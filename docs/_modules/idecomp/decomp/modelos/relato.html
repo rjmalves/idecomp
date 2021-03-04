@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.modelos.relato &mdash; documentação idecomp 0.0.2</title>
+  <title>idecomp.decomp.modelos.relato &mdash; documentação idecomp 0.0.3</title>
   
 
   
@@ -246,6 +246,134 @@
         <span class="k">return</span> <span class="n">dict_cmo</span></div>
 
 
+<div class="viewcode-block" id="GeracaoTermicaSubsistemaRelato"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/relato.html#idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato">[documentos]</a><span class="k">class</span> <span class="nc">GeracaoTermicaSubsistemaRelato</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Armazena os dados de saída existentes no relato do DECOMP</span>
+<span class="sd">    referentes à geração de térmicas (MWmed) por subsistema.</span>
+
+<span class="sd">    Esta classe armazena a tabela de Geração por subsistema</span>
+<span class="sd">    e por semana do DECOMP.</span>
+
+<span class="sd">    **Parâmetros**</span>
+
+<span class="sd">    - subsistema: `List[str]`</span>
+<span class="sd">    - tabela: `np.ndarray`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">subsistema</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">tabela</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">=</span> <span class="n">subsistema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span> <span class="o">=</span> <span class="n">tabela</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A igualdade entre GeracaoTermicaSubsistemaRelato</span>
+<span class="sd">        avalia todos os campos.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">gt</span><span class="p">:</span> <span class="n">GeracaoTermicaSubsistemaRelato</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="n">eq_subsistema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">==</span> <span class="n">gt</span><span class="o">.</span><span class="n">subsistema</span>
+        <span class="n">eq_tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">,</span> <span class="n">gt</span><span class="o">.</span><span class="n">tabela</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">eq_subsistema</span><span class="p">,</span> <span class="n">eq_tabela</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">geracao_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Geração Térmica (MWmed) por subsistema e por semana</span>
+<span class="sd">        como fornecido no arquivo relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]` e é retornada um</span>
+<span class="sd">        array onde a posição [i - 1] contém os dados do período</span>
+<span class="sd">        i do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_gt</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ssis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span><span class="p">):</span>
+            <span class="n">dict_gt</span><span class="p">[</span><span class="n">ssis</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="k">return</span> <span class="n">dict_gt</span></div>
+
+
+<div class="viewcode-block" id="EnergiaArmazenadaSubsistemaRelato"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/relato.html#idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato">[documentos]</a><span class="k">class</span> <span class="nc">EnergiaArmazenadaSubsistemaRelato</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Armazena os dados de saída existentes no relato do DECOMP</span>
+<span class="sd">    referentes à energia armazenada (% EARMax) por subsistema.</span>
+
+<span class="sd">    Esta classe armazena a tabela de armazenamento por subsistema</span>
+<span class="sd">    inicial e por semana do DECOMP.</span>
+
+<span class="sd">    **Parâmetros**</span>
+
+<span class="sd">    - subsistema: `List[str]`</span>
+<span class="sd">    - tabela: `np.ndarray`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">subsistema</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">tabela</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">=</span> <span class="n">subsistema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span> <span class="o">=</span> <span class="n">tabela</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A igualdade entre EnergiaArmazenadaSubsistemaRelato</span>
+<span class="sd">        avalia todos os campos.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">earm</span><span class="p">:</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="n">eq_subsistema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">==</span> <span class="n">earm</span><span class="o">.</span><span class="n">subsistema</span>
+        <span class="n">eq_tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">,</span> <span class="n">earm</span><span class="o">.</span><span class="n">tabela</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">eq_subsistema</span><span class="p">,</span> <span class="n">eq_tabela</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">armazenamento_inicial_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Energia Armazenada inicial (% EARMax) por subsistema</span>
+<span class="sd">        como fornecido no arquivo relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, float]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_gt</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ssis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span><span class="p">):</span>
+            <span class="n">dict_gt</span><span class="p">[</span><span class="n">ssis</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">dict_gt</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">armazenamento_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Energia Armazenada (% EARMax) por subsistema e por</span>
+<span class="sd">        período de execução como fornecido no arquivo</span>
+<span class="sd">        relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]` e é retornada uma</span>
+<span class="sd">        `np.ndarray` onde a entrada [i - 1] possui o valor</span>
+<span class="sd">        referente ap período i do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_earm</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ssis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span><span class="p">):</span>
+            <span class="n">dict_earm</span><span class="p">[</span><span class="n">ssis</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">dict_earm</span></div>
+
+
 <div class="viewcode-block" id="Relato"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/relato.html#idecomp.decomp.modelos.relato.Relato">[documentos]</a><span class="k">class</span> <span class="nc">Relato</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Armazena os dados de saída do DECOMP referentes ao</span>
@@ -262,13 +390,18 @@
 
 <span class="sd">    - dados_gerais: `DadosGeraisRelato`</span>
 <span class="sd">    - cmo: `CMORelato`</span>
+<span class="sd">    - geracao_termica_subsistema: `GeracaoTermicaSubsistemaRelato`</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">dados_gerais</span><span class="p">:</span> <span class="n">DadosGeraisRelato</span><span class="p">,</span>
-                 <span class="n">cmo</span><span class="p">:</span> <span class="n">CMORelato</span><span class="p">):</span>
+                 <span class="n">cmo</span><span class="p">:</span> <span class="n">CMORelato</span><span class="p">,</span>
+                 <span class="n">geracao_termica_subsistema</span><span class="p">:</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">,</span>
+                 <span class="n">earm_subsistema</span><span class="p">:</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dados_gerais</span> <span class="o">=</span> <span class="n">dados_gerais</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">cmo</span> <span class="o">=</span> <span class="n">cmo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cmo</span> <span class="o">=</span> <span class="n">cmo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_geracao_termica_subsistema</span> <span class="o">=</span> <span class="n">geracao_termica_subsistema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_earm_subsistema</span> <span class="o">=</span> <span class="n">earm_subsistema</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -283,7 +416,78 @@
             <span class="k">if</span> <span class="n">u</span> <span class="o">!=</span> <span class="n">v</span><span class="p">:</span>
                 <span class="n">dif</span> <span class="o">=</span> <span class="kc">True</span>
                 <span class="k">break</span>
-        <span class="k">return</span> <span class="ow">not</span> <span class="n">dif</span></div>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">dif</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cmo_medio_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Custo Marginal de Operação (CMO) médio por subsistema</span>
+<span class="sd">        e por semana.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]` e é retornada um</span>
+<span class="sd">        array onde a posição [i - 1] contém os dados do período</span>
+<span class="sd">        i do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cmo</span><span class="o">.</span><span class="n">custo_medio_subsistema</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">geracao_termica_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Geração Térmica (MWmed) por subsistema e por semana</span>
+<span class="sd">        como fornecido no arquivo relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]` e é retornada um</span>
+<span class="sd">        array onde a posição [i - 1] contém os dados do período</span>
+<span class="sd">        i do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_geracao_termica_subsistema</span><span class="o">.</span><span class="n">geracao_subsistema</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energia_armazenada_inicial_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Energia Armazenada inicial (% EARMax) por subsistema</span>
+<span class="sd">        como fornecido no arquivo relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_earm_subsistema</span><span class="o">.</span><span class="n">armazenamento_inicial_subsistema</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energia_armazenada_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Energia Armazenada (% EARMax) por subsistema e por</span>
+<span class="sd">        período de execução como fornecido no arquivo</span>
+<span class="sd">        relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]` e é retornada uma</span>
+<span class="sd">        `np.ndarray` onde a entrada [i - 1] possui o valor</span>
+<span class="sd">        referente ap período i do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_earm_subsistema</span><span class="o">.</span><span class="n">armazenamento_subsistema</span></div>
 </pre></div>
 
            </div>

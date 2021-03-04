@@ -27,6 +27,12 @@ auxiliares para armazenar todas as informações disponíveis.
 .. autoclass:: CMORelato
    :members:
 
+.. autoclass:: GeracaoTermicaSubsistemaRelato
+   :members:
+
+.. autoclass:: EnergiaArmazenadaSubsistemaRelato
+   :members:
+
 Leitura
 ========
 .. currentmodule:: idecomp.decomp.relato

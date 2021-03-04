@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.2</title>
+  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.3</title>
   
 
   
@@ -181,7 +181,7 @@
 relato.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
 <dl class="py class">
 <dt id="idecomp.decomp.modelos.relato.Relato">
-<em class="property">class </em><code class="sig-name descname">Relato</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dados_gerais</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#idecomp.decomp.modelos.relato.DadosGeraisRelato" title="idecomp.decomp.modelos.relato.DadosGeraisRelato">idecomp.decomp.modelos.relato.DadosGeraisRelato</a></span></em>, <em class="sig-param"><span class="n">cmo</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#idecomp.decomp.modelos.relato.CMORelato" title="idecomp.decomp.modelos.relato.CMORelato">idecomp.decomp.modelos.relato.CMORelato</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/relato.html#Relato"><span class="viewcode-link">[código fonte]</span></a><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato" title="Link permanente para esta definição">¶</a></dt>
+<em class="property">class </em><code class="sig-name descname">Relato</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dados_gerais</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#idecomp.decomp.modelos.relato.DadosGeraisRelato" title="idecomp.decomp.modelos.relato.DadosGeraisRelato">idecomp.decomp.modelos.relato.DadosGeraisRelato</a></span></em>, <em class="sig-param"><span class="n">cmo</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#idecomp.decomp.modelos.relato.CMORelato" title="idecomp.decomp.modelos.relato.CMORelato">idecomp.decomp.modelos.relato.CMORelato</a></span></em>, <em class="sig-param"><span class="n">geracao_termica_subsistema</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato" title="idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato">idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato</a></span></em>, <em class="sig-param"><span class="n">earm_subsistema</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato" title="idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato">idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato</a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/relato.html#Relato"><span class="viewcode-link">[código fonte]</span></a><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Armazena os dados de saída do DECOMP referentes ao
 acompanhamento do programa.</p>
 <p>Esta classe lida com as informações de entrada fornecidas ao
@@ -193,7 +193,59 @@ de execução intermediárias do programa.</p>
 <ul class="simple">
 <li><p>dados_gerais: <a class="reference internal" href="#idecomp.decomp.modelos.relato.DadosGeraisRelato" title="idecomp.decomp.modelos.relato.DadosGeraisRelato"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DadosGeraisRelato</span></code></a></p></li>
 <li><p>cmo: <a class="reference internal" href="#idecomp.decomp.modelos.relato.CMORelato" title="idecomp.decomp.modelos.relato.CMORelato"><code class="xref py py-obj docutils literal notranslate"><span class="pre">CMORelato</span></code></a></p></li>
+<li><p>geracao_termica_subsistema: <a class="reference internal" href="#idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato" title="idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato"><code class="xref py py-obj docutils literal notranslate"><span class="pre">GeracaoTermicaSubsistemaRelato</span></code></a></p></li>
 </ul>
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.cmo_medio_subsistema">
+<em class="property">property </em><code class="sig-name descname">cmo_medio_subsistema</code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.cmo_medio_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Custo Marginal de Operação (CMO) médio por subsistema
+e por semana.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.energia_armazenada_inicial_subsistema">
+<em class="property">property </em><code class="sig-name descname">energia_armazenada_inicial_subsistema</code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.energia_armazenada_inicial_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Energia Armazenada inicial (% EARMax) por subsistema
+como fornecido no arquivo relato.rvX do DECOMP.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.energia_armazenada_subsistema">
+<em class="property">property </em><code class="sig-name descname">energia_armazenada_subsistema</code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.energia_armazenada_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Energia Armazenada (% EARMax) por subsistema e por
+período de execução como fornecido no arquivo
+relato.rvX do DECOMP.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada uma
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">np.ndarray</span></code> onde a entrada [i - 1] possui o valor
+referente ap período i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.geracao_termica_subsistema">
+<em class="property">property </em><code class="sig-name descname">geracao_termica_subsistema</code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.geracao_termica_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Geração Térmica (MWmed) por subsistema e por semana
+como fornecido no arquivo relato.rvX do DECOMP.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -235,6 +287,72 @@ e por semana.</p>
 <p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
 array onde a posição [i - 1] contém os dados do período
 i do DECOMP.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato">
+<em class="property">class </em><code class="sig-name descname">GeracaoTermicaSubsistemaRelato</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subsistema</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">tabela</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/relato.html#GeracaoTermicaSubsistemaRelato"><span class="viewcode-link">[código fonte]</span></a><a class="headerlink" href="#idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Armazena os dados de saída existentes no relato do DECOMP
+referentes à geração de térmicas (MWmed) por subsistema.</p>
+<p>Esta classe armazena a tabela de Geração por subsistema
+e por semana do DECOMP.</p>
+<p><strong>Parâmetros</strong></p>
+<ul class="simple">
+<li><p>subsistema: <code class="xref py py-obj docutils literal notranslate"><span class="pre">List[str]</span></code></p></li>
+<li><p>tabela: <code class="xref py py-obj docutils literal notranslate"><span class="pre">np.ndarray</span></code></p></li>
+</ul>
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato.geracao_subsistema">
+<em class="property">property </em><code class="sig-name descname">geracao_subsistema</code><a class="headerlink" href="#idecomp.decomp.modelos.relato.GeracaoTermicaSubsistemaRelato.geracao_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Geração Térmica (MWmed) por subsistema e por semana
+como fornecido no arquivo relato.rvX do DECOMP.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato">
+<em class="property">class </em><code class="sig-name descname">EnergiaArmazenadaSubsistemaRelato</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">subsistema</span><span class="p">:</span> <span class="n">List<span class="p">[</span>str<span class="p">]</span></span></em>, <em class="sig-param"><span class="n">tabela</span><span class="p">:</span> <span class="n">numpy.ndarray</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/relato.html#EnergiaArmazenadaSubsistemaRelato"><span class="viewcode-link">[código fonte]</span></a><a class="headerlink" href="#idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Armazena os dados de saída existentes no relato do DECOMP
+referentes à energia armazenada (% EARMax) por subsistema.</p>
+<p>Esta classe armazena a tabela de armazenamento por subsistema
+inicial e por semana do DECOMP.</p>
+<p><strong>Parâmetros</strong></p>
+<ul class="simple">
+<li><p>subsistema: <code class="xref py py-obj docutils literal notranslate"><span class="pre">List[str]</span></code></p></li>
+<li><p>tabela: <code class="xref py py-obj docutils literal notranslate"><span class="pre">np.ndarray</span></code></p></li>
+</ul>
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato.armazenamento_inicial_subsistema">
+<em class="property">property </em><code class="sig-name descname">armazenamento_inicial_subsistema</code><a class="headerlink" href="#idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato.armazenamento_inicial_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Energia Armazenada inicial (% EARMax) por subsistema
+como fornecido no arquivo relato.rvX do DECOMP.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">float]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato.armazenamento_subsistema">
+<em class="property">property </em><code class="sig-name descname">armazenamento_subsistema</code><a class="headerlink" href="#idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato.armazenamento_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Energia Armazenada (% EARMax) por subsistema e por
+período de execução como fornecido no arquivo
+relato.rvX do DECOMP.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada uma
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">np.ndarray</span></code> onde a entrada [i - 1] possui o valor
+referente ap período i do DECOMP.</p>
 </dd></dl>
 
 </dd></dl>
