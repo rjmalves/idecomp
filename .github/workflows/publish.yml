@@ -1,8 +1,8 @@
-name: Upload de versão atualizada para o PyPI
+name: deploy
 
 on:
   release:
-    types: [created]
+    types: [created, edited]
 
 jobs:
   build-and-publish:
@@ -15,10 +15,10 @@ jobs:
         python-version: '3.x'
     - name: Instala os requisitos do módulo
       run: |
-        python -m pip install -r requirements.txt
+        python -m pip install -r deploy-requirements.txt
     - name: Executa os testes do pacote
       run: |
-        python -m pytest
+        python -m pytest --cov=idecomp tests/
     - name: Veriricações de qualidade de código - tipagem estática
       run: |
         python -m mypy .

@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>idecomp.decomp.modelos.relato &mdash; documentação idecomp 0.0.2</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../../../../genindex.html" />
+    <link rel="search" title="Buscar" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> idecomp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Instalação</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference.html">Referência</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">idecomp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Código do módulo</a> &raquo;</li>
+        
+      <li>idecomp.decomp.modelos.relato</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Código fonte para idecomp.decomp.modelos.relato</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  <span class="c1"># type: ignore</span>
+
+
+<div class="viewcode-block" id="DadosGeraisRelato"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/relato.html#idecomp.decomp.modelos.relato.DadosGeraisRelato">[documentos]</a><span class="k">class</span> <span class="nc">DadosGeraisRelato</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Armazena os dados de saída existentes no relato do DECOMP</span>
+<span class="sd">    referentes aos dados gerais fornecidos ao programa.</span>
+
+<span class="sd">    **Parâmetros**</span>
+
+<span class="sd">    - numero_semanas_1_mes: `int`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">numero_semanas_1_mes</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">numero_semanas_1_mes</span> <span class="o">=</span> <span class="n">numero_semanas_1_mes</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A igualdade entre DadosGeraisRelato avalia todos os campos.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">DadosGeraisRelato</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">rel</span><span class="p">:</span> <span class="n">DadosGeraisRelato</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="n">dif</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">u</span><span class="p">),</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+                                  <span class="n">rel</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">u</span> <span class="o">!=</span> <span class="n">v</span><span class="p">:</span>
+                <span class="n">dif</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">dif</span></div>
+
+
+<div class="viewcode-block" id="CMORelato"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/relato.html#idecomp.decomp.modelos.relato.CMORelato">[documentos]</a><span class="k">class</span> <span class="nc">CMORelato</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Armazena os dados de saída existentes no relato do DECOMP</span>
+<span class="sd">    referentes ao Custo Marginal de Operação (CMO).</span>
+
+<span class="sd">    Esta classe armazena a tabela de CMO por subsistema em cada</span>
+<span class="sd">    patamar de carga e os valores médios por submercado.</span>
+
+<span class="sd">    **Parâmetros**</span>
+
+<span class="sd">    - subsistema: `List[str]`</span>
+<span class="sd">    - tabela: `np.ndarray`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">subsistema</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">tabela</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">=</span> <span class="n">subsistema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span> <span class="o">=</span> <span class="n">tabela</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A igualdade entre CMORelato avalia todos os campos.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">CMORelato</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">cmo</span><span class="p">:</span> <span class="n">CMORelato</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="n">eq_subsistema</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">==</span> <span class="n">cmo</span><span class="o">.</span><span class="n">subsistema</span>
+        <span class="n">eq_tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">,</span> <span class="n">cmo</span><span class="o">.</span><span class="n">tabela</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">eq_subsistema</span><span class="p">,</span> <span class="n">eq_tabela</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">custo_medio_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Custo Marginal de Operação (CMO) médio por subsistema</span>
+<span class="sd">        e por semana.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]` e é retornada um</span>
+<span class="sd">        array onde a posição [i - 1] contém os dados do período</span>
+<span class="sd">        i do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_cmo</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ssis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s2">&quot;Med&quot;</span> <span class="ow">in</span> <span class="n">ssis</span><span class="p">:</span>
+                <span class="n">str_subsistema</span> <span class="o">=</span> <span class="n">ssis</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">dict_cmo</span><span class="p">[</span><span class="n">str_subsistema</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="k">return</span> <span class="n">dict_cmo</span></div>
+
+
+<div class="viewcode-block" id="Relato"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/relato.html#idecomp.decomp.modelos.relato.Relato">[documentos]</a><span class="k">class</span> <span class="nc">Relato</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Armazena os dados de saída do DECOMP referentes ao</span>
+<span class="sd">    acompanhamento do programa.</span>
+
+<span class="sd">    Esta classe lida com as informações de entrada fornecidas ao</span>
+<span class="sd">    DECOMP e reproduzidas no `relato.rvx`, bem como as saídas finais</span>
+<span class="sd">    da execução: custos de operação, despacho de térmicas, etc.</span>
+
+<span class="sd">    Em versões futuras, esta classe pode passar a ler os dados</span>
+<span class="sd">    de execução intermediárias do programa.</span>
+
+<span class="sd">    **Parâmetros**</span>
+
+<span class="sd">    - dados_gerais: `DadosGeraisRelato`</span>
+<span class="sd">    - cmo: `CMORelato`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">dados_gerais</span><span class="p">:</span> <span class="n">DadosGeraisRelato</span><span class="p">,</span>
+                 <span class="n">cmo</span><span class="p">:</span> <span class="n">CMORelato</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dados_gerais</span> <span class="o">=</span> <span class="n">dados_gerais</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmo</span> <span class="o">=</span> <span class="n">cmo</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A igualdade entre Relato avalia todos os campos.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">Relato</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">rel</span><span class="p">:</span> <span class="n">Relato</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="n">dif</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">u</span><span class="p">),</span> <span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
+                                  <span class="n">rel</span><span class="o">.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">u</span> <span class="o">!=</span> <span class="n">v</span><span class="p">:</span>
+                <span class="n">dif</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">dif</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rogerio Alves.
+
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -24,6 +24,6 @@ setup(
         "Operating System :: OS Independent",
         "Development Status :: 1 - Planning"
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.5",
     install_requires=requirements
 )

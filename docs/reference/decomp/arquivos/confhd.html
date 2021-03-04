@@ -1,0 +1,264 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.2</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../../../genindex.html" />
+    <link rel="search" title="Buscar" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> idecomp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Instalação</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Referência</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">idecomp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Relato (relato.rvX)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../../_sources/reference/decomp/arquivos/confhd.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="relato-relato-rvx">
+<span id="relato"></span><h1>Relato (relato.rvX)<a class="headerlink" href="#relato-relato-rvx" title="Link permanente para este título">¶</a></h1>
+<div class="section" id="visao-geral-do-modelo">
+<h2>Visão geral do modelo<a class="headerlink" href="#visao-geral-do-modelo" title="Link permanente para este título">¶</a></h2>
+<p>As informações de saída do DECOMP, localizadas no arquivo geralmente denominado
+relato.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
+<dl class="py class">
+<dt id="idecomp.decomp.modelos.relato.Relato">
+<em class="property">class </em><code class="sig-name descname">Relato</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dados_gerais</span><span class="p">:</span> <span class="n">idecomp.decomp.modelos.relato.DadosGeraisRelato</span></em>, <em class="sig-param"><span class="n">cmo</span><span class="p">:</span> <span class="n">idecomp.decomp.modelos.relato.CMORelato</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/relato.html#Relato"><span class="viewcode-link">[código fonte]</span></a><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Armazena os dados de saída do DECOMP referentes ao
+acompanhamento do programa.</p>
+<p>Esta classe lida com as informações de entrada fornecidas ao
+DECOMP e reproduzidas no <code class="xref py py-obj docutils literal notranslate"><span class="pre">relato.rvx</span></code>, bem como as saídas finais
+da execução: custos de operação, despacho de térmicas, etc.</p>
+<p>Em versões futuras, esta classe pode passar a ler os dados
+de execução intermediárias do programa.</p>
+<p><strong>Parâmetros</strong></p>
+<ul class="simple">
+<li><p>dados_gerais: <code class="xref py py-obj docutils literal notranslate"><span class="pre">DadosGeraisRelato</span></code></p></li>
+<li><p>cmo: <code class="xref py py-obj docutils literal notranslate"><span class="pre">CMORelato</span></code></p></li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="leitura">
+<h2>Leitura<a class="headerlink" href="#leitura" title="Link permanente para este título">¶</a></h2>
+<p>A leitura do arquivo <code class="xref py py-obj docutils literal notranslate"><span class="pre">relato.rvX</span></code> é feita através da classe <a class="reference internal" href="#idecomp.decomp.relato.LeituraRelato" title="idecomp.decomp.relato.LeituraRelato"><code class="xref py py-class docutils literal notranslate"><span class="pre">LeituraRelato</span></code></a>.</p>
+<dl class="py class">
+<dt id="idecomp.decomp.relato.LeituraRelato">
+<em class="property">class </em><code class="sig-name descname">LeituraRelato</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">diretorio</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/relato.html#LeituraRelato"><span class="viewcode-link">[código fonte]</span></a><a class="headerlink" href="#idecomp.decomp.relato.LeituraRelato" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Realiza a leitura do arquivo relato.rvx
+existente em um diretório de saídas do DECOMP.</p>
+<p>Esta classe contém o conjunto de utilidades para ler
+e interpretar os campos de um arquivo relato.rvx, construindo
+um objeto <code class="xref py py-obj docutils literal notranslate"><span class="pre">Relato</span></code> cujas informações são as mesmas do relato.rvx.</p>
+<p>Este objeto existe para retirar do modelo de dados a complexidade
+de iterar pelas linhas do arquivo, recortar colunas, converter
+tipos de dados, dentre outras tarefas necessárias para a leitura.</p>
+<p>Uma vez realizada a leitura do arquivo, as informações são guardadas
+internamente no atributo <code class="xref py py-obj docutils literal notranslate"><span class="pre">Relato</span></code>.</p>
+<p><strong>Exemplos</strong></p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">diretorio</span> <span class="o">=</span> <span class="s2">&quot;~/documentos/.../deck&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leitor</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">leitor</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">()</span>
+<span class="go"># Ops, esqueci de pegar o objeto</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">relato</span> <span class="o">=</span> <span class="n">leitor</span><span class="o">.</span><span class="n">relato</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt id="idecomp.decomp.relato.LeituraRelato.le_arquivo">
+<code class="sig-name descname">le_arquivo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">relato_rev</span><span class="p">:</span> <span class="n">str</span> <span class="o">=</span> <span class="default_value">''</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.relato.Relato" title="idecomp.decomp.modelos.relato.Relato">idecomp.decomp.modelos.relato.Relato</a><a class="reference internal" href="../../../_modules/idecomp/decomp/relato.html#LeituraRelato.le_arquivo"><span class="viewcode-link">[código fonte]</span></a><a class="headerlink" href="#idecomp.decomp.relato.LeituraRelato.le_arquivo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Faz a leitura do arquivo <code class="xref py py-obj docutils literal notranslate"><span class="pre">relato.rvx</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rogerio Alves.
+
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
