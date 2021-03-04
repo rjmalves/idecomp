@@ -2,6 +2,8 @@
 from idecomp._utils.leitura import Leitura
 from .modelos.relato import DadosGeraisRelato
 from .modelos.relato import CMORelato
+from .modelos.relato import GeracaoTermicaSubsistemaRelato
+from .modelos.relato import EnergiaArmazenadaSubsistemaRelato
 from .modelos.relato import Relato
 # Imports de módulos externos
 import os
@@ -37,6 +39,8 @@ class LeituraRelato(Leitura):
     """
     str_inicio_dados = "Relatorio  dos  Dados  Gerais"
     str_inicio_cmo = "CUSTO MARGINAL DE OPERACAO  ($/MWh)"
+    str_inicio_gt_subsis = "GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)"
+    str_inicio_earm_subsis = "ENERGIA ARMAZENADA NOS SUBSISTEMAS (%"
     str_fim_relato = "FIM DO PROCESSAMENTO"
 
     def __init__(self,
@@ -44,9 +48,15 @@ class LeituraRelato(Leitura):
         super().__init__()
         self.diretorio = diretorio
         # Relato default, depois é substituído
+        gt = GeracaoTermicaSubsistemaRelato([],
+                                            np.ndarray([]))
+        earm = EnergiaArmazenadaSubsistemaRelato([],
+                                                 np.ndarray([]))
         self.relato = Relato(DadosGeraisRelato(0),
                              CMORelato([],
-                                       np.ndarray([])))
+                                       np.ndarray([])),
+                             gt,
+                             earm)
 
     def le_arquivo(self,
                    relato_rev: str = "") -> Relato:
@@ -79,16 +89,22 @@ class LeituraRelato(Leitura):
         """
         achou_dados_gerais = False
         achou_cmo = False
+        achou_gt_subsis = False
+        achou_earm_subsis = False
         linha = ""
         dados_gerais = DadosGeraisRelato(0)
         cmo = CMORelato([], np.array([]))
-
+        gt_subsis = GeracaoTermicaSubsistemaRelato([], np.array([]))
+        earm_subsis = EnergiaArmazenadaSubsistemaRelato([],
+                                                        np.ndarray([]))
         while True:
             # Decide se lê uma linha nova ou usa a última lida
             linha = self._le_linha_com_backup(arq)
             if len(linha) == 0 or self._fim_arquivo(linha):
                 self.relato = Relato(dados_gerais,
-                                     cmo)
+                                     cmo,
+                                     gt_subsis,
+                                     earm_subsis)
                 break
             # Condição para iniciar uma leitura de dados
             if not achou_dados_gerais:
@@ -97,6 +113,12 @@ class LeituraRelato(Leitura):
             if not achou_cmo:
                 achou = LeituraRelato.str_inicio_cmo in linha
                 achou_cmo = achou
+            if not achou_gt_subsis:
+                achou = LeituraRelato.str_inicio_gt_subsis in linha
+                achou_gt_subsis = achou
+            if not achou_earm_subsis:
+                achou = LeituraRelato.str_inicio_earm_subsis in linha
+                achou_earm_subsis = achou
             # Quando achar, le cada parte adequadamente
             if achou_dados_gerais:
                 dados_gerais = self._le_dados_gerais(arq)
@@ -104,6 +126,12 @@ class LeituraRelato(Leitura):
             if achou_cmo:
                 cmo = self._le_cmo(arq)
                 achou_cmo = False
+            if achou_gt_subsis:
+                gt_subsis = self._le_gt_subsistema(arq)
+                achou_gt_subsis = False
+            if achou_earm_subsis:
+                earm_subsis = self._le_earm_subsistema(arq)
+                achou_earm_subsis = False
 
         return self.relato
 
@@ -156,6 +184,82 @@ class LeituraRelato(Leitura):
             ci = 11
             nc = 10
             for j in range(n_semanas):
+                cf = ci + nc
+                tabela[i, j] = float(linha[ci:cf])
+                ci = cf + 1
+            i += 1
+
+    def _le_gt_subsistema(self,
+                          arq: IO
+                          ) -> GeracaoTermicaSubsistemaRelato:
+        """
+        Lê a tabela de GT por subsistema
+        existente no arquivo relato do DECOMP.
+        """
+        # Salta uma linha
+        self._le_linha_com_backup(arq)
+        # Descobre o número de semanas
+        linha = self._le_linha_com_backup(arq)
+        sems = [s for s in linha.split(" ") if (len(s) > 0
+                                                and "Sem" in s)]
+        n_semanas = len(sems)
+        subsistemas: List[str] = []
+        tabela = np.zeros((20, n_semanas))
+        # Salta outra linha
+        self._le_linha_com_backup(arq)
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = self._le_linha_com_backup(arq)
+            if "X------X" in linha:
+                return GeracaoTermicaSubsistemaRelato(subsistemas,
+                                                      tabela[:i, :])
+            # Senão, lê mais uma linha
+            # Subsistema
+            ssis = linha[4:10].strip()
+            subsistemas.append(ssis)
+            # Semanas
+            ci = 11
+            nc = 10
+            for j in range(n_semanas):
+                cf = ci + nc
+                tabela[i, j] = float(linha[ci:cf])
+                ci = cf + 1
+            i += 1
+
+    def _le_earm_subsistema(self,
+                            arq: IO
+                            ) -> EnergiaArmazenadaSubsistemaRelato:
+        """
+        Lê a tabela de EARM por subsistema
+        existente no arquivo relato do DECOMP.
+        """
+        # Salta uma linha
+        self._le_linha_com_backup(arq)
+        # Descobre o número de semanas
+        linha = self._le_linha_com_backup(arq)
+        sems = [s for s in linha.split(" ") if (len(s) > 0
+                                                and "Sem" in s)]
+        n_semanas = len(sems)
+        subsistemas: List[str] = []
+        tabela = np.zeros((20, n_semanas + 1))
+        # Salta outra linha
+        self._le_linha_com_backup(arq)
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = self._le_linha_com_backup(arq)
+            if "-------" in linha:
+                return EnergiaArmazenadaSubsistemaRelato(subsistemas,
+                                                         tabela[:i, :])
+            # Senão, lê mais uma linha
+            # Subsistema
+            ssis = linha[4:16].strip()
+            subsistemas.append(ssis)
+            # Inicial e semanas
+            ci = 23
+            nc = 6
+            for j in range(n_semanas + 1):
                 cf = ci + nc
                 tabela[i, j] = float(linha[ci:cf])
                 ci = cf + 1
