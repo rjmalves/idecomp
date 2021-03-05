@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages  # type: ignore
+from idecomp import __version__ as ver
 
 long_description = ""
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -10,7 +11,7 @@ with open('requirements.txt', 'r') as fh:
 
 setup(
     name="idecomp",
-    version="0.0.2",
+    version=ver,
     author="Rogerio Alves",
     author_email="rogerioalves.ee@gmail.com",
     description="Interface para arquivos do DECOMP",
