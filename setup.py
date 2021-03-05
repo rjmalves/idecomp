@@ -23,7 +23,7 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent",
-        "Development Status :: 2 - Pre-Alpha""
+        "Development Status :: 2 - Pre-Alpha"
     ],
     python_requires=">=3.5",
     install_requires=requirements
