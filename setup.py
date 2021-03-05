@@ -1,5 +1,5 @@
+import idecomp
 from setuptools import setup, find_packages  # type: ignore
-from idecomp import __version__ as ver
 
 long_description = ""
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -11,7 +11,7 @@ with open('requirements.txt', 'r') as fh:
 
 setup(
     name="idecomp",
-    version=ver,
+    version=idecomp.__version__,
     author="Rogerio Alves",
     author_email="rogerioalves.ee@gmail.com",
     description="Interface para arquivos do DECOMP",
@@ -23,7 +23,7 @@ setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: OS Independent",
-        "Development Status :: 1 - Planning"
+        "Development Status :: 2 - Pre-Alpha""
     ],
     python_requires=">=3.5",
     install_requires=requirements
