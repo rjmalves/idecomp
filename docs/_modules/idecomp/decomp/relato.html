@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.3</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.4</title>
   
 
   
@@ -87,8 +87,12 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Instalação</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Referência</a></li>
+</ul>
+
             
           
         </div>
@@ -154,11 +158,13 @@
             
   <h1>Código fonte para idecomp.decomp.relato</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Imports do próprio módulo</span>
+<span class="kn">from</span> <span class="nn">idecomp.config</span> <span class="kn">import</span> <span class="n">MAX_SEMANAS_PRE</span>
 <span class="kn">from</span> <span class="nn">idecomp._utils.leitura</span> <span class="kn">import</span> <span class="n">Leitura</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">DadosGeraisRelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">CMORelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">GeracaoTermicaSubsistemaRelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span>
+<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">Relato</span>
 <span class="c1"># Imports de módulos externos</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -196,6 +202,7 @@
     <span class="n">str_inicio_cmo</span> <span class="o">=</span> <span class="s2">&quot;CUSTO MARGINAL DE OPERACAO  ($/MWh)&quot;</span>
     <span class="n">str_inicio_gt_subsis</span> <span class="o">=</span> <span class="s2">&quot;GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)&quot;</span>
     <span class="n">str_inicio_earm_subsis</span> <span class="o">=</span> <span class="s2">&quot;ENERGIA ARMAZENADA NOS SUBSISTEMAS (%&quot;</span>
+    <span class="n">str_inicio_ena_semana_subsis</span> <span class="o">=</span> <span class="s2">&quot;NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS&quot;</span>
     <span class="n">str_fim_relato</span> <span class="o">=</span> <span class="s2">&quot;FIM DO PROCESSAMENTO&quot;</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -207,11 +214,14 @@
                                             <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
         <span class="n">earm</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">([],</span>
                                                  <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
+        <span class="n">ena_semana</span> <span class="o">=</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">([],</span>
+                                                         <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">relato</span> <span class="o">=</span> <span class="n">Relato</span><span class="p">(</span><span class="n">DadosGeraisRelato</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
                              <span class="n">CMORelato</span><span class="p">([],</span>
                                        <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([])),</span>
                              <span class="n">gt</span><span class="p">,</span>
-                             <span class="n">earm</span><span class="p">)</span>
+                             <span class="n">earm</span><span class="p">,</span>
+                             <span class="n">ena_semana</span><span class="p">)</span>
 
 <div class="viewcode-block" id="LeituraRelato.le_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/relato.html#idecomp.decomp.relato.LeituraRelato.le_arquivo">[documentos]</a>    <span class="k">def</span> <span class="nf">le_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                    <span class="n">relato_rev</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Relato</span><span class="p">:</span>
@@ -246,12 +256,15 @@
         <span class="n">achou_cmo</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">achou_gt_subsis</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">achou_ena_semana_subsis</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">linha</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
         <span class="n">dados_gerais</span> <span class="o">=</span> <span class="n">DadosGeraisRelato</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">cmo</span> <span class="o">=</span> <span class="n">CMORelato</span><span class="p">([],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]))</span>
         <span class="n">gt_subsis</span> <span class="o">=</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">([],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]))</span>
         <span class="n">earm_subsis</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">([],</span>
                                                         <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
+        <span class="n">ena_sem_subsis</span> <span class="o">=</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">([],</span>
+                                                             <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
         <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
             <span class="c1"># Decide se lê uma linha nova ou usa a última lida</span>
             <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
@@ -259,7 +272,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">relato</span> <span class="o">=</span> <span class="n">Relato</span><span class="p">(</span><span class="n">dados_gerais</span><span class="p">,</span>
                                      <span class="n">cmo</span><span class="p">,</span>
                                      <span class="n">gt_subsis</span><span class="p">,</span>
-                                     <span class="n">earm_subsis</span><span class="p">)</span>
+                                     <span class="n">earm_subsis</span><span class="p">,</span>
+                                     <span class="n">ena_sem_subsis</span><span class="p">)</span>
                 <span class="k">break</span>
             <span class="c1"># Condição para iniciar uma leitura de dados</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_dados_gerais</span><span class="p">:</span>
@@ -274,6 +288,9 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_earm_subsis</span><span class="p">:</span>
                 <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_earm_subsis</span> <span class="ow">in</span> <span class="n">linha</span>
                 <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="n">achou</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_ena_semana_subsis</span><span class="p">:</span>
+                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_ena_semana_subsis</span> <span class="ow">in</span> <span class="n">linha</span>
+                <span class="n">achou_ena_semana_subsis</span> <span class="o">=</span> <span class="n">achou</span>
             <span class="c1"># Quando achar, le cada parte adequadamente</span>
             <span class="k">if</span> <span class="n">achou_dados_gerais</span><span class="p">:</span>
                 <span class="n">dados_gerais</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_dados_gerais</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
@@ -287,6 +304,9 @@
             <span class="k">if</span> <span class="n">achou_earm_subsis</span><span class="p">:</span>
                 <span class="n">earm_subsis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_earm_subsistema</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
                 <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">achou_ena_semana_subsis</span><span class="p">:</span>
+                <span class="n">ena_sem_subsis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_ena_sem_subsis</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+                <span class="n">achou_ena_semana_subsis</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relato</span>
 
@@ -417,6 +437,46 @@
             <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_semanas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
                 <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
                 <span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
+                <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="k">def</span> <span class="nf">_le_ena_sem_subsis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                           <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
+                           <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lê a tabela de ENA pré-estudo semanal por subsistema</span>
+<span class="sd">        existente no arquivo relato do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Salta 4 linhas</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+        <span class="c1"># Cria as variáveis e inicia a leitura</span>
+        <span class="n">subsistemas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="n">MAX_SEMANAS_PRE</span><span class="p">))</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Confere se a leitura não acabou</span>
+            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;-------&quot;</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">(</span><span class="n">subsistemas</span><span class="p">,</span>
+                                                           <span class="n">tabela</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">j</span><span class="p">])</span>
+            <span class="c1"># Senão, lê mais uma linha</span>
+            <span class="c1"># Subsistema</span>
+            <span class="n">ssis</span> <span class="o">=</span> <span class="n">linha</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">18</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">subsistemas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssis</span><span class="p">)</span>
+            <span class="c1"># Inicial e semanas</span>
+            <span class="n">ci</span> <span class="o">=</span> <span class="mi">24</span>
+            <span class="n">nc</span> <span class="o">=</span> <span class="mi">8</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SEMANAS_PRE</span><span class="p">):</span>
+                <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
+                <span class="n">ena</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">ena</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="n">n</span>
+                    <span class="k">break</span>
+                <span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
                 <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 

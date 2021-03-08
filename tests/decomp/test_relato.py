@@ -28,6 +28,18 @@ def test_earm_subsistema():
     assert len(earm.keys()) == 4
 
 
+def test_ena_pre_estudo_semanal_subsistema():
+    ena = leitor.relato.energia_afluente_pre_estudo_semanal_subsistema
+    assert len(ena.keys()) == 4
+    assert len(ena['SE']) == 0
+
+
+def test_armazenamento_maximo_subsistema():
+    earmax = leitor.relato.armazenamento_maximo_subsistema
+    assert len(earmax.keys()) == 4
+    assert all([e > 0 for e in earmax.values()])
+
+
 def test_eq_relato():
     leitor2 = LeituraRelato("tests/_arquivos")
     leitor2.le_arquivo()

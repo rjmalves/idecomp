@@ -1,1 +1,2 @@
-SUBSISTEMAS = ["SE", "S", "NE", "S"]
+SUBSISTEMAS = ["SE", "S", "NE", "N"]
+MAX_SEMANAS_PRE = 10

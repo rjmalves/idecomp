@@ -207,7 +207,85 @@ class EnergiaArmazenadaSubsistemaRelato:
 
         O acesso é feito com `[subsistema]` e é retornada uma
         `np.ndarray` onde a entrada [i - 1] possui o valor
-        referente ap período i do DECOMP.
+        referente ao período i do DECOMP.
+        """
+        dict_earm: Dict[str, np.ndarray] = {}
+        for i, ssis in enumerate(self.subsistema):
+            dict_earm[ssis] = self.tabela[i, 1:]
+        return dict_earm
+
+
+class ENAPreEstudoSemanalSubsistemaRelato:
+    """
+    Armazena os dados de saída existentes no relato do DECOMP
+    referentes à energia natural afluente pré-estudo por subsistema,
+    em valores semanais (MWmed).
+
+    Esta classe armazena a tabela de energias afluentes por subsistema
+    e em cada semana anterior ao estudo do DECOMP, bem como o valor
+    de EARMax (em MWmes) por subsistema ao final do estudo.
+
+    **Parâmetros**
+
+    - subsistema: `List[str]`
+    - tabela: `np.ndarray`
+
+    """
+    def __init__(self,
+                 subsistema: List[str],
+                 tabela: np.ndarray):
+        self.subsistema = subsistema
+        self.tabela = tabela
+
+    def __eq__(self, o: object) -> bool:
+        """
+        A igualdade entre ENAPreEstudoSemanalRelato
+        avalia todos os campos.
+        """
+        if not isinstance(o, ENAPreEstudoSemanalSubsistemaRelato):
+            return False
+        earm: ENAPreEstudoSemanalSubsistemaRelato = o
+        eq_subsistema = self.subsistema == earm.subsistema
+        eq_tabela = np.array_equal(self.tabela, earm.tabela)
+        return all([eq_subsistema, eq_tabela])
+
+    @property
+    def armazenamento_maximo_subsistema(self) -> Dict[str, float]:
+        """
+        Armazenamento máximo (EARMax) por subsistema com referência
+        no final do estudo, como fornecido no arquivo
+        relato.rvX do DECOMP.
+
+        **Retorna**
+
+        `Dict[str, float]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornado um float.
+        """
+        dict_earm: Dict[str, float] = {}
+        for i, ssis in enumerate(self.subsistema):
+            dict_earm[ssis] = self.tabela[i, 0]
+        return dict_earm
+
+    @property
+    def energia_afluente_pre_estudo_semanal(self) -> Dict[str, np.ndarray]:
+        """
+        Energia natural afluente (ENA) pré-estudo por semana (em MWmed) e
+        por subsistema, como fornecido no arquivo relato.rvX do DECOMP.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada uma
+        `np.ndarray` onde a entrada [i - 1] possui o valor
+        referente à `i`-ésima semana pré-estudo. `Atenção`, pois a
+        ordem das semanas pré-estudo é [..., 4ª, 3ª, 2ª, 1ª], então
+        a lista deve ser invertida para estar em ordem cronológica.
         """
         dict_earm: Dict[str, np.ndarray] = {}
         for i, ssis in enumerate(self.subsistema):
@@ -232,17 +310,21 @@ class Relato:
     - dados_gerais: `DadosGeraisRelato`
     - cmo: `CMORelato`
     - geracao_termica_subsistema: `GeracaoTermicaSubsistemaRelato`
+    - earm_subsistema: `EnergiaArmazenadaSubsistemaRelato`
+    - ena_pre_semanal: `ENAPreEstudoSemanalSubsistemaRelato`
 
     """
     def __init__(self,
                  dados_gerais: DadosGeraisRelato,
                  cmo: CMORelato,
                  geracao_termica_subsistema: GeracaoTermicaSubsistemaRelato,
-                 earm_subsistema: EnergiaArmazenadaSubsistemaRelato):
+                 earm_subsistema: EnergiaArmazenadaSubsistemaRelato,
+                 ena_pre_sem_subsistema: ENAPreEstudoSemanalSubsistemaRelato):
         self.dados_gerais = dados_gerais
         self._cmo = cmo
         self._geracao_termica_subsistema = geracao_termica_subsistema
         self._earm_subsistema = earm_subsistema
+        self._ena_pre_semanal_subsistema = ena_pre_sem_subsistema
 
     def __eq__(self, o: object) -> bool:
         """
@@ -329,3 +411,46 @@ class Relato:
         referente ap período i do DECOMP.
         """
         return self._earm_subsistema.armazenamento_subsistema
+
+    @property
+    def armazenamento_maximo_subsistema(self) -> Dict[str, float]:
+        """
+        Armazenamento máximo (EARMax) por subsistema com referência
+        no final do estudo, como fornecido no arquivo
+        relato.rvX do DECOMP.
+
+        **Retorna**
+
+        `Dict[str, float]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornado um float.
+        """
+        earmax = (self._ena_pre_semanal_subsistema.
+                  armazenamento_maximo_subsistema)
+        return earmax
+
+    @property
+    def energia_afluente_pre_estudo_semanal_subsistema(self
+                                                       ) -> Dict[str,
+                                                                 np.ndarray]:
+        """
+        Energia natural afluente (ENA) pré-estudo por semana (em MWmed) e
+        por subsistema, como fornecido no arquivo relato.rvX do DECOMP.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada uma
+        `np.ndarray` onde a entrada [i - 1] possui o valor
+        referente à `i`-ésima semana pré-estudo. `Atenção`, pois a
+        ordem das semanas pré-estudo é [..., 4ª, 3ª, 2ª, 1ª], então
+        a lista deve ser invertida para estar em ordem cronológica.
+        """
+        ena = (self._ena_pre_semanal_subsistema.
+               energia_afluente_pre_estudo_semanal)
+        return ena

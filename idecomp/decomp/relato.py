@@ -1,9 +1,11 @@
 # Imports do próprio módulo
+from idecomp.config import MAX_SEMANAS_PRE
 from idecomp._utils.leitura import Leitura
 from .modelos.relato import DadosGeraisRelato
 from .modelos.relato import CMORelato
 from .modelos.relato import GeracaoTermicaSubsistemaRelato
 from .modelos.relato import EnergiaArmazenadaSubsistemaRelato
+from .modelos.relato import ENAPreEstudoSemanalSubsistemaRelato
 from .modelos.relato import Relato
 # Imports de módulos externos
 import os
@@ -41,6 +43,7 @@ class LeituraRelato(Leitura):
     str_inicio_cmo = "CUSTO MARGINAL DE OPERACAO  ($/MWh)"
     str_inicio_gt_subsis = "GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)"
     str_inicio_earm_subsis = "ENERGIA ARMAZENADA NOS SUBSISTEMAS (%"
+    str_inicio_ena_semana_subsis = "NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS"
     str_fim_relato = "FIM DO PROCESSAMENTO"
 
     def __init__(self,
@@ -52,11 +55,14 @@ class LeituraRelato(Leitura):
                                             np.ndarray([]))
         earm = EnergiaArmazenadaSubsistemaRelato([],
                                                  np.ndarray([]))
+        ena_semana = ENAPreEstudoSemanalSubsistemaRelato([],
+                                                         np.ndarray([]))
         self.relato = Relato(DadosGeraisRelato(0),
                              CMORelato([],
                                        np.ndarray([])),
                              gt,
-                             earm)
+                             earm,
+                             ena_semana)
 
     def le_arquivo(self,
                    relato_rev: str = "") -> Relato:
@@ -91,12 +97,15 @@ class LeituraRelato(Leitura):
         achou_cmo = False
         achou_gt_subsis = False
         achou_earm_subsis = False
+        achou_ena_semana_subsis = False
         linha = ""
         dados_gerais = DadosGeraisRelato(0)
         cmo = CMORelato([], np.array([]))
         gt_subsis = GeracaoTermicaSubsistemaRelato([], np.array([]))
         earm_subsis = EnergiaArmazenadaSubsistemaRelato([],
                                                         np.ndarray([]))
+        ena_sem_subsis = ENAPreEstudoSemanalSubsistemaRelato([],
+                                                             np.ndarray([]))
         while True:
             # Decide se lê uma linha nova ou usa a última lida
             linha = self._le_linha_com_backup(arq)
@@ -104,7 +113,8 @@ class LeituraRelato(Leitura):
                 self.relato = Relato(dados_gerais,
                                      cmo,
                                      gt_subsis,
-                                     earm_subsis)
+                                     earm_subsis,
+                                     ena_sem_subsis)
                 break
             # Condição para iniciar uma leitura de dados
             if not achou_dados_gerais:
@@ -119,6 +129,9 @@ class LeituraRelato(Leitura):
             if not achou_earm_subsis:
                 achou = LeituraRelato.str_inicio_earm_subsis in linha
                 achou_earm_subsis = achou
+            if not achou_ena_semana_subsis:
+                achou = LeituraRelato.str_inicio_ena_semana_subsis in linha
+                achou_ena_semana_subsis = achou
             # Quando achar, le cada parte adequadamente
             if achou_dados_gerais:
                 dados_gerais = self._le_dados_gerais(arq)
@@ -132,6 +145,9 @@ class LeituraRelato(Leitura):
             if achou_earm_subsis:
                 earm_subsis = self._le_earm_subsistema(arq)
                 achou_earm_subsis = False
+            if achou_ena_semana_subsis:
+                ena_sem_subsis = self._le_ena_sem_subsis(arq)
+                achou_ena_semana_subsis = False
 
         return self.relato
 
@@ -262,6 +278,46 @@ class LeituraRelato(Leitura):
             for j in range(n_semanas + 1):
                 cf = ci + nc
                 tabela[i, j] = float(linha[ci:cf])
+                ci = cf + 1
+            i += 1
+
+    def _le_ena_sem_subsis(self,
+                           arq: IO
+                           ) -> ENAPreEstudoSemanalSubsistemaRelato:
+        """
+        Lê a tabela de ENA pré-estudo semanal por subsistema
+        existente no arquivo relato do DECOMP.
+        """
+        # Salta 4 linhas
+        self._le_linha_com_backup(arq)
+        self._le_linha_com_backup(arq)
+        self._le_linha_com_backup(arq)
+        self._le_linha_com_backup(arq)
+        # Cria as variáveis e inicia a leitura
+        subsistemas: List[str] = []
+        tabela = np.zeros((20, MAX_SEMANAS_PRE))
+        i = 0
+        j = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = self._le_linha_com_backup(arq)
+            if "-------" in linha:
+                return ENAPreEstudoSemanalSubsistemaRelato(subsistemas,
+                                                           tabela[:i, :j])
+            # Senão, lê mais uma linha
+            # Subsistema
+            ssis = linha[4:18].strip()
+            subsistemas.append(ssis)
+            # Inicial e semanas
+            ci = 24
+            nc = 8
+            for n in range(MAX_SEMANAS_PRE):
+                cf = ci + nc
+                ena = float(linha[ci:cf])
+                if ena == 0.0:
+                    j = n
+                    break
+                tabela[i, n] = float(linha[ci:cf])
                 ci = cf + 1
             i += 1
 
