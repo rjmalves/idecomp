@@ -36,6 +36,9 @@ auxiliares para armazenar todas as informações disponíveis.
 .. autoclass:: ENAPreEstudoSemanalSubsistemaRelato
    :members:
 
+.. autoclass:: BalancoEnergeticoRelato
+   :members:
+
 Leitura
 ========
 .. currentmodule:: idecomp.decomp.relato
