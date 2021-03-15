@@ -1,7 +1,7 @@
 # Imports do próprio módulo
-from idecomp.config import MAX_SEMANAS_PRE
+from idecomp.config import MAX_SEMANAS_PRE, SUBSISTEMAS
 from idecomp._utils.leitura import Leitura
-from .modelos.relato import DadosGeraisRelato
+from .modelos.relato import BalancoEnergeticoRelato, DadosGeraisRelato
 from .modelos.relato import CMORelato
 from .modelos.relato import GeracaoTermicaSubsistemaRelato
 from .modelos.relato import EnergiaArmazenadaSubsistemaRelato
@@ -40,10 +40,12 @@ class LeituraRelato(Leitura):
 
     """
     str_inicio_dados = "Relatorio  dos  Dados  Gerais"
+    str_inicio_balanco = "RELATORIO  DO  BALANCO  ENERGETICO "
     str_inicio_cmo = "CUSTO MARGINAL DE OPERACAO  ($/MWh)"
     str_inicio_gt_subsis = "GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)"
     str_inicio_earm_subsis = "ENERGIA ARMAZENADA NOS SUBSISTEMAS (%"
     str_inicio_ena_semana_subsis = "NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS"
+    str_fim_balanco = "RELATORIO  DA  OPERACAO"
     str_fim_relato = "FIM DO PROCESSAMENTO"
 
     def __init__(self,
@@ -57,12 +59,15 @@ class LeituraRelato(Leitura):
                                                  np.ndarray([]))
         ena_semana = ENAPreEstudoSemanalSubsistemaRelato([],
                                                          np.ndarray([]))
+        balanco_energetico = BalancoEnergeticoRelato([],
+                                                     np.ndarray([]))
         self.relato = Relato(DadosGeraisRelato(0),
                              CMORelato([],
                                        np.ndarray([])),
                              gt,
                              earm,
-                             ena_semana)
+                             ena_semana,
+                             balanco_energetico)
 
     def le_arquivo(self,
                    relato_rev: str = "") -> Relato:
@@ -98,6 +103,7 @@ class LeituraRelato(Leitura):
         achou_gt_subsis = False
         achou_earm_subsis = False
         achou_ena_semana_subsis = False
+        achou_balanco_energetico = False
         linha = ""
         dados_gerais = DadosGeraisRelato(0)
         cmo = CMORelato([], np.array([]))
@@ -106,15 +112,23 @@ class LeituraRelato(Leitura):
                                                         np.ndarray([]))
         ena_sem_subsis = ENAPreEstudoSemanalSubsistemaRelato([],
                                                              np.ndarray([]))
+        tabela_bal = np.zeros((10, len(SUBSISTEMAS), 9))
+        balanco_energ = BalancoEnergeticoRelato([],
+                                                tabela_bal)
+        balancos_lidos = 0
         while True:
             # Decide se lê uma linha nova ou usa a última lida
             linha = self._le_linha_com_backup(arq)
             if len(linha) == 0 or self._fim_arquivo(linha):
+                balanco_energ.tabela = balanco_energ.tabela[:balancos_lidos,
+                                                            :,
+                                                            :]
                 self.relato = Relato(dados_gerais,
                                      cmo,
                                      gt_subsis,
                                      earm_subsis,
-                                     ena_sem_subsis)
+                                     ena_sem_subsis,
+                                     balanco_energ)
                 break
             # Condição para iniciar uma leitura de dados
             if not achou_dados_gerais:
@@ -132,6 +146,9 @@ class LeituraRelato(Leitura):
             if not achou_ena_semana_subsis:
                 achou = LeituraRelato.str_inicio_ena_semana_subsis in linha
                 achou_ena_semana_subsis = achou
+            if not achou_balanco_energetico:
+                achou = LeituraRelato.str_inicio_balanco in linha
+                achou_balanco_energetico = achou
             # Quando achar, le cada parte adequadamente
             if achou_dados_gerais:
                 dados_gerais = self._le_dados_gerais(arq)
@@ -148,6 +165,11 @@ class LeituraRelato(Leitura):
             if achou_ena_semana_subsis:
                 ena_sem_subsis = self._le_ena_sem_subsis(arq)
                 achou_ena_semana_subsis = False
+            if achou_balanco_energetico:
+                self._le_balanco_energetico(arq,
+                                            balanco_energ)
+                achou_balanco_energetico = False
+                balancos_lidos += 1
 
         return self.relato
 
@@ -320,6 +342,41 @@ class LeituraRelato(Leitura):
                 tabela[i, n] = float(linha[ci:cf])
                 ci = cf + 1
             i += 1
+
+    def _le_balanco_energetico(self,
+                               arq: IO,
+                               balanco: BalancoEnergeticoRelato):
+        """
+        """
+        # Salta uma linha e extrai a semana
+        self._le_linha_com_backup(arq)
+        linha = self._le_linha_com_backup(arq)
+        semana = int(linha.split("SEMANA")[1][:2].strip())
+        str_subsis = "     Subsistema"
+        str_medio = "    Medio"
+        subsis = -1
+        while True:
+            linha = self._le_linha_com_backup(arq)
+            # Verifica se acabou
+            if LeituraRelato.str_fim_balanco in linha:
+                break
+            # Senão, procura a linha que identifica o subsistema
+            if str_subsis in linha:
+                sigla_sub = linha.split(str_subsis)[1][:3].strip()
+                if sigla_sub != "FC":
+                    subsis = SUBSISTEMAS.index(sigla_sub)
+            # Se está lendo um subsistema e achou a linha de valores médios
+            if subsis != -1 and str_medio in linha:
+                nc = 7
+                ci = 10
+                for i in range(9):
+                    cf = ci + nc
+                    balanco.tabela[semana - 1,
+                                   subsis,
+                                   i] = float(linha[ci:cf])
+                    ci = cf + 1
+                # Reseta o indicador de subsistema
+                subsis = -1
 
     def _fim_arquivo(self, linha: str) -> bool:
         return LeituraRelato.str_fim_relato in linha

@@ -1,3 +1,4 @@
+from idecomp.config import SUBSISTEMAS
 from typing import Dict, List
 import numpy as np  # type: ignore
 
@@ -239,7 +240,7 @@ class ENAPreEstudoSemanalSubsistemaRelato:
 
     def __eq__(self, o: object) -> bool:
         """
-        A igualdade entre ENAPreEstudoSemanalRelato
+        A igualdade entre BalancoEnergeticoRelato
         avalia todos os campos.
         """
         if not isinstance(o, ENAPreEstudoSemanalSubsistemaRelato):
@@ -293,6 +294,61 @@ class ENAPreEstudoSemanalSubsistemaRelato:
         return dict_earm
 
 
+class BalancoEnergeticoRelato:
+    """
+    Armazena os dados de saída existentes no relato do DECOMP
+    referentes ao balanço energético para o primeiro mês.
+
+    Esta classe armazena as tabelas do balanço por subsistema
+    em cada patamar de carga e os valores médios.
+
+    **Parâmetros**
+
+    - subsistema: `List[str]`
+    - tabela: `np.ndarray`
+
+    """
+    def __init__(self,
+                 subsistema: List[str],
+                 tabela: np.ndarray):
+        self.subsistema = subsistema
+        self.tabela = tabela
+
+    def __eq__(self, o: object) -> bool:
+        """
+        A igualdade entre ENAPreEstudoSemanalRelato
+        avalia todos os campos.
+        """
+        if not isinstance(o, BalancoEnergeticoRelato):
+            return False
+        bal: BalancoEnergeticoRelato = o
+        eq_subsistema = self.subsistema == bal.subsistema
+        eq_tabela = np.array_equal(self.tabela, bal.tabela)
+        return all([eq_subsistema, eq_tabela])
+
+    @property
+    def geracao_hidraulica_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Geração Hidráulica (Ghid) médio por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        col_ghid = 3
+        dict_ghid: Dict[str, np.ndarray] = {}
+        for i, sub in enumerate(SUBSISTEMAS):
+            dict_ghid[sub] = self.tabela[:, i, col_ghid]
+        return dict_ghid
+
+
 class Relato:
     """
     Armazena os dados de saída do DECOMP referentes ao
@@ -312,6 +368,7 @@ class Relato:
     - geracao_termica_subsistema: `GeracaoTermicaSubsistemaRelato`
     - earm_subsistema: `EnergiaArmazenadaSubsistemaRelato`
     - ena_pre_semanal: `ENAPreEstudoSemanalSubsistemaRelato`
+    - balanco_energetico: `BalancoEnergeticoRelato`
 
     """
     def __init__(self,
@@ -319,12 +376,14 @@ class Relato:
                  cmo: CMORelato,
                  geracao_termica_subsistema: GeracaoTermicaSubsistemaRelato,
                  earm_subsistema: EnergiaArmazenadaSubsistemaRelato,
-                 ena_pre_sem_subsistema: ENAPreEstudoSemanalSubsistemaRelato):
+                 ena_pre_sem_subsistema: ENAPreEstudoSemanalSubsistemaRelato,
+                 balanco_energetico: BalancoEnergeticoRelato):
         self.dados_gerais = dados_gerais
         self._cmo = cmo
         self._geracao_termica_subsistema = geracao_termica_subsistema
         self._earm_subsistema = earm_subsistema
         self._ena_pre_semanal_subsistema = ena_pre_sem_subsistema
+        self.balanco_energetico = balanco_energetico
 
     def __eq__(self, o: object) -> bool:
         """
@@ -454,3 +513,21 @@ class Relato:
         ena = (self._ena_pre_semanal_subsistema.
                energia_afluente_pre_estudo_semanal)
         return ena
+
+    @property
+    def geracao_hidraulica_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Geração Hidráulica (Ghid) médio por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        return self.balanco_energetico.geracao_hidraulica_subsistema

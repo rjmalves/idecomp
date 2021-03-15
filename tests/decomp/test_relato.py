@@ -40,6 +40,12 @@ def test_armazenamento_maximo_subsistema():
     assert all([e > 0 for e in earmax.values()])
 
 
+def test_geracao_hidraulica_subsistema():
+    ghid = leitor.relato.geracao_hidraulica_subsistema
+    assert len(ghid.keys()) == 4
+    assert all([len(e) == 5 for e in ghid.values()])
+
+
 def test_eq_relato():
     leitor2 = LeituraRelato("tests/_arquivos")
     leitor2.le_arquivo()
