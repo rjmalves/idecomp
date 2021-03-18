@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.5</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.6</title>
   
 
   
@@ -271,7 +271,7 @@
                                                         <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
         <span class="n">ena_sem_subsis</span> <span class="o">=</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">([],</span>
                                                              <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="n">tabela_bal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">SUBSISTEMAS</span><span class="p">),</span> <span class="mi">9</span><span class="p">))</span>
+        <span class="n">tabela_bal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">SUBSISTEMAS</span><span class="p">),</span> <span class="mi">17</span><span class="p">))</span>
         <span class="n">balanco_energ</span> <span class="o">=</span> <span class="n">BalancoEnergeticoRelato</span><span class="p">([],</span>
                                                 <span class="n">tabela_bal</span><span class="p">)</span>
         <span class="n">balancos_lidos</span> <span class="o">=</span> <span class="mi">0</span>
@@ -534,6 +534,17 @@
                                    <span class="n">subsis</span><span class="p">,</span>
                                    <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
                     <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="c1"># TODO - Começar a ler a interligação</span>
+                <span class="c1"># Para o SE, lê as gerações de Itaipu50 e Itaipu60</span>
+                <span class="k">if</span> <span class="n">subsis</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ci</span> <span class="o">=</span> <span class="mi">97</span>
+                    <span class="n">nc</span> <span class="o">=</span> <span class="mi">7</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">):</span>
+                        <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
+                        <span class="n">balanco</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">semana</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                                       <span class="n">subsis</span><span class="p">,</span>
+                                       <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
+                        <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
                 <span class="c1"># Reseta o indicador de subsistema</span>
                 <span class="n">subsis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 

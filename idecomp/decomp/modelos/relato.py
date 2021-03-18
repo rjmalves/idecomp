@@ -1,5 +1,6 @@
 from idecomp.config import SUBSISTEMAS
 from typing import Dict, List
+from copy import deepcopy
 import numpy as np  # type: ignore
 
 
@@ -327,6 +328,72 @@ class BalancoEnergeticoRelato:
         return all([eq_subsistema, eq_tabela])
 
     @property
+    def mercado_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Mercado médio por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        col_merc = 0
+        dict_merc: Dict[str, np.ndarray] = {}
+        for i, sub in enumerate(SUBSISTEMAS):
+            dict_merc[sub] = self.tabela[:, i, col_merc]
+        return dict_merc
+
+    @property
+    def bacia_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Bacia média por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        col_bacia = 1
+        dict_bacia: Dict[str, np.ndarray] = {}
+        for i, sub in enumerate(SUBSISTEMAS):
+            dict_bacia[sub] = self.tabela[:, i, col_bacia]
+        return dict_bacia
+
+    @property
+    def cbomba_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Cbomba médio por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        col_cbomba = 2
+        dict_cbomba: Dict[str, np.ndarray] = {}
+        for i, sub in enumerate(SUBSISTEMAS):
+            dict_cbomba[sub] = self.tabela[:, i, col_cbomba]
+        return dict_cbomba
+
+    @property
     def geracao_hidraulica_subsistema(self) -> Dict[str, np.ndarray]:
         """
         Geração Hidráulica (Ghid) médio por subsistema
@@ -345,8 +412,55 @@ class BalancoEnergeticoRelato:
         col_ghid = 3
         dict_ghid: Dict[str, np.ndarray] = {}
         for i, sub in enumerate(SUBSISTEMAS):
-            dict_ghid[sub] = self.tabela[:, i, col_ghid]
+            ghid = deepcopy(self.tabela[:, i, col_ghid])
+            ghid += self.tabela[:, i, 15]
+            ghid += self.tabela[:, i, 16]
+            dict_ghid[sub] = ghid
         return dict_ghid
+
+    @property
+    def geracao_termica_antecipada_subsistema(self) -> Dict[str,
+                                                            np.ndarray]:
+        """
+        Geração térmica antecipada média por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        col_gterat = 5
+        dict_gterat: Dict[str, np.ndarray] = {}
+        for i, sub in enumerate(SUBSISTEMAS):
+            dict_gterat[sub] = self.tabela[:, i, col_gterat]
+        return dict_gterat
+
+    @property
+    def deficit_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Déficit médio por subsistema e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        col_def = 6
+        dict_def: Dict[str, np.ndarray] = {}
+        for i, sub in enumerate(SUBSISTEMAS):
+            dict_def[sub] = self.tabela[:, i, col_def]
+        return dict_def
 
 
 class Relato:
@@ -515,6 +629,60 @@ class Relato:
         return ena
 
     @property
+    def mercado_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Mercado médio por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        return self.balanco_energetico.mercado_subsistema
+
+    @property
+    def bacia_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Bacia média por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        return self.balanco_energetico.bacia_subsistema
+
+    @property
+    def cbomba_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Cbomba médio por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        return self.balanco_energetico.cbomba_subsistema
+
+    @property
     def geracao_hidraulica_subsistema(self) -> Dict[str, np.ndarray]:
         """
         Geração Hidráulica (Ghid) médio por subsistema
@@ -531,3 +699,39 @@ class Relato:
         i do DECOMP.
         """
         return self.balanco_energetico.geracao_hidraulica_subsistema
+
+    @property
+    def geracao_termica_antecipada_subsistema(self) -> Dict[str,
+                                                            np.ndarray]:
+        """
+        Geração térmica antecipada média por subsistema
+        e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        return self.balanco_energetico.geracao_termica_antecipada_subsistema
+
+    @property
+    def deficit_subsistema(self) -> Dict[str, np.ndarray]:
+        """
+        Déficit médio por subsistema e por semana, em MWmed.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]` e é retornada um
+        array onde a posição [i - 1] contém os dados do período
+        i do DECOMP.
+        """
+        return self.balanco_energetico.deficit_subsistema

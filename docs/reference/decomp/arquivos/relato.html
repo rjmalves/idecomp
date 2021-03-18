@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.5</title>
+  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.6</title>
   
 
   
@@ -211,10 +211,48 @@ relato.rvX do DECOMP.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.bacia_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bacia_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.bacia_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Bacia média por subsistema
+e por semana, em MWmed.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.cbomba_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">cbomba_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.cbomba_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Cbomba médio por subsistema
+e por semana, em MWmed.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="idecomp.decomp.modelos.relato.Relato.cmo_medio_subsistema">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">cmo_medio_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.cmo_medio_subsistema" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Custo Marginal de Operação (CMO) médio por subsistema
 e por semana.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.deficit_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">deficit_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.deficit_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Déficit médio por subsistema e por semana, em MWmed.</p>
 <p><strong>Retorna</strong></p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
 <p><strong>Sobre</strong></p>
@@ -277,10 +315,36 @@ i do DECOMP.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.geracao_termica_antecipada_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">geracao_termica_antecipada_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.geracao_termica_antecipada_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Geração térmica antecipada média por subsistema
+e por semana, em MWmed.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="idecomp.decomp.modelos.relato.Relato.geracao_termica_subsistema">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">geracao_termica_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.geracao_termica_subsistema" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Geração Térmica (MWmed) por subsistema e por semana
 como fornecido no arquivo relato.rvX do DECOMP.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.Relato.mercado_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">mercado_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.Relato.mercado_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Mercado médio por subsistema
+e por semana, em MWmed.</p>
 <p><strong>Retorna</strong></p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
 <p><strong>Sobre</strong></p>
@@ -456,9 +520,73 @@ em cada patamar de carga e os valores médios.</p>
 <li><p>tabela: <code class="xref py py-obj docutils literal notranslate"><span class="pre">np.ndarray</span></code></p></li>
 </ul>
 <dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.bacia_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">bacia_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.bacia_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Bacia média por subsistema
+e por semana, em MWmed.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.cbomba_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">cbomba_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.cbomba_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Cbomba médio por subsistema
+e por semana, em MWmed.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.deficit_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">deficit_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.deficit_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Déficit médio por subsistema e por semana, em MWmed.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.geracao_hidraulica_subsistema">
 <em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">geracao_hidraulica_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.geracao_hidraulica_subsistema" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Geração Hidráulica (Ghid) médio por subsistema
+e por semana, em MWmed.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.geracao_termica_antecipada_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">geracao_termica_antecipada_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.geracao_termica_antecipada_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Geração térmica antecipada média por subsistema
+e por semana, em MWmed.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>
+<p><strong>Sobre</strong></p>
+<p>O acesso é feito com <code class="xref py py-obj docutils literal notranslate"><span class="pre">[subsistema]</span></code> e é retornada um
+array onde a posição [i - 1] contém os dados do período
+i do DECOMP.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.mercado_subsistema">
+<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">mercado_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.modelos.relato.BalancoEnergeticoRelato.mercado_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Mercado médio por subsistema
 e por semana, em MWmed.</p>
 <p><strong>Retorna</strong></p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dict[str,</span> <span class="pre">np.ndarray]</span></code></p>

@@ -40,8 +40,32 @@ def test_armazenamento_maximo_subsistema():
     assert all([e > 0 for e in earmax.values()])
 
 
+def test_mercado_subsistema():
+    ghid = leitor.relato.mercado_subsistema
+    assert len(ghid.keys()) == 4
+    assert all([len(e) == 5 for e in ghid.values()])
+
+
+def test_bacia_subsistema():
+    ghid = leitor.relato.bacia_subsistema
+    assert len(ghid.keys()) == 4
+    assert all([len(e) == 5 for e in ghid.values()])
+
+
 def test_geracao_hidraulica_subsistema():
     ghid = leitor.relato.geracao_hidraulica_subsistema
+    assert len(ghid.keys()) == 4
+    assert all([len(e) == 5 for e in ghid.values()])
+
+
+def test_geracao_termica_antecipada_subsistema():
+    ghid = leitor.relato.geracao_termica_antecipada_subsistema
+    assert len(ghid.keys()) == 4
+    assert all([len(e) == 5 for e in ghid.values()])
+
+
+def test_deficit_subsistema():
+    ghid = leitor.relato.deficit_subsistema
     assert len(ghid.keys()) == 4
     assert all([len(e) == 5 for e in ghid.values()])
 

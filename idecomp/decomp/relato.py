@@ -112,7 +112,7 @@ class LeituraRelato(Leitura):
                                                         np.ndarray([]))
         ena_sem_subsis = ENAPreEstudoSemanalSubsistemaRelato([],
                                                              np.ndarray([]))
-        tabela_bal = np.zeros((10, len(SUBSISTEMAS), 9))
+        tabela_bal = np.zeros((10, len(SUBSISTEMAS), 17))
         balanco_energ = BalancoEnergeticoRelato([],
                                                 tabela_bal)
         balancos_lidos = 0
@@ -375,6 +375,17 @@ class LeituraRelato(Leitura):
                                    subsis,
                                    i] = float(linha[ci:cf])
                     ci = cf + 1
+                # TODO - Começar a ler a interligação
+                # Para o SE, lê as gerações de Itaipu50 e Itaipu60
+                if subsis == 0:
+                    ci = 97
+                    nc = 7
+                    for i in range(15, 17):
+                        cf = ci + nc
+                        balanco.tabela[semana - 1,
+                                       subsis,
+                                       i] = float(linha[ci:cf])
+                        ci = cf + 1
                 # Reseta o indicador de subsistema
                 subsis = -1
 
