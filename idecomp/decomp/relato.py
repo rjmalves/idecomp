@@ -351,7 +351,7 @@ class LeituraRelato(Leitura):
         # Salta uma linha e extrai a semana
         self._le_linha_com_backup(arq)
         linha = self._le_linha_com_backup(arq)
-        semana = int(linha.split("SEMANA")[1][:2].strip())
+        semana = int(linha.split("ESTAGIO")[1][:3].strip())
         str_subsis = "     Subsistema"
         str_medio = "    Medio"
         subsis = -1

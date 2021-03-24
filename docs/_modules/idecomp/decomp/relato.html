@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.6</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.7</title>
   
 
   
@@ -510,7 +510,7 @@
         <span class="c1"># Salta uma linha e extrai a semana</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
         <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">semana</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;SEMANA&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="n">semana</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;ESTAGIO&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
         <span class="n">str_subsis</span> <span class="o">=</span> <span class="s2">&quot;     Subsistema&quot;</span>
         <span class="n">str_medio</span> <span class="o">=</span> <span class="s2">&quot;    Medio&quot;</span>
         <span class="n">subsis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
