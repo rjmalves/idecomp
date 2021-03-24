@@ -277,7 +277,8 @@ class LeituraRelato(Leitura):
         # Descobre o número de semanas
         linha = self._le_linha_com_backup(arq)
         sems = [s for s in linha.split(" ") if (len(s) > 0
-                                                and "Sem" in s)]
+                                                and ("Sem" in s or
+                                                     "Mes" in s))]
         n_semanas = len(sems)
         subsistemas: List[str] = []
         tabela = np.zeros((20, n_semanas + 1))
