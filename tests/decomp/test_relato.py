@@ -3,7 +3,7 @@ from idecomp.decomp.relato import LeituraRelato
 
 
 leitor = LeituraRelato("tests/_arquivos")
-leitor.le_arquivo()
+leitor.le_arquivo("relato.rv0")
 
 
 def test_leitura():
