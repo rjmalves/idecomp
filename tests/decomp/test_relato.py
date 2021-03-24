@@ -72,7 +72,7 @@ def test_deficit_subsistema():
 
 def test_eq_relato():
     leitor2 = LeituraRelato("tests/_arquivos")
-    leitor2.le_arquivo()
+    leitor2.le_arquivo("relato.rv0")
     assert leitor2.relato == leitor.relato
 
 
