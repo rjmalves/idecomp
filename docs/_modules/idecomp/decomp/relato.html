@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -158,11 +161,12 @@
             
   <h1>Código fonte para idecomp.decomp.relato</h1><div class="highlight"><pre>
 <span></span><span class="c1"># Imports do próprio módulo</span>
-<span class="kn">from</span> <span class="nn">idecomp.config</span> <span class="kn">import</span> <span class="n">MAX_SEMANAS_PRE</span><span class="p">,</span> <span class="n">SUBSISTEMAS</span>
+<span class="kn">from</span> <span class="nn">idecomp.config</span> <span class="kn">import</span> <span class="n">MAX_SEMANAS_PRE</span><span class="p">,</span> <span class="n">SUBSISTEMAS</span><span class="p">,</span> <span class="n">REES</span>
 <span class="kn">from</span> <span class="nn">idecomp._utils.leitura</span> <span class="kn">import</span> <span class="n">Leitura</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">BalancoEnergeticoRelato</span><span class="p">,</span> <span class="n">DadosGeraisRelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">CMORelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">GeracaoTermicaSubsistemaRelato</span>
+<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">EnergiaArmazenadaREERelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span>
 <span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">Relato</span>
@@ -202,6 +206,7 @@
     <span class="n">str_inicio_balanco</span> <span class="o">=</span> <span class="s2">&quot;RELATORIO  DO  BALANCO  ENERGETICO &quot;</span>
     <span class="n">str_inicio_cmo</span> <span class="o">=</span> <span class="s2">&quot;CUSTO MARGINAL DE OPERACAO  ($/MWh)&quot;</span>
     <span class="n">str_inicio_gt_subsis</span> <span class="o">=</span> <span class="s2">&quot;GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)&quot;</span>
+    <span class="n">str_inicio_earm_ree</span> <span class="o">=</span> <span class="s2">&quot;ENERGIA ARMAZENADA NOS REEs (%&quot;</span>
     <span class="n">str_inicio_earm_subsis</span> <span class="o">=</span> <span class="s2">&quot;ENERGIA ARMAZENADA NOS SUBSISTEMAS (%&quot;</span>
     <span class="n">str_inicio_ena_semana_subsis</span> <span class="o">=</span> <span class="s2">&quot;NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS&quot;</span>
     <span class="n">str_fim_balanco</span> <span class="o">=</span> <span class="s2">&quot;RELATORIO  DA  OPERACAO&quot;</span>
@@ -214,6 +219,8 @@
         <span class="c1"># Relato default, depois é substituído</span>
         <span class="n">gt</span> <span class="o">=</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">([],</span>
                                             <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
+        <span class="n">earm_ree</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">([],</span>
+                                                     <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
         <span class="n">earm</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">([],</span>
                                                  <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
         <span class="n">ena_semana</span> <span class="o">=</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">([],</span>
@@ -224,6 +231,7 @@
                              <span class="n">CMORelato</span><span class="p">([],</span>
                                        <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([])),</span>
                              <span class="n">gt</span><span class="p">,</span>
+                             <span class="n">earm_ree</span><span class="p">,</span>
                              <span class="n">earm</span><span class="p">,</span>
                              <span class="n">ena_semana</span><span class="p">,</span>
                              <span class="n">balanco_energetico</span><span class="p">)</span>
@@ -260,6 +268,7 @@
         <span class="n">achou_dados_gerais</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">achou_cmo</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">achou_gt_subsis</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">achou_earm_ree</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">achou_ena_semana_subsis</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">achou_balanco_energetico</span> <span class="o">=</span> <span class="kc">False</span>
@@ -267,6 +276,8 @@
         <span class="n">dados_gerais</span> <span class="o">=</span> <span class="n">DadosGeraisRelato</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">cmo</span> <span class="o">=</span> <span class="n">CMORelato</span><span class="p">([],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]))</span>
         <span class="n">gt_subsis</span> <span class="o">=</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">([],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]))</span>
+        <span class="n">earm_ree</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaREERelato</span><span class="p">([],</span>
+                                              <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
         <span class="n">earm_subsis</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">([],</span>
                                                         <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
         <span class="n">ena_sem_subsis</span> <span class="o">=</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">([],</span>
@@ -285,6 +296,7 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">relato</span> <span class="o">=</span> <span class="n">Relato</span><span class="p">(</span><span class="n">dados_gerais</span><span class="p">,</span>
                                      <span class="n">cmo</span><span class="p">,</span>
                                      <span class="n">gt_subsis</span><span class="p">,</span>
+                                     <span class="n">earm_ree</span><span class="p">,</span>
                                      <span class="n">earm_subsis</span><span class="p">,</span>
                                      <span class="n">ena_sem_subsis</span><span class="p">,</span>
                                      <span class="n">balanco_energ</span><span class="p">)</span>
@@ -299,6 +311,9 @@
             <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_gt_subsis</span><span class="p">:</span>
                 <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_gt_subsis</span> <span class="ow">in</span> <span class="n">linha</span>
                 <span class="n">achou_gt_subsis</span> <span class="o">=</span> <span class="n">achou</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_earm_ree</span><span class="p">:</span>
+                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_earm_ree</span> <span class="ow">in</span> <span class="n">linha</span>
+                <span class="n">achou_earm_ree</span> <span class="o">=</span> <span class="n">achou</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_earm_subsis</span><span class="p">:</span>
                 <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_earm_subsis</span> <span class="ow">in</span> <span class="n">linha</span>
                 <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="n">achou</span>
@@ -318,6 +333,9 @@
             <span class="k">if</span> <span class="n">achou_gt_subsis</span><span class="p">:</span>
                 <span class="n">gt_subsis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_gt_subsistema</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
                 <span class="n">achou_gt_subsis</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="n">achou_earm_ree</span><span class="p">:</span>
+                <span class="n">earm_ree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_earm_ree</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+                <span class="n">achou_earm_ree</span> <span class="o">=</span> <span class="kc">False</span>
             <span class="k">if</span> <span class="n">achou_earm_subsis</span><span class="p">:</span>
                 <span class="n">earm_subsis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_earm_subsistema</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
                 <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="kc">False</span>
@@ -361,7 +379,8 @@
         <span class="c1"># Descobre o número de semanas</span>
         <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
         <span class="n">sems</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                                                <span class="ow">and</span> <span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)]</span>
+                                                <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">or</span>
+                                                     <span class="s2">&quot;Mes&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">))]</span>
         <span class="n">n_semanas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sems</span><span class="p">)</span>
         <span class="n">subsistemas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">80</span><span class="p">,</span> <span class="n">n_semanas</span><span class="p">))</span>
@@ -398,7 +417,8 @@
         <span class="c1"># Descobre o número de semanas</span>
         <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
         <span class="n">sems</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                                                <span class="ow">and</span> <span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)]</span>
+                                                <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">or</span>
+                                                     <span class="s2">&quot;Mes&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">))]</span>
         <span class="n">n_semanas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sems</span><span class="p">)</span>
         <span class="n">subsistemas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_semanas</span><span class="p">))</span>
@@ -424,6 +444,45 @@
                 <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
 
+    <span class="k">def</span> <span class="nf">_le_earm_ree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                     <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
+                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnergiaArmazenadaREERelato</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lê a tabela de EARM por REE</span>
+<span class="sd">        existente no arquivo relato do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Salta uma linha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+        <span class="c1"># Descobre o número de semanas</span>
+        <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+        <span class="n">sems</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+                                                <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">or</span>
+                                                     <span class="s2">&quot;Mes&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">))]</span>
+        <span class="n">n_semanas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sems</span><span class="p">)</span>
+        <span class="n">rees</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_semanas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="c1"># Salta outra linha</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="c1"># Confere se a leitura não acabou</span>
+            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;-------&quot;</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">EnergiaArmazenadaREERelato</span><span class="p">(</span><span class="n">rees</span><span class="p">,</span>
+                                                  <span class="n">tabela</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+            <span class="c1"># Senão, lê mais uma linha</span>
+            <span class="c1"># Subsistema</span>
+            <span class="n">ssis</span> <span class="o">=</span> <span class="n">linha</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">rees</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssis</span><span class="p">)</span>
+            <span class="c1"># Inicial e semanas</span>
+            <span class="n">ci</span> <span class="o">=</span> <span class="mi">28</span>
+            <span class="n">nc</span> <span class="o">=</span> <span class="mi">6</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_semanas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
+                <span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
+                <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
     <span class="k">def</span> <span class="nf">_le_earm_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                             <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
                             <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">:</span>
@@ -436,7 +495,8 @@
         <span class="c1"># Descobre o número de semanas</span>
         <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
         <span class="n">sems</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                                                <span class="ow">and</span> <span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)]</span>
+                                                <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">or</span>
+                                                     <span class="s2">&quot;Mes&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">))]</span>
         <span class="n">n_semanas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sems</span><span class="p">)</span>
         <span class="n">subsistemas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_semanas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>

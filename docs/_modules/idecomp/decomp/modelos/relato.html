@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.modelos.relato &mdash; documentação idecomp 0.0.6</title>
+  <title>idecomp.decomp.modelos.relato &mdash; documentação idecomp 0.0.7</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -300,6 +303,80 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ssis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">subsistema</span><span class="p">):</span>
             <span class="n">dict_gt</span><span class="p">[</span><span class="n">ssis</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
         <span class="k">return</span> <span class="n">dict_gt</span></div>
+
+
+<span class="k">class</span> <span class="nc">EnergiaArmazenadaREERelato</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Armazena os dados de saída existentes no relato do DECOMP</span>
+<span class="sd">    referentes à energia armazenada (% EARMax) por REE.</span>
+
+<span class="sd">    Esta classe armazena a tabela de armazenamento por REE</span>
+<span class="sd">    inicial e por semana do DECOMP.</span>
+
+<span class="sd">    **Parâmetros**</span>
+
+<span class="sd">    - subsistema: `List[str]`</span>
+<span class="sd">    - tabela: `np.ndarray`</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">ree</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+                 <span class="n">tabela</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ree</span> <span class="o">=</span> <span class="n">ree</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span> <span class="o">=</span> <span class="n">tabela</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A igualdade entre EnergiaArmazenadaREERelato</span>
+<span class="sd">        avalia todos os campos.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">EnergiaArmazenadaREERelato</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">earm</span><span class="p">:</span> <span class="n">EnergiaArmazenadaREERelato</span> <span class="o">=</span> <span class="n">o</span>
+        <span class="n">eq_ree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ree</span> <span class="o">==</span> <span class="n">earm</span><span class="o">.</span><span class="n">ree</span>
+        <span class="n">eq_tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">,</span> <span class="n">earm</span><span class="o">.</span><span class="n">tabela</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="n">eq_ree</span><span class="p">,</span> <span class="n">eq_tabela</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">armazenamento_inicial_ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Energia Armazenada inicial (% EARMax) por REE</span>
+<span class="sd">        como fornecido no arquivo relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, float]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[subsistema]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_gt</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ssis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ree</span><span class="p">):</span>
+            <span class="n">dict_gt</span><span class="p">[</span><span class="n">ssis</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">dict_gt</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">armazenamento_ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Energia Armazenada (% EARMax) por REE e por</span>
+<span class="sd">        período de execução como fornecido no arquivo</span>
+<span class="sd">        relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[ree]` e é retornada uma</span>
+<span class="sd">        `np.ndarray` onde a entrada [i - 1] possui o valor</span>
+<span class="sd">        referente ao período i do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_earm</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ssis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ree</span><span class="p">):</span>
+            <span class="n">dict_earm</span><span class="p">[</span><span class="n">ssis</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">dict_earm</span>
 
 
 <div class="viewcode-block" id="EnergiaArmazenadaSubsistemaRelato"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/relato.html#idecomp.decomp.modelos.relato.EnergiaArmazenadaSubsistemaRelato">[documentos]</a><span class="k">class</span> <span class="nc">EnergiaArmazenadaSubsistemaRelato</span><span class="p">:</span>
@@ -639,6 +716,7 @@
 <span class="sd">    - dados_gerais: `DadosGeraisRelato`</span>
 <span class="sd">    - cmo: `CMORelato`</span>
 <span class="sd">    - geracao_termica_subsistema: `GeracaoTermicaSubsistemaRelato`</span>
+<span class="sd">    - earm_ree: `EnergiaArmazenadaREERelato`</span>
 <span class="sd">    - earm_subsistema: `EnergiaArmazenadaSubsistemaRelato`</span>
 <span class="sd">    - ena_pre_semanal: `ENAPreEstudoSemanalSubsistemaRelato`</span>
 <span class="sd">    - balanco_energetico: `BalancoEnergeticoRelato`</span>
@@ -648,12 +726,14 @@
                  <span class="n">dados_gerais</span><span class="p">:</span> <span class="n">DadosGeraisRelato</span><span class="p">,</span>
                  <span class="n">cmo</span><span class="p">:</span> <span class="n">CMORelato</span><span class="p">,</span>
                  <span class="n">geracao_termica_subsistema</span><span class="p">:</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">,</span>
+                 <span class="n">earm_ree</span><span class="p">:</span> <span class="n">EnergiaArmazenadaREERelato</span><span class="p">,</span>
                  <span class="n">earm_subsistema</span><span class="p">:</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">,</span>
                  <span class="n">ena_pre_sem_subsistema</span><span class="p">:</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">,</span>
                  <span class="n">balanco_energetico</span><span class="p">:</span> <span class="n">BalancoEnergeticoRelato</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dados_gerais</span> <span class="o">=</span> <span class="n">dados_gerais</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cmo</span> <span class="o">=</span> <span class="n">cmo</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_geracao_termica_subsistema</span> <span class="o">=</span> <span class="n">geracao_termica_subsistema</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_earm_ree</span> <span class="o">=</span> <span class="n">earm_ree</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_earm_subsistema</span> <span class="o">=</span> <span class="n">earm_subsistema</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ena_pre_semanal_subsistema</span> <span class="o">=</span> <span class="n">ena_pre_sem_subsistema</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">balanco_energetico</span> <span class="o">=</span> <span class="n">balanco_energetico</span>
@@ -710,6 +790,22 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_geracao_termica_subsistema</span><span class="o">.</span><span class="n">geracao_subsistema</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energia_armazenada_inicial_ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Energia Armazenada inicial (% EARMax) por REE</span>
+<span class="sd">        como fornecido no arquivo relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[ree]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_earm_ree</span><span class="o">.</span><span class="n">armazenamento_inicial_ree</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">energia_armazenada_inicial_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Energia Armazenada inicial (% EARMax) por subsistema</span>
@@ -743,6 +839,25 @@
 <span class="sd">        referente ap período i do DECOMP.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_earm_subsistema</span><span class="o">.</span><span class="n">armazenamento_subsistema</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energia_armazenada_ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Energia Armazenada (% EARMax) por REE e por</span>
+<span class="sd">        período de execução como fornecido no arquivo</span>
+<span class="sd">        relato.rvX do DECOMP.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `Dict[str, np.ndarray]`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        O acesso é feito com `[ree]` e é retornada uma</span>
+<span class="sd">        `np.ndarray` onde a entrada [i - 1] possui o valor</span>
+<span class="sd">        referente ap período i do DECOMP.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_earm_ree</span><span class="o">.</span><span class="n">armazenamento_ree</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">armazenamento_maximo_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
