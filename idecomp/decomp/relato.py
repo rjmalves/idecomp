@@ -1,9 +1,10 @@
 # Imports do próprio módulo
-from idecomp.config import MAX_SEMANAS_PRE, SUBSISTEMAS
+from idecomp.config import MAX_SEMANAS_PRE, SUBSISTEMAS, REES
 from idecomp._utils.leitura import Leitura
 from .modelos.relato import BalancoEnergeticoRelato, DadosGeraisRelato
 from .modelos.relato import CMORelato
 from .modelos.relato import GeracaoTermicaSubsistemaRelato
+from .modelos.relato import EnergiaArmazenadaREERelato
 from .modelos.relato import EnergiaArmazenadaSubsistemaRelato
 from .modelos.relato import ENAPreEstudoSemanalSubsistemaRelato
 from .modelos.relato import Relato
@@ -43,6 +44,7 @@ class LeituraRelato(Leitura):
     str_inicio_balanco = "RELATORIO  DO  BALANCO  ENERGETICO "
     str_inicio_cmo = "CUSTO MARGINAL DE OPERACAO  ($/MWh)"
     str_inicio_gt_subsis = "GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)"
+    str_inicio_earm_ree = "ENERGIA ARMAZENADA NOS REEs (%"
     str_inicio_earm_subsis = "ENERGIA ARMAZENADA NOS SUBSISTEMAS (%"
     str_inicio_ena_semana_subsis = "NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS"
     str_fim_balanco = "RELATORIO  DA  OPERACAO"
@@ -55,6 +57,8 @@ class LeituraRelato(Leitura):
         # Relato default, depois é substituído
         gt = GeracaoTermicaSubsistemaRelato([],
                                             np.ndarray([]))
+        earm_ree = EnergiaArmazenadaSubsistemaRelato([],
+                                                     np.ndarray([]))
         earm = EnergiaArmazenadaSubsistemaRelato([],
                                                  np.ndarray([]))
         ena_semana = ENAPreEstudoSemanalSubsistemaRelato([],
@@ -65,6 +69,7 @@ class LeituraRelato(Leitura):
                              CMORelato([],
                                        np.ndarray([])),
                              gt,
+                             earm_ree,
                              earm,
                              ena_semana,
                              balanco_energetico)
@@ -101,6 +106,7 @@ class LeituraRelato(Leitura):
         achou_dados_gerais = False
         achou_cmo = False
         achou_gt_subsis = False
+        achou_earm_ree = False
         achou_earm_subsis = False
         achou_ena_semana_subsis = False
         achou_balanco_energetico = False
@@ -108,6 +114,8 @@ class LeituraRelato(Leitura):
         dados_gerais = DadosGeraisRelato(0)
         cmo = CMORelato([], np.array([]))
         gt_subsis = GeracaoTermicaSubsistemaRelato([], np.array([]))
+        earm_ree = EnergiaArmazenadaREERelato([],
+                                              np.ndarray([]))
         earm_subsis = EnergiaArmazenadaSubsistemaRelato([],
                                                         np.ndarray([]))
         ena_sem_subsis = ENAPreEstudoSemanalSubsistemaRelato([],
@@ -126,6 +134,7 @@ class LeituraRelato(Leitura):
                 self.relato = Relato(dados_gerais,
                                      cmo,
                                      gt_subsis,
+                                     earm_ree,
                                      earm_subsis,
                                      ena_sem_subsis,
                                      balanco_energ)
@@ -140,6 +149,9 @@ class LeituraRelato(Leitura):
             if not achou_gt_subsis:
                 achou = LeituraRelato.str_inicio_gt_subsis in linha
                 achou_gt_subsis = achou
+            if not achou_earm_ree:
+                achou = LeituraRelato.str_inicio_earm_ree in linha
+                achou_earm_ree = achou
             if not achou_earm_subsis:
                 achou = LeituraRelato.str_inicio_earm_subsis in linha
                 achou_earm_subsis = achou
@@ -159,6 +171,9 @@ class LeituraRelato(Leitura):
             if achou_gt_subsis:
                 gt_subsis = self._le_gt_subsistema(arq)
                 achou_gt_subsis = False
+            if achou_earm_ree:
+                earm_ree = self._le_earm_ree(arq)
+                achou_earm_ree = False
             if achou_earm_subsis:
                 earm_subsis = self._le_earm_subsistema(arq)
                 achou_earm_subsis = False
@@ -262,6 +277,45 @@ class LeituraRelato(Leitura):
             ci = 11
             nc = 10
             for j in range(n_semanas):
+                cf = ci + nc
+                tabela[i, j] = float(linha[ci:cf])
+                ci = cf + 1
+            i += 1
+
+    def _le_earm_ree(self,
+                     arq: IO
+                     ) -> EnergiaArmazenadaREERelato:
+        """
+        Lê a tabela de EARM por REE
+        existente no arquivo relato do DECOMP.
+        """
+        # Salta uma linha
+        self._le_linha_com_backup(arq)
+        # Descobre o número de semanas
+        linha = self._le_linha_com_backup(arq)
+        sems = [s for s in linha.split(" ") if (len(s) > 0
+                                                and ("Sem" in s or
+                                                     "Mes" in s))]
+        n_semanas = len(sems)
+        rees: List[str] = []
+        tabela = np.zeros((20, n_semanas + 1))
+        # Salta outra linha
+        self._le_linha_com_backup(arq)
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = self._le_linha_com_backup(arq)
+            if "-------" in linha:
+                return EnergiaArmazenadaREERelato(rees,
+                                                  tabela[:i, :])
+            # Senão, lê mais uma linha
+            # Subsistema
+            ssis = linha[4:16].strip()
+            rees.append(ssis)
+            # Inicial e semanas
+            ci = 28
+            nc = 6
+            for j in range(n_semanas + 1):
                 cf = ci + nc
                 tabela[i, j] = float(linha[ci:cf])
                 ci = cf + 1

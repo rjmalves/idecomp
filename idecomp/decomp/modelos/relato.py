@@ -143,6 +143,80 @@ class GeracaoTermicaSubsistemaRelato:
         return dict_gt
 
 
+class EnergiaArmazenadaREERelato:
+    """
+    Armazena os dados de saída existentes no relato do DECOMP
+    referentes à energia armazenada (% EARMax) por REE.
+
+    Esta classe armazena a tabela de armazenamento por REE
+    inicial e por semana do DECOMP.
+
+    **Parâmetros**
+
+    - subsistema: `List[str]`
+    - tabela: `np.ndarray`
+
+    """
+    def __init__(self,
+                 ree: List[str],
+                 tabela: np.ndarray):
+        self.ree = ree
+        self.tabela = tabela
+
+    def __eq__(self, o: object) -> bool:
+        """
+        A igualdade entre EnergiaArmazenadaREERelato
+        avalia todos os campos.
+        """
+        if not isinstance(o, EnergiaArmazenadaREERelato):
+            return False
+        earm: EnergiaArmazenadaREERelato = o
+        eq_ree = self.ree == earm.ree
+        eq_tabela = np.array_equal(self.tabela, earm.tabela)
+        return all([eq_ree, eq_tabela])
+
+    @property
+    def armazenamento_inicial_ree(self) -> Dict[str, float]:
+        """
+        Energia Armazenada inicial (% EARMax) por REE
+        como fornecido no arquivo relato.rvX do DECOMP.
+
+        **Retorna**
+
+        `Dict[str, float]`
+
+        **Sobre**
+
+        O acesso é feito com `[subsistema]`.
+        """
+        dict_gt: Dict[str, float] = {}
+        for i, ssis in enumerate(self.ree):
+            dict_gt[ssis] = self.tabela[i, 0]
+        return dict_gt
+
+    @property
+    def armazenamento_ree(self) -> Dict[str, np.ndarray]:
+        """
+        Energia Armazenada (% EARMax) por REE e por
+        período de execução como fornecido no arquivo
+        relato.rvX do DECOMP.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[ree]` e é retornada uma
+        `np.ndarray` onde a entrada [i - 1] possui o valor
+        referente ao período i do DECOMP.
+        """
+        dict_earm: Dict[str, np.ndarray] = {}
+        for i, ssis in enumerate(self.ree):
+            dict_earm[ssis] = self.tabela[i, 1:]
+        return dict_earm
+
+
 class EnergiaArmazenadaSubsistemaRelato:
     """
     Armazena os dados de saída existentes no relato do DECOMP
@@ -480,6 +554,7 @@ class Relato:
     - dados_gerais: `DadosGeraisRelato`
     - cmo: `CMORelato`
     - geracao_termica_subsistema: `GeracaoTermicaSubsistemaRelato`
+    - earm_ree: `EnergiaArmazenadaREERelato`
     - earm_subsistema: `EnergiaArmazenadaSubsistemaRelato`
     - ena_pre_semanal: `ENAPreEstudoSemanalSubsistemaRelato`
     - balanco_energetico: `BalancoEnergeticoRelato`
@@ -489,12 +564,14 @@ class Relato:
                  dados_gerais: DadosGeraisRelato,
                  cmo: CMORelato,
                  geracao_termica_subsistema: GeracaoTermicaSubsistemaRelato,
+                 earm_ree: EnergiaArmazenadaREERelato,
                  earm_subsistema: EnergiaArmazenadaSubsistemaRelato,
                  ena_pre_sem_subsistema: ENAPreEstudoSemanalSubsistemaRelato,
                  balanco_energetico: BalancoEnergeticoRelato):
         self.dados_gerais = dados_gerais
         self._cmo = cmo
         self._geracao_termica_subsistema = geracao_termica_subsistema
+        self._earm_ree = earm_ree
         self._earm_subsistema = earm_subsistema
         self._ena_pre_semanal_subsistema = ena_pre_sem_subsistema
         self.balanco_energetico = balanco_energetico
@@ -551,6 +628,22 @@ class Relato:
         return self._geracao_termica_subsistema.geracao_subsistema
 
     @property
+    def energia_armazenada_inicial_ree(self) -> Dict[str, float]:
+        """
+        Energia Armazenada inicial (% EARMax) por REE
+        como fornecido no arquivo relato.rvX do DECOMP.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[ree]`.
+        """
+        return self._earm_ree.armazenamento_inicial_ree
+
+    @property
     def energia_armazenada_inicial_subsistema(self) -> Dict[str, float]:
         """
         Energia Armazenada inicial (% EARMax) por subsistema
@@ -584,6 +677,25 @@ class Relato:
         referente ap período i do DECOMP.
         """
         return self._earm_subsistema.armazenamento_subsistema
+
+    @property
+    def energia_armazenada_ree(self) -> Dict[str, np.ndarray]:
+        """
+        Energia Armazenada (% EARMax) por REE e por
+        período de execução como fornecido no arquivo
+        relato.rvX do DECOMP.
+
+        **Retorna**
+
+        `Dict[str, np.ndarray]`
+
+        **Sobre**
+
+        O acesso é feito com `[ree]` e é retornada uma
+        `np.ndarray` onde a entrada [i - 1] possui o valor
+        referente ap período i do DECOMP.
+        """
+        return self._earm_ree.armazenamento_ree
 
     @property
     def armazenamento_maximo_subsistema(self) -> Dict[str, float]:
