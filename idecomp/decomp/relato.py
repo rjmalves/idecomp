@@ -1,5 +1,5 @@
 # Imports do próprio módulo
-from idecomp.config import MAX_SEMANAS_PRE, SUBSISTEMAS, REES
+from idecomp.config import MAX_SEMANAS_PRE, SUBSISTEMAS
 from idecomp._utils.leitura import Leitura
 from .modelos.relato import BalancoEnergeticoRelato, DadosGeraisRelato
 from .modelos.relato import CMORelato
