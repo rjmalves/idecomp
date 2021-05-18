@@ -57,8 +57,8 @@ class LeituraRelato(Leitura):
         # Relato default, depois é substituído
         gt = GeracaoTermicaSubsistemaRelato([],
                                             np.ndarray([]))
-        earm_ree = EnergiaArmazenadaSubsistemaRelato([],
-                                                     np.ndarray([]))
+        earm_ree = EnergiaArmazenadaREERelato([],
+                                              np.ndarray([]))
         earm = EnergiaArmazenadaSubsistemaRelato([],
                                                  np.ndarray([]))
         ena_semana = ENAPreEstudoSemanalSubsistemaRelato([],
