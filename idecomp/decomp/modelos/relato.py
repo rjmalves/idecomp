@@ -1,849 +1,521 @@
-from idecomp.config import SUBSISTEMAS
-from typing import Dict, List
-from copy import deepcopy
+# Imports do próprio módulo
+from idecomp.config import MAX_SEMANAS_ESTUDO
+from idecomp.config import MAX_SEMANAS_PRE, REES, SUBSISTEMAS
+from idecomp._utils.bloco import Bloco
+from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
+from idecomp._utils.leitura import Leitura
+# Imports de módulos externos
 import numpy as np  # type: ignore
+import pandas as pd  # type: ignore
+from typing import IO, List
 
 
-class DadosGeraisRelato:
+class BlocoDadosGeraisRelato(Bloco):
     """
-    Armazena os dados de saída existentes no relato do DECOMP
-    referentes aos dados gerais fornecidos ao programa.
-
-    **Parâmetros**
-
-    - numero_semanas_1_mes: `int`
-
+    Bloco com as informações de eco dos dados gerais
+    utilizados na execução do caso.
     """
-    def __init__(self,
-                 numero_semanas_1_mes: int):
-        self.numero_semanas_1_mes = numero_semanas_1_mes
+    str_inicio = "Relatorio  dos  Dados  Gerais"
+    str_fim = ""
 
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre DadosGeraisRelato avalia todos os campos.
-        """
-        if not isinstance(o, DadosGeraisRelato):
+    def __init__(self):
+
+        super().__init__(BlocoDadosGeraisRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoDadosGeraisRelato):
             return False
-        rel: DadosGeraisRelato = o
-        dif = False
-        for (k, u), (_, v) in zip(self.__dict__.items(),
-                                  rel.__dict__.items()):
-            if u != v:
-                dif = True
+        bloco: BlocoDadosGeraisRelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+        pass
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
+class BlocoBalancoEnergeticoRelato(Bloco):
+    """
+    Bloco com as informações de eco dos dados gerais
+    utilizados na execução do caso.
+    """
+    str_inicio = "RELATORIO  DO  BALANCO  ENERGETICO "
+    str_fim = "RELATORIO  DA  OPERACAO"
+
+    def __init__(self):
+
+        super().__init__(BlocoBalancoEnergeticoRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoBalancoEnergeticoRelato):
+            return False
+        bloco: BlocoBalancoEnergeticoRelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_para_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Mercado", "Bacia", "Cbomba",
+                    "Ghid", "Gter", "GterAT", "Deficit",
+                    "Compra", "Venda", "Itaipu50", "Itaipu60"]
+            df.columns = cols
+            df["Estágio"] = estagios
+            df["Subsistema"] = subsistemas
+            df = df[["Estágio", "Subsistema"] + cols]
+            return df
+
+        # Variáveis auxiliares
+        reg_tabela = RegistroFn(7)
+        str_estagio = "PROB ACUMUL:"
+        str_subsis = "     Subsistema"
+        str_medio = "    Medio"
+        subsis = "FC"
+        estagios = []
+        subsistemas = []
+        # Salta uma linha e extrai a semana
+        tabela = np.zeros((MAX_SEMANAS_ESTUDO, 11))
+        i = 0
+        while True:
+            linha = arq.readline()
+            # Verifica se acabou
+            if BlocoBalancoEnergeticoRelato.str_fim in linha:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_para_df()
                 break
-        return not dif
+            # Procura a linha que identifica o estágio
+            if str_estagio in linha:
+                estagio = int(linha.split("ESTAGIO")[1][:3].strip())
+            # Senão, procura a linha que identifica o subsistema
+            if str_subsis in linha:
+                subsis = linha.split(str_subsis)[1][:3].strip()
+            # Se está lendo um subsistema e achou a linha de valores médios
+            if subsis != "FC" and str_medio in linha:
+                estagios.append(estagio)
+                subsistemas.append(subsis)
+                tabela[i, :9] = reg_tabela.le_linha_tabela(linha,
+                                                           10,
+                                                           1,
+                                                           9)
+                # TODO - Começar a ler a interligação
+                # Para o SE, lê as gerações de Itaipu50 e Itaipu60
+                if subsis == "SE":
+                    tabela[i, 9:] = reg_tabela.le_linha_tabela(linha,
+                                                               96,
+                                                               1,
+                                                               2)
+                # Reseta o indicador de subsistema
+                subsis = "FC"
+                i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
 
 
-class CMORelato:
+class BlocoCMORelato(Bloco):
     """
-    Armazena os dados de saída existentes no relato do DECOMP
-    referentes ao Custo Marginal de Operação (CMO).
-
-    Esta classe armazena a tabela de CMO por subsistema em cada
-    patamar de carga e os valores médios por submercado.
-
-    **Parâmetros**
-
-    - subsistema: `List[str]`
-    - tabela: `np.ndarray`
-
+    Bloco com as informações do CMO por estágio e por subsistema.
     """
-    def __init__(self,
-                 subsistema: List[str],
-                 tabela: np.ndarray):
-        self.subsistema = subsistema
-        self.tabela = tabela
+    str_inicio = "CUSTO MARGINAL DE OPERACAO  ($/MWh)"
+    str_fim = ""
 
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre CMORelato avalia todos os campos.
-        """
-        if not isinstance(o, CMORelato):
+    def __init__(self):
+
+        super().__init__(BlocoCMORelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoCMORelato):
             return False
-        cmo: CMORelato = o
-        eq_subsistema = self.subsistema == cmo.subsistema
-        eq_tabela = np.array_equal(self.tabela, cmo.tabela)
-        return all([eq_subsistema, eq_tabela])
-
-    @property
-    def custo_medio_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Custo Marginal de Operação (CMO) médio por subsistema
-        e por semana.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        dict_cmo: Dict[str, np.ndarray] = {}
-        for i, ssis in enumerate(self.subsistema):
-            if "Med" in ssis:
-                str_subsistema = ssis.split("_")[1]
-                dict_cmo[str_subsistema] = self.tabela[i, :]
-        return dict_cmo
-
-
-class GeracaoTermicaSubsistemaRelato:
-    """
-    Armazena os dados de saída existentes no relato do DECOMP
-    referentes à geração de térmicas (MWmed) por subsistema.
-
-    Esta classe armazena a tabela de Geração por subsistema
-    e por semana do DECOMP.
-
-    **Parâmetros**
-
-    - subsistema: `List[str]`
-    - tabela: `np.ndarray`
-
-    """
-    def __init__(self,
-                 subsistema: List[str],
-                 tabela: np.ndarray):
-        self.subsistema = subsistema
-        self.tabela = tabela
-
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre GeracaoTermicaSubsistemaRelato
-        avalia todos os campos.
-        """
-        if not isinstance(o, GeracaoTermicaSubsistemaRelato):
-            return False
-        gt: GeracaoTermicaSubsistemaRelato = o
-        eq_subsistema = self.subsistema == gt.subsistema
-        eq_tabela = np.array_equal(self.tabela, gt.tabela)
-        return all([eq_subsistema, eq_tabela])
-
-    @property
-    def geracao_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Geração Térmica (MWmed) por subsistema e por semana
-        como fornecido no arquivo relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        dict_gt: Dict[str, np.ndarray] = {}
-        for i, ssis in enumerate(self.subsistema):
-            dict_gt[ssis] = self.tabela[i, :]
-        return dict_gt
-
-
-class EnergiaArmazenadaREERelato:
-    """
-    Armazena os dados de saída existentes no relato do DECOMP
-    referentes à energia armazenada (% EARMax) por REE.
-
-    Esta classe armazena a tabela de armazenamento por REE
-    inicial e por semana do DECOMP.
-
-    **Parâmetros**
-
-    - subsistema: `List[str]`
-    - tabela: `np.ndarray`
-
-    """
-    def __init__(self,
-                 ree: List[str],
-                 tabela: np.ndarray):
-        self.ree = ree
-        self.tabela = tabela
-
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre EnergiaArmazenadaREERelato
-        avalia todos os campos.
-        """
-        if not isinstance(o, EnergiaArmazenadaREERelato):
-            return False
-        earm: EnergiaArmazenadaREERelato = o
-        eq_ree = self.ree == earm.ree
-        eq_tabela = np.array_equal(self.tabela, earm.tabela)
-        return all([eq_ree, eq_tabela])
-
-    @property
-    def armazenamento_inicial_ree(self) -> Dict[str, float]:
-        """
-        Energia Armazenada inicial (% EARMax) por REE
-        como fornecido no arquivo relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, float]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]`.
-        """
-        dict_gt: Dict[str, float] = {}
-        for i, ssis in enumerate(self.ree):
-            dict_gt[ssis] = self.tabela[i, 0]
-        return dict_gt
-
-    @property
-    def armazenamento_ree(self) -> Dict[str, np.ndarray]:
-        """
-        Energia Armazenada (% EARMax) por REE e por
-        período de execução como fornecido no arquivo
-        relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[ree]` e é retornada uma
-        `np.ndarray` onde a entrada [i - 1] possui o valor
-        referente ao período i do DECOMP.
-        """
-        dict_earm: Dict[str, np.ndarray] = {}
-        for i, ssis in enumerate(self.ree):
-            dict_earm[ssis] = self.tabela[i, 1:]
-        return dict_earm
-
-
-class EnergiaArmazenadaSubsistemaRelato:
-    """
-    Armazena os dados de saída existentes no relato do DECOMP
-    referentes à energia armazenada (% EARMax) por subsistema.
-
-    Esta classe armazena a tabela de armazenamento por subsistema
-    inicial e por semana do DECOMP.
-
-    **Parâmetros**
-
-    - subsistema: `List[str]`
-    - tabela: `np.ndarray`
-
-    """
-    def __init__(self,
-                 subsistema: List[str],
-                 tabela: np.ndarray):
-        self.subsistema = subsistema
-        self.tabela = tabela
-
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre EnergiaArmazenadaSubsistemaRelato
-        avalia todos os campos.
-        """
-        if not isinstance(o, EnergiaArmazenadaSubsistemaRelato):
-            return False
-        earm: EnergiaArmazenadaSubsistemaRelato = o
-        eq_subsistema = self.subsistema == earm.subsistema
-        eq_tabela = np.array_equal(self.tabela, earm.tabela)
-        return all([eq_subsistema, eq_tabela])
-
-    @property
-    def armazenamento_inicial_subsistema(self) -> Dict[str, float]:
-        """
-        Energia Armazenada inicial (% EARMax) por subsistema
-        como fornecido no arquivo relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, float]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]`.
-        """
-        dict_gt: Dict[str, float] = {}
-        for i, ssis in enumerate(self.subsistema):
-            dict_gt[ssis] = self.tabela[i, 0]
-        return dict_gt
-
-    @property
-    def armazenamento_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Energia Armazenada (% EARMax) por subsistema e por
-        período de execução como fornecido no arquivo
-        relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada uma
-        `np.ndarray` onde a entrada [i - 1] possui o valor
-        referente ao período i do DECOMP.
-        """
-        dict_earm: Dict[str, np.ndarray] = {}
-        for i, ssis in enumerate(self.subsistema):
-            dict_earm[ssis] = self.tabela[i, 1:]
-        return dict_earm
-
-
-class ENAPreEstudoSemanalSubsistemaRelato:
-    """
-    Armazena os dados de saída existentes no relato do DECOMP
-    referentes à energia natural afluente pré-estudo por subsistema,
-    em valores semanais (MWmed).
-
-    Esta classe armazena a tabela de energias afluentes por subsistema
-    e em cada semana anterior ao estudo do DECOMP, bem como o valor
-    de EARMax (em MWmes) por subsistema ao final do estudo.
-
-    **Parâmetros**
-
-    - subsistema: `List[str]`
-    - tabela: `np.ndarray`
-
-    """
-    def __init__(self,
-                 subsistema: List[str],
-                 tabela: np.ndarray):
-        self.subsistema = subsistema
-        self.tabela = tabela
-
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre BalancoEnergeticoRelato
-        avalia todos os campos.
-        """
-        if not isinstance(o, ENAPreEstudoSemanalSubsistemaRelato):
-            return False
-        earm: ENAPreEstudoSemanalSubsistemaRelato = o
-        eq_subsistema = self.subsistema == earm.subsistema
-        eq_tabela = np.array_equal(self.tabela, earm.tabela)
-        return all([eq_subsistema, eq_tabela])
-
-    @property
-    def armazenamento_maximo_subsistema(self) -> Dict[str, float]:
-        """
-        Armazenamento máximo (EARMax) por subsistema com referência
-        no final do estudo, como fornecido no arquivo
-        relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, float]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornado um float.
-        """
-        dict_earm: Dict[str, float] = {}
-        for i, ssis in enumerate(self.subsistema):
-            dict_earm[ssis] = self.tabela[i, 0]
-        return dict_earm
-
-    @property
-    def energia_afluente_pre_estudo_semanal(self) -> Dict[str, np.ndarray]:
-        """
-        Energia natural afluente (ENA) pré-estudo por semana (em MWmed) e
-        por subsistema, como fornecido no arquivo relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada uma
-        `np.ndarray` onde a entrada [i - 1] possui o valor
-        referente à `i`-ésima semana pré-estudo. `Atenção`, pois a
-        ordem das semanas pré-estudo é [..., 4ª, 3ª, 2ª, 1ª], então
-        a lista deve ser invertida para estar em ordem cronológica.
-        """
-        dict_earm: Dict[str, np.ndarray] = {}
-        for i, ssis in enumerate(self.subsistema):
-            dict_earm[ssis] = self.tabela[i, 1:]
-        return dict_earm
-
-
-class BalancoEnergeticoRelato:
-    """
-    Armazena os dados de saída existentes no relato do DECOMP
-    referentes ao balanço energético para o primeiro mês.
-
-    Esta classe armazena as tabelas do balanço por subsistema
-    em cada patamar de carga e os valores médios.
-
-    **Parâmetros**
-
-    - subsistema: `List[str]`
-    - tabela: `np.ndarray`
-
-    """
-    def __init__(self,
-                 subsistema: List[str],
-                 tabela: np.ndarray):
-        self.subsistema = subsistema
-        self.tabela = tabela
-
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre ENAPreEstudoSemanalRelato
-        avalia todos os campos.
-        """
-        if not isinstance(o, BalancoEnergeticoRelato):
-            return False
-        bal: BalancoEnergeticoRelato = o
-        eq_subsistema = self.subsistema == bal.subsistema
-        eq_tabela = np.array_equal(self.tabela, bal.tabela)
-        return all([eq_subsistema, eq_tabela])
-
-    @property
-    def mercado_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Mercado médio por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        col_merc = 0
-        dict_merc: Dict[str, np.ndarray] = {}
-        for i, sub in enumerate(SUBSISTEMAS):
-            dict_merc[sub] = self.tabela[:, i, col_merc]
-        return dict_merc
-
-    @property
-    def bacia_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Bacia média por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        col_bacia = 1
-        dict_bacia: Dict[str, np.ndarray] = {}
-        for i, sub in enumerate(SUBSISTEMAS):
-            dict_bacia[sub] = self.tabela[:, i, col_bacia]
-        return dict_bacia
-
-    @property
-    def cbomba_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Cbomba médio por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        col_cbomba = 2
-        dict_cbomba: Dict[str, np.ndarray] = {}
-        for i, sub in enumerate(SUBSISTEMAS):
-            dict_cbomba[sub] = self.tabela[:, i, col_cbomba]
-        return dict_cbomba
-
-    @property
-    def geracao_hidraulica_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Geração Hidráulica (Ghid) médio por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        col_ghid = 3
-        dict_ghid: Dict[str, np.ndarray] = {}
-        for i, sub in enumerate(SUBSISTEMAS):
-            ghid = deepcopy(self.tabela[:, i, col_ghid])
-            ghid += self.tabela[:, i, 15]
-            ghid += self.tabela[:, i, 16]
-            dict_ghid[sub] = ghid
-        return dict_ghid
-
-    @property
-    def geracao_termica_antecipada_subsistema(self) -> Dict[str,
-                                                            np.ndarray]:
-        """
-        Geração térmica antecipada média por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        col_gterat = 5
-        dict_gterat: Dict[str, np.ndarray] = {}
-        for i, sub in enumerate(SUBSISTEMAS):
-            dict_gterat[sub] = self.tabela[:, i, col_gterat]
-        return dict_gterat
-
-    @property
-    def deficit_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Déficit médio por subsistema e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        col_def = 6
-        dict_def: Dict[str, np.ndarray] = {}
-        for i, sub in enumerate(SUBSISTEMAS):
-            dict_def[sub] = self.tabela[:, i, col_def]
-        return dict_def
-
-
-class Relato:
-    """
-    Armazena os dados de saída do DECOMP referentes ao
-    acompanhamento do programa.
-
-    Esta classe lida com as informações de entrada fornecidas ao
-    DECOMP e reproduzidas no `relato.rvx`, bem como as saídas finais
-    da execução: custos de operação, despacho de térmicas, etc.
-
-    Em versões futuras, esta classe pode passar a ler os dados
-    de execução intermediárias do programa.
-
-    **Parâmetros**
-
-    - dados_gerais: `DadosGeraisRelato`
-    - cmo: `CMORelato`
-    - geracao_termica_subsistema: `GeracaoTermicaSubsistemaRelato`
-    - earm_ree: `EnergiaArmazenadaREERelato`
-    - earm_subsistema: `EnergiaArmazenadaSubsistemaRelato`
-    - ena_pre_semanal: `ENAPreEstudoSemanalSubsistemaRelato`
-    - balanco_energetico: `BalancoEnergeticoRelato`
-
-    """
-    def __init__(self,
-                 dados_gerais: DadosGeraisRelato,
-                 cmo: CMORelato,
-                 geracao_termica_subsistema: GeracaoTermicaSubsistemaRelato,
-                 earm_ree: EnergiaArmazenadaREERelato,
-                 earm_subsistema: EnergiaArmazenadaSubsistemaRelato,
-                 ena_pre_sem_subsistema: ENAPreEstudoSemanalSubsistemaRelato,
-                 balanco_energetico: BalancoEnergeticoRelato):
-        self.dados_gerais = dados_gerais
-        self._cmo = cmo
-        self._geracao_termica_subsistema = geracao_termica_subsistema
-        self._earm_ree = earm_ree
-        self._earm_subsistema = earm_subsistema
-        self._ena_pre_semanal_subsistema = ena_pre_sem_subsistema
-        self.balanco_energetico = balanco_energetico
-
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre Relato avalia todos os campos.
-        """
-        if not isinstance(o, Relato):
-            return False
-        rel: Relato = o
-        dif = False
-        for (k, u), (_, v) in zip(self.__dict__.items(),
-                                  rel.__dict__.items()):
-            if u != v:
-                dif = True
+        bloco: BlocoCMORelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = [f"Estágio {s}" for s in range(1, n_semanas + 1)]
+            df.columns = cols
+            df["Subsistema"] = subsistemas
+            df["Patamar"] = patamares
+            df = df[["Subsistema", "Patamar"] + cols]
+            return df
+
+        # Salta uma linha
+        arq.readline()
+        # Descobre o número de semanas
+        linha = arq.readline()
+        sems = [s for s in linha.split(" ") if (len(s) > 0
+                                                and ("Sem" in s or
+                                                     "Mes" in s))]
+        reg_pat = RegistroAn(6)
+        reg_cmo = RegistroFn(10)
+        n_semanas = len(sems)
+        subsistemas: List[str] = []
+        patamares: List[str] = []
+        tabela = np.zeros((4 * len(SUBSISTEMAS),
+                           n_semanas))
+        # Salta outra linha
+        arq.readline()
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X------X" in linha:
+                self._dados = converte_tabela_em_df()
                 break
-        return not dif
+            # Senão, lê mais uma linha
+            # Subsistema e patamar
+            ssis = SUBSISTEMAS[int(i / 4)]
+            str_pat = reg_pat.le_registro(linha, 4)
+            pat = "Médio" if "Med" in str_pat else str_pat.split("_")[1]
+            subsistemas.append(ssis)
+            patamares.append(pat)
+            # Semanas
+            tabela[i, :] = reg_cmo.le_linha_tabela(linha,
+                                                   11,
+                                                   1,
+                                                   n_semanas)
+            i += 1
 
-    @property
-    def cmo_medio_subsistema(self) -> Dict[str, np.ndarray]:
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
+class BlocoGeracaoTermicaSubsistemaRelato(Bloco):
+    """
+    Bloco com as informações de eco dos dados gerais
+    utilizados na execução do caso.
+    """
+    str_inicio = "GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoGeracaoTermicaSubsistemaRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoGeracaoTermicaSubsistemaRelato):
+            return False
+        bloco: BlocoGeracaoTermicaSubsistemaRelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = [f"Estágio {s}" for s in range(1, n_semanas + 1)]
+            df.columns = cols
+            df["Subsistema"] = subsistemas
+            df = df[["Subsistema"] + cols]
+            return df
+
+        # Salta uma linha
+        arq.readline()
+        # Descobre o número de semanas
+        linha = arq.readline()
+        sems = [s for s in linha.split(" ") if (len(s) > 0
+                                                and ("Sem" in s or
+                                                     "Mes" in s))]
+        reg_ssis = RegistroAn(6)
+        reg_gt = RegistroFn(10)
+        n_semanas = len(sems)
+        subsistemas: List[str] = []
+        tabela = np.zeros((len(SUBSISTEMAS),
+                           n_semanas))
+        # Salta outra linha
+        arq.readline()
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X------X" in linha:
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Subsistema e patamar
+            ssis = reg_ssis.le_registro(linha, 4)
+            subsistemas.append(ssis)
+            # Semanas
+            tabela[i, :] = reg_gt.le_linha_tabela(linha,
+                                                  11,
+                                                  1,
+                                                  n_semanas)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
+class BlocoEnergiaArmazenadaREERelato(Bloco):
+    """
+    Bloco com as informações de energia armazenada
+    em percentual por REE.
+    """
+    str_inicio = "ENERGIA ARMAZENADA NOS REEs (%"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoEnergiaArmazenadaREERelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoEnergiaArmazenadaREERelato):
+            return False
+        bloco: BlocoEnergiaArmazenadaREERelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Inicial"] + [f"Estágio {s}"
+                                  for s in range(1, n_semanas + 1)]
+            df.columns = cols
+            df["Subsistema"] = subsistemas
+            df["REE"] = rees
+            df = df[["Subsistema", "REE"] + cols]
+            return df
+
+        # Salta uma linha
+        arq.readline()
+        # Descobre o número de semanas
+        linha = arq.readline()
+        sems = [s for s in linha.split(" ") if (len(s) > 0
+                                                and ("Sem" in s or
+                                                     "Mes" in s))]
+        reg_ree = RegistroAn(12)
+        reg_ssis = RegistroIn(4)
+        reg_earm = RegistroFn(6)
+        n_semanas = len(sems)
+        rees: List[str] = []
+        subsistemas: List[str] = []
+        tabela = np.zeros((len(REES),
+                           n_semanas + 1))
+        # Salta outra linha
+        arq.readline()
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X------X" in linha:
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Subsistema e REE
+            ree = reg_ree.le_registro(linha, 4)
+            ssis = SUBSISTEMAS[reg_ssis.le_registro(linha, 22) - 1]
+            rees.append(ree)
+            subsistemas.append(ssis)
+            # Semanas
+            tabela[i, :] = reg_earm.le_linha_tabela(linha,
+                                                  28,
+                                                  1,
+                                                  n_semanas + 1)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
+class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
+    """
+    Bloco com as informações de energia armazenada
+    em percentual por REE.
+    """
+    str_inicio = "ENERGIA ARMAZENADA NOS SUBSISTEMAS (%"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoEnergiaArmazenadaSubsistemaRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoEnergiaArmazenadaSubsistemaRelato):
+            return False
+        bloco: BlocoEnergiaArmazenadaSubsistemaRelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Inicial"] + [f"Estágio {s}"
+                                  for s in range(1, n_semanas + 1)]
+            df.columns = cols
+            df["Subsistema"] = subsistemas
+            df = df[["Subsistema"] + cols]
+            return df
+
+        # Salta uma linha
+        arq.readline()
+        # Descobre o número de semanas
+        linha = arq.readline()
+        sems = [s for s in linha.split(" ") if (len(s) > 0
+                                                and ("Sem" in s or
+                                                     "Mes" in s))]
+        reg_ssis = RegistroAn(12)
+        reg_earm = RegistroFn(6)
+        n_semanas = len(sems)
+        subsistemas: List[str] = []
+        tabela = np.zeros((len(SUBSISTEMAS) - 1,
+                           n_semanas + 1))
+        # Salta outra linha
+        arq.readline()
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X------------X" in linha:
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Subsistema e REE
+            ssis = reg_ssis.le_registro(linha, 4)
+            subsistemas.append(ssis)
+            # Semanas
+            tabela[i, :] = reg_earm.le_linha_tabela(linha,
+                                                  23,
+                                                  1,
+                                                  n_semanas + 1)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
+class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
+    """
+    Bloco com as informações de eco dos dados gerais
+    utilizados na execução do caso.
+    """
+    str_inicio = "NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoENAPreEstudoSemanalSubsistemaRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados = [0, 0, pd.DataFrame()]
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoENAPreEstudoSemanalSubsistemaRelato):
+            return False
+        bloco: BlocoENAPreEstudoSemanalSubsistemaRelato = o
+        return all([
+                    self._dados[0] == bloco._dados[0],
+                    self._dados[1] == bloco._dados[1],
+                    self._dados[2].equals(bloco._dados[2])
+                   ])
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Earmax"] + [f"Estágio Pré {s}"
+                                  for s in range(1, 6)]
+            df.columns = cols
+            df["Subsistema"] = subsistemas
+            df = df[["Subsistema"] + cols]
+            return df
+
+        # Salta 4 linhas
+        for _ in range(4):
+            arq.readline()
+        reg_ssis = RegistroAn(14)
+        reg_ena = RegistroFn(8)
+        subsistemas: List[str] = []
+        tabela = np.zeros((len(SUBSISTEMAS) - 1,
+                           6))
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X--------------X" in linha:
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Subsistema e REE
+            ssis = reg_ssis.le_registro(linha, 4)
+            subsistemas.append(ssis)
+            # Semanas
+            tabela[i, :] = reg_ena.le_linha_tabela(linha,
+                                                   24,
+                                                   1,
+                                                   6)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
+class LeituraRelato(Leitura):
+    """
+    Realiza a leitura do arquivo relato.rvx
+    existente em um diretório de saídas do DECOMP.
+
+    Esta classe contém o conjunto de utilidades para ler
+    e interpretar os campos de um arquivo relato.rvx, construindo
+    um objeto `Relato` cujas informações são as mesmas do relato.rvx.
+
+    Este objeto existe para retirar do modelo de dados a complexidade
+    de iterar pelas linhas do arquivo, recortar colunas, converter
+    tipos de dados, dentre outras tarefas necessárias para a leitura.
+
+    """
+    def __init__(self,
+                 diretorio: str):
+        super().__init__(diretorio)
+
+    # Override
+    def _cria_blocos_leitura(self) -> List[Bloco]:
         """
-        Custo Marginal de Operação (CMO) médio por subsistema
-        e por semana.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
+        Cria a lista de blocos a serem lidos no arquivo adterm.dat.
         """
-        return self._cmo.custo_medio_subsistema
-
-    @property
-    def geracao_termica_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Geração Térmica (MWmed) por subsistema e por semana
-        como fornecido no arquivo relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        return self._geracao_termica_subsistema.geracao_subsistema
-
-    @property
-    def energia_armazenada_inicial_ree(self) -> Dict[str, float]:
-        """
-        Energia Armazenada inicial (% EARMax) por REE
-        como fornecido no arquivo relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[ree]`.
-        """
-        return self._earm_ree.armazenamento_inicial_ree
-
-    @property
-    def energia_armazenada_inicial_subsistema(self) -> Dict[str, float]:
-        """
-        Energia Armazenada inicial (% EARMax) por subsistema
-        como fornecido no arquivo relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]`.
-        """
-        return self._earm_subsistema.armazenamento_inicial_subsistema
-
-    @property
-    def energia_armazenada_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Energia Armazenada (% EARMax) por subsistema e por
-        período de execução como fornecido no arquivo
-        relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada uma
-        `np.ndarray` onde a entrada [i - 1] possui o valor
-        referente ap período i do DECOMP.
-        """
-        return self._earm_subsistema.armazenamento_subsistema
-
-    @property
-    def energia_armazenada_ree(self) -> Dict[str, np.ndarray]:
-        """
-        Energia Armazenada (% EARMax) por REE e por
-        período de execução como fornecido no arquivo
-        relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[ree]` e é retornada uma
-        `np.ndarray` onde a entrada [i - 1] possui o valor
-        referente ap período i do DECOMP.
-        """
-        return self._earm_ree.armazenamento_ree
-
-    @property
-    def armazenamento_maximo_subsistema(self) -> Dict[str, float]:
-        """
-        Armazenamento máximo (EARMax) por subsistema com referência
-        no final do estudo, como fornecido no arquivo
-        relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, float]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornado um float.
-        """
-        earmax = (self._ena_pre_semanal_subsistema.
-                  armazenamento_maximo_subsistema)
-        return earmax
-
-    @property
-    def energia_afluente_pre_estudo_semanal_subsistema(self
-                                                       ) -> Dict[str,
-                                                                 np.ndarray]:
-        """
-        Energia natural afluente (ENA) pré-estudo por semana (em MWmed) e
-        por subsistema, como fornecido no arquivo relato.rvX do DECOMP.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada uma
-        `np.ndarray` onde a entrada [i - 1] possui o valor
-        referente à `i`-ésima semana pré-estudo. `Atenção`, pois a
-        ordem das semanas pré-estudo é [..., 4ª, 3ª, 2ª, 1ª], então
-        a lista deve ser invertida para estar em ordem cronológica.
-        """
-        ena = (self._ena_pre_semanal_subsistema.
-               energia_afluente_pre_estudo_semanal)
-        return ena
-
-    @property
-    def mercado_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Mercado médio por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        return self.balanco_energetico.mercado_subsistema
-
-    @property
-    def bacia_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Bacia média por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        return self.balanco_energetico.bacia_subsistema
-
-    @property
-    def cbomba_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Cbomba médio por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        return self.balanco_energetico.cbomba_subsistema
-
-    @property
-    def geracao_hidraulica_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Geração Hidráulica (Ghid) médio por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        return self.balanco_energetico.geracao_hidraulica_subsistema
-
-    @property
-    def geracao_termica_antecipada_subsistema(self) -> Dict[str,
-                                                            np.ndarray]:
-        """
-        Geração térmica antecipada média por subsistema
-        e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        return self.balanco_energetico.geracao_termica_antecipada_subsistema
-
-    @property
-    def deficit_subsistema(self) -> Dict[str, np.ndarray]:
-        """
-        Déficit médio por subsistema e por semana, em MWmed.
-
-        **Retorna**
-
-        `Dict[str, np.ndarray]`
-
-        **Sobre**
-
-        O acesso é feito com `[subsistema]` e é retornada um
-        array onde a posição [i - 1] contém os dados do período
-        i do DECOMP.
-        """
-        return self.balanco_energetico.deficit_subsistema
+        return [BlocoDadosGeraisRelato(),
+                BlocoBalancoEnergeticoRelato(),
+                BlocoCMORelato(),
+                BlocoEnergiaArmazenadaREERelato(),
+                BlocoEnergiaArmazenadaSubsistemaRelato(),
+                BlocoENAPreEstudoSemanalSubsistemaRelato(),
+                BlocoGeracaoTermicaSubsistemaRelato()]
