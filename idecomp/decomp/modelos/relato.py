@@ -1,6 +1,6 @@
 # Imports do próprio módulo
 from idecomp.config import MAX_SEMANAS_ESTUDO
-from idecomp.config import MAX_SEMANAS_PRE, REES, SUBSISTEMAS
+from idecomp.config import REES, SUBSISTEMAS
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
 from idecomp._utils.leitura import Leitura
@@ -47,7 +47,7 @@ class BlocoBalancoEnergeticoRelato(Bloco):
     utilizados na execução do caso.
     """
     str_inicio = "RELATORIO  DO  BALANCO  ENERGETICO "
-    str_fim = "RELATORIO  DA  OPERACAO"
+    str_fim = "VOLUME UTIL DOS RESERVATORIOS  "
 
     def __init__(self):
 
@@ -86,7 +86,7 @@ class BlocoBalancoEnergeticoRelato(Bloco):
         estagios = []
         subsistemas = []
         # Salta uma linha e extrai a semana
-        tabela = np.zeros((MAX_SEMANAS_ESTUDO, 11))
+        tabela = np.zeros((MAX_SEMANAS_ESTUDO * len(SUBSISTEMAS), 11))
         i = 0
         while True:
             linha = arq.readline()
@@ -338,9 +338,9 @@ class BlocoEnergiaArmazenadaREERelato(Bloco):
             subsistemas.append(ssis)
             # Semanas
             tabela[i, :] = reg_earm.le_linha_tabela(linha,
-                                                  28,
-                                                  1,
-                                                  n_semanas + 1)
+                                                    28,
+                                                    1,
+                                                    n_semanas + 1)
             i += 1
 
     # Override
@@ -410,9 +410,9 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
             subsistemas.append(ssis)
             # Semanas
             tabela[i, :] = reg_earm.le_linha_tabela(linha,
-                                                  23,
-                                                  1,
-                                                  n_semanas + 1)
+                                                    23,
+                                                    1,
+                                                    n_semanas + 1)
             i += 1
 
     # Override
@@ -434,17 +434,13 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
                          "",
                          True)
 
-        self._dados = [0, 0, pd.DataFrame()]
+        self._dados = pd.DataFrame()
 
     def __eq__(self, o: object):
         if not isinstance(o, BlocoENAPreEstudoSemanalSubsistemaRelato):
             return False
         bloco: BlocoENAPreEstudoSemanalSubsistemaRelato = o
-        return all([
-                    self._dados[0] == bloco._dados[0],
-                    self._dados[1] == bloco._dados[1],
-                    self._dados[2].equals(bloco._dados[2])
-                   ])
+        return self._dados.equals(bloco._dados)
 
     # Override
     def le(self, arq: IO):
@@ -452,7 +448,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["Earmax"] + [f"Estágio Pré {s}"
-                                  for s in range(1, 6)]
+                                 for s in range(1, 6)]
             df.columns = cols
             df["Subsistema"] = subsistemas
             df = df[["Subsistema"] + cols]
@@ -489,6 +485,42 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
         pass
 
 
+class BlocoDiasExcluidosSemanas(Bloco):
+    """
+    Bloco com as informações de dias excluídos das semanas
+    inicial e final do estudo.
+    """
+    str_inicio = " Mes inicial do periodo de estudos"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoDiasExcluidosSemanas.str_inicio,
+                         "",
+                         True)
+
+        self._dados = [0, 0]
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoDiasExcluidosSemanas):
+            return False
+        bloco: BlocoDiasExcluidosSemanas = o
+        return all([
+                    self._dados[0] == bloco._dados[0],
+                    self._dados[1] == bloco._dados[1]
+                   ])
+
+    # Override
+    def le(self, arq: IO):
+        reg_dias = RegistroIn(1)
+        self._dados[0] = reg_dias.le_registro(arq.readline(), 54)
+        self._dados[1] = reg_dias.le_registro(arq.readline(), 54)
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
 class LeituraRelato(Leitura):
     """
     Realiza a leitura do arquivo relato.rvx
@@ -518,4 +550,5 @@ class LeituraRelato(Leitura):
                 BlocoEnergiaArmazenadaREERelato(),
                 BlocoEnergiaArmazenadaSubsistemaRelato(),
                 BlocoENAPreEstudoSemanalSubsistemaRelato(),
-                BlocoGeracaoTermicaSubsistemaRelato()]
+                BlocoGeracaoTermicaSubsistemaRelato(),
+                BlocoDiasExcluidosSemanas()]
