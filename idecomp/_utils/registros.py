@@ -5,7 +5,7 @@ from typing import Any, List
 class Registro:
     """
     Classe geral que modela os registros existentes
-    nos arquivos do modelo NEWAVE.
+    nos arquivos do modelo DECOMP.
     """
     def __init__(self, tamanho: int):
         self.tamanho = tamanho

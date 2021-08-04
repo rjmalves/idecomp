@@ -2,59 +2,57 @@ from abc import abstractmethod
 from typing import Any, IO, Optional
 
 
-class Bloco:
+class RegistroDadger:
     """
-    Bloco genérico de um arquivo do DECOMP,
+    Registro genérico do arquivo dadger do DECOMP,
     especificado através de uma string de início e uma
     de terminação, com estados de leitura.
     """
     def __init__(self,
-                 str_inicio: str,
-                 str_final: str,
+                 mnemonico: str,
                  obrigatorio: bool):
-        self._str_inicio = str_inicio
-        self._str_final = str_final
+        self._mnemonico = mnemonico
         self._obrigatorio = obrigatorio
         self._dados: Any = None
         self._encontrado = False
-        self._ordem = 0
+        self._ordem = 0.
         self._lido = False
-        self._linha_inicio = ""
+        self._linha = ""
 
     def __eq__(self, o: object) -> bool:
-        if not isinstance(o, Bloco):
+        if not isinstance(o, RegistroDadger):
             return False
-        bloco: Bloco = o
+        bloco: RegistroDadger = o
         return self.dados == bloco.dados
 
-    def e_inicio_de_bloco(self, linha: str) -> bool:
+    def e_inicio_de_registro(self, linha: str) -> bool:
         """
-        Verifica se uma linha é início do bloco.
+        Verifica se uma linha é início do registro.
         """
-        return (self._str_inicio in linha
+        return (self._mnemonico in linha[0:2]
+                and linha[0] != "&"
                 and not self._encontrado)
 
-    def inicia_bloco(self,
+    def inicia_registro(self,
                      linha: str,
                      ordem: int) -> bool:
         """
-        Inicia um bloco com uma linha.
+        Inicia um registro com uma linha.
         """
         if not self._encontrado:
             self._encontrado = True
-            self._linha_inicio = linha
+            self._linha = linha
             self._ordem = ordem
         return self._encontrado and not self._lido
 
-    def le_bloco(self,
-                 arq: IO) -> Optional[bool]:
+    def le_registro(self) -> Optional[bool]:
         """
         """
         self._lido = True
-        return self.le(arq)
+        return self.le()
 
     @abstractmethod
-    def le(self, arq: IO):
+    def le(self):
         pass
 
     @abstractmethod
@@ -75,10 +73,31 @@ class Bloco:
     @property
     def dados(self) -> Any:
         """
-        Retorna os dados lidos pelo bloco.
+        Retorna os dados lidos pelo registro.
         """
         return self._dados
 
     @dados.setter
     def dados(self, d: Any):
         self._dados = d
+
+
+class TipoRegistroAC:
+    """
+    Classe base para os diferentes tipos possíveis de
+    registros AC, baseados nos diferentes mnemônicos. 
+    """
+    mnemonico = ""
+    def __init__(self,
+                 linha: str) -> None:
+        self._linha = linha
+        self._dados = []
+
+    @abstractmethod
+    def le(self):
+        pass
+
+    @abstractmethod
+    @property
+    def linha_escrita(self) -> str:
+        pass

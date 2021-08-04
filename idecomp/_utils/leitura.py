@@ -11,7 +11,7 @@ from .dadosarquivo import DadosArquivo
 class Leitura:
     """
     Classe com utilidades gerais para leitura de arquivos
-    do NEWAVE.
+    do DECOMP.
     """
     def __init__(self,
                  diretorio: str):

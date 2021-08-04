@@ -9,7 +9,7 @@ from traceback import print_exc
 class Escrita:
     """
     Classe com utilidades gerais para a escrita de arquivos
-    do NEWAVE.
+    do DECOMP.
     """
     def __init__(self,
                  diretorio: str):
@@ -22,8 +22,9 @@ class Escrita:
 
         ordem_blocos = [b._ordem for b in blocos]
         ordem_linhas = list(linhas.keys())
-        num_itens = max(ordem_blocos + ordem_linhas) + 1
-        for i in range(num_itens):
+        itens = ordem_blocos + ordem_linhas
+        itens.sort()
+        for i in itens:
             if i in ordem_blocos:
                 blocos[ordem_blocos.index(i)].escreve(arq)
             elif i in ordem_linhas:
@@ -42,5 +43,6 @@ class Escrita:
                 self._escreve_blocos_e_linhas(arq,
                                               dados.blocos,
                                               dados.linhas_fora_blocos)
-        except Exception:
+        except Exception as e:
             print_exc()
+            raise e
