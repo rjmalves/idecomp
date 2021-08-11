@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Tutorial &mdash; documentação idecomp 0.0.8</title>
+  <title>Tutorial &mdash; documentação idecomp 0.0.9</title>
   
 
   
@@ -95,6 +95,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Instalação</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#leitura-e-escrita-do-dadger-rvx">Leitura e escrita do dadger.rvX</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#leitura-do-relato-rvx">Leitura do relato.rvX</a></li>
 </ul>
 </li>
@@ -169,12 +170,78 @@
   <div class="section" id="tutorial">
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Link permanente para este título">¶</a></h1>
 <p>Este guia pode ser um bom ponto inicial para o uso do <em>idecomp</em>. Como interface de desenvolvimento é recomendado
-usar algum editor com um <code class="xref py py-obj docutils literal notranslate"><span class="pre">language</span> <span class="pre">server</span></code> com um recurso de <code class="xref py py-obj docutils literal notranslate"><span class="pre">autocomplete</span></code> eficiente para Python, como o
+usar algum editor com um <code class="xref py py-obj docutils literal notranslate"><span class="pre">language</span> <span class="pre">server</span></code> com um recurso de sugestões automáticas eficiente para Python, como o
 <a class="reference external" href="https://code.visualstudio.com/">VSCode</a> com <a class="reference external" href="https://marketplace.visualstudio.com/items?itemName=ms-python.vscode-pylance">PyLance</a>
-ou a IDE específica <a class="reference external" href="https://www.jetbrains.com/pt-br/pycharm/download/">PyCharm</a>. O <code class="xref py py-obj docutils literal notranslate"><span class="pre">autocomplete</span></code> é essencial para fazer uso de todo o potencial do
+ou a IDE específica <a class="reference external" href="https://www.jetbrains.com/pt-br/pycharm/download/">PyCharm</a>. As sugestões automáticas são essenciais para fazer uso de todo o potencial do
 módulo <em>idecomp</em>, além de auxiliar na escrita de códigos melhores.</p>
+<div class="section" id="leitura-e-escrita-do-dadger-rvx">
+<h2>Leitura e escrita do dadger.rvX<a class="headerlink" href="#leitura-e-escrita-do-dadger-rvx" title="Link permanente para este título">¶</a></h2>
+<p>Seja um sistema de arquivos no qual, dentro de um diretório cujo caminho é:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pwd
+$ /home/usuario/estudo/dcp_AAAA_MM_rvX/
+</pre></div>
+</div>
+<p>E neste diretório exista um arquivo <code class="docutils literal notranslate"><span class="pre">dadger.rvX</span></code>, então o conteúdo deste pode ser lido
+através do código:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">inewave.decomp.dadger</span> <span class="kn">import</span> <span class="n">Dadger</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span> <span class="o">=</span> <span class="n">Dadger</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="s2">&quot;/home/usuario/estudo/dcp_AAAA_MM_rvX/&quot;</span><span class="p">,</span> <span class="s2">&quot;dadger.rvX&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>É possível ter acesso a diversos registros existentes no dadger:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span><span class="o">.</span><span class="n">te</span><span class="o">.</span><span class="n">titulo</span>
+<span class="go">&#39;PMO - JANEIRO/AA - FEVEREIRO/AA - REV X - FCF COM CVAR - 12 REE - VALOR ESP&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span><span class="o">.</span><span class="n">ti</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">taxas</span>
+<span class="go">[0.2, 0.2, 0.2, 0.2, 0.2, 0.2]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span><span class="o">.</span><span class="n">lv</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">limite_inferior</span>
+<span class="go">623.0</span>
+</pre></div>
+</div>
+<p>Ao comparar com as informações existentes no arquivo <code class="xref py py-obj docutils literal notranslate"><span class="pre">dadger.rvX</span></code>:</p>
+<a class="reference internal image-reference" href="_images/registro_te_dadger.png"><img alt="_images/registro_te_dadger.png" src="_images/registro_te_dadger.png" style="width: 480px;" /></a>
+<a class="reference internal image-reference" href="_images/registro_ti_dadger.png"><img alt="_images/registro_ti_dadger.png" src="_images/registro_ti_dadger.png" style="width: 480px;" /></a>
+<a class="reference internal image-reference" href="_images/registro_lv_dadger.png"><img alt="_images/registro_lv_dadger.png" src="_images/registro_lv_dadger.png" style="width: 480px;" /></a>
+<p>Como o dadger é um arquivo de entrada do DECOMP, cada um dos registro é editável (em desenvolvimento). Além disso,
+ao final é possível realizar a escrita do arquivo para geração automatizada de estudos.</p>
+<p>Por exemplo, ao alterar o limite do registro LV mostrado acima e realizar a escrita do arquivo com:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span><span class="o">.</span><span class="n">lv</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">limite_inferior</span> <span class="o">=</span> <span class="mf">500.55</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span><span class="o">.</span><span class="n">escreve_arquivo</span><span class="p">(</span><span class="s2">&quot;/home/usuario/estudo/dcp_AAAA_MM_rvX/&quot;</span><span class="p">,</span> <span class="s2">&quot;dadger.rvX&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Temos o arquivo atualizado com o conteúdo da linha:</p>
+<a class="reference internal image-reference" href="_images/registro_lv_dadger_novo.png"><img alt="_images/registro_lv_dadger_novo.png" src="_images/registro_lv_dadger_novo.png" style="width: 480px;" /></a>
+<p>Mais informações estão disponíveis na referência do objeto <a class="reference internal" href="reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+</div>
 <div class="section" id="leitura-do-relato-rvx">
 <h2>Leitura do relato.rvX<a class="headerlink" href="#leitura-do-relato-rvx" title="Link permanente para este título">¶</a></h2>
+<p>Seja um sistema de arquivos no qual, dentro de um diretório cujo caminho é:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pwd
+$ /home/usuario/estudo/dcp_AAAA_MM_rvX/
+</pre></div>
+</div>
+<p>E neste diretório exista um arquivo <code class="docutils literal notranslate"><span class="pre">relato.rvX</span></code>, então o conteúdo deste pode ser lido
+através do código:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">inewave.decomp.relato</span> <span class="kn">import</span> <span class="n">Relato</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rel</span> <span class="o">=</span> <span class="n">Relato</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="s2">&quot;/home/usuario/estudo/dcp_AAAA_MM_rvX/&quot;</span><span class="p">,</span> <span class="s2">&quot;relato.rvX&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>É possível ter acesso a diversos blocos de informação existentes no relato:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rel</span><span class="o">.</span><span class="n">energia_armazenada_maxima_subsistema</span>
+<span class="go">  Subsistema    Earmax</span>
+<span class="go">0         SE  204321.7</span>
+<span class="go">1          S   19897.2</span>
+<span class="go">2         NE   51605.5</span>
+<span class="go">3          N   15212.9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rel</span><span class="o">.</span><span class="n">energia_armazenada_subsistema</span>
+<span class="go">  Subsistema  Inicial  Estágio 1  Estágio 2  Estágio 3  Estágio 4  Estágio 5</span>
+<span class="go">0         SE     20.4       20.7       21.1       21.9       23.3       25.2</span>
+<span class="go">1          S     30.6       29.9       28.9       28.4       29.2       31.2</span>
+<span class="go">2         NE     37.6       37.6       37.4       37.5       37.9       39.0</span>
+<span class="go">3          N     15.0       15.8       16.7       17.8       19.0       21.4</span>
+</pre></div>
+</div>
+<p>Se comparado com o conteúdo do arquivo <code class="xref py py-obj docutils literal notranslate"><span class="pre">relato.rvX</span></code>:</p>
+<a class="reference internal image-reference" href="_images/earm_subsis_relato.png"><img alt="_images/earm_subsis_relato.png" src="_images/earm_subsis_relato.png" style="width: 480px;" /></a>
+<p>Para mais informações, basta consultar a referência do objeto <a class="reference internal" href="reference/decomp/arquivos/relato.html#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Relato</span></code></a>.</p>
 </div>
 </div>
 

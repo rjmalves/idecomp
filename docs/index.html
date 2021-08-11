@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Interface de Programação para o DECOMP &mdash; documentação idecomp 0.0.8</title>
+  <title>Interface de Programação para o DECOMP &mdash; documentação idecomp 0.0.9</title>
   
 
   
@@ -164,8 +164,8 @@
             
   <div class="section" id="interface-de-programacao-para-o-decomp">
 <h1>Interface de Programação para o DECOMP<a class="headerlink" href="#interface-de-programacao-para-o-decomp" title="Link permanente para este título">¶</a></h1>
-<p><strong>Versão:</strong> 0.0.8</p>
-<p><strong>Data:</strong> 17/05/2021</p>
+<p><strong>Versão:</strong> 0.0.9</p>
+<p><strong>Data:</strong> 11/08/2021</p>
 <p>O <em>idecomp</em> é um pacote Python para manipulação dos arquivos
 de entrada e saída do programa <a class="reference external" href="http://www.cepel.br/pt_br/produtos/decomp-modelo-de-planejamento-da-operacao-de-sistemas-hidrotermicos-interligados-de-curto-prazo.htm">DECOMP</a>,
 desenvolvido pelo <a class="reference external" href="http://www.cepel.br/">CEPEL</a> e utilizado para os estudos de planejamento e operação do Sistema Interligado Nacional (SIN).</p>
@@ -173,11 +173,10 @@ desenvolvido pelo <a class="reference external" href="http://www.cepel.br/">CEPE
 <ul class="simple">
 <li><p>Meios para leitura dos arquivos de entrada e saída do DECOMP</p></li>
 <li><p>Armazenamento e processamento de dados otimizados com o uso de <a class="reference external" href="https://numpy.org/">NumPy</a></p></li>
+<li><p>Facilidades para estudo e análise dos dados utilizando DataFrames de <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/index.html">Pandas</a></p></li>
 <li><p>Dados estruturados em modelos com o uso do paradigma de orientação a objetos (OOP)</p></li>
 <li><p>Utilidades de escritas dos arquivos de entrada do DECOMP para elaboração automatizada de estudos</p></li>
 </ul>
-<p>Com <em>idecomp</em> é possível ler os arquivos de texto, característicos do DECOMP, e salvar as informações em <a class="reference external" href="https://docs.python.org/3/library/pickle.html">pickle</a>,
-para poupar processamento futuro e reduzir o tempo de execução.</p>
 </div>
 <div class="section" id="documentacao">
 <h1>Documentação<a class="headerlink" href="#documentacao" title="Link permanente para este título">¶</a></h1>
@@ -190,6 +189,7 @@ para poupar processamento futuro e reduzir o tempo de execução.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#leitura-e-escrita-do-dadger-rvx">Leitura e escrita do dadger.rvX</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#leitura-do-relato-rvx">Leitura do relato.rvX</a></li>
 </ul>
 </li>

@@ -1,5 +1,5 @@
 # Imports do próprio módulo
-from idecomp.config import MAX_SEMANAS_ESTUDO
+from idecomp.config import MAX_ESTAGIOS
 from idecomp.config import REES, SUBSISTEMAS
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
@@ -86,7 +86,7 @@ class BlocoBalancoEnergeticoRelato(Bloco):
         estagios = []
         subsistemas = []
         # Salta uma linha e extrai a semana
-        tabela = np.zeros((MAX_SEMANAS_ESTUDO * len(SUBSISTEMAS), 11))
+        tabela = np.zeros((MAX_ESTAGIOS * len(SUBSISTEMAS), 11))
         i = 0
         while True:
             linha = arq.readline()

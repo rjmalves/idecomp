@@ -4,11 +4,10 @@ DECOMP
 =======
 
 
-A estrutura do *idecomp* padroniza os objetos de interface existentes para cada um dos módulos desenvolvidos. 
+A estrutura do *idecomp* padroniza os objetos de interface existentes. 
 A interface com o DECOMP segue o padrão de implementar modelos para armazenar cada uma das informações existentes
 nos arquivos de entrada e saída, além de classes utilitárias para gerenciar com a leitura e interpretação das informações
-dos arquivos, bem como na geração de novos arquivos. As classes de leitura e escrita tem seus nomes padronizados, sendo estes
-``LeituraMODELO`` e ``EscritaMODELO``, onde ``MODELO`` varia conforma o arquivo do DECOMP em questão.
+dos arquivos, bem como na geração de novos arquivos.
 
 Classes são nomeadas em ``CamelCase``, enquanto funções, métodos e variáveis recebem seus nomes em ``snake_case``.
 
@@ -21,21 +20,16 @@ o estudo em questão. Desta forma, não é recomendado importar todo o módulo `
 
 A importação recomendada é, por exemplo::
 
-    >>> from idecomp.decomp.relato import LeituraRelato
-
-Em geral, os objetos de leitura são instanciados recebendo um único atributo, que é o diretório de leitura e possuem um dos dois métodos: ``le_arquivo()`` ou ``le_arquivos()``. 
-Os métodos de leitura, além de retornarem os objetos arquiridos dos arquivos de entrada de texto, também armazenam os dados internamente ao objeto de leitura.
+    >>> from idecomp.decomp.relato import Relato
 
 Para a leitura do arquivo `relato.rv0`::
 
-    >>> from idecomp.decomp.relato import LeituraRelato
+    >>> from idecomp.decomp.relato import Relato
     >>>
     >>> diretorio = "/home/usuario/..."
-    >>> leitor = LeituraRelato(diretorio)
-    >>> leitor.le_arquivo()
-    <idecomp.decomp.modelos.Relato object at 0x000001BC7663B340>
-    >>> leitor.relato
-    <idecomp.decomp.modelos.Relato object at 0x000001BC7663B340>
+    >>> rel = Relato.le_arquivo(diretorio, "relato.rv0")
+    >>> rel
+    <idecomp.decomp.Relato object at 0x000001BC7663B340>
 
 Arquivos
 ---------
@@ -43,4 +37,5 @@ Arquivos
 .. toctree::
    :maxdepth: 2
 
+   arquivos/dadger
    arquivos/relato

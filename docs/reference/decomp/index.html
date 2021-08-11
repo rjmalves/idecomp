@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>DECOMP &mdash; documentação idecomp 0.0.8</title>
+  <title>DECOMP &mdash; documentação idecomp 0.0.9</title>
   
 
   
@@ -46,7 +46,7 @@
     
     <link rel="index" title="Índice" href="../../genindex.html" />
     <link rel="search" title="Buscar" href="../../search.html" />
-    <link rel="next" title="Relato (relato.rvX)" href="arquivos/relato.html" />
+    <link rel="next" title="Dados gerais (dadger.rvX)" href="arquivos/dadger.html" />
     <link rel="prev" title="Referência" href="../../reference.html" /> 
 </head>
 
@@ -99,6 +99,7 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">DECOMP</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#basico-da-interface-decomp">Básico da interface DECOMP</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#arquivos">Arquivos</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="arquivos/dadger.html">Dados gerais (dadger.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="arquivos/relato.html">Relato (relato.rvX)</a></li>
 </ul>
 </li>
@@ -177,31 +178,26 @@
             
   <div class="section" id="decomp">
 <span id="id1"></span><h1>DECOMP<a class="headerlink" href="#decomp" title="Link permanente para este título">¶</a></h1>
-<p>A estrutura do <em>idecomp</em> padroniza os objetos de interface existentes para cada um dos módulos desenvolvidos.
+<p>A estrutura do <em>idecomp</em> padroniza os objetos de interface existentes.
 A interface com o DECOMP segue o padrão de implementar modelos para armazenar cada uma das informações existentes
 nos arquivos de entrada e saída, além de classes utilitárias para gerenciar com a leitura e interpretação das informações
-dos arquivos, bem como na geração de novos arquivos. As classes de leitura e escrita tem seus nomes padronizados, sendo estes
-<code class="docutils literal notranslate"><span class="pre">LeituraMODELO</span></code> e <code class="docutils literal notranslate"><span class="pre">EscritaMODELO</span></code>, onde <code class="docutils literal notranslate"><span class="pre">MODELO</span></code> varia conforma o arquivo do DECOMP em questão.</p>
+dos arquivos, bem como na geração de novos arquivos.</p>
 <p>Classes são nomeadas em <code class="docutils literal notranslate"><span class="pre">CamelCase</span></code>, enquanto funções, métodos e variáveis recebem seus nomes em <code class="docutils literal notranslate"><span class="pre">snake_case</span></code>.</p>
 <div class="section" id="basico-da-interface-decomp">
 <h2>Básico da interface DECOMP<a class="headerlink" href="#basico-da-interface-decomp" title="Link permanente para este título">¶</a></h2>
 <p>É recomendado que a importação seja feita sempre de forma a utilizar somente os objetos que serão de fato necessários para
 o estudo em questão. Desta forma, não é recomendado importar todo o módulo <code class="docutils literal notranslate"><span class="pre">idecomp.decomp</span></code> ou utilizar o <code class="xref py py-obj docutils literal notranslate"><span class="pre">wildcard</span></code> <code class="docutils literal notranslate"><span class="pre">*</span></code>.</p>
 <p>A importação recomendada é, por exemplo:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">idecomp.decomp.relato</span> <span class="kn">import</span> <span class="n">LeituraRelato</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">idecomp.decomp.relato</span> <span class="kn">import</span> <span class="n">Relato</span>
 </pre></div>
 </div>
-<p>Em geral, os objetos de leitura são instanciados recebendo um único atributo, que é o diretório de leitura e possuem um dos dois métodos: <code class="docutils literal notranslate"><span class="pre">le_arquivo()</span></code> ou <code class="docutils literal notranslate"><span class="pre">le_arquivos()</span></code>.
-Os métodos de leitura, além de retornarem os objetos arquiridos dos arquivos de entrada de texto, também armazenam os dados internamente ao objeto de leitura.</p>
 <p>Para a leitura do arquivo <code class="xref py py-obj docutils literal notranslate"><span class="pre">relato.rv0</span></code>:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">idecomp.decomp.relato</span> <span class="kn">import</span> <span class="n">LeituraRelato</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">idecomp.decomp.relato</span> <span class="kn">import</span> <span class="n">Relato</span>
 <span class="go">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">diretorio</span> <span class="o">=</span> <span class="s2">&quot;/home/usuario/...&quot;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">leitor</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">leitor</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">()</span>
-<span class="go">&lt;idecomp.decomp.modelos.Relato object at 0x000001BC7663B340&gt;</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">leitor</span><span class="o">.</span><span class="n">relato</span>
-<span class="go">&lt;idecomp.decomp.modelos.Relato object at 0x000001BC7663B340&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rel</span> <span class="o">=</span> <span class="n">Relato</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="n">diretorio</span><span class="p">,</span> <span class="s2">&quot;relato.rv0&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rel</span>
+<span class="go">&lt;idecomp.decomp.Relato object at 0x000001BC7663B340&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -209,10 +205,12 @@ Os métodos de leitura, além de retornarem os objetos arquiridos dos arquivos d
 <h2>Arquivos<a class="headerlink" href="#arquivos" title="Link permanente para este título">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="arquivos/dadger.html">Dados gerais (dadger.rvX)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="arquivos/dadger.html#visao-geral-do-modelo">Visão geral do modelo</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="arquivos/relato.html">Relato (relato.rvX)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="arquivos/relato.html#visao-geral-do-modelo">Visão geral do modelo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="arquivos/relato.html#modelos-auxiliares">Modelos auxiliares</a></li>
-<li class="toctree-l2"><a class="reference internal" href="arquivos/relato.html#leitura">Leitura</a></li>
 </ul>
 </li>
 </ul>
@@ -226,7 +224,7 @@ Os métodos de leitura, além de retornarem os objetos arquiridos dos arquivos d
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="arquivos/relato.html" class="btn btn-neutral float-right" title="Relato (relato.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="arquivos/dadger.html" class="btn btn-neutral float-right" title="Dados gerais (dadger.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="../../reference.html" class="btn btn-neutral float-left" title="Referência" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
     </div>
 

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.7</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.9</title>
   
 
   
@@ -160,456 +160,195 @@
            <div itemprop="articleBody">
             
   <h1>Código fonte para idecomp.decomp.relato</h1><div class="highlight"><pre>
-<span></span><span class="c1"># Imports do próprio módulo</span>
-<span class="kn">from</span> <span class="nn">idecomp.config</span> <span class="kn">import</span> <span class="n">MAX_SEMANAS_PRE</span><span class="p">,</span> <span class="n">SUBSISTEMAS</span><span class="p">,</span> <span class="n">REES</span>
-<span class="kn">from</span> <span class="nn">idecomp._utils.leitura</span> <span class="kn">import</span> <span class="n">Leitura</span>
-<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">BalancoEnergeticoRelato</span><span class="p">,</span> <span class="n">DadosGeraisRelato</span>
-<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">CMORelato</span>
-<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">GeracaoTermicaSubsistemaRelato</span>
-<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">EnergiaArmazenadaREERelato</span>
-<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span>
-<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span>
-<span class="kn">from</span> <span class="nn">.modelos.relato</span> <span class="kn">import</span> <span class="n">Relato</span>
-<span class="c1"># Imports de módulos externos</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>  <span class="c1"># type: ignore</span>
-<span class="kn">from</span> <span class="nn">traceback</span> <span class="kn">import</span> <span class="n">print_exc</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">IO</span><span class="p">,</span> <span class="n">List</span>
+<span></span><span class="kn">from</span> <span class="nn">idecomp._utils.bloco</span> <span class="kn">import</span> <span class="n">Bloco</span>
+<span class="c1"># from idecomp.decomp.modelos.relato import BlocoDadosGeraisRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoBalancoEnergeticoRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoCMORelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoGeracaoTermicaSubsistemaRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoEnergiaArmazenadaREERelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoEnergiaArmazenadaSubsistemaRelato</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoENAPreEstudoSemanalSubsistemaRelato</span>  <span class="c1"># noqa</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoDiasExcluidosSemanas</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">LeituraRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.arquivo</span> <span class="kn">import</span> <span class="n">Arquivo</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.dadosarquivo</span> <span class="kn">import</span> <span class="n">DadosArquivo</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>  <span class="c1"># type: ignore</span>
 
 
-<div class="viewcode-block" id="LeituraRelato"><a class="viewcode-back" href="../../../reference/decomp/arquivos/relato.html#idecomp.decomp.relato.LeituraRelato">[documentos]</a><span class="k">class</span> <span class="nc">LeituraRelato</span><span class="p">(</span><span class="n">Leitura</span><span class="p">):</span>
+<div class="viewcode-block" id="Relato"><a class="viewcode-back" href="../../../reference/decomp/arquivos/relato.html#idecomp.decomp.relato.Relato">[documentos]</a><span class="k">class</span> <span class="nc">Relato</span><span class="p">(</span><span class="n">Arquivo</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Realiza a leitura do arquivo relato.rvx</span>
-<span class="sd">    existente em um diretório de saídas do DECOMP.</span>
+<span class="sd">    Armazena os dados de saída do DECOMP referentes ao</span>
+<span class="sd">    acompanhamento do programa.</span>
 
-<span class="sd">    Esta classe contém o conjunto de utilidades para ler</span>
-<span class="sd">    e interpretar os campos de um arquivo relato.rvx, construindo</span>
-<span class="sd">    um objeto `Relato` cujas informações são as mesmas do relato.rvx.</span>
-
-<span class="sd">    Este objeto existe para retirar do modelo de dados a complexidade</span>
-<span class="sd">    de iterar pelas linhas do arquivo, recortar colunas, converter</span>
-<span class="sd">    tipos de dados, dentre outras tarefas necessárias para a leitura.</span>
-
-<span class="sd">    Uma vez realizada a leitura do arquivo, as informações são guardadas</span>
-<span class="sd">    internamente no atributo `Relato`.</span>
-
-<span class="sd">    **Exemplos**</span>
-
-<span class="sd">    &gt;&gt;&gt; diretorio = &quot;~/documentos/.../deck&quot;</span>
-<span class="sd">    &gt;&gt;&gt; leitor = LeituraRelato(diretorio)</span>
-<span class="sd">    &gt;&gt;&gt; leitor.le_arquivo()</span>
-<span class="sd">    # Ops, esqueci de pegar o objeto</span>
-<span class="sd">    &gt;&gt;&gt; relato = leitor.relato</span>
+<span class="sd">    Esta classe lida com as informações de entrada fornecidas ao</span>
+<span class="sd">    DECOMP e reproduzidas no `relato.rvx`, bem como as saídas finais</span>
+<span class="sd">    da execução: custos de operação, despacho de térmicas, etc.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">str_inicio_dados</span> <span class="o">=</span> <span class="s2">&quot;Relatorio  dos  Dados  Gerais&quot;</span>
-    <span class="n">str_inicio_balanco</span> <span class="o">=</span> <span class="s2">&quot;RELATORIO  DO  BALANCO  ENERGETICO &quot;</span>
-    <span class="n">str_inicio_cmo</span> <span class="o">=</span> <span class="s2">&quot;CUSTO MARGINAL DE OPERACAO  ($/MWh)&quot;</span>
-    <span class="n">str_inicio_gt_subsis</span> <span class="o">=</span> <span class="s2">&quot;GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)&quot;</span>
-    <span class="n">str_inicio_earm_ree</span> <span class="o">=</span> <span class="s2">&quot;ENERGIA ARMAZENADA NOS REEs (%&quot;</span>
-    <span class="n">str_inicio_earm_subsis</span> <span class="o">=</span> <span class="s2">&quot;ENERGIA ARMAZENADA NOS SUBSISTEMAS (%&quot;</span>
-    <span class="n">str_inicio_ena_semana_subsis</span> <span class="o">=</span> <span class="s2">&quot;NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS&quot;</span>
-    <span class="n">str_fim_balanco</span> <span class="o">=</span> <span class="s2">&quot;RELATORIO  DA  OPERACAO&quot;</span>
-    <span class="n">str_fim_relato</span> <span class="o">=</span> <span class="s2">&quot;FIM DO PROCESSAMENTO&quot;</span>
-
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">diretorio</span> <span class="o">=</span> <span class="n">diretorio</span>
-        <span class="c1"># Relato default, depois é substituído</span>
-        <span class="n">gt</span> <span class="o">=</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">([],</span>
-                                            <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="n">earm_ree</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">([],</span>
-                                                     <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="n">earm</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">([],</span>
-                                                 <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="n">ena_semana</span> <span class="o">=</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">([],</span>
-                                                         <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="n">balanco_energetico</span> <span class="o">=</span> <span class="n">BalancoEnergeticoRelato</span><span class="p">([],</span>
-                                                     <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">relato</span> <span class="o">=</span> <span class="n">Relato</span><span class="p">(</span><span class="n">DadosGeraisRelato</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span>
-                             <span class="n">CMORelato</span><span class="p">([],</span>
-                                       <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([])),</span>
-                             <span class="n">gt</span><span class="p">,</span>
-                             <span class="n">earm_ree</span><span class="p">,</span>
-                             <span class="n">earm</span><span class="p">,</span>
-                             <span class="n">ena_semana</span><span class="p">,</span>
-                             <span class="n">balanco_energetico</span><span class="p">)</span>
+                 <span class="n">dados</span><span class="p">:</span> <span class="n">DadosArquivo</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
 
-<div class="viewcode-block" id="LeituraRelato.le_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/relato.html#idecomp.decomp.relato.LeituraRelato.le_arquivo">[documentos]</a>    <span class="k">def</span> <span class="nf">le_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                   <span class="n">relato_rev</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Relato</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Faz a leitura do arquivo `relato.rvx`.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="c1"># Se não foi fornecido um nome de relato,</span>
-            <span class="c1"># procura um relato no diretório</span>
-            <span class="k">if</span> <span class="n">relato_rev</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="n">arquivos</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diretorio</span><span class="p">)</span>
-                <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">arquivos</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="s2">&quot;relato.rv&quot;</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
-                        <span class="n">relato_rev</span> <span class="o">=</span> <span class="n">a</span>
-                        <span class="k">break</span>
-                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">relato_rev</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado relato&quot;</span><span class="p">)</span>
-            <span class="c1"># Lê o arquivo</span>
-            <span class="n">caminho</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">diretorio</span><span class="p">,</span> <span class="n">relato_rev</span><span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">caminho</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">arq</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">relato</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_relato</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relato</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">print_exc</span><span class="p">()</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relato</span></div>
-
-    <span class="k">def</span> <span class="nf">_le_relato</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Relato</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Faz a leitura do arquivo pmo.dat.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">achou_dados_gerais</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">achou_cmo</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">achou_gt_subsis</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">achou_earm_ree</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">achou_ena_semana_subsis</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">achou_balanco_energetico</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">linha</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">dados_gerais</span> <span class="o">=</span> <span class="n">DadosGeraisRelato</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="n">cmo</span> <span class="o">=</span> <span class="n">CMORelato</span><span class="p">([],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]))</span>
-        <span class="n">gt_subsis</span> <span class="o">=</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">([],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]))</span>
-        <span class="n">earm_ree</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaREERelato</span><span class="p">([],</span>
-                                              <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="n">earm_subsis</span> <span class="o">=</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">([],</span>
-                                                        <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="n">ena_sem_subsis</span> <span class="o">=</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">([],</span>
-                                                             <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">([]))</span>
-        <span class="n">tabela_bal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">SUBSISTEMAS</span><span class="p">),</span> <span class="mi">17</span><span class="p">))</span>
-        <span class="n">balanco_energ</span> <span class="o">=</span> <span class="n">BalancoEnergeticoRelato</span><span class="p">([],</span>
-                                                <span class="n">tabela_bal</span><span class="p">)</span>
-        <span class="n">balancos_lidos</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Decide se lê uma linha nova ou usa a última lida</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fim_arquivo</span><span class="p">(</span><span class="n">linha</span><span class="p">):</span>
-                <span class="n">balanco_energ</span><span class="o">.</span><span class="n">tabela</span> <span class="o">=</span> <span class="n">balanco_energ</span><span class="o">.</span><span class="n">tabela</span><span class="p">[:</span><span class="n">balancos_lidos</span><span class="p">,</span>
-                                                            <span class="p">:,</span>
-                                                            <span class="p">:]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">relato</span> <span class="o">=</span> <span class="n">Relato</span><span class="p">(</span><span class="n">dados_gerais</span><span class="p">,</span>
-                                     <span class="n">cmo</span><span class="p">,</span>
-                                     <span class="n">gt_subsis</span><span class="p">,</span>
-                                     <span class="n">earm_ree</span><span class="p">,</span>
-                                     <span class="n">earm_subsis</span><span class="p">,</span>
-                                     <span class="n">ena_sem_subsis</span><span class="p">,</span>
-                                     <span class="n">balanco_energ</span><span class="p">)</span>
-                <span class="k">break</span>
-            <span class="c1"># Condição para iniciar uma leitura de dados</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_dados_gerais</span><span class="p">:</span>
-                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_dados</span> <span class="ow">in</span> <span class="n">linha</span>
-                <span class="n">achou_dados_gerais</span> <span class="o">=</span> <span class="n">achou</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_cmo</span><span class="p">:</span>
-                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_cmo</span> <span class="ow">in</span> <span class="n">linha</span>
-                <span class="n">achou_cmo</span> <span class="o">=</span> <span class="n">achou</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_gt_subsis</span><span class="p">:</span>
-                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_gt_subsis</span> <span class="ow">in</span> <span class="n">linha</span>
-                <span class="n">achou_gt_subsis</span> <span class="o">=</span> <span class="n">achou</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_earm_ree</span><span class="p">:</span>
-                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_earm_ree</span> <span class="ow">in</span> <span class="n">linha</span>
-                <span class="n">achou_earm_ree</span> <span class="o">=</span> <span class="n">achou</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_earm_subsis</span><span class="p">:</span>
-                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_earm_subsis</span> <span class="ow">in</span> <span class="n">linha</span>
-                <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="n">achou</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_ena_semana_subsis</span><span class="p">:</span>
-                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_ena_semana_subsis</span> <span class="ow">in</span> <span class="n">linha</span>
-                <span class="n">achou_ena_semana_subsis</span> <span class="o">=</span> <span class="n">achou</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">achou_balanco_energetico</span><span class="p">:</span>
-                <span class="n">achou</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_inicio_balanco</span> <span class="ow">in</span> <span class="n">linha</span>
-                <span class="n">achou_balanco_energetico</span> <span class="o">=</span> <span class="n">achou</span>
-            <span class="c1"># Quando achar, le cada parte adequadamente</span>
-            <span class="k">if</span> <span class="n">achou_dados_gerais</span><span class="p">:</span>
-                <span class="n">dados_gerais</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_dados_gerais</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-                <span class="n">achou_dados_gerais</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">achou_cmo</span><span class="p">:</span>
-                <span class="n">cmo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_cmo</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-                <span class="n">achou_cmo</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">achou_gt_subsis</span><span class="p">:</span>
-                <span class="n">gt_subsis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_gt_subsistema</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-                <span class="n">achou_gt_subsis</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">achou_earm_ree</span><span class="p">:</span>
-                <span class="n">earm_ree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_earm_ree</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-                <span class="n">achou_earm_ree</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">achou_earm_subsis</span><span class="p">:</span>
-                <span class="n">earm_subsis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_earm_subsistema</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-                <span class="n">achou_earm_subsis</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">achou_ena_semana_subsis</span><span class="p">:</span>
-                <span class="n">ena_sem_subsis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_ena_sem_subsis</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-                <span class="n">achou_ena_semana_subsis</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="k">if</span> <span class="n">achou_balanco_energetico</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_le_balanco_energetico</span><span class="p">(</span><span class="n">arq</span><span class="p">,</span>
-                                            <span class="n">balanco_energ</span><span class="p">)</span>
-                <span class="n">achou_balanco_energetico</span> <span class="o">=</span> <span class="kc">False</span>
-                <span class="n">balancos_lidos</span> <span class="o">+=</span> <span class="mi">1</span>
-
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">relato</span>
-
-    <span class="k">def</span> <span class="nf">_le_dados_gerais</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                         <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
-                         <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DadosGeraisRelato</span><span class="p">:</span>
+    <span class="c1"># Override</span>
+<div class="viewcode-block" id="Relato.le_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/relato.html#idecomp.decomp.relato.Relato.le_arquivo">[documentos]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">le_arquivo</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span>
+                   <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                   <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;relato.rv0&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Relato&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Salta uma linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="c1"># Descobre o número de semanas</span>
-        <span class="n">dados</span> <span class="o">=</span> <span class="n">DadosGeraisRelato</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Confere se a leitura não acabou</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">dados</span>
-            <span class="c1"># Senão, lê mais uma linha</span>
-            <span class="k">if</span> <span class="s2">&quot;Numero de semanas do mes inicial&quot;</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="n">dados</span><span class="o">.</span><span class="n">numero_semanas_1_mes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">:])</span>
+        <span class="n">leitor</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">leitor</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="n">nome_arquivo</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">_le_cmo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
-                <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CMORelato</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Lê a tabela de CMO existente no arquivo relato do DECOMP.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Salta uma linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="c1"># Descobre o número de semanas</span>
-        <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">sems</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                                                <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">or</span>
-                                                     <span class="s2">&quot;Mes&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">))]</span>
-        <span class="n">n_semanas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sems</span><span class="p">)</span>
-        <span class="n">subsistemas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">80</span><span class="p">,</span> <span class="n">n_semanas</span><span class="p">))</span>
-        <span class="c1"># Salta outra linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Confere se a leitura não acabou</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s2">&quot;X------X&quot;</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">CMORelato</span><span class="p">(</span><span class="n">subsistemas</span><span class="p">,</span> <span class="n">tabela</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
-            <span class="c1"># Senão, lê mais uma linha</span>
-            <span class="c1"># Subsistema</span>
-            <span class="n">ssis</span> <span class="o">=</span> <span class="n">linha</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">subsistemas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssis</span><span class="p">)</span>
-            <span class="c1"># Semanas</span>
-            <span class="n">ci</span> <span class="o">=</span> <span class="mi">11</span>
-            <span class="n">nc</span> <span class="o">=</span> <span class="mi">10</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_semanas</span><span class="p">):</span>
-                <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
-                <span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
-                <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">_le_gt_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                          <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
-                          <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Lê a tabela de GT por subsistema</span>
-<span class="sd">        existente no arquivo relato do DECOMP.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Salta uma linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="c1"># Descobre o número de semanas</span>
-        <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">sems</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                                                <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">or</span>
-                                                     <span class="s2">&quot;Mes&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">))]</span>
-        <span class="n">n_semanas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sems</span><span class="p">)</span>
-        <span class="n">subsistemas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_semanas</span><span class="p">))</span>
-        <span class="c1"># Salta outra linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Confere se a leitura não acabou</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s2">&quot;X------X&quot;</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">GeracaoTermicaSubsistemaRelato</span><span class="p">(</span><span class="n">subsistemas</span><span class="p">,</span>
-                                                      <span class="n">tabela</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
-            <span class="c1"># Senão, lê mais uma linha</span>
-            <span class="c1"># Subsistema</span>
-            <span class="n">ssis</span> <span class="o">=</span> <span class="n">linha</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">10</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">subsistemas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssis</span><span class="p">)</span>
-            <span class="c1"># Semanas</span>
-            <span class="n">ci</span> <span class="o">=</span> <span class="mi">11</span>
-            <span class="n">nc</span> <span class="o">=</span> <span class="mi">10</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_semanas</span><span class="p">):</span>
-                <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
-                <span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
-                <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">_le_earm_ree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                     <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
-                     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnergiaArmazenadaREERelato</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Lê a tabela de EARM por REE</span>
-<span class="sd">        existente no arquivo relato do DECOMP.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Salta uma linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="c1"># Descobre o número de semanas</span>
-        <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">sems</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                                                <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">or</span>
-                                                     <span class="s2">&quot;Mes&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">))]</span>
-        <span class="n">n_semanas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sems</span><span class="p">)</span>
-        <span class="n">rees</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_semanas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="c1"># Salta outra linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Confere se a leitura não acabou</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s2">&quot;-------&quot;</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">EnergiaArmazenadaREERelato</span><span class="p">(</span><span class="n">rees</span><span class="p">,</span>
-                                                  <span class="n">tabela</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
-            <span class="c1"># Senão, lê mais uma linha</span>
-            <span class="c1"># Subsistema</span>
-            <span class="n">ssis</span> <span class="o">=</span> <span class="n">linha</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">rees</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssis</span><span class="p">)</span>
-            <span class="c1"># Inicial e semanas</span>
-            <span class="n">ci</span> <span class="o">=</span> <span class="mi">28</span>
-            <span class="n">nc</span> <span class="o">=</span> <span class="mi">6</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_semanas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
-                <span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
-                <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">_le_earm_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                            <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
-                            <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Lê a tabela de EARM por subsistema</span>
-<span class="sd">        existente no arquivo relato do DECOMP.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Salta uma linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="c1"># Descobre o número de semanas</span>
-        <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">sems</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
-                                                <span class="ow">and</span> <span class="p">(</span><span class="s2">&quot;Sem&quot;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">or</span>
-                                                     <span class="s2">&quot;Mes&quot;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">))]</span>
-        <span class="n">n_semanas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">sems</span><span class="p">)</span>
-        <span class="n">subsistemas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_semanas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-        <span class="c1"># Salta outra linha</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Confere se a leitura não acabou</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s2">&quot;-------&quot;</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">EnergiaArmazenadaSubsistemaRelato</span><span class="p">(</span><span class="n">subsistemas</span><span class="p">,</span>
-                                                         <span class="n">tabela</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
-            <span class="c1"># Senão, lê mais uma linha</span>
-            <span class="c1"># Subsistema</span>
-            <span class="n">ssis</span> <span class="o">=</span> <span class="n">linha</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">16</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">subsistemas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssis</span><span class="p">)</span>
-            <span class="c1"># Inicial e semanas</span>
-            <span class="n">ci</span> <span class="o">=</span> <span class="mi">23</span>
-            <span class="n">nc</span> <span class="o">=</span> <span class="mi">6</span>
-            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_semanas</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
-                <span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
-                <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">_le_ena_sem_subsis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                           <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span>
-                           <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Lê a tabela de ENA pré-estudo semanal por subsistema</span>
-<span class="sd">        existente no arquivo relato do DECOMP.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Salta 4 linhas</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="c1"># Cria as variáveis e inicia a leitura</span>
-        <span class="n">subsistemas</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="n">tabela</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span> <span class="n">MAX_SEMANAS_PRE</span><span class="p">))</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Confere se a leitura não acabou</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s2">&quot;-------&quot;</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">ENAPreEstudoSemanalSubsistemaRelato</span><span class="p">(</span><span class="n">subsistemas</span><span class="p">,</span>
-                                                           <span class="n">tabela</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">j</span><span class="p">])</span>
-            <span class="c1"># Senão, lê mais uma linha</span>
-            <span class="c1"># Subsistema</span>
-            <span class="n">ssis</span> <span class="o">=</span> <span class="n">linha</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">18</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-            <span class="n">subsistemas</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ssis</span><span class="p">)</span>
-            <span class="c1"># Inicial e semanas</span>
-            <span class="n">ci</span> <span class="o">=</span> <span class="mi">24</span>
-            <span class="n">nc</span> <span class="o">=</span> <span class="mi">8</span>
-            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SEMANAS_PRE</span><span class="p">):</span>
-                <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
-                <span class="n">ena</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
-                <span class="k">if</span> <span class="n">ena</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">:</span>
-                    <span class="n">j</span> <span class="o">=</span> <span class="n">n</span>
-                    <span class="k">break</span>
-                <span class="n">tabela</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
-                <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">_le_balanco_energetico</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                               <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">,</span>
-                               <span class="n">balanco</span><span class="p">:</span> <span class="n">BalancoEnergeticoRelato</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__obtem_bloco</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">Bloco</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Bloco</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c1"># Salta uma linha e extrai a semana</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="n">semana</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;ESTAGIO&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-        <span class="n">str_subsis</span> <span class="o">=</span> <span class="s2">&quot;     Subsistema&quot;</span>
-        <span class="n">str_medio</span> <span class="o">=</span> <span class="s2">&quot;    Medio&quot;</span>
-        <span class="n">subsis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="c1"># Verifica se acabou</span>
-            <span class="k">if</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_fim_balanco</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="k">break</span>
-            <span class="c1"># Senão, procura a linha que identifica o subsistema</span>
-            <span class="k">if</span> <span class="n">str_subsis</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="n">sigla_sub</span> <span class="o">=</span> <span class="n">linha</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">str_subsis</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
-                <span class="k">if</span> <span class="n">sigla_sub</span> <span class="o">!=</span> <span class="s2">&quot;FC&quot;</span><span class="p">:</span>
-                    <span class="n">subsis</span> <span class="o">=</span> <span class="n">SUBSISTEMAS</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">sigla_sub</span><span class="p">)</span>
-            <span class="c1"># Se está lendo um subsistema e achou a linha de valores médios</span>
-            <span class="k">if</span> <span class="n">subsis</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">str_medio</span> <span class="ow">in</span> <span class="n">linha</span><span class="p">:</span>
-                <span class="n">nc</span> <span class="o">=</span> <span class="mi">7</span>
-                <span class="n">ci</span> <span class="o">=</span> <span class="mi">10</span>
-                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
-                    <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
-                    <span class="n">balanco</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">semana</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
-                                   <span class="n">subsis</span><span class="p">,</span>
-                                   <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
-                    <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
-                <span class="c1"># TODO - Começar a ler a interligação</span>
-                <span class="c1"># Para o SE, lê as gerações de Itaipu50 e Itaipu60</span>
-                <span class="k">if</span> <span class="n">subsis</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="n">ci</span> <span class="o">=</span> <span class="mi">97</span>
-                    <span class="n">nc</span> <span class="o">=</span> <span class="mi">7</span>
-                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">):</span>
-                        <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="n">nc</span>
-                        <span class="n">balanco</span><span class="o">.</span><span class="n">tabela</span><span class="p">[</span><span class="n">semana</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
-                                       <span class="n">subsis</span><span class="p">,</span>
-                                       <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">])</span>
-                        <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span> <span class="o">+</span> <span class="mi">1</span>
-                <span class="c1"># Reseta o indicador de subsistema</span>
-                <span class="n">subsis</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_blocos</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">tipo</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">b</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Não foi encontrado um bloco do tipo </span><span class="si">{</span><span class="n">tipo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_fim_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linha</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">LeituraRelato</span><span class="o">.</span><span class="n">str_fim_relato</span> <span class="ow">in</span> <span class="n">linha</span></div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">balanco_energetico</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tabela de balanço energético médio entre os patamares</span>
+<span class="sd">        para cada estágio e subsistema.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `pd.DataFrame`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoBalancoEnergeticoRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cmo_medio_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Custo Marginal de Operação (CMO) médio por subsistema</span>
+<span class="sd">        e por semana.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `pd.DataFrame`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoCMORelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">geracao_termica_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tabela com a Geração Térmica por subsistema</span>
+<span class="sd">        e por semana.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `pd.DataFrame`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoGeracaoTermicaSubsistemaRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energia_armazenada_ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tabela com a Energia Armazenada (%) por REE</span>
+<span class="sd">        e por semana.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `pd.DataFrame`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoEnergiaArmazenadaREERelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energia_armazenada_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tabela com a Energia Armazenada (%) por subsistema</span>
+<span class="sd">        e por semana.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `pd.DataFrame`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoEnergiaArmazenadaSubsistemaRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ena_pre_estudo_semanal_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tabela com a ENA pré-estudo por subsistema</span>
+<span class="sd">        e por semana.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `pd.DataFrame`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoENAPreEstudoSemanalSubsistemaRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">energia_armazenada_maxima_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tabela com a EARMax (Mwmes) por subsistema.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `pd.DataFrame`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoENAPreEstudoSemanalSubsistemaRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span><span class="p">[[</span><span class="s2">&quot;Subsistema&quot;</span><span class="p">,</span> <span class="s2">&quot;Earmax&quot;</span><span class="p">]]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dias_excluidos_semana_inicial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Número de dias excluídos na semana inicial de estudo.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `int`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoDiasExcluidosSemanas</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dias_excluidos_semana_final</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Número de dias excluídos na semana final de estudo.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `int`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoDiasExcluidosSemanas</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 </pre></div>
 
            </div>

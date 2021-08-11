@@ -34,8 +34,8 @@ class RegistroDadger:
                 and not self._encontrado)
 
     def inicia_registro(self,
-                     linha: str,
-                     ordem: int) -> bool:
+                        linha: str,
+                        ordem: float) -> bool:
         """
         Inicia um registro com uma linha.
         """
@@ -85,19 +85,20 @@ class RegistroDadger:
 class TipoRegistroAC:
     """
     Classe base para os diferentes tipos possíveis de
-    registros AC, baseados nos diferentes mnemônicos. 
+    registros AC, baseados nos diferentes mnemônicos.
     """
     mnemonico = ""
+
     def __init__(self,
                  linha: str) -> None:
         self._linha = linha
-        self._dados = []
+        self._dados: Any = []
 
     @abstractmethod
     def le(self):
         pass
 
-    @abstractmethod
     @property
+    @abstractmethod
     def linha_escrita(self) -> str:
         pass

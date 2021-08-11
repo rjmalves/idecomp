@@ -9,7 +9,7 @@ class DadosDadger:
     """
     def __init__(self,
                  registros: List[RegistroDadger],
-                 linhas_fora_registros: Dict[int, str]) -> None:
+                 linhas_fora_registros: Dict[float, str]) -> None:
         self.__registros = registros
         self.__linhas_fora_registros = linhas_fora_registros
         pass
@@ -19,5 +19,5 @@ class DadosDadger:
         return self.__registros
 
     @property
-    def linhas_fora_registros(self) -> Dict[int, str]:
+    def linhas_fora_registros(self) -> Dict[float, str]:
         return self.__linhas_fora_registros
