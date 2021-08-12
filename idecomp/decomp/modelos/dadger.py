@@ -29,6 +29,11 @@ class TE(RegistroDadger):
 
     @property
     def titulo(self) -> str:
+        """
+        O único conteúdo do registro (título do estudo).
+
+        :return: Uma `str`com o título do estudo
+        """
         return self._dados
 
     @titulo.setter
@@ -60,10 +65,20 @@ class SB(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código de cadastro do subsistema.
+
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def nome(self) -> str:
+        """
+        O nome de cadastro do subsistema.
+
+        :return: O nome como `str`.
+        """
         return self._dados[1]
 
 
@@ -105,14 +120,29 @@ class UH(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código de cadastro da UHE.
+
+        :return: O código como um `int`.
+        """
         return self._dados[0]
 
     @property
     def ree(self) -> int:
+        """
+        O REE de cadastro da UHE.
+
+        :return: O REE como um `int`.
+        """
         return self._dados[1]
 
     @property
     def volume_inicial(self) -> float:
+        """
+        O volume inicial da UHE para o estudo.
+
+        :return: O volume como um `float`.
+        """
         return self._dados[2]
 
     @volume_inicial.setter
@@ -121,6 +151,11 @@ class UH(RegistroDadger):
 
     @property
     def evaporacao(self) -> bool:
+        """
+        A consideração ou não de evaporação para a UHE.
+
+        :return: A consideração como um `bool`.
+        """
         return self._dados[3]
 
     @evaporacao.setter
@@ -184,14 +219,29 @@ class CT(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código de cadastro da UTE.
+
+        :return: O código como um `int`.
+        """
         return self._dados[0]
 
     @property
     def subsistema(self) -> int:
+        """
+        O subsistema de cadastro da UTE.
+
+        :return: O subsistema como um `int`.
+        """
         return self._dados[1]
 
     @property
     def nome(self) -> str:
+        """
+        O nome de cadastro da UTE.
+
+        :return: O nome como uma `str`.
+        """
         return self._dados[2]
 
     @nome.setter
@@ -200,6 +250,11 @@ class CT(RegistroDadger):
 
     @property
     def inflexibilidades(self) -> List[float]:
+        """
+        As inflexibilidades da UTE por patamar.
+
+        :return: As inflexibilidades como `list[float]`.
+        """
         return self._dados[4::3]
 
     @inflexibilidades.setter
@@ -213,6 +268,11 @@ class CT(RegistroDadger):
 
     @property
     def disponibilidades(self) -> List[float]:
+        """
+        As disponibilidades da UTE por patamar.
+
+        :return: As disponibilidades como `list[float]`.
+        """
         return self._dados[5::3]
 
     @disponibilidades.setter
@@ -226,6 +286,11 @@ class CT(RegistroDadger):
 
     @property
     def cvus(self) -> List[float]:
+        """
+        Os CVUs da UTE por patamar.
+
+        :return: Os CVUs como `list[float]`.
+        """
         return self._dados[6::3]
 
     @cvus.setter
@@ -334,18 +399,38 @@ class DP(RegistroDadger):
 
     @property
     def estagio(self) -> int:
+        """
+        O estágio associado às durações especificadas.
+
+        :return: O estágio como `int`.
+        """
         return self._dados[0]
 
     @property
     def subsistema(self) -> int:
+        """
+        O subsistema associado às durações especificadas.
+
+        :return: O subsistema como `int`.
+        """
         return self._dados[1]
 
     @property
     def num_patamares(self) -> int:
+        """
+        O número de patamares.
+
+        :return: O número como `int`.
+        """
         return self._dados[2]
 
     @property
     def cargas(self) -> List[float]:
+        """
+        As cargas em Mwmed pata cada patamar de carga
+
+        :return: As cargas como `list[float]`.
+        """
         return self._dados[3::2]
 
     @cargas.setter
@@ -359,6 +444,11 @@ class DP(RegistroDadger):
 
     @property
     def duracoes(self) -> List[float]:
+        """
+        As durações de cada patamar de carga em horas
+
+        :return: As durações como `list[float]`.
+        """
         return self._dados[4::2]
 
     @duracoes.setter
@@ -544,6 +634,11 @@ class TX(RegistroDadger):
 
     @property
     def taxa(self) -> float:
+        """
+        A taxa de desconto em % utilizada no estudo
+
+        :return: As taxa como `float`.
+        """
         return self._dados
 
     @taxa.setter
@@ -573,6 +668,11 @@ class GP(RegistroDadger):
 
     @property
     def gap(self) -> float:
+        """
+        O gap considerado para convergência no estudo
+
+        :return: O gap como `float`.
+        """
         return self._dados
 
     @gap.setter
@@ -600,6 +700,11 @@ class NI(RegistroDadger):
 
     @property
     def iteracoes(self) -> int:
+        """
+        O número máximo de iterações do modelo no estudo
+
+        :return: O número de iterações como `int`.
+        """
         return self._dados
 
     @iteracoes.setter
@@ -633,6 +738,11 @@ class DT(RegistroDadger):
 
     @property
     def dia(self) -> int:
+        """
+        O dia de referência para realização do estudo
+
+        :return: O dia como `int`.
+        """
         return self._dados[0]
 
     @dia.setter
@@ -641,6 +751,11 @@ class DT(RegistroDadger):
 
     @property
     def mes(self) -> int:
+        """
+        O mês de referência para realização do estudo
+
+        :return: O mês como `int`.
+        """
         return self._dados[1]
 
     @mes.setter
@@ -649,6 +764,11 @@ class DT(RegistroDadger):
 
     @property
     def ano(self) -> int:
+        """
+        O ano de referência para realização do estudo
+
+        :return: O ano como `int`.
+        """
         return self._dados[2]
 
     @ano.setter
@@ -817,14 +937,29 @@ class RE(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código de cadastro para a restrição
+
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def estagio_inicial(self) -> int:
+        """
+        O estágio inicial para consideração da restrição
+
+        :return: O estágio como `int`.
+        """
         return self._dados[1]
 
     @property
     def estagio_final(self) -> int:
+        """
+        O estágio final para consideração da restrição
+
+        :return: O estágio como `int`.
+        """
         return self._dados[2]
 
 
@@ -866,10 +1001,21 @@ class LU(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código da restrição RE associada aos limites
+
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def estagio(self) -> int:
+        """
+        O estágio inicial para consideração dos limites, até
+        que sejam especificados novos limites.
+
+        :return: O estágio como `int`.
+        """
         return self._dados[1]
 
     @estagio.setter
@@ -878,6 +1024,11 @@ class LU(RegistroDadger):
 
     @property
     def limites_inferiores(self) -> List[float]:
+        """
+        Os limites inferiores por patamar para a restrição elétrica
+
+        :return: Os limites como `list[float]`
+        """
         return self._dados[2::2]
 
     @limites_inferiores.setter
@@ -891,6 +1042,11 @@ class LU(RegistroDadger):
 
     @property
     def limites_superiores(self) -> List[float]:
+        """
+        Os limites superiores por patamar para a restrição elétrica
+
+        :return: Os limites como `list[float]`
+        """
         return self._dados[3::2]
 
     @limites_superiores.setter
@@ -1041,10 +1197,22 @@ class VI(RegistroDadger):
 
     @property
     def uhe(self) -> int:
+        """
+        O código da UHE a partir do qual é contabilizado
+        o tempo de viagem.
+
+        :return: O código como `int`
+        """
         return self._dados[0]
 
     @property
     def duracao(self) -> int:
+        """
+        A duração da viagem da água (em horas) entre a UHE do
+        código informado e sua usina à jusante segundo o hidr.
+
+        :return: A duração como `int`
+        """
         return self._dados[1]
 
     @duracao.setter
@@ -1053,6 +1221,13 @@ class VI(RegistroDadger):
 
     @property
     def vazoes(self) -> List[float]:
+        """
+        As vazões defluentes das semanas passadas para a usina
+        do código informado. A posição da vazão na lista indica
+        a qual semana passada se refere [s-1, s-2, s-3, ...].
+
+        :return: A duração como `int`
+        """
         return self._dados[2:]
 
     @vazoes.setter
@@ -1606,6 +1781,12 @@ class IR(RegistroDadger):
 
     @property
     def tipo(self) -> str:
+        """
+        Mnemônico que contém o tipo de relatório de
+        saída escolhido.
+
+        :return: O mnemônico como `str`.
+        """
         return self._dados[0]
 
 
@@ -1738,10 +1919,22 @@ class FC(RegistroDadger):
 
     @property
     def tipo(self) -> str:
+        """
+        O tipo de arquivo da FCF na forma dos mnemônicos
+        aceitos pelo DECOMP.
+
+        :return: O mnemônico como `str`.
+        """
         return self._dados[0]
 
     @property
     def caminho(self) -> str:
+        """
+        O caminho relativo ou completo para o arquivo da
+        FCF.
+
+        :return: O caminho como `str`.
+        """
         return self._dados[1]
 
     @caminho.setter
@@ -1781,10 +1974,22 @@ class TI(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código da UHE associada às taxas de irrigação
+
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def taxas(self) -> List[float]:
+        """
+        As taxas de irrigação por estágio do estudo. A
+        posição da taxa na lista indica a qual estágio
+        ela está associada [e1, e2, e3, ...].
+
+        :return: As taxas como `list[float]`.
+        """
         return self._dados[1:]
 
     @taxas.setter
@@ -1878,14 +2083,29 @@ class HV(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código da UHE associada à restrição HV.
+
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def estagio_inicial(self) -> int:
+        """
+        O estágio inicial de consideração da restrição HV.
+        
+        :return: O estágio como `int`.
+        """
         return self._dados[1]
 
     @property
     def estagio_final(self) -> int:
+        """
+        O estágio final de consideração da restrição HV.
+        
+        :return: O estágio como `int`.
+        """
         return self._dados[2]
 
 
@@ -1927,10 +2147,20 @@ class LV(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código da restrição HV associada aos limites
+        
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def estagio(self) -> int:
+        """
+        O estágio de consideração dos limites.
+        
+        :return: O estágio como `int`.
+        """
         return self._dados[1]
 
     @estagio.setter
@@ -1939,6 +2169,11 @@ class LV(RegistroDadger):
 
     @property
     def limite_inferior(self) -> float:
+        """
+        O limite inferior para o armazenamento.
+        
+        :return: O limite como `float`.
+        """
         return self._dados[2]
 
     @limite_inferior.setter
@@ -1947,6 +2182,11 @@ class LV(RegistroDadger):
 
     @property
     def limites_superior(self) -> float:
+        """
+        O limite superior para o armazenamento.
+        
+        :return: O limite como `float`.
+        """
         return self._dados[3]
 
     @limites_superior.setter
@@ -2015,14 +2255,29 @@ class HQ(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código da UHE associada à restrição HQ.
+
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def estagio_inicial(self) -> int:
+        """
+        O estágio inicial de consideração da restrição HQ.
+        
+        :return: O estágio como `int`.
+        """
         return self._dados[1]
 
     @property
     def estagio_final(self) -> int:
+        """
+        O estágio final de consideração da restrição HQ.
+        
+        :return: O estágio como `int`.
+        """
         return self._dados[2]
 
 
@@ -2064,10 +2319,20 @@ class LQ(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código da restrição HQ associada aos limites
+        
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def estagio(self) -> int:
+        """
+        O estágio de consideração dos limites.
+        
+        :return: O estágio como `int`.
+        """
         return self._dados[1]
 
     @estagio.setter
@@ -2076,6 +2341,11 @@ class LQ(RegistroDadger):
 
     @property
     def limites_inferiores(self) -> List[float]:
+        """
+        Os limites inferiores por patamar para a vazão.
+        
+        :return: Os limites como `list[float]`.
+        """
         return self._dados[2::2]
 
     @limites_inferiores.setter
@@ -2089,6 +2359,11 @@ class LQ(RegistroDadger):
 
     @property
     def limites_superiores(self) -> List[float]:
+        """
+        Os limites superiores por patamar para a vazão.
+        
+        :return: Os limites como `list[float]`.
+        """
         return self._dados[3::2]
 
     @limites_superiores.setter
@@ -2239,10 +2514,21 @@ class HE(RegistroDadger):
 
     @property
     def codigo(self) -> int:
+        """
+        O código de cadastro da restrição HE
+        
+        :return: O código como `int`.
+        """
         return self._dados[0]
 
     @property
     def tipo_limite(self) -> int:
+        """
+        O tipo de limite especificado na restrição HE,
+        em valor absoluto ou percentual.
+        
+        :return: O tipo como `int`.
+        """
         return self._dados[1]
 
     @tipo_limite.setter
@@ -2251,6 +2537,12 @@ class HE(RegistroDadger):
 
     @property
     def limite(self) -> float:
+        """
+        O limite para a energia armazenada associada
+        ao registro HE.
+        
+        :return: O limite como `float`.
+        """
         return self._dados[2]
 
     @limite.setter
@@ -2259,6 +2551,11 @@ class HE(RegistroDadger):
 
     @property
     def estagio(self) -> int:
+        """
+        O estágio para consideração da restrição.
+        
+        :return: O estágio como `int`.
+        """
         return self._dados[3]
 
     @estagio.setter
@@ -2267,6 +2564,11 @@ class HE(RegistroDadger):
 
     @property
     def penalidade(self) -> float:
+        """
+        O valor da penalidade para a violação da restrição.
+        
+        :return: O valor como `float`.
+        """
         return self._dados[4]
 
     @penalidade.setter
@@ -2275,6 +2577,12 @@ class HE(RegistroDadger):
 
     @property
     def tipo_penalidade(self) -> int:
+        """
+        O tipo de penalidade a ser considerada ao violar a
+        restrição (inviabilidade ou penalização).
+        
+        :return: O tipo como `int`.
+        """
         return self._dados[5]
 
     @tipo_penalidade.setter

@@ -176,10 +176,19 @@
 
 <div class="viewcode-block" id="Dadger"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger">[documentos]</a><span class="k">class</span> <span class="nc">Dadger</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Armazena os dados de entrada do DECOMP</span>
+<span class="sd">    Armazena os dados de entrada gerais do DECOMP.</span>
 
 <span class="sd">    Esta classe lida com as informações de entrada fornecidas ao</span>
-<span class="sd">    DECOMP no `dadger.rvx`.</span>
+<span class="sd">    DECOMP no `dadger.rvx`. Possui métodos para acessar individualmente</span>
+<span class="sd">    cada registro, editá-lo e também cria alguns novos registros.</span>
+
+<span class="sd">    Atualmente, são suportados os registros:</span>
+<span class="sd">    `TE`, `SB`, `UH`, `CT`, `DP`, `TX`, `GP`, `NI`, `DT`, `RE`, `LU`,</span>
+<span class="sd">    `VI`, `IR`, `FC`, `TI`, `HV`, `LV`, `HQ`, `LQ` e `HE`.</span>
+
+<span class="sd">    É possível ler as informações existentes em arquivos a partir do</span>
+<span class="sd">    método `le_arquivo()` e escreve um novo arquivo a partir do método</span>
+<span class="sd">    `escreve_arquivo()`.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -187,6 +196,9 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">dados</span><span class="p">:</span> <span class="n">DadosDadger</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Construtor padrão</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">dados</span>
 
     <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
@@ -224,16 +236,37 @@
                    <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                    <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;dadger.rv0&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Dadger&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Realiza a leitura de um arquivo &quot;dadger.rvx&quot; existente em</span>
+<span class="sd">        um diretório.</span>
+
+<span class="sd">        :param diretorio: O caminho relativo ou completo para o diretório</span>
+<span class="sd">            onde se encontra o arquivo</span>
+<span class="sd">        :type diretorio: str</span>
+<span class="sd">        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente</span>
+<span class="sd">            especificando a revisão. Tem como valor default &quot;dadger.rv0&quot;</span>
+<span class="sd">        :type nome_arquivo: str, optional</span>
+<span class="sd">        :return: Um objeto :class:`Dadger` com informações do arquivo lido</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">leitor</span> <span class="o">=</span> <span class="n">LeituraDadger</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">leitor</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="n">nome_arquivo</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+<div class="viewcode-block" id="Dadger.escreve_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.escreve_arquivo">[documentos]</a>    <span class="k">def</span> <span class="nf">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                         <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                         <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;dadger.rv0&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Realiza a escrita de um arquivo com as informações do</span>
+<span class="sd">        objeto :class:`Dadger`</span>
+
+<span class="sd">        :param diretorio: O caminho relativo ou completo para o diretório</span>
+<span class="sd">            onde será escrito o arquivo.</span>
+<span class="sd">        :type diretorio: str</span>
+<span class="sd">        :param nome_arquivo: Nome do arquivo a ser escrito.Tem como valor</span>
+<span class="sd">            default &quot;dadger.rv0&quot;</span>
+<span class="sd">        :type nome_arquivo: str, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">escritor</span> <span class="o">=</span> <span class="n">EscritaDadger</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
-        <span class="n">escritor</span><span class="o">.</span><span class="n">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span>
+        <span class="n">escritor</span><span class="o">.</span><span class="n">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__obtem_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                          <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
@@ -257,8 +290,6 @@
 
     <span class="k">def</span> <span class="nf">__obtem_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                           <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">registros</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">tipo</span><span class="p">):</span>
@@ -267,34 +298,79 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">te</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TE</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que define o nome do estudo no</span>
+<span class="sd">        :class:`Dadger`</span>
+
+<span class="sd">        :return: Um registro do tipo :class:`TE`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">TE</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">r</span>
 
-    <span class="k">def</span> <span class="nf">sb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SB</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.sb"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.sb">[documentos]</a>    <span class="k">def</span> <span class="nf">sb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SB</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que define os subsistemas existentes</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            do subsistema</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`SB`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SB</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">SB</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro SB&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para o código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; para o código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">uh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UH</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.uh"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.uh">[documentos]</a>    <span class="k">def</span> <span class="nf">uh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UH</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que define uma usina hidrelétrica existente</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da UHE</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`UH`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">UH</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">UH</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro UH&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">ct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CT</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ct"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ct">[documentos]</a>    <span class="k">def</span> <span class="nf">ct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CT</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que define uma usina termelétrica existente</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da UTE</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`CT`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CT</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">CT</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro CT&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UTE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; para a UTE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DP</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.dp"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.dp">[documentos]</a>    <span class="k">def</span> <span class="nf">dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DP</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que define as durações dos patamares</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param estagio: Índice do estágio sobre o qual serão</span>
+<span class="sd">            definidas as durações dos patamares</span>
+<span class="sd">        :type estagio: int</span>
+<span class="sd">        :param subsistema: Índice do subsistema para o qual</span>
+<span class="sd">            valerão os patamares.</span>
+<span class="sd">        :type subsistema: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`DP`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DP</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">,</span>
@@ -302,33 +378,107 @@
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro DP&quot;</span> <span class="o">+</span>
                          <span class="sa">f</span><span class="s2">&quot; para o subsistema </span><span class="si">{</span><span class="n">subsistema</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; no estágio </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; no estágio </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">tx</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TX</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que define a taxa de desconto</span>
+<span class="sd">        aplicada no estudo definido no :class:`Dadger`</span>
+
+<span class="sd">        :return: Um registro do tipo :class:`TX`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">TX</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">gp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GP</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que define o gap para convergência</span>
+<span class="sd">        considerado no estudo definido no :class:`Dadger`</span>
+
+<span class="sd">        :return: Um registro do tipo :class:`GP`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">GP</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ni</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NI</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que define o número máximo de iterações</span>
+<span class="sd">        do DECOMP no estudo definido no :class:`Dadger`</span>
+
+<span class="sd">        :return: Um registro do tipo :class:`NI`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">NI</span><span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DT</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que define a data de referência do</span>
+<span class="sd">        estudo definido no :class:`Dadger`</span>
+
+<span class="sd">        :return: Um registro do tipo :class:`DT`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">DT</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">re</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RE</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.re"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.re">[documentos]</a>    <span class="k">def</span> <span class="nf">re</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RE</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que cadastra uma restrição elétrica existente</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da restrição elétrica</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`RE`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">RE</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro RE&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; com código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">lu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LU</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.lu"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lu">[documentos]</a>    <span class="k">def</span> <span class="nf">lu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LU</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica os limites inferiores e</span>
+<span class="sd">        superiores por patamar de uma restrição elétrica existente</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da restrição elétrica</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :param estagio: Estágio sobre o qual valerão os limites da</span>
+<span class="sd">            restrição elétricas</span>
+<span class="sd">        :type estagio: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`LU`</span>
+
+<span class="sd">        **Exemplos**</span>
+
+<span class="sd">        Para um objeto :class:`Dadger` que possua uma restrição RE</span>
+<span class="sd">        de código 1, definida para os estágios de 1 a 5, com limites</span>
+<span class="sd">        LU definidos apenas para o estágio 1, estes podem ser acessados com:</span>
+
+<span class="sd">        &gt;&gt;&gt; lu = dadger.lu(1, 1)</span>
+<span class="sd">        &gt;&gt;&gt; lu</span>
+<span class="sd">            &lt;idecomp.decomp.modelos.dadger.LU object at 0x0000026E5C269550&gt;</span>
+
+<span class="sd">        Se for acessado o registro LU de um estágio fora dos limites da</span>
+<span class="sd">        restrição RE, isso resultará em um erro:</span>
+
+<span class="sd">        &gt;&gt;&gt; dadger.lu(1, 7)</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ...</span>
+<span class="sd">            ValueError: Estágio 7 fora dos limites do registro RE</span>
+
+<span class="sd">        Por outro lado, se for acessado o registro LU em um estágio dentro</span>
+<span class="sd">        dos limites do registro RE, porém sem limites próprios definidos,</span>
+<span class="sd">        será criado um registro idêntico ao do último estágio existente,</span>
+<span class="sd">        e este será retornado:</span>
+
+<span class="sd">        &gt;&gt;&gt; lu2 = dadger.lu(1, 5)</span>
+<span class="sd">        &gt;&gt;&gt; lu.limites_inferiores == lu2.limites_inferiores        </span>
+<span class="sd">            True</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="n">modelo</span><span class="p">:</span> <span class="n">LU</span><span class="p">,</span>
                           <span class="n">estagio_final</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LU</span><span class="p">:</span>
@@ -368,50 +518,136 @@
                 <span class="n">reg</span> <span class="o">=</span> <span class="n">r</span>
         <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">vi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uhe</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VI</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.vi"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.vi">[documentos]</a>    <span class="k">def</span> <span class="nf">vi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uhe</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VI</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica os tempos de viagem da</span>
+<span class="sd">        água em uma UHE existente no no estudo descrito</span>
+<span class="sd">        pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param uhe: Índice da UHE associada aos tempos de viagem</span>
+<span class="sd">        :type uhe: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`VI`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">VI</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">VI</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">uhe</span> <span class="o">==</span> <span class="n">uhe</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro VI&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">uhe</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">uhe</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">ir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IR</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ir"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ir">[documentos]</a>    <span class="k">def</span> <span class="nf">ir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IR</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica os relatórios de saída</span>
+<span class="sd">        a serem produzidos pelo DECOMP após a execução do estudo</span>
+<span class="sd">        descrito no :class:`Dadger`.</span>
+
+<span class="sd">        :param tipo: Mnemônico do tipo de relatório especificado</span>
+<span class="sd">            no registro</span>
+<span class="sd">        :type tipo: str</span>
+<span class="sd">        :return: Um registro do tipo :class:`IR`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">IR</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">IR</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">tipo</span> <span class="o">==</span> <span class="n">tipo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro IR&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com mnemônico </span><span class="si">{</span><span class="n">tipo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; com mnemônico </span><span class="si">{</span><span class="n">tipo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">fc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FC</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.fc"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.fc">[documentos]</a>    <span class="k">def</span> <span class="nf">fc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FC</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica os caminhos para os</span>
+<span class="sd">        arquivos com a FCF do NEWAVE.</span>
+
+<span class="sd">        :param tipo: Mnemônico do tipo de FCF especificado</span>
+<span class="sd">            no registro</span>
+<span class="sd">        :type tipo: str</span>
+<span class="sd">        :return: Um registro do tipo :class:`FC`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">FC</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">FC</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">tipo</span> <span class="o">==</span> <span class="n">tipo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro FC&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com mnemônico </span><span class="si">{</span><span class="n">tipo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; com mnemônico </span><span class="si">{</span><span class="n">tipo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">ti</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TI</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ti"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ti">[documentos]</a>    <span class="k">def</span> <span class="nf">ti</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TI</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica as taxas de irrigação</span>
+<span class="sd">        por posto (UHE) existente no estudo especificado no :class:`Dadger`</span>
+
+<span class="sd">        :param codigo: Mnemônico do tipo de FCF especificado</span>
+<span class="sd">            no registro</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`FC`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TI</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">TI</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro TI&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">hv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HV</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.hv"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.hv">[documentos]</a>    <span class="k">def</span> <span class="nf">hv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HV</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que cadastra uma restrição de volume mínimo</span>
+<span class="sd">        armazenado existente no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da restrição de volume mínimo</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`HV`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">HV</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">HV</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro HV&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; para UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">lv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LV</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.lv"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lv">[documentos]</a>    <span class="k">def</span> <span class="nf">lv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LV</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica os limites inferior e</span>
+<span class="sd">        superior de uma restrição de volume mínimo existente</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
 
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da restrição de volume mínimo</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :param estagio: Estágio sobre o qual valerão os limites da</span>
+<span class="sd">            restrição</span>
+<span class="sd">        :type estagio: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`LV`</span>
+
+<span class="sd">        **Exemplos**</span>
+
+<span class="sd">        Para um objeto :class:`Dadger` que possua uma restrição HV</span>
+<span class="sd">        de código 1, definida para os estágios de 1 a 5, com limites</span>
+<span class="sd">        LV definidos apenas para o estágio 1, estes podem ser acessados com:</span>
+
+<span class="sd">        &gt;&gt;&gt; lv = dadger.lv(1, 1)</span>
+<span class="sd">        &gt;&gt;&gt; lv</span>
+<span class="sd">            &lt;idecomp.decomp.modelos.dadger.LV object at 0x0000026E5C269550&gt;</span>
+
+<span class="sd">        Se for acessado o registro LV de um estágio fora dos limites da</span>
+<span class="sd">        restrição HV, isso resultará em um erro:</span>
+
+<span class="sd">        &gt;&gt;&gt; dadger.lv(1, 7)</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ...</span>
+<span class="sd">            ValueError: Estágio 7 fora dos limites do registro HV</span>
+
+<span class="sd">        Por outro lado, se for acessado o registro LV em um estágio dentro</span>
+<span class="sd">        dos limites do registro HV, porém sem limites próprios definidos,</span>
+<span class="sd">        será criado um registro idêntico ao do último estágio existente,</span>
+<span class="sd">        e este será retornado:</span>
+
+<span class="sd">        &gt;&gt;&gt; lv2 = dadger.lv(1, 5)</span>
+<span class="sd">        &gt;&gt;&gt; lv.limite_inferior == lv2.limite_inferior</span>
+<span class="sd">            True</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="n">modelo</span><span class="p">:</span> <span class="n">LV</span><span class="p">,</span>
                           <span class="n">estagio_final</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LV</span><span class="p">:</span>
             <span class="n">copia</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">modelo</span><span class="p">)</span>
@@ -450,18 +686,67 @@
                 <span class="n">reg</span> <span class="o">=</span> <span class="n">r</span>
         <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">hv</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">hv</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">hq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HQ</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.hq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.hq">[documentos]</a>    <span class="k">def</span> <span class="nf">hq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HQ</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que cadastra uma restrição de vazão</span>
+<span class="sd">        existente no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da restrição de vazão</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`HQ`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">HQ</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">HQ</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro HQ&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com o código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                         <span class="sa">f</span><span class="s2">&quot; com o código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">lq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LQ</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.lq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lq">[documentos]</a>    <span class="k">def</span> <span class="nf">lq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LQ</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica os limites inferiores e</span>
+<span class="sd">        superiores por patamar de uma restrição de vazão existente</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
 
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da restrição de vazão</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :param estagio: Estágio sobre o qual valerão os limites da</span>
+<span class="sd">            restrição de vazão</span>
+<span class="sd">        :type estagio: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`LQ`</span>
+
+<span class="sd">        **Exemplos**</span>
+
+<span class="sd">        Para um objeto :class:`Dadger` que possua uma restrição HQ</span>
+<span class="sd">        de código 1, definida para os estágios de 1 a 5, com limites</span>
+<span class="sd">        LQ definidos apenas para o estágio 1, estes podem ser acessados com:</span>
+
+<span class="sd">        &gt;&gt;&gt; lq = dadger.lq(1, 1)</span>
+<span class="sd">        &gt;&gt;&gt; lq</span>
+<span class="sd">            &lt;idecomp.decomp.modelos.dadger.LQ object at 0x0000026E5C269550&gt;</span>
+
+<span class="sd">        Se for acessado o registro LQ de um estágio fora dos limites da</span>
+<span class="sd">        restrição HQ, isso resultará em um erro:</span>
+
+<span class="sd">        &gt;&gt;&gt; dadger.lq(1, 7)</span>
+<span class="sd">            Traceback (most recent call last):</span>
+<span class="sd">            ...</span>
+<span class="sd">            ValueError: Estágio 7 fora dos limites do registro HQ</span>
+
+<span class="sd">        Por outro lado, se for acessado o registro LQ em um estágio dentro</span>
+<span class="sd">        dos limites do registro HQ, porém sem limites próprios definidos,</span>
+<span class="sd">        será criado um registro idêntico ao do último estágio existente,</span>
+<span class="sd">        e este será retornado:</span>
+
+<span class="sd">        &gt;&gt;&gt; lq2 = dadger.lq(1, 5)</span>
+<span class="sd">        &gt;&gt;&gt; lq.limites_inferiores == lq2.limites_inferiores        </span>
+<span class="sd">            True</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="n">modelo</span><span class="p">:</span> <span class="n">LQ</span><span class="p">,</span>
                           <span class="n">estagio_final</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LQ</span><span class="p">:</span>
             <span class="n">copia</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">modelo</span><span class="p">)</span>
@@ -500,16 +785,28 @@
                 <span class="n">reg</span> <span class="o">=</span> <span class="n">r</span>
         <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">hq</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">hq</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">he</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HE</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.he"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.he">[documentos]</a>    <span class="k">def</span> <span class="nf">he</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HE</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que cadastra uma restrição de energia</span>
+<span class="sd">        armazenada existente no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">            da restrição de energia armazenada</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :param estagio: Índice do estágio para o qual vale a</span>
+<span class="sd">            restrição de energia armazenada</span>
+<span class="sd">        :type estagio: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`HE`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">HE</span><span class="p">,</span>
                                              <span class="n">codigo</span><span class="p">,</span>
                                              <span class="n">estagio</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">r</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span></div>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

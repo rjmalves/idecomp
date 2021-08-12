@@ -187,14 +187,1395 @@ dadger.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger">
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Dadger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dados</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">idecomp._utils.dadosdadger.DadosDadger</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Armazena os dados de entrada do DECOMP</p>
+<dd><p>Armazena os dados de entrada gerais do DECOMP.</p>
 <p>Esta classe lida com as informações de entrada fornecidas ao
-DECOMP no <code class="xref py py-obj docutils literal notranslate"><span class="pre">dadger.rvx</span></code>.</p>
+DECOMP no <code class="xref py py-obj docutils literal notranslate"><span class="pre">dadger.rvx</span></code>. Possui métodos para acessar individualmente
+cada registro, editá-lo e também cria alguns novos registros.</p>
+<p>Atualmente, são suportados os registros:
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">TE</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">SB</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">UH</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">CT</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">DP</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">TX</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">GP</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">NI</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">DT</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">RE</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">LU</span></code>,
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">VI</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">IR</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">FC</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">TI</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">HV</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">LV</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">HQ</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">LQ</span></code> e <code class="xref py py-obj docutils literal notranslate"><span class="pre">HE</span></code>.</p>
+<p>É possível ler as informações existentes em arquivos a partir do
+método <a class="reference internal" href="#idecomp.decomp.dadger.Dadger.le_arquivo" title="idecomp.decomp.dadger.Dadger.le_arquivo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">le_arquivo()</span></code></a> e escreve um novo arquivo a partir do método
+<a class="reference internal" href="#idecomp.decomp.dadger.Dadger.escreve_arquivo" title="idecomp.decomp.dadger.Dadger.escreve_arquivo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">escreve_arquivo()</span></code></a>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ct">
+<span class="sig-name descname"><span class="pre">ct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.CT" title="idecomp.decomp.modelos.dadger.CT"><span class="pre">idecomp.decomp.modelos.dadger.CT</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ct"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ct" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que define uma usina termelétrica existente
+no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da UTE</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">CT</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.dp">
+<span class="sig-name descname"><span class="pre">dp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsistema</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.DP" title="idecomp.decomp.modelos.dadger.DP"><span class="pre">idecomp.decomp.modelos.dadger.DP</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.dp"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.dp" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que define as durações dos patamares
+no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>estagio</strong> (<em>int</em>) – Índice do estágio sobre o qual serão
+definidas as durações dos patamares</p></li>
+<li><p><strong>subsistema</strong> (<em>int</em>) – Índice do subsistema para o qual
+valerão os patamares.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">DP</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.dt">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dt</span></span><em class="property"><span class="pre">:</span> <span class="pre">idecomp.decomp.modelos.dadger.DT</span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.dt" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém o (único) registro que define a data de referência do
+estudo definido no <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">DT</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.escreve_arquivo">
+<span class="sig-name descname"><span class="pre">escreve_arquivo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diretorio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome_arquivo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dadger.rv0'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.escreve_arquivo"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.escreve_arquivo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Realiza a escrita de um arquivo com as informações do
+objeto <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diretorio</strong> (<em>str</em>) – O caminho relativo ou completo para o diretório
+onde será escrito o arquivo.</p></li>
+<li><p><strong>nome_arquivo</strong> (<em>str</em><em>, </em><em>optional</em>) – Nome do arquivo a ser escrito.Tem como valor
+default “dadger.rv0”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.fc">
+<span class="sig-name descname"><span class="pre">fc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tipo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.FC" title="idecomp.decomp.modelos.dadger.FC"><span class="pre">idecomp.decomp.modelos.dadger.FC</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.fc"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.fc" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica os caminhos para os
+arquivos com a FCF do NEWAVE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>tipo</strong> (<em>str</em>) – Mnemônico do tipo de FCF especificado
+no registro</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">FC</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.gp">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">gp</span></span><em class="property"><span class="pre">:</span> <span class="pre">idecomp.decomp.modelos.dadger.GP</span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.gp" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém o (único) registro que define o gap para convergência
+considerado no estudo definido no <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">GP</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.he">
+<span class="sig-name descname"><span class="pre">he</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.HE" title="idecomp.decomp.modelos.dadger.HE"><span class="pre">idecomp.decomp.modelos.dadger.HE</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.he"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.he" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que cadastra uma restrição de energia
+armazenada existente no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da restrição de energia armazenada</p></li>
+<li><p><strong>estagio</strong> (<em>int</em>) – Índice do estágio para o qual vale a
+restrição de energia armazenada</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">HE</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.hq">
+<span class="sig-name descname"><span class="pre">hq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.HQ" title="idecomp.decomp.modelos.dadger.HQ"><span class="pre">idecomp.decomp.modelos.dadger.HQ</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.hq"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.hq" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que cadastra uma restrição de vazão
+existente no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da restrição de vazão</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">HQ</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.hv">
+<span class="sig-name descname"><span class="pre">hv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.HV" title="idecomp.decomp.modelos.dadger.HV"><span class="pre">idecomp.decomp.modelos.dadger.HV</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.hv"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.hv" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que cadastra uma restrição de volume mínimo
+armazenado existente no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da restrição de volume mínimo</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">HV</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ir">
+<span class="sig-name descname"><span class="pre">ir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tipo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.IR" title="idecomp.decomp.modelos.dadger.IR"><span class="pre">idecomp.decomp.modelos.dadger.IR</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ir"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ir" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica os relatórios de saída
+a serem produzidos pelo DECOMP após a execução do estudo
+descrito no <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>tipo</strong> (<em>str</em>) – Mnemônico do tipo de relatório especificado
+no registro</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">IR</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.le_arquivo">
 <em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">le_arquivo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diretorio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome_arquivo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dadger.rv0'</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><span class="pre">idecomp.decomp.dadger.Dadger</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.le_arquivo"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.le_arquivo" title="Link permanente para esta definição">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Realiza a leitura de um arquivo “dadger.rvx” existente em
+um diretório.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diretorio</strong> (<em>str</em>) – O caminho relativo ou completo para o diretório
+onde se encontra o arquivo</p></li>
+<li><p><strong>nome_arquivo</strong> (<em>str</em><em>, </em><em>optional</em>) – Nome do arquivo a ser lido, potencialmente
+especificando a revisão. Tem como valor default “dadger.rv0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um objeto <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a> com informações do arquivo lido</p>
+</dd>
+</dl>
+</dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.lq">
+<span class="sig-name descname"><span class="pre">lq</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.LQ" title="idecomp.decomp.modelos.dadger.LQ"><span class="pre">idecomp.decomp.modelos.dadger.LQ</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.lq"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.lq" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica os limites inferiores e
+superiores por patamar de uma restrição de vazão existente
+no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da restrição de vazão</p></li>
+<li><p><strong>estagio</strong> (<em>int</em>) – Estágio sobre o qual valerão os limites da
+restrição de vazão</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">LQ</span></code></p>
+</dd>
+</dl>
+<p><strong>Exemplos</strong></p>
+<p>Para um objeto <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a> que possua uma restrição HQ
+de código 1, definida para os estágios de 1 a 5, com limites
+LQ definidos apenas para o estágio 1, estes podem ser acessados com:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lq</span> <span class="o">=</span> <span class="n">dadger</span><span class="o">.</span><span class="n">lq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lq</span>
+<span class="go">    &lt;idecomp.decomp.modelos.dadger.LQ object at 0x0000026E5C269550&gt;</span>
+</pre></div>
+</div>
+<p>Se for acessado o registro LQ de um estágio fora dos limites da
+restrição HQ, isso resultará em um erro:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span><span class="o">.</span><span class="n">lq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="go">    Traceback (most recent call last):</span>
+<span class="go">    ...</span>
+<span class="go">    ValueError: Estágio 7 fora dos limites do registro HQ</span>
+</pre></div>
+</div>
+<p>Por outro lado, se for acessado o registro LQ em um estágio dentro
+dos limites do registro HQ, porém sem limites próprios definidos,
+será criado um registro idêntico ao do último estágio existente,
+e este será retornado:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lq2</span> <span class="o">=</span> <span class="n">dadger</span><span class="o">.</span><span class="n">lq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lq</span><span class="o">.</span><span class="n">limites_inferiores</span> <span class="o">==</span> <span class="n">lq2</span><span class="o">.</span><span class="n">limites_inferiores</span>        
+<span class="go">    True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.lu">
+<span class="sig-name descname"><span class="pre">lu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.LU" title="idecomp.decomp.modelos.dadger.LU"><span class="pre">idecomp.decomp.modelos.dadger.LU</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.lu"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.lu" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica os limites inferiores e
+superiores por patamar de uma restrição elétrica existente
+no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da restrição elétrica</p></li>
+<li><p><strong>estagio</strong> (<em>int</em>) – Estágio sobre o qual valerão os limites da
+restrição elétricas</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">LU</span></code></p>
+</dd>
+</dl>
+<p><strong>Exemplos</strong></p>
+<p>Para um objeto <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a> que possua uma restrição RE
+de código 1, definida para os estágios de 1 a 5, com limites
+LU definidos apenas para o estágio 1, estes podem ser acessados com:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lu</span> <span class="o">=</span> <span class="n">dadger</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lu</span>
+<span class="go">    &lt;idecomp.decomp.modelos.dadger.LU object at 0x0000026E5C269550&gt;</span>
+</pre></div>
+</div>
+<p>Se for acessado o registro LU de um estágio fora dos limites da
+restrição RE, isso resultará em um erro:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="go">    Traceback (most recent call last):</span>
+<span class="go">    ...</span>
+<span class="go">    ValueError: Estágio 7 fora dos limites do registro RE</span>
+</pre></div>
+</div>
+<p>Por outro lado, se for acessado o registro LU em um estágio dentro
+dos limites do registro RE, porém sem limites próprios definidos,
+será criado um registro idêntico ao do último estágio existente,
+e este será retornado:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lu2</span> <span class="o">=</span> <span class="n">dadger</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lu</span><span class="o">.</span><span class="n">limites_inferiores</span> <span class="o">==</span> <span class="n">lu2</span><span class="o">.</span><span class="n">limites_inferiores</span>        
+<span class="go">    True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.lv">
+<span class="sig-name descname"><span class="pre">lv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.LV" title="idecomp.decomp.modelos.dadger.LV"><span class="pre">idecomp.decomp.modelos.dadger.LV</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.lv"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.lv" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica os limites inferior e
+superior de uma restrição de volume mínimo existente
+no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da restrição de volume mínimo</p></li>
+<li><p><strong>estagio</strong> (<em>int</em>) – Estágio sobre o qual valerão os limites da
+restrição</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">LV</span></code></p>
+</dd>
+</dl>
+<p><strong>Exemplos</strong></p>
+<p>Para um objeto <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a> que possua uma restrição HV
+de código 1, definida para os estágios de 1 a 5, com limites
+LV definidos apenas para o estágio 1, estes podem ser acessados com:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lv</span> <span class="o">=</span> <span class="n">dadger</span><span class="o">.</span><span class="n">lv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lv</span>
+<span class="go">    &lt;idecomp.decomp.modelos.dadger.LV object at 0x0000026E5C269550&gt;</span>
+</pre></div>
+</div>
+<p>Se for acessado o registro LV de um estágio fora dos limites da
+restrição HV, isso resultará em um erro:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dadger</span><span class="o">.</span><span class="n">lv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="go">    Traceback (most recent call last):</span>
+<span class="go">    ...</span>
+<span class="go">    ValueError: Estágio 7 fora dos limites do registro HV</span>
+</pre></div>
+</div>
+<p>Por outro lado, se for acessado o registro LV em um estágio dentro
+dos limites do registro HV, porém sem limites próprios definidos,
+será criado um registro idêntico ao do último estágio existente,
+e este será retornado:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lv2</span> <span class="o">=</span> <span class="n">dadger</span><span class="o">.</span><span class="n">lv</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lv</span><span class="o">.</span><span class="n">limite_inferior</span> <span class="o">==</span> <span class="n">lv2</span><span class="o">.</span><span class="n">limite_inferior</span>
+<span class="go">    True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ni">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ni</span></span><em class="property"><span class="pre">:</span> <span class="pre">idecomp.decomp.modelos.dadger.NI</span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ni" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém o (único) registro que define o número máximo de iterações
+do DECOMP no estudo definido no <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">NI</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.re">
+<span class="sig-name descname"><span class="pre">re</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.RE" title="idecomp.decomp.modelos.dadger.RE"><span class="pre">idecomp.decomp.modelos.dadger.RE</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.re"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.re" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que cadastra uma restrição elétrica existente
+no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da restrição elétrica</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">RE</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.sb">
+<span class="sig-name descname"><span class="pre">sb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.SB" title="idecomp.decomp.modelos.dadger.SB"><span class="pre">idecomp.decomp.modelos.dadger.SB</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.sb"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.sb" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que define os subsistemas existentes
+no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+do subsistema</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">SB</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.te">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">te</span></span><em class="property"><span class="pre">:</span> <span class="pre">idecomp.decomp.modelos.dadger.TE</span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.te" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém o (único) registro que define o nome do estudo no
+<a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">TE</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ti">
+<span class="sig-name descname"><span class="pre">ti</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.TI" title="idecomp.decomp.modelos.dadger.TI"><span class="pre">idecomp.decomp.modelos.dadger.TI</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ti"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ti" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica as taxas de irrigação
+por posto (UHE) existente no estudo especificado no <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – Mnemônico do tipo de FCF especificado
+no registro</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">FC</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.tx">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">tx</span></span><em class="property"><span class="pre">:</span> <span class="pre">idecomp.decomp.modelos.dadger.TX</span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.tx" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém o (único) registro que define a taxa de desconto
+aplicada no estudo definido no <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">TX</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.uh">
+<span class="sig-name descname"><span class="pre">uh</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.UH" title="idecomp.decomp.modelos.dadger.UH"><span class="pre">idecomp.decomp.modelos.dadger.UH</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.uh"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.uh" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que define uma usina hidrelétrica existente
+no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da UHE</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">UH</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.vi">
+<span class="sig-name descname"><span class="pre">vi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uhe</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.VI" title="idecomp.decomp.modelos.dadger.VI"><span class="pre">idecomp.decomp.modelos.dadger.VI</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.vi"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.vi" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica os tempos de viagem da
+água em uma UHE existente no no estudo descrito
+pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>uhe</strong> (<em>int</em>) – Índice da UHE associada aos tempos de viagem</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">VI</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="registros">
+<h2>Registros<a class="headerlink" href="#registros" title="Link permanente para este título">¶</a></h2>
+<p>As informações existentes em cada um dos registros são armazenadas em modelos próprios
+para cada um. Os registros suportados até o momento são os utilizados nos estudos oficiais
+de operação:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">TE</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#TE"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TE" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o nome do estudo do DECOMP.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TE.titulo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">titulo</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TE.titulo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O único conteúdo do registro (título do estudo).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Uma <a href="#id1"><span class="problematic" id="id2">`</span></a>str`com o título do estudo</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.SB">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">SB</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#SB"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.SB" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o cadastro dos subsistemas.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.SB.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.SB.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código de cadastro do subsistema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.SB.nome">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">nome</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.SB.nome" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O nome de cadastro do subsistema.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O nome como <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.UH">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">UH</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#UH"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.UH" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o cadastro das UHEs, com os seus volumes
+iniciais no estudo.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.UH.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.UH.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código de cadastro da UHE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.UH.evaporacao">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">evaporacao</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.UH.evaporacao" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>A consideração ou não de evaporação para a UHE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A consideração como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.UH.ree">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ree</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.UH.ree" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O REE de cadastro da UHE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O REE como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.UH.volume_inicial">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">volume_inicial</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.UH.volume_inicial" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O volume inicial da UHE para o estudo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O volume como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CT">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CT</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CT"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CT" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o cadastro das usinas termelétricas com
+os seus custos e capacidades.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CT.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CT.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código de cadastro da UTE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CT.cvus">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">cvus</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CT.cvus" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Os CVUs da UTE por patamar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Os CVUs como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CT.disponibilidades">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">disponibilidades</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CT.disponibilidades" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>As disponibilidades da UTE por patamar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>As disponibilidades como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CT.inflexibilidades">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">inflexibilidades</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CT.inflexibilidades" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>As inflexibilidades da UTE por patamar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>As inflexibilidades como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CT.nome">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">nome</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CT.nome" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O nome de cadastro da UTE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O nome como uma <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CT.subsistema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">subsistema</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CT.subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O subsistema de cadastro da UTE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O subsistema como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.UE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">UE</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#UE"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.UE" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o cadastro das estações de bombeamento
+(usinas elevatórias).</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DP">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">DP</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#DP"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DP" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o cadastro das durações dos patamares.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DP.cargas">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">cargas</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DP.cargas" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>As cargas em Mwmed pata cada patamar de carga</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>As cargas como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DP.duracoes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">duracoes</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DP.duracoes" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>As durações de cada patamar de carga em horas</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>As durações como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DP.estagio">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DP.estagio" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio associado às durações especificadas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DP.num_patamares">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">num_patamares</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DP.num_patamares" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O número de patamares.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O número como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DP.subsistema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">subsistema</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DP.subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O subsistema associado às durações especificadas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O subsistema como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CD">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CD</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CD"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CD" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o cadastro dos custos de déficit.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PQ">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">PQ</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#PQ"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PQ" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as gerações de pequenas usinas, não
+incluídas no despacho.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RI">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">RI</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#RI"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RI" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as restrições de Itaipu.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.IA">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">IA</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#IA"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.IA" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os limites de intercâmbio entre os subsistemas.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TX">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">TX</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#TX"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TX" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém a taxa de desconto anual do modelo.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TX.taxa">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">taxa</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TX.taxa" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>A taxa de desconto em % utilizada no estudo</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>As taxa como <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.GP">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">GP</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#GP"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.GP" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o gap de tolerância para convergência.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.GP.gap">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">gap</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.GP.gap" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O gap considerado para convergência no estudo</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O gap como <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.NI">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">NI</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#NI"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.NI" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o número máximo de iterações do modelo.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.NI.iteracoes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">iteracoes</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.NI.iteracoes" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O número máximo de iterações do modelo no estudo</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O número de iterações como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DT">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">DT</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#DT"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DT" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém a data de referência do estudo.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DT.ano">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ano</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DT.ano" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O ano de referência para realização do estudo</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O ano como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DT.dia">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dia</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DT.dia" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O dia de referência para realização do estudo</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O dia como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.DT.mes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">mes</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.DT.mes" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O mês de referência para realização do estudo</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O mês como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.MP">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">MP</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#MP"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.MP" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as manutenções programadas das UHEs.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.MT">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">MT</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#MT"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.MT" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as manutenções programadas das UTEs.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FD">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FD</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#FD"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FD" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os fatores de disponibilidade das UHEs.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.VE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">VE</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#VE"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.VE" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os volumes de espera das UHEs.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">RE</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#RE"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RE" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os cadastros de restrições elétricas.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RE.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RE.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código de cadastro para a restrição</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RE.estagio_final">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio_final</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RE.estagio_final" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio final para consideração da restrição</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RE.estagio_inicial">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio_inicial</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RE.estagio_inicial" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio inicial para consideração da restrição</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LU">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">LU</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#LU"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LU" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os cadastros de restrições elétricas.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LU.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LU.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código da restrição RE associada aos limites</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LU.estagio">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LU.estagio" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio inicial para consideração dos limites, até
+que sejam especificados novos limites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LU.limites_inferiores">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">limites_inferiores</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LU.limites_inferiores" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Os limites inferiores por patamar para a restrição elétrica</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Os limites como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LU.limites_superiores">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">limites_superiores</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LU.limites_superiores" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Os limites superiores por patamar para a restrição elétrica</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Os limites como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FU">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FU</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#FU"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FU" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os coeficientes das usinas hidráulicas
+nas restrições elétricas.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FT">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FT</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#FT"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FT" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os coeficientes das usinas térmicas
+nas restrições elétricas.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FI">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FI</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#FI"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FI" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o sentido do fluxo da interligação
+entre os subsistemas associados à restrição elétrica.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.VI">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">VI</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#VI"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.VI" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os tempos de viagem da água entre usinas.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.VI.duracao">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">duracao</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.VI.duracao" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>A duração da viagem da água (em horas) entre a UHE do
+código informado e sua usina à jusante segundo o hidr.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A duração como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.VI.uhe">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">uhe</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.VI.uhe" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código da UHE a partir do qual é contabilizado
+o tempo de viagem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.VI.vazoes">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">vazoes</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.VI.vazoes" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>As vazões defluentes das semanas passadas para a usina
+do código informado. A posição da vazão na lista indica
+a qual semana passada se refere [s-1, s-2, s-3, …].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A duração como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.AC">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">AC</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#AC"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.AC" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as alterações de cadastro das usinas hidrelétricas.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.IR">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">IR</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#IR"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.IR" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as configurações de
+geração de relatórios de saída.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.IR.tipo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">tipo</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.IR.tipo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Mnemônico que contém o tipo de relatório de
+saída escolhido.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O mnemônico como <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CI">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CI</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CI"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CI" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que define contratos de importação de energia.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CE</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CE"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CE" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que define contratos de importação de energia.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FC">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FC</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#FC"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FC" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém informações para acessar a FCF fornecida
+pelo NEWAVE.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FC.caminho">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">caminho</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FC.caminho" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O caminho relativo ou completo para o arquivo da
+FCF.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O caminho como <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FC.tipo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">tipo</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FC.tipo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O tipo de arquivo da FCF na forma dos mnemônicos
+aceitos pelo DECOMP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O mnemônico como <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TI">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">TI</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#TI"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TI" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as taxas de irrigação por UHE.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TI.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TI.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código da UHE associada às taxas de irrigação</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TI.taxas">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">taxas</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TI.taxas" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>As taxas de irrigação por estágio do estudo. A
+posição da taxa na lista indica a qual estágio
+ela está associada [e1, e2, e3, …].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>As taxas como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RQ">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">RQ</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#RQ"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RQ" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as vazões mínimas históricas.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.EZ">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">EZ</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#EZ"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.EZ" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o percentual máximo do
+volume útil para acoplamento.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HV">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">HV</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#HV"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HV" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os cadastros de restrições de volume armazenado.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HV.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HV.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código da UHE associada à restrição HV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HV.estagio_final">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio_final</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HV.estagio_final" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio final de consideração da restrição HV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HV.estagio_inicial">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio_inicial</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HV.estagio_inicial" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio inicial de consideração da restrição HV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LV">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">LV</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#LV"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LV" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os limites das restrições de volume armazenado.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LV.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LV.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código da restrição HV associada aos limites</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LV.estagio">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LV.estagio" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio de consideração dos limites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LV.limite_inferior">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">limite_inferior</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LV.limite_inferior" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O limite inferior para o armazenamento.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O limite como <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LV.limites_superior">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">limites_superior</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LV.limites_superior" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O limite superior para o armazenamento.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O limite como <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CV">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CV</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CV"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CV" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os coeficientes das usinas hidráulicas
+nas restrições de volume armazenado.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HQ">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">HQ</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#HQ"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HQ" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os cadastros de restrições de vazões.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HQ.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HQ.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código da UHE associada à restrição HQ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HQ.estagio_final">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio_final</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HQ.estagio_final" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio final de consideração da restrição HQ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HQ.estagio_inicial">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio_inicial</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HQ.estagio_inicial" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio inicial de consideração da restrição HQ.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LQ">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">LQ</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#LQ"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LQ" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os limites das restrições de volume armazenado.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LQ.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LQ.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código da restrição HQ associada aos limites</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LQ.estagio">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LQ.estagio" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio de consideração dos limites.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LQ.limites_inferiores">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">limites_inferiores</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LQ.limites_inferiores" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Os limites inferiores por patamar para a vazão.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Os limites como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.LQ.limites_superiores">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">limites_superiores</span></span><em class="property"><span class="pre">:</span> <span class="pre">List[float]</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.LQ.limites_superiores" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Os limites superiores por patamar para a vazão.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Os limites como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CQ">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CQ</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CQ"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CQ" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os coeficientes das usinas hidráulicas
+nas restrições de vazão.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.AR">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">AR</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#AR"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.AR" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as configurações de aversão a risco.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.EV">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">EV</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#EV"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.EV" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as configurações de consideração
+da evaporação.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FJ">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FJ</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#FJ"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FJ" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém as configurações de aversão a risco.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">HE</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#HE"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HE" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém o cadastro de uma restrição de volume
+mínimo armazenado.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HE.codigo">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">codigo</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HE.codigo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O código de cadastro da restrição HE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HE.estagio">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HE.estagio" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio para consideração da restrição.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HE.limite">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">limite</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HE.limite" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O limite para a energia armazenada associada
+ao registro HE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O limite como <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HE.penalidade">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">penalidade</span></span><em class="property"><span class="pre">:</span> <span class="pre">float</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HE.penalidade" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O valor da penalidade para a violação da restrição.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O valor como <code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HE.tipo_limite">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">tipo_limite</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HE.tipo_limite" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O tipo de limite especificado na restrição HE,
+em valor absoluto ou percentual.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O tipo como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.HE.tipo_penalidade">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">tipo_penalidade</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.HE.tipo_penalidade" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O tipo de penalidade a ser considerada ao violar a
+restrição (inviabilidade ou penalização).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O tipo como <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CM">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">CM</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CM"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CM" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro que contém os coeficientes de uma restrição RHE.</p>
 </dd></dl>
 
 </div>

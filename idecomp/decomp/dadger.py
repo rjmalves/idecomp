@@ -14,10 +14,19 @@ from typing import Type, List, Optional, TypeVar, Any
 
 class Dadger:
     """
-    Armazena os dados de entrada do DECOMP
+    Armazena os dados de entrada gerais do DECOMP.
 
     Esta classe lida com as informações de entrada fornecidas ao
-    DECOMP no `dadger.rvx`.
+    DECOMP no `dadger.rvx`. Possui métodos para acessar individualmente
+    cada registro, editá-lo e também cria alguns novos registros.
+
+    Atualmente, são suportados os registros:
+    `TE`, `SB`, `UH`, `CT`, `DP`, `TX`, `GP`, `NI`, `DT`, `RE`, `LU`,
+    `VI`, `IR`, `FC`, `TI`, `HV`, `LV`, `HQ`, `LQ` e `HE`.
+
+    É possível ler as informações existentes em arquivos a partir do
+    método `le_arquivo()` e escreve um novo arquivo a partir do método
+    `escreve_arquivo()`.
 
     """
 
@@ -25,6 +34,9 @@ class Dadger:
 
     def __init__(self,
                  dados: DadosDadger) -> None:
+        """
+        Construtor padrão
+        """
         self._dados = dados
 
     def __eq__(self, o: object) -> bool:
@@ -62,6 +74,16 @@ class Dadger:
                    diretorio: str,
                    nome_arquivo="dadger.rv0") -> 'Dadger':
         """
+        Realiza a leitura de um arquivo "dadger.rvx" existente em
+        um diretório.
+
+        :param diretorio: O caminho relativo ou completo para o diretório
+            onde se encontra o arquivo
+        :type diretorio: str
+        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
+            especificando a revisão. Tem como valor default "dadger.rv0"
+        :type nome_arquivo: str, optional
+        :return: Um objeto :class:`Dadger` com informações do arquivo lido
         """
         leitor = LeituraDadger(diretorio)
         r = leitor.le_arquivo(nome_arquivo)
@@ -70,6 +92,17 @@ class Dadger:
     def escreve_arquivo(self,
                         diretorio: str,
                         nome_arquivo="dadger.rv0"):
+        """
+        Realiza a escrita de um arquivo com as informações do
+        objeto :class:`Dadger`
+
+        :param diretorio: O caminho relativo ou completo para o diretório
+            onde será escrito o arquivo.
+        :type diretorio: str
+        :param nome_arquivo: Nome do arquivo a ser escrito.Tem como valor
+            default "dadger.rv0"
+        :type nome_arquivo: str, optional
+        """
         escritor = EscritaDadger(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
 
@@ -95,8 +128,6 @@ class Dadger:
 
     def __obtem_registros(self,
                           tipo: Type[T]) -> List[T]:
-        """
-        """
         registros = []
         for b in self._registros:
             if isinstance(b, tipo):
@@ -105,10 +136,25 @@ class Dadger:
 
     @property
     def te(self) -> TE:
+        """
+        Obtém o (único) registro que define o nome do estudo no
+        :class:`Dadger`
+
+        :return: Um registro do tipo :class:`TE`.
+        """
         r = self.__obtem_registro(TE)
         return r
 
     def sb(self, codigo: int) -> SB:
+        """
+        Obtém um registro que define os subsistemas existentes
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo: Índice do código que especifica o registro
+            do subsistema
+        :type codigo: int
+        :return: Um registro do tipo :class:`SB`
+        """
         regs: List[SB] = self.__obtem_registros(SB)
         for r in regs:
             if r.codigo == codigo:
@@ -117,6 +163,15 @@ class Dadger:
                          f" para o código {codigo}")
 
     def uh(self, codigo: int) -> UH:
+        """
+        Obtém um registro que define uma usina hidrelétrica existente
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo: Índice do código que especifica o registro
+            da UHE
+        :type codigo: int
+        :return: Um registro do tipo :class:`UH`
+        """
         regs: List[UH] = self.__obtem_registros(UH)
         for r in regs:
             if r.codigo == codigo:
@@ -125,6 +180,15 @@ class Dadger:
                          f" para a UHE {codigo}")
 
     def ct(self, codigo: int) -> CT:
+        """
+        Obtém um registro que define uma usina termelétrica existente
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo: Índice do código que especifica o registro
+            da UTE
+        :type codigo: int
+        :return: Um registro do tipo :class:`CT`
+        """
         regs: List[CT] = self.__obtem_registros(CT)
         for r in regs:
             if r.codigo == codigo:
@@ -133,6 +197,18 @@ class Dadger:
                          f" para a UTE {codigo}")
 
     def dp(self, estagio: int, subsistema: int) -> DP:
+        """
+        Obtém um registro que define as durações dos patamares
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param estagio: Índice do estágio sobre o qual serão
+            definidas as durações dos patamares
+        :type estagio: int
+        :param subsistema: Índice do subsistema para o qual
+            valerão os patamares.
+        :type subsistema: int
+        :return: Um registro do tipo :class:`DP`
+        """
         regs: List[DP] = self.__obtem_registros(DP)
         for r in regs:
             if all([r.estagio == estagio,
@@ -144,21 +220,54 @@ class Dadger:
 
     @property
     def tx(self) -> TX:
+        """
+        Obtém o (único) registro que define a taxa de desconto
+        aplicada no estudo definido no :class:`Dadger`
+
+        :return: Um registro do tipo :class:`TX`.
+        """
         return self.__obtem_registro(TX)
 
     @property
     def gp(self) -> GP:
+        """
+        Obtém o (único) registro que define o gap para convergência
+        considerado no estudo definido no :class:`Dadger`
+
+        :return: Um registro do tipo :class:`GP`.
+        """
         return self.__obtem_registro(GP)
 
     @property
     def ni(self) -> NI:
+        """
+        Obtém o (único) registro que define o número máximo de iterações
+        do DECOMP no estudo definido no :class:`Dadger`
+
+        :return: Um registro do tipo :class:`NI`.
+        """
         return self.__obtem_registro(NI)
 
     @property
     def dt(self) -> DT:
+        """
+        Obtém o (único) registro que define a data de referência do
+        estudo definido no :class:`Dadger`
+
+        :return: Um registro do tipo :class:`DT`.
+        """
         return self.__obtem_registro(DT)
 
     def re(self, codigo: int) -> RE:
+        """
+        Obtém um registro que cadastra uma restrição elétrica existente
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo: Índice do código que especifica o registro
+            da restrição elétrica
+        :type codigo: int
+        :return: Um registro do tipo :class:`RE`
+        """
         regs: List[RE] = self.__obtem_registros(RE)
         for r in regs:
             if r.codigo == codigo:
@@ -167,6 +276,47 @@ class Dadger:
                          f" com código {codigo}")
 
     def lu(self, codigo: int, estagio: int) -> LU:
+        """
+        Obtém um registro que especifica os limites inferiores e
+        superiores por patamar de uma restrição elétrica existente
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo: Índice do código que especifica o registro
+            da restrição elétrica
+        :type codigo: int
+        :param estagio: Estágio sobre o qual valerão os limites da
+            restrição elétricas
+        :type estagio: int
+        :return: Um registro do tipo :class:`LU`
+
+        **Exemplos**
+
+        Para um objeto :class:`Dadger` que possua uma restrição RE
+        de código 1, definida para os estágios de 1 a 5, com limites
+        LU definidos apenas para o estágio 1, estes podem ser acessados com:
+
+        >>> lu = dadger.lu(1, 1)
+        >>> lu
+            <idecomp.decomp.modelos.dadger.LU object at 0x0000026E5C269550>
+
+        Se for acessado o registro LU de um estágio fora dos limites da
+        restrição RE, isso resultará em um erro:
+
+        >>> dadger.lu(1, 7)
+            Traceback (most recent call last):
+            ...
+            ValueError: Estágio 7 fora dos limites do registro RE
+
+        Por outro lado, se for acessado o registro LU em um estágio dentro
+        dos limites do registro RE, porém sem limites próprios definidos,
+        será criado um registro idêntico ao do último estágio existente,
+        e este será retornado:
+
+        >>> lu2 = dadger.lu(1, 5)
+        >>> lu.limites_inferiores == lu2.limites_inferiores        
+            True
+
+        """
 
         def cria_registro(modelo: LU,
                           estagio_final: int) -> LU:
@@ -209,6 +359,15 @@ class Dadger:
         return cria_registro(reg, re.estagio_final)
 
     def vi(self, uhe: int) -> VI:
+        """
+        Obtém um registro que especifica os tempos de viagem da
+        água em uma UHE existente no no estudo descrito
+        pelo :class:`Dadger`.
+
+        :param uhe: Índice da UHE associada aos tempos de viagem
+        :type uhe: int
+        :return: Um registro do tipo :class:`VI`
+        """
         regs: List[VI] = self.__obtem_registros(VI)
         for r in regs:
             if r.uhe == uhe:
@@ -217,6 +376,16 @@ class Dadger:
                          f" para a UHE {uhe}")
 
     def ir(self, tipo: str) -> IR:
+        """
+        Obtém um registro que especifica os relatórios de saída
+        a serem produzidos pelo DECOMP após a execução do estudo
+        descrito no :class:`Dadger`.
+
+        :param tipo: Mnemônico do tipo de relatório especificado
+            no registro
+        :type tipo: str
+        :return: Um registro do tipo :class:`IR`
+        """
         regs: List[IR] = self.__obtem_registros(IR)
         for r in regs:
             if r.tipo == tipo:
@@ -225,6 +394,15 @@ class Dadger:
                          f" com mnemônico {tipo}")
 
     def fc(self, tipo: str) -> FC:
+        """
+        Obtém um registro que especifica os caminhos para os
+        arquivos com a FCF do NEWAVE.
+
+        :param tipo: Mnemônico do tipo de FCF especificado
+            no registro
+        :type tipo: str
+        :return: Um registro do tipo :class:`FC`
+        """
         regs: List[FC] = self.__obtem_registros(FC)
         for r in regs:
             if r.tipo == tipo:
@@ -233,6 +411,15 @@ class Dadger:
                          f" com mnemônico {tipo}")
 
     def ti(self, codigo: int) -> TI:
+        """
+        Obtém um registro que especifica as taxas de irrigação
+        por posto (UHE) existente no estudo especificado no :class:`Dadger`
+
+        :param codigo: Mnemônico do tipo de FCF especificado
+            no registro
+        :type codigo: int
+        :return: Um registro do tipo :class:`FC`
+        """
         regs: List[TI] = self.__obtem_registros(TI)
         for r in regs:
             if r.codigo == codigo:
@@ -241,6 +428,15 @@ class Dadger:
                          f" para a UHE {codigo}")
 
     def hv(self, codigo: int) -> HV:
+        """
+        Obtém um registro que cadastra uma restrição de volume mínimo
+        armazenado existente no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo: Índice do código que especifica o registro
+            da restrição de volume mínimo
+        :type codigo: int
+        :return: Um registro do tipo :class:`HV`
+        """
         regs: List[HV] = self.__obtem_registros(HV)
         for r in regs:
             if r.codigo == codigo:
@@ -249,7 +445,47 @@ class Dadger:
                          f" para UHE {codigo}")
 
     def lv(self, codigo: int, estagio: int) -> LV:
+        """
+        Obtém um registro que especifica os limites inferior e
+        superior de uma restrição de volume mínimo existente
+        no estudo descrito pelo :class:`Dadger`.
 
+        :param codigo: Índice do código que especifica o registro
+            da restrição de volume mínimo
+        :type codigo: int
+        :param estagio: Estágio sobre o qual valerão os limites da
+            restrição
+        :type estagio: int
+        :return: Um registro do tipo :class:`LV`
+
+        **Exemplos**
+
+        Para um objeto :class:`Dadger` que possua uma restrição HV
+        de código 1, definida para os estágios de 1 a 5, com limites
+        LV definidos apenas para o estágio 1, estes podem ser acessados com:
+
+        >>> lv = dadger.lv(1, 1)
+        >>> lv
+            <idecomp.decomp.modelos.dadger.LV object at 0x0000026E5C269550>
+
+        Se for acessado o registro LV de um estágio fora dos limites da
+        restrição HV, isso resultará em um erro:
+
+        >>> dadger.lv(1, 7)
+            Traceback (most recent call last):
+            ...
+            ValueError: Estágio 7 fora dos limites do registro HV
+
+        Por outro lado, se for acessado o registro LV em um estágio dentro
+        dos limites do registro HV, porém sem limites próprios definidos,
+        será criado um registro idêntico ao do último estágio existente,
+        e este será retornado:
+
+        >>> lv2 = dadger.lv(1, 5)
+        >>> lv.limite_inferior == lv2.limite_inferior
+            True
+
+        """
         def cria_registro(modelo: LV,
                           estagio_final: int) -> LV:
             copia = deepcopy(modelo)
@@ -291,6 +527,15 @@ class Dadger:
         return cria_registro(reg, hv.estagio_final)
 
     def hq(self, codigo: int) -> HQ:
+        """
+        Obtém um registro que cadastra uma restrição de vazão
+        existente no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo: Índice do código que especifica o registro
+            da restrição de vazão
+        :type codigo: int
+        :return: Um registro do tipo :class:`HQ`
+        """
         regs: List[HQ] = self.__obtem_registros(HQ)
         for r in regs:
             if r.codigo == codigo:
@@ -299,7 +544,47 @@ class Dadger:
                          f" com o código {codigo}")
 
     def lq(self, codigo: int, estagio: int) -> LQ:
+        """
+        Obtém um registro que especifica os limites inferiores e
+        superiores por patamar de uma restrição de vazão existente
+        no estudo descrito pelo :class:`Dadger`.
 
+        :param codigo: Índice do código que especifica o registro
+            da restrição de vazão
+        :type codigo: int
+        :param estagio: Estágio sobre o qual valerão os limites da
+            restrição de vazão
+        :type estagio: int
+        :return: Um registro do tipo :class:`LQ`
+
+        **Exemplos**
+
+        Para um objeto :class:`Dadger` que possua uma restrição HQ
+        de código 1, definida para os estágios de 1 a 5, com limites
+        LQ definidos apenas para o estágio 1, estes podem ser acessados com:
+
+        >>> lq = dadger.lq(1, 1)
+        >>> lq
+            <idecomp.decomp.modelos.dadger.LQ object at 0x0000026E5C269550>
+
+        Se for acessado o registro LQ de um estágio fora dos limites da
+        restrição HQ, isso resultará em um erro:
+
+        >>> dadger.lq(1, 7)
+            Traceback (most recent call last):
+            ...
+            ValueError: Estágio 7 fora dos limites do registro HQ
+
+        Por outro lado, se for acessado o registro LQ em um estágio dentro
+        dos limites do registro HQ, porém sem limites próprios definidos,
+        será criado um registro idêntico ao do último estágio existente,
+        e este será retornado:
+
+        >>> lq2 = dadger.lq(1, 5)
+        >>> lq.limites_inferiores == lq2.limites_inferiores        
+            True
+
+        """
         def cria_registro(modelo: LQ,
                           estagio_final: int) -> LQ:
             copia = deepcopy(modelo)
@@ -341,6 +626,18 @@ class Dadger:
         return cria_registro(reg, hq.estagio_final)
 
     def he(self, codigo: int, estagio: int) -> HE:
+        """
+        Obtém um registro que cadastra uma restrição de energia
+        armazenada existente no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo: Índice do código que especifica o registro
+            da restrição de energia armazenada
+        :type codigo: int
+        :param estagio: Índice do estágio para o qual vale a
+            restrição de energia armazenada
+        :type estagio: int
+        :return: Um registro do tipo :class:`HE`
+        """
         r = self.__obtem_registro_do_estagio(HE,
                                              codigo,
                                              estagio)
