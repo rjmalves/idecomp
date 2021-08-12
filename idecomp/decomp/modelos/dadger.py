@@ -2094,7 +2094,7 @@ class HV(RegistroDadger):
     def estagio_inicial(self) -> int:
         """
         O estágio inicial de consideração da restrição HV.
-        
+
         :return: O estágio como `int`.
         """
         return self._dados[1]
@@ -2103,7 +2103,7 @@ class HV(RegistroDadger):
     def estagio_final(self) -> int:
         """
         O estágio final de consideração da restrição HV.
-        
+
         :return: O estágio como `int`.
         """
         return self._dados[2]
@@ -2149,7 +2149,7 @@ class LV(RegistroDadger):
     def codigo(self) -> int:
         """
         O código da restrição HV associada aos limites
-        
+
         :return: O código como `int`.
         """
         return self._dados[0]
@@ -2158,7 +2158,7 @@ class LV(RegistroDadger):
     def estagio(self) -> int:
         """
         O estágio de consideração dos limites.
-        
+
         :return: O estágio como `int`.
         """
         return self._dados[1]
@@ -2171,7 +2171,7 @@ class LV(RegistroDadger):
     def limite_inferior(self) -> float:
         """
         O limite inferior para o armazenamento.
-        
+
         :return: O limite como `float`.
         """
         return self._dados[2]
@@ -2184,7 +2184,7 @@ class LV(RegistroDadger):
     def limites_superior(self) -> float:
         """
         O limite superior para o armazenamento.
-        
+
         :return: O limite como `float`.
         """
         return self._dados[3]
@@ -2266,7 +2266,7 @@ class HQ(RegistroDadger):
     def estagio_inicial(self) -> int:
         """
         O estágio inicial de consideração da restrição HQ.
-        
+
         :return: O estágio como `int`.
         """
         return self._dados[1]
@@ -2275,7 +2275,7 @@ class HQ(RegistroDadger):
     def estagio_final(self) -> int:
         """
         O estágio final de consideração da restrição HQ.
-        
+
         :return: O estágio como `int`.
         """
         return self._dados[2]
@@ -2321,7 +2321,7 @@ class LQ(RegistroDadger):
     def codigo(self) -> int:
         """
         O código da restrição HQ associada aos limites
-        
+
         :return: O código como `int`.
         """
         return self._dados[0]
@@ -2330,7 +2330,7 @@ class LQ(RegistroDadger):
     def estagio(self) -> int:
         """
         O estágio de consideração dos limites.
-        
+
         :return: O estágio como `int`.
         """
         return self._dados[1]
@@ -2343,7 +2343,7 @@ class LQ(RegistroDadger):
     def limites_inferiores(self) -> List[float]:
         """
         Os limites inferiores por patamar para a vazão.
-        
+
         :return: Os limites como `list[float]`.
         """
         return self._dados[2::2]
@@ -2361,7 +2361,7 @@ class LQ(RegistroDadger):
     def limites_superiores(self) -> List[float]:
         """
         Os limites superiores por patamar para a vazão.
-        
+
         :return: Os limites como `list[float]`.
         """
         return self._dados[3::2]
@@ -2516,7 +2516,7 @@ class HE(RegistroDadger):
     def codigo(self) -> int:
         """
         O código de cadastro da restrição HE
-        
+
         :return: O código como `int`.
         """
         return self._dados[0]
@@ -2526,7 +2526,7 @@ class HE(RegistroDadger):
         """
         O tipo de limite especificado na restrição HE,
         em valor absoluto ou percentual.
-        
+
         :return: O tipo como `int`.
         """
         return self._dados[1]
@@ -2540,7 +2540,7 @@ class HE(RegistroDadger):
         """
         O limite para a energia armazenada associada
         ao registro HE.
-        
+
         :return: O limite como `float`.
         """
         return self._dados[2]
@@ -2553,7 +2553,7 @@ class HE(RegistroDadger):
     def estagio(self) -> int:
         """
         O estágio para consideração da restrição.
-        
+
         :return: O estágio como `int`.
         """
         return self._dados[3]
@@ -2566,7 +2566,7 @@ class HE(RegistroDadger):
     def penalidade(self) -> float:
         """
         O valor da penalidade para a violação da restrição.
-        
+
         :return: O valor como `float`.
         """
         return self._dados[4]
@@ -2580,7 +2580,7 @@ class HE(RegistroDadger):
         """
         O tipo de penalidade a ser considerada ao violar a
         restrição (inviabilidade ou penalização).
-        
+
         :return: O tipo como `int`.
         """
         return self._dados[5]

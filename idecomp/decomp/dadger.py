@@ -313,7 +313,7 @@ class Dadger:
         e este será retornado:
 
         >>> lu2 = dadger.lu(1, 5)
-        >>> lu.limites_inferiores == lu2.limites_inferiores        
+        >>> lu.limites_inferiores == lu2.limites_inferiores
             True
 
         """
@@ -581,7 +581,7 @@ class Dadger:
         e este será retornado:
 
         >>> lq2 = dadger.lq(1, 5)
-        >>> lq.limites_inferiores == lq2.limites_inferiores        
+        >>> lq.limites_inferiores == lq2.limites_inferiores
             True
 
         """
