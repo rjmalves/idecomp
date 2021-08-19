@@ -1,5 +1,6 @@
 from idecomp._utils.bloco import Bloco
 # from idecomp.decomp.modelos.relato import BlocoDadosGeraisRelato
+from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
 from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
 from idecomp.decomp.modelos.relato import BlocoCMORelato
 from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
@@ -10,7 +11,7 @@ from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
 from idecomp.decomp.modelos.relato import LeituraRelato
 from idecomp._utils.arquivo import ArquivoBlocos
 from idecomp._utils.dadosarquivo import DadosArquivoBlocos
-from typing import Type
+from typing import Type, List
 import pandas as pd  # type: ignore
 
 
@@ -47,6 +48,43 @@ class Relato(ArquivoBlocos):
                 return b
         raise ValueError(f"Não foi encontrado um bloco do tipo {tipo}")
 
+    def __obtem_blocos(self, tipo: Type[Bloco]) -> List[Bloco]:
+        """
+        """
+        blocos = []
+        for b in self._blocos:
+            if isinstance(b, tipo):
+                blocos.append(b)
+        if len(blocos) == 0:
+            raise ValueError(f"Não foi encontrado um bloco do tipo {tipo}")
+        return blocos
+
+    @property
+    def relatorio_operacao_uhe(self) -> pd.DataFrame:
+        """
+        Tabela com o relatório de operação por UHE e por
+        estágio de execução do DECOMP.
+
+        **Retorna**
+
+        `pd.DataFrame`
+
+        **Sobre**
+
+        """
+        relatorios = self.__obtem_blocos(BlocoRelatorioOperacaoUHERelato)
+        relat_final = None
+        for i, r in enumerate(relatorios):
+            df_r: pd.DataFrame = r.dados.copy()
+            cols_sem_estagio = list(df_r.columns)
+            df_r["Estágio"] = i + 1
+            df_r = df_r[["Estágio"] + cols_sem_estagio]
+            if relat_final is None:
+                relat_final = df_r
+            else:
+                relat_final = pd.concat([relat_final, df_r], ignore_index=True)
+        return relat_final
+
     @property
     def balanco_energetico(self) -> pd.DataFrame:
         """
@@ -60,8 +98,19 @@ class Relato(ArquivoBlocos):
         **Sobre**
 
         """
-        b = self.__obtem_bloco(BlocoBalancoEnergeticoRelato)
-        return b.dados
+        balancos = self.__obtem_blocos(BlocoBalancoEnergeticoRelato)
+        balanc_final = None
+        for i, r in enumerate(balancos):
+            df_r: pd.DataFrame = r.dados.copy()
+            cols_sem_estagio = list(df_r.columns)
+            df_r["Estágio"] = i + 1
+            df_r = df_r[["Estágio"] + cols_sem_estagio]
+            if balanc_final is None:
+                balanc_final = df_r
+            else:
+                balanc_final = pd.concat([balanc_final, df_r],
+                                         ignore_index=True)
+        return balanc_final
 
     @property
     def cmo_medio_subsistema(self) -> pd.DataFrame:

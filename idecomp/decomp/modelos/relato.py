@@ -41,13 +41,126 @@ class BlocoDadosGeraisRelato(Bloco):
         pass
 
 
+class BlocoRelatorioOperacaoUHERelato(Bloco):
+    """
+    """
+    str_inicio = "No.       Usina       Volume (% V.U.)"
+    str_fim = "X----X-"
+
+    def __init__(self):
+
+        super().__init__(BlocoRelatorioOperacaoUHERelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoRelatorioOperacaoUHERelato):
+            return False
+        bloco: BlocoRelatorioOperacaoUHERelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_para_df() -> pd.DataFrame:
+            cols = ["Volume Ini (% V.U)", "Volume Fin (% V.U)",
+                    "Volume Esp. (% V.U)", "Qnat (m3/s)", "Qnat (% MLT)",
+                    "Qafl (m3/s)", "Qdef (m3/s)", "Geração Pat 1",
+                    "Geração Pat 2", "Geração Pat 3", "Geração Média",
+                    "Vertimento Turbinável", "Vertimento Não-Turbinável",
+                    "Ponta", "FPCGC"]
+            df = pd.DataFrame(tabela, columns=cols)
+            cols_adic = ["Código", "Usina", "Evaporação", "Tempo de Viagem",
+                         "Cota Abaixo da Crista do Vert", "Def. Mínima = 0"]
+            df["Código"] = numeros
+            df["Usina"] = usinas
+            df["Evaporação"] = evaporacao
+            df["Tempo de Viagem"] = tv_afluencia
+            df["Cota Abaixo da Crista do Vert"] = cota_abaixo_crista
+            df["Def. Mínima = 0"] = def_minima_zero
+            df = df[cols_adic + cols]
+            return df
+
+        def le_se_tem_valor(digitos: int,
+                            linha: str,
+                            coluna_inicio: int):
+            coluna_fim = coluna_inicio + digitos
+            trecho = linha[coluna_inicio:coluna_fim].strip()
+            valor = None
+            if len(trecho) > 0 and "---" not in trecho:
+                reg = RegistroFn(digitos)
+                valor = reg.le_registro(linha, coluna_inicio)
+            else:
+                valor = np.nan
+            return valor
+
+        # Salta duas linhas
+        arq.readline()
+        arq.readline()
+        # Variáveis auxiliares
+        reg_numero = RegistroIn(4)
+        reg_usina = RegistroAn(12)
+        reg_flags = RegistroAn(4)
+        reg_volume = RegistroFn(5)
+        reg_tabela = RegistroFn(7)
+        numeros: List[int] = []
+        usinas: List[str] = []
+        evaporacao: List[bool] = []
+        tv_afluencia: List[bool] = []
+        cota_abaixo_crista: List[bool] = []
+        def_minima_zero: List[bool] = []
+        # Salta uma linha e extrai a semana
+        tabela = np.zeros((300, 15))
+        i = 0
+        while True:
+            linha: str = arq.readline()
+            # Verifica se acabou
+            if BlocoRelatorioOperacaoUHERelato.str_fim in linha:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_para_df()
+                break
+            numeros.append(reg_numero.le_registro(linha, 4))
+            usinas.append(reg_usina.le_registro(linha, 9))
+            flags = reg_flags.le_registro(linha, 22)
+            evaporacao.append("#" in flags)
+            tv_afluencia.append("*" in flags)
+            cota_abaixo_crista.append("@" in flags)
+            def_minima_zero.append("$" in flags)
+            tem_volume = len(linha[27:33].strip()) > 0
+            if tem_volume:
+                tabela[i, :3] = reg_volume.le_linha_tabela(linha,
+                                                           27,
+                                                           1,
+                                                           3)
+            else:
+                tabela[i, :3] = np.nan
+            tabela[i, 3] = le_se_tem_valor(7, linha, 45)
+            tabela[i, 4] = le_se_tem_valor(6, linha, 54)
+            tabela[i, 5] = le_se_tem_valor(7, linha, 63)
+            tabela[i, 6:11] = reg_tabela.le_linha_tabela(linha,
+                                                         72,
+                                                         5,
+                                                         1)
+            tabela[i, 11] = le_se_tem_valor(7, linha, 112)
+            tabela[i, 12] = le_se_tem_valor(7, linha, 120)
+            tabela[i, 13] = le_se_tem_valor(7, linha, 128)
+            tabela[i, 14] = le_se_tem_valor(7, linha, 136)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
 class BlocoBalancoEnergeticoRelato(Bloco):
     """
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
-    str_inicio = "RELATORIO  DO  BALANCO  ENERGETICO "
-    str_fim = "VOLUME UTIL DOS RESERVATORIOS  "
+    str_inicio = "RELATORIO  DO  BALANCO  ENERGETICO"
+    str_fim = "RELATORIO  DA  OPERACAO"
 
     def __init__(self):
 
@@ -72,18 +185,15 @@ class BlocoBalancoEnergeticoRelato(Bloco):
                     "Ghid", "Gter", "GterAT", "Deficit",
                     "Compra", "Venda", "Itaipu50", "Itaipu60"]
             df.columns = cols
-            df["Estágio"] = estagios
             df["Subsistema"] = subsistemas
-            df = df[["Estágio", "Subsistema"] + cols]
+            df = df[["Subsistema"] + cols]
             return df
 
         # Variáveis auxiliares
         reg_tabela = RegistroFn(7)
-        str_estagio = "PROB ACUMUL:"
         str_subsis = "     Subsistema"
         str_medio = "    Medio"
         subsis = "FC"
-        estagios = []
         subsistemas = []
         # Salta uma linha e extrai a semana
         tabela = np.zeros((MAX_ESTAGIOS * len(SUBSISTEMAS), 11))
@@ -95,15 +205,11 @@ class BlocoBalancoEnergeticoRelato(Bloco):
                 tabela = tabela[:i, :]
                 self._dados = converte_tabela_para_df()
                 break
-            # Procura a linha que identifica o estágio
-            if str_estagio in linha:
-                estagio = int(linha.split("ESTAGIO")[1][:3].strip())
             # Senão, procura a linha que identifica o subsistema
             if str_subsis in linha:
                 subsis = linha.split(str_subsis)[1][:3].strip()
             # Se está lendo um subsistema e achou a linha de valores médios
             if subsis != "FC" and str_medio in linha:
-                estagios.append(estagio)
                 subsistemas.append(subsis)
                 tabela[i, :9] = reg_tabela.le_linha_tabela(linha,
                                                            10,
@@ -544,11 +650,16 @@ class LeituraRelato(LeituraBlocos):
         """
         Cria a lista de blocos a serem lidos no arquivo adterm.dat.
         """
-        return [BlocoDadosGeraisRelato(),
-                BlocoBalancoEnergeticoRelato(),
-                BlocoCMORelato(),
-                BlocoEnergiaArmazenadaREERelato(),
-                BlocoEnergiaArmazenadaSubsistemaRelato(),
-                BlocoENAPreEstudoSemanalSubsistemaRelato(),
-                BlocoGeracaoTermicaSubsistemaRelato(),
-                BlocoDiasExcluidosSemanas()]
+        relat_uhe: List[Bloco] = [BlocoRelatorioOperacaoUHERelato()
+                                  for _ in range(10)]
+        balanc_energ: List[Bloco] = [BlocoBalancoEnergeticoRelato()
+                                     for _ in range(10)]
+        return ([BlocoDadosGeraisRelato(),
+                 BlocoCMORelato(),
+                 BlocoEnergiaArmazenadaREERelato(),
+                 BlocoEnergiaArmazenadaSubsistemaRelato(),
+                 BlocoENAPreEstudoSemanalSubsistemaRelato(),
+                 BlocoGeracaoTermicaSubsistemaRelato(),
+                 BlocoDiasExcluidosSemanas()] +
+                relat_uhe +
+                balanc_energ)

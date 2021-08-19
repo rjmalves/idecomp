@@ -51,6 +51,12 @@ def test_balanco_energetico():
                          "Mercado"]) == 37924.4
 
 
+def test_relatorio_operacao_uhe():
+    bal = rel.relatorio_operacao_uhe
+    assert float(bal.loc[(bal["Estágio"] == 1) & (bal["Usina"] == "CAMARGOS"),
+                         "Ponta"]) == 31.5
+
+
 def test_eq_relato():
     rel2 = Relato.le_arquivo("tests/_arquivos", "relato.rv0")
     assert rel == rel2
