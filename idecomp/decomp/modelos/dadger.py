@@ -1,15 +1,13 @@
-from typing import IO, List, Dict, Type
-import os
-from traceback import print_exc
+from typing import IO, List, Type
 
 from idecomp._utils.utils import formata_numero
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
-from idecomp._utils.registrodadger import RegistroDadger
-from idecomp._utils.registrodadger import TipoRegistroAC
-from idecomp._utils.dadosdadger import DadosDadger
+from idecomp._utils.registrodecomp import RegistroDecomp
+from idecomp._utils.registrodecomp import TipoRegistroAC
+from idecomp._utils.leituraregistros import LeituraRegistros
 
 
-class TE(RegistroDadger):
+class TE(RegistroDecomp):
     """
     Registro que contém o nome do estudo do DECOMP.
     """
@@ -32,7 +30,7 @@ class TE(RegistroDadger):
         """
         O único conteúdo do registro (título do estudo).
 
-        :return: Uma `str`com o título do estudo
+        :return: Uma `str` com o título do estudo
         """
         return self._dados
 
@@ -41,7 +39,7 @@ class TE(RegistroDadger):
         self._dados = t
 
 
-class SB(RegistroDadger):
+class SB(RegistroDecomp):
     """
     Registro que contém o cadastro dos subsistemas.
     """
@@ -82,7 +80,7 @@ class SB(RegistroDadger):
         return self._dados[1]
 
 
-class UH(RegistroDadger):
+class UH(RegistroDecomp):
     """
     Registro que contém o cadastro das UHEs, com os seus volumes
     iniciais no estudo.
@@ -103,7 +101,7 @@ class UH(RegistroDadger):
         self._dados[1] = reg_ree.le_registro(self._linha, 9)
         self._dados[2] = reg_vini.le_registro(self._linha, 18)
         self._dados[3] = bool(reg_evap.le_registro(self._linha, 39))
-        if self._linha[59:69].strip().isnumeric():
+        if len(self._linha[59:69].strip()) > 0:
             self._dados[4] = reg_vert.le_registro(self._linha, 59)
 
     def escreve(self, arq: IO):
@@ -163,7 +161,7 @@ class UH(RegistroDadger):
         self._dados[3] = e
 
 
-class CT(RegistroDadger):
+class CT(RegistroDecomp):
     """
     Registro que contém o cadastro das usinas termelétricas com
     os seus custos e capacidades.
@@ -303,7 +301,7 @@ class CT(RegistroDadger):
         self._dados[6::3] = cvu
 
 
-class UE(RegistroDadger):
+class UE(RegistroDecomp):
     """
     Registro que contém o cadastro das estações de bombeamento
     (usinas elevatórias).
@@ -343,7 +341,7 @@ class UE(RegistroDadger):
         arq.write(linha)
 
 
-class DP(RegistroDadger):
+class DP(RegistroDecomp):
     """
     Registro que contém o cadastro das durações dos patamares.
     """
@@ -461,7 +459,7 @@ class DP(RegistroDadger):
         self._dados[4::2] = d
 
 
-class CD(RegistroDadger):
+class CD(RegistroDecomp):
     """
     Registro que contém o cadastro dos custos de déficit.
     """
@@ -507,7 +505,7 @@ class CD(RegistroDadger):
         arq.write(linha)
 
 
-class PQ(RegistroDadger):
+class PQ(RegistroDecomp):
     """
     Registro que contém as gerações de pequenas usinas, não
     incluídas no despacho.
@@ -541,7 +539,7 @@ class PQ(RegistroDadger):
         arq.write(linha)
 
 
-class RI(RegistroDadger):
+class RI(RegistroDecomp):
     """
     Registro que contém as restrições de Itaipu.
     """
@@ -577,7 +575,7 @@ class RI(RegistroDadger):
         arq.write(linha)
 
 
-class IA(RegistroDadger):
+class IA(RegistroDecomp):
     """
     Registro que contém os limites de intercâmbio entre os subsistemas.
     """
@@ -612,7 +610,7 @@ class IA(RegistroDadger):
         arq.write(linha)
 
 
-class TX(RegistroDadger):
+class TX(RegistroDecomp):
     """
     Registro que contém a taxa de desconto anual do modelo.
     """
@@ -646,7 +644,7 @@ class TX(RegistroDadger):
         self._dados = t
 
 
-class GP(RegistroDadger):
+class GP(RegistroDecomp):
     """
     Registro que contém o gap de tolerância para convergência.
     """
@@ -680,7 +678,7 @@ class GP(RegistroDadger):
         self._dados = g
 
 
-class NI(RegistroDadger):
+class NI(RegistroDecomp):
     """
     Registro que contém o número máximo de iterações do modelo.
     """
@@ -712,7 +710,7 @@ class NI(RegistroDadger):
         self._dados = i
 
 
-class DT(RegistroDadger):
+class DT(RegistroDecomp):
     """
     Registro que contém a data de referência do estudo.
     """
@@ -776,7 +774,7 @@ class DT(RegistroDadger):
         self._dados[2] = a
 
 
-class MP(RegistroDadger):
+class MP(RegistroDecomp):
     """
     Registro que contém as manutenções programadas das UHEs.
     """
@@ -811,7 +809,7 @@ class MP(RegistroDadger):
         arq.write(linha)
 
 
-class MT(RegistroDadger):
+class MT(RegistroDecomp):
     """
     Registro que contém as manutenções programadas das UTEs.
     """
@@ -845,7 +843,7 @@ class MT(RegistroDadger):
         arq.write(linha)
 
 
-class FD(RegistroDadger):
+class FD(RegistroDecomp):
     """
     Registro que contém os fatores de disponibilidade das UHEs.
     """
@@ -880,7 +878,7 @@ class FD(RegistroDadger):
         arq.write(linha)
 
 
-class VE(RegistroDadger):
+class VE(RegistroDecomp):
     """
     Registro que contém os volumes de espera das UHEs.
     """
@@ -911,7 +909,7 @@ class VE(RegistroDadger):
         arq.write(linha)
 
 
-class RE(RegistroDadger):
+class RE(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições elétricas.
     """
@@ -963,7 +961,7 @@ class RE(RegistroDadger):
         return self._dados[2]
 
 
-class LU(RegistroDadger):
+class LU(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições elétricas.
     """
@@ -1059,7 +1057,7 @@ class LU(RegistroDadger):
         self._dados[3::2] = lim
 
 
-class FU(RegistroDadger):
+class FU(RegistroDecomp):
     """
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições elétricas.
@@ -1095,7 +1093,7 @@ class FU(RegistroDadger):
         arq.write(linha)
 
 
-class FT(RegistroDadger):
+class FT(RegistroDecomp):
     """
     Registro que contém os coeficientes das usinas térmicas
     nas restrições elétricas.
@@ -1129,7 +1127,7 @@ class FT(RegistroDadger):
         arq.write(linha)
 
 
-class FI(RegistroDadger):
+class FI(RegistroDecomp):
     """
     Registro que contém o sentido do fluxo da interligação
     entre os subsistemas associados à restrição elétrica.
@@ -1162,7 +1160,7 @@ class FI(RegistroDadger):
         arq.write(linha)
 
 
-class VI(RegistroDadger):
+class VI(RegistroDecomp):
     """
     Registro que contém os tempos de viagem da água entre usinas.
     """
@@ -1660,7 +1658,7 @@ class ACNPOSNW(TipoRegistroAC):
         return linha
 
 
-class AC(RegistroDadger):
+class AC(RegistroDecomp):
     """
     Registro que contém as alterações de cadastro das usinas hidrelétricas.
     """
@@ -1741,7 +1739,7 @@ class AC(RegistroDadger):
         arq.write(linha)
 
 
-class IR(RegistroDadger):
+class IR(RegistroDecomp):
     """
     Registro que contém as configurações de
     geração de relatórios de saída.
@@ -1790,7 +1788,7 @@ class IR(RegistroDadger):
         return self._dados[0]
 
 
-class CI(RegistroDadger):
+class CI(RegistroDecomp):
     """
     Registro que define contratos de importação de energia.
     """
@@ -1842,7 +1840,7 @@ class CI(RegistroDadger):
         arq.write(linha)
 
 
-class CE(RegistroDadger):
+class CE(RegistroDecomp):
     """
     Registro que define contratos de importação de energia.
     """
@@ -1894,7 +1892,7 @@ class CE(RegistroDadger):
         arq.write(linha)
 
 
-class FC(RegistroDadger):
+class FC(RegistroDecomp):
     """
     Registro que contém informações para acessar a FCF fornecida
     pelo NEWAVE.
@@ -1942,7 +1940,7 @@ class FC(RegistroDadger):
         self._dados[1] = c
 
 
-class TI(RegistroDadger):
+class TI(RegistroDecomp):
     """
     Registro que contém as taxas de irrigação por UHE.
     """
@@ -2002,7 +2000,7 @@ class TI(RegistroDadger):
         self._dados[1:] = tx
 
 
-class RQ(RegistroDadger):
+class RQ(RegistroDecomp):
     """
     Registro que contém as vazões mínimas históricas.
     """
@@ -2033,7 +2031,7 @@ class RQ(RegistroDadger):
         arq.write(linha)
 
 
-class EZ(RegistroDadger):
+class EZ(RegistroDecomp):
     """
     Registro que contém o percentual máximo do
     volume útil para acoplamento.
@@ -2057,7 +2055,7 @@ class EZ(RegistroDadger):
         arq.write(linha)
 
 
-class HV(RegistroDadger):
+class HV(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições de volume armazenado.
     """
@@ -2109,7 +2107,7 @@ class HV(RegistroDadger):
         return self._dados[2]
 
 
-class LV(RegistroDadger):
+class LV(RegistroDecomp):
     """
     Registro que contém os limites das restrições de volume armazenado.
     """
@@ -2194,7 +2192,7 @@ class LV(RegistroDadger):
         self._dados[3] = lim
 
 
-class CV(RegistroDadger):
+class CV(RegistroDecomp):
     """
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições de volume armazenado.
@@ -2229,7 +2227,7 @@ class CV(RegistroDadger):
         arq.write(linha)
 
 
-class HQ(RegistroDadger):
+class HQ(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições de vazões.
     """
@@ -2281,7 +2279,7 @@ class HQ(RegistroDadger):
         return self._dados[2]
 
 
-class LQ(RegistroDadger):
+class LQ(RegistroDecomp):
     """
     Registro que contém os limites das restrições de volume armazenado.
     """
@@ -2376,7 +2374,7 @@ class LQ(RegistroDadger):
         self._dados[3::2] = lim
 
 
-class CQ(RegistroDadger):
+class CQ(RegistroDecomp):
     """
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições de vazão.
@@ -2411,7 +2409,7 @@ class CQ(RegistroDadger):
         arq.write(linha)
 
 
-class AR(RegistroDadger):
+class AR(RegistroDecomp):
     """
     Registro que contém as configurações de aversão a risco.
     """
@@ -2431,7 +2429,7 @@ class AR(RegistroDadger):
         arq.write(linha)
 
 
-class EV(RegistroDadger):
+class EV(RegistroDecomp):
     """
     Registro que contém as configurações de consideração
     da evaporação.
@@ -2455,7 +2453,7 @@ class EV(RegistroDadger):
         arq.write(linha)
 
 
-class FJ(RegistroDadger):
+class FJ(RegistroDecomp):
     """
     Registro que contém as configurações de aversão a risco.
     """
@@ -2475,7 +2473,7 @@ class FJ(RegistroDadger):
         arq.write(linha)
 
 
-class HE(RegistroDadger):
+class HE(RegistroDecomp):
     """
     Registro que contém o cadastro de uma restrição de volume
     mínimo armazenado.
@@ -2590,7 +2588,7 @@ class HE(RegistroDadger):
         self._dados[5] = t
 
 
-class CM(RegistroDadger):
+class CM(RegistroDecomp):
     """
     Registro que contém os coeficientes de uma restrição RHE.
     """
@@ -2637,115 +2635,16 @@ class CM(RegistroDadger):
         self._dados[2] = c
 
 
-class LeituraDadger:
+class LeituraDadger(LeituraRegistros):
     """
     Classe com utilidades gerais para leitura de arquivos
     do DECOMP com comentários.
     """
     def __init__(self,
                  diretorio: str):
-        self._usa_backup = False
-        self._linha_backup = ""
-        self._diretorio = diretorio
-        self._linhas_fora_registros: Dict[float, str] = {}
-        self._registros: List[RegistroDadger] = []
-        self._registros_encontrados: List[RegistroDadger] = []
-        self._registros_lidos: List[RegistroDadger] = []
+        super().__init__(diretorio)
 
-    def _le_linha_com_backup(self, arq: IO) -> str:
-        """
-        Faz uma leitura de linha de um arquivo, mas com a opção de usar
-        um backup de leitura anterior sinalizado anteriormente.
-        """
-        linha = ""
-        if self._usa_backup:
-            self._usa_backup = False
-            linha = self._linha_backup
-        else:
-            linha = arq.readline()
-            self._linha_backup = linha
-        return linha
-
-    def _configura_backup(self):
-        """
-        Prepara a próxima leitura para ser uma feita a partir de um
-        backup armazenado.
-        """
-        self._usa_backup = True
-
-    def _lista_arquivos_por_chave(self, chave: str) -> List[str]:
-        """
-        Retorna a lista de caminhos completos para os arquivos em um
-        diretório, desde que tenham uma certa chave no nome.
-        """
-        return [f for f in os.listdir(self._diretorio) if chave in f]
-
-    def _verifica_inicio_registros(self,
-                                   linha: str,
-                                   ordem: int,
-                                   registros: List[RegistroDadger]) -> bool:
-        """
-        Verifica se a linha atual é a linha de início de algum
-        dos registros a serem lidos.
-        """
-        for i, b in enumerate(registros):
-            if b.e_inicio_de_registro(linha):
-                b.inicia_registro(linha, ordem)
-                self._registros_encontrados.append(registros.pop(i))
-                return True
-
-        self._linhas_fora_registros[ordem] = linha
-        return False
-
-    def _le_registros_encontrados(self,
-                                  registros: List[RegistroDadger]):
-        """
-        Faz a leitura dos registros encontrados até o momento e que
-        ainda não foram lidos.
-        """
-        for i, b in enumerate(registros):
-            if b.encontrado:
-                res = b.le_registro()
-                self._registros_lidos.append(registros.pop(i))
-                return res
-
-    def _le_registros_arquivo(self, arq: IO):
-        """
-        Faz a leitura dos registros de dados do arquivo.
-        """
-        self._registros = self._cria_registros_leitura()
-        linha = ""
-        i = 0
-        while True:
-            # Decide se lê uma linha nova ou usa a última lida
-            linha = self._le_linha_com_backup(arq)
-            if self._fim_arquivo(linha):
-                self._prepara_dados_saida()
-                break
-
-            self._verifica_inicio_registros(linha, i, self._registros)
-            # Caso a função de leitura retorne True, é configurado
-            #  o backup da linha atual.
-            bkp = self._le_registros_encontrados(self._registros_encontrados)
-            if bkp:
-                self._linha_backup = bkp
-                self._configura_backup()
-            i += 1
-
-    def _le_arquivo_em_diretorio(self,
-                                 diretorio: str,
-                                 nome_arquivo: str) -> None:
-        """
-        Faz a leitura do arquivo em um diretorio.
-        """
-        try:
-            caminho = os.path.join(diretorio, nome_arquivo)
-            with open(caminho, "r") as arq:
-                self._le_registros_arquivo(arq)
-        except Exception:
-            print_exc()
-
-    def _cria_registros_leitura(self) -> List[RegistroDadger]:
+    def _cria_registros_leitura(self) -> List[RegistroDecomp]:
         """
         Método que cria a lista de registros a serem lidos no arquivo.
         Implementa o Factory Pattern.
@@ -2759,124 +2658,58 @@ class LeituraDadger:
         MAX_AC_UHE = 10
         MAX_REE = 12
         MAX_RELATORIOS = 10
-        te: List[RegistroDadger] = [TE()]
-        sb: List[RegistroDadger] = [SB() for _ in range(MAX_SUBSIS)]
-        uh: List[RegistroDadger] = [UH() for _ in range(MAX_UHE)]
-        ct: List[RegistroDadger] = [CT() for _ in range(MAX_UTE)]
-        ue: List[RegistroDadger] = [UE() for _ in range(MAX_UE)]
-        dp: List[RegistroDadger] = [DP() for _ in
+        te: List[RegistroDecomp] = [TE()]
+        sb: List[RegistroDecomp] = [SB() for _ in range(MAX_SUBSIS)]
+        uh: List[RegistroDecomp] = [UH() for _ in range(MAX_UHE)]
+        ct: List[RegistroDecomp] = [CT() for _ in range(MAX_UTE)]
+        ue: List[RegistroDecomp] = [UE() for _ in range(MAX_UE)]
+        dp: List[RegistroDecomp] = [DP() for _ in
                                     range(MAX_SUBSIS * MAX_ESTAGIOS)]
-        cd: List[RegistroDadger] = [CD() for _ in range(MAX_SUBSIS)]
-        pq: List[RegistroDadger] = [PQ() for _ in
+        cd: List[RegistroDecomp] = [CD() for _ in range(MAX_SUBSIS)]
+        pq: List[RegistroDecomp] = [PQ() for _ in
                                     range(MAX_SUBSIS * MAX_ESTAGIOS)]
-        ri: List[RegistroDadger] = [RI() for _ in range(MAX_ESTAGIOS)]
-        ia: List[RegistroDadger] = [IA() for _ in
+        ri: List[RegistroDecomp] = [RI() for _ in range(MAX_ESTAGIOS)]
+        ia: List[RegistroDecomp] = [IA() for _ in
                                     range(MAX_SUBSIS * MAX_SUBSIS)]
-        tx: List[RegistroDadger] = [TX()]
-        gp: List[RegistroDadger] = [GP()]
-        ni: List[RegistroDadger] = [NI()]
-        dt: List[RegistroDadger] = [DT()]
-        mp: List[RegistroDadger] = [MP() for _ in range(MAX_UHE)]
-        mt: List[RegistroDadger] = [MT() for _ in range(MAX_UTE)]
-        fd: List[RegistroDadger] = [FD() for _ in range(MAX_UHE)]
-        ve: List[RegistroDadger] = [VE() for _ in range(MAX_UHE)]
-        re: List[RegistroDadger] = [RE() for _ in range(MAX_RE)]
-        lu: List[RegistroDadger] = [LU() for _ in
+        tx: List[RegistroDecomp] = [TX()]
+        gp: List[RegistroDecomp] = [GP()]
+        ni: List[RegistroDecomp] = [NI()]
+        dt: List[RegistroDecomp] = [DT()]
+        mp: List[RegistroDecomp] = [MP() for _ in range(MAX_UHE)]
+        mt: List[RegistroDecomp] = [MT() for _ in range(MAX_UTE)]
+        fd: List[RegistroDecomp] = [FD() for _ in range(MAX_UHE)]
+        ve: List[RegistroDecomp] = [VE() for _ in range(MAX_UHE)]
+        re: List[RegistroDecomp] = [RE() for _ in range(MAX_RE)]
+        lu: List[RegistroDecomp] = [LU() for _ in
                                     range(MAX_RE * MAX_ESTAGIOS)]
-        fu: List[RegistroDadger] = [FU() for _ in range(MAX_RE)]
-        ft: List[RegistroDadger] = [FT() for _ in range(MAX_RE)]
-        vi: List[RegistroDadger] = [VI(), VI()]
-        ac: List[RegistroDadger] = [AC() for _ in
+        fu: List[RegistroDecomp] = [FU() for _ in range(MAX_RE)]
+        ft: List[RegistroDecomp] = [FT() for _ in range(MAX_RE)]
+        vi: List[RegistroDecomp] = [VI(), VI()]
+        ac: List[RegistroDecomp] = [AC() for _ in
                                     range(MAX_UHE * MAX_AC_UHE)]
-        ir: List[RegistroDadger] = [IR() for _ in range(MAX_RELATORIOS)]
-        fc: List[RegistroDadger] = [FC(), FC()]
-        ti: List[RegistroDadger] = [TI() for _ in range(MAX_UHE)]
-        rq: List[RegistroDadger] = [RE() for _ in range(MAX_REE)]
-        ez: List[RegistroDadger] = [EZ() for _ in range(MAX_UHE)]
-        hv: List[RegistroDadger] = [HV() for _ in range(MAX_UHE)]
-        lv: List[RegistroDadger] = [LV() for _ in
+        ir: List[RegistroDecomp] = [IR() for _ in range(MAX_RELATORIOS)]
+        fc: List[RegistroDecomp] = [FC(), FC()]
+        ti: List[RegistroDecomp] = [TI() for _ in range(MAX_UHE)]
+        rq: List[RegistroDecomp] = [RE() for _ in range(MAX_REE)]
+        ez: List[RegistroDecomp] = [EZ() for _ in range(MAX_UHE)]
+        hv: List[RegistroDecomp] = [HV() for _ in range(MAX_UHE)]
+        lv: List[RegistroDecomp] = [LV() for _ in
                                     range(MAX_UHE * MAX_ESTAGIOS)]
-        cv: List[RegistroDadger] = [CV() for _ in range(MAX_UHE)]
-        hq: List[RegistroDadger] = [HQ() for _ in range(MAX_UHE)]
-        lq: List[RegistroDadger] = [LQ() for _ in
+        cv: List[RegistroDecomp] = [CV() for _ in range(MAX_UHE)]
+        hq: List[RegistroDecomp] = [HQ() for _ in range(MAX_UHE)]
+        lq: List[RegistroDecomp] = [LQ() for _ in
                                     range(MAX_UHE * MAX_ESTAGIOS)]
-        cq: List[RegistroDadger] = [CQ() for _ in
+        cq: List[RegistroDecomp] = [CQ() for _ in
                                     range(MAX_UHE * MAX_ESTAGIOS)]
-        ar: List[RegistroDadger] = [AR()]
-        ev: List[RegistroDadger] = [EV()]
-        fj: List[RegistroDadger] = [FJ()]
-        he: List[RegistroDadger] = [HE() for _ in
+        ar: List[RegistroDecomp] = [AR()]
+        ev: List[RegistroDecomp] = [EV()]
+        fj: List[RegistroDecomp] = [FJ()]
+        he: List[RegistroDecomp] = [HE() for _ in
                                     range(MAX_REE * MAX_ESTAGIOS)]
-        cm: List[RegistroDadger] = [CM() for _ in
+        cm: List[RegistroDecomp] = [CM() for _ in
                                     range(MAX_REE * MAX_ESTAGIOS)]
         return (te + sb + uh + ct + ue + dp + cd + pq +
                 ri + ia + tx + gp + ni + dt + mp + mt +
                 fd + ve + re + lu + fu + ft + vi + ac +
                 ir + fc + ti + rq + ez + hv + lv + cv +
                 hq + lq + cq + ar + ev + fj + he + cm)
-
-    def _prepara_dados_saida(self):
-        """
-        Trata os dados obtidos do arquivo para ser retornado.
-        """
-        self._registros = self._registros_lidos
-
-    def _fim_arquivo(self, linha: str) -> bool:
-        """
-        Método que deve ser implementado para cada arquivo, com o
-        conteúdo da linha que indica o fim do próprio, para impedir loops
-        de leitura eterna.
-        """
-        return len(linha) == 0
-
-    def le_arquivo(self, nome_arquivo: str) -> DadosDadger:
-        """
-        Método para ler um arquivo e retornar o objeto
-        devido da classe em particular.
-        """
-        self._le_arquivo_em_diretorio(self._diretorio,
-                                      nome_arquivo)
-        return DadosDadger(self._registros,
-                           self._linhas_fora_registros)
-
-
-class EscritaDadger:
-    """
-    Classe com utilidades gerais para a escrita de arquivos
-    do DECOMP.
-    """
-    def __init__(self,
-                 diretorio: str):
-        self._diretorio = diretorio
-
-    def _escreve_blocos_e_linhas(self,
-                                 arq: IO,
-                                 blocos: List[RegistroDadger],
-                                 linhas: Dict[float, str]):
-
-        ordem_blocos = [b._ordem for b in blocos]
-        ordem_linhas = list(linhas.keys())
-        itens = ordem_blocos + ordem_linhas
-        itens.sort()
-        for i in itens:
-            if i in ordem_blocos:
-                blocos[ordem_blocos.index(i)].escreve(arq)
-            elif i in ordem_linhas:
-                arq.write(linhas[i])
-
-    def escreve_arquivo(self,
-                        dados: DadosDadger,
-                        nome_arquivo: str):
-        """
-        """
-        try:
-            if not os.path.exists(self._diretorio):
-                os.makedirs(self._diretorio)
-            caminho = os.path.join(self._diretorio, nome_arquivo)
-            with open(caminho, "w") as arq:
-                self._escreve_blocos_e_linhas(arq,
-                                              dados.registros,
-                                              dados.linhas_fora_registros)
-        except Exception as e:
-            print_exc()
-            raise e

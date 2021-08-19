@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.9</title>
+  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.10</title>
   
 
   
@@ -46,7 +46,7 @@
     
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" />
-    <link rel="next" title="Relato (relato.rvX)" href="relato.html" />
+    <link rel="next" title="Dados de Térmicas GNL (dadgnl.rvX)" href="dadgnl.html" />
     <link rel="prev" title="DECOMP" href="../index.html" /> 
 </head>
 
@@ -100,7 +100,9 @@
 <li class="toctree-l3"><a class="reference internal" href="../index.html#basico-da-interface-decomp">Básico da interface DECOMP</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../index.html#arquivos">Arquivos</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Dados gerais (dadger.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dadgnl.html">Dados de Térmicas GNL (dadgnl.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relato.html">Relato (relato.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="relgnl.html">Relatório de Térmicas GNL (relgnl.rvX)</a></li>
 </ul>
 </li>
 </ul>
@@ -186,7 +188,7 @@
 dadger.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger">
-<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Dadger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dados</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">idecomp._utils.dadosdadger.DadosDadger</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger" title="Link permanente para esta definição">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Dadger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dados</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">idecomp._utils.dadosarquivo.DadosArquivoRegistros</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Armazena os dados de entrada gerais do DECOMP.</p>
 <p>Esta classe lida com as informações de entrada fornecidas ao
 DECOMP no <code class="xref py py-obj docutils literal notranslate"><span class="pre">dadger.rvx</span></code>. Possui métodos para acessar individualmente
@@ -420,7 +422,7 @@ dos limites do registro HQ, porém sem limites próprios definidos,
 será criado um registro idêntico ao do último estágio existente,
 e este será retornado:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lq2</span> <span class="o">=</span> <span class="n">dadger</span><span class="o">.</span><span class="n">lq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lq</span><span class="o">.</span><span class="n">limites_inferiores</span> <span class="o">==</span> <span class="n">lq2</span><span class="o">.</span><span class="n">limites_inferiores</span>        
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lq</span><span class="o">.</span><span class="n">limites_inferiores</span> <span class="o">==</span> <span class="n">lq2</span><span class="o">.</span><span class="n">limites_inferiores</span>
 <span class="go">    True</span>
 </pre></div>
 </div>
@@ -467,7 +469,7 @@ dos limites do registro RE, porém sem limites próprios definidos,
 será criado um registro idêntico ao do último estágio existente,
 e este será retornado:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lu2</span> <span class="o">=</span> <span class="n">dadger</span><span class="o">.</span><span class="n">lu</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lu</span><span class="o">.</span><span class="n">limites_inferiores</span> <span class="o">==</span> <span class="n">lu2</span><span class="o">.</span><span class="n">limites_inferiores</span>        
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lu</span><span class="o">.</span><span class="n">limites_inferiores</span> <span class="o">==</span> <span class="n">lu2</span><span class="o">.</span><span class="n">limites_inferiores</span>
 <span class="go">    True</span>
 </pre></div>
 </div>
@@ -654,7 +656,7 @@ de operação:</p>
 <dd><p>O único conteúdo do registro (título do estudo).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
-<dd class="field-odd"><p>Uma <a href="#id1"><span class="problematic" id="id2">`</span></a>str`com o título do estudo</p>
+<dd class="field-odd"><p>Uma <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code> com o título do estudo</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1587,7 +1589,7 @@ restrição (inviabilidade ou penalização).</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="relato.html" class="btn btn-neutral float-right" title="Relato (relato.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="dadgnl.html" class="btn btn-neutral float-right" title="Dados de Térmicas GNL (dadgnl.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="../index.html" class="btn btn-neutral float-left" title="DECOMP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
     </div>
 

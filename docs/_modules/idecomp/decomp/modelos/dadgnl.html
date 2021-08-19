@@ -1,0 +1,626 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>idecomp.decomp.modelos.dadgnl &mdash; documentação idecomp 0.0.9</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../../../../genindex.html" />
+    <link rel="search" title="Buscar" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home"> idecomp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Instalação</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../reference.html">Referência</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">idecomp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Código do módulo</a> &raquo;</li>
+        
+      <li>idecomp.decomp.modelos.dadgnl</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Código fonte para idecomp.decomp.modelos.dadgnl</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">IO</span><span class="p">,</span> <span class="n">List</span>
+
+<span class="kn">from</span> <span class="nn">idecomp._utils.utils</span> <span class="kn">import</span> <span class="n">formata_numero</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.registros</span> <span class="kn">import</span> <span class="n">RegistroAn</span><span class="p">,</span> <span class="n">RegistroFn</span><span class="p">,</span> <span class="n">RegistroIn</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.registrodecomp</span> <span class="kn">import</span> <span class="n">RegistroDecomp</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.leituraregistros</span> <span class="kn">import</span> <span class="n">LeituraRegistros</span>
+
+
+<div class="viewcode-block" id="TG"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.modelos.dadgnl.TG">[documentos]</a><span class="k">class</span> <span class="nc">TG</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro que contém o cadastro das térmicas a GNL</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mnemonico</span> <span class="o">=</span> <span class="s2">&quot;TG&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">TG</span><span class="o">.</span><span class="n">mnemonico</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                       <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                       <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                       <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reg_codigo</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">reg_subsis</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">reg_nome</span> <span class="o">=</span> <span class="n">RegistroAn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">reg_estagio</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">reg_inflex</span> <span class="o">=</span> <span class="n">RegistroFn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">reg_disp</span> <span class="o">=</span> <span class="n">RegistroFn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">reg_cvu</span> <span class="o">=</span> <span class="n">RegistroFn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_codigo</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_subsis</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_nome</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_estagio</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_inflex</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span>
+                                                            <span class="mi">29</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_disp</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span>
+                                                          <span class="mi">34</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">6</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_cvu</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span>
+                                                         <span class="mi">39</span> <span class="o">+</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">j</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">escreve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">):</span>
+
+        <span class="n">linha</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">TG</span><span class="o">.</span><span class="n">mnemonico</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span>
+                 <span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span><span class="si">:</span><span class="s2">10.2f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                 <span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="si">:</span><span class="s2">10.2f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                 <span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">11</span><span class="p">],</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">12</span><span class="p">]</span><span class="si">:</span><span class="s2">10.2f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O código de cadastro da UTE.</span>
+
+<span class="sd">        :return: O código como um `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O subsistema de cadastro da UTE.</span>
+
+<span class="sd">        :return: O subsistema como um `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O nome de cadastro da UTE.</span>
+
+<span class="sd">        :return: O nome como uma `str`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@nome</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">nome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nome</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">nome</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O estágio do despacho da UTE.</span>
+
+<span class="sd">        :return: O estágio como um `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="nd">@estagio</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">estagio</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">inflexibilidades</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        As inflexibilidades da UTE por patamar.</span>
+
+<span class="sd">        :return: As inflexibilidades como `list[float]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="nd">@inflexibilidades</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">inflexibilidades</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inflex</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="n">novas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">inflex</span><span class="p">)</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">inflexibilidades</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">novas</span> <span class="o">!=</span> <span class="n">atuais</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Número de inflexibilidades incompatível. De&quot;</span> <span class="o">+</span>
+                             <span class="sa">f</span><span class="s2">&quot;vem ser fornecidas </span><span class="si">{</span><span class="n">atuais</span><span class="si">}</span><span class="s2">, mas foram </span><span class="si">{</span><span class="n">novas</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">inflex</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">disponibilidades</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        As disponibilidades da UTE por patamar.</span>
+
+<span class="sd">        :return: As disponibilidades como `list[float]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="nd">@disponibilidades</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">disponibilidades</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">disp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="n">novas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">disp</span><span class="p">)</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">disponibilidades</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">novas</span> <span class="o">!=</span> <span class="n">atuais</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Número de disponibilidades incompatível. De&quot;</span> <span class="o">+</span>
+                             <span class="sa">f</span><span class="s2">&quot;vem ser fornecidas </span><span class="si">{</span><span class="n">atuais</span><span class="si">}</span><span class="s2">, mas foram </span><span class="si">{</span><span class="n">novas</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">disp</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cvus</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Os CVUs da UTE por patamar.</span>
+
+<span class="sd">        :return: Os CVUs como `list[float]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">6</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="nd">@cvus</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">cvus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cvu</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="n">novas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cvu</span><span class="p">)</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cvus</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">novas</span> <span class="o">!=</span> <span class="n">atuais</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Número de CVUs incompatível. De&quot;</span> <span class="o">+</span>
+                             <span class="sa">f</span><span class="s2">&quot;vem ser fornecidas </span><span class="si">{</span><span class="n">atuais</span><span class="si">}</span><span class="s2">, mas foram </span><span class="si">{</span><span class="n">novas</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">6</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cvu</span></div>
+
+
+<div class="viewcode-block" id="GS"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.modelos.dadgnl.GS">[documentos]</a><span class="k">class</span> <span class="nc">GS</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro que contém o número de semanas dos meses envolvidos</span>
+<span class="sd">    no estudo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mnemonico</span> <span class="o">=</span> <span class="s2">&quot;GS&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">GS</span><span class="o">.</span><span class="n">mnemonico</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reg_mes</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">reg_semanas</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_mes</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_semanas</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">escreve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">):</span>
+        <span class="n">linha</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">GS</span><span class="o">.</span><span class="n">mnemonico</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O índice do mês associado ao registro GS</span>
+
+<span class="sd">        :return: O índice como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@mes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">mes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">semanas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O número de semanas do mês associado ao registro GS</span>
+
+<span class="sd">        :return: O número de semanas como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@semanas</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">semanas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span></div>
+
+
+<div class="viewcode-block" id="NL"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.modelos.dadgnl.NL">[documentos]</a><span class="k">class</span> <span class="nc">NL</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro que contém o número de lags para o despacho de cada térmica</span>
+<span class="sd">    de despacho antecipado em cada subsistema.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mnemonico</span> <span class="o">=</span> <span class="s2">&quot;NL&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">NL</span><span class="o">.</span><span class="n">mnemonico</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reg_codigo</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">reg_subsis</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">reg_lag</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_codigo</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_subsis</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_lag</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">escreve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">):</span>
+        <span class="n">linha</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">NL</span><span class="o">.</span><span class="n">mnemonico</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O código da UTE associada ao registro NL</span>
+
+<span class="sd">        :return: O código como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@codigo</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O índice do subsistema de despacho da UTE</span>
+
+<span class="sd">        :return: O índice do subsistema como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@subsistema</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O lag de despacho da UTE</span>
+
+<span class="sd">        :return: O lag como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@lag</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">lag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lag</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">lag</span></div>
+
+
+<div class="viewcode-block" id="GL"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.modelos.dadgnl.GL">[documentos]</a><span class="k">class</span> <span class="nc">GL</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro que contém os cadastros de restrições elétricas.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mnemonico</span> <span class="o">=</span> <span class="s2">&quot;GL&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">GL</span><span class="o">.</span><span class="n">mnemonico</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>
+                       <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                       <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                       <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span>
+                       <span class="s2">&quot;&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reg_cod</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">reg_subsistema</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">reg_estagio</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">reg_geracao</span> <span class="o">=</span> <span class="n">RegistroFn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">reg_duracao</span> <span class="o">=</span> <span class="n">RegistroFn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">reg_data</span> <span class="o">=</span> <span class="n">RegistroAn</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_cod</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_subsistema</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_estagio</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_geracao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_duracao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">29</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_geracao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">34</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_duracao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">44</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_geracao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">49</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_duracao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">59</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_data</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">65</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">escreve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">):</span>
+        <span class="n">linha</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">GL</span><span class="o">.</span><span class="n">mnemonico</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;  &quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;   &quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">6</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">7</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">formata_numero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">8</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O código da UTE despachada no registro GL</span>
+
+<span class="sd">        :return: O código como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O índice do subsistema de despacho da UTE</span>
+
+<span class="sd">        :return: O índice do subsistema como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@subsistema</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O estágio de despacho da UTE</span>
+
+<span class="sd">        :return: O estágio como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@estagio</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">geracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Os valores de geração por patamar para o despacho</span>
+<span class="sd">        da UTE</span>
+
+<span class="sd">        :return: As geracoes como `list[float]`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">2</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@geracoes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">geracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="n">novos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">gers</span><span class="p">)</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geracoes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">novos</span> <span class="o">!=</span> <span class="n">atuais</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Número de gerações incompatível. De&quot;</span> <span class="o">+</span>
+                             <span class="sa">f</span><span class="s2">&quot;vem ser fornecidos </span><span class="si">{</span><span class="n">atuais</span><span class="si">}</span><span class="s2">, mas foram </span><span class="si">{</span><span class="n">novos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">gers</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">duracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Os valores de geração por patamar para o despacho</span>
+<span class="sd">        da UTE</span>
+
+<span class="sd">        :return: As durações como `list[float]`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@duracoes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">duracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">durs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="n">novos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">durs</span><span class="p">)</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">duracoes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">novos</span> <span class="o">!=</span> <span class="n">atuais</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Número de durações incompatível. De&quot;</span> <span class="o">+</span>
+                             <span class="sa">f</span><span class="s2">&quot;vem ser fornecidos </span><span class="si">{</span><span class="n">atuais</span><span class="si">}</span><span class="s2">, mas foram </span><span class="si">{</span><span class="n">novos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">durs</span></div>
+
+
+<span class="k">class</span> <span class="nc">LeituraDadGNL</span><span class="p">(</span><span class="n">LeituraRegistros</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Classe com utilidades gerais para leitura de arquivos</span>
+<span class="sd">    do DECOMP com comentários.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_cria_registros_leitura</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Método que cria a lista de registros a serem lidos no arquivo.</span>
+<span class="sd">        Implementa o Factory Pattern.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">MAX_UTE</span> <span class="o">=</span> <span class="mi">200</span>
+        <span class="n">MAX_MESES</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="n">MAX_ESTAGIOS</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="n">tg</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TG</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UTE</span><span class="p">)]</span>
+        <span class="n">gs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">GS</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_MESES</span><span class="p">)]</span>
+        <span class="n">nl</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">NL</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UTE</span><span class="p">)]</span>
+        <span class="n">gl</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">GL</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UTE</span> <span class="o">*</span>
+                                                        <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">tg</span> <span class="o">+</span> <span class="n">gs</span> <span class="o">+</span> <span class="n">nl</span> <span class="o">+</span> <span class="n">gl</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rogerio Alves.
+
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

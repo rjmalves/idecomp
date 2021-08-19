@@ -5,10 +5,10 @@ import pandas as pd  # type: ignore
 from traceback import print_exc
 
 from idecomp._utils.bloco import Bloco
-from .dadosarquivo import DadosArquivo
+from .dadosarquivo import DadosArquivoBlocos
 
 
-class Leitura:
+class LeituraBlocos:
     """
     Classe com utilidades gerais para leitura de arquivos
     do DECOMP.
@@ -136,15 +136,15 @@ class Leitura:
         """
         return len(linha) == 0
 
-    def le_arquivo(self, nome_arquivo: str) -> DadosArquivo:
+    def le_arquivo(self, nome_arquivo: str) -> DadosArquivoBlocos:
         """
         Método para ler um arquivo e retornar o objeto
         devido da classe em particular.
         """
         self._le_arquivo_em_diretorio(self._diretorio,
                                       nome_arquivo)
-        return DadosArquivo(self._blocos,
-                            self._linhas_fora_blocos)
+        return DadosArquivoBlocos(self._blocos,
+                                  self._linhas_fora_blocos)
 
     @property
     def dados(self) -> Any:

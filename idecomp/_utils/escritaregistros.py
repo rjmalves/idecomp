@@ -1,12 +1,12 @@
-from .dadosarquivo import DadosArquivo
-from .bloco import Bloco
+from .dadosarquivo import DadosArquivoRegistros
+from .registrodecomp import RegistroDecomp
 
 import os
 from typing import IO, List, Dict
 from traceback import print_exc
 
 
-class Escrita:
+class EscritaRegistros:
     """
     Classe com utilidades gerais para a escrita de arquivos
     do DECOMP.
@@ -17,8 +17,8 @@ class Escrita:
 
     def _escreve_blocos_e_linhas(self,
                                  arq: IO,
-                                 blocos: List[Bloco],
-                                 linhas: Dict[int, str]):
+                                 blocos: List[RegistroDecomp],
+                                 linhas: Dict[float, str]):
 
         ordem_blocos = [b._ordem for b in blocos]
         ordem_linhas = list(linhas.keys())
@@ -31,7 +31,7 @@ class Escrita:
                 arq.write(linhas[i])
 
     def escreve_arquivo(self,
-                        dados: DadosArquivo,
+                        dados: DadosArquivoRegistros,
                         nome_arquivo: str):
         """
         """
@@ -41,8 +41,8 @@ class Escrita:
             caminho = os.path.join(self._diretorio, nome_arquivo)
             with open(caminho, "w") as arq:
                 self._escreve_blocos_e_linhas(arq,
-                                              dados.blocos,
-                                              dados.linhas_fora_blocos)
+                                              dados.registros,
+                                              dados.linhas_fora_registros)
         except Exception as e:
             print_exc()
             raise e

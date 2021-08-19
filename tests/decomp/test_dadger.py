@@ -6,6 +6,12 @@ dadger = Dadger.le_arquivo("tests/_arquivos", "dadger.rv0")
 dadger_he = Dadger.le_arquivo("tests/_arquivos", "dadgerhe.rv0")
 
 
+def test_leitura_escrita():
+    dadger.escreve_arquivo("tests/_saidas", "dadger.rv0")
+    dadger2 = Dadger.le_arquivo("tests/_saidas", "dadger.rv0")
+    assert dadger == dadger2
+
+
 def test_te():
     te = dadger.te
     assert "PMO - JUNHO/21 - JULHO/21" in te.titulo

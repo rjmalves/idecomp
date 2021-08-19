@@ -38,4 +38,6 @@ Arquivos
    :maxdepth: 2
 
    arquivos/dadger
+   arquivos/dadgnl
    arquivos/relato
+   arquivos/relgnl

@@ -1,12 +1,12 @@
 from abc import abstractmethod
-from .dadosarquivo import DadosArquivo
+from .dadosarquivo import DadosArquivoBlocos, DadosArquivoRegistros
 
 
-class Arquivo:
+class ArquivoBlocos:
     """
     """
     def __init__(self,
-                 dados: DadosArquivo) -> None:
+                 dados: DadosArquivoBlocos) -> None:
         self._dados = dados
 
     def __eq__(self, o: object) -> bool:
@@ -14,9 +14,9 @@ class Arquivo:
         A igualdade entre arquivos avalia os dados interpretados e
         também os comentários externos.
         """
-        if not isinstance(o, Arquivo):
+        if not isinstance(o, ArquivoBlocos):
             return False
-        arquivos: Arquivo = o
+        arquivos: ArquivoBlocos = o
         dif = False
         for (i1, l1), (i2, l2) in zip(self._linhas_fora_blocos.items(),
                                       arquivos._linhas_fora_blocos.items()):
@@ -40,7 +40,53 @@ class Arquivo:
 
     @classmethod
     @abstractmethod
-    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> 'Arquivo':
+    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> 'ArquivoBlocos':
+        pass
+
+    @abstractmethod
+    def escreve_arquivo(self, diretorio: str, nome_arquivo=""):
+        pass
+
+
+class ArquivoRegistros:
+    """
+    """
+    def __init__(self,
+                 dados: DadosArquivoRegistros) -> None:
+        self._dados = dados
+
+    def __eq__(self, o: object) -> bool:
+        """
+        A igualdade entre arquivos avalia os dados interpretados e
+        também os comentários externos.
+        """
+        if not isinstance(o, ArquivoRegistros):
+            return False
+        d: ArquivoRegistros = o
+        dif = False
+        for (i1, l1), (i2, l2) in zip(self.linhas_fora_registros.items(),
+                                      d.linhas_fora_registros.items()):
+            if i1 != i2 or l1 != l2:
+                dif = True
+                break
+        for b1, b2 in zip(self._registros,
+                          d._registros):
+            if b1 != b2:
+                dif = True
+                break
+        return not dif
+
+    @property
+    def linhas_fora_registros(self):
+        return self._dados.linhas_fora_registros
+
+    @property
+    def _registros(self):
+        return self._dados.registros
+
+    @classmethod
+    @abstractmethod
+    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> 'ArquivoRegistros':
         pass
 
     @abstractmethod

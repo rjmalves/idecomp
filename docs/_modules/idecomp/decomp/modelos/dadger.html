@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.9</title>
+  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.10</title>
   
 
   
@@ -160,18 +160,16 @@
            <div itemprop="articleBody">
             
   <h1>Código fonte para idecomp.decomp.modelos.dadger</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">IO</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Type</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">traceback</span> <span class="kn">import</span> <span class="n">print_exc</span>
+<span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">IO</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Type</span>
 
 <span class="kn">from</span> <span class="nn">idecomp._utils.utils</span> <span class="kn">import</span> <span class="n">formata_numero</span>
 <span class="kn">from</span> <span class="nn">idecomp._utils.registros</span> <span class="kn">import</span> <span class="n">RegistroAn</span><span class="p">,</span> <span class="n">RegistroFn</span><span class="p">,</span> <span class="n">RegistroIn</span>
-<span class="kn">from</span> <span class="nn">idecomp._utils.registrodadger</span> <span class="kn">import</span> <span class="n">RegistroDadger</span>
-<span class="kn">from</span> <span class="nn">idecomp._utils.registrodadger</span> <span class="kn">import</span> <span class="n">TipoRegistroAC</span>
-<span class="kn">from</span> <span class="nn">idecomp._utils.dadosdadger</span> <span class="kn">import</span> <span class="n">DadosDadger</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.registrodecomp</span> <span class="kn">import</span> <span class="n">RegistroDecomp</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.registrodecomp</span> <span class="kn">import</span> <span class="n">TipoRegistroAC</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.leituraregistros</span> <span class="kn">import</span> <span class="n">LeituraRegistros</span>
 
 
-<div class="viewcode-block" id="TE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.TE">[documentos]</a><span class="k">class</span> <span class="nc">TE</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="TE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.TE">[documentos]</a><span class="k">class</span> <span class="nc">TE</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o nome do estudo do DECOMP.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -194,7 +192,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O único conteúdo do registro (título do estudo).</span>
 
-<span class="sd">        :return: Uma `str`com o título do estudo</span>
+<span class="sd">        :return: Uma `str` com o título do estudo</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span>
 
@@ -203,7 +201,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">t</span></div>
 
 
-<div class="viewcode-block" id="SB"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.SB">[documentos]</a><span class="k">class</span> <span class="nc">SB</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="SB"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.SB">[documentos]</a><span class="k">class</span> <span class="nc">SB</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o cadastro dos subsistemas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -244,7 +242,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="UH"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.UH">[documentos]</a><span class="k">class</span> <span class="nc">UH</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="UH"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.UH">[documentos]</a><span class="k">class</span> <span class="nc">UH</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o cadastro das UHEs, com os seus volumes</span>
 <span class="sd">    iniciais no estudo.</span>
@@ -265,7 +263,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_ree</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_vini</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">18</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">reg_evap</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">39</span><span class="p">))</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="mi">59</span><span class="p">:</span><span class="mi">69</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">isnumeric</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="mi">59</span><span class="p">:</span><span class="mi">69</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_vert</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">59</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">escreve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">):</span>
@@ -325,7 +323,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span></div>
 
 
-<div class="viewcode-block" id="CT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CT">[documentos]</a><span class="k">class</span> <span class="nc">CT</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="CT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CT">[documentos]</a><span class="k">class</span> <span class="nc">CT</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o cadastro das usinas termelétricas com</span>
 <span class="sd">    os seus custos e capacidades.</span>
@@ -465,7 +463,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">6</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">cvu</span></div>
 
 
-<div class="viewcode-block" id="UE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.UE">[documentos]</a><span class="k">class</span> <span class="nc">UE</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="UE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.UE">[documentos]</a><span class="k">class</span> <span class="nc">UE</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o cadastro das estações de bombeamento</span>
 <span class="sd">    (usinas elevatórias).</span>
@@ -505,7 +503,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="DP"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.DP">[documentos]</a><span class="k">class</span> <span class="nc">DP</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="DP"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.DP">[documentos]</a><span class="k">class</span> <span class="nc">DP</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o cadastro das durações dos patamares.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -623,7 +621,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">d</span></div>
 
 
-<div class="viewcode-block" id="CD"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CD">[documentos]</a><span class="k">class</span> <span class="nc">CD</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="CD"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CD">[documentos]</a><span class="k">class</span> <span class="nc">CD</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o cadastro dos custos de déficit.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -669,7 +667,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="PQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.PQ">[documentos]</a><span class="k">class</span> <span class="nc">PQ</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="PQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.PQ">[documentos]</a><span class="k">class</span> <span class="nc">PQ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as gerações de pequenas usinas, não</span>
 <span class="sd">    incluídas no despacho.</span>
@@ -703,7 +701,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="RI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.RI">[documentos]</a><span class="k">class</span> <span class="nc">RI</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="RI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.RI">[documentos]</a><span class="k">class</span> <span class="nc">RI</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as restrições de Itaipu.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -739,7 +737,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="IA"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.IA">[documentos]</a><span class="k">class</span> <span class="nc">IA</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="IA"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.IA">[documentos]</a><span class="k">class</span> <span class="nc">IA</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os limites de intercâmbio entre os subsistemas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -774,7 +772,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="TX"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.TX">[documentos]</a><span class="k">class</span> <span class="nc">TX</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="TX"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.TX">[documentos]</a><span class="k">class</span> <span class="nc">TX</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém a taxa de desconto anual do modelo.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -808,7 +806,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">t</span></div>
 
 
-<div class="viewcode-block" id="GP"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.GP">[documentos]</a><span class="k">class</span> <span class="nc">GP</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="GP"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.GP">[documentos]</a><span class="k">class</span> <span class="nc">GP</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o gap de tolerância para convergência.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -842,7 +840,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">g</span></div>
 
 
-<div class="viewcode-block" id="NI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.NI">[documentos]</a><span class="k">class</span> <span class="nc">NI</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="NI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.NI">[documentos]</a><span class="k">class</span> <span class="nc">NI</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o número máximo de iterações do modelo.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -874,7 +872,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">i</span></div>
 
 
-<div class="viewcode-block" id="DT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.DT">[documentos]</a><span class="k">class</span> <span class="nc">DT</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="DT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.DT">[documentos]</a><span class="k">class</span> <span class="nc">DT</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém a data de referência do estudo.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -938,7 +936,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">a</span></div>
 
 
-<div class="viewcode-block" id="MP"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.MP">[documentos]</a><span class="k">class</span> <span class="nc">MP</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="MP"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.MP">[documentos]</a><span class="k">class</span> <span class="nc">MP</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as manutenções programadas das UHEs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -973,7 +971,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="MT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.MT">[documentos]</a><span class="k">class</span> <span class="nc">MT</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="MT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.MT">[documentos]</a><span class="k">class</span> <span class="nc">MT</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as manutenções programadas das UTEs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1007,7 +1005,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="FD"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FD">[documentos]</a><span class="k">class</span> <span class="nc">FD</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="FD"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FD">[documentos]</a><span class="k">class</span> <span class="nc">FD</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os fatores de disponibilidade das UHEs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1042,7 +1040,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="VE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.VE">[documentos]</a><span class="k">class</span> <span class="nc">VE</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="VE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.VE">[documentos]</a><span class="k">class</span> <span class="nc">VE</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os volumes de espera das UHEs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1073,7 +1071,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="RE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.RE">[documentos]</a><span class="k">class</span> <span class="nc">RE</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="RE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.RE">[documentos]</a><span class="k">class</span> <span class="nc">RE</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os cadastros de restrições elétricas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1125,7 +1123,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="LU"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.LU">[documentos]</a><span class="k">class</span> <span class="nc">LU</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="LU"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.LU">[documentos]</a><span class="k">class</span> <span class="nc">LU</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os cadastros de restrições elétricas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1221,7 +1219,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">lim</span></div>
 
 
-<div class="viewcode-block" id="FU"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FU">[documentos]</a><span class="k">class</span> <span class="nc">FU</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="FU"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FU">[documentos]</a><span class="k">class</span> <span class="nc">FU</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os coeficientes das usinas hidráulicas</span>
 <span class="sd">    nas restrições elétricas.</span>
@@ -1257,7 +1255,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="FT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FT">[documentos]</a><span class="k">class</span> <span class="nc">FT</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="FT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FT">[documentos]</a><span class="k">class</span> <span class="nc">FT</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os coeficientes das usinas térmicas</span>
 <span class="sd">    nas restrições elétricas.</span>
@@ -1291,7 +1289,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="FI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FI">[documentos]</a><span class="k">class</span> <span class="nc">FI</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="FI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FI">[documentos]</a><span class="k">class</span> <span class="nc">FI</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o sentido do fluxo da interligação</span>
 <span class="sd">    entre os subsistemas associados à restrição elétrica.</span>
@@ -1324,7 +1322,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="VI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.VI">[documentos]</a><span class="k">class</span> <span class="nc">VI</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="VI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.VI">[documentos]</a><span class="k">class</span> <span class="nc">VI</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os tempos de viagem da água entre usinas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1822,7 +1820,7 @@
         <span class="k">return</span> <span class="n">linha</span>
 
 
-<div class="viewcode-block" id="AC"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.AC">[documentos]</a><span class="k">class</span> <span class="nc">AC</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="AC"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.AC">[documentos]</a><span class="k">class</span> <span class="nc">AC</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as alterações de cadastro das usinas hidrelétricas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -1903,7 +1901,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="IR"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.IR">[documentos]</a><span class="k">class</span> <span class="nc">IR</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="IR"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.IR">[documentos]</a><span class="k">class</span> <span class="nc">IR</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as configurações de</span>
 <span class="sd">    geração de relatórios de saída.</span>
@@ -1952,7 +1950,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="CI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CI">[documentos]</a><span class="k">class</span> <span class="nc">CI</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="CI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CI">[documentos]</a><span class="k">class</span> <span class="nc">CI</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que define contratos de importação de energia.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2004,7 +2002,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="CE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CE">[documentos]</a><span class="k">class</span> <span class="nc">CE</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="CE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CE">[documentos]</a><span class="k">class</span> <span class="nc">CE</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que define contratos de importação de energia.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2056,7 +2054,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="FC"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FC">[documentos]</a><span class="k">class</span> <span class="nc">FC</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="FC"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FC">[documentos]</a><span class="k">class</span> <span class="nc">FC</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém informações para acessar a FCF fornecida</span>
 <span class="sd">    pelo NEWAVE.</span>
@@ -2104,7 +2102,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span></div>
 
 
-<div class="viewcode-block" id="TI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.TI">[documentos]</a><span class="k">class</span> <span class="nc">TI</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="TI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.TI">[documentos]</a><span class="k">class</span> <span class="nc">TI</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as taxas de irrigação por UHE.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2164,7 +2162,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">tx</span></div>
 
 
-<div class="viewcode-block" id="RQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.RQ">[documentos]</a><span class="k">class</span> <span class="nc">RQ</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="RQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.RQ">[documentos]</a><span class="k">class</span> <span class="nc">RQ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as vazões mínimas históricas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2195,7 +2193,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="EZ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.EZ">[documentos]</a><span class="k">class</span> <span class="nc">EZ</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="EZ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.EZ">[documentos]</a><span class="k">class</span> <span class="nc">EZ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o percentual máximo do</span>
 <span class="sd">    volume útil para acoplamento.</span>
@@ -2219,7 +2217,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="HV"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.HV">[documentos]</a><span class="k">class</span> <span class="nc">HV</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="HV"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.HV">[documentos]</a><span class="k">class</span> <span class="nc">HV</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os cadastros de restrições de volume armazenado.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2256,7 +2254,7 @@
     <span class="k">def</span> <span class="nf">estagio_inicial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio inicial de consideração da restrição HV.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O estágio como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -2265,13 +2263,13 @@
     <span class="k">def</span> <span class="nf">estagio_final</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio final de consideração da restrição HV.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O estágio como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="LV"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.LV">[documentos]</a><span class="k">class</span> <span class="nc">LV</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="LV"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.LV">[documentos]</a><span class="k">class</span> <span class="nc">LV</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os limites das restrições de volume armazenado.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2311,7 +2309,7 @@
     <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O código da restrição HV associada aos limites</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O código como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2320,7 +2318,7 @@
     <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio de consideração dos limites.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O estágio como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -2333,7 +2331,7 @@
     <span class="k">def</span> <span class="nf">limite_inferior</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O limite inferior para o armazenamento.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O limite como `float`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -2346,7 +2344,7 @@
     <span class="k">def</span> <span class="nf">limites_superior</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O limite superior para o armazenamento.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O limite como `float`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
@@ -2356,7 +2354,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">lim</span></div>
 
 
-<div class="viewcode-block" id="CV"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CV">[documentos]</a><span class="k">class</span> <span class="nc">CV</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="CV"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CV">[documentos]</a><span class="k">class</span> <span class="nc">CV</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os coeficientes das usinas hidráulicas</span>
 <span class="sd">    nas restrições de volume armazenado.</span>
@@ -2391,7 +2389,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="HQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.HQ">[documentos]</a><span class="k">class</span> <span class="nc">HQ</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="HQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.HQ">[documentos]</a><span class="k">class</span> <span class="nc">HQ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os cadastros de restrições de vazões.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2428,7 +2426,7 @@
     <span class="k">def</span> <span class="nf">estagio_inicial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio inicial de consideração da restrição HQ.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O estágio como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -2437,13 +2435,13 @@
     <span class="k">def</span> <span class="nf">estagio_final</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio final de consideração da restrição HQ.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O estágio como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="LQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.LQ">[documentos]</a><span class="k">class</span> <span class="nc">LQ</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="LQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.LQ">[documentos]</a><span class="k">class</span> <span class="nc">LQ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os limites das restrições de volume armazenado.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2483,7 +2481,7 @@
     <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O código da restrição HQ associada aos limites</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O código como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2492,7 +2490,7 @@
     <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio de consideração dos limites.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O estágio como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -2505,7 +2503,7 @@
     <span class="k">def</span> <span class="nf">limites_inferiores</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Os limites inferiores por patamar para a vazão.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: Os limites como `list[float]`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
@@ -2523,7 +2521,7 @@
     <span class="k">def</span> <span class="nf">limites_superiores</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Os limites superiores por patamar para a vazão.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: Os limites como `list[float]`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
@@ -2538,7 +2536,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">lim</span></div>
 
 
-<div class="viewcode-block" id="CQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CQ">[documentos]</a><span class="k">class</span> <span class="nc">CQ</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="CQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CQ">[documentos]</a><span class="k">class</span> <span class="nc">CQ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os coeficientes das usinas hidráulicas</span>
 <span class="sd">    nas restrições de vazão.</span>
@@ -2573,7 +2571,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="AR"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.AR">[documentos]</a><span class="k">class</span> <span class="nc">AR</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="AR"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.AR">[documentos]</a><span class="k">class</span> <span class="nc">AR</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as configurações de aversão a risco.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2593,7 +2591,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="EV"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.EV">[documentos]</a><span class="k">class</span> <span class="nc">EV</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="EV"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.EV">[documentos]</a><span class="k">class</span> <span class="nc">EV</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as configurações de consideração</span>
 <span class="sd">    da evaporação.</span>
@@ -2617,7 +2615,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="FJ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FJ">[documentos]</a><span class="k">class</span> <span class="nc">FJ</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="FJ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FJ">[documentos]</a><span class="k">class</span> <span class="nc">FJ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém as configurações de aversão a risco.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2637,7 +2635,7 @@
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="HE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.HE">[documentos]</a><span class="k">class</span> <span class="nc">HE</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="HE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.HE">[documentos]</a><span class="k">class</span> <span class="nc">HE</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o cadastro de uma restrição de volume</span>
 <span class="sd">    mínimo armazenado.</span>
@@ -2678,7 +2676,7 @@
     <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O código de cadastro da restrição HE</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O código como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -2688,7 +2686,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O tipo de limite especificado na restrição HE,</span>
 <span class="sd">        em valor absoluto ou percentual.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O tipo como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
@@ -2702,7 +2700,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O limite para a energia armazenada associada</span>
 <span class="sd">        ao registro HE.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O limite como `float`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
@@ -2715,7 +2713,7 @@
     <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio para consideração da restrição.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O estágio como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
@@ -2728,7 +2726,7 @@
     <span class="k">def</span> <span class="nf">penalidade</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O valor da penalidade para a violação da restrição.</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O valor como `float`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
@@ -2742,7 +2740,7 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O tipo de penalidade a ser considerada ao violar a</span>
 <span class="sd">        restrição (inviabilidade ou penalização).</span>
-<span class="sd">        </span>
+
 <span class="sd">        :return: O tipo como `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
@@ -2752,7 +2750,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span></div>
 
 
-<div class="viewcode-block" id="CM"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CM">[documentos]</a><span class="k">class</span> <span class="nc">CM</span><span class="p">(</span><span class="n">RegistroDadger</span><span class="p">):</span>
+<div class="viewcode-block" id="CM"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CM">[documentos]</a><span class="k">class</span> <span class="nc">CM</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os coeficientes de uma restrição RHE.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -2799,115 +2797,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span></div>
 
 
-<span class="k">class</span> <span class="nc">LeituraDadger</span><span class="p">:</span>
+<span class="k">class</span> <span class="nc">LeituraDadger</span><span class="p">(</span><span class="n">LeituraRegistros</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Classe com utilidades gerais para leitura de arquivos</span>
 <span class="sd">    do DECOMP com comentários.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
                  <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_usa_backup</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_linha_backup</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_diretorio</span> <span class="o">=</span> <span class="n">diretorio</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_linhas_fora_registros</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_registros_encontrados</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_registros_lidos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_le_linha_com_backup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Faz uma leitura de linha de um arquivo, mas com a opção de usar</span>
-<span class="sd">        um backup de leitura anterior sinalizado anteriormente.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">linha</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_usa_backup</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_usa_backup</span> <span class="o">=</span> <span class="kc">False</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linha_backup</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="n">arq</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_linha_backup</span> <span class="o">=</span> <span class="n">linha</span>
-        <span class="k">return</span> <span class="n">linha</span>
-
-    <span class="k">def</span> <span class="nf">_configura_backup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Prepara a próxima leitura para ser uma feita a partir de um</span>
-<span class="sd">        backup armazenado.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_usa_backup</span> <span class="o">=</span> <span class="kc">True</span>
-
-    <span class="k">def</span> <span class="nf">_lista_arquivos_por_chave</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">chave</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Retorna a lista de caminhos completos para os arquivos em um</span>
-<span class="sd">        diretório, desde que tenham uma certa chave no nome.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diretorio</span><span class="p">)</span> <span class="k">if</span> <span class="n">chave</span> <span class="ow">in</span> <span class="n">f</span><span class="p">]</span>
-
-    <span class="k">def</span> <span class="nf">_verifica_inicio_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                   <span class="n">linha</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                                   <span class="n">ordem</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                                   <span class="n">registros</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Verifica se a linha atual é a linha de início de algum</span>
-<span class="sd">        dos registros a serem lidos.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">registros</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">e_inicio_de_registro</span><span class="p">(</span><span class="n">linha</span><span class="p">):</span>
-                <span class="n">b</span><span class="o">.</span><span class="n">inicia_registro</span><span class="p">(</span><span class="n">linha</span><span class="p">,</span> <span class="n">ordem</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_registros_encontrados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">registros</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-                <span class="k">return</span> <span class="kc">True</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">_linhas_fora_registros</span><span class="p">[</span><span class="n">ordem</span><span class="p">]</span> <span class="o">=</span> <span class="n">linha</span>
-        <span class="k">return</span> <span class="kc">False</span>
-
-    <span class="k">def</span> <span class="nf">_le_registros_encontrados</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                  <span class="n">registros</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Faz a leitura dos registros encontrados até o momento e que</span>
-<span class="sd">        ainda não foram lidos.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">registros</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">b</span><span class="o">.</span><span class="n">encontrado</span><span class="p">:</span>
-                <span class="n">res</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">le_registro</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_registros_lidos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">registros</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
-                <span class="k">return</span> <span class="n">res</span>
-
-    <span class="k">def</span> <span class="nf">_le_registros_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Faz a leitura dos registros de dados do arquivo.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cria_registros_leitura</span><span class="p">()</span>
-        <span class="n">linha</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-            <span class="c1"># Decide se lê uma linha nova ou usa a última lida</span>
-            <span class="n">linha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_linha_com_backup</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fim_arquivo</span><span class="p">(</span><span class="n">linha</span><span class="p">):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_prepara_dados_saida</span><span class="p">()</span>
-                <span class="k">break</span>
-
-            <span class="bp">self</span><span class="o">.</span><span class="n">_verifica_inicio_registros</span><span class="p">(</span><span class="n">linha</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="p">)</span>
-            <span class="c1"># Caso a função de leitura retorne True, é configurado</span>
-            <span class="c1">#  o backup da linha atual.</span>
-            <span class="n">bkp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_le_registros_encontrados</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_registros_encontrados</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">bkp</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_linha_backup</span> <span class="o">=</span> <span class="n">bkp</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_configura_backup</span><span class="p">()</span>
-            <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">def</span> <span class="nf">_le_arquivo_em_diretorio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                 <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                                 <span class="n">nome_arquivo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Faz a leitura do arquivo em um diretorio.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">caminho</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">diretorio</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">caminho</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">arq</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_le_registros_arquivo</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">print_exc</span><span class="p">()</span>
-
-    <span class="k">def</span> <span class="nf">_cria_registros_leitura</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">_cria_registros_leitura</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Método que cria a lista de registros a serem lidos no arquivo.</span>
 <span class="sd">        Implementa o Factory Pattern.</span>
@@ -2921,127 +2820,61 @@
         <span class="n">MAX_AC_UHE</span> <span class="o">=</span> <span class="mi">10</span>
         <span class="n">MAX_REE</span> <span class="o">=</span> <span class="mi">12</span>
         <span class="n">MAX_RELATORIOS</span> <span class="o">=</span> <span class="mi">10</span>
-        <span class="n">te</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TE</span><span class="p">()]</span>
-        <span class="n">sb</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">SB</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span><span class="p">)]</span>
-        <span class="n">uh</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">UH</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">ct</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CT</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UTE</span><span class="p">)]</span>
-        <span class="n">ue</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">UE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UE</span><span class="p">)]</span>
-        <span class="n">dp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">DP</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">te</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TE</span><span class="p">()]</span>
+        <span class="n">sb</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">SB</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span><span class="p">)]</span>
+        <span class="n">uh</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">UH</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">ct</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CT</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UTE</span><span class="p">)]</span>
+        <span class="n">ue</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">UE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UE</span><span class="p">)]</span>
+        <span class="n">dp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">DP</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">cd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CD</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span><span class="p">)]</span>
-        <span class="n">pq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">PQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">cd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CD</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span><span class="p">)]</span>
+        <span class="n">pq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">PQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">ri</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RI</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">ia</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">IA</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">ri</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RI</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
+        <span class="n">ia</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">IA</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span> <span class="o">*</span> <span class="n">MAX_SUBSIS</span><span class="p">)]</span>
-        <span class="n">tx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TX</span><span class="p">()]</span>
-        <span class="n">gp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">GP</span><span class="p">()]</span>
-        <span class="n">ni</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">NI</span><span class="p">()]</span>
-        <span class="n">dt</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">DT</span><span class="p">()]</span>
-        <span class="n">mp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">MP</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">mt</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">MT</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UTE</span><span class="p">)]</span>
-        <span class="n">fd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FD</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">ve</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">VE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">re</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RE</span><span class="p">)]</span>
-        <span class="n">lu</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">LU</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">tx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TX</span><span class="p">()]</span>
+        <span class="n">gp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">GP</span><span class="p">()]</span>
+        <span class="n">ni</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">NI</span><span class="p">()]</span>
+        <span class="n">dt</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">DT</span><span class="p">()]</span>
+        <span class="n">mp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">MP</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">mt</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">MT</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UTE</span><span class="p">)]</span>
+        <span class="n">fd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FD</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">ve</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">VE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">re</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RE</span><span class="p">)]</span>
+        <span class="n">lu</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">LU</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RE</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">fu</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FU</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RE</span><span class="p">)]</span>
-        <span class="n">ft</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FT</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RE</span><span class="p">)]</span>
-        <span class="n">vi</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">VI</span><span class="p">(),</span> <span class="n">VI</span><span class="p">()]</span>
-        <span class="n">ac</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">AC</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">fu</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FU</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RE</span><span class="p">)]</span>
+        <span class="n">ft</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FT</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RE</span><span class="p">)]</span>
+        <span class="n">vi</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">VI</span><span class="p">(),</span> <span class="n">VI</span><span class="p">()]</span>
+        <span class="n">ac</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">AC</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span> <span class="o">*</span> <span class="n">MAX_AC_UHE</span><span class="p">)]</span>
-        <span class="n">ir</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">IR</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RELATORIOS</span><span class="p">)]</span>
-        <span class="n">fc</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FC</span><span class="p">(),</span> <span class="n">FC</span><span class="p">()]</span>
-        <span class="n">ti</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TI</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">rq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_REE</span><span class="p">)]</span>
-        <span class="n">ez</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">EZ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">hv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">HV</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">lv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">LV</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">ir</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">IR</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RELATORIOS</span><span class="p">)]</span>
+        <span class="n">fc</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FC</span><span class="p">(),</span> <span class="n">FC</span><span class="p">()]</span>
+        <span class="n">ti</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TI</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">rq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_REE</span><span class="p">)]</span>
+        <span class="n">ez</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">EZ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">hv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">HV</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">lv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">LV</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">cv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CV</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">hq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">HQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">lq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">LQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">cv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CV</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">hq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">HQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
+        <span class="n">lq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">LQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">cq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">cq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">ar</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">AR</span><span class="p">()]</span>
-        <span class="n">ev</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">EV</span><span class="p">()]</span>
-        <span class="n">fj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FJ</span><span class="p">()]</span>
-        <span class="n">he</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">HE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">ar</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">AR</span><span class="p">()]</span>
+        <span class="n">ev</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">EV</span><span class="p">()]</span>
+        <span class="n">fj</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FJ</span><span class="p">()]</span>
+        <span class="n">he</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">HE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_REE</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">cm</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CM</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+        <span class="n">cm</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CM</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_REE</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">te</span> <span class="o">+</span> <span class="n">sb</span> <span class="o">+</span> <span class="n">uh</span> <span class="o">+</span> <span class="n">ct</span> <span class="o">+</span> <span class="n">ue</span> <span class="o">+</span> <span class="n">dp</span> <span class="o">+</span> <span class="n">cd</span> <span class="o">+</span> <span class="n">pq</span> <span class="o">+</span>
                 <span class="n">ri</span> <span class="o">+</span> <span class="n">ia</span> <span class="o">+</span> <span class="n">tx</span> <span class="o">+</span> <span class="n">gp</span> <span class="o">+</span> <span class="n">ni</span> <span class="o">+</span> <span class="n">dt</span> <span class="o">+</span> <span class="n">mp</span> <span class="o">+</span> <span class="n">mt</span> <span class="o">+</span>
                 <span class="n">fd</span> <span class="o">+</span> <span class="n">ve</span> <span class="o">+</span> <span class="n">re</span> <span class="o">+</span> <span class="n">lu</span> <span class="o">+</span> <span class="n">fu</span> <span class="o">+</span> <span class="n">ft</span> <span class="o">+</span> <span class="n">vi</span> <span class="o">+</span> <span class="n">ac</span> <span class="o">+</span>
                 <span class="n">ir</span> <span class="o">+</span> <span class="n">fc</span> <span class="o">+</span> <span class="n">ti</span> <span class="o">+</span> <span class="n">rq</span> <span class="o">+</span> <span class="n">ez</span> <span class="o">+</span> <span class="n">hv</span> <span class="o">+</span> <span class="n">lv</span> <span class="o">+</span> <span class="n">cv</span> <span class="o">+</span>
                 <span class="n">hq</span> <span class="o">+</span> <span class="n">lq</span> <span class="o">+</span> <span class="n">cq</span> <span class="o">+</span> <span class="n">ar</span> <span class="o">+</span> <span class="n">ev</span> <span class="o">+</span> <span class="n">fj</span> <span class="o">+</span> <span class="n">he</span> <span class="o">+</span> <span class="n">cm</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">_prepara_dados_saida</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Trata os dados obtidos do arquivo para ser retornado.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registros_lidos</span>
-
-    <span class="k">def</span> <span class="nf">_fim_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linha</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Método que deve ser implementado para cada arquivo, com o</span>
-<span class="sd">        conteúdo da linha que indica o fim do próprio, para impedir loops</span>
-<span class="sd">        de leitura eterna.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
-
-    <span class="k">def</span> <span class="nf">le_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DadosDadger</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Método para ler um arquivo e retornar o objeto</span>
-<span class="sd">        devido da classe em particular.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_le_arquivo_em_diretorio</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diretorio</span><span class="p">,</span>
-                                      <span class="n">nome_arquivo</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">DadosDadger</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="p">,</span>
-                           <span class="bp">self</span><span class="o">.</span><span class="n">_linhas_fora_registros</span><span class="p">)</span>
-
-
-<span class="k">class</span> <span class="nc">EscritaDadger</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Classe com utilidades gerais para a escrita de arquivos</span>
-<span class="sd">    do DECOMP.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_diretorio</span> <span class="o">=</span> <span class="n">diretorio</span>
-
-    <span class="k">def</span> <span class="nf">_escreve_blocos_e_linhas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                 <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">,</span>
-                                 <span class="n">blocos</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDadger</span><span class="p">],</span>
-                                 <span class="n">linhas</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
-
-        <span class="n">ordem_blocos</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">_ordem</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">blocos</span><span class="p">]</span>
-        <span class="n">ordem_linhas</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">linhas</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-        <span class="n">itens</span> <span class="o">=</span> <span class="n">ordem_blocos</span> <span class="o">+</span> <span class="n">ordem_linhas</span>
-        <span class="n">itens</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">itens</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ordem_blocos</span><span class="p">:</span>
-                <span class="n">blocos</span><span class="p">[</span><span class="n">ordem_blocos</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">escreve</span><span class="p">(</span><span class="n">arq</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ordem_linhas</span><span class="p">:</span>
-                <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linhas</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-
-    <span class="k">def</span> <span class="nf">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                        <span class="n">dados</span><span class="p">:</span> <span class="n">DadosDadger</span><span class="p">,</span>
-                        <span class="n">nome_arquivo</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diretorio</span><span class="p">):</span>
-                <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diretorio</span><span class="p">)</span>
-            <span class="n">caminho</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_diretorio</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span>
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">caminho</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">arq</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_escreve_blocos_e_linhas</span><span class="p">(</span><span class="n">arq</span><span class="p">,</span>
-                                              <span class="n">dados</span><span class="o">.</span><span class="n">registros</span><span class="p">,</span>
-                                              <span class="n">dados</span><span class="o">.</span><span class="n">linhas_fora_registros</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-            <span class="n">print_exc</span><span class="p">()</span>
-            <span class="k">raise</span> <span class="n">e</span>
 </pre></div>
 
            </div>

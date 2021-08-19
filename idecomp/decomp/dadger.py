@@ -5,14 +5,15 @@ from idecomp.decomp.modelos.dadger import FD, VE, RE, LU, FU, FT, FI, VI  # noqa
 from idecomp.decomp.modelos.dadger import AC, IR, CI, CE, FC, TI, RQ, EZ  # noqa
 from idecomp.decomp.modelos.dadger import HV, LV, CV, HQ, LQ, CQ, AR, EV  # noqa
 from idecomp.decomp.modelos.dadger import FJ, HE, CM  # noqa
-from idecomp.decomp.modelos.dadger import EscritaDadger
-from idecomp._utils.dadosdadger import DadosDadger
+from idecomp._utils.arquivo import ArquivoRegistros
+from idecomp._utils.dadosarquivo import DadosArquivoRegistros
+from idecomp._utils.escritaregistros import EscritaRegistros
 
 from copy import deepcopy
 from typing import Type, List, Optional, TypeVar, Any
 
 
-class Dadger:
+class Dadger(ArquivoRegistros):
     """
     Armazena os dados de entrada gerais do DECOMP.
 
@@ -33,40 +34,11 @@ class Dadger:
     T = TypeVar("T")
 
     def __init__(self,
-                 dados: DadosDadger) -> None:
+                 dados: DadosArquivoRegistros) -> None:
         """
         Construtor padrão
         """
-        self._dados = dados
-
-    def __eq__(self, o: object) -> bool:
-        """
-        A igualdade entre arquivos avalia os dados interpretados e
-        também os comentários externos.
-        """
-        if not isinstance(o, Dadger):
-            return False
-        d: Dadger = o
-        dif = False
-        for (i1, l1), (i2, l2) in zip(self.linhas_fora_registros.items(),
-                                      d.linhas_fora_registros.items()):
-            if i1 != i2 or l1 != l2:
-                dif = True
-                break
-        for b1, b2 in zip(self._registros,
-                          d._registros):
-            if b1 != b2:
-                dif = True
-                break
-        return not dif
-
-    @property
-    def linhas_fora_registros(self):
-        return self._dados.linhas_fora_registros
-
-    @property
-    def _registros(self):
-        return self._dados.registros
+        super().__init__(dados)
 
     # Override
     @classmethod
@@ -103,7 +75,7 @@ class Dadger:
             default "dadger.rv0"
         :type nome_arquivo: str, optional
         """
-        escritor = EscritaDadger(diretorio)
+        escritor = EscritaRegistros(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
 
     def __obtem_registro(self,

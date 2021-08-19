@@ -167,14 +167,15 @@
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">AC</span><span class="p">,</span> <span class="n">IR</span><span class="p">,</span> <span class="n">CI</span><span class="p">,</span> <span class="n">CE</span><span class="p">,</span> <span class="n">FC</span><span class="p">,</span> <span class="n">TI</span><span class="p">,</span> <span class="n">RQ</span><span class="p">,</span> <span class="n">EZ</span>  <span class="c1"># noqa</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">HV</span><span class="p">,</span> <span class="n">LV</span><span class="p">,</span> <span class="n">CV</span><span class="p">,</span> <span class="n">HQ</span><span class="p">,</span> <span class="n">LQ</span><span class="p">,</span> <span class="n">CQ</span><span class="p">,</span> <span class="n">AR</span><span class="p">,</span> <span class="n">EV</span>  <span class="c1"># noqa</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">FJ</span><span class="p">,</span> <span class="n">HE</span><span class="p">,</span> <span class="n">CM</span>  <span class="c1"># noqa</span>
-<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">EscritaDadger</span>
-<span class="kn">from</span> <span class="nn">idecomp._utils.dadosdadger</span> <span class="kn">import</span> <span class="n">DadosDadger</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.arquivo</span> <span class="kn">import</span> <span class="n">ArquivoRegistros</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.dadosarquivo</span> <span class="kn">import</span> <span class="n">DadosArquivoRegistros</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.escritaregistros</span> <span class="kn">import</span> <span class="n">EscritaRegistros</span>
 
 <span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Any</span>
 
 
-<div class="viewcode-block" id="Dadger"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger">[documentos]</a><span class="k">class</span> <span class="nc">Dadger</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger">[documentos]</a><span class="k">class</span> <span class="nc">Dadger</span><span class="p">(</span><span class="n">ArquivoRegistros</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Armazena os dados de entrada gerais do DECOMP.</span>
 
@@ -195,40 +196,11 @@
     <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">dados</span><span class="p">:</span> <span class="n">DadosDadger</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+                 <span class="n">dados</span><span class="p">:</span> <span class="n">DadosArquivoRegistros</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Construtor padrão</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">dados</span>
-
-    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">o</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        A igualdade entre arquivos avalia os dados interpretados e</span>
-<span class="sd">        também os comentários externos.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">Dadger</span><span class="p">):</span>
-            <span class="k">return</span> <span class="kc">False</span>
-        <span class="n">d</span><span class="p">:</span> <span class="n">Dadger</span> <span class="o">=</span> <span class="n">o</span>
-        <span class="n">dif</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">i1</span><span class="p">,</span> <span class="n">l1</span><span class="p">),</span> <span class="p">(</span><span class="n">i2</span><span class="p">,</span> <span class="n">l2</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">linhas_fora_registros</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span>
-                                      <span class="n">d</span><span class="o">.</span><span class="n">linhas_fora_registros</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-            <span class="k">if</span> <span class="n">i1</span> <span class="o">!=</span> <span class="n">i2</span> <span class="ow">or</span> <span class="n">l1</span> <span class="o">!=</span> <span class="n">l2</span><span class="p">:</span>
-                <span class="n">dif</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">break</span>
-        <span class="k">for</span> <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="p">,</span>
-                          <span class="n">d</span><span class="o">.</span><span class="n">_registros</span><span class="p">):</span>
-            <span class="k">if</span> <span class="n">b1</span> <span class="o">!=</span> <span class="n">b2</span><span class="p">:</span>
-                <span class="n">dif</span> <span class="o">=</span> <span class="kc">True</span>
-                <span class="k">break</span>
-        <span class="k">return</span> <span class="ow">not</span> <span class="n">dif</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">linhas_fora_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">linhas_fora_registros</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">registros</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
 
     <span class="c1"># Override</span>
 <div class="viewcode-block" id="Dadger.le_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.le_arquivo">[documentos]</a>    <span class="nd">@classmethod</span>
@@ -265,7 +237,7 @@
 <span class="sd">            default &quot;dadger.rv0&quot;</span>
 <span class="sd">        :type nome_arquivo: str, optional</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">escritor</span> <span class="o">=</span> <span class="n">EscritaDadger</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
+        <span class="n">escritor</span> <span class="o">=</span> <span class="n">EscritaRegistros</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
         <span class="n">escritor</span><span class="o">.</span><span class="n">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__obtem_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
@@ -475,7 +447,7 @@
 <span class="sd">        e este será retornado:</span>
 
 <span class="sd">        &gt;&gt;&gt; lu2 = dadger.lu(1, 5)</span>
-<span class="sd">        &gt;&gt;&gt; lu.limites_inferiores == lu2.limites_inferiores        </span>
+<span class="sd">        &gt;&gt;&gt; lu.limites_inferiores == lu2.limites_inferiores</span>
 <span class="sd">            True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -743,7 +715,7 @@
 <span class="sd">        e este será retornado:</span>
 
 <span class="sd">        &gt;&gt;&gt; lq2 = dadger.lq(1, 5)</span>
-<span class="sd">        &gt;&gt;&gt; lq.limites_inferiores == lq2.limites_inferiores        </span>
+<span class="sd">        &gt;&gt;&gt; lq.limites_inferiores == lq2.limites_inferiores</span>
 <span class="sd">            True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>

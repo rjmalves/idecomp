@@ -3,7 +3,7 @@ from idecomp.config import MAX_ESTAGIOS
 from idecomp.config import REES, SUBSISTEMAS
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
-from idecomp._utils.leitura import Leitura
+from idecomp._utils.leiturablocos import LeituraBlocos
 # Imports de módulos externos
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
@@ -521,7 +521,7 @@ class BlocoDiasExcluidosSemanas(Bloco):
         pass
 
 
-class LeituraRelato(Leitura):
+class LeituraRelato(LeituraBlocos):
     """
     Realiza a leitura do arquivo relato.rvx
     existente em um diretório de saídas do DECOMP.

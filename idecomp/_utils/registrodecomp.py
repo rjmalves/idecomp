@@ -2,11 +2,10 @@ from abc import abstractmethod
 from typing import Any, IO, Optional
 
 
-class RegistroDadger:
+class RegistroDecomp:
     """
-    Registro genérico do arquivo dadger do DECOMP,
-    especificado através de uma string de início e uma
-    de terminação, com estados de leitura.
+    Registro genérico dos arquivos do DECOMP,
+    especificado através de um mnemônico, com estados de leitura.
     """
     def __init__(self,
                  mnemonico: str,
@@ -20,9 +19,9 @@ class RegistroDadger:
         self._linha = ""
 
     def __eq__(self, o: object) -> bool:
-        if not isinstance(o, RegistroDadger):
+        if not isinstance(o, RegistroDecomp):
             return False
-        bloco: RegistroDadger = o
+        bloco: RegistroDecomp = o
         return self.dados == bloco.dados
 
     def e_inicio_de_registro(self, linha: str) -> bool:
@@ -85,7 +84,7 @@ class RegistroDadger:
 class TipoRegistroAC:
     """
     Classe base para os diferentes tipos possíveis de
-    registros AC, baseados nos diferentes mnemônicos.
+    registros AC do Dadger, baseados nos diferentes mnemônicos.
     """
     mnemonico = ""
 

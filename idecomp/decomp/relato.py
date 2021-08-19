@@ -8,13 +8,13 @@ from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaSubsistemaRelato
 from idecomp.decomp.modelos.relato import BlocoENAPreEstudoSemanalSubsistemaRelato  # noqa
 from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
 from idecomp.decomp.modelos.relato import LeituraRelato
-from idecomp._utils.arquivo import Arquivo
-from idecomp._utils.dadosarquivo import DadosArquivo
+from idecomp._utils.arquivo import ArquivoBlocos
+from idecomp._utils.dadosarquivo import DadosArquivoBlocos
 from typing import Type
 import pandas as pd  # type: ignore
 
 
-class Relato(Arquivo):
+class Relato(ArquivoBlocos):
     """
     Armazena os dados de saída do DECOMP referentes ao
     acompanhamento do programa.
@@ -25,7 +25,7 @@ class Relato(Arquivo):
 
     """
     def __init__(self,
-                 dados: DadosArquivo) -> None:
+                 dados: DadosArquivoBlocos) -> None:
         super().__init__(dados)
 
     # Override
