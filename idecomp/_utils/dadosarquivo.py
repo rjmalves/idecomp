@@ -1,3 +1,4 @@
+from idecomp._utils.blocobinario import BlocoBinario
 from .registrodecomp import RegistroDecomp
 from .bloco import Bloco
 from typing import Dict, List
@@ -39,3 +40,15 @@ class DadosArquivoRegistros:
     @property
     def linhas_fora_registros(self) -> Dict[float, str]:
         return self.__linhas_fora_registros
+
+
+class DadosArquivoBinarios:
+    """
+    """
+    def __init__(self,
+                 blocos: List[BlocoBinario]) -> None:
+        self.__blocos = blocos
+
+    @property
+    def blocos(self) -> List[BlocoBinario]:
+        return self.__blocos
