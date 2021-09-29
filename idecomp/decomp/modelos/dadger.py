@@ -904,10 +904,7 @@ class VE(RegistroDecomp):
         linha = (f"{VE.mnemonico}".ljust(4) +
                  f"{self._dados[0]}".rjust(3) + "  ")
         for i in range(1, len(self._dados)):
-            if self._dados[i] == 100:
-                linha += f"{round(self._dados[i], 2):.1f}"
-            else:
-                linha += f"{round(self._dados[i], 2):.2f}"
+            linha += f"{round(self._dados[i], 2)}".rjust(5)
         linha += "\n"
         arq.write(linha)
 
