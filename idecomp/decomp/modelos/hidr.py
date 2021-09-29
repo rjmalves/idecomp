@@ -1,5 +1,6 @@
 from io import BufferedReader
-from typing import List
+from typing import List, BinaryIO
+import numpy as np  # type: ignore
 
 from idecomp._utils.registrosbinario import RegistroAnBinario
 from idecomp._utils.registrosbinario import RegistroFnBinario
@@ -98,10 +99,82 @@ class BlocoBinarioHidr(BlocoBinario):
                       ]
 
     # Override
-    def escreve(self, arq: BufferedReader):
+    def escreve(self, arq: BinaryIO):
         """
         """
-        pass
+        # Nome
+        arq.write(self._dados[0].ljust(12).encode("ISO-8859-1"))
+        # Posto
+        np.array(self._dados[1]).astype("int32").tofile(arq)
+        # Posto BDH
+        np.array(self._dados[2:10]).astype("int8").tofile(arq)
+        # Subsistema
+        np.array(self._dados[10]).astype("int32").tofile(arq)
+        # Empresa
+        np.array(self._dados[11]).astype("int32").tofile(arq)
+        # Jusante
+        np.array(self._dados[12]).astype("int32").tofile(arq)
+        # Desvio
+        np.array(self._dados[13]).astype("int32").tofile(arq)
+        # Volumes
+        np.array(self._dados[14]).astype("float32").tofile(arq)
+        np.array(self._dados[15]).astype("float32").tofile(arq)
+        np.array(self._dados[16]).astype("float32").tofile(arq)
+        np.array(self._dados[17]).astype("float32").tofile(arq)
+        # Cotas
+        np.array(self._dados[18]).astype("float32").tofile(arq)
+        np.array(self._dados[19]).astype("float32").tofile(arq)
+        # Polinomios
+        np.array(self._dados[20:25]).astype("float32").tofile(arq)
+        np.array(self._dados[25:30]).astype("float32").tofile(arq)
+        # Evaporacao
+        np.array(self._dados[30:42]).astype("int32").tofile(arq)
+        # Número de conjuntos de máquinas
+        np.array(self._dados[42]).astype("int32").tofile(arq)
+        # Número de máquinas por conjunto
+        np.array(self._dados[43:48]).astype("int32").tofile(arq)
+        # Potência das máquinas em cada conjunto
+        np.array(self._dados[48:53]).astype("float32").tofile(arq)
+        # Dados ignorados
+        np.array(self._dados[53:128]).astype("float32").tofile(arq)
+        # Altura de queda nominal
+        np.array(self._dados[128:133]).astype("float32").tofile(arq)
+        # Vazão nominal
+        np.array(self._dados[133:138]).astype("int32").tofile(arq)
+        # Produtibilidade
+        np.array(self._dados[138]).astype("float32").tofile(arq)
+        # Perdas
+        np.array(self._dados[139]).astype("float32").tofile(arq)
+        # Número de polinômios
+        np.array(self._dados[140]).astype("int32").tofile(arq)
+        # Polinômios
+        np.array(self._dados[141:177]).astype("float32").tofile(arq)
+        # Canal de Fuga
+        np.array(self._dados[177]).astype("float32").tofile(arq)
+        # Influência de vertimento
+        np.array(self._dados[178]).astype("int32").tofile(arq)
+        # Fatores de carga
+        np.array(self._dados[179:181]).astype("float32").tofile(arq)
+        # Vazão
+        np.array(self._dados[181]).astype("float32").tofile(arq)
+        # Número de unidades de geradoras
+        np.array(self._dados[182]).astype("int32").tofile(arq)
+        # Tipos de turbina
+        np.array(self._dados[183]).astype("int32").tofile(arq)
+        # Tipo de representação do conjunto
+        np.array(self._dados[184]).astype("int32").tofile(arq)
+        # Taxas de indisponibilidade
+        np.array(self._dados[185:187]).astype("float32").tofile(arq)
+        # Tipos de perdas
+        np.array(self._dados[187]).astype("int32").tofile(arq)
+        # Data
+        arq.write(self._dados[188].ljust(8).encode("ISO-8859-1"))
+        # Observação
+        arq.write(self._dados[189].ljust(43).encode("ISO-8859-1"))
+        # Volume de referência
+        np.array(self._dados[190]).astype("float32").tofile(arq)
+        # Tipo de regulação
+        arq.write(self._dados[191].ljust(1).encode("ISO-8859-1"))
 
 
 class LeituraHidr(LeituraBinario):

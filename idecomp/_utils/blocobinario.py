@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from io import BufferedReader
-from typing import Any, Optional
+from typing import Any, BinaryIO, Optional
 
 
 class BlocoBinario:
@@ -29,7 +29,7 @@ class BlocoBinario:
         pass
 
     @abstractmethod
-    def escreve(self, arq: BufferedReader):
+    def escreve(self, arq: BinaryIO):
         pass
 
     @property

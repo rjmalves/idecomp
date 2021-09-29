@@ -1,5 +1,6 @@
 from idecomp.decomp.modelos.hidr import LeituraHidr
 from idecomp._utils.arquivo import ArquivoBinario
+from idecomp._utils.escritabinario import EscritaBinario
 from idecomp._utils.dadosarquivo import DadosArquivoBinarios
 import pandas as pd  # type: ignore
 
@@ -29,6 +30,15 @@ class Hidr(ArquivoBinario):
         leitor = LeituraHidr(diretorio)
         r = leitor.le_arquivo(nome_arquivo)
         return cls(r)
+
+    # Override
+    def escreve_arquivo(self,
+                        diretorio: str,
+                        nome_arquivo: str = "hidr.dat"):
+        """
+        """
+        escritor = EscritaBinario(diretorio)
+        escritor.escreve_arquivo(self._dados, nome_arquivo)
 
     def __calcula_df(self):
 
@@ -82,13 +92,12 @@ class Hidr(ArquivoBinario):
                    "Tipo de Regulação"
                   ]
 
-        df = pd.DataFrame(index=range(600))
+        df = pd.DataFrame(index=list(range(1, 601)))
         blocos = self._dados.blocos
-        print(blocos)
         for i, c in enumerate(colunas):
             dados_coluna = [b.dados[i] for b in blocos]
             df[c] = dados_coluna
-        self.__df = df
+        self.__df = df.copy()
 
     @property
     def tabela(self) -> pd.DataFrame:
@@ -97,3 +106,12 @@ class Hidr(ArquivoBinario):
         if self.__df is None:
             self.__calcula_df()
         return self.__df
+
+    @tabela.setter
+    def tabela(self, df: pd.DataFrame):
+        n_postos = df.shape[0]
+        n_postos_arquivo = self.tabela.shape[0]
+        if n_postos != n_postos_arquivo:
+            raise ValueError(f"Número de postos incompatível ({n_postos})")
+        for i in range(n_postos):
+            self._dados.blocos[i]._dados = df.iloc[i, :].tolist()
