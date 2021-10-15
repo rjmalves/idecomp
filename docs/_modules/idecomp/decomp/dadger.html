@@ -7,14 +7,12 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.9</title>
+  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.11</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
@@ -35,7 +33,6 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -549,16 +546,32 @@
 <span class="sd">        Obtém um registro que especifica as taxas de irrigação</span>
 <span class="sd">        por posto (UHE) existente no estudo especificado no :class:`Dadger`</span>
 
-<span class="sd">        :param codigo: Mnemônico do tipo de FCF especificado</span>
+<span class="sd">        :param codigo: Código do posto da UHE associada</span>
 <span class="sd">            no registro</span>
 <span class="sd">        :type codigo: int</span>
-<span class="sd">        :return: Um registro do tipo :class:`FC`</span>
+<span class="sd">        :return: Um registro do tipo :class:`TI`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">TI</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">TI</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro TI&quot;</span> <span class="o">+</span>
+                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.ve"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ve">[documentos]</a>    <span class="k">def</span> <span class="nf">ve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VE</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica os volumes de espera</span>
+<span class="sd">        por posto (UHE) existente no estudo especificado no :class:`Dadger`</span>
+
+<span class="sd">        :param codigo: Código do posto da UHE associada</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`VE`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">VE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">VE</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">r</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro VE&quot;</span> <span class="o">+</span>
                          <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Dadger.hv"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.hv">[documentos]</a>    <span class="k">def</span> <span class="nf">hv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HV</span><span class="p">:</span>
