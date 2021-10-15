@@ -71,13 +71,13 @@ class RegistroInBinario(RegistroBinario):
                  num_bits: int = 8):
         super().__init__(int(num_bits / 8))
         if num_bits == 8:
-            self._tipo = np.int8
+            self._tipo = np.int8  # type: ignore
         elif num_bits == 16:
-            self._tipo = np.int16
+            self._tipo = np.int16  # type: ignore
         elif num_bits == 32:
-            self._tipo = np.int32
+            self._tipo = np.int32  # type: ignore
         else:
-            self._tipo = np.int64
+            self._tipo = np.int64  # type: ignore
 
     def le_registro(self,
                     arq: BufferedReader) -> int:
@@ -107,12 +107,12 @@ class RegistroFnBinario(RegistroBinario):
     do DECOMP.
     """
     def __init__(self,
-                 num_bytes: int = 32):
-        super().__init__(int(num_bytes / 8))
-        if num_bytes == 32:
-            self._tipo = np.float32
-        elif num_bytes == 64:
-            self._tipo = np.float64
+                 num_bits: int = 32):
+        super().__init__(int(num_bits / 8))
+        if num_bits == 32:
+            self._tipo = np.float32  # type: ignore
+        elif num_bits == 64:
+            self._tipo = np.float64  # type: ignore
 
     def le_registro(self,
                     arq: BufferedReader) -> float:
