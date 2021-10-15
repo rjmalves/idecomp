@@ -387,16 +387,32 @@ class Dadger(ArquivoRegistros):
         Obtém um registro que especifica as taxas de irrigação
         por posto (UHE) existente no estudo especificado no :class:`Dadger`
 
-        :param codigo: Mnemônico do tipo de FCF especificado
+        :param codigo: Código do posto da UHE associada
             no registro
         :type codigo: int
-        :return: Um registro do tipo :class:`FC`
+        :return: Um registro do tipo :class:`TI`
         """
         regs: List[TI] = self.__obtem_registros(TI)
         for r in regs:
             if r.codigo == codigo:
                 return r
         raise ValueError("Não foi encontrado registro TI" +
+                         f" para a UHE {codigo}")
+
+    def ve(self, codigo: int) -> VE:
+        """
+        Obtém um registro que especifica os volumes de espera
+        por posto (UHE) existente no estudo especificado no :class:`Dadger`
+
+        :param codigo: Código do posto da UHE associada
+        :type codigo: int
+        :return: Um registro do tipo :class:`VE`
+        """
+        regs: List[VE] = self.__obtem_registros(VE)
+        for r in regs:
+            if r.codigo == codigo:
+                return r
+        raise ValueError("Não foi encontrado registro VE" +
                          f" para a UHE {codigo}")
 
     def hv(self, codigo: int) -> HV:

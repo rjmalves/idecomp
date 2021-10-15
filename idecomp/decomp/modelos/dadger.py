@@ -908,6 +908,15 @@ class VE(RegistroDecomp):
         linha += "\n"
         arq.write(linha)
 
+    @property
+    def codigo(self) -> int:
+        """
+        O código do posto associado ao volume
+
+        :return: O código como `int`.
+        """
+        return self._dados[0]
+
 
 class RE(RegistroDecomp):
     """
