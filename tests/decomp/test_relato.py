@@ -20,6 +20,12 @@ def test_geracao_termica_subsistema():
     assert float(gt.loc[gt["Subsistema"] == "SE", "Estágio 1"]) == 5083.8
 
 
+def test_volume_util_reservatorios():
+    vol = rel.volume_util_reservatorios
+    assert float(vol.loc[vol["Usina"] == "CAMARGOS", "Estágio 1"]) == 24.9
+    assert float(vol.loc[vol["Usina"] == "BALBINA", "Estágio 5"]) == 31.8
+
+
 def test_energia_armazenada_subsistema():
     earm = rel.energia_armazenada_subsistema
     assert float(earm.loc[earm["Subsistema"] == "SE", "Inicial"]) == 20.4

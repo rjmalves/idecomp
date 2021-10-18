@@ -4,6 +4,7 @@ from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
 from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
 from idecomp.decomp.modelos.relato import BlocoCMORelato
 from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
+from idecomp.decomp.modelos.relato import BlocoVolumeUtilReservatorioRelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaREERelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaSubsistemaRelato  # noqa
 from idecomp.decomp.modelos.relato import BlocoENAPreEstudoSemanalSubsistemaRelato  # noqa
@@ -174,6 +175,22 @@ class Relato(ArquivoBlocos):
 
         """
         b = self.__obtem_bloco(BlocoEnergiaArmazenadaSubsistemaRelato)
+        return b.dados
+
+    @property
+    def volume_util_reservatorios(self) -> pd.DataFrame:
+        """
+        Tabela com os volumes úteis por reservatório
+        e por semana.
+
+        **Retorna**
+
+        `pd.DataFrame`
+
+        **Sobre**
+
+        """
+        b = self.__obtem_bloco(BlocoVolumeUtilReservatorioRelato)
         return b.dados
 
     @property

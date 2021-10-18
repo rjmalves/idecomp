@@ -377,6 +377,85 @@ class BlocoGeracaoTermicaSubsistemaRelato(Bloco):
         pass
 
 
+class BlocoVolumeUtilReservatorioRelato(Bloco):
+    """
+    Bloco com as informações de energia armazenada
+    em percentual por REE.
+    """
+    str_inicio = " VOLUME UTIL DOS RESERVATORIOS"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoVolumeUtilReservatorioRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoVolumeUtilReservatorioRelato):
+            return False
+        bloco: BlocoVolumeUtilReservatorioRelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Inicial"] + [f"Estágio {s}"
+                                  for s in range(1, n_semanas + 1)]
+            df.columns = cols
+            df["Usina"] = usinas
+            df["Número"] = numeros
+            df = df[["Número", "Usina"] + cols]
+            return df
+
+        # Salta duas linhas
+        arq.readline()
+        arq.readline()
+        # Descobre o número de semanas
+        linha = arq.readline()
+        sems = [s for s in linha.split(" ") if (len(s) > 0
+                                                and ("Sem" in s or
+                                                     "Mes" in s))]
+        reg_usina = RegistroAn(12)
+        reg_numero = RegistroIn(4)
+        reg_vol = RegistroFn(6)
+        n_semanas = len(sems)
+        usinas: List[str] = []
+        numeros: List[int] = []
+        tabela = np.zeros((300,
+                           n_semanas + 1))
+        # Salta outra linha
+        arq.readline()
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X-------X" in linha:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Subsistema e REE
+            numero = reg_numero.le_registro(linha, 4)
+            usina = reg_usina.le_registro(linha, 9)
+            numeros.append(numero)
+            usinas.append(usina)
+            # Semanas
+            tabela[i, :] = reg_vol.le_linha_tabela(linha,
+                                                   23,
+                                                   1,
+                                                   n_semanas + 1)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
 class BlocoEnergiaArmazenadaREERelato(Bloco):
     """
     Bloco com as informações de energia armazenada
@@ -656,6 +735,7 @@ class LeituraRelato(LeituraBlocos):
                                      for _ in range(10)]
         return ([BlocoDadosGeraisRelato(),
                  BlocoCMORelato(),
+                 BlocoVolumeUtilReservatorioRelato(),
                  BlocoEnergiaArmazenadaREERelato(),
                  BlocoEnergiaArmazenadaSubsistemaRelato(),
                  BlocoENAPreEstudoSemanalSubsistemaRelato(),
