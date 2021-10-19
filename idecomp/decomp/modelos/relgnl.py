@@ -2,6 +2,7 @@
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
 from idecomp._utils.leiturablocos import LeituraBlocos
+from idecomp.config import MAX_ESTAGIOS
 # Imports de módulos externos
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
@@ -255,6 +256,105 @@ class BlocoComandosUsinasAjustesRERelGNL(Bloco):
         pass
 
 
+class BlocoRelatorioOperacaoRelGNL(Bloco):
+    """
+    Bloco com as informações de eco dos dados gerais
+    utilizados na execução do caso.
+    """
+    str_inicio = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
+    str_fim = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
+
+    def __init__(self):
+
+        super().__init__(BlocoRelatorioOperacaoRelGNL.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoRelatorioOperacaoRelGNL):
+            return False
+        bloco: BlocoRelatorioOperacaoRelGNL = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_para_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Despacho Pat. 1", "Duração Pat. 1",
+                    "Despacho Pat. 2", "Duração Pat. 2",
+                    "Despacho Pat. 3", "Duração Pat. 3",
+                    "Custo"]
+            df.columns = cols
+            df["Subsistema"] = subsistemas
+            df["Usina"] = usinas
+            df["Lag"] = lags
+            df["Estágio"] = semanas
+            df["Início Semana"] = inicio_semanas
+            df = df[["Subsistema",
+                     "Usina",
+                     "Lag",
+                     "Estágio",
+                     "Início Semana"] + cols]
+            return df
+
+        # Variáveis auxiliares
+        str_tabela = "Sinalizacao de Despacho antecipado em k meses"
+        reg_subsis = RegistroAn(3)
+        reg_usina = RegistroAn(11)
+        reg_lag = RegistroIn(7)
+        reg_semana = RegistroAn(7)
+        reg_despacho = RegistroFn(8)
+        reg_duracao = RegistroFn(7)
+        reg_custo = RegistroFn(10)
+        reg_inicio = RegistroAn(12)
+        subsistemas = []
+        usinas = []
+        lags = []
+        semanas = []
+        inicio_semanas = []
+        # Salta uma linha e extrai a semana
+        tabela = np.zeros((MAX_ESTAGIOS * 10, 7))
+        i = 0
+        achou_tabela = False
+        while True:
+            linha = arq.readline()
+            # Verifica se acabou
+            if BlocoRelatorioOperacaoRelGNL.str_fim in linha:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_para_df()
+                break
+            # Senão, procura a linha que identifica o subsistema
+            if str_tabela in linha:
+                achou_tabela = True
+                # Salta 4 linhas
+                for _ in range(4):
+                    arq.readline()
+            elif len(linha) < 5:
+                achou_tabela = False
+            # Se está lendo um subsistema e achou a linha de valores médios
+            elif achou_tabela:
+                subsistemas.append(reg_subsis.le_registro(linha, 4))
+                usinas.append(reg_usina.le_registro(linha, 8))
+                lags.append(reg_lag.le_registro(linha, 20))
+                semanas.append(reg_semana.le_registro(linha, 28))
+                inicio_semanas.append(reg_inicio.le_registro(linha, 98))
+                tabela[i, 0] = reg_despacho.le_registro(linha, 36)
+                tabela[i, 1] = reg_duracao.le_registro(linha, 44)
+                tabela[i, 2] = reg_despacho.le_registro(linha, 53)
+                tabela[i, 3] = reg_duracao.le_registro(linha, 61)
+                tabela[i, 4] = reg_despacho.le_registro(linha, 70)
+                tabela[i, 5] = reg_duracao.le_registro(linha, 78)
+                tabela[i, 6] = reg_custo.le_registro(linha, 87)
+                i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
 class LeituraRelGNL(LeituraBlocos):
     """
     Realiza a leitura do arquivo relgnl.rvx
@@ -280,4 +380,5 @@ class LeituraRelGNL(LeituraBlocos):
         """
         return [BlocoDadosUsinasRelGNL(),
                 BlocoComandosUsinasAjustesTGRelGNL(),
-                BlocoComandosUsinasAjustesRERelGNL()]
+                BlocoComandosUsinasAjustesRERelGNL(),
+                BlocoRelatorioOperacaoRelGNL()]

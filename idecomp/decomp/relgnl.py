@@ -3,6 +3,7 @@ from idecomp._utils.bloco import Bloco
 from idecomp.decomp.modelos.relgnl import BlocoDadosUsinasRelGNL
 from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesTGRelGNL
 from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesRERelGNL
+from idecomp.decomp.modelos.relgnl import BlocoRelatorioOperacaoRelGNL
 from idecomp.decomp.modelos.relgnl import LeituraRelGNL
 from idecomp._utils.arquivo import ArquivoBlocos
 from idecomp._utils.dadosarquivo import DadosArquivoBlocos
@@ -88,4 +89,20 @@ class RelGNL(ArquivoBlocos):
 
         """
         b = self.__obtem_bloco(BlocoComandosUsinasAjustesRERelGNL)
+        return b.dados
+
+    @property
+    def relatorio_operacao_termica(self) -> pd.DataFrame:
+        """
+        Tabela com o relatório do despacho sinalizado para as usinas
+        térmicas GNL.
+
+        **Retorna**
+
+        `pd.DataFrame`
+
+        **Sobre**
+
+        """
+        b = self.__obtem_bloco(BlocoRelatorioOperacaoRelGNL)
         return b.dados

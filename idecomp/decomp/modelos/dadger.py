@@ -1914,7 +1914,7 @@ class FC(RegistroDecomp):
 
     def le(self):
         reg_mne = RegistroAn(6)
-        reg_nome = RegistroAn(60)
+        reg_nome = RegistroAn(200)
         self._dados[0] = reg_mne.le_registro(self._linha, 4)
         self._dados[1] = reg_nome.le_registro(self._linha, 14)
 

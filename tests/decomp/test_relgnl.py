@@ -24,3 +24,10 @@ def test_comandos_restricoes_eletricas():
     assert float(com.loc[(com["Código"] == 86) &
                          (com["Período"] == 1),
                          "Pat 1"]) == 350.00
+
+
+def test_relatorio_operacao():
+    ope = rel.relatorio_operacao_termica
+    assert float(ope.loc[(ope["Usina"] == "SANTA CRUZ") &
+                         (ope["Estágio"] == "MENSAL"),
+                         "Custo"]) == 33373.8
