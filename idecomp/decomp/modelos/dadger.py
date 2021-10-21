@@ -2585,6 +2585,22 @@ class EV(RegistroDecomp):
                  f"{self._dados[1]}".rjust(3) + "\n")
         arq.write(linha)
 
+    @property
+    def modelo(self) -> int:
+        return self._dados[0]
+
+    @modelo.setter
+    def modelo(self, m: int):
+        self._dados[0] = m
+
+    @property
+    def volume_referencia(self) -> str:
+        return self._dados[1]
+
+    @volume_referencia.setter
+    def volume_referencia(self, v: str):
+        self._dados[1] = v
+
 
 class FJ(RegistroDecomp):
     """
@@ -2604,6 +2620,14 @@ class FJ(RegistroDecomp):
         linha = (f"{FJ.mnemonico}".ljust(4) +
                  f"{self.dados}".rjust(12) + "\n")
         arq.write(linha)
+
+    @property
+    def arquivo(self) -> str:
+        return self._dados
+
+    @arquivo.setter
+    def arquivo(self, a: str):
+        self._dados = a
 
 
 class HE(RegistroDecomp):
