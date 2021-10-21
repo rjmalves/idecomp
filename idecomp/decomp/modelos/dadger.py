@@ -134,6 +134,10 @@ class UH(RegistroDecomp):
         """
         return self._dados[1]
 
+    @ree.setter
+    def ree(self, r: int) -> int:
+        self._dados[1] = r
+
     @property
     def volume_inicial(self) -> float:
         """
@@ -1516,6 +1520,54 @@ class ACPOTEFE(TipoRegistroAC):
         return linha
 
 
+class ACALTEFE(TipoRegistroAC):
+    """
+    Registro AC específico para alteração da altura efetiva
+    de queda para um conjunto de máquinas.
+    """
+    mnemonico = "ALTEFE"
+
+    def __init__(self, linha: str):
+        super().__init__(linha)
+        self._dados = [0, 0.0]
+
+    def le(self):
+        reg_usi = RegistroIn(5)
+        reg_desvio = RegistroFn(10)
+        self._dados[0] = reg_usi.le_registro(self._linha, 19)
+        self._dados[1] = reg_desvio.le_registro(self._linha, 24)
+
+    @property
+    def linha_escrita(self) -> str:
+        linha = (f"{self._dados[0]}".rjust(5) +
+                 f"{round(self._dados[1], 1)}".rjust(10))
+        return linha
+
+
+class ACVAZEFE(TipoRegistroAC):
+    """
+    Registro AC específico para alteração da vazão efetiva
+    para um conjunto de máquinas.
+    """
+    mnemonico = "VAZEFE"
+
+    def __init__(self, linha: str):
+        super().__init__(linha)
+        self._dados = [0, 0]
+
+    def le(self):
+        reg_usi = RegistroIn(5)
+        reg_vaz = RegistroIn(5)
+        self._dados[0] = reg_usi.le_registro(self._linha, 19)
+        self._dados[1] = reg_vaz.le_registro(self._linha, 24)
+
+    @property
+    def linha_escrita(self) -> str:
+        linha = (f"{self._dados[0]}".rjust(5) +
+                 f"{self._dados[1]}".rjust(5))
+        return linha
+
+
 class ACJUSMED(TipoRegistroAC):
     """
     Registro AC específico para alteração da cota média do canal
@@ -1685,6 +1737,8 @@ class AC(RegistroDecomp):
                                                  ACNUMCON,
                                                  ACNUMMAQ,
                                                  ACPOTEFE,
+                                                 ACALTEFE,
+                                                 ACVAZEFE,
                                                  ACJUSMED,
                                                  ACVERTJU,
                                                  ACVAZMIN,
