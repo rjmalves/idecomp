@@ -92,11 +92,14 @@ class Hidr(ArquivoBinario):
                    "Tipo de Regulação"
                   ]
 
-        df = pd.DataFrame(index=list(range(1, 601)))
         blocos = self._dados.blocos
+        dados = {}
         for i, c in enumerate(colunas):
             dados_coluna = [b.dados[i] for b in blocos]
-            df[c] = dados_coluna
+            dados[c] = dados_coluna
+
+        df = pd.DataFrame(data=dados)
+        df.index = list(range(1, len(list(df.index)) + 1))
         self.__df = df.copy()
 
     @property

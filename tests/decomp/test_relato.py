@@ -10,6 +10,11 @@ def test_leitura():
     assert n_semanas == 5
 
 
+def test_convergencia():
+    conv = rel.convergencia
+    assert conv.loc[0, "Zinf"] == 450767.9
+
+
 def test_cmo():
     cmo_medio = rel.cmo_medio_subsistema
     assert cmo_medio.loc[0, "Estágio 1"] == 287.91

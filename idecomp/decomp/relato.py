@@ -1,5 +1,6 @@
 from idecomp._utils.bloco import Bloco
 # from idecomp.decomp.modelos.relato import BlocoDadosGeraisRelato
+from idecomp.decomp.modelos.relato import BlocoConvergenciaRelato
 from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
 from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
 from idecomp.decomp.modelos.relato import BlocoCMORelato
@@ -59,6 +60,21 @@ class Relato(ArquivoBlocos):
         if len(blocos) == 0:
             raise ValueError(f"Não foi encontrado um bloco do tipo {tipo}")
         return blocos
+
+    @property
+    def convergencia(self) -> pd.DataFrame:
+        """
+        Tabela com o relatório de convergência do DECOMP.
+
+        **Retorna**
+
+        `pd.DataFrame`
+
+        **Sobre**
+
+        """
+        b = self.__obtem_bloco(BlocoConvergenciaRelato)
+        return b.dados
 
     @property
     def relatorio_operacao_uhe(self) -> pd.DataFrame:

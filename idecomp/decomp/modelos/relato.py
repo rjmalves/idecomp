@@ -41,6 +41,108 @@ class BlocoDadosGeraisRelato(Bloco):
         pass
 
 
+class BlocoConvergenciaRelato(Bloco):
+    """
+    Bloco com as informações de convergência do DECOMP no relato.rvX.
+    """
+    str_inicio = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoConvergenciaRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoConvergenciaRelato):
+            return False
+        bloco: BlocoConvergenciaRelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            colunas = ["Iteração",
+                       "Zinf",
+                       "Zsup",
+                       "Gap (%)",
+                       "Tempo (s)",
+                       "Tot. Def. Demanda (MWmed)",
+                       "Tot. Def. Niv. Seg. (MWmes)",
+                       "Num. Inviab",
+                       "Tot. Inviab (MWmed)",
+                       "Tot. Inviab (m3/s)",
+                       "Tot. Inviab (Hm3)"]
+            tipos = {"Iteração": np.int64,
+                     "Zinf": np.float,
+                     "Zsup": np.float,
+                     "Gap (%)": np.float,
+                     "Tempo (s)": np.int64,
+                     "Tot. Def. Demanda (MWmed)": np.float,
+                     "Tot. Def. Niv. Seg. (MWmes)": np.float,
+                     "Num. Inviab": np.int64,
+                     "Tot. Inviab (MWmed)": np.float,
+                     "Tot. Inviab (m3/s)": np.float,
+                     "Tot. Inviab (Hm3)": np.float}
+            df = pd.DataFrame(tabela,
+                              columns=colunas)
+            df = df.astype(tipos)
+            return df
+
+        # Salta 9 linhas linha
+        for _ in range(9):
+            arq.readline()
+
+        reg_iter = RegistroIn(4)
+        reg_z = RegistroFn(12)
+        reg_gap = RegistroFn(16)
+        reg_tempo = RegistroAn(8)
+        reg_def_demanda = RegistroFn(10)
+        reg_def_niv_seg = RegistroFn(12)
+        reg_num_inviab = RegistroIn(7)
+        reg_tot_inviab = RegistroFn(12)
+        tabela = np.zeros((999, 11))
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if len(linha) < 5:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_em_df()
+                break
+            if "----" in linha:
+                continue
+            # Senão, lê mais uma linha
+            tabela[i, 0] = reg_iter.le_registro(linha, 4)
+            tabela[i, 1] = reg_z.le_registro(linha, 9)
+            tabela[i, 2] = reg_z.le_registro(linha, 22)
+            tabela[i, 3] = reg_gap.le_registro(linha, 35)
+            tempo = reg_tempo.le_registro(linha, 52)
+            parcelas = tempo.split(":")
+            segundos = (int(parcelas[0]) * 3600 +
+                        int(parcelas[1]) * 60 +
+                        int(parcelas[2]))
+            tabela[i, 4] = segundos
+            tabela[i, 5] = reg_def_demanda.le_registro(linha, 61)
+            if str(linha[72:85]).isnumeric():
+                tabela[i, 6] = reg_def_niv_seg.le_registro(linha, 72)
+            else:
+                tabela[i, 6] = np.nan
+            tabela[i, 7] = reg_num_inviab.le_registro(linha, 85)
+            tabela[i, 8] = reg_tot_inviab.le_registro(linha, 93)
+            tabela[i, 9] = reg_tot_inviab.le_registro(linha, 106)
+            tabela[i, 10] = reg_tot_inviab.le_registro(linha, 119)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
 class BlocoRelatorioOperacaoUHERelato(Bloco):
     """
     """
@@ -734,6 +836,7 @@ class LeituraRelato(LeituraBlocos):
         balanc_energ: List[Bloco] = [BlocoBalancoEnergeticoRelato()
                                      for _ in range(10)]
         return ([BlocoDadosGeraisRelato(),
+                 BlocoConvergenciaRelato(),
                  BlocoCMORelato(),
                  BlocoVolumeUtilReservatorioRelato(),
                  BlocoEnergiaArmazenadaREERelato(),
