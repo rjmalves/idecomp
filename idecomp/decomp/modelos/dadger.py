@@ -70,6 +70,10 @@ class SB(RegistroDecomp):
         """
         return self._dados[0]
 
+    @codigo.setter
+    def codigo(self, cod: int):
+        self._dados[0] = cod
+
     @property
     def nome(self) -> str:
         """
@@ -78,6 +82,10 @@ class SB(RegistroDecomp):
         :return: O nome como `str`.
         """
         return self._dados[1]
+
+    @nome.setter
+    def nome(self, n: str):
+        self._dados[1] = n
 
 
 class UH(RegistroDecomp):
@@ -511,6 +519,48 @@ class CD(RegistroDecomp):
                  f"{self._dados[8]:5.0f}" +
                  f"{self._dados[9]:10.2f}" + "\n")
         arq.write(linha)
+
+    @property
+    def numero_curva(self) -> int:
+        return self._dados[0]
+
+    @property
+    def subsistema(self) -> int:
+        return self._dados[1]
+
+    @property
+    def nome_curva(self) -> str:
+        return self._dados[2]
+
+    @property
+    def estagio(self) -> int:
+        return self._dados[3]
+
+    @property
+    def limites_superiores(self) -> List[float]:
+        return self._dados[4::2]
+
+    @limites_superiores.setter
+    def limites_superiores(self, lim: List[float]):
+        novos = len(lim)
+        atuais = len(self.limites_superiores)
+        if novos != atuais:
+            raise ValueError("Número de limites incompatível. De" +
+                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+        self._dados[4::2] = lim
+
+    @property
+    def custos(self) -> List[float]:
+        return self._dados[5::2]
+
+    @custos.setter
+    def custos(self, lim: List[float]):
+        novos = len(lim)
+        atuais = len(self.custos)
+        if novos != atuais:
+            raise ValueError("Número de custos incompatível. De" +
+                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+        self._dados[5::2] = lim
 
 
 class PQ(RegistroDecomp):
