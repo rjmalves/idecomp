@@ -78,16 +78,16 @@ class BlocoConvergenciaRelato(Bloco):
                        "Tot. Inviab (m3/s)",
                        "Tot. Inviab (Hm3)"]
             tipos = {"Iteração": np.int64,
-                     "Zinf": np.float,
-                     "Zsup": np.float,
-                     "Gap (%)": np.float,
+                     "Zinf": np.float64,
+                     "Zsup": np.float64,
+                     "Gap (%)": np.float64,
                      "Tempo (s)": np.int64,
-                     "Tot. Def. Demanda (MWmed)": np.float,
-                     "Tot. Def. Niv. Seg. (MWmes)": np.float,
+                     "Tot. Def. Demanda (MWmed)": np.float64,
+                     "Tot. Def. Niv. Seg. (MWmes)": np.float64,
                      "Num. Inviab": np.int64,
-                     "Tot. Inviab (MWmed)": np.float,
-                     "Tot. Inviab (m3/s)": np.float,
-                     "Tot. Inviab (Hm3)": np.float}
+                     "Tot. Inviab (MWmed)": np.float64,
+                     "Tot. Inviab (m3/s)": np.float64,
+                     "Tot. Inviab (Hm3)": np.float64}
             df = pd.DataFrame(tabela,
                               columns=colunas)
             df = df.astype(tipos)
