@@ -417,6 +417,10 @@ class DP(RegistroDecomp):
         """
         return self._dados[1]
 
+    @subsistema.setter
+    def subsistema(self, sub: int):
+        self._dados[1] = sub
+
     @property
     def num_patamares(self) -> int:
         """
