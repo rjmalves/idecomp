@@ -23,7 +23,7 @@ class Dadger(ArquivoRegistros):
 
     Atualmente, são suportados os registros:
     `TE`, `SB`, `UH`, `CT`, `DP`, `TX`, `GP`, `NI`, `DT`, `RE`, `LU`,
-    `VI`, `IR`, `FC`, `TI`, `HV`, `LV`, `HQ`, `LQ` e `HE`.
+    `VI`, `IR`, `FC`, `TI`, `HV`, `LV`, `HQ`, `LQ` `HE`, `EV` e `FJ`.
 
     É possível ler as informações existentes em arquivos a partir do
     método `le_arquivo()` e escreve um novo arquivo a partir do método
@@ -633,3 +633,25 @@ class Dadger(ArquivoRegistros):
             return r
         else:
             raise ValueError("Registro não encontrado")
+
+    @property
+    def ev(self) -> EV:
+        """
+        Obtém o (único) registro que define a evaporação
+        :class:`Dadger`
+
+        :return: Um registro do tipo :class:`EV`.
+        """
+        r = self.__obtem_registro(EV)
+        return r
+
+    @property
+    def fj(self) -> FJ:
+        """
+        Obtém o (único) registro que define o arquivo `polinjus`
+        :class:`Dadger`
+
+        :return: Um registro do tipo :class:`FJ`.
+        """
+        r = self.__obtem_registro(FJ)
+        return r

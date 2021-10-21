@@ -135,7 +135,7 @@ class UH(RegistroDecomp):
         return self._dados[1]
 
     @ree.setter
-    def ree(self, r: int) -> int:
+    def ree(self, r: int):
         self._dados[1] = r
 
     @property
