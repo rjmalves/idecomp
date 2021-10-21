@@ -524,17 +524,33 @@ class CD(RegistroDecomp):
     def numero_curva(self) -> int:
         return self._dados[0]
 
+    @numero_curva.setter
+    def numero_curva(self, n: int):
+        self._dados[0] = n
+
     @property
     def subsistema(self) -> int:
         return self._dados[1]
+
+    @subsistema.setter
+    def subsistema(self, s: int):
+        self._dados[1] = s
 
     @property
     def nome_curva(self) -> str:
         return self._dados[2]
 
+    @nome_curva.setter
+    def nome_curva(self, n: str):
+        self._dados[2] = n
+
     @property
     def estagio(self) -> int:
         return self._dados[3]
+
+    @estagio.setter
+    def estagio(self, e: int):
+        self._dados[3] = e
 
     @property
     def limites_superiores(self) -> List[float]:
@@ -554,13 +570,13 @@ class CD(RegistroDecomp):
         return self._dados[5::2]
 
     @custos.setter
-    def custos(self, lim: List[float]):
-        novos = len(lim)
+    def custos(self, cus: List[float]):
+        novos = len(cus)
         atuais = len(self.custos)
         if novos != atuais:
             raise ValueError("Número de custos incompatível. De" +
                              f"vem ser fornecidos {atuais}, mas foram {novos}")
-        self._dados[5::2] = lim
+        self._dados[5::2] = cus
 
 
 class PQ(RegistroDecomp):

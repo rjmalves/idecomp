@@ -191,6 +191,28 @@ class Dadger(ArquivoRegistros):
                          f" para o subsistema {subsistema}" +
                          f" no estágio {estagio})")
 
+    def cd(self, numero_curva: int, subsistema: int) -> CD:
+        """
+        Obtém um registro que define as curvas de déficit
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param numero_curva: Índice da curva de déficit
+            descrita
+        :type numero_curva: int
+        :param subsistema: Índice do subsistema para o qual
+            valerá a curva.
+        :type subsistema: int
+        :return: Um registro do tipo :class:`CD`
+        """
+        regs: List[CD] = self.__obtem_registros(CD)
+        for r in regs:
+            if all([r.numero_curva == numero_curva,
+                    r.subsistema == subsistema]):
+                return r
+        raise ValueError("Não foi encontrado registro CD" +
+                         f" para o subsistema {subsistema}" +
+                         f" na curva {numero_curva})")
+
     @property
     def tx(self) -> TX:
         """
