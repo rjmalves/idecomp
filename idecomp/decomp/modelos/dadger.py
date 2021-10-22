@@ -868,7 +868,7 @@ class MP(RegistroDecomp):
         ci = 9
         for i in range(2, 26):
             cf = ci + 5
-            if len(self._linha[ci:cf].strip()) < 5:
+            if len(self._linha[ci:cf].strip()) == 0:
                 break
             self._dados.append(reg_manutencao.le_registro(self._linha, ci))
             ci = cf
@@ -902,7 +902,7 @@ class MT(RegistroDecomp):
         ci = 14
         for i in range(2, 26):
             cf = ci + 5
-            if len(self._linha[ci:cf].strip()) < 5:
+            if len(self._linha[ci:cf].strip()) == 0:
                 break
             self._dados.append(reg_manutencao.le_registro(self._linha, ci))
             ci = cf
@@ -937,7 +937,7 @@ class FD(RegistroDecomp):
         ci = 9
         for i in range(2, 25):
             cf = ci + 5
-            if len(self._linha[ci:cf].strip()) < 5:
+            if len(self._linha[ci:cf].strip()) == 0:
                 break
             self._dados.append(reg_manutencao.le_registro(self._linha, ci))
             ci = cf
@@ -969,7 +969,7 @@ class VE(RegistroDecomp):
         ci = 9
         for i in range(1, 25):
             cf = ci + 5
-            if len(self._linha[ci:cf].strip()) < 5:
+            if len(self._linha[ci:cf].strip()) == 0:
                 break
             self._dados.append(reg_manutencao.le_registro(self._linha, ci))
             ci = cf
@@ -2838,7 +2838,8 @@ class LeituraDadger(LeituraRegistros):
         ue: List[RegistroDecomp] = [UE() for _ in range(MAX_UE)]
         dp: List[RegistroDecomp] = [DP() for _ in
                                     range(MAX_SUBSIS * MAX_ESTAGIOS)]
-        cd: List[RegistroDecomp] = [CD() for _ in range(MAX_SUBSIS)]
+        cd: List[RegistroDecomp] = [CD() for _ in
+                                    range(MAX_SUBSIS * MAX_ESTAGIOS)]
         pq: List[RegistroDecomp] = [PQ() for _ in
                                     range(MAX_SUBSIS * MAX_ESTAGIOS)]
         ri: List[RegistroDecomp] = [RI() for _ in range(MAX_ESTAGIOS)]
