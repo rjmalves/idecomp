@@ -1692,7 +1692,7 @@ class ACVAZMIN(TipoRegistroAC):
 
     def le(self):
         reg_usi = RegistroIn(5)
-        if len(self._linha[19:24]) == 5:
+        if len(self._linha[19:24].strip()) > 0:
             self._dados = reg_usi.le_registro(self._linha, 19)
 
     @property
@@ -1870,6 +1870,22 @@ class AC(RegistroDecomp):
 
         linha += "\n"
         arq.write(linha)
+
+    @property
+    def uhe(self) -> int:
+        return self._dados[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self._dados[0] = u
+
+    @property
+    def modificacao(self) -> str:
+        return self._dados[1]
+
+    @modificacao.setter
+    def modificacao(self, m: str):
+        self._dados[1] = m
 
 
 class IR(RegistroDecomp):

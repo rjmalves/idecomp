@@ -191,6 +191,26 @@ class Dadger(ArquivoRegistros):
                          f" para o subsistema {subsistema}" +
                          f" no estágio {estagio})")
 
+    def ac(self, uhe: int, modificacao: str) -> AC:
+        """
+        Obtém um registro que define modificações nos parâmetros
+        das UHE em um :class:`Dadger`.
+
+        :param uhe: código da UHE modificada
+        :type uhe: int
+        :param modificacao: mnemônico da modificação realizada
+        :type modificacao: str
+        :return: Um registro do tipo :class:`AC`
+        """
+        regs: List[AC] = self.__obtem_registros(AC)
+        for r in regs:
+            if all([r.uhe == uhe,
+                    r.modificacao == modificacao]):
+                return r
+        raise ValueError("Não foi encontrado registro AC" +
+                         f" para a UHE {uhe}" +
+                         f" que modifique {modificacao})")
+
     def cd(self, numero_curva: int, subsistema: int) -> CD:
         """
         Obtém um registro que define as curvas de déficit
