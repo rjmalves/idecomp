@@ -2151,7 +2151,8 @@ class TI(RegistroDecomp):
 
 class RQ(RegistroDecomp):
     """
-    Registro que contém as vazões mínimas históricas.
+    Registro que contém os percentuais de vazão defluente
+    mínima histórica para cada REE.
     """
     mnemonico = "RQ"
 
@@ -2161,14 +2162,14 @@ class RQ(RegistroDecomp):
 
     def le(self):
         reg_ree = RegistroIn(2)
-        reg_irrig = RegistroFn(5)
+        reg_vazao = RegistroFn(5)
         self._dados[0] = reg_ree.le_registro(self._linha, 4)
         ci = 9
         for i in range(24):
             cf = ci + 5
             if len(self._linha[ci:cf].strip()) == 0:
                 break
-            self._dados.append(reg_irrig.le_registro(self._linha, ci))
+            self._dados.append(reg_vazao.le_registro(self._linha, ci))
             ci = cf
 
     def escreve(self, arq: IO):
@@ -2178,6 +2179,38 @@ class RQ(RegistroDecomp):
             linha += f"{round(self._dados[i], 2)}".rjust(5)
         linha += "\n"
         arq.write(linha)
+
+    @property
+    def ree(self) -> int:
+        """
+        O código do REE associado às vazões mínimas.
+
+        :return: O código como `int`.
+        """
+        return self._dados[0]
+
+    @ree.setter
+    def ree(self, r: int):
+        self._dados[0] = r
+
+    @property
+    def vazoes(self) -> List[float]:
+        """
+        As vazões defluentes mínimas (percentuais)
+        para o REE, por estágio [e1, e2, e3, ...].
+
+        :return: As vazoes como `list[float]`.
+        """
+        return self._dados[1:]
+
+    @vazoes.setter
+    def vazoes(self, tx: List[float]):
+        novas = len(tx)
+        atuais = len(self.vazoes)
+        if novas != atuais:
+            raise ValueError("Número de vazões incompatível. De" +
+                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+        self._dados[1:] = tx
 
 
 class EZ(RegistroDecomp):
@@ -2864,7 +2897,7 @@ class LeituraDadger(LeituraRegistros):
         ir: List[RegistroDecomp] = [IR() for _ in range(MAX_RELATORIOS)]
         fc: List[RegistroDecomp] = [FC(), FC()]
         ti: List[RegistroDecomp] = [TI() for _ in range(MAX_UHE)]
-        rq: List[RegistroDecomp] = [RE() for _ in range(MAX_REE)]
+        rq: List[RegistroDecomp] = [RQ() for _ in range(MAX_REE)]
         ez: List[RegistroDecomp] = [EZ() for _ in range(MAX_UHE)]
         hv: List[RegistroDecomp] = [HV() for _ in range(MAX_UHE)]
         lv: List[RegistroDecomp] = [LV() for _ in

@@ -441,6 +441,22 @@ class Dadger(ArquivoRegistros):
         raise ValueError("Não foi encontrado registro TI" +
                          f" para a UHE {codigo}")
 
+    def rq(self, ree: int) -> RQ:
+        """
+        Obtém um registro que especifica as vazões mínimas históricas
+        por REE existentes no estudo especificado no :class:`Dadger`
+
+        :param ree: Código do REE
+        :type ree: int
+        :return: Um registro do tipo :class:`RQ`
+        """
+        regs: List[RQ] = self.__obtem_registros(RQ)
+        for r in regs:
+            if r.ree == ree:
+                return r
+        raise ValueError("Não foi encontrado registro RQ" +
+                         f" para o REE {ree}")
+
     def ve(self, codigo: int) -> VE:
         """
         Obtém um registro que especifica os volumes de espera
