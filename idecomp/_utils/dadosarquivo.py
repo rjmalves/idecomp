@@ -41,6 +41,29 @@ class DadosArquivoRegistros:
     def linhas_fora_registros(self) -> Dict[float, str]:
         return self.__linhas_fora_registros
 
+    def cria_registro(self,
+                      anterior: RegistroDecomp,
+                      registro: RegistroDecomp) -> RegistroDecomp:
+        # Obtém a ordem do registro anterior
+        ant = anterior._ordem
+        # Procura dentre linhas e registros a ordem do próximo
+        ordens_linhas = list(self.linhas_fora_registros.keys())
+        ordens_linhas = [o for o in ordens_linhas
+                         if o > ant]
+        prox = (ant + 2 if len(ordens_linhas) == 0
+                else ordens_linhas[0])
+        ordem_novo = (prox + ant) / 2
+        registro._ordem = ordem_novo
+        self.registros.append(registro)
+        return registro
+
+    def deleta_registro(self, registro: RegistroDecomp) -> bool:
+        try:
+            self.registros.remove(registro)
+            return True
+        except ValueError:
+            return False
+
 
 class DadosArquivoBinarios:
     """

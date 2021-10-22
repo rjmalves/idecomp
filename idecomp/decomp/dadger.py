@@ -1,4 +1,3 @@
-from idecomp._utils.registrodecomp import RegistroDecomp
 from idecomp.decomp.modelos.dadger import LeituraDadger
 from idecomp.decomp.modelos.dadger import TE, SB, UH, CT, UE, DP, CD, PQ  # noqa
 from idecomp.decomp.modelos.dadger import RI, IA, TX, GP, NI, DT, MP, MT  # noqa
@@ -698,10 +697,3 @@ class Dadger(ArquivoRegistros):
         """
         r = self.__obtem_registro(FJ)
         return r
-
-    def deleta_registro(self, reg: RegistroDecomp) -> bool:
-        try:
-            self._dados.registros.remove(reg)
-            return True
-        except ValueError:
-            return False

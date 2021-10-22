@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from .registrodecomp import RegistroDecomp
 from .dadosarquivo import DadosArquivoBlocos
 from .dadosarquivo import DadosArquivoRegistros
 from .dadosarquivo import DadosArquivoBinarios
@@ -85,6 +86,14 @@ class ArquivoRegistros:
     @property
     def _registros(self):
         return self._dados.registros
+
+    def cria_registro(self,
+                      anterior: RegistroDecomp,
+                      registro: RegistroDecomp) -> RegistroDecomp:
+        return self._dados.cria_registro(anterior, registro)
+
+    def deleta_registro(self, registro: RegistroDecomp) -> bool:
+        return self._dados.deleta_registro(registro)
 
     @classmethod
     @abstractmethod
