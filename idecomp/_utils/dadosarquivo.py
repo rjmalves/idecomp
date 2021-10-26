@@ -50,9 +50,15 @@ class DadosArquivoRegistros:
         ordens_linhas = list(self.linhas_fora_registros.keys())
         ordens_linhas = [o for o in ordens_linhas
                          if o > ant]
-        prox = (ant + 2 if len(ordens_linhas) == 0
-                else ordens_linhas[0])
-        ordem_novo = (prox + ant) / 2
+        prox_linha = (ant + 1 if len(ordens_linhas) == 0
+                      else ordens_linhas[0])
+        ordens_registros = [r._ordem for r in self.registros]
+        ordens_registros = [o for o in ordens_registros
+                            if o > ant]
+        prox_registro = (ant + 1 if len(ordens_registros) == 0
+                         else ordens_linhas[0])
+        prox = min([prox_linha, prox_registro])
+        ordem_novo = (prox + ant) / 2.0
         registro._ordem = ordem_novo
         self.registros.append(registro)
         return registro
