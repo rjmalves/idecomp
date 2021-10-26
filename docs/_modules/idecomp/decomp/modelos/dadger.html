@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.11</title>
+  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.18</title>
   
 
   
   <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../../../../_static/gallery-dataframe.css" type="text/css" />
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
@@ -229,6 +232,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
+    <span class="nd">@codigo</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cod</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cod</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -236,7 +243,11 @@
 
 <span class="sd">        :return: O nome como `str`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@nome</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">nome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span></div>
 
 
 <div class="viewcode-block" id="UH"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.UH">[documentos]</a><span class="k">class</span> <span class="nc">UH</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
@@ -292,6 +303,10 @@
 <span class="sd">        :return: O REE como um `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@ree</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">ree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">volume_inicial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
@@ -572,6 +587,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
+    <span class="nd">@subsistema</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">num_patamares</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -661,7 +680,65 @@
                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span><span class="si">:</span><span class="s2">10.2f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span><span class="si">:</span><span class="s2">5.0f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span><span class="si">:</span><span class="s2">10.2f</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">numero_curva</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@numero_curva</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">numero_curva</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@subsistema</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">s</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nome_curva</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@nome_curva</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">nome_curva</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+
+    <span class="nd">@estagio</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">limites_superiores</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@limites_superiores</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">limites_superiores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lim</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="n">novos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lim</span><span class="p">)</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">limites_superiores</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">novos</span> <span class="o">!=</span> <span class="n">atuais</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Número de limites incompatível. De&quot;</span> <span class="o">+</span>
+                             <span class="sa">f</span><span class="s2">&quot;vem ser fornecidos </span><span class="si">{</span><span class="n">atuais</span><span class="si">}</span><span class="s2">, mas foram </span><span class="si">{</span><span class="n">novos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">lim</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">custos</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@custos</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">custos</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cus</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="n">novos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">cus</span><span class="p">)</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">custos</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">novos</span> <span class="o">!=</span> <span class="n">atuais</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Número de custos incompatível. De&quot;</span> <span class="o">+</span>
+                             <span class="sa">f</span><span class="s2">&quot;vem ser fornecidos </span><span class="si">{</span><span class="n">atuais</span><span class="si">}</span><span class="s2">, mas foram </span><span class="si">{</span><span class="n">novos</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">5</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cus</span></div>
 
 
 <div class="viewcode-block" id="PQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.PQ">[documentos]</a><span class="k">class</span> <span class="nc">PQ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
@@ -953,7 +1030,7 @@
         <span class="n">ci</span> <span class="o">=</span> <span class="mi">9</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">26</span><span class="p">):</span>
             <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="mi">5</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg_manutencao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="n">ci</span><span class="p">))</span>
             <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span>
@@ -987,7 +1064,7 @@
         <span class="n">ci</span> <span class="o">=</span> <span class="mi">14</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">26</span><span class="p">):</span>
             <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="mi">5</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg_manutencao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="n">ci</span><span class="p">))</span>
             <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span>
@@ -1022,7 +1099,7 @@
         <span class="n">ci</span> <span class="o">=</span> <span class="mi">9</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">25</span><span class="p">):</span>
             <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="mi">5</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg_manutencao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="n">ci</span><span class="p">))</span>
             <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span>
@@ -1054,7 +1131,7 @@
         <span class="n">ci</span> <span class="o">=</span> <span class="mi">9</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">25</span><span class="p">):</span>
             <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="mi">5</span>
-            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">break</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg_manutencao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="n">ci</span><span class="p">))</span>
             <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span>
@@ -1675,6 +1752,54 @@
         <span class="k">return</span> <span class="n">linha</span>
 
 
+<span class="k">class</span> <span class="nc">ACALTEFE</span><span class="p">(</span><span class="n">TipoRegistroAC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro AC específico para alteração da altura efetiva</span>
+<span class="sd">    de queda para um conjunto de máquinas.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mnemonico</span> <span class="o">=</span> <span class="s2">&quot;ALTEFE&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linha</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reg_usi</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">reg_desvio</span> <span class="o">=</span> <span class="n">RegistroFn</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_usi</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_desvio</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">linha_escrita</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">linha</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">linha</span>
+
+
+<span class="k">class</span> <span class="nc">ACVAZEFE</span><span class="p">(</span><span class="n">TipoRegistroAC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro AC específico para alteração da vazão efetiva</span>
+<span class="sd">    para um conjunto de máquinas.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mnemonico</span> <span class="o">=</span> <span class="s2">&quot;VAZEFE&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linha</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">reg_usi</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">reg_vaz</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_usi</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_vaz</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">linha_escrita</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="n">linha</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span>
+                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">linha</span>
+
+
 <span class="k">class</span> <span class="nc">ACJUSMED</span><span class="p">(</span><span class="n">TipoRegistroAC</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro AC específico para alteração da cota média do canal</span>
@@ -1729,7 +1854,7 @@
 
     <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">reg_usi</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="mi">19</span><span class="p">:</span><span class="mi">24</span><span class="p">])</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="mi">19</span><span class="p">:</span><span class="mi">24</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">reg_usi</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">19</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -1844,6 +1969,8 @@
                                                  <span class="n">ACNUMCON</span><span class="p">,</span>
                                                  <span class="n">ACNUMMAQ</span><span class="p">,</span>
                                                  <span class="n">ACPOTEFE</span><span class="p">,</span>
+                                                 <span class="n">ACALTEFE</span><span class="p">,</span>
+                                                 <span class="n">ACVAZEFE</span><span class="p">,</span>
                                                  <span class="n">ACJUSMED</span><span class="p">,</span>
                                                  <span class="n">ACVERTJU</span><span class="p">,</span>
                                                  <span class="n">ACVAZMIN</span><span class="p">,</span>
@@ -1904,7 +2031,23 @@
                 <span class="n">linha</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="n">linha</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uhe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@uhe</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">uhe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">u</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">u</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">modificacao</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@modificacao</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">modificacao</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span></div>
 
 
 <div class="viewcode-block" id="IR"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.IR">[documentos]</a><span class="k">class</span> <span class="nc">IR</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
@@ -2073,7 +2216,7 @@
 
     <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">reg_mne</span> <span class="o">=</span> <span class="n">RegistroAn</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-        <span class="n">reg_nome</span> <span class="o">=</span> <span class="n">RegistroAn</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+        <span class="n">reg_nome</span> <span class="o">=</span> <span class="n">RegistroAn</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_mne</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_nome</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">14</span><span class="p">)</span>
 
@@ -2170,7 +2313,8 @@
 
 <div class="viewcode-block" id="RQ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.RQ">[documentos]</a><span class="k">class</span> <span class="nc">RQ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Registro que contém as vazões mínimas históricas.</span>
+<span class="sd">    Registro que contém os percentuais de vazão defluente</span>
+<span class="sd">    mínima histórica para cada REE.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">mnemonico</span> <span class="o">=</span> <span class="s2">&quot;RQ&quot;</span>
 
@@ -2180,14 +2324,14 @@
 
     <span class="k">def</span> <span class="nf">le</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">reg_ree</span> <span class="o">=</span> <span class="n">RegistroIn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-        <span class="n">reg_irrig</span> <span class="o">=</span> <span class="n">RegistroFn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">reg_vazao</span> <span class="o">=</span> <span class="n">RegistroFn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">reg_ree</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
         <span class="n">ci</span> <span class="o">=</span> <span class="mi">9</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">24</span><span class="p">):</span>
             <span class="n">cf</span> <span class="o">=</span> <span class="n">ci</span> <span class="o">+</span> <span class="mi">5</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">[</span><span class="n">ci</span><span class="p">:</span><span class="n">cf</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="k">break</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg_irrig</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="n">ci</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg_vazao</span><span class="o">.</span><span class="n">le_registro</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_linha</span><span class="p">,</span> <span class="n">ci</span><span class="p">))</span>
             <span class="n">ci</span> <span class="o">=</span> <span class="n">cf</span>
 
     <span class="k">def</span> <span class="nf">escreve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">):</span>
@@ -2196,7 +2340,39 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">)):</span>
             <span class="n">linha</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
         <span class="n">linha</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
-        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O código do REE associado às vazões mínimas.</span>
+
+<span class="sd">        :return: O código como `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@ree</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">ree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vazoes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        As vazões defluentes mínimas (percentuais)</span>
+<span class="sd">        para o REE, por estágio [e1, e2, e3, ...].</span>
+
+<span class="sd">        :return: As vazoes como `list[float]`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="nd">@vazoes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">vazoes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tx</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="n">novas</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tx</span><span class="p">)</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">vazoes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">novas</span> <span class="o">!=</span> <span class="n">atuais</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Número de vazões incompatível. De&quot;</span> <span class="o">+</span>
+                             <span class="sa">f</span><span class="s2">&quot;vem ser fornecidas </span><span class="si">{</span><span class="n">atuais</span><span class="si">}</span><span class="s2">, mas foram </span><span class="si">{</span><span class="n">novas</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">tx</span></div>
 
 
 <div class="viewcode-block" id="EZ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.EZ">[documentos]</a><span class="k">class</span> <span class="nc">EZ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
@@ -2618,7 +2794,23 @@
         <span class="n">linha</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">EV</span><span class="o">.</span><span class="n">mnemonico</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span>
                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;    &quot;</span> <span class="o">+</span>
                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">modelo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@modelo</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">modelo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">m</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">m</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">volume_referencia</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@volume_referencia</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">volume_referencia</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span></div>
 
 
 <div class="viewcode-block" id="FJ"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.FJ">[documentos]</a><span class="k">class</span> <span class="nc">FJ</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
@@ -2638,7 +2830,15 @@
     <span class="k">def</span> <span class="nf">escreve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arq</span><span class="p">:</span> <span class="n">IO</span><span class="p">):</span>
         <span class="n">linha</span> <span class="o">=</span> <span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">FJ</span><span class="o">.</span><span class="n">mnemonico</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">+</span>
                  <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dados</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">rjust</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span></div>
+        <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span>
+
+    <span class="nd">@arquivo</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">a</span></div>
 
 
 <div class="viewcode-block" id="HE"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.HE">[documentos]</a><span class="k">class</span> <span class="nc">HE</span><span class="p">(</span><span class="n">RegistroDecomp</span><span class="p">):</span>
@@ -2833,7 +3033,8 @@
         <span class="n">ue</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">UE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UE</span><span class="p">)]</span>
         <span class="n">dp</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">DP</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
-        <span class="n">cd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CD</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span><span class="p">)]</span>
+        <span class="n">cd</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">CD</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
+                                    <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
         <span class="n">pq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">PQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>
                                     <span class="nb">range</span><span class="p">(</span><span class="n">MAX_SUBSIS</span> <span class="o">*</span> <span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
         <span class="n">ri</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RI</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_ESTAGIOS</span><span class="p">)]</span>
@@ -2858,7 +3059,7 @@
         <span class="n">ir</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">IR</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_RELATORIOS</span><span class="p">)]</span>
         <span class="n">fc</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">FC</span><span class="p">(),</span> <span class="n">FC</span><span class="p">()]</span>
         <span class="n">ti</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">TI</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
-        <span class="n">rq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RE</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_REE</span><span class="p">)]</span>
+        <span class="n">rq</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">RQ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_REE</span><span class="p">)]</span>
         <span class="n">ez</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">EZ</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
         <span class="n">hv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">HV</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_UHE</span><span class="p">)]</span>
         <span class="n">lv</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RegistroDecomp</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">LV</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span>

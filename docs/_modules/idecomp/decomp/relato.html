@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.11</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.18</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -159,10 +162,12 @@
   <h1>Código fonte para idecomp.decomp.relato</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">idecomp._utils.bloco</span> <span class="kn">import</span> <span class="n">Bloco</span>
 <span class="c1"># from idecomp.decomp.modelos.relato import BlocoDadosGeraisRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoConvergenciaRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoRelatorioOperacaoUHERelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoBalancoEnergeticoRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoCMORelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoGeracaoTermicaSubsistemaRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoVolumeUtilReservatorioRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoEnergiaArmazenadaREERelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoEnergiaArmazenadaSubsistemaRelato</span>  <span class="c1"># noqa</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoENAPreEstudoSemanalSubsistemaRelato</span>  <span class="c1"># noqa</span>
@@ -194,6 +199,16 @@
                    <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
                    <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;relato.rv0&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Relato&#39;</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Realiza a leitura de um arquivo &quot;relato.rvx&quot; existente em</span>
+<span class="sd">        um diretório.</span>
+
+<span class="sd">        :param diretorio: O caminho relativo ou completo para o diretório</span>
+<span class="sd">            onde se encontra o arquivo</span>
+<span class="sd">        :type diretorio: str</span>
+<span class="sd">        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente</span>
+<span class="sd">            especificando a revisão. Tem como valor default &quot;relato.rv0&quot;</span>
+<span class="sd">        :type nome_arquivo: str, optional</span>
+<span class="sd">        :return: Um objeto :class:`Relato` com informações do arquivo lido</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">leitor</span> <span class="o">=</span> <span class="n">LeituraRelato</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
         <span class="n">r</span> <span class="o">=</span> <span class="n">leitor</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="n">nome_arquivo</span><span class="p">)</span>
@@ -219,17 +234,23 @@
         <span class="k">return</span> <span class="n">blocos</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">convergencia</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém a tabela de convergência do DECOMP existente no</span>
+<span class="sd">        :class:`Relato`</span>
+
+<span class="sd">        :return: A tabela de convergência como um `pd.DataFrame`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoConvergenciaRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">relatorio_operacao_uhe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tabela com o relatório de operação por UHE e por</span>
-<span class="sd">        estágio de execução do DECOMP.</span>
+<span class="sd">        Obtém a tabela de operação de cada UHE por estágio do DECOMP</span>
+<span class="sd">        existente no :class:`Relato`</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `pd.DataFrame`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: O relatório de operação como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">relatorios</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_blocos</span><span class="p">(</span><span class="n">BlocoRelatorioOperacaoUHERelato</span><span class="p">)</span>
         <span class="n">relat_final</span> <span class="o">=</span> <span class="kc">None</span>
@@ -247,15 +268,10 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">balanco_energetico</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tabela de balanço energético médio entre os patamares</span>
-<span class="sd">        para cada estágio e subsistema.</span>
+<span class="sd">        Obtém a tabela de balanço energético entre os patamares para</span>
+<span class="sd">        cada estágio do DECOMP existente no :class:`Relato`</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `pd.DataFrame`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: O relatório de balanço energético como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">balancos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_blocos</span><span class="p">(</span><span class="n">BlocoBalancoEnergeticoRelato</span><span class="p">)</span>
         <span class="n">balanc_final</span> <span class="o">=</span> <span class="kc">None</span>
@@ -274,15 +290,9 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">cmo_medio_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Custo Marginal de Operação (CMO) médio por subsistema</span>
-<span class="sd">        e por semana.</span>
+<span class="sd">        Obtém a tabela de CMO existente no :class:`Relato`</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `pd.DataFrame`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: A tabela de CMO como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoCMORelato</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
@@ -290,15 +300,9 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">geracao_termica_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tabela com a Geração Térmica por subsistema</span>
-<span class="sd">        e por semana.</span>
+<span class="sd">        Obtém a tabela de Geração Térmica existente no :class:`Relato`</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `pd.DataFrame`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: A tabela de Geração Térmica como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoGeracaoTermicaSubsistemaRelato</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
@@ -306,15 +310,10 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">energia_armazenada_ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tabela com a Energia Armazenada (%) por REE</span>
-<span class="sd">        e por semana.</span>
+<span class="sd">        Obtém a tabela de Energia Armazenada por REE (em %)</span>
+<span class="sd">        existente no :class:`Relato`</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `pd.DataFrame`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: A tabela de EARM como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoEnergiaArmazenadaREERelato</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
@@ -322,31 +321,32 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">energia_armazenada_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tabela com a Energia Armazenada (%) por subsistema</span>
-<span class="sd">        e por semana.</span>
+<span class="sd">        Obtém a tabela de Energia Armazenada por Subsistema (em %)</span>
+<span class="sd">        existente no :class:`Relato`</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `pd.DataFrame`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: A tabela de EARM como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoEnergiaArmazenadaSubsistemaRelato</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
 
     <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">volume_util_reservatorios</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém a tabela de Volumes Úteis por reservatório (em %)</span>
+<span class="sd">        existente no :class:`Relato`</span>
+
+<span class="sd">        :return: A tabela de volumes como um `pd.DataFrame`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoVolumeUtilReservatorioRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ena_pre_estudo_semanal_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tabela com a ENA pré-estudo por subsistema</span>
-<span class="sd">        e por semana.</span>
+<span class="sd">        Obtém a tabela de ENA Pré-Estudo Semanal</span>
+<span class="sd">        existente no :class:`Relato`</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `pd.DataFrame`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: A tabela de ENA como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoENAPreEstudoSemanalSubsistemaRelato</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
@@ -354,14 +354,10 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">energia_armazenada_maxima_subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Tabela com a EARMax (Mwmes) por subsistema.</span>
+<span class="sd">        Obtém a tabela de Energia Armazenada Máxima (EARMax) em MWmes</span>
+<span class="sd">        por subsistema existente no :class:`Relato`</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `pd.DataFrame`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: A tabela de EARMax como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoENAPreEstudoSemanalSubsistemaRelato</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span><span class="p">[[</span><span class="s2">&quot;Subsistema&quot;</span><span class="p">,</span> <span class="s2">&quot;Earmax&quot;</span><span class="p">]]</span>
@@ -369,14 +365,9 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dias_excluidos_semana_inicial</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Número de dias excluídos na semana inicial de estudo.</span>
+<span class="sd">        Obtém o número de dias excluídos da semana inicial.</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `int`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: O número de dias como um `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoDiasExcluidosSemanas</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -384,14 +375,9 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">dias_excluidos_semana_final</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Número de dias excluídos na semana final de estudo.</span>
+<span class="sd">        Obtém o número de dias excluídos da semana final.</span>
 
-<span class="sd">        **Retorna**</span>
-
-<span class="sd">        `int`</span>
-
-<span class="sd">        **Sobre**</span>
-
+<span class="sd">        :return: O número de dias como um `int`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoDiasExcluidosSemanas</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></div>

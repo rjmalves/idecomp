@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Relatório de Térmicas GNL (relgnl.rvX) &mdash; documentação idecomp 0.0.11</title>
+  <title>Relatório de Térmicas GNL (relgnl.rvX) &mdash; documentação idecomp 0.0.18</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -43,7 +46,8 @@
     
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" />
-    <link rel="prev" title="Relato (relato.rvX)" href="relato.html" /> 
+    <link rel="next" title="InviabUnic (inviab_unic.rvX)" href="inviabunic.html" />
+    <link rel="prev" title="Sumario (sumario.rvX)" href="sumario.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -97,8 +101,11 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../index.html#arquivos">Arquivos</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="dadger.html">Dados gerais (dadger.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="dadgnl.html">Dados de Térmicas GNL (dadgnl.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hidr.html">Hidr (hidr.dat)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relato.html">Relato (relato.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sumario.html">Sumario (sumario.rvX)</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Relatório de Térmicas GNL (relgnl.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inviabunic.html">InviabUnic (inviab_unic.rvX)</a></li>
 </ul>
 </li>
 </ul>
@@ -183,16 +190,16 @@
 <p>As informações de saída das térmicas de despacho antecipado (GNL) do DECOMP, localizadas no arquivo geralmente denominado
 relgnl.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
 <dl class="py class">
-<dt id="idecomp.decomp.relgnl.RelGNL">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">RelGNL</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dados</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">idecomp._utils.dadosarquivo.DadosArquivoBlocos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/relgnl.html#RelGNL"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL" title="Link permanente para esta definição">¶</a></dt>
+<dt class="sig sig-object py" id="idecomp.decomp.relgnl.RelGNL">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">RelGNL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dados</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">idecomp._utils.dadosarquivo.DadosArquivoBlocos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/relgnl.html#RelGNL"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Armazena os dados de saída do DECOMP referentes às térmicas de
 despacho antecipado (GNL).</p>
 <p>Esta classe lida com as informações de entrada fornecidas ao
 DECOMP e reproduzidas no <code class="xref py py-obj docutils literal notranslate"><span class="pre">relgnl.rvx</span></code>, bem como as saídas finais
 da execução.</p>
-<dl class="py method">
-<dt id="idecomp.decomp.relgnl.RelGNL.comandos_usinas_registros_tg">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">comandos_usinas_registros_tg</span></code><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.comandos_usinas_registros_tg" title="Link permanente para esta definição">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relgnl.RelGNL.comandos_usinas_registros_tg">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">comandos_usinas_registros_tg</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.comandos_usinas_registros_tg" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Tabela de comandos das usinas térmicas GNL com ajustes
 devido aos registros TG.</p>
 <p><strong>Retorna</strong></p>
@@ -200,9 +207,9 @@ devido aos registros TG.</p>
 <p><strong>Sobre</strong></p>
 </dd></dl>
 
-<dl class="py method">
-<dt id="idecomp.decomp.relgnl.RelGNL.comandos_usinas_restricoes_eletricas">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">comandos_usinas_restricoes_eletricas</span></code><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.comandos_usinas_restricoes_eletricas" title="Link permanente para esta definição">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relgnl.RelGNL.comandos_usinas_restricoes_eletricas">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">comandos_usinas_restricoes_eletricas</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.comandos_usinas_restricoes_eletricas" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Tabela de comandos das usinas térmicas GNL com ajustes
 devido a restrições elétricas especiais.</p>
 <p><strong>Retorna</strong></p>
@@ -211,13 +218,23 @@ devido a restrições elétricas especiais.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="idecomp.decomp.relgnl.RelGNL.le_arquivo">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">le_arquivo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diretorio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome_arquivo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'relgnl.rv0'</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.relgnl.RelGNL" title="idecomp.decomp.relgnl.RelGNL"><span class="pre">idecomp.decomp.relgnl.RelGNL</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/relgnl.html#RelGNL.le_arquivo"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.le_arquivo" title="Link permanente para esta definição">¶</a></dt>
+<dt class="sig sig-object py" id="idecomp.decomp.relgnl.RelGNL.le_arquivo">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">le_arquivo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diretorio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome_arquivo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'relgnl.rv0'</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.relgnl.RelGNL" title="idecomp.decomp.relgnl.RelGNL"><span class="pre">idecomp.decomp.relgnl.RelGNL</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/relgnl.html#RelGNL.le_arquivo"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.le_arquivo" title="Link permanente para esta definição">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="py method">
-<dt id="idecomp.decomp.relgnl.RelGNL.usinas_termicas">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">usinas_termicas</span></code><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.usinas_termicas" title="Link permanente para esta definição">¶</a></dt>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relgnl.RelGNL.relatorio_operacao_termica">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">relatorio_operacao_termica</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.relatorio_operacao_termica" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Tabela com o relatório do despacho sinalizado para as usinas
+térmicas GNL.</p>
+<p><strong>Retorna</strong></p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
+<p><strong>Sobre</strong></p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relgnl.RelGNL.usinas_termicas">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">usinas_termicas</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relgnl.RelGNL.usinas_termicas" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Tabela de informações das usinas térmicas GNL.</p>
 <p><strong>Retorna</strong></p>
 <p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
@@ -235,7 +252,8 @@ devido a restrições elétricas especiais.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="relato.html" class="btn btn-neutral float-left" title="Relato (relato.rvX)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="inviabunic.html" class="btn btn-neutral float-right" title="InviabUnic (inviab_unic.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sumario.html" class="btn btn-neutral float-left" title="Sumario (sumario.rvX)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
     </div>
 
   <hr/>

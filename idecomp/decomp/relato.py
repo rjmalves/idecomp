@@ -37,6 +37,16 @@ class Relato(ArquivoBlocos):
                    diretorio: str,
                    nome_arquivo="relato.rv0") -> 'Relato':
         """
+        Realiza a leitura de um arquivo "relato.rvx" existente em
+        um diretório.
+
+        :param diretorio: O caminho relativo ou completo para o diretório
+            onde se encontra o arquivo
+        :type diretorio: str
+        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
+            especificando a revisão. Tem como valor default "relato.rv0"
+        :type nome_arquivo: str, optional
+        :return: Um objeto :class:`Relato` com informações do arquivo lido
         """
         leitor = LeituraRelato(diretorio)
         r = leitor.le_arquivo(nome_arquivo)
@@ -64,14 +74,10 @@ class Relato(ArquivoBlocos):
     @property
     def convergencia(self) -> pd.DataFrame:
         """
-        Tabela com o relatório de convergência do DECOMP.
+        Obtém a tabela de convergência do DECOMP existente no
+        :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de convergência como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoConvergenciaRelato)
         return b.dados
@@ -79,15 +85,10 @@ class Relato(ArquivoBlocos):
     @property
     def relatorio_operacao_uhe(self) -> pd.DataFrame:
         """
-        Tabela com o relatório de operação por UHE e por
-        estágio de execução do DECOMP.
+        Obtém a tabela de operação de cada UHE por estágio do DECOMP
+        existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: O relatório de operação como um `pd.DataFrame`.
         """
         relatorios = self.__obtem_blocos(BlocoRelatorioOperacaoUHERelato)
         relat_final = None
@@ -105,15 +106,10 @@ class Relato(ArquivoBlocos):
     @property
     def balanco_energetico(self) -> pd.DataFrame:
         """
-        Tabela de balanço energético médio entre os patamares
-        para cada estágio e subsistema.
+        Obtém a tabela de balanço energético entre os patamares para
+        cada estágio do DECOMP existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: O relatório de balanço energético como um `pd.DataFrame`.
         """
         balancos = self.__obtem_blocos(BlocoBalancoEnergeticoRelato)
         balanc_final = None
@@ -132,15 +128,9 @@ class Relato(ArquivoBlocos):
     @property
     def cmo_medio_subsistema(self) -> pd.DataFrame:
         """
-        Custo Marginal de Operação (CMO) médio por subsistema
-        e por semana.
+        Obtém a tabela de CMO existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de CMO como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoCMORelato)
         return b.dados
@@ -148,15 +138,9 @@ class Relato(ArquivoBlocos):
     @property
     def geracao_termica_subsistema(self) -> pd.DataFrame:
         """
-        Tabela com a Geração Térmica por subsistema
-        e por semana.
+        Obtém a tabela de Geração Térmica existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de Geração Térmica como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoGeracaoTermicaSubsistemaRelato)
         return b.dados
@@ -164,15 +148,10 @@ class Relato(ArquivoBlocos):
     @property
     def energia_armazenada_ree(self) -> pd.DataFrame:
         """
-        Tabela com a Energia Armazenada (%) por REE
-        e por semana.
+        Obtém a tabela de Energia Armazenada por REE (em %)
+        existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de EARM como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoEnergiaArmazenadaREERelato)
         return b.dados
@@ -180,15 +159,10 @@ class Relato(ArquivoBlocos):
     @property
     def energia_armazenada_subsistema(self) -> pd.DataFrame:
         """
-        Tabela com a Energia Armazenada (%) por subsistema
-        e por semana.
+        Obtém a tabela de Energia Armazenada por Subsistema (em %)
+        existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de EARM como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoEnergiaArmazenadaSubsistemaRelato)
         return b.dados
@@ -196,15 +170,10 @@ class Relato(ArquivoBlocos):
     @property
     def volume_util_reservatorios(self) -> pd.DataFrame:
         """
-        Tabela com os volumes úteis por reservatório
-        e por semana.
+        Obtém a tabela de Volumes Úteis por reservatório (em %)
+        existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de volumes como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoVolumeUtilReservatorioRelato)
         return b.dados
@@ -212,15 +181,10 @@ class Relato(ArquivoBlocos):
     @property
     def ena_pre_estudo_semanal_subsistema(self) -> pd.DataFrame:
         """
-        Tabela com a ENA pré-estudo por subsistema
-        e por semana.
+        Obtém a tabela de ENA Pré-Estudo Semanal
+        existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de ENA como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoENAPreEstudoSemanalSubsistemaRelato)
         return b.dados
@@ -228,14 +192,10 @@ class Relato(ArquivoBlocos):
     @property
     def energia_armazenada_maxima_subsistema(self) -> pd.DataFrame:
         """
-        Tabela com a EARMax (Mwmes) por subsistema.
+        Obtém a tabela de Energia Armazenada Máxima (EARMax) em MWmes
+        por subsistema existente no :class:`Relato`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de EARMax como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoENAPreEstudoSemanalSubsistemaRelato)
         return b.dados[["Subsistema", "Earmax"]]
@@ -243,14 +203,9 @@ class Relato(ArquivoBlocos):
     @property
     def dias_excluidos_semana_inicial(self) -> int:
         """
-        Número de dias excluídos na semana inicial de estudo.
+        Obtém o número de dias excluídos da semana inicial.
 
-        **Retorna**
-
-        `int`
-
-        **Sobre**
-
+        :return: O número de dias como um `int`.
         """
         b = self.__obtem_bloco(BlocoDiasExcluidosSemanas)
         return b.dados[0]
@@ -258,14 +213,9 @@ class Relato(ArquivoBlocos):
     @property
     def dias_excluidos_semana_final(self) -> int:
         """
-        Número de dias excluídos na semana final de estudo.
+        Obtém o número de dias excluídos da semana final.
 
-        **Retorna**
-
-        `int`
-
-        **Sobre**
-
+        :return: O número de dias como um `int`.
         """
         b = self.__obtem_bloco(BlocoDiasExcluidosSemanas)
         return b.dados[1]

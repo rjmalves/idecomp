@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.relgnl &mdash; documentação idecomp 0.0.11</title>
+  <title>idecomp.decomp.relgnl &mdash; documentação idecomp 0.0.18</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -162,6 +165,7 @@
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relgnl</span> <span class="kn">import</span> <span class="n">BlocoDadosUsinasRelGNL</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relgnl</span> <span class="kn">import</span> <span class="n">BlocoComandosUsinasAjustesTGRelGNL</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relgnl</span> <span class="kn">import</span> <span class="n">BlocoComandosUsinasAjustesRERelGNL</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relgnl</span> <span class="kn">import</span> <span class="n">BlocoRelatorioOperacaoRelGNL</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relgnl</span> <span class="kn">import</span> <span class="n">LeituraRelGNL</span>
 <span class="kn">from</span> <span class="nn">idecomp._utils.arquivo</span> <span class="kn">import</span> <span class="n">ArquivoBlocos</span>
 <span class="kn">from</span> <span class="nn">idecomp._utils.dadosarquivo</span> <span class="kn">import</span> <span class="n">DadosArquivoBlocos</span>
@@ -247,6 +251,22 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoComandosUsinasAjustesRERelGNL</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">relatorio_operacao_termica</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tabela com o relatório do despacho sinalizado para as usinas</span>
+<span class="sd">        térmicas GNL.</span>
+
+<span class="sd">        **Retorna**</span>
+
+<span class="sd">        `pd.DataFrame`</span>
+
+<span class="sd">        **Sobre**</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoRelatorioOperacaoRelGNL</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span></div>
 </pre></div>
 

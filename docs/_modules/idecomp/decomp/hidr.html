@@ -1,0 +1,399 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>idecomp.decomp.hidr &mdash; documentação idecomp 0.0.18</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../../../genindex.html" />
+    <link rel="search" title="Buscar" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> idecomp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Instalação</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Referência</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">idecomp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Código do módulo</a> &raquo;</li>
+        
+      <li>idecomp.decomp.hidr</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Código fonte para idecomp.decomp.hidr</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.hidr</span> <span class="kn">import</span> <span class="n">LeituraHidr</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.arquivo</span> <span class="kn">import</span> <span class="n">ArquivoBinario</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.escritabinario</span> <span class="kn">import</span> <span class="n">EscritaBinario</span>
+<span class="kn">from</span> <span class="nn">idecomp._utils.dadosarquivo</span> <span class="kn">import</span> <span class="n">DadosArquivoBinarios</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>  <span class="c1"># type: ignore</span>
+
+
+<div class="viewcode-block" id="Hidr"><a class="viewcode-back" href="../../../reference/decomp/arquivos/hidr.html#idecomp.decomp.hidr.Hidr">[documentos]</a><span class="k">class</span> <span class="nc">Hidr</span><span class="p">(</span><span class="n">ArquivoBinario</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Armazena os dados de saída do DECOMP referentes às térmicas de</span>
+<span class="sd">    despacho antecipado (GNL).</span>
+
+<span class="sd">    Esta classe lida com as informações de entrada fornecidas ao</span>
+<span class="sd">    DECOMP e reproduzidas no `relgnl.rvx`, bem como as saídas finais</span>
+<span class="sd">    da execução.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">dados</span><span class="p">:</span> <span class="n">DadosArquivoBinarios</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="c1"># Override</span>
+<div class="viewcode-block" id="Hidr.le_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/hidr.html#idecomp.decomp.hidr.Hidr.le_arquivo">[documentos]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">le_arquivo</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span>
+                   <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                   <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;hidr.dat&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Hidr&#39;</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Realiza a leitura de um arquivo &quot;hidr.dat&quot; existente em</span>
+<span class="sd">        um diretório.</span>
+
+<span class="sd">        :param diretorio: O caminho relativo ou completo para o diretório</span>
+<span class="sd">            onde se encontra o arquivo</span>
+<span class="sd">        :type diretorio: str</span>
+<span class="sd">        :param nome_arquivo: Nome do arquivo a ser lido.</span>
+<span class="sd">            Tem como valor default &quot;hidr.dat&quot;</span>
+<span class="sd">        :type nome_arquivo: str, optional</span>
+<span class="sd">        :return: Um objeto :class:`Hidr` com informações do arquivo lido</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">leitor</span> <span class="o">=</span> <span class="n">LeituraHidr</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">leitor</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="n">nome_arquivo</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></div>
+
+    <span class="c1"># Override</span>
+<div class="viewcode-block" id="Hidr.escreve_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/hidr.html#idecomp.decomp.hidr.Hidr.escreve_arquivo">[documentos]</a>    <span class="k">def</span> <span class="nf">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                        <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+                        <span class="n">nome_arquivo</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;hidr.dat&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Realiza a escrita de um arquivo com as informações do</span>
+<span class="sd">        objeto :class:`Hidr`</span>
+
+<span class="sd">        :param diretorio: O caminho relativo ou completo para o diretório</span>
+<span class="sd">            onde será escrito o arquivo.</span>
+<span class="sd">        :type diretorio: str</span>
+<span class="sd">        :param nome_arquivo: Nome do arquivo a ser escrito.Tem como valor</span>
+<span class="sd">            default &quot;hidr.dat&quot;</span>
+<span class="sd">        :type nome_arquivo: str, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">escritor</span> <span class="o">=</span> <span class="n">EscritaBinario</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
+        <span class="n">escritor</span><span class="o">.</span><span class="n">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__calcula_df</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="n">colunas</span> <span class="o">=</span> <span class="p">[</span>
+                   <span class="s2">&quot;Nome&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Posto&quot;</span><span class="p">,</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Posto BDH </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)],</span>
+                   <span class="s2">&quot;Subsistema&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Empresa&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Posto Jusante&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Desvio&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Volume Mínimo&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Volume Máximo&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Volume Vertedouro&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Volume Desvio&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Cota Mínima&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Cota Máxima&quot;</span><span class="p">,</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> CV&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> CA&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Evaporação Mês </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">13</span><span class="p">)],</span>
+                   <span class="s2">&quot;Num. Conjuntos Máquinas&quot;</span><span class="p">,</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Num. Máquinas Conjunto </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Pot. Conjunto </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Ignorado </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">76</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;H Nominal </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Q Nominal </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="s2">&quot;Produtibilidade Específica&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Perdas&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Número Pol. Jusante&quot;</span><span class="p">,</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> PJUS1&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> PJUS2&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> PJUS3&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> PJUS4&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> PJUS5&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> PJUS6&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)],</span>
+                   <span class="o">*</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;C</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> PJUSREF&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">)],</span>
+                   <span class="s2">&quot;Canal de Fuga Médio&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Influencia Vert. Cfuga&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Fator Carga Max.&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Fator Carga Min.&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Vazão Mínima&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Num. Unidades Base&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Tipo Turbina&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Representação Conjunto&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Taxa Indisp. Forçada&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Taxa Indisp. Programada&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Tipo de Perda&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Data&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Observação&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Volume de Referência&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;Tipo de Regulação&quot;</span>
+                  <span class="p">]</span>
+
+        <span class="n">blocos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">blocos</span>
+        <span class="n">dados</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colunas</span><span class="p">):</span>
+            <span class="n">dados_coluna</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="o">.</span><span class="n">dados</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">blocos</span><span class="p">]</span>
+            <span class="n">dados</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">dados_coluna</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dados</span><span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">tabela</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A tabela com as informações contidas no arquivo `hidr.dat` é um</span>
+<span class="sd">        DataFrame com o número delinhas igual ao número de postos e 192</span>
+<span class="sd">        colunas.</span>
+<span class="sd">        O índice é a numeração das usinas em ordem crescente, iniciando</span>
+<span class="sd">        em 1.</span>
+<span class="sd">        As colunas são:</span>
+
+<span class="sd">        - Nome (`str`): nome da usina (12 caracteres)</span>
+<span class="sd">        - Posto (`int`): posto de vazão natural da usina</span>
+<span class="sd">        - Posto BDH [1 - 8] (`int`): TODO</span>
+<span class="sd">        - Subsistema (`str`): subsistema da usina</span>
+<span class="sd">        - Empresa (`str`): agente responsável pela usina</span>
+<span class="sd">        - Posto Jusante (`int`): posto à jusante da usina</span>
+<span class="sd">        - Desvio (`float`): TODO</span>
+<span class="sd">        - Volume Mínimo (`float`): volume mínimo da usina (hm3)</span>
+<span class="sd">        - Volume Máximo (`float`): volume máximo da usina (hm3)</span>
+<span class="sd">        - Volume Vertedouro (`float`): volume do vertedouro da usina (hm3)</span>
+<span class="sd">        - Volume Desvio (`float`): TODO</span>
+<span class="sd">        - Cota Mínima (`float`): cota mínima da usina (m)</span>
+<span class="sd">        - Cota Máxima (`float`): cota máxima da usina (m)</span>
+<span class="sd">        - C[1-5] CV (`float`): coeficientes do polinômio cota-volume</span>
+<span class="sd">        - C[1-5] CA (`float`): coeficientes do polinômio cota-área</span>
+<span class="sd">        - Evaporação Mês [1-12] (`float`): coeficientes de evaporação (mm)</span>
+<span class="sd">        - Num Conjunto Máquinas (`int`): número de conjuntos de máquinas</span>
+<span class="sd">        - Num Máquinas Conjunto [1-5] (`int`): máquinas por conjunto</span>
+<span class="sd">        - Pot. Conjunto [1-5] (`float`): potência das máquinas (MWmed)</span>
+<span class="sd">        - Ingorado [1-75]: campos ignorados</span>
+<span class="sd">        - H Nominal [1-5]: alturas nominais de queda por conjunto (m)</span>
+<span class="sd">        - Q Nominal [1-5]: vazões nominais por conjunto (m3/s)</span>
+<span class="sd">        - Produtibilidade Específica (`float`): produtibilidade específica</span>
+<span class="sd">        - Perdas (`float`): perdas da usina (% ?)</span>
+<span class="sd">        - Número Pol. Jusante (`int`): número de polinômios de jusante</span>
+<span class="sd">        - C[1-5] PJUS[1-6] (`float`): coeficientes de cada polinjus</span>
+<span class="sd">        - C[1-5] PJUSREF (`float`): coeficientes do polinjus de referência</span>
+<span class="sd">        - Canal de Fuga Médio (`float`): cota média do canal de fuga (m)</span>
+<span class="sd">        - Influencia Vert. Cfuga (`int`): TODO (0 ou 1)</span>
+<span class="sd">        - Fator Carga Max. (`float`): TODO (%)</span>
+<span class="sd">        - Fator Carga Min. (`float`): TODO (%)</span>
+<span class="sd">        - Vazão Mínima (`float`): vazão mínima da usina (m3/s)</span>
+<span class="sd">        - Num. Unidades Base (`int`): TODO (0 = X, 1 = Y, 2 = Z)</span>
+<span class="sd">        - Tipo Turbina (`int`): TODO (0 = X, 1 = Y, 2 = Z)</span>
+<span class="sd">        - Representação Conjunto (`int`): TODO (0 = X, 1 = Y, 2 = Z)</span>
+<span class="sd">        - Taxa Indisp. Forçada (`float`): TODO (%)</span>
+<span class="sd">        - Taxa Indisp. Programada (`float`): TODO (%)</span>
+<span class="sd">        - Tipo de Perda (`int`): TODO (0 = X, 1 = Y, 2 = Z)</span>
+<span class="sd">        - Data (`str`): TODO (DD/MM/AA)</span>
+<span class="sd">        - Observação (`str`): observação qualquer sobre a usina</span>
+<span class="sd">        - Volume de Referência (`float`): TODO (hm3)</span>
+<span class="sd">        - Tipo de Regulação (`str`): TODO (D, S ou M)</span>
+
+<span class="sd">        :return: Tabela com as informações contidas no arquivo `hidr.dat`</span>
+<span class="sd">        :rtype: pd.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__calcula_df</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__df</span>
+
+    <span class="nd">@tabela</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">tabela</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">n_postos</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">n_postos_arquivo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tabela</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">n_postos</span> <span class="o">!=</span> <span class="n">n_postos_arquivo</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Número de postos incompatível (</span><span class="si">{</span><span class="n">n_postos</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_postos</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="o">.</span><span class="n">blocos</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">_dados</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rogerio Alves.
+
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

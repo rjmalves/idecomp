@@ -39,5 +39,8 @@ Arquivos
 
    arquivos/dadger
    arquivos/dadgnl
+   arquivos/hidr
    arquivos/relato
+   arquivos/sumario
    arquivos/relgnl
+   arquivos/inviabunic

@@ -26,9 +26,6 @@ class DadGNL(ArquivoRegistros):
 
     def __init__(self,
                  dados: DadosArquivoRegistros) -> None:
-        """
-        Construtor padrão
-        """
         super().__init__(dados)
 
     # Override
@@ -68,15 +65,6 @@ class DadGNL(ArquivoRegistros):
         """
         escritor = EscritaRegistros(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
-
-    def __obtem_registro(self,
-                         tipo: Type[T]) -> T:
-        """
-        """
-        for b in self._registros:
-            if isinstance(b, tipo):
-                return b
-        raise ValueError(f"Não foi encontrado um registro do tipo {tipo}")
 
     def __obtem_registro_do_estagio(self,
                                     tipo: Type[T],

@@ -10,12 +10,11 @@ import pandas as pd  # type: ignore
 
 class InviabUnic(ArquivoBlocos):
     """
-    Armazena os dados de saída do DECOMP referentes ao
-    acompanhamento do programa.
+    Armazena os dados de saída do DECOMP referentes às inviabilidades
+    ocorridas durante o processo de execução.
 
-    Esta classe lida com as informações de entrada fornecidas ao
-    DECOMP e reproduzidas no `sumario.rvx`, bem como as saídas finais
-    da execução: custos de operação, despacho de térmicas, etc.
+    Esta classe lida com as informações de saída fornecidas pelo
+    DECOMP e reproduzidas no `inviab_unic.rvx`.
 
     """
     def __init__(self,
@@ -28,6 +27,16 @@ class InviabUnic(ArquivoBlocos):
                    diretorio: str,
                    nome_arquivo="inviab_unic.rv0") -> 'InviabUnic':
         """
+        Realiza a leitura de um arquivo "inviab_unic.rvx" existente em
+        um diretório.
+
+        :param diretorio: O caminho relativo ou completo para o diretório
+            onde se encontra o arquivo
+        :type diretorio: str
+        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
+            especificando a revisão. Tem como valor default "inviab_unic.rv0"
+        :type nome_arquivo: str, optional
+        :return: Um objeto :class:`InviabUnic` com informações do arquivo lido
         """
         leitor = LeituraInviabUnic(diretorio)
         r = leitor.le_arquivo(nome_arquivo)
@@ -45,14 +54,19 @@ class InviabUnic(ArquivoBlocos):
     def inviabilidades_iteracoes(self) -> pd.DataFrame:
         """
         Tabela das inviabilidades visitadas pelo modelo durante
-        o processo iterativo.
+        as iterações. As colunas são:
 
-        **Retorna**
+        - Iteração (`int`): iteração de ocorrência da inviabilidade
+        - FWD/BWD (`int`): momento de ocorrência da inviabilidade (0/1)
+        - Estágio (`int`): estágio da ocorrência da inviabilidade
+        - Cenário (`int`): cenário da ocorrência da inviabilidade
+        - Restrição (`str`): mensagem da restrição como no arquivo
+        - Violação (`float`): quantidade de violação da restrição
+        - Unidade (`str`): unidade de medição da restrição violada
 
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: Tabela das inviabilidades no mesmo formato do
+            arquivo `inviab_unic.rvX`.
+        :rtype: pd.DataFrame
         """
         b = self.__obtem_bloco(BlocoInviabilidadesIteracoes)
         return b.dados
@@ -61,14 +75,17 @@ class InviabUnic(ArquivoBlocos):
     def inviabilidades_simulacao_final(self) -> pd.DataFrame:
         """
         Tabela das inviabilidades visitadas pelo modelo durante
-        a simulação final.
+        a simulação final. As colunas são:
 
-        **Retorna**
+        - Estágio (`int`): estágio da ocorrência da inviabilidade
+        - Cenário (`int`): cenário da ocorrência da inviabilidade
+        - Restrição (`str`): mensagem da restrição como impressa
+        - Violação (`float`): quantidade de violação da restrição
+        - Unidade (`str`): unidade de medição da restrição violada
 
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: Tabela das inviabilidades no mesmo formato do
+            arquivo `inviab_unic.rvX`.
+        :rtype: pd.DataFrame
         """
         b = self.__obtem_bloco(BlocoInviabilidadesSimFinal)
         return b.dados

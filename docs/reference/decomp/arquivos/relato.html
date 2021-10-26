@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.11</title>
+  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.18</title>
   
 
   
   <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
   <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
@@ -33,6 +35,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
@@ -43,8 +46,8 @@
     
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" />
-    <link rel="next" title="Relatório de Térmicas GNL (relgnl.rvX)" href="relgnl.html" />
-    <link rel="prev" title="Dados de Térmicas GNL (dadgnl.rvX)" href="dadgnl.html" /> 
+    <link rel="next" title="Sumario (sumario.rvX)" href="sumario.html" />
+    <link rel="prev" title="Hidr (hidr.dat)" href="hidr.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -98,8 +101,11 @@
 <li class="toctree-l3 current"><a class="reference internal" href="../index.html#arquivos">Arquivos</a><ul class="current">
 <li class="toctree-l4"><a class="reference internal" href="dadger.html">Dados gerais (dadger.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="dadgnl.html">Dados de Térmicas GNL (dadgnl.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hidr.html">Hidr (hidr.dat)</a></li>
 <li class="toctree-l4 current"><a class="current reference internal" href="#">Relato (relato.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sumario.html">Sumario (sumario.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relgnl.html">Relatório de Térmicas GNL (relgnl.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inviabunic.html">InviabUnic (inviab_unic.rvX)</a></li>
 </ul>
 </li>
 </ul>
@@ -184,113 +190,171 @@
 <p>As informações de saída do DECOMP, localizadas no arquivo geralmente denominado
 relato.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
 <dl class="py class">
-<dt id="idecomp.decomp.relato.Relato">
-<em class="property"><span class="pre">class</span> </em><code class="sig-name descname"><span class="pre">Relato</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dados</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">idecomp._utils.dadosarquivo.DadosArquivoBlocos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/relato.html#Relato"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relato.Relato" title="Link permanente para esta definição">¶</a></dt>
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Relato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dados</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">idecomp._utils.dadosarquivo.DadosArquivoBlocos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/relato.html#Relato"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relato.Relato" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Armazena os dados de saída do DECOMP referentes ao
 acompanhamento do programa.</p>
 <p>Esta classe lida com as informações de entrada fornecidas ao
 DECOMP e reproduzidas no <code class="xref py py-obj docutils literal notranslate"><span class="pre">relato.rvx</span></code>, bem como as saídas finais
 da execução: custos de operação, despacho de térmicas, etc.</p>
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.balanco_energetico">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">balanco_energetico</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.balanco_energetico" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Tabela de balanço energético médio entre os patamares
-para cada estágio e subsistema.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
-<p><strong>Sobre</strong></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.balanco_energetico">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">balanco_energetico</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.balanco_energetico" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de balanço energético entre os patamares para
+cada estágio do DECOMP existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O relatório de balanço energético como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.cmo_medio_subsistema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">cmo_medio_subsistema</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.cmo_medio_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de CMO existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de CMO como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.convergencia">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">convergencia</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.convergencia" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de convergência do DECOMP existente no
+<a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de convergência como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.dias_excluidos_semana_final">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dias_excluidos_semana_final</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.dias_excluidos_semana_final" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém o número de dias excluídos da semana final.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O número de dias como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.dias_excluidos_semana_inicial">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dias_excluidos_semana_inicial</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.dias_excluidos_semana_inicial" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém o número de dias excluídos da semana inicial.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O número de dias como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.ena_pre_estudo_semanal_subsistema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">ena_pre_estudo_semanal_subsistema</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.ena_pre_estudo_semanal_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de ENA Pré-Estudo Semanal
+existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de ENA como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.energia_armazenada_maxima_subsistema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">energia_armazenada_maxima_subsistema</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.energia_armazenada_maxima_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de Energia Armazenada Máxima (EARMax) em MWmes
+por subsistema existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de EARMax como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.energia_armazenada_ree">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">energia_armazenada_ree</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.energia_armazenada_ree" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de Energia Armazenada por REE (em %)
+existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de EARM como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.energia_armazenada_subsistema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">energia_armazenada_subsistema</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.energia_armazenada_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de Energia Armazenada por Subsistema (em %)
+existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de EARM como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.geracao_termica_subsistema">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">geracao_termica_subsistema</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.geracao_termica_subsistema" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de Geração Térmica existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de Geração Térmica como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.cmo_medio_subsistema">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">cmo_medio_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.cmo_medio_subsistema" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Custo Marginal de Operação (CMO) médio por subsistema
-e por semana.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
-<p><strong>Sobre</strong></p>
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.le_arquivo">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">le_arquivo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diretorio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome_arquivo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'relato.rv0'</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><span class="pre">idecomp.decomp.relato.Relato</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/relato.html#Relato.le_arquivo"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relato.Relato.le_arquivo" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Realiza a leitura de um arquivo “relato.rvx” existente em
+um diretório.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>diretorio</strong> (<em>str</em>) – O caminho relativo ou completo para o diretório
+onde se encontra o arquivo</p></li>
+<li><p><strong>nome_arquivo</strong> (<em>str</em><em>, </em><em>optional</em>) – Nome do arquivo a ser lido, potencialmente
+especificando a revisão. Tem como valor default “relato.rv0”</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um objeto <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a> com informações do arquivo lido</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.dias_excluidos_semana_final">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">dias_excluidos_semana_final</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.dias_excluidos_semana_final" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Número de dias excluídos na semana final de estudo.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
-<p><strong>Sobre</strong></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.relatorio_operacao_uhe">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">relatorio_operacao_uhe</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.relatorio_operacao_uhe" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de operação de cada UHE por estágio do DECOMP
+existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O relatório de operação como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.dias_excluidos_semana_inicial">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">dias_excluidos_semana_inicial</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.dias_excluidos_semana_inicial" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Número de dias excluídos na semana inicial de estudo.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></p>
-<p><strong>Sobre</strong></p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.ena_pre_estudo_semanal_subsistema">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">ena_pre_estudo_semanal_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.ena_pre_estudo_semanal_subsistema" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Tabela com a ENA pré-estudo por subsistema
-e por semana.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
-<p><strong>Sobre</strong></p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.energia_armazenada_maxima_subsistema">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">energia_armazenada_maxima_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.energia_armazenada_maxima_subsistema" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Tabela com a EARMax (Mwmes) por subsistema.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
-<p><strong>Sobre</strong></p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.energia_armazenada_ree">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">energia_armazenada_ree</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.energia_armazenada_ree" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Tabela com a Energia Armazenada (%) por REE
-e por semana.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
-<p><strong>Sobre</strong></p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.energia_armazenada_subsistema">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">energia_armazenada_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.energia_armazenada_subsistema" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Tabela com a Energia Armazenada (%) por subsistema
-e por semana.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
-<p><strong>Sobre</strong></p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.geracao_termica_subsistema">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">geracao_termica_subsistema</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.geracao_termica_subsistema" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Tabela com a Geração Térmica por subsistema
-e por semana.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
-<p><strong>Sobre</strong></p>
-</dd></dl>
-
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.le_arquivo">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">le_arquivo</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">diretorio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome_arquivo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'relato.rv0'</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><span class="pre">idecomp.decomp.relato.Relato</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/relato.html#Relato.le_arquivo"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relato.Relato.le_arquivo" title="Link permanente para esta definição">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="idecomp.decomp.relato.Relato.relatorio_operacao_uhe">
-<em class="property"><span class="pre">property</span> </em><code class="sig-name descname"><span class="pre">relatorio_operacao_uhe</span></code><a class="headerlink" href="#idecomp.decomp.relato.Relato.relatorio_operacao_uhe" title="Link permanente para esta definição">¶</a></dt>
-<dd><p>Tabela com o relatório de operação por UHE e por
-estágio de execução do DECOMP.</p>
-<p><strong>Retorna</strong></p>
-<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code></p>
-<p><strong>Sobre</strong></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.volume_util_reservatorios">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">volume_util_reservatorios</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.volume_util_reservatorios" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de Volumes Úteis por reservatório (em %)
+existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de volumes como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -304,8 +368,8 @@ estágio de execução do DECOMP.</p>
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="relgnl.html" class="btn btn-neutral float-right" title="Relatório de Térmicas GNL (relgnl.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="dadgnl.html" class="btn btn-neutral float-left" title="Dados de Térmicas GNL (dadgnl.rvX)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="sumario.html" class="btn btn-neutral float-right" title="Sumario (sumario.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="hidr.html" class="btn btn-neutral float-left" title="Hidr (hidr.dat)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
     </div>
 
   <hr/>

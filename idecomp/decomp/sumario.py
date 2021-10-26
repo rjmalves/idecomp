@@ -30,6 +30,16 @@ class Sumario(ArquivoBlocos):
                    diretorio: str,
                    nome_arquivo="sumario.rv0") -> 'Sumario':
         """
+        Realiza a leitura de um arquivo "sumario.rvx" existente em
+        um diretório.
+
+        :param diretorio: O caminho relativo ou completo para o diretório
+            onde se encontra o arquivo
+        :type diretorio: str
+        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
+            especificando a revisão. Tem como valor default "sumario.rv0"
+        :type nome_arquivo: str, optional
+        :return: Um objeto :class:`Sumario` com informações do arquivo lido
         """
         leitor = LeituraSumario(diretorio)
         r = leitor.le_arquivo(nome_arquivo)
@@ -46,15 +56,9 @@ class Sumario(ArquivoBlocos):
     @property
     def cmo_medio_subsistema(self) -> pd.DataFrame:
         """
-        Custo Marginal de Operação (CMO) médio por subsistema
-        e por semana.
+        Obtém a tabela de CMO existente no :class:`Sumario`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de CMO como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoCMOSumario)
         return b.dados
@@ -62,15 +66,9 @@ class Sumario(ArquivoBlocos):
     @property
     def geracao_termica_subsistema(self) -> pd.DataFrame:
         """
-        Tabela com a Geração Térmica por subsistema
-        e por semana.
+        Obtém a tabela de Geração Térmica existente no :class:`Sumario`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de Geração Térmica como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoGeracaoTermicaSubsistemaSumario)
         return b.dados
@@ -78,15 +76,10 @@ class Sumario(ArquivoBlocos):
     @property
     def energia_armazenada_ree(self) -> pd.DataFrame:
         """
-        Tabela com a Energia Armazenada (%) por REE
-        e por semana.
+        Obtém a tabela de Energia Armazenada por REE (em %)
+        existente no :class:`Sumario`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de EARM como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoEnergiaArmazenadaREESumario)
         return b.dados
@@ -94,15 +87,10 @@ class Sumario(ArquivoBlocos):
     @property
     def energia_armazenada_subsistema(self) -> pd.DataFrame:
         """
-        Tabela com a Energia Armazenada (%) por subsistema
-        e por semana.
+        Obtém a tabela de Energia Armazenada por Subsistema (em %)
+        existente no :class:`Sumario`
 
-        **Retorna**
-
-        `pd.DataFrame`
-
-        **Sobre**
-
+        :return: A tabela de EARM como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoEnergiaArmazenadaSubsistemaSumario)
         return b.dados
