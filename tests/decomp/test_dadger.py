@@ -32,9 +32,10 @@ def test_uh():
 
 
 def test_ct():
-    ct = dadger.ct(1)
+    ct = dadger.ct(1, 1)
     assert ct.codigo == 1
     assert ct.nome == "ANGRA 1"
+    assert ct.estagio == 1
     assert ct.subsistema == 1
     assert ct.inflexibilidades == [640, 640, 640]
     assert ct.disponibilidades == [640, 640, 640]

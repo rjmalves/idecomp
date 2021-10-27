@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.18</title>
+  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.19</title>
   
 
   
@@ -419,6 +419,15 @@
     <span class="nd">@nome</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">nome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nome</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">nome</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O estágio associado às propriedades cadastradas.</span>
+
+<span class="sd">        :return: O estágio como um `int`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">inflexibilidades</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>

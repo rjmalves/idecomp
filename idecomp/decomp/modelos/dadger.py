@@ -259,6 +259,15 @@ class CT(RegistroDecomp):
         self._dados[2] = nome
 
     @property
+    def estagio(self) -> str:
+        """
+        O estágio associado às propriedades cadastradas.
+
+        :return: O estágio como um `int`.
+        """
+        return self._dados[3]
+
+    @property
     def inflexibilidades(self) -> List[float]:
         """
         As inflexibilidades da UTE por patamar.

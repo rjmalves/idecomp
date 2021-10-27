@@ -151,7 +151,7 @@ class Dadger(ArquivoRegistros):
         raise ValueError("Não foi encontrado registro UH" +
                          f" para a UHE {codigo}")
 
-    def ct(self, codigo: int) -> CT:
+    def ct(self, codigo: int, estagio: int) -> CT:
         """
         Obtém um registro que define uma usina termelétrica existente
         no estudo descrito pelo :class:`Dadger`.
@@ -159,14 +159,18 @@ class Dadger(ArquivoRegistros):
         :param codigo: Índice do código que especifica o registro
             da UTE
         :type codigo: int
+        :param estagio: Índice do estágio associado ao registro
+        :type estagio: int
         :return: Um registro do tipo :class:`CT`
         """
         regs: List[CT] = self.__obtem_registros(CT)
         for r in regs:
-            if r.codigo == codigo:
+            if all([r.codigo == codigo,
+                    r.estagio == estagio]):
                 return r
         raise ValueError("Não foi encontrado registro CT" +
-                         f" para a UTE {codigo}")
+                         f" para a UTE {codigo} no estágio" +
+                         f" {estagio}.")
 
     def dp(self, estagio: int, subsistema: int) -> DP:
         """

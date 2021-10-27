@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.18</title>
+  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.19</title>
   
 
   
@@ -242,13 +242,16 @@ valerá a curva.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ct">
-<span class="sig-name descname"><span class="pre">ct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.CT" title="idecomp.decomp.modelos.dadger.CT"><span class="pre">idecomp.decomp.modelos.dadger.CT</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ct"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ct" title="Link permanente para esta definição">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.CT" title="idecomp.decomp.modelos.dadger.CT"><span class="pre">idecomp.decomp.modelos.dadger.CT</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ct"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ct" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Obtém um registro que define uma usina termelétrica existente
 no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parâmetros</dt>
-<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
-da UTE</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codigo</strong> (<em>int</em>) – Índice do código que especifica o registro
+da UTE</p></li>
+<li><p><strong>estagio</strong> (<em>int</em>) – Índice do estágio associado ao registro</p></li>
+</ul>
 </dd>
 <dt class="field-even">Retorna</dt>
 <dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">CT</span></code></p>
@@ -871,6 +874,17 @@ os seus custos e capacidades.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>As disponibilidades como <code class="xref py py-obj docutils literal notranslate"><span class="pre">list[float]</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CT.estagio">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">estagio</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CT.estagio" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O estágio associado às propriedades cadastradas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O estágio como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>

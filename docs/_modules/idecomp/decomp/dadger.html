@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.18</title>
+  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.19</title>
   
 
   
@@ -313,7 +313,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro UH&quot;</span> <span class="o">+</span>
                          <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Dadger.ct"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ct">[documentos]</a>    <span class="k">def</span> <span class="nf">ct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CT</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ct"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ct">[documentos]</a>    <span class="k">def</span> <span class="nf">ct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CT</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define uma usina termelétrica existente</span>
 <span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
@@ -321,14 +321,18 @@
 <span class="sd">        :param codigo: Índice do código que especifica o registro</span>
 <span class="sd">            da UTE</span>
 <span class="sd">        :type codigo: int</span>
+<span class="sd">        :param estagio: Índice do estágio associado ao registro</span>
+<span class="sd">        :type estagio: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`CT`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CT</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">CT</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">,</span>
+                    <span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">]):</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro CT&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UTE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+                         <span class="sa">f</span><span class="s2">&quot; para a UTE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2"> no estágio&quot;</span> <span class="o">+</span>
+                         <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Dadger.dp"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.dp">[documentos]</a>    <span class="k">def</span> <span class="nf">dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DP</span><span class="p">:</span>
         <span class="sd">&quot;&quot;&quot;</span>
