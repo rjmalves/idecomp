@@ -3051,8 +3051,8 @@ AC   34  VOLMIN       15563.0
 &QUEBRA QUEIXO
 AC   95  COFEVA       10    0
 &********* Tucurui ****************
-AC  275  JUSMED          5.95                                        JUN  1
-AC  275  JUSMED           4.8                                        JUL
+AC  275  JUSMED          5.95                                        JUN  1 
+AC  275  JUSMED           4.8                                        JUL    
 &---------------------------------------------------------
 & DEFINICAO DOS POSTOS DE VAZAO NATURAL 
 &---------------------------------------------------------                                                                                                                                    
@@ -3330,19 +3330,19 @@ AC  304  VERTJU        1
 &                       NUMERO DE UGS JIRAU                       
 &- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 &-285-JIRAU
-AC  285  NUMCON        1                                             JUN  1
-AC  285  NUMMAQ        1   50                                        JUN  1
-AC  285  POTEFE        1      75.0                                   JUN  1
+AC  285  NUMCON        1                                             JUN  1 
+AC  285  NUMMAQ        1   50                                        JUN  1 
+AC  285  POTEFE        1      75.0                                   JUN  1 
 &
 &- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  
 &                       USINAS EM EXPANSAO
 &- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 &-272-CURUA-UNA
-AC  272  NUMCON        2                                             JUN  1
-AC  272  NUMMAQ        1    2                                        JUN  1
-AC  272  NUMMAQ        2    1                                        JUN  1
-AC  272  POTEFE        1      10.0                                   JUN  1
-AC  272  POTEFE        2      10.3                                   JUN  1
+AC  272  NUMCON        2                                             JUN  1 
+AC  272  NUMMAQ        1    2                                        JUN  1 
+AC  272  NUMMAQ        2    1                                        JUN  1 
+AC  272  POTEFE        1      10.0                                   JUN  1 
+AC  272  POTEFE        2      10.3                                   JUN  1 
 &
 &----------------------------------------------------------------------------------------------
 &         BLOCO 26 *** REVISAO DA OPERACAO  ***

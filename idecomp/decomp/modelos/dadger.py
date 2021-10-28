@@ -1872,10 +1872,12 @@ class AC(RegistroDecomp):
                ]):
             linha = linha.ljust(69)
             linha += self._dados[2]
+            linha = linha.ljust(74)
             if self._dados[3] != 0:
-                linha += f"  {self._dados[3]}"
+                linha += f"{self._dados[3]}"
+            linha = linha.ljust(76)
             if self._dados[4] != 0:
-                linha += f" {self._dados[4]}"
+                linha += f"{self._dados[4]}"
 
         linha += "\n"
         arq.write(linha)

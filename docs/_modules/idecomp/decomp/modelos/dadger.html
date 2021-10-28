@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.20</title>
+  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.21</title>
   
 
   
@@ -2034,10 +2034,12 @@
                <span class="p">]):</span>
             <span class="n">linha</span> <span class="o">=</span> <span class="n">linha</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">69</span><span class="p">)</span>
             <span class="n">linha</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">linha</span> <span class="o">=</span> <span class="n">linha</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">74</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">linha</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">linha</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">linha</span> <span class="o">=</span> <span class="n">linha</span><span class="o">.</span><span class="n">ljust</span><span class="p">(</span><span class="mi">76</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-                <span class="n">linha</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="n">linha</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
 
         <span class="n">linha</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="n">arq</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">linha</span><span class="p">)</span>
