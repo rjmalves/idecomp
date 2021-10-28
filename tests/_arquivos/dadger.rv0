@@ -4,7 +4,9 @@
 &---------------------------------------------------------------------------------------------
 &TE
 &   CENARIOS GERADOS COM HISTORICO DE 1931-2019
-TE  PMO - JUNHO/21 - JULHO/21 - REV 0 - FCF COM CVAR - 12 REE - VALOR ESPERADO      
+TE  PMO - JUNHO/21 - JULHO/21 - REV 0 - FCF COM CVAR - 12 REE - VALOR ESPERADO  
+RT  CRISTA
+RT  DESVIO    
 &
 &-----------------------------------------------------------------------------------------------
 &       BLOCO 2  *** OS SUBSISTEMAS ***

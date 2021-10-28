@@ -4,7 +4,7 @@ from idecomp.decomp.modelos.dadger import RI, IA, TX, GP, NI, DT, MP, MT  # noqa
 from idecomp.decomp.modelos.dadger import FD, VE, RE, LU, FU, FT, FI, VI  # noqa
 from idecomp.decomp.modelos.dadger import AC, IR, CI, CE, FC, TI, RQ, EZ  # noqa
 from idecomp.decomp.modelos.dadger import HV, LV, CV, HQ, LQ, CQ, AR, EV  # noqa
-from idecomp.decomp.modelos.dadger import FJ, HE, CM  # noqa
+from idecomp.decomp.modelos.dadger import FJ, HE, CM, RT  # noqa
 from idecomp._utils.arquivo import ArquivoRegistros
 from idecomp._utils.dadosarquivo import DadosArquivoRegistros
 from idecomp._utils.escritaregistros import EscritaRegistros
@@ -410,6 +410,23 @@ class Dadger(ArquivoRegistros):
                 return r
         raise ValueError("Não foi encontrado registro IR" +
                          f" com mnemônico {tipo}")
+
+    def rt(self, mnemonico: str) -> RT:
+        """
+        Obtém um registro que especifica uma retirada de restrição
+        de soleira de vertedouro ou canal de desvio.
+
+        :param mnemonico: Mnemônico da restrição retirada (CRISTA ou
+            DESVIO)
+        :type mnemonico: str
+        :return: Um registro do tipo :class:`RT`
+        """
+        regs: List[RT] = self.__obtem_registros(RT)
+        for r in regs:
+            if r.restricao == mnemonico:
+                return r
+        raise ValueError("Não foi encontrado registro RT" +
+                         f" com mnemônico {mnemonico}")
 
     def fc(self, tipo: str) -> FC:
         """

@@ -2098,6 +2098,40 @@ class FC(RegistroDecomp):
         self._dados[1] = c
 
 
+class RT(RegistroDecomp):
+    """
+    Registro utilizado para retirada de restrições de soleira de
+    vertedouro e de canais de desvio.
+    """
+    mnemonico = "RT"
+
+    def __init__(self):
+        super().__init__(RT.mnemonico, True)
+        self._dados = [""]
+
+    def le(self):
+        reg_mne = RegistroAn(6)
+        self._dados[0] = reg_mne.le_registro(self._linha, 4)
+
+    def escreve(self, arq: IO):
+        linha = (f"{RT.mnemonico}".ljust(4) +
+                 f"{self._dados[0]}".ljust(6) + "\n")
+        arq.write(linha)
+
+    @property
+    def restricao(self) -> str:
+        """
+        O mnemônico da restrição removida.
+
+        :return: O mnemônico como `str`.
+        """
+        return self._dados[0]
+
+    @restricao.setter
+    def restricao(self, m: str):
+        self._dados[0] = m
+
+
 class TI(RegistroDecomp):
     """
     Registro que contém as taxas de irrigação por UHE.
@@ -2874,6 +2908,7 @@ class LeituraDadger(LeituraRegistros):
         MAX_REE = 12
         MAX_RELATORIOS = 10
         te: List[RegistroDecomp] = [TE()]
+        rt: List[RegistroDecomp] = [RT(), RT()]
         sb: List[RegistroDecomp] = [SB() for _ in range(MAX_SUBSIS)]
         uh: List[RegistroDecomp] = [UH() for _ in range(MAX_UHE)]
         ct: List[RegistroDecomp] = [CT() for _ in range(MAX_UTE)]
@@ -2924,7 +2959,7 @@ class LeituraDadger(LeituraRegistros):
                                     range(MAX_REE * MAX_ESTAGIOS)]
         cm: List[RegistroDecomp] = [CM() for _ in
                                     range(MAX_REE * MAX_ESTAGIOS)]
-        return (te + sb + uh + ct + ue + dp + cd + pq +
+        return (te + rt + sb + uh + ct + ue + dp + cd + pq +
                 ri + ia + tx + gp + ni + dt + mp + mt +
                 fd + ve + re + lu + fu + ft + vi + ac +
                 ir + fc + ti + rq + ez + hv + lv + cv +

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.19</title>
+  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.20</title>
   
 
   
@@ -629,6 +629,22 @@ por REE existentes no estudo especificado no <a class="reference internal" href=
 </dd>
 <dt class="field-even">Retorna</dt>
 <dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">RQ</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.rt">
+<span class="sig-name descname"><span class="pre">rt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mnemonico</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.RT" title="idecomp.decomp.modelos.dadger.RT"><span class="pre">idecomp.decomp.modelos.dadger.RT</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.rt"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.rt" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica uma retirada de restrição
+de soleira de vertedouro ou canal de desvio.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>mnemonico</strong> (<em>str</em>) – Mnemônico da restrição retirada (CRISTA ou
+DESVIO)</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">RT</span></code></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1355,6 +1371,24 @@ FCF.</p>
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">tipo</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FC.tipo" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>O tipo de arquivo da FCF na forma dos mnemônicos
 aceitos pelo DECOMP.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O mnemônico como <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RT">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">RT</span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#RT"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RT" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Registro utilizado para retirada de restrições de soleira de
+vertedouro e de canais de desvio.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RT.restricao">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">restricao</span></span><em class="property"><span class="pre">:</span> <span class="pre">str</span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RT.restricao" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>O mnemônico da restrição removida.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>O mnemônico como <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>.</p>

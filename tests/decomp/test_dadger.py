@@ -17,6 +17,13 @@ def test_te():
     assert "PMO - JUNHO/21 - JULHO/21" in te.titulo
 
 
+def test_rt():
+    rt = dadger.rt("CRISTA")
+    rt2 = dadger.rt("DESVIO")
+    assert rt.restricao == "CRISTA"
+    assert rt2.restricao == "DESVIO"
+
+
 def test_sb():
     sb = dadger.sb(1)
     assert sb.codigo == 1

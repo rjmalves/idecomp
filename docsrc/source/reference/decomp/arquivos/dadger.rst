@@ -112,6 +112,9 @@ de operação:
 .. autoclass:: FC
    :members:
 
+.. autoclass:: RT
+   :members:
+
 .. autoclass:: TI
    :members:
 
