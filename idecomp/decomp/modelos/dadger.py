@@ -988,7 +988,12 @@ class VE(RegistroDecomp):
         linha = (f"{VE.mnemonico}".ljust(4) +
                  f"{self._dados[0]}".rjust(3) + "  ")
         for i in range(1, len(self._dados)):
-            linha += f"{round(self._dados[i], 2)}".rjust(5)
+            a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
+            if len(a_escrever) > 5:
+                a_escrever = f"{round(self._dados[i], 1)}".rjust(5)
+            if len(a_escrever) > 5:
+                a_escrever = f"{int(self._dados[i])}".rjust(5)
+            linha += a_escrever
         linha += "\n"
         arq.write(linha)
 
@@ -1282,7 +1287,12 @@ class VI(RegistroDecomp):
                  f"{self._dados[0]}".rjust(3) + "  " +
                  f"{self._dados[1]}".rjust(3) + "  ")
         for i in range(2, len(self._dados)):
-            linha += f"{round(self._dados[i], 2)}".rjust(5)
+            a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
+            if len(a_escrever) > 5:
+                a_escrever = f"{round(self._dados[i], 1)}".rjust(5)
+            if len(a_escrever) > 5:
+                a_escrever = f"{int(self._dados[i])}".rjust(5)
+            linha += a_escrever
         linha += "\n"
         arq.write(linha)
 
@@ -1485,6 +1495,72 @@ class ACCOTARE(TipoRegistroAC):
         return linha
 
 
+class ACPROESP(TipoRegistroAC):
+    """
+    Registro AC específico para alteração do coeficiente de perdas
+    hidráulicas em função da queda bruta (%,m,k).
+    """
+    mnemonico = "PROESP"
+
+    def __init__(self, linha: str):
+        super().__init__(linha)
+        self._dados = 0.0
+
+    def le(self):
+        reg_desvio = RegistroFn(10)
+        self._dados = reg_desvio.le_registro(self._linha, 19)
+
+    @property
+    def linha_escrita(self) -> str:
+        linha = f"{round(self._dados, 2)}".rjust(10)
+        return linha
+
+
+class ACPERHID(TipoRegistroAC):
+    """
+    Registro AC específico para alteração do coeficiente de perdas
+    hidráulicas em função da queda bruta (%,m,k).
+    """
+    mnemonico = "PERHID"
+
+    def __init__(self, linha: str):
+        super().__init__(linha)
+        self._dados = 0.0
+
+    def le(self):
+        reg_desvio = RegistroFn(10)
+        self._dados = reg_desvio.le_registro(self._linha, 19)
+
+    @property
+    def linha_escrita(self) -> str:
+        linha = f"{round(self._dados, 2)}".rjust(10)
+        return linha
+
+
+class ACNCHAVE(TipoRegistroAC):
+    """
+    Registro AC específico para alteração do número da curva-chave
+    (cota-vazão) e nível de jusante da faixa associada (m).
+    """
+    mnemonico = "NCHAVE"
+
+    def __init__(self, linha: str):
+        super().__init__(linha)
+        self._dados = [0, 0.0]
+
+    def le(self):
+        reg_usi = RegistroIn(5)
+        reg_desvio = RegistroFn(10)
+        self._dados[0] = reg_usi.le_registro(self._linha, 19)
+        self._dados[1] = reg_desvio.le_registro(self._linha, 24)
+
+    @property
+    def linha_escrita(self) -> str:
+        linha = (f"{self._dados[0]}".rjust(5) +
+                 f"{round(self._dados[1], 1)}".rjust(10))
+        return linha
+
+
 class ACCOTVAZ(TipoRegistroAC):
     """
     Registro AC específico para alteração de um coeficiente do
@@ -1501,7 +1577,7 @@ class ACCOTVAZ(TipoRegistroAC):
         reg_coef = RegistroFn(15)
         self._dados[0] = reg_indice.le_registro(self._linha, 19)
         self._dados[1] = reg_indice.le_registro(self._linha, 24)
-        self._dados[1] = reg_coef.le_registro(self._linha, 29)
+        self._dados[2] = reg_coef.le_registro(self._linha, 29)
 
     @property
     def linha_escrita(self) -> str:
@@ -1812,6 +1888,9 @@ class AC(RegistroDecomp):
                                                  ACVOLMAX,
                                                  ACCOTVOL,
                                                  ACCOTARE,
+                                                 ACPROESP,
+                                                 ACPERHID,
+                                                 ACNCHAVE,
                                                  ACCOTVAZ,
                                                  ACCOFEVA,
                                                  ACNUMCON,
@@ -2160,8 +2239,15 @@ class TI(RegistroDecomp):
     def escreve(self, arq: IO):
         linha = (f"{TI.mnemonico}".ljust(4) +
                  f"{self._dados[0]}".rjust(3) + "  ")
+            
         for i in range(1, len(self._dados)):
-            linha += f"{round(self._dados[i], 2)}".rjust(5)
+            # Verificação de segurança para tamanho do registro
+            a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
+            if len(a_escrever) > 5:
+                a_escrever = f"{round(self._dados[i], 1)}".rjust(5)
+            if len(a_escrever) > 5:
+                a_escrever = f"{int(self._dados[i])}".rjust(5)
+            linha += a_escrever
         linha += "\n"
         arq.write(linha)
 
