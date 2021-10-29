@@ -108,7 +108,8 @@ class UH(RegistroDecomp):
         self._dados[0] = reg_indice.le_registro(self._linha, 4)
         self._dados[1] = reg_ree.le_registro(self._linha, 9)
         self._dados[2] = reg_vini.le_registro(self._linha, 18)
-        self._dados[3] = bool(reg_evap.le_registro(self._linha, 39))
+        if len(self._linha[39:40].strip()) > 0:
+            self._dados[3] = bool(reg_evap.le_registro(self._linha, 39))
         if len(self._linha[59:69].strip()) > 0:
             self._dados[4] = reg_vert.le_registro(self._linha, 59)
 
