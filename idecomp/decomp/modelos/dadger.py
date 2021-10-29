@@ -2239,7 +2239,6 @@ class TI(RegistroDecomp):
     def escreve(self, arq: IO):
         linha = (f"{TI.mnemonico}".ljust(4) +
                  f"{self._dados[0]}".rjust(3) + "  ")
-            
         for i in range(1, len(self._dados)):
             # Verificação de segurança para tamanho do registro
             a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
