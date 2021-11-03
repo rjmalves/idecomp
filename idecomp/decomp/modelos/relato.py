@@ -602,7 +602,6 @@ class BlocoEnergiaArmazenadaREERelato(Bloco):
                                                      "Mes" in s))]
         reg_ree = RegistroAn(12)
         reg_ssis = RegistroIn(4)
-        reg_earm = RegistroFn(6)
         n_semanas = len(sems)
         rees: List[str] = []
         subsistemas: List[str] = []
@@ -624,10 +623,15 @@ class BlocoEnergiaArmazenadaREERelato(Bloco):
             rees.append(ree)
             subsistemas.append(ssis)
             # Semanas
-            tabela[i, :] = reg_earm.le_linha_tabela(linha,
-                                                    28,
-                                                    1,
-                                                    n_semanas + 1)
+            ci = 28
+            for col in range(n_semanas + 1):
+                cf = ci + 6
+                conteudo = linha[ci:cf].strip()
+                if not conteudo.replace(".", "0").isnumeric():
+                    tabela[i, col] = np.nan
+                else:
+                    tabela[i, col] = float(conteudo)
+                ci = cf + 1
             i += 1
 
     # Override

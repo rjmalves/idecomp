@@ -40,7 +40,7 @@ class BlocoBinarioHidr(BlocoBinario):
         reg_canal_fuga = RegistroFnBinario(32)
         reg_influencia_vert = RegistroInBinario(32)
         reg_fator_carga = RegistroFnBinario(32)
-        reg_vazao = RegistroFnBinario(32)
+        reg_vazao = RegistroInBinario(32)
         reg_numero_unidades = RegistroInBinario(32)
         reg_tipo_turbina = RegistroInBinario(32)
         reg_repr_conjunto = RegistroInBinario(32)
