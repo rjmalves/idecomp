@@ -1978,6 +1978,30 @@ class AC(RegistroDecomp):
     def modificacao(self, m: str):
         self._dados[1] = m
 
+    @property
+    def mes(self) -> str:
+        return self._dados[2]
+
+    @mes.setter
+    def mes(self, m: str):
+        self._dados[2] = m
+
+    @property
+    def semana(self) -> int:
+        return self._dados[3]
+
+    @semana.setter
+    def semana(self, s: int):
+        self._dados[3] = s
+
+    @property
+    def ano(self) -> int:
+        return self._dados[4]
+
+    @ano.setter
+    def ano(self, m: int):
+        self._dados[4] = m
+
 
 class IR(RegistroDecomp):
     """
@@ -2278,6 +2302,187 @@ class TI(RegistroDecomp):
             raise ValueError("Número de taxas incompatível. De" +
                              f"vem ser fornecidas {atuais}, mas foram {novas}")
         self._dados[1:] = tx
+
+
+class FP(RegistroDecomp):
+    """
+    Registro que contém os cadastros de restrições de alteração na
+    função de produção das usinas.
+    """
+    mnemonico = "FP"
+
+    def __init__(self):
+        super().__init__(FP.mnemonico, True)
+        self._dados = [0, 0, 0, 0, 0.0, 0.0, 0, 0, 0.0, 0.0]
+
+    def le(self):
+        reg_cod = RegistroIn(3)
+        reg_estagio = RegistroIn(3)
+        reg_flag = RegistroIn(1)
+        reg_pontos = RegistroIn(4)
+        reg_limite = RegistroFn(5)
+        self._dados[0] = reg_cod.le_registro(self._linha, 4)
+        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
+        self._dados[2] = reg_flag.le_registro(self._linha, 14)
+        self._dados[3] = reg_pontos.le_registro(self._linha, 16)
+        self._dados[4] = reg_limite.le_registro(self._linha, 21)
+        self._dados[5] = reg_limite.le_registro(self._linha, 27)
+        self._dados[6] = reg_flag.le_registro(self._linha, 34)
+        self._dados[7] = reg_pontos.le_registro(self._linha, 36)
+        self._dados[8] = reg_limite.le_registro(self._linha, 41)
+        self._dados[9] = reg_limite.le_registro(self._linha, 47)
+
+    def escreve(self, arq: IO):
+        linha = (f"{FP.mnemonico}".ljust(4) +
+                 f"{self._dados[0]}".rjust(3) + "  " +
+                 f"{self._dados[1]}".rjust(3) + "  " +
+                 f"{self._dados[2]}" + " " +
+                 f"{self._dados[3]}".rjust(4) + " " +
+                 f"{self._dados[4]:.1f}".rjust(5) + " " +
+                 f"{self._dados[5]:.1f}".rjust(5) + "  " +
+                 f"{self._dados[6]}" + " " +
+                 f"{self._dados[7]}".rjust(4) + " " +
+                 f"{self._dados[8]:.1f}".rjust(5) + " " +
+                 f"{self._dados[9]:.1f}".rjust(5) + "\n")
+        arq.write(linha)
+
+    @property
+    def codigo(self) -> int:
+        """
+        O código da UHE associada à restrição FP.
+
+        :return: O código como `int`.
+        """
+        return self._dados[0]
+
+    @codigo.setter
+    def codigo(self, c: int):
+        self._dados[0] = c
+
+    @property
+    def estagio(self) -> int:
+        """
+        O estágio associado à restrição FP.
+
+        :return: O estágio como `int`.
+        """
+        return self._dados[1]
+
+    @estagio.setter
+    def estagio(self, e: int):
+        self._dados[1] = e
+
+    @property
+    def tipo_entrada_janela_turbinamento(self) -> int:
+        """
+        O tipo de entrada da janela de turbinamento fornecido
+        na restrição FP. 0 para limites em percentual da vazão turbinada
+        máxima das usinas, 1 para limites em m3/s.
+
+        :return: O tipo de entrada como `int`.
+        """
+        return self._dados[2]
+
+    @tipo_entrada_janela_turbinamento.setter
+    def tipo_entrada_janela_turbinamento(self, t: int):
+        self._dados[2] = t
+
+    @property
+    def numero_pontos_turbinamento(self) -> int:
+        """
+        O número de pontos para discretização da janela de
+        turbinamento. Máximo permitido de 1000 pontos.
+
+        :return: O número de pontos como `int`.
+        """
+        return self._dados[3]
+
+    @numero_pontos_turbinamento.setter
+    def numero_pontos_turbinamento(self, n: int):
+        self._dados[3] = n
+
+    @property
+    def limite_inferior_janela_turbinamento(self) -> float:
+        """
+        O limite inferior da janela de turbinamento.
+
+        :return: O limite como `float`.
+        """
+        return self._dados[4]
+
+    @limite_inferior_janela_turbinamento.setter
+    def limite_inferior_janela_turbinamento(self, lim: float):
+        self._dados[4] = lim
+
+    @property
+    def limite_superior_janela_turbinamento(self) -> float:
+        """
+        O limite superior da janela de turbinamento.
+
+        :return: O limite como `float`.
+        """
+        return self._dados[5]
+
+    @limite_superior_janela_turbinamento.setter
+    def limite_superior_janela_turbinamento(self, lim: float):
+        self._dados[5] = lim
+
+    @property
+    def tipo_entrada_janela_volume(self) -> int:
+        """
+        O tipo de entrada da janela de volume fornecido
+        na restrição FP. 0 para limites em percentual do volume útil
+        das usinas, 1 para limites em hm3.
+
+        :return: O tipo de entrada como `int`.
+        """
+        return self._dados[6]
+
+    @tipo_entrada_janela_volume.setter
+    def tipo_entrada_janela_volume(self, t: int):
+        self._dados[6] = t
+
+    @property
+    def numero_pontos_volume(self) -> int:
+        """
+        O número de pontos para discretização da janela de
+        volume. Máximo permitido de 1000 pontos.
+
+        :return: O número de pontos como `int`.
+        """
+        return self._dados[7]
+
+    @numero_pontos_volume.setter
+    def numero_pontos_volume(self, n: int):
+        self._dados[7] = n
+
+    @property
+    def limite_inferior_janela_volume(self) -> float:
+        """
+        A redução aplicada ao volume útil da usina, para ser utilizado
+        como limite inferior da janela de volume.
+
+        :return: O limite como `float`.
+        """
+        return self._dados[8]
+
+    @limite_inferior_janela_volume.setter
+    def limite_inferior_janela_volume(self, lim: float):
+        self._dados[8] = lim
+
+    @property
+    def limite_superior_janela_volume(self) -> float:
+        """
+        O acréscimo aplicado ao volume útil da usina, para ser utilizado
+        como limite superior da janela de volume.
+
+        :return: O limite como `float`.
+        """
+        return self._dados[9]
+
+    @limite_superior_janela_volume.setter
+    def limite_superior_janela_volume(self, lim: float):
+        self._dados[9] = lim
 
 
 class RQ(RegistroDecomp):
@@ -3047,8 +3252,9 @@ class LeituraDadger(LeituraRegistros):
                                     range(MAX_REE * MAX_ESTAGIOS)]
         cm: List[RegistroDecomp] = [CM() for _ in
                                     range(MAX_REE * MAX_ESTAGIOS)]
+        fp: List[RegistroDecomp] = [FP() for _ in range(MAX_UHE)]
         return (te + rt + sb + uh + ct + ue + dp + cd + pq +
                 ri + ia + tx + gp + ni + dt + mp + mt +
                 fd + ve + re + lu + fu + ft + vi + ac +
                 ir + fc + ti + rq + ez + hv + lv + cv +
-                hq + lq + cq + ar + ev + fj + he + cm)
+                hq + lq + cq + ar + ev + fj + he + cm + fp)

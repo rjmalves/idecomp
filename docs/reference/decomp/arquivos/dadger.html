@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.23</title>
+  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.25</title>
   
 
   
@@ -204,7 +204,7 @@ método <a class="reference internal" href="#idecomp.decomp.dadger.Dadger.le_arq
 <a class="reference internal" href="#idecomp.decomp.dadger.Dadger.escreve_arquivo" title="idecomp.decomp.dadger.Dadger.escreve_arquivo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">escreve_arquivo()</span></code></a>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ac">
-<span class="sig-name descname"><span class="pre">ac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uhe</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modificacao</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.AC" title="idecomp.decomp.modelos.dadger.AC"><span class="pre">idecomp.decomp.modelos.dadger.AC</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ac"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ac" title="Link permanente para esta definição">¶</a></dt>
+<span class="sig-name descname"><span class="pre">ac</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uhe</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modificacao</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mes</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">semana</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ano</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="#idecomp.decomp.modelos.dadger.AC" title="idecomp.decomp.modelos.dadger.AC"><span class="pre">idecomp.decomp.modelos.dadger.AC</span></a><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ac"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ac" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Obtém um registro que define modificações nos parâmetros
 das UHE em um <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a>.</p>
 <dl class="field-list simple">
@@ -344,6 +344,25 @@ no registro</p>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">FJ</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.fp">
+<span class="sig-name descname"><span class="pre">fp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">idecomp.decomp.modelos.dadger.FP</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.fp"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.fp" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém um registro que especifica as taxas de irrigação
+por posto (UHE) existente no estudo especificado no <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="idecomp.decomp.dadger.Dadger"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dadger</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codigo</strong> (<em>int</em>) – Código do posto da UHE associada
+no registro</p></li>
+<li><p><strong>estagio</strong> (<em>int</em>) – Estágio de definição da FP da UHE</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">FP</span></code></p>
 </dd>
 </dl>
 </dd></dl>

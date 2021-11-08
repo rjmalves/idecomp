@@ -4,7 +4,7 @@ from idecomp.decomp.modelos.dadger import RI, IA, TX, GP, NI, DT, MP, MT  # noqa
 from idecomp.decomp.modelos.dadger import FD, VE, RE, LU, FU, FT, FI, VI  # noqa
 from idecomp.decomp.modelos.dadger import AC, IR, CI, CE, FC, TI, RQ, EZ  # noqa
 from idecomp.decomp.modelos.dadger import HV, LV, CV, HQ, LQ, CQ, AR, EV  # noqa
-from idecomp.decomp.modelos.dadger import FJ, HE, CM, RT  # noqa
+from idecomp.decomp.modelos.dadger import FJ, HE, CM, RT, FP  # noqa
 from idecomp._utils.arquivo import ArquivoRegistros
 from idecomp._utils.dadosarquivo import DadosArquivoRegistros
 from idecomp._utils.escritaregistros import EscritaRegistros
@@ -194,7 +194,13 @@ class Dadger(ArquivoRegistros):
                          f" para o subsistema {subsistema}" +
                          f" no estágio {estagio})")
 
-    def ac(self, uhe: int, modificacao: str) -> AC:
+    def ac(self,
+           uhe: int,
+           modificacao: str,
+           mes: str = None,
+           semana: int = None,
+           ano: int = None
+           ) -> AC:
         """
         Obtém um registro que define modificações nos parâmetros
         das UHE em um :class:`Dadger`.
@@ -205,10 +211,21 @@ class Dadger(ArquivoRegistros):
         :type modificacao: str
         :return: Um registro do tipo :class:`AC`
         """
+
+        def __atende(r: AC) -> bool:
+            condicoes: List[bool] = [r.uhe == uhe,
+                                     r.modificacao == modificacao]
+            if mes is not None:
+                condicoes.append(r.mes == mes)
+            if semana is not None:
+                condicoes.append(r.semana == semana)
+            if ano is not None:
+                condicoes.append(r.ano == ano)
+            return all(condicoes)
+
         regs: List[AC] = self.__obtem_registros(AC)
         for r in regs:
-            if all([r.uhe == uhe,
-                    r.modificacao == modificacao]):
+            if __atende(r):
                 return r
         raise ValueError("Não foi encontrado registro AC" +
                          f" para a UHE {uhe}" +
@@ -461,6 +478,27 @@ class Dadger(ArquivoRegistros):
                 return r
         raise ValueError("Não foi encontrado registro TI" +
                          f" para a UHE {codigo}")
+
+    def fp(self, codigo: int, estagio: int) -> FP:
+        """
+        Obtém um registro que especifica as taxas de irrigação
+        por posto (UHE) existente no estudo especificado no :class:`Dadger`
+
+        :param codigo: Código do posto da UHE associada
+            no registro
+        :type codigo: int
+        :param estagio: Estágio de definição da FP da UHE
+        :type estagio: int
+        :return: Um registro do tipo :class:`FP`
+        """
+        r = self.__obtem_registro_do_estagio(FP,
+                                             codigo,
+                                             estagio)
+        if r is not None:
+            return r
+        else:
+            raise ValueError("Registro não encontrado registro FP" +
+                             f"para a UHE {codigo} no estágio {estagio}")
 
     def rq(self, ree: int) -> RQ:
         """
