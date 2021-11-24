@@ -43,7 +43,7 @@ def test_energia_armazenada_ree():
 
 def test_ena_pre_estudo_semanal():
     earm = rel.ena_pre_estudo_semanal_subsistema
-    assert float(earm.loc[earm["Subsistema"] == "SE", "Estágio Pré 1"]) == 0.0
+    assert len(list(earm.columns)) == 1
 
 
 def test_armazenamento_maximo_subsistema():

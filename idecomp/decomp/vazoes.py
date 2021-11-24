@@ -42,7 +42,7 @@ class Vazoes(ArquivoBinario):
         escritor.escreve_arquivo(self._dados, nome_arquivo)
 
     def __calcula_df(self):
-        tabela_dados = np.zeros((12000, 600), dtype="int32")
+        tabela_dados = np.zeros((12000, 320), dtype="int32")
         i = 0
         for b in self._blocos:
             tabela_dados[i, :] = np.array(b._dados)

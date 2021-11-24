@@ -17,7 +17,7 @@ class BlocoBinarioVazoes(BlocoBinario):
         """
         """
         reg_teste = RegistroInBinario(32)
-        vazoes = reg_teste.le_linha_tabela(arq, 600)
+        vazoes = reg_teste.le_linha_tabela(arq, 320)
         self._dados = vazoes
 
     # Override

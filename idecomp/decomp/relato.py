@@ -5,9 +5,13 @@ from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
 from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
 from idecomp.decomp.modelos.relato import BlocoCMORelato
 from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
+from idecomp.decomp.modelos.relato import BlocoENAAcoplamentoREERelato
 from idecomp.decomp.modelos.relato import BlocoVolumeUtilReservatorioRelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaREERelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaSubsistemaRelato  # noqa
+from idecomp.decomp.modelos.relato import BlocoENAPreEstudoMensalREERelato
+from idecomp.decomp.modelos.relato import BlocoENAPreEstudoMensalSubsistemaRelato  # noqa
+from idecomp.decomp.modelos.relato import BlocoENAPreEstudoSemanalREERelato
 from idecomp.decomp.modelos.relato import BlocoENAPreEstudoSemanalSubsistemaRelato  # noqa
 from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
 from idecomp.decomp.modelos.relato import LeituraRelato
@@ -179,15 +183,67 @@ class Relato(ArquivoBlocos):
         return b.dados
 
     @property
+    def ena_acoplamento_ree(self) -> pd.DataFrame:
+        """
+        Obtém a tabela de ENA para acoplamento com o longo prazo
+        (em MWmed) existente no :class:`Relato`
+
+        :return: A tabela de volumes como um `pd.DataFrame`.
+        """
+        b = self.__obtem_bloco(BlocoENAAcoplamentoREERelato)
+        return b.dados
+
+    @property
+    def ena_pre_estudo_mensal_ree(self) -> pd.DataFrame:
+        """
+        Obtém a tabela de ENA Pré-Estudo Mensal por REE
+        existente no :class:`Relato`
+
+        :return: A tabela de ENA como um `pd.DataFrame`.
+        """
+        b = self.__obtem_bloco(BlocoENAPreEstudoMensalREERelato)
+        df: pd.DataFrame = b.dados.copy()
+        df.drop(columns=["Earmax"], inplace=True)
+        return df
+
+    @property
+    def ena_pre_estudo_mensal_subsistema(self) -> pd.DataFrame:
+        """
+        Obtém a tabela de ENA Pré-Estudo Mensal por Subsistema
+        existente no :class:`Relato`
+
+        :return: A tabela de ENA como um `pd.DataFrame`.
+        """
+        b = self.__obtem_bloco(BlocoENAPreEstudoMensalSubsistemaRelato)
+        df: pd.DataFrame = b.dados.copy()
+        df.drop(columns=["Earmax"], inplace=True)
+        return df
+
+    @property
+    def ena_pre_estudo_semanal_ree(self) -> pd.DataFrame:
+        """
+        Obtém a tabela de ENA Pré-Estudo Semanal por REE
+        existente no :class:`Relato`
+
+        :return: A tabela de ENA como um `pd.DataFrame`.
+        """
+        b = self.__obtem_bloco(BlocoENAPreEstudoSemanalREERelato)
+        df: pd.DataFrame = b.dados.copy()
+        df.drop(columns=["Earmax"], inplace=True)
+        return df
+
+    @property
     def ena_pre_estudo_semanal_subsistema(self) -> pd.DataFrame:
         """
-        Obtém a tabela de ENA Pré-Estudo Semanal
+        Obtém a tabela de ENA Pré-Estudo Semanal por Subsistema
         existente no :class:`Relato`
 
         :return: A tabela de ENA como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoENAPreEstudoSemanalSubsistemaRelato)
-        return b.dados
+        df: pd.DataFrame = b.dados.copy()
+        df.drop(columns=["Earmax"], inplace=True)
+        return df
 
     @property
     def energia_armazenada_maxima_subsistema(self) -> pd.DataFrame:

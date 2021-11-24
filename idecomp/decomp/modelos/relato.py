@@ -10,6 +10,10 @@ import pandas as pd  # type: ignore
 from typing import IO, List
 
 
+# TODO - LER BLOCO DE ENA PREVISTA SEMANAL POR REE
+# TODO - LER BLOCO DE ENA PASSADA POR REE
+
+
 class BlocoDadosGeraisRelato(Bloco):
     """
     Bloco com as informações de eco dos dados gerais
@@ -558,6 +562,92 @@ class BlocoVolumeUtilReservatorioRelato(Bloco):
         pass
 
 
+class BlocoENAAcoplamentoREERelato(Bloco):
+    """
+    Bloco com as informações de energia natural afluente para
+    acoplamento com o longo prazo por REE.
+    """
+    str_inicio = "Afluente para Acoplamento c/ Longo Prazo por REE"
+    str_fim = "Afluente para Acoplamento c/ Longo Prazo por Subsistema"
+
+    def __init__(self):
+
+        super().__init__(BlocoENAAcoplamentoREERelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoENAAcoplamentoREERelato):
+            return False
+        bloco: BlocoENAAcoplamentoREERelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def le_tabela(linha: str) -> np.ndarray:
+            ree = linha.split("REE: ")[1].split("/")[0].split("-")[1].strip()
+            subsis = linha.split("SUBSISTEMA: ")[1].split("-")[1].strip()
+            # Salta uma linha para identificar o número de estágios
+            arq.readline()
+            lin = arq.readline()
+            sems = [s for s in lin.split(" ") if (len(s) > 0
+                                                  and ("Sem" in s or
+                                                       "Mes" in s))]
+            n_semanas = len(sems)
+            arq.readline()
+            # Começa a ler os cenários
+            reg_cen = RegistroIn(3)
+            reg_ena = RegistroFn(8)
+            tab = np.zeros((300, n_semanas + 1))
+            i = 0
+            while True:
+                lin = arq.readline()
+                if len(lin) < 4:
+                    tab = tab[:i, :]
+                    break
+                tab[i, 0] = reg_cen.le_registro(lin, 4)
+                tab[i, 1:] = reg_ena.le_linha_tabela(lin, 8, 1, n_semanas)
+                rees.append(ree)
+                subsistemas.append(subsis)
+                i += 1
+            return tab
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            n_semanas = tabela.shape[1] - 1
+            cols = ["Cenário"] + [f"Estágio {s}"
+                                  for s in range(1, n_semanas + 1)]
+            df.columns = cols
+            df["REE"] = rees
+            df["Subsistema"] = subsistemas
+            df = df[["REE", "Subsistema"] + cols]
+            df = df.astype({"Cenário": np.int64})
+            return df
+
+        rees: List[str] = []
+        subsistemas: List[str] = []
+        tabela: np.ndarray = None
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if BlocoENAAcoplamentoREERelato.str_fim in linha:
+                self._dados = converte_tabela_em_df()
+                return linha
+            if "REE: " in linha:
+                tab = le_tabela(linha)
+                if tabela is None:
+                    tabela = tab
+                else:
+                    tabela = np.vstack([tabela, tab])
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
 class BlocoEnergiaArmazenadaREERelato(Bloco):
     """
     Bloco com as informações de energia armazenada
@@ -711,10 +801,210 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
         pass
 
 
+class BlocoENAPreEstudoMensalREERelato(Bloco):
+    """
+    Bloco com as informações da ENA pré estudo mensal do caso
+    por REE.
+    """
+    str_inicio = "ENERGIA NATURAL AFLUENTE POR REE (MESES"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoENAPreEstudoMensalREERelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoENAPreEstudoMensalREERelato):
+            return False
+        bloco: BlocoENAPreEstudoMensalREERelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Earmax"] + [f"Estágio Pré {s}"
+                                 for s in range(1, 12)]
+            df.columns = cols
+            df["REE"] = rees
+            df = df[["REE"] + cols]
+            return df
+
+        # Salta 4 linhas
+        for _ in range(4):
+            arq.readline()
+        reg_ree = RegistroAn(14)
+        reg_ena = RegistroFn(8)
+        rees: List[str] = []
+        tabela = np.zeros((20, 12))
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X--------------X" in linha:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Subsistema e REE
+            ssis = reg_ree.le_registro(linha, 4)
+            rees.append(ssis)
+            # Semanas
+            tabela[i, :] = reg_ena.le_linha_tabela(linha,
+                                                   29,
+                                                   1,
+                                                   12)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
+class BlocoENAPreEstudoMensalSubsistemaRelato(Bloco):
+    """
+    Bloco com as informações da ENA pré estudo mensal do caso
+    por Subsistema.
+    """
+    str_inicio = "ENERGIA NATURAL AFLUENTE POR SUBSISTEMA (MESES"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoENAPreEstudoMensalSubsistemaRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoENAPreEstudoMensalSubsistemaRelato):
+            return False
+        bloco: BlocoENAPreEstudoMensalSubsistemaRelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Earmax"] + [f"Estágio Pré {s}"
+                                 for s in range(1, 12)]
+            df.columns = cols
+            df["Subsistema"] = subsistemas
+            df = df[["Subsistema"] + cols]
+            return df
+
+        # Salta 4 linhas
+        for _ in range(4):
+            arq.readline()
+        reg_ssis = RegistroAn(14)
+        reg_ena = RegistroFn(8)
+        subsistemas: List[str] = []
+        tabela = np.zeros((len(SUBSISTEMAS) - 1,
+                           12))
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X--------------X" in linha:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Subsistema e REE
+            ssis = reg_ssis.le_registro(linha, 4)
+            subsistemas.append(ssis)
+            # Semanas
+            tabela[i, :] = reg_ena.le_linha_tabela(linha,
+                                                   24,
+                                                   1,
+                                                   12)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
+class BlocoENAPreEstudoSemanalREERelato(Bloco):
+    """
+    Bloco com as informações da ENA pré estudo semanal do caso
+    por REE.
+    """
+    str_inicio = "DADOS DE ENERGIA NATURAL AFLUENTE POR REE (SEMANAS"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoENAPreEstudoSemanalREERelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoENAPreEstudoSemanalREERelato):
+            return False
+        bloco: BlocoENAPreEstudoSemanalREERelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = ["Earmax"] + [f"Estágio Pré {s}"
+                                 for s in range(1, 6)]
+            df.columns = cols
+            df["REE"] = rees
+            df = df[["REE"] + cols]
+            # Remove as colunas preenchidas com 0
+            for c in cols:
+                if df[c].max() == 0:
+                    df.drop(columns=[c], inplace=True)
+            return df
+
+        # Salta 4 linhas
+        for _ in range(4):
+            arq.readline()
+        reg_ree = RegistroAn(14)
+        reg_ena = RegistroFn(8)
+        rees: List[str] = []
+        tabela = np.zeros((20, 6))
+        i = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X--------------X" in linha:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Subsistema e REE
+            ssis = reg_ree.le_registro(linha, 4)
+            rees.append(ssis)
+            # Semanas
+            tabela[i, :] = reg_ena.le_linha_tabela(linha,
+                                                   29,
+                                                   1,
+                                                   6)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
 class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
     """
-    Bloco com as informações de eco dos dados gerais
-    utilizados na execução do caso.
+    Bloco com as informações da ENA pré estudo semanal do caso
+    por Subsistema.
     """
     str_inicio = "NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS"
     str_fim = ""
@@ -743,6 +1033,10 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
             df.columns = cols
             df["Subsistema"] = subsistemas
             df = df[["Subsistema"] + cols]
+            # Remove as colunas preenchidas com 0
+            for c in cols:
+                if df[c].max() == 0:
+                    df.drop(columns=c, inplace=True)
             return df
 
         # Salta 4 linhas
@@ -758,6 +1052,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if "X--------------X" in linha:
+                tabela = tabela[:i, :]
                 self._dados = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -843,8 +1138,12 @@ class LeituraRelato(LeituraBlocos):
                  BlocoConvergenciaRelato(),
                  BlocoCMORelato(),
                  BlocoVolumeUtilReservatorioRelato(),
+                 BlocoENAAcoplamentoREERelato(),
                  BlocoEnergiaArmazenadaREERelato(),
                  BlocoEnergiaArmazenadaSubsistemaRelato(),
+                 BlocoENAPreEstudoMensalREERelato(),
+                 BlocoENAPreEstudoMensalSubsistemaRelato(),
+                 BlocoENAPreEstudoSemanalREERelato(),
                  BlocoENAPreEstudoSemanalSubsistemaRelato(),
                  BlocoGeracaoTermicaSubsistemaRelato(),
                  BlocoDiasExcluidosSemanas()] +

@@ -1790,6 +1790,30 @@ class ACVAZMIN(TipoRegistroAC):
         return linha
 
 
+class ACTIPERH(TipoRegistroAC):
+    """
+    Registro AC específico para alteração do tipo de perdas hidráulicas.
+    """
+    mnemonico = "TIPERH"
+
+    def __init__(self, linha: str):
+        super().__init__(linha)
+        self._dados = -1
+
+    def le(self):
+        reg_usi = RegistroIn(5)
+        if len(self._linha[19:24].strip()) > 0:
+            self._dados = reg_usi.le_registro(self._linha, 19)
+
+    @property
+    def linha_escrita(self) -> str:
+        if self._dados != -1:
+            linha = f"{self._dados}".rjust(5)
+        else:
+            linha = "".rjust(5)
+        return linha
+
+
 class ACJUSENA(TipoRegistroAC):
     """
     Registro AC específico para alteração do índice de
@@ -1901,6 +1925,7 @@ class AC(RegistroDecomp):
                                                  ACJUSMED,
                                                  ACVERTJU,
                                                  ACVAZMIN,
+                                                 ACTIPERH,
                                                  ACJUSENA,
                                                  ACVSVERT,
                                                  ACVMDESV,
@@ -2329,8 +2354,10 @@ class FP(RegistroDecomp):
         self._dados[5] = reg_limite.le_registro(self._linha, 27)
         self._dados[6] = reg_flag.le_registro(self._linha, 34)
         self._dados[7] = reg_pontos.le_registro(self._linha, 36)
-        self._dados[8] = reg_limite.le_registro(self._linha, 41)
-        self._dados[9] = reg_limite.le_registro(self._linha, 47)
+        if len(self._linha[41:46].strip()) > 0:
+            self._dados[8] = reg_limite.le_registro(self._linha, 41)
+        if len(self._linha[47:52].strip()) > 0:
+            self._dados[9] = reg_limite.le_registro(self._linha, 47)
 
     def escreve(self, arq: IO):
         linha = (f"{FP.mnemonico}".ljust(4) +
@@ -2341,9 +2368,12 @@ class FP(RegistroDecomp):
                  f"{self._dados[4]:.1f}".rjust(5) + " " +
                  f"{self._dados[5]:.1f}".rjust(5) + "  " +
                  f"{self._dados[6]}" + " " +
-                 f"{self._dados[7]}".rjust(4) + " " +
-                 f"{self._dados[8]:.1f}".rjust(5) + " " +
-                 f"{self._dados[9]:.1f}".rjust(5) + "\n")
+                 f"{self._dados[7]}".rjust(4))
+        if self._dados[8] != 0:
+            linha += " " + f"{self._dados[8]:.1f}".rjust(5)
+        if self._dados[9] != 0:
+            linha += " " + f"{self._dados[9]:.1f}".rjust(5)
+        linha += "\n"
         arq.write(linha)
 
     @property
