@@ -1,5 +1,5 @@
 # Imports do próprio módulo
-from idecomp.config import REES, SUBSISTEMAS
+from idecomp.config import MAX_REES, MAX_SUBSISTEMAS, SUBSISTEMAS
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
 from idecomp._utils.leiturablocos import LeituraBlocos
@@ -128,7 +128,7 @@ class BlocoGeracaoTermicaSubsistemaSumario(Bloco):
         reg_gt = RegistroFn(10)
         n_semanas = len(sems)
         subsistemas: List[str] = []
-        tabela = np.zeros((len(SUBSISTEMAS),
+        tabela = np.zeros((MAX_SUBSISTEMAS,
                            n_semanas))
         # Salta outra linha
         arq.readline()
@@ -137,6 +137,7 @@ class BlocoGeracaoTermicaSubsistemaSumario(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if "X------X" in linha:
+                tabela = tabela[:i, :]
                 self._dados = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -199,11 +200,10 @@ class BlocoEnergiaArmazenadaREESumario(Bloco):
                                                      "Mes" in s))]
         reg_ree = RegistroAn(12)
         reg_ssis = RegistroIn(4)
-        reg_earm = RegistroFn(6)
         n_semanas = len(sems)
         rees: List[str] = []
-        subsistemas: List[str] = []
-        tabela = np.zeros((len(REES),
+        subsistemas: List[int] = []
+        tabela = np.zeros((MAX_REES,
                            n_semanas + 1))
         # Salta outra linha
         arq.readline()
@@ -212,19 +212,25 @@ class BlocoEnergiaArmazenadaREESumario(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if "X------X" in linha:
+                tabela = tabela[:i, :]
                 self._dados = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
             # Subsistema e REE
             ree = reg_ree.le_registro(linha, 4)
-            ssis = SUBSISTEMAS[reg_ssis.le_registro(linha, 22) - 1]
+            ssis = reg_ssis.le_registro(linha, 22)
             rees.append(ree)
             subsistemas.append(ssis)
             # Semanas
-            tabela[i, :] = reg_earm.le_linha_tabela(linha,
-                                                    28,
-                                                    1,
-                                                    n_semanas + 1)
+            ci = 28
+            for col in range(n_semanas + 1):
+                cf = ci + 6
+                conteudo = linha[ci:cf].strip()
+                if not conteudo.replace(".", "0").isnumeric():
+                    tabela[i, col] = np.nan
+                else:
+                    tabela[i, col] = float(conteudo)
+                ci = cf + 1
             i += 1
 
     # Override
@@ -277,7 +283,7 @@ class BlocoEnergiaArmazenadaSubsistemaSumario(Bloco):
         reg_earm = RegistroFn(6)
         n_semanas = len(sems)
         subsistemas: List[str] = []
-        tabela = np.zeros((len(SUBSISTEMAS) - 1,
+        tabela = np.zeros((MAX_SUBSISTEMAS,
                            n_semanas + 1))
         # Salta outra linha
         arq.readline()
@@ -286,6 +292,7 @@ class BlocoEnergiaArmazenadaSubsistemaSumario(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if "X------------X" in linha:
+                tabela = tabela[:i, :]
                 self._dados = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha

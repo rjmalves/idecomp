@@ -1,6 +1,6 @@
 # Imports do próprio módulo
-from idecomp.config import MAX_ESTAGIOS
-from idecomp.config import REES, SUBSISTEMAS
+from idecomp.config import MAX_ESTAGIOS, MAX_SUBSISTEMAS, MAX_REES
+from idecomp.config import SUBSISTEMAS
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
 from idecomp._utils.leiturablocos import LeituraBlocos
@@ -122,8 +122,14 @@ class BlocoConvergenciaRelato(Bloco):
                 continue
             # Senão, lê mais uma linha
             tabela[i, 0] = reg_iter.le_registro(linha, 4)
-            tabela[i, 1] = reg_z.le_registro(linha, 9)
-            tabela[i, 2] = reg_z.le_registro(linha, 22)
+            if "*" in linha[9:21]:
+                tabela[i, 1] = np.nan
+            else:
+                tabela[i, 1] = reg_z.le_registro(linha, 9)
+            if "*" in linha[22:34]:
+                tabela[i, 2] = np.nan
+            else:
+                tabela[i, 2] = reg_z.le_registro(linha, 22)
             tabela[i, 3] = reg_gap.le_registro(linha, 35)
             tempo = reg_tempo.le_registro(linha, 52)
             parcelas = tempo.split(":")
@@ -302,7 +308,7 @@ class BlocoBalancoEnergeticoRelato(Bloco):
         subsis = "FC"
         subsistemas = []
         # Salta uma linha e extrai a semana
-        tabela = np.zeros((MAX_ESTAGIOS * len(SUBSISTEMAS), 11))
+        tabela = np.zeros((MAX_ESTAGIOS * MAX_SUBSISTEMAS, 11))
         i = 0
         while True:
             linha = arq.readline()
@@ -456,7 +462,7 @@ class BlocoGeracaoTermicaSubsistemaRelato(Bloco):
         reg_gt = RegistroFn(10)
         n_semanas = len(sems)
         subsistemas: List[str] = []
-        tabela = np.zeros((len(SUBSISTEMAS),
+        tabela = np.zeros((MAX_SUBSISTEMAS,
                            n_semanas))
         # Salta outra linha
         arq.readline()
@@ -465,6 +471,7 @@ class BlocoGeracaoTermicaSubsistemaRelato(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if "X------X" in linha:
+                tabela = tabela[:i, :]
                 self._dados = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -616,8 +623,11 @@ class BlocoENAAcoplamentoREERelato(Bloco):
             return tab
 
         def converte_tabela_em_df() -> pd.DataFrame:
-            df = pd.DataFrame(tabela)
-            n_semanas = tabela.shape[1] - 1
+            if isinstance(tabela, np.ndarray):
+                df = pd.DataFrame(tabela)
+                n_semanas = tabela.shape[1] - 1
+            else:
+                raise TypeError("Erro na leitura das ENAs para acoplamento")
             cols = ["Cenário"] + [f"Estágio {s}"
                                   for s in range(1, n_semanas + 1)]
             df.columns = cols
@@ -629,7 +639,7 @@ class BlocoENAAcoplamentoREERelato(Bloco):
 
         rees: List[str] = []
         subsistemas: List[str] = []
-        tabela: np.ndarray = None
+        tabela = None
         while True:
             # Confere se a leitura não acabou
             linha = arq.readline()
@@ -694,8 +704,8 @@ class BlocoEnergiaArmazenadaREERelato(Bloco):
         reg_ssis = RegistroIn(4)
         n_semanas = len(sems)
         rees: List[str] = []
-        subsistemas: List[str] = []
-        tabela = np.zeros((len(REES),
+        subsistemas: List[int] = []
+        tabela = np.zeros((MAX_REES,
                            n_semanas + 1))
         # Salta outra linha
         arq.readline()
@@ -704,12 +714,13 @@ class BlocoEnergiaArmazenadaREERelato(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if "X------X" in linha:
+                tabela = tabela[:i, :]
                 self._dados = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
             # Subsistema e REE
             ree = reg_ree.le_registro(linha, 4)
-            ssis = SUBSISTEMAS[reg_ssis.le_registro(linha, 22) - 1]
+            ssis = reg_ssis.le_registro(linha, 22) - 1
             rees.append(ree)
             subsistemas.append(ssis)
             # Semanas
@@ -774,7 +785,7 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
         reg_earm = RegistroFn(6)
         n_semanas = len(sems)
         subsistemas: List[str] = []
-        tabela = np.zeros((len(SUBSISTEMAS) - 1,
+        tabela = np.zeros((MAX_SUBSISTEMAS,
                            n_semanas + 1))
         # Salta outra linha
         arq.readline()
@@ -783,6 +794,7 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if "X------------X" in linha:
+                tabela = tabela[:i, :]
                 self._dados = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -906,7 +918,7 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Bloco):
         reg_ssis = RegistroAn(14)
         reg_ena = RegistroFn(8)
         subsistemas: List[str] = []
-        tabela = np.zeros((len(SUBSISTEMAS) - 1,
+        tabela = np.zeros((MAX_SUBSISTEMAS,
                            12))
         i = 0
         while True:
@@ -1045,7 +1057,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
         reg_ssis = RegistroAn(14)
         reg_ena = RegistroFn(8)
         subsistemas: List[str] = []
-        tabela = np.zeros((len(SUBSISTEMAS) - 1,
+        tabela = np.zeros((MAX_SUBSISTEMAS,
                            6))
         i = 0
         while True:
