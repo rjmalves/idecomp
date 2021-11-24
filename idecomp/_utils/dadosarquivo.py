@@ -1,7 +1,7 @@
 from idecomp._utils.blocobinario import BlocoBinario
 from .registrodecomp import RegistroDecomp
 from .bloco import Bloco
-from typing import Dict, List
+from typing import Dict, List, TypeVar, Type
 
 
 class DadosArquivoBlocos:
@@ -26,6 +26,9 @@ class DadosArquivoBlocos:
 class DadosArquivoRegistros:
     """
     """
+
+    T = TypeVar("T")
+
     def __init__(self,
                  registros: List[RegistroDecomp],
                  linhas_fora_registros: Dict[float, str]) -> None:
@@ -71,6 +74,13 @@ class DadosArquivoRegistros:
             return True
         except ValueError:
             return False
+
+    def lista_registros(self, tipo: Type[T]) -> List[T]:
+        registros_tipo: list = []
+        for r in self.registros:
+            if isinstance(r, tipo):
+                registros_tipo.append(r)
+        return registros_tipo
 
 
 class DadosArquivoBinarios:

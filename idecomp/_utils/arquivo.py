@@ -1,4 +1,5 @@
 from abc import abstractmethod
+from typing import List, TypeVar, Type
 from .registrodecomp import RegistroDecomp
 from .dadosarquivo import DadosArquivoBlocos
 from .dadosarquivo import DadosArquivoRegistros
@@ -54,6 +55,9 @@ class ArquivoBlocos:
 class ArquivoRegistros:
     """
     """
+
+    T = TypeVar("T")
+
     def __init__(self,
                  dados: DadosArquivoRegistros) -> None:
         self._dados = dados
@@ -94,6 +98,9 @@ class ArquivoRegistros:
 
     def deleta_registro(self, registro: RegistroDecomp) -> bool:
         return self._dados.deleta_registro(registro)
+
+    def lista_registros(self, tipo: Type[T]) -> List[T]:
+        return self._dados.lista_registros(tipo)
 
     @classmethod
     @abstractmethod
