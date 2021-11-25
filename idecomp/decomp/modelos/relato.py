@@ -608,7 +608,7 @@ class BlocoENAAcoplamentoREERelato(Bloco):
             # Começa a ler os cenários
             reg_cen = RegistroIn(3)
             reg_ena = RegistroFn(8)
-            tab = np.zeros((300, n_semanas + 1))
+            tab = np.zeros((1000, n_semanas + 1))
             i = 0
             while True:
                 lin = arq.readline()
