@@ -725,6 +725,77 @@ class BlocoDisponibilidadesTermicasRelato(Bloco):
         pass
 
 
+class BlocoDadosMercadoRelato(Bloco):
+    """
+    Bloco com as informações de mercado de energia por patamar
+    e por subsistema existente no :class:`Relato`.
+    """
+    str_inicio = "Relatorio  dos  Dados  de  Mercado"
+    str_fim = ""
+
+    def __init__(self):
+
+        super().__init__(BlocoDadosMercadoRelato.str_inicio,
+                         "",
+                         True)
+
+        self._dados: pd.DataFrame = pd.DataFrame()
+
+    def __eq__(self, o: object):
+        if not isinstance(o, BlocoDadosMercadoRelato):
+            return False
+        bloco: BlocoDadosMercadoRelato = o
+        return self._dados.equals(bloco._dados)
+
+    # Override
+    def le(self, arq: IO):
+
+        def converte_tabela_em_df() -> pd.DataFrame:
+            cols = ["Patamar 1", "Mercado",
+                    "Patamar 2", "Mercado",
+                    "Patamar 3", "Mercado"]
+            df = pd.DataFrame(tabela, columns=cols)
+            df["Estágio"] = estagios
+            df["Subsistema"] = subsistemas
+            df = df[["Estágio", "Subsistema"] + cols]
+            return df
+
+        # Salta as linhas de cabeçalho
+        for _ in range(4):
+            arq.readline()
+
+        reg_estagio = RegistroIn(9)
+        reg_subsis = RegistroAn(6)
+        reg_valores = RegistroFn(9)
+        estagios: List[int] = []
+        subsistemas: List[str] = []
+
+        tabela = np.zeros((100, 6))
+
+        i = 0
+        estagio_atual = 0
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X---------X------X" in linha:
+                tabela = tabela[:i, :]
+                self._dados = converte_tabela_em_df()
+                break
+            # Senão, lê mais uma linha
+            # Verifica se começa um novo estágio na linha
+            if len(linha[4:13].strip()) > 0:
+                estagio_atual = reg_estagio.le_registro(linha, 4)
+            # Lê as propriedades existentes em todas as linhas
+            estagios.append(estagio_atual)
+            subsistemas.append(reg_subsis.le_registro(linha, 14))
+            tabela[i, :] = reg_valores.le_linha_tabela(linha, 21, 1, 6)
+            i += 1
+
+    # Override
+    def escreve(self, arq: IO):
+        pass
+
+
 class BlocoENAAcoplamentoREERelato(Bloco):
     """
     Bloco com as informações de energia natural afluente para
@@ -1263,10 +1334,8 @@ class BlocoDiasExcluidosSemanas(Bloco):
         if not isinstance(o, BlocoDiasExcluidosSemanas):
             return False
         bloco: BlocoDiasExcluidosSemanas = o
-        return all([
-                    self._dados[0] == bloco._dados[0],
-                    self._dados[1] == bloco._dados[1]
-                   ])
+        return all([self._dados[0] == bloco._dados[0],
+                    self._dados[1] == bloco._dados[1]])
 
     # Override
     def le(self, arq: IO):
@@ -1312,6 +1381,7 @@ class LeituraRelato(LeituraBlocos):
                  BlocoVolumeUtilReservatorioRelato(),
                  BlocoDadosTermicasRelato(),
                  BlocoDisponibilidadesTermicasRelato(),
+                 BlocoDadosMercadoRelato(),
                  BlocoENAAcoplamentoREERelato(),
                  BlocoEnergiaArmazenadaREERelato(),
                  BlocoEnergiaArmazenadaSubsistemaRelato(),

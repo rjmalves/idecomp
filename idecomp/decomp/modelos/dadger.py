@@ -1904,33 +1904,31 @@ class AC(RegistroDecomp):
     Registro que contém as alterações de cadastro das usinas hidrelétricas.
     """
     mnemonico = "AC"
-    modificacoes: List[Type[TipoRegistroAC]] = [
-                                                 ACNUMPOS,
-                                                 ACNUMJUS,
-                                                 ACDESVIO,
-                                                 ACVOLMIN,
-                                                 ACVOLMAX,
-                                                 ACCOTVOL,
-                                                 ACCOTARE,
-                                                 ACPROESP,
-                                                 ACPERHID,
-                                                 ACNCHAVE,
-                                                 ACCOTVAZ,
-                                                 ACCOFEVA,
-                                                 ACNUMCON,
-                                                 ACNUMMAQ,
-                                                 ACPOTEFE,
-                                                 ACALTEFE,
-                                                 ACVAZEFE,
-                                                 ACJUSMED,
-                                                 ACVERTJU,
-                                                 ACVAZMIN,
-                                                 ACTIPERH,
-                                                 ACJUSENA,
-                                                 ACVSVERT,
-                                                 ACVMDESV,
-                                                 ACNPOSNW
-                                                ]
+    modificacoes: List[Type[TipoRegistroAC]] = [ACNUMPOS,
+                                                ACNUMJUS,
+                                                ACDESVIO,
+                                                ACVOLMIN,
+                                                ACVOLMAX,
+                                                ACCOTVOL,
+                                                ACCOTARE,
+                                                ACPROESP,
+                                                ACPERHID,
+                                                ACNCHAVE,
+                                                ACCOTVAZ,
+                                                ACCOFEVA,
+                                                ACNUMCON,
+                                                ACNUMMAQ,
+                                                ACPOTEFE,
+                                                ACALTEFE,
+                                                ACVAZEFE,
+                                                ACJUSMED,
+                                                ACVERTJU,
+                                                ACVAZMIN,
+                                                ACTIPERH,
+                                                ACJUSENA,
+                                                ACVSVERT,
+                                                ACVMDESV,
+                                                ACNPOSNW]
 
     def __init__(self):
         super().__init__(AC.mnemonico, True)
@@ -1970,11 +1968,9 @@ class AC(RegistroDecomp):
                  f"{self._dados[1]}".rjust(6))
         linha = linha.ljust(19)
         linha += self._modificacao.linha_escrita
-        if any([
-                self._dados[2] != "",
+        if any([self._dados[2] != "",
                 self._dados[3] != 0,
-                self._dados[4] != 0
-               ]):
+                self._dados[4] != 0]):
             linha = linha.ljust(69)
             linha += self._dados[2]
             linha = linha.ljust(74)

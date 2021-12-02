@@ -53,8 +53,7 @@ class BlocoBinarioHidr(BlocoBinario):
         reg_tipo_regul = RegistroAnBinario(1)
 
         # Realiza a leitura
-        self._dados = [
-                       reg_nome.le_registro(arq),
+        self._dados = [reg_nome.le_registro(arq),
                        reg_posto.le_registro(arq),
                        *reg_posto_bdh.le_linha_tabela(arq, 8),
                        reg_subsistema.le_registro(arq),
@@ -95,8 +94,7 @@ class BlocoBinarioHidr(BlocoBinario):
                        reg_data.le_registro(arq),
                        reg_obs.le_registro(arq),
                        reg_vol_ref.le_registro(arq),
-                       reg_tipo_regul.le_registro(arq)
-                      ]
+                       reg_tipo_regul.le_registro(arq)]
 
     # Override
     def escreve(self, arq: BinaryIO):

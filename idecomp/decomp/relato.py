@@ -9,6 +9,7 @@ from idecomp.decomp.modelos.relato import BlocoENAAcoplamentoREERelato
 from idecomp.decomp.modelos.relato import BlocoVolumeUtilReservatorioRelato
 from idecomp.decomp.modelos.relato import BlocoDadosTermicasRelato
 from idecomp.decomp.modelos.relato import BlocoDisponibilidadesTermicasRelato
+from idecomp.decomp.modelos.relato import BlocoDadosMercadoRelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaREERelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaSubsistemaRelato  # noqa
 from idecomp.decomp.modelos.relato import BlocoENAPreEstudoMensalREERelato
@@ -204,6 +205,17 @@ class Relato(ArquivoBlocos):
         :return: A tabela de disponibilidades como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoDisponibilidadesTermicasRelato)
+        return b.dados
+
+    @property
+    def dados_mercado(self) -> pd.DataFrame:
+        """
+        Obtém a tabela de dados do mercado de energia
+        existente no :class:`Relato`.
+
+        :return: A tabela de dados como um `pd.DataFrame`.
+        """
+        b = self.__obtem_bloco(BlocoDadosMercadoRelato)
         return b.dados
 
     @property

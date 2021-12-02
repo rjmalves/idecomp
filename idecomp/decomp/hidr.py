@@ -61,8 +61,7 @@ class Hidr(ArquivoBinario):
 
     def __calcula_df(self):
 
-        colunas = [
-                   "Nome",
+        colunas = ["Nome",
                    "Posto",
                    *[f"Posto BDH {i}" for i in range(1, 9)],
                    "Subsistema",
@@ -108,8 +107,7 @@ class Hidr(ArquivoBinario):
                    "Data",
                    "Observação",
                    "Volume de Referência",
-                   "Tipo de Regulação"
-                  ]
+                   "Tipo de Regulação"]
 
         blocos = self._dados.blocos
         dados = {}
