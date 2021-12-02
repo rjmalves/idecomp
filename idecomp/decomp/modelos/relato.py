@@ -619,7 +619,6 @@ class BlocoDadosTermicasRelato(Bloco):
         subsistemas: List[str] = []
         estagios: List[int] = []
 
-        subsistemas: List[str] = []
         tabela = np.zeros((5000, 9))
 
         i = 0
