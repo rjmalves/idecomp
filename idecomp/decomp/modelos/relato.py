@@ -751,9 +751,9 @@ class BlocoDadosMercadoRelato(Bloco):
     def le(self, arq: IO):
 
         def converte_tabela_em_df() -> pd.DataFrame:
-            cols = ["Patamar 1", "Mercado",
-                    "Patamar 2", "Mercado",
-                    "Patamar 3", "Mercado"]
+            cols = ["Patamar 1", "Mercado 1",
+                    "Patamar 2", "Mercado 2",
+                    "Patamar 3", "Mercado 3"]
             df = pd.DataFrame(tabela, columns=cols)
             df["Estágio"] = estagios
             df["Subsistema"] = subsistemas
