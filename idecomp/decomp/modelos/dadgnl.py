@@ -297,11 +297,14 @@ class GL(RegistroDecomp):
         self._dados[1] = reg_subsistema.le_registro(self._linha, 9)
         self._dados[2] = reg_estagio.le_registro(self._linha, 14)
         self._dados[3] = reg_geracao.le_registro(self._linha, 19)
-        self._dados[4] = reg_duracao.le_registro(self._linha, 29)
+        if len(self._linha[29:34].strip()) > 0:
+            self._dados[4] = reg_duracao.le_registro(self._linha, 29)
         self._dados[5] = reg_geracao.le_registro(self._linha, 34)
-        self._dados[6] = reg_duracao.le_registro(self._linha, 44)
+        if len(self._linha[44:49].strip()) > 0:
+            self._dados[6] = reg_duracao.le_registro(self._linha, 44)
         self._dados[7] = reg_geracao.le_registro(self._linha, 49)
-        self._dados[8] = reg_duracao.le_registro(self._linha, 59)
+        if len(self._linha[59:64].strip()) > 0:
+            self._dados[8] = reg_duracao.le_registro(self._linha, 59)
         self._dados[9] = reg_data.le_registro(self._linha, 65)
 
     def escreve(self, arq: IO):
@@ -309,13 +312,25 @@ class GL(RegistroDecomp):
                  f"{self._dados[0]}".rjust(3) + "  " +
                  f"{self._dados[1]}".rjust(2) + "   " +
                  f"{self._dados[2]}".rjust(2) + "   " +
-                 f"{formata_numero(self._dados[3], 1, 10)}" +
-                 f"{formata_numero(self._dados[4], 1, 5)}" +
-                 f"{formata_numero(self._dados[5], 1, 10)}" +
-                 f"{formata_numero(self._dados[6], 1, 5)}" +
-                 f"{formata_numero(self._dados[7], 1, 10)}" +
-                 f"{formata_numero(self._dados[8], 1, 5)}" +
-                 f" {self._dados[9]}")
+                 f"{formata_numero(self._dados[3], 1, 10)}")
+        if self._dados[4] == 0.0:
+            str_dur_1 = "".rjust(5)
+        else:
+            str_dur_1 = f"{formata_numero(self._dados[4], 1, 5)}"
+        linha += str_dur_1
+        linha += f"{formata_numero(self._dados[5], 1, 10)}"
+        if self._dados[6] == 0.0:
+            str_dur_2 = "".rjust(5)
+        else:
+            str_dur_2 = f"{formata_numero(self._dados[6], 1, 5)}"
+        linha += str_dur_2
+        linha += f"{formata_numero(self._dados[7], 1, 10)}"
+        if self._dados[8] == 0.0:
+            str_dur_3 = "".rjust(5)
+        else:
+            str_dur_3 = f"{formata_numero(self._dados[8], 1, 5)}"
+        linha += str_dur_3
+        linha += f" {self._dados[9]}"
 
         arq.write(linha + "\n")
 
@@ -362,7 +377,7 @@ class GL(RegistroDecomp):
 
         :return: As geracoes como `list[float]`
         """
-        return self._dados[3::2][:-1]
+        return self._dados[3:8:2]
 
     @geracoes.setter
     def geracoes(self, gers: List[float]):
@@ -371,7 +386,7 @@ class GL(RegistroDecomp):
         if novos != atuais:
             raise ValueError("Número de gerações incompatível. De" +
                              f"vem ser fornecidos {atuais}, mas foram {novos}")
-        self._dados[3::2] = gers
+        self._dados[3:8:2] = gers
 
     @property
     def duracoes(self) -> List[float]:

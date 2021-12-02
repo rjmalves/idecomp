@@ -7,6 +7,8 @@ from idecomp.decomp.modelos.relato import BlocoCMORelato
 from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
 from idecomp.decomp.modelos.relato import BlocoENAAcoplamentoREERelato
 from idecomp.decomp.modelos.relato import BlocoVolumeUtilReservatorioRelato
+from idecomp.decomp.modelos.relato import BlocoDadosTermicasRelato
+from idecomp.decomp.modelos.relato import BlocoDisponibilidadesTermicasRelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaREERelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaSubsistemaRelato  # noqa
 from idecomp.decomp.modelos.relato import BlocoENAPreEstudoMensalREERelato
@@ -26,7 +28,7 @@ class Relato(ArquivoBlocos):
     Armazena os dados de saída do DECOMP referentes ao
     acompanhamento do programa.
 
-    Esta classe lida com as informações de entrada fornecidas ao
+    Esta classe lida com as informações de entrada D ao
     DECOMP e reproduzidas no `relato.rvx`, bem como as saídas finais
     da execução: custos de operação, despacho de térmicas, etc.
 
@@ -180,6 +182,28 @@ class Relato(ArquivoBlocos):
         :return: A tabela de volumes como um `pd.DataFrame`.
         """
         b = self.__obtem_bloco(BlocoVolumeUtilReservatorioRelato)
+        return b.dados
+
+    @property
+    def dados_termicas(self) -> pd.DataFrame:
+        """
+        Obtém a tabela de dados cadastrais das usinas térmicas
+        existente no :class:`Relato`.
+
+        :return: A tabela de dados como um `pd.DataFrame`.
+        """
+        b = self.__obtem_bloco(BlocoDadosTermicasRelato)
+        return b.dados
+
+    @property
+    def disponibilidades_termicas(self) -> pd.DataFrame:
+        """
+        Obtém a tabela de disponibilidades das usinas térmicas
+        existente no :class:`Relato`.
+
+        :return: A tabela de disponibilidades como um `pd.DataFrame`.
+        """
+        b = self.__obtem_bloco(BlocoDisponibilidadesTermicasRelato)
         return b.dados
 
     @property

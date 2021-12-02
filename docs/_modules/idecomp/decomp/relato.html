@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.26</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.28</title>
   
 
   
@@ -169,6 +169,8 @@
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoGeracaoTermicaSubsistemaRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoENAAcoplamentoREERelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoVolumeUtilReservatorioRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoDadosTermicasRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoDisponibilidadesTermicasRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoEnergiaArmazenadaREERelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoEnergiaArmazenadaSubsistemaRelato</span>  <span class="c1"># noqa</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoENAPreEstudoMensalREERelato</span>
@@ -188,7 +190,7 @@
 <span class="sd">    Armazena os dados de saída do DECOMP referentes ao</span>
 <span class="sd">    acompanhamento do programa.</span>
 
-<span class="sd">    Esta classe lida com as informações de entrada fornecidas ao</span>
+<span class="sd">    Esta classe lida com as informações de entrada D ao</span>
 <span class="sd">    DECOMP e reproduzidas no `relato.rvx`, bem como as saídas finais</span>
 <span class="sd">    da execução: custos de operação, despacho de térmicas, etc.</span>
 
@@ -342,6 +344,28 @@
 <span class="sd">        :return: A tabela de volumes como um `pd.DataFrame`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoVolumeUtilReservatorioRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">dados_termicas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém a tabela de dados cadastrais das usinas térmicas</span>
+<span class="sd">        existente no :class:`Relato`.</span>
+
+<span class="sd">        :return: A tabela de dados como um `pd.DataFrame`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoDadosTermicasRelato</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">disponibilidades_termicas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém a tabela de disponibilidades das usinas térmicas</span>
+<span class="sd">        existente no :class:`Relato`.</span>
+
+<span class="sd">        :return: A tabela de disponibilidades como um `pd.DataFrame`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_bloco</span><span class="p">(</span><span class="n">BlocoDisponibilidadesTermicasRelato</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">dados</span>
 
     <span class="nd">@property</span>

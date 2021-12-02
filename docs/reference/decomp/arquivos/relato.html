@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.27</title>
+  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.28</title>
   
 
   
@@ -194,7 +194,7 @@ relato.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
 <em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Relato</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dados</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">idecomp._utils.dadosarquivo.DadosArquivoBlocos</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/relato.html#Relato"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.relato.Relato" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Armazena os dados de saída do DECOMP referentes ao
 acompanhamento do programa.</p>
-<p>Esta classe lida com as informações de entrada fornecidas ao
+<p>Esta classe lida com as informações de entrada D ao
 DECOMP e reproduzidas no <code class="xref py py-obj docutils literal notranslate"><span class="pre">relato.rvx</span></code>, bem como as saídas finais
 da execução: custos de operação, despacho de térmicas, etc.</p>
 <dl class="py property">
@@ -233,6 +233,18 @@ cada estágio do DECOMP existente no <a class="reference internal" href="#idecom
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.dados_termicas">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dados_termicas</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.dados_termicas" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de dados cadastrais das usinas térmicas
+existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de dados como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.dias_excluidos_semana_final">
 <em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">dias_excluidos_semana_final</span></span><em class="property"><span class="pre">:</span> <span class="pre">int</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.dias_excluidos_semana_final" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Obtém o número de dias excluídos da semana final.</p>
@@ -250,6 +262,18 @@ cada estágio do DECOMP existente no <a class="reference internal" href="#idecom
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>O número de dias como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.disponibilidades_termicas">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">disponibilidades_termicas</span></span><em class="property"><span class="pre">:</span> <span class="pre">pandas.core.frame.DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.disponibilidades_termicas" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de disponibilidades das usinas térmicas
+existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tabela de disponibilidades como um <code class="xref py py-obj docutils literal notranslate"><span class="pre">pd.DataFrame</span></code>.</p>
 </dd>
 </dl>
 </dd></dl>
