@@ -13,8 +13,8 @@ class LeituraBinario:
     Classe com utilidades gerais para leitura de arquivos
     binários do DECOMP.
     """
-    def __init__(self,
-                 diretorio: str):
+
+    def __init__(self, diretorio: str):
         self._diretorio = diretorio
         self._blocos: List[BlocoBinario] = []
         self._dados: Any = None
@@ -26,9 +26,9 @@ class LeituraBinario:
         """
         return [f for f in os.listdir(self._diretorio) if chave in f]
 
-    def _le_blocos_encontrados(self,
-                               arq: BufferedReader,
-                               blocos: List[BlocoBinario]):
+    def _le_blocos_encontrados(
+        self, arq: BufferedReader, blocos: List[BlocoBinario]
+    ):
         """
         Faz a leitura dos blocos encontrados até o momento e que
         ainda não foram lidos.
@@ -51,9 +51,9 @@ class LeituraBinario:
             # Lê mais um bloco
             self._le_blocos_encontrados(arq, self._blocos)
 
-    def _le_arquivo_em_diretorio(self,
-                                 diretorio: str,
-                                 nome_arquivo: str) -> None:
+    def _le_arquivo_em_diretorio(
+        self, diretorio: str, nome_arquivo: str
+    ) -> None:
         """
         Faz a leitura do arquivo em um diretorio.
         """
@@ -76,8 +76,7 @@ class LeituraBinario:
         """
         Trata os dados obtidos do arquivo para ser retornado.
         """
-        self._blocos = [b for b in self._blocos
-                        if b.concluido]
+        self._blocos = [b for b in self._blocos if b.concluido]
 
     def _fim_arquivo(self, b: bytes) -> bool:
         """
@@ -92,8 +91,7 @@ class LeituraBinario:
         Método para ler um arquivo e retornar o objeto
         devido da classe em particular.
         """
-        self._le_arquivo_em_diretorio(self._diretorio,
-                                      nome_arquivo)
+        self._le_arquivo_em_diretorio(self._diretorio, nome_arquivo)
         return DadosArquivoBinarios(self._blocos)
 
     @property

@@ -58,14 +58,26 @@ def test_dias_excluidos():
 
 def test_balanco_energetico():
     bal = rel.balanco_energetico
-    assert float(bal.loc[(bal["Estágio"] == 1) & (bal["Subsistema"] == "SE"),
-                         "Mercado"]) == 37924.4
+    assert (
+        float(
+            bal.loc[
+                (bal["Estágio"] == 1) & (bal["Subsistema"] == "SE"), "Mercado"
+            ]
+        )
+        == 37924.4
+    )
 
 
 def test_relatorio_operacao_uhe():
     bal = rel.relatorio_operacao_uhe
-    assert float(bal.loc[(bal["Estágio"] == 1) & (bal["Usina"] == "CAMARGOS"),
-                         "Ponta"]) == 31.5
+    assert (
+        float(
+            bal.loc[
+                (bal["Estágio"] == 1) & (bal["Usina"] == "CAMARGOS"), "Ponta"
+            ]
+        )
+        == 31.5
+    )
 
 
 def test_eq_relato():

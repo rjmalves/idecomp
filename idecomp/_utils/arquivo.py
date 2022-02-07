@@ -7,10 +7,9 @@ from .dadosarquivo import DadosArquivoBinarios
 
 
 class ArquivoBlocos:
-    """
-    """
-    def __init__(self,
-                 dados: DadosArquivoBlocos) -> None:
+    """ """
+
+    def __init__(self, dados: DadosArquivoBlocos) -> None:
         self._dados = dados
 
     def __eq__(self, o: object) -> bool:
@@ -22,13 +21,14 @@ class ArquivoBlocos:
             return False
         arquivos: ArquivoBlocos = o
         dif = False
-        for (i1, l1), (i2, l2) in zip(self._linhas_fora_blocos.items(),
-                                      arquivos._linhas_fora_blocos.items()):
+        for (i1, l1), (i2, l2) in zip(
+            self._linhas_fora_blocos.items(),
+            arquivos._linhas_fora_blocos.items(),
+        ):
             if i1 != i2 or l1 != l2:
                 dif = True
                 break
-        for b1, b2 in zip(self._blocos,
-                          arquivos._blocos):
+        for b1, b2 in zip(self._blocos, arquivos._blocos):
             if b1 != b2:
                 dif = True
                 break
@@ -44,7 +44,7 @@ class ArquivoBlocos:
 
     @classmethod
     @abstractmethod
-    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> 'ArquivoBlocos':
+    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> "ArquivoBlocos":
         pass
 
     @abstractmethod
@@ -53,13 +53,11 @@ class ArquivoBlocos:
 
 
 class ArquivoRegistros:
-    """
-    """
+    """ """
 
     T = TypeVar("T")
 
-    def __init__(self,
-                 dados: DadosArquivoRegistros) -> None:
+    def __init__(self, dados: DadosArquivoRegistros) -> None:
         self._dados = dados
 
     def __eq__(self, o: object) -> bool:
@@ -71,13 +69,13 @@ class ArquivoRegistros:
             return False
         d: ArquivoRegistros = o
         dif = False
-        for (i1, l1), (i2, l2) in zip(self.linhas_fora_registros.items(),
-                                      d.linhas_fora_registros.items()):
+        for (i1, l1), (i2, l2) in zip(
+            self.linhas_fora_registros.items(), d.linhas_fora_registros.items()
+        ):
             if i1 != i2 or l1 != l2:
                 dif = True
                 break
-        for b1, b2 in zip(self._registros,
-                          d._registros):
+        for b1, b2 in zip(self._registros, d._registros):
             if b1 != b2:
                 dif = True
                 break
@@ -91,9 +89,9 @@ class ArquivoRegistros:
     def _registros(self):
         return self._dados.registros
 
-    def cria_registro(self,
-                      anterior: RegistroDecomp,
-                      registro: RegistroDecomp) -> RegistroDecomp:
+    def cria_registro(
+        self, anterior: RegistroDecomp, registro: RegistroDecomp
+    ) -> RegistroDecomp:
         return self._dados.cria_registro(anterior, registro)
 
     def deleta_registro(self, registro: RegistroDecomp) -> bool:
@@ -104,7 +102,7 @@ class ArquivoRegistros:
 
     @classmethod
     @abstractmethod
-    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> 'ArquivoRegistros':
+    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> "ArquivoRegistros":
         pass
 
     @abstractmethod
@@ -113,10 +111,9 @@ class ArquivoRegistros:
 
 
 class ArquivoBinario:
-    """
-    """
-    def __init__(self,
-                 dados: DadosArquivoBinarios) -> None:
+    """ """
+
+    def __init__(self, dados: DadosArquivoBinarios) -> None:
         self._dados = dados
 
     def __eq__(self, o: object) -> bool:
@@ -128,8 +125,7 @@ class ArquivoBinario:
             return False
         d: ArquivoBinario = o
         dif = False
-        for b1, b2 in zip(self._blocos,
-                          d._blocos):
+        for b1, b2 in zip(self._blocos, d._blocos):
             if b1 != b2:
                 dif = True
                 break
@@ -141,7 +137,7 @@ class ArquivoBinario:
 
     @classmethod
     @abstractmethod
-    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> 'ArquivoBinario':
+    def le_arquivo(cls, diretorio: str, nome_arquivo="") -> "ArquivoBinario":
         pass
 
     @abstractmethod

@@ -10,14 +10,12 @@ class TG(RegistroDecomp):
     """
     Registro que contém o cadastro das térmicas a GNL
     """
+
     mnemonico = "TG"
 
     def __init__(self):
         super().__init__(TG.mnemonico, True)
-        self._dados = [0, 0, "", 0,
-                       0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0]
+        self._dados = [0, 0, "", 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
     def le(self):
         reg_codigo = RegistroIn(3)
@@ -32,29 +30,38 @@ class TG(RegistroDecomp):
         self._dados[2] = reg_nome.le_registro(self._linha, 14)
         self._dados[3] = reg_estagio.le_registro(self._linha, 24)
         for j in range(3):
-            self._dados[4 + 3 * j] = reg_inflex.le_registro(self._linha,
-                                                            29 + 20 * j)
-            self._dados[5 + 3 * j] = reg_disp.le_registro(self._linha,
-                                                          34 + 20 * j)
-            self._dados[6 + 3 * j] = reg_cvu.le_registro(self._linha,
-                                                         39 + 20 * j)
+            self._dados[4 + 3 * j] = reg_inflex.le_registro(
+                self._linha, 29 + 20 * j
+            )
+            self._dados[5 + 3 * j] = reg_disp.le_registro(
+                self._linha, 34 + 20 * j
+            )
+            self._dados[6 + 3 * j] = reg_cvu.le_registro(
+                self._linha, 39 + 20 * j
+            )
 
     def escreve(self, arq: IO):
 
-        linha = (f"{TG.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".ljust(10) +
-                 f"{self._dados[3]}".rjust(2) + "   " +
-                 formata_numero(self._dados[4], 2, 5) +
-                 formata_numero(self._dados[5], 2, 5) +
-                 f"{self._dados[6]:10.2f}" +
-                 formata_numero(self._dados[7], 2, 5) +
-                 formata_numero(self._dados[8], 2, 5) +
-                 f"{self._dados[9]:10.2f}" +
-                 formata_numero(self._dados[10], 2, 5) +
-                 formata_numero(self._dados[11], 2, 5) +
-                 f"{self._dados[12]:10.2f}" + "\n")
+        linha = (
+            f"{TG.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".ljust(10)
+            + f"{self._dados[3]}".rjust(2)
+            + "   "
+            + formata_numero(self._dados[4], 2, 5)
+            + formata_numero(self._dados[5], 2, 5)
+            + f"{self._dados[6]:10.2f}"
+            + formata_numero(self._dados[7], 2, 5)
+            + formata_numero(self._dados[8], 2, 5)
+            + f"{self._dados[9]:10.2f}"
+            + formata_numero(self._dados[10], 2, 5)
+            + formata_numero(self._dados[11], 2, 5)
+            + f"{self._dados[12]:10.2f}"
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -115,8 +122,10 @@ class TG(RegistroDecomp):
         novas = len(inflex)
         atuais = len(self.inflexibilidades)
         if novas != atuais:
-            raise ValueError("Número de inflexibilidades incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de inflexibilidades incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[4::3] = inflex
 
     @property
@@ -133,8 +142,10 @@ class TG(RegistroDecomp):
         novas = len(disp)
         atuais = len(self.disponibilidades)
         if novas != atuais:
-            raise ValueError("Número de disponibilidades incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de disponibilidades incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[5::3] = disp
 
     @property
@@ -151,8 +162,10 @@ class TG(RegistroDecomp):
         novas = len(cvu)
         atuais = len(self.cvus)
         if novas != atuais:
-            raise ValueError("Número de CVUs incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de CVUs incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[6::3] = cvu
 
 
@@ -161,6 +174,7 @@ class GS(RegistroDecomp):
     Registro que contém o número de semanas dos meses envolvidos
     no estudo.
     """
+
     mnemonico = "GS"
 
     def __init__(self):
@@ -174,9 +188,13 @@ class GS(RegistroDecomp):
         self._dados[1] = reg_semanas.le_registro(self._linha, 9)
 
     def escreve(self, arq: IO):
-        linha = (f"{GS.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(2) + "   " +
-                 f"{self._dados[1]}".rjust(1) + "\n")
+        linha = (
+            f"{GS.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(2)
+            + "   "
+            + f"{self._dados[1]}".rjust(1)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -211,6 +229,7 @@ class NL(RegistroDecomp):
     Registro que contém o número de lags para o despacho de cada térmica
     de despacho antecipado em cada subsistema.
     """
+
     mnemonico = "NL"
 
     def __init__(self):
@@ -226,10 +245,15 @@ class NL(RegistroDecomp):
         self._dados[2] = reg_lag.le_registro(self._linha, 14)
 
     def escreve(self, arq: IO):
-        linha = (f"{NL.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(1) + "\n")
+        linha = (
+            f"{NL.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(1)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -276,15 +300,12 @@ class GL(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições elétricas.
     """
+
     mnemonico = "GL"
 
     def __init__(self):
         super().__init__(GL.mnemonico, True)
-        self._dados = [0, 0, 0,
-                       0.0, 0.0,
-                       0.0, 0.0,
-                       0.0, 0.0,
-                       ""]
+        self._dados = [0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ""]
 
     def le(self):
         reg_cod = RegistroIn(3)
@@ -308,11 +329,16 @@ class GL(RegistroDecomp):
         self._dados[9] = reg_data.le_registro(self._linha, 65)
 
     def escreve(self, arq: IO):
-        linha = (f"{GL.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(2) + "   " +
-                 f"{formata_numero(self._dados[3], 1, 10)}")
+        linha = (
+            f"{GL.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(2)
+            + "   "
+            + f"{formata_numero(self._dados[3], 1, 10)}"
+        )
         if self._dados[4] == 0.0:
             str_dur_1 = "".rjust(5)
         else:
@@ -384,8 +410,10 @@ class GL(RegistroDecomp):
         novos = len(gers)
         atuais = len(self.geracoes)
         if novos != atuais:
-            raise ValueError("Número de gerações incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de gerações incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[3:8:2] = gers
 
     @property
@@ -403,8 +431,10 @@ class GL(RegistroDecomp):
         novos = len(durs)
         atuais = len(self.duracoes)
         if novos != atuais:
-            raise ValueError("Número de durações incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de durações incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[4::2] = durs
 
 
@@ -413,8 +443,8 @@ class LeituraDadGNL(LeituraRegistros):
     Classe com utilidades gerais para leitura de arquivos
     do DECOMP com comentários.
     """
-    def __init__(self,
-                 diretorio: str):
+
+    def __init__(self, diretorio: str):
         super().__init__(diretorio)
 
     def _cria_registros_leitura(self) -> List[RegistroDecomp]:
@@ -428,6 +458,5 @@ class LeituraDadGNL(LeituraRegistros):
         tg: List[RegistroDecomp] = [TG() for _ in range(MAX_UTE)]
         gs: List[RegistroDecomp] = [GS() for _ in range(MAX_MESES)]
         nl: List[RegistroDecomp] = [NL() for _ in range(MAX_UTE)]
-        gl: List[RegistroDecomp] = [GL() for _ in range(MAX_UTE *
-                                                        MAX_ESTAGIOS)]
-        return (tg + gs + nl + gl)
+        gl: List[RegistroDecomp] = [GL() for _ in range(MAX_UTE * MAX_ESTAGIOS)]
+        return tg + gs + nl + gl

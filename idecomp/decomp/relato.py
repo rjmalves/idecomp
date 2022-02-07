@@ -1,4 +1,5 @@
 from idecomp._utils.bloco import Bloco
+
 # from idecomp.decomp.modelos.relato import BlocoDadosGeraisRelato
 from idecomp.decomp.modelos.relato import BlocoConvergenciaRelato
 from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
@@ -11,11 +12,17 @@ from idecomp.decomp.modelos.relato import BlocoDadosTermicasRelato
 from idecomp.decomp.modelos.relato import BlocoDisponibilidadesTermicasRelato
 from idecomp.decomp.modelos.relato import BlocoDadosMercadoRelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaREERelato
-from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaSubsistemaRelato  # noqa
+from idecomp.decomp.modelos.relato import (
+    BlocoEnergiaArmazenadaSubsistemaRelato,
+)  # noqa
 from idecomp.decomp.modelos.relato import BlocoENAPreEstudoMensalREERelato
-from idecomp.decomp.modelos.relato import BlocoENAPreEstudoMensalSubsistemaRelato  # noqa
+from idecomp.decomp.modelos.relato import (
+    BlocoENAPreEstudoMensalSubsistemaRelato,
+)  # noqa
 from idecomp.decomp.modelos.relato import BlocoENAPreEstudoSemanalREERelato
-from idecomp.decomp.modelos.relato import BlocoENAPreEstudoSemanalSubsistemaRelato  # noqa
+from idecomp.decomp.modelos.relato import (
+    BlocoENAPreEstudoSemanalSubsistemaRelato,
+)  # noqa
 from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
 from idecomp.decomp.modelos.relato import LeituraRelato
 from idecomp._utils.arquivo import ArquivoBlocos
@@ -34,15 +41,13 @@ class Relato(ArquivoBlocos):
     da execução: custos de operação, despacho de térmicas, etc.
 
     """
-    def __init__(self,
-                 dados: DadosArquivoBlocos) -> None:
+
+    def __init__(self, dados: DadosArquivoBlocos) -> None:
         super().__init__(dados)
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="relato.rv0") -> 'Relato':
+    def le_arquivo(cls, diretorio: str, nome_arquivo="relato.rv0") -> "Relato":
         """
         Realiza a leitura de um arquivo "relato.rvx" existente em
         um diretório.
@@ -60,16 +65,14 @@ class Relato(ArquivoBlocos):
         return cls(r)
 
     def __obtem_bloco(self, tipo: Type[Bloco]) -> Bloco:
-        """
-        """
+        """ """
         for b in self._blocos:
             if isinstance(b, tipo):
                 return b
         raise ValueError(f"Não foi encontrado um bloco do tipo {tipo}")
 
     def __obtem_blocos(self, tipo: Type[Bloco]) -> List[Bloco]:
-        """
-        """
+        """ """
         blocos = []
         for b in self._blocos:
             if isinstance(b, tipo):
@@ -128,8 +131,9 @@ class Relato(ArquivoBlocos):
             if balanc_final is None:
                 balanc_final = df_r
             else:
-                balanc_final = pd.concat([balanc_final, df_r],
-                                         ignore_index=True)
+                balanc_final = pd.concat(
+                    [balanc_final, df_r], ignore_index=True
+                )
         return balanc_final
 
     @property

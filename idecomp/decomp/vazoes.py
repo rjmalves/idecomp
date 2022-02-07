@@ -16,28 +16,22 @@ class Vazoes(ArquivoBinario):
     da execução.
 
     """
-    def __init__(self,
-                 dados: DadosArquivoBinarios) -> None:
+
+    def __init__(self, dados: DadosArquivoBinarios) -> None:
         super().__init__(dados)
         self.__df = None
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="vazoes.dat") -> 'Vazoes':
-        """
-        """
+    def le_arquivo(cls, diretorio: str, nome_arquivo="vazoes.dat") -> "Vazoes":
+        """ """
         leitor = LeituraVazoes(diretorio)
         r = leitor.le_arquivo(nome_arquivo)
         return cls(r)
 
     # Override
-    def escreve_arquivo(self,
-                        diretorio: str,
-                        nome_arquivo: str = "vazoes.dat"):
-        """
-        """
+    def escreve_arquivo(self, diretorio: str, nome_arquivo: str = "vazoes.dat"):
+        """ """
         escritor = EscritaBinario(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
 
@@ -48,15 +42,12 @@ class Vazoes(ArquivoBinario):
             tabela_dados[i, :] = np.array(b._dados)
             i += 1
         tabela_dados = tabela_dados[:i, :]
-        colunas = [f"Posto {i}" for i in
-                   range(1, tabela_dados.shape[1] + 1)]
-        self.__df = pd.DataFrame(tabela_dados,
-                                 columns=colunas)
+        colunas = [f"Posto {i}" for i in range(1, tabela_dados.shape[1] + 1)]
+        self.__df = pd.DataFrame(tabela_dados, columns=colunas)
 
     @property
     def vazoes(self) -> pd.DataFrame:
-        """
-        """
+        """ """
         if self.__df is None:
             self.__calcula_df()
         return self.__df

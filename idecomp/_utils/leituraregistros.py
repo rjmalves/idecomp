@@ -12,8 +12,8 @@ class LeituraRegistros:
     Classe com utilidades gerais para leitura de arquivos
     do DECOMP com comentários.
     """
-    def __init__(self,
-                 diretorio: str):
+
+    def __init__(self, diretorio: str):
         self._usa_backup = False
         self._linha_backup = ""
         self._diretorio = diretorio
@@ -50,10 +50,9 @@ class LeituraRegistros:
         """
         return [f for f in os.listdir(self._diretorio) if chave in f]
 
-    def _verifica_inicio_registros(self,
-                                   linha: str,
-                                   ordem: int,
-                                   registros: List[RegistroDecomp]) -> bool:
+    def _verifica_inicio_registros(
+        self, linha: str, ordem: int, registros: List[RegistroDecomp]
+    ) -> bool:
         """
         Verifica se a linha atual é a linha de início de algum
         dos registros a serem lidos.
@@ -67,8 +66,7 @@ class LeituraRegistros:
         self._linhas_fora_registros[ordem] = linha
         return False
 
-    def _le_registros_encontrados(self,
-                                  registros: List[RegistroDecomp]):
+    def _le_registros_encontrados(self, registros: List[RegistroDecomp]):
         """
         Faz a leitura dos registros encontrados até o momento e que
         ainda não foram lidos.
@@ -102,9 +100,9 @@ class LeituraRegistros:
                 self._configura_backup()
             i += 1
 
-    def _le_arquivo_em_diretorio(self,
-                                 diretorio: str,
-                                 nome_arquivo: str) -> None:
+    def _le_arquivo_em_diretorio(
+        self, diretorio: str, nome_arquivo: str
+    ) -> None:
         """
         Faz a leitura do arquivo em um diretorio.
         """
@@ -142,7 +140,7 @@ class LeituraRegistros:
         Método para ler um arquivo e retornar o objeto
         devido da classe em particular.
         """
-        self._le_arquivo_em_diretorio(self._diretorio,
-                                      nome_arquivo)
-        return DadosArquivoRegistros(self._registros,
-                                     self._linhas_fora_registros)
+        self._le_arquivo_em_diretorio(self._diretorio, nome_arquivo)
+        return DadosArquivoRegistros(
+            self._registros, self._linhas_fora_registros
+        )

@@ -1,4 +1,5 @@
 from idecomp._utils.bloco import Bloco
+
 # from idecomp.decomp.modelos.relato import BlocoDadosGeraisRelato
 from idecomp.decomp.modelos.relgnl import BlocoDadosUsinasRelGNL
 from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesTGRelGNL
@@ -21,24 +22,20 @@ class RelGNL(ArquivoBlocos):
     da execução.
 
     """
-    def __init__(self,
-                 dados: DadosArquivoBlocos) -> None:
+
+    def __init__(self, dados: DadosArquivoBlocos) -> None:
         super().__init__(dados)
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="relgnl.rv0") -> 'RelGNL':
-        """
-        """
+    def le_arquivo(cls, diretorio: str, nome_arquivo="relgnl.rv0") -> "RelGNL":
+        """ """
         leitor = LeituraRelGNL(diretorio)
         r = leitor.le_arquivo(nome_arquivo)
         return cls(r)
 
     def __obtem_bloco(self, tipo: Type[Bloco]) -> Bloco:
-        """
-        """
+        """ """
         for b in self._blocos:
             if isinstance(b, tipo):
                 return b

@@ -17,15 +17,15 @@ class InviabUnic(ArquivoBlocos):
     DECOMP e reproduzidas no `inviab_unic.rvx`.
 
     """
-    def __init__(self,
-                 dados: DadosArquivoBlocos) -> None:
+
+    def __init__(self, dados: DadosArquivoBlocos) -> None:
         super().__init__(dados)
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="inviab_unic.rv0") -> 'InviabUnic':
+    def le_arquivo(
+        cls, diretorio: str, nome_arquivo="inviab_unic.rv0"
+    ) -> "InviabUnic":
         """
         Realiza a leitura de um arquivo "inviab_unic.rvx" existente em
         um diretório.
@@ -43,8 +43,7 @@ class InviabUnic(ArquivoBlocos):
         return cls(r)
 
     def __obtem_bloco(self, tipo: Type[Bloco]) -> Bloco:
-        """
-        """
+        """ """
         for b in self._blocos:
             if isinstance(b, tipo):
                 return b

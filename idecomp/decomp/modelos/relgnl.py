@@ -3,6 +3,7 @@ from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
 from idecomp._utils.leiturablocos import LeituraBlocos
 from idecomp.config import MAX_ESTAGIOS
+
 # Imports de módulos externos
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
@@ -14,14 +15,13 @@ class BlocoDadosUsinasRelGNL(Bloco):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
     str_inicio = "Relatorio  dos  Dados  de  Usinas  Termicas GNL"
     str_fim = "X---X-"
 
     def __init__(self):
 
-        super().__init__(BlocoDadosUsinasRelGNL.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoDadosUsinasRelGNL.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -33,19 +33,19 @@ class BlocoDadosUsinasRelGNL(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
-            colunas = ["GT Min Pat 1",
-                       "GT Max Pat 1",
-                       "Custo GT Pat 1",
-                       "GT Min Pat 2",
-                       "GT Max Pat 2",
-                       "Custo GT Pat 2",
-                       "GT Min Pat 3",
-                       "GT Max Pat 3",
-                       "Custo GT Pat 3"]
-            df = pd.DataFrame(tabela,
-                              columns=colunas)
+            colunas = [
+                "GT Min Pat 1",
+                "GT Max Pat 1",
+                "Custo GT Pat 1",
+                "GT Min Pat 2",
+                "GT Max Pat 2",
+                "Custo GT Pat 2",
+                "GT Min Pat 3",
+                "GT Max Pat 3",
+                "Custo GT Pat 3",
+            ]
+            df = pd.DataFrame(tabela, columns=colunas)
             df["Código"] = numeros
             df["Usina"] = usinas
             df["Subsistema"] = subsistemas
@@ -87,10 +87,7 @@ class BlocoDadosUsinasRelGNL(Bloco):
             usinas.append(usina_atual)
             subsistemas.append(subsistema_atual)
             estagios.append(reg_estagio.le_registro(linha, 26))
-            tabela[i, :] = reg_valores.le_linha_tabela(linha,
-                                                       34,
-                                                       1,
-                                                       9)
+            tabela[i, :] = reg_valores.le_linha_tabela(linha, 34, 1, 9)
             i += 1
 
     # Override
@@ -103,14 +100,15 @@ class BlocoComandosUsinasAjustesTGRelGNL(Bloco):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
     str_inicio = "usinas GNL com possiveis ajustes devido a registros TG"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoComandosUsinasAjustesTGRelGNL.str_inicio,
-                         "",
-                         True)
+        super().__init__(
+            BlocoComandosUsinasAjustesTGRelGNL.str_inicio, "", True
+        )
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -122,20 +120,17 @@ class BlocoComandosUsinasAjustesTGRelGNL(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
-            colunas = ["Pat 1",
-                       "Pat 2",
-                       "Pat 3"]
-            df = pd.DataFrame(tabela,
-                              columns=colunas)
+            colunas = ["Pat 1", "Pat 2", "Pat 3"]
+            df = pd.DataFrame(tabela, columns=colunas)
             df["Código"] = numeros
             df["Usina"] = usinas
             df["Lag"] = lags
             df["Subsistema"] = subsistemas
             df["Semana"] = semanas
-            df = df[["Código", "Usina", "Lag",
-                     "Subsistema", "Semana"] + colunas]
+            df = df[
+                ["Código", "Usina", "Lag", "Subsistema", "Semana"] + colunas
+            ]
             return df
 
         # Pula 4 linhas
@@ -166,10 +161,7 @@ class BlocoComandosUsinasAjustesTGRelGNL(Bloco):
             lags.append(reg_lag.le_registro(linha, 20))
             subsistemas.append(reg_subsis.le_registro(linha, 24))
             semanas.append(reg_semana.le_registro(linha, 31))
-            tabela[i, :] = reg_valores.le_linha_tabela(linha,
-                                                       44,
-                                                       1,
-                                                       3)
+            tabela[i, :] = reg_valores.le_linha_tabela(linha, 44, 1, 3)
             i += 1
 
     # Override
@@ -182,14 +174,15 @@ class BlocoComandosUsinasAjustesRERelGNL(Bloco):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
     str_inicio = "ajustes devido a Restricoes Eletricas Especiais"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoComandosUsinasAjustesRERelGNL.str_inicio,
-                         "",
-                         True)
+        super().__init__(
+            BlocoComandosUsinasAjustesRERelGNL.str_inicio, "", True
+        )
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -201,20 +194,17 @@ class BlocoComandosUsinasAjustesRERelGNL(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
-            colunas = ["Pat 1",
-                       "Pat 2",
-                       "Pat 3"]
-            df = pd.DataFrame(tabela,
-                              columns=colunas)
+            colunas = ["Pat 1", "Pat 2", "Pat 3"]
+            df = pd.DataFrame(tabela, columns=colunas)
             df["Código"] = numeros
             df["Usina"] = usinas
             df["Lag"] = lags
             df["Subsistema"] = subsistemas
             df["Período"] = periodos
-            df = df[["Código", "Usina", "Lag",
-                     "Subsistema", "Período"] + colunas]
+            df = df[
+                ["Código", "Usina", "Lag", "Subsistema", "Período"] + colunas
+            ]
             return df
 
         # Pula 4 linhas
@@ -245,10 +235,7 @@ class BlocoComandosUsinasAjustesRERelGNL(Bloco):
             lags.append(reg_lag.le_registro(linha, 20))
             subsistemas.append(reg_subsis.le_registro(linha, 24))
             periodos.append(reg_periodo.le_registro(linha, 31))
-            tabela[i, :] = reg_valores.le_linha_tabela(linha,
-                                                       41,
-                                                       1,
-                                                       3)
+            tabela[i, :] = reg_valores.le_linha_tabela(linha, 41, 1, 3)
             i += 1
 
     # Override
@@ -261,14 +248,13 @@ class BlocoRelatorioOperacaoRelGNL(Bloco):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
     str_inicio = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
     str_fim = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
 
     def __init__(self):
 
-        super().__init__(BlocoRelatorioOperacaoRelGNL.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoRelatorioOperacaoRelGNL.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -280,24 +266,27 @@ class BlocoRelatorioOperacaoRelGNL(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Despacho Pat. 1", "Duração Pat. 1",
-                    "Despacho Pat. 2", "Duração Pat. 2",
-                    "Despacho Pat. 3", "Duração Pat. 3",
-                    "Custo"]
+            cols = [
+                "Despacho Pat. 1",
+                "Duração Pat. 1",
+                "Despacho Pat. 2",
+                "Duração Pat. 2",
+                "Despacho Pat. 3",
+                "Duração Pat. 3",
+                "Custo",
+            ]
             df.columns = cols
             df["Subsistema"] = subsistemas
             df["Usina"] = usinas
             df["Lag"] = lags
             df["Estágio"] = semanas
             df["Início Semana"] = inicio_semanas
-            df = df[["Subsistema",
-                     "Usina",
-                     "Lag",
-                     "Estágio",
-                     "Início Semana"] + cols]
+            df = df[
+                ["Subsistema", "Usina", "Lag", "Estágio", "Início Semana"]
+                + cols
+            ]
             return df
 
         # Variáveis auxiliares
@@ -369,8 +358,8 @@ class LeituraRelGNL(LeituraBlocos):
     tipos de dados, dentre outras tarefas necessárias para a leitura.
 
     """
-    def __init__(self,
-                 diretorio: str):
+
+    def __init__(self, diretorio: str):
         super().__init__(diretorio)
 
     # Override
@@ -378,7 +367,9 @@ class LeituraRelGNL(LeituraBlocos):
         """
         Cria a lista de blocos a serem lidos no arquivo relgnl.rvX.
         """
-        return [BlocoDadosUsinasRelGNL(),
-                BlocoComandosUsinasAjustesTGRelGNL(),
-                BlocoComandosUsinasAjustesRERelGNL(),
-                BlocoRelatorioOperacaoRelGNL()]
+        return [
+            BlocoDadosUsinasRelGNL(),
+            BlocoComandosUsinasAjustesTGRelGNL(),
+            BlocoComandosUsinasAjustesRERelGNL(),
+            BlocoRelatorioOperacaoRelGNL(),
+        ]

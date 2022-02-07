@@ -14,16 +14,14 @@ class BlocoBinarioVazoes(BlocoBinario):
 
     # Override
     def le(self, arq: BufferedReader):
-        """
-        """
+        """ """
         reg_teste = RegistroInBinario(32)
         vazoes = reg_teste.le_linha_tabela(arq, 320)
         self._dados = vazoes
 
     # Override
     def escreve(self, arq: BinaryIO):
-        """
-        """
+        """ """
         np.array(self._dados).astype("int32").tofile(arq)
 
 
@@ -32,8 +30,8 @@ class LeituraVazoes(LeituraBinario):
     Classe com utilidades gerais para leitura de arquivos
     do DECOMP com comentários.
     """
-    def __init__(self,
-                 diretorio: str):
+
+    def __init__(self, diretorio: str):
         super().__init__(diretorio)
 
     def _cria_blocos_leitura(self) -> List[BlocoBinario]:
@@ -43,7 +41,8 @@ class LeituraVazoes(LeituraBinario):
         """
         MAX_BLOCOS = 9000
 
-        b: List[BlocoBinario] = [BlocoBinarioVazoes()
-                                 for _ in range(MAX_BLOCOS)]
+        b: List[BlocoBinario] = [
+            BlocoBinarioVazoes() for _ in range(MAX_BLOCOS)
+        ]
 
         return b

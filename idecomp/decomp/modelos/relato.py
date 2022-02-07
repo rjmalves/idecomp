@@ -4,6 +4,7 @@ from idecomp.config import SUBSISTEMAS
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
 from idecomp._utils.leiturablocos import LeituraBlocos
+
 # Imports de módulos externos
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
@@ -19,14 +20,13 @@ class BlocoDadosGeraisRelato(Bloco):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
     str_inicio = "Relatorio  dos  Dados  Gerais"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoDadosGeraisRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoDadosGeraisRelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -49,14 +49,13 @@ class BlocoConvergenciaRelato(Bloco):
     """
     Bloco com as informações de convergência do DECOMP no relato.rvX.
     """
+
     str_inicio = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoConvergenciaRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoConvergenciaRelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -68,32 +67,34 @@ class BlocoConvergenciaRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
-            colunas = ["Iteração",
-                       "Zinf",
-                       "Zsup",
-                       "Gap (%)",
-                       "Tempo (s)",
-                       "Tot. Def. Demanda (MWmed)",
-                       "Tot. Def. Niv. Seg. (MWmes)",
-                       "Num. Inviab",
-                       "Tot. Inviab (MWmed)",
-                       "Tot. Inviab (m3/s)",
-                       "Tot. Inviab (Hm3)"]
-            tipos = {"Iteração": np.int64,
-                     "Zinf": np.float64,
-                     "Zsup": np.float64,
-                     "Gap (%)": np.float64,
-                     "Tempo (s)": np.int64,
-                     "Tot. Def. Demanda (MWmed)": np.float64,
-                     "Tot. Def. Niv. Seg. (MWmes)": np.float64,
-                     "Num. Inviab": np.int64,
-                     "Tot. Inviab (MWmed)": np.float64,
-                     "Tot. Inviab (m3/s)": np.float64,
-                     "Tot. Inviab (Hm3)": np.float64}
-            df = pd.DataFrame(tabela,
-                              columns=colunas)
+            colunas = [
+                "Iteração",
+                "Zinf",
+                "Zsup",
+                "Gap (%)",
+                "Tempo (s)",
+                "Tot. Def. Demanda (MWmed)",
+                "Tot. Def. Niv. Seg. (MWmes)",
+                "Num. Inviab",
+                "Tot. Inviab (MWmed)",
+                "Tot. Inviab (m3/s)",
+                "Tot. Inviab (Hm3)",
+            ]
+            tipos = {
+                "Iteração": np.int64,
+                "Zinf": np.float64,
+                "Zsup": np.float64,
+                "Gap (%)": np.float64,
+                "Tempo (s)": np.int64,
+                "Tot. Def. Demanda (MWmed)": np.float64,
+                "Tot. Def. Niv. Seg. (MWmes)": np.float64,
+                "Num. Inviab": np.int64,
+                "Tot. Inviab (MWmed)": np.float64,
+                "Tot. Inviab (m3/s)": np.float64,
+                "Tot. Inviab (Hm3)": np.float64,
+            }
+            df = pd.DataFrame(tabela, columns=colunas)
             df = df.astype(tipos)
             return df
 
@@ -133,9 +134,11 @@ class BlocoConvergenciaRelato(Bloco):
             tabela[i, 3] = reg_gap.le_registro(linha, 35)
             tempo = reg_tempo.le_registro(linha, 52)
             parcelas = tempo.split(":")
-            segundos = (int(parcelas[0]) * 3600 +
-                        int(parcelas[1]) * 60 +
-                        int(parcelas[2]))
+            segundos = (
+                int(parcelas[0]) * 3600
+                + int(parcelas[1]) * 60
+                + int(parcelas[2])
+            )
             tabela[i, 4] = segundos
             tabela[i, 5] = reg_def_demanda.le_registro(linha, 61)
             if str(linha[72:85]).isnumeric():
@@ -154,16 +157,14 @@ class BlocoConvergenciaRelato(Bloco):
 
 
 class BlocoRelatorioOperacaoUHERelato(Bloco):
-    """
-    """
+    """ """
+
     str_inicio = "No.       Usina       Volume (% V.U.)"
     str_fim = "X----X-"
 
     def __init__(self):
 
-        super().__init__(BlocoRelatorioOperacaoUHERelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoRelatorioOperacaoUHERelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -175,17 +176,33 @@ class BlocoRelatorioOperacaoUHERelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_para_df() -> pd.DataFrame:
-            cols = ["Volume Ini (% V.U)", "Volume Fin (% V.U)",
-                    "Volume Esp. (% V.U)", "Qnat (m3/s)", "Qnat (% MLT)",
-                    "Qafl (m3/s)", "Qdef (m3/s)", "Geração Pat 1",
-                    "Geração Pat 2", "Geração Pat 3", "Geração Média",
-                    "Vertimento Turbinável", "Vertimento Não-Turbinável",
-                    "Ponta", "FPCGC"]
+            cols = [
+                "Volume Ini (% V.U)",
+                "Volume Fin (% V.U)",
+                "Volume Esp. (% V.U)",
+                "Qnat (m3/s)",
+                "Qnat (% MLT)",
+                "Qafl (m3/s)",
+                "Qdef (m3/s)",
+                "Geração Pat 1",
+                "Geração Pat 2",
+                "Geração Pat 3",
+                "Geração Média",
+                "Vertimento Turbinável",
+                "Vertimento Não-Turbinável",
+                "Ponta",
+                "FPCGC",
+            ]
             df = pd.DataFrame(tabela, columns=cols)
-            cols_adic = ["Código", "Usina", "Evaporação", "Tempo de Viagem",
-                         "Cota Abaixo da Crista do Vert", "Def. Mínima = 0"]
+            cols_adic = [
+                "Código",
+                "Usina",
+                "Evaporação",
+                "Tempo de Viagem",
+                "Cota Abaixo da Crista do Vert",
+                "Def. Mínima = 0",
+            ]
             df["Código"] = numeros
             df["Usina"] = usinas
             df["Evaporação"] = evaporacao
@@ -195,9 +212,7 @@ class BlocoRelatorioOperacaoUHERelato(Bloco):
             df = df[cols_adic + cols]
             return df
 
-        def le_se_tem_valor(digitos: int,
-                            linha: str,
-                            coluna_inicio: int):
+        def le_se_tem_valor(digitos: int, linha: str, coluna_inicio: int):
             coluna_fim = coluna_inicio + digitos
             trecho = linha[coluna_inicio:coluna_fim].strip()
             valor = None
@@ -242,19 +257,13 @@ class BlocoRelatorioOperacaoUHERelato(Bloco):
             def_minima_zero.append("$" in flags)
             tem_volume = len(linha[27:33].strip()) > 0
             if tem_volume:
-                tabela[i, :3] = reg_volume.le_linha_tabela(linha,
-                                                           27,
-                                                           1,
-                                                           3)
+                tabela[i, :3] = reg_volume.le_linha_tabela(linha, 27, 1, 3)
             else:
                 tabela[i, :3] = np.nan
             tabela[i, 3] = le_se_tem_valor(7, linha, 45)
             tabela[i, 4] = le_se_tem_valor(6, linha, 54)
             tabela[i, 5] = le_se_tem_valor(7, linha, 63)
-            tabela[i, 6:11] = reg_tabela.le_linha_tabela(linha,
-                                                         72,
-                                                         5,
-                                                         1)
+            tabela[i, 6:11] = reg_tabela.le_linha_tabela(linha, 72, 5, 1)
             tabela[i, 11] = le_se_tem_valor(7, linha, 112)
             tabela[i, 12] = le_se_tem_valor(7, linha, 120)
             tabela[i, 13] = le_se_tem_valor(7, linha, 128)
@@ -271,14 +280,13 @@ class BlocoBalancoEnergeticoRelato(Bloco):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
     str_inicio = "RELATORIO  DO  BALANCO  ENERGETICO"
     str_fim = "RELATORIO  DA  OPERACAO"
 
     def __init__(self):
 
-        super().__init__(BlocoBalancoEnergeticoRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoBalancoEnergeticoRelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -290,12 +298,21 @@ class BlocoBalancoEnergeticoRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Mercado", "Bacia", "Cbomba",
-                    "Ghid", "Gter", "GterAT", "Deficit",
-                    "Compra", "Venda", "Itaipu50", "Itaipu60"]
+            cols = [
+                "Mercado",
+                "Bacia",
+                "Cbomba",
+                "Ghid",
+                "Gter",
+                "GterAT",
+                "Deficit",
+                "Compra",
+                "Venda",
+                "Itaipu50",
+                "Itaipu60",
+            ]
             df.columns = cols
             df["Subsistema"] = subsistemas
             df = df[["Subsistema"] + cols]
@@ -323,17 +340,11 @@ class BlocoBalancoEnergeticoRelato(Bloco):
             # Se está lendo um subsistema e achou a linha de valores médios
             if subsis != "FC" and str_medio in linha:
                 subsistemas.append(subsis)
-                tabela[i, :9] = reg_tabela.le_linha_tabela(linha,
-                                                           10,
-                                                           1,
-                                                           9)
+                tabela[i, :9] = reg_tabela.le_linha_tabela(linha, 10, 1, 9)
                 # TODO - Começar a ler a interligação
                 # Para o SE, lê as gerações de Itaipu50 e Itaipu60
                 if subsis == "SE":
-                    tabela[i, 9:] = reg_tabela.le_linha_tabela(linha,
-                                                               96,
-                                                               1,
-                                                               2)
+                    tabela[i, 9:] = reg_tabela.le_linha_tabela(linha, 96, 1, 2)
                 # Reseta o indicador de subsistema
                 subsis = "FC"
                 i += 1
@@ -347,14 +358,13 @@ class BlocoCMORelato(Bloco):
     """
     Bloco com as informações do CMO por estágio e por subsistema.
     """
+
     str_inicio = "CUSTO MARGINAL DE OPERACAO  ($/MWh)"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoCMORelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoCMORelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -366,7 +376,6 @@ class BlocoCMORelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"Estágio {s}" for s in range(1, n_semanas + 1)]
@@ -380,16 +389,17 @@ class BlocoCMORelato(Bloco):
         arq.readline()
         # Descobre o número de semanas
         linha = arq.readline()
-        sems = [s for s in linha.split(" ") if (len(s) > 0
-                                                and ("Sem" in s or
-                                                     "Mes" in s))]
+        sems = [
+            s
+            for s in linha.split(" ")
+            if (len(s) > 0 and ("Sem" in s or "Mes" in s))
+        ]
         reg_pat = RegistroAn(6)
         reg_cmo = RegistroFn(10)
         n_semanas = len(sems)
         subsistemas: List[str] = []
         patamares: List[str] = []
-        tabela = np.zeros((4 * len(SUBSISTEMAS),
-                           n_semanas))
+        tabela = np.zeros((4 * len(SUBSISTEMAS), n_semanas))
         # Salta outra linha
         arq.readline()
         i = 0
@@ -407,10 +417,7 @@ class BlocoCMORelato(Bloco):
             subsistemas.append(ssis)
             patamares.append(pat)
             # Semanas
-            tabela[i, :] = reg_cmo.le_linha_tabela(linha,
-                                                   11,
-                                                   1,
-                                                   n_semanas)
+            tabela[i, :] = reg_cmo.le_linha_tabela(linha, 11, 1, n_semanas)
             i += 1
 
     # Override
@@ -423,14 +430,15 @@ class BlocoGeracaoTermicaSubsistemaRelato(Bloco):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
     str_inicio = "GERACAO TERMICA NOS SUSBSISTEMAS (MWmed)"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoGeracaoTermicaSubsistemaRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(
+            BlocoGeracaoTermicaSubsistemaRelato.str_inicio, "", True
+        )
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -442,7 +450,6 @@ class BlocoGeracaoTermicaSubsistemaRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"Estágio {s}" for s in range(1, n_semanas + 1)]
@@ -455,15 +462,16 @@ class BlocoGeracaoTermicaSubsistemaRelato(Bloco):
         arq.readline()
         # Descobre o número de semanas
         linha = arq.readline()
-        sems = [s for s in linha.split(" ") if (len(s) > 0
-                                                and ("Sem" in s or
-                                                     "Mes" in s))]
+        sems = [
+            s
+            for s in linha.split(" ")
+            if (len(s) > 0 and ("Sem" in s or "Mes" in s))
+        ]
         reg_ssis = RegistroAn(6)
         reg_gt = RegistroFn(10)
         n_semanas = len(sems)
         subsistemas: List[str] = []
-        tabela = np.zeros((MAX_SUBSISTEMAS,
-                           n_semanas))
+        tabela = np.zeros((MAX_SUBSISTEMAS, n_semanas))
         # Salta outra linha
         arq.readline()
         i = 0
@@ -479,10 +487,7 @@ class BlocoGeracaoTermicaSubsistemaRelato(Bloco):
             ssis = reg_ssis.le_registro(linha, 4)
             subsistemas.append(ssis)
             # Semanas
-            tabela[i, :] = reg_gt.le_linha_tabela(linha,
-                                                  11,
-                                                  1,
-                                                  n_semanas)
+            tabela[i, :] = reg_gt.le_linha_tabela(linha, 11, 1, n_semanas)
             i += 1
 
     # Override
@@ -495,14 +500,13 @@ class BlocoVolumeUtilReservatorioRelato(Bloco):
     Bloco com as informações de energia armazenada
     em percentual por REE.
     """
+
     str_inicio = " VOLUME UTIL DOS RESERVATORIOS"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoVolumeUtilReservatorioRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoVolumeUtilReservatorioRelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -514,11 +518,11 @@ class BlocoVolumeUtilReservatorioRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Inicial"] + [f"Estágio {s}"
-                                  for s in range(1, n_semanas + 1)]
+            cols = ["Inicial"] + [
+                f"Estágio {s}" for s in range(1, n_semanas + 1)
+            ]
             df.columns = cols
             df["Usina"] = usinas
             df["Número"] = numeros
@@ -530,17 +534,18 @@ class BlocoVolumeUtilReservatorioRelato(Bloco):
         arq.readline()
         # Descobre o número de semanas
         linha = arq.readline()
-        sems = [s for s in linha.split(" ") if (len(s) > 0
-                                                and ("Sem" in s or
-                                                     "Mes" in s))]
+        sems = [
+            s
+            for s in linha.split(" ")
+            if (len(s) > 0 and ("Sem" in s or "Mes" in s))
+        ]
         reg_usina = RegistroAn(12)
         reg_numero = RegistroIn(4)
         reg_vol = RegistroFn(6)
         n_semanas = len(sems)
         usinas: List[str] = []
         numeros: List[int] = []
-        tabela = np.zeros((300,
-                           n_semanas + 1))
+        tabela = np.zeros((300, n_semanas + 1))
         # Salta outra linha
         arq.readline()
         i = 0
@@ -558,10 +563,7 @@ class BlocoVolumeUtilReservatorioRelato(Bloco):
             numeros.append(numero)
             usinas.append(usina)
             # Semanas
-            tabela[i, :] = reg_vol.le_linha_tabela(linha,
-                                                   23,
-                                                   1,
-                                                   n_semanas + 1)
+            tabela[i, :] = reg_vol.le_linha_tabela(linha, 23, 1, n_semanas + 1)
             i += 1
 
     # Override
@@ -573,14 +575,13 @@ class BlocoDadosTermicasRelato(Bloco):
     """
     Bloco com as informações de cadastro das térmicas existentes no estudo.
     """
+
     str_inicio = "Relatorio  dos  Dados  de  Usinas  Termicas"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoDadosTermicasRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoDadosTermicasRelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -592,11 +593,18 @@ class BlocoDadosTermicasRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
-            cols = ["GT Min Pat. 1", "GT Max Pat. 1", "Custo Pat. 1",
-                    "GT Min Pat. 2", "GT Max Pat. 2", "Custo Pat. 2",
-                    "GT Min Pat. 3", "GT Max Pat. 3", "Custo Pat. 3"]
+            cols = [
+                "GT Min Pat. 1",
+                "GT Max Pat. 1",
+                "Custo Pat. 1",
+                "GT Min Pat. 2",
+                "GT Max Pat. 2",
+                "Custo Pat. 2",
+                "GT Min Pat. 3",
+                "GT Max Pat. 3",
+                "Custo Pat. 3",
+            ]
             df = pd.DataFrame(tabela, columns=cols)
             df["Código"] = numeros
             df["Usina"] = usinas
@@ -656,14 +664,15 @@ class BlocoDisponibilidadesTermicasRelato(Bloco):
     Bloco com as informações de disponibilidade
     das térmicas existentes no estudo.
     """
+
     str_inicio = "Disponibilidade das Usinas Termicas (%)"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoDisponibilidadesTermicasRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(
+            BlocoDisponibilidadesTermicasRelato.str_inicio, "", True
+        )
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -675,7 +684,6 @@ class BlocoDisponibilidadesTermicasRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [f"Estágio {i}" for i in range(1, n_semanas + 1)]
             df = pd.DataFrame(tabela, columns=cols)
@@ -689,9 +697,11 @@ class BlocoDisponibilidadesTermicasRelato(Bloco):
 
         # Descobre o número de estágios
         linha = arq.readline()
-        sems = [s for s in linha.split(" ") if (len(s) > 0
-                                                and ("Sem" in s or
-                                                     "Mes" in s))]
+        sems = [
+            s
+            for s in linha.split(" ")
+            if (len(s) > 0 and ("Sem" in s or "Mes" in s))
+        ]
         n_semanas = len(sems)
 
         reg_num = RegistroIn(3)
@@ -714,10 +724,7 @@ class BlocoDisponibilidadesTermicasRelato(Bloco):
             # Senão, lê mais uma linha
             numeros.append(reg_num.le_registro(linha, 4))
             usinas.append(reg_usina.le_registro(linha, 8))
-            tabela[i, :] = reg_valores.le_linha_tabela(linha,
-                                                       21,
-                                                       1,
-                                                       n_semanas)
+            tabela[i, :] = reg_valores.le_linha_tabela(linha, 21, 1, n_semanas)
             i += 1
 
     # Override
@@ -730,14 +737,13 @@ class BlocoDadosMercadoRelato(Bloco):
     Bloco com as informações de mercado de energia por patamar
     e por subsistema existente no :class:`Relato`.
     """
+
     str_inicio = "Relatorio  dos  Dados  de  Mercado"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoDadosMercadoRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoDadosMercadoRelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -749,11 +755,15 @@ class BlocoDadosMercadoRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
-            cols = ["Patamar 1", "Mercado 1",
-                    "Patamar 2", "Mercado 2",
-                    "Patamar 3", "Mercado 3"]
+            cols = [
+                "Patamar 1",
+                "Mercado 1",
+                "Patamar 2",
+                "Mercado 2",
+                "Patamar 3",
+                "Mercado 3",
+            ]
             df = pd.DataFrame(tabela, columns=cols)
             df["Estágio"] = estagios
             df["Subsistema"] = subsistemas
@@ -801,14 +811,13 @@ class BlocoENAAcoplamentoREERelato(Bloco):
     Bloco com as informações de energia natural afluente para
     acoplamento com o longo prazo por REE.
     """
+
     str_inicio = "Afluente para Acoplamento c/ Longo Prazo por REE"
     str_fim = "Afluente para Acoplamento c/ Longo Prazo por Subsistema"
 
     def __init__(self):
 
-        super().__init__(BlocoENAAcoplamentoREERelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoENAAcoplamentoREERelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -820,7 +829,6 @@ class BlocoENAAcoplamentoREERelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def le_tabela(linha: str) -> np.ndarray:
             indice_ree = int(linha.split("REE: ")[1].split("-")[0].strip())
             ree = linha.split("REE: ")[1].split("/")[0].split("-")[1].strip()
@@ -828,9 +836,11 @@ class BlocoENAAcoplamentoREERelato(Bloco):
             # Salta uma linha para identificar o número de estágios
             arq.readline()
             lin = arq.readline()
-            sems = [s for s in lin.split(" ") if (len(s) > 0
-                                                  and ("Sem" in s or
-                                                       "Mes" in s))]
+            sems = [
+                s
+                for s in lin.split(" ")
+                if (len(s) > 0 and ("Sem" in s or "Mes" in s))
+            ]
             n_semanas = len(sems)
             arq.readline()
             # Começa a ler os cenários
@@ -857,8 +867,9 @@ class BlocoENAAcoplamentoREERelato(Bloco):
                 n_semanas = tabela.shape[1] - 1
             else:
                 raise TypeError("Erro na leitura das ENAs para acoplamento")
-            cols = ["Cenário"] + [f"Estágio {s}"
-                                  for s in range(1, n_semanas + 1)]
+            cols = ["Cenário"] + [
+                f"Estágio {s}" for s in range(1, n_semanas + 1)
+            ]
             df.columns = cols
             df["Índice"] = indices_rees
             df["REE"] = rees
@@ -894,14 +905,13 @@ class BlocoEnergiaArmazenadaREERelato(Bloco):
     Bloco com as informações de energia armazenada
     em percentual por REE.
     """
+
     str_inicio = "ENERGIA ARMAZENADA NOS REEs (%"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoEnergiaArmazenadaREERelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoEnergiaArmazenadaREERelato.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -913,11 +923,11 @@ class BlocoEnergiaArmazenadaREERelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Inicial"] + [f"Estágio {s}"
-                                  for s in range(1, n_semanas + 1)]
+            cols = ["Inicial"] + [
+                f"Estágio {s}" for s in range(1, n_semanas + 1)
+            ]
             df.columns = cols
             df["Subsistema"] = subsistemas
             df["REE"] = rees
@@ -928,16 +938,17 @@ class BlocoEnergiaArmazenadaREERelato(Bloco):
         arq.readline()
         # Descobre o número de semanas
         linha = arq.readline()
-        sems = [s for s in linha.split(" ") if (len(s) > 0
-                                                and ("Sem" in s or
-                                                     "Mes" in s))]
+        sems = [
+            s
+            for s in linha.split(" ")
+            if (len(s) > 0 and ("Sem" in s or "Mes" in s))
+        ]
         reg_ree = RegistroAn(12)
         reg_ssis = RegistroIn(4)
         n_semanas = len(sems)
         rees: List[str] = []
         subsistemas: List[int] = []
-        tabela = np.zeros((MAX_REES,
-                           n_semanas + 1))
+        tabela = np.zeros((MAX_REES, n_semanas + 1))
         # Salta outra linha
         arq.readline()
         i = 0
@@ -976,14 +987,15 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
     Bloco com as informações de energia armazenada
     em percentual por REE.
     """
+
     str_inicio = "ENERGIA ARMAZENADA NOS SUBSISTEMAS (%"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoEnergiaArmazenadaSubsistemaRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(
+            BlocoEnergiaArmazenadaSubsistemaRelato.str_inicio, "", True
+        )
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -995,11 +1007,11 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Inicial"] + [f"Estágio {s}"
-                                  for s in range(1, n_semanas + 1)]
+            cols = ["Inicial"] + [
+                f"Estágio {s}" for s in range(1, n_semanas + 1)
+            ]
             df.columns = cols
             df["Subsistema"] = subsistemas
             df = df[["Subsistema"] + cols]
@@ -1009,15 +1021,16 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
         arq.readline()
         # Descobre o número de semanas
         linha = arq.readline()
-        sems = [s for s in linha.split(" ") if (len(s) > 0
-                                                and ("Sem" in s or
-                                                     "Mes" in s))]
+        sems = [
+            s
+            for s in linha.split(" ")
+            if (len(s) > 0 and ("Sem" in s or "Mes" in s))
+        ]
         reg_ssis = RegistroAn(12)
         reg_earm = RegistroFn(6)
         n_semanas = len(sems)
         subsistemas: List[str] = []
-        tabela = np.zeros((MAX_SUBSISTEMAS,
-                           n_semanas + 1))
+        tabela = np.zeros((MAX_SUBSISTEMAS, n_semanas + 1))
         # Salta outra linha
         arq.readline()
         i = 0
@@ -1033,10 +1046,7 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
             ssis = reg_ssis.le_registro(linha, 4)
             subsistemas.append(ssis)
             # Semanas
-            tabela[i, :] = reg_earm.le_linha_tabela(linha,
-                                                    23,
-                                                    1,
-                                                    n_semanas + 1)
+            tabela[i, :] = reg_earm.le_linha_tabela(linha, 23, 1, n_semanas + 1)
             i += 1
 
     # Override
@@ -1049,14 +1059,13 @@ class BlocoENAPreEstudoMensalREERelato(Bloco):
     Bloco com as informações da ENA pré estudo mensal do caso
     por REE.
     """
+
     str_inicio = "ENERGIA NATURAL AFLUENTE POR REE (MESES"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoENAPreEstudoMensalREERelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoENAPreEstudoMensalREERelato.str_inicio, "", True)
 
         self._dados = pd.DataFrame()
 
@@ -1068,11 +1077,9 @@ class BlocoENAPreEstudoMensalREERelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Earmax"] + [f"Estágio Pré {s}"
-                                 for s in range(1, 12)]
+            cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 12)]
             df.columns = cols
             df["REE"] = rees
             df = df[["REE"] + cols]
@@ -1098,10 +1105,7 @@ class BlocoENAPreEstudoMensalREERelato(Bloco):
             ssis = reg_ree.le_registro(linha, 4)
             rees.append(ssis)
             # Semanas
-            tabela[i, :] = reg_ena.le_linha_tabela(linha,
-                                                   29,
-                                                   1,
-                                                   12)
+            tabela[i, :] = reg_ena.le_linha_tabela(linha, 29, 1, 12)
             i += 1
 
     # Override
@@ -1114,14 +1118,15 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Bloco):
     Bloco com as informações da ENA pré estudo mensal do caso
     por Subsistema.
     """
+
     str_inicio = "ENERGIA NATURAL AFLUENTE POR SUBSISTEMA (MESES"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoENAPreEstudoMensalSubsistemaRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(
+            BlocoENAPreEstudoMensalSubsistemaRelato.str_inicio, "", True
+        )
 
         self._dados = pd.DataFrame()
 
@@ -1133,11 +1138,9 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Earmax"] + [f"Estágio Pré {s}"
-                                 for s in range(1, 12)]
+            cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 12)]
             df.columns = cols
             df["Subsistema"] = subsistemas
             df = df[["Subsistema"] + cols]
@@ -1149,8 +1152,7 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Bloco):
         reg_ssis = RegistroAn(14)
         reg_ena = RegistroFn(8)
         subsistemas: List[str] = []
-        tabela = np.zeros((MAX_SUBSISTEMAS,
-                           12))
+        tabela = np.zeros((MAX_SUBSISTEMAS, 12))
         i = 0
         while True:
             # Confere se a leitura não acabou
@@ -1164,10 +1166,7 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Bloco):
             ssis = reg_ssis.le_registro(linha, 4)
             subsistemas.append(ssis)
             # Semanas
-            tabela[i, :] = reg_ena.le_linha_tabela(linha,
-                                                   24,
-                                                   1,
-                                                   12)
+            tabela[i, :] = reg_ena.le_linha_tabela(linha, 24, 1, 12)
             i += 1
 
     # Override
@@ -1180,14 +1179,13 @@ class BlocoENAPreEstudoSemanalREERelato(Bloco):
     Bloco com as informações da ENA pré estudo semanal do caso
     por REE.
     """
+
     str_inicio = "DADOS DE ENERGIA NATURAL AFLUENTE POR REE (SEMANAS"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoENAPreEstudoSemanalREERelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoENAPreEstudoSemanalREERelato.str_inicio, "", True)
 
         self._dados = pd.DataFrame()
 
@@ -1199,11 +1197,9 @@ class BlocoENAPreEstudoSemanalREERelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Earmax"] + [f"Estágio Pré {s}"
-                                 for s in range(1, 6)]
+            cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 6)]
             df.columns = cols
             df["REE"] = rees
             df = df[["REE"] + cols]
@@ -1233,10 +1229,7 @@ class BlocoENAPreEstudoSemanalREERelato(Bloco):
             ssis = reg_ree.le_registro(linha, 4)
             rees.append(ssis)
             # Semanas
-            tabela[i, :] = reg_ena.le_linha_tabela(linha,
-                                                   29,
-                                                   1,
-                                                   6)
+            tabela[i, :] = reg_ena.le_linha_tabela(linha, 29, 1, 6)
             i += 1
 
     # Override
@@ -1249,14 +1242,15 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
     Bloco com as informações da ENA pré estudo semanal do caso
     por Subsistema.
     """
+
     str_inicio = "NATURAL AFLUENTE POR SUBSISTEMA(SEMANAS"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoENAPreEstudoSemanalSubsistemaRelato.str_inicio,
-                         "",
-                         True)
+        super().__init__(
+            BlocoENAPreEstudoSemanalSubsistemaRelato.str_inicio, "", True
+        )
 
         self._dados = pd.DataFrame()
 
@@ -1268,11 +1262,9 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Earmax"] + [f"Estágio Pré {s}"
-                                 for s in range(1, 6)]
+            cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 6)]
             df.columns = cols
             df["Subsistema"] = subsistemas
             df = df[["Subsistema"] + cols]
@@ -1288,8 +1280,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
         reg_ssis = RegistroAn(14)
         reg_ena = RegistroFn(8)
         subsistemas: List[str] = []
-        tabela = np.zeros((MAX_SUBSISTEMAS,
-                           6))
+        tabela = np.zeros((MAX_SUBSISTEMAS, 6))
         i = 0
         while True:
             # Confere se a leitura não acabou
@@ -1303,10 +1294,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Bloco):
             ssis = reg_ssis.le_registro(linha, 4)
             subsistemas.append(ssis)
             # Semanas
-            tabela[i, :] = reg_ena.le_linha_tabela(linha,
-                                                   24,
-                                                   1,
-                                                   6)
+            tabela[i, :] = reg_ena.le_linha_tabela(linha, 24, 1, 6)
             i += 1
 
     # Override
@@ -1319,14 +1307,13 @@ class BlocoDiasExcluidosSemanas(Bloco):
     Bloco com as informações de dias excluídos das semanas
     inicial e final do estudo.
     """
+
     str_inicio = " Mes inicial do periodo de estudos"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoDiasExcluidosSemanas.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoDiasExcluidosSemanas.str_inicio, "", True)
 
         self._dados = [0, 0]
 
@@ -1334,8 +1321,12 @@ class BlocoDiasExcluidosSemanas(Bloco):
         if not isinstance(o, BlocoDiasExcluidosSemanas):
             return False
         bloco: BlocoDiasExcluidosSemanas = o
-        return all([self._dados[0] == bloco._dados[0],
-                    self._dados[1] == bloco._dados[1]])
+        return all(
+            [
+                self._dados[0] == bloco._dados[0],
+                self._dados[1] == bloco._dados[1],
+            ]
+        )
 
     # Override
     def le(self, arq: IO):
@@ -1362,8 +1353,8 @@ class LeituraRelato(LeituraBlocos):
     tipos de dados, dentre outras tarefas necessárias para a leitura.
 
     """
-    def __init__(self,
-                 diretorio: str):
+
+    def __init__(self, diretorio: str):
         super().__init__(diretorio)
 
     # Override
@@ -1371,25 +1362,31 @@ class LeituraRelato(LeituraBlocos):
         """
         Cria a lista de blocos a serem lidos no arquivo adterm.dat.
         """
-        relat_uhe: List[Bloco] = [BlocoRelatorioOperacaoUHERelato()
-                                  for _ in range(10)]
-        balanc_energ: List[Bloco] = [BlocoBalancoEnergeticoRelato()
-                                     for _ in range(10)]
-        return ([BlocoDadosGeraisRelato(),
-                 BlocoConvergenciaRelato(),
-                 BlocoCMORelato(),
-                 BlocoVolumeUtilReservatorioRelato(),
-                 BlocoDadosTermicasRelato(),
-                 BlocoDisponibilidadesTermicasRelato(),
-                 BlocoDadosMercadoRelato(),
-                 BlocoENAAcoplamentoREERelato(),
-                 BlocoEnergiaArmazenadaREERelato(),
-                 BlocoEnergiaArmazenadaSubsistemaRelato(),
-                 BlocoENAPreEstudoMensalREERelato(),
-                 BlocoENAPreEstudoMensalSubsistemaRelato(),
-                 BlocoENAPreEstudoSemanalREERelato(),
-                 BlocoENAPreEstudoSemanalSubsistemaRelato(),
-                 BlocoGeracaoTermicaSubsistemaRelato(),
-                 BlocoDiasExcluidosSemanas()] +
-                relat_uhe +
-                balanc_energ)
+        relat_uhe: List[Bloco] = [
+            BlocoRelatorioOperacaoUHERelato() for _ in range(10)
+        ]
+        balanc_energ: List[Bloco] = [
+            BlocoBalancoEnergeticoRelato() for _ in range(10)
+        ]
+        return (
+            [
+                BlocoDadosGeraisRelato(),
+                BlocoConvergenciaRelato(),
+                BlocoCMORelato(),
+                BlocoVolumeUtilReservatorioRelato(),
+                BlocoDadosTermicasRelato(),
+                BlocoDisponibilidadesTermicasRelato(),
+                BlocoDadosMercadoRelato(),
+                BlocoENAAcoplamentoREERelato(),
+                BlocoEnergiaArmazenadaREERelato(),
+                BlocoEnergiaArmazenadaSubsistemaRelato(),
+                BlocoENAPreEstudoMensalREERelato(),
+                BlocoENAPreEstudoMensalSubsistemaRelato(),
+                BlocoENAPreEstudoSemanalREERelato(),
+                BlocoENAPreEstudoSemanalSubsistemaRelato(),
+                BlocoGeracaoTermicaSubsistemaRelato(),
+                BlocoDiasExcluidosSemanas(),
+            ]
+            + relat_uhe
+            + balanc_energ
+        )

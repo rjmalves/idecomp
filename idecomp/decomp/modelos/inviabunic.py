@@ -1,6 +1,7 @@
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroIn
 from idecomp._utils.leiturablocos import LeituraBlocos
+
 # Imports de módulos externos
 import pandas as pd  # type: ignore
 from typing import IO, List
@@ -11,14 +12,13 @@ class BlocoInviabilidadesIteracoes(Bloco):
     Bloco com as informações das inviabilidades visitadas
     pelo DECOMP durante o processo iterativo.
     """
+
     str_inicio = "TERACAO  FWD(1)/BWD(0)  ESTAGIO  CENARIO"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoInviabilidadesIteracoes.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoInviabilidadesIteracoes.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -30,7 +30,6 @@ class BlocoInviabilidadesIteracoes(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
             df["Iteração"] = iteracoes
@@ -85,14 +84,13 @@ class BlocoInviabilidadesSimFinal(Bloco):
     Bloco com as informações das inviabilidades visitadas
     pelo DECOMP durante a simulação final.
     """
+
     str_inicio = "    ESTAGIO  CENARIO         RESTRICAO"
     str_fim = ""
 
     def __init__(self):
 
-        super().__init__(BlocoInviabilidadesSimFinal.str_inicio,
-                         "",
-                         True)
+        super().__init__(BlocoInviabilidadesSimFinal.str_inicio, "", True)
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -104,7 +102,6 @@ class BlocoInviabilidadesSimFinal(Bloco):
 
     # Override
     def le(self, arq: IO):
-
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
             df["Estágio"] = estagios
@@ -160,8 +157,8 @@ class LeituraInviabUnic(LeituraBlocos):
     tipos de dados, dentre outras tarefas necessárias para a leitura.
 
     """
-    def __init__(self,
-                 diretorio: str):
+
+    def __init__(self, diretorio: str):
         super().__init__(diretorio)
 
     # Override
@@ -169,5 +166,4 @@ class LeituraInviabUnic(LeituraBlocos):
         """
         Cria a lista de blocos a serem lidos no arquivo inviab_unic.rvx.
         """
-        return ([BlocoInviabilidadesIteracoes(),
-                 BlocoInviabilidadesSimFinal()])
+        return [BlocoInviabilidadesIteracoes(), BlocoInviabilidadesSimFinal()]

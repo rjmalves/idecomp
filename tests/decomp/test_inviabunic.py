@@ -2,8 +2,7 @@
 from idecomp.decomp.inviabunic import InviabUnic
 
 
-inv = InviabUnic.le_arquivo("tests/_arquivos",
-                            "inviab_unic.rv0")
+inv = InviabUnic.le_arquivo("tests/_arquivos", "inviab_unic.rv0")
 
 
 def test_leitura():

@@ -15,16 +15,14 @@ class Hidr(ArquivoBinario):
     da execução.
 
     """
-    def __init__(self,
-                 dados: DadosArquivoBinarios) -> None:
+
+    def __init__(self, dados: DadosArquivoBinarios) -> None:
         super().__init__(dados)
         self.__df: pd.DataFrame = None
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="hidr.dat") -> 'Hidr':
+    def le_arquivo(cls, diretorio: str, nome_arquivo="hidr.dat") -> "Hidr":
         """
         Realiza a leitura de um arquivo "hidr.dat" existente em
         um diretório.
@@ -42,9 +40,7 @@ class Hidr(ArquivoBinario):
         return cls(r)
 
     # Override
-    def escreve_arquivo(self,
-                        diretorio: str,
-                        nome_arquivo: str = "hidr.dat"):
+    def escreve_arquivo(self, diretorio: str, nome_arquivo: str = "hidr.dat"):
         """
         Realiza a escrita de um arquivo com as informações do
         objeto :class:`Hidr`
@@ -61,53 +57,55 @@ class Hidr(ArquivoBinario):
 
     def __calcula_df(self):
 
-        colunas = ["Nome",
-                   "Posto",
-                   *[f"Posto BDH {i}" for i in range(1, 9)],
-                   "Subsistema",
-                   "Empresa",
-                   "Posto Jusante",
-                   "Desvio",
-                   "Volume Mínimo",
-                   "Volume Máximo",
-                   "Volume Vertedouro",
-                   "Volume Desvio",
-                   "Cota Mínima",
-                   "Cota Máxima",
-                   *[f"C{i} CV" for i in range(1, 6)],
-                   *[f"C{i} CA" for i in range(1, 6)],
-                   *[f"Evaporação Mês {i}" for i in range(1, 13)],
-                   "Num. Conjuntos Máquinas",
-                   *[f"Num. Máquinas Conjunto {i}" for i in range(1, 6)],
-                   *[f"Pot. Conjunto {i}" for i in range(1, 6)],
-                   *[f"Ignorado {i}" for i in range(1, 76)],
-                   *[f"H Nominal {i}" for i in range(1, 6)],
-                   *[f"Q Nominal {i}" for i in range(1, 6)],
-                   "Produtibilidade Específica",
-                   "Perdas",
-                   "Número Pol. Jusante",
-                   *[f"C{i} PJUS1" for i in range(1, 6)],
-                   *[f"C{i} PJUS2" for i in range(1, 6)],
-                   *[f"C{i} PJUS3" for i in range(1, 6)],
-                   *[f"C{i} PJUS4" for i in range(1, 6)],
-                   *[f"C{i} PJUS5" for i in range(1, 6)],
-                   *[f"C{i} PJUS6" for i in range(1, 6)],
-                   *[f"C{i} PJUSREF" for i in range(1, 7)],
-                   "Canal de Fuga Médio",
-                   "Influencia Vert. Cfuga",
-                   "Fator Carga Max.",
-                   "Fator Carga Min.",
-                   "Vazão Mínima",
-                   "Num. Unidades Base",
-                   "Tipo Turbina",
-                   "Representação Conjunto",
-                   "Taxa Indisp. Forçada",
-                   "Taxa Indisp. Programada",
-                   "Tipo de Perda",
-                   "Data",
-                   "Observação",
-                   "Volume de Referência",
-                   "Tipo de Regulação"]
+        colunas = [
+            "Nome",
+            "Posto",
+            *[f"Posto BDH {i}" for i in range(1, 9)],
+            "Subsistema",
+            "Empresa",
+            "Posto Jusante",
+            "Desvio",
+            "Volume Mínimo",
+            "Volume Máximo",
+            "Volume Vertedouro",
+            "Volume Desvio",
+            "Cota Mínima",
+            "Cota Máxima",
+            *[f"C{i} CV" for i in range(1, 6)],
+            *[f"C{i} CA" for i in range(1, 6)],
+            *[f"Evaporação Mês {i}" for i in range(1, 13)],
+            "Num. Conjuntos Máquinas",
+            *[f"Num. Máquinas Conjunto {i}" for i in range(1, 6)],
+            *[f"Pot. Conjunto {i}" for i in range(1, 6)],
+            *[f"Ignorado {i}" for i in range(1, 76)],
+            *[f"H Nominal {i}" for i in range(1, 6)],
+            *[f"Q Nominal {i}" for i in range(1, 6)],
+            "Produtibilidade Específica",
+            "Perdas",
+            "Número Pol. Jusante",
+            *[f"C{i} PJUS1" for i in range(1, 6)],
+            *[f"C{i} PJUS2" for i in range(1, 6)],
+            *[f"C{i} PJUS3" for i in range(1, 6)],
+            *[f"C{i} PJUS4" for i in range(1, 6)],
+            *[f"C{i} PJUS5" for i in range(1, 6)],
+            *[f"C{i} PJUS6" for i in range(1, 6)],
+            *[f"C{i} PJUSREF" for i in range(1, 7)],
+            "Canal de Fuga Médio",
+            "Influencia Vert. Cfuga",
+            "Fator Carga Max.",
+            "Fator Carga Min.",
+            "Vazão Mínima",
+            "Num. Unidades Base",
+            "Tipo Turbina",
+            "Representação Conjunto",
+            "Taxa Indisp. Forçada",
+            "Taxa Indisp. Programada",
+            "Tipo de Perda",
+            "Data",
+            "Observação",
+            "Volume de Referência",
+            "Tipo de Regulação",
+        ]
 
         blocos = self._dados.blocos
         dados = {}

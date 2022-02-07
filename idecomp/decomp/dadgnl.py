@@ -24,15 +24,12 @@ class DadGNL(ArquivoRegistros):
 
     T = TypeVar("T")
 
-    def __init__(self,
-                 dados: DadosArquivoRegistros) -> None:
+    def __init__(self, dados: DadosArquivoRegistros) -> None:
         super().__init__(dados)
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="dadgnl.rv0") -> 'DadGNL':
+    def le_arquivo(cls, diretorio: str, nome_arquivo="dadgnl.rv0") -> "DadGNL":
         """
         Realiza a leitura de um arquivo "dadgnl.rvx" existente em
         um diretório.
@@ -49,9 +46,7 @@ class DadGNL(ArquivoRegistros):
         r = leitor.le_arquivo(nome_arquivo)
         return cls(r)
 
-    def escreve_arquivo(self,
-                        diretorio: str,
-                        nome_arquivo="dadgnl.rv0"):
+    def escreve_arquivo(self, diretorio: str, nome_arquivo="dadgnl.rv0"):
         """
         Realiza a escrita de um arquivo com as informações do
         objeto :class:`DadGNL`
@@ -66,19 +61,16 @@ class DadGNL(ArquivoRegistros):
         escritor = EscritaRegistros(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
 
-    def __obtem_registro_do_estagio(self,
-                                    tipo: Type[T],
-                                    codigo: int,
-                                    estagio: int) -> Optional[T]:
+    def __obtem_registro_do_estagio(
+        self, tipo: Type[T], codigo: int, estagio: int
+    ) -> Optional[T]:
         regs: List[Any] = self.__obtem_registros(tipo)
         for r in regs:
-            if all([r.codigo == codigo,
-                    r.estagio == estagio]):
+            if all([r.codigo == codigo, r.estagio == estagio]):
                 return r
         return None
 
-    def __obtem_registros(self,
-                          tipo: Type[T]) -> List[T]:
+    def __obtem_registros(self, tipo: Type[T]) -> List[T]:
         registros = []
         for b in self._registros:
             if isinstance(b, tipo):
@@ -98,12 +90,12 @@ class DadGNL(ArquivoRegistros):
         :type estagio: int
         :return: Um registro do tipo :class:`TG`
         """
-        reg = self.__obtem_registro_do_estagio(TG,
-                                               codigo,
-                                               estagio)
+        reg = self.__obtem_registro_do_estagio(TG, codigo, estagio)
         if reg is None:
-            raise ValueError("Não foi encontrado registro TG com" +
-                             f" código {codigo} no estágio {estagio}")
+            raise ValueError(
+                "Não foi encontrado registro TG com"
+                + f" código {codigo} no estágio {estagio}"
+            )
         return reg
 
     def gs(self, mes: int) -> GS:
@@ -120,8 +112,9 @@ class DadGNL(ArquivoRegistros):
         for r in regs:
             if r.mes == mes:
                 return r
-        raise ValueError("Não foi encontrado registro GS" +
-                         f" para o mês {mes}")
+        raise ValueError(
+            "Não foi encontrado registro GS" + f" para o mês {mes}"
+        )
 
     def nl(self, codigo: int) -> NL:
         """
@@ -137,8 +130,9 @@ class DadGNL(ArquivoRegistros):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError("Não foi encontrado registro GS" +
-                         f" para o código {codigo}")
+        raise ValueError(
+            "Não foi encontrado registro GS" + f" para o código {codigo}"
+        )
 
     def gl(self, codigo: int, estagio: int) -> GL:
         """
@@ -153,10 +147,10 @@ class DadGNL(ArquivoRegistros):
         :type estagio: int
         :return: Um registro do tipo :class:`GL`
         """
-        reg = self.__obtem_registro_do_estagio(GL,
-                                               codigo,
-                                               estagio)
+        reg = self.__obtem_registro_do_estagio(GL, codigo, estagio)
         if reg is None:
-            raise ValueError("Não foi encontrado registro GL com" +
-                             f" código {codigo} no estágio {estagio}")
+            raise ValueError(
+                "Não foi encontrado registro GL com"
+                + f" código {codigo} no estágio {estagio}"
+            )
         return reg

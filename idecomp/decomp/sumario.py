@@ -2,7 +2,9 @@ from idecomp._utils.bloco import Bloco
 from idecomp.decomp.modelos.sumario import BlocoCMOSumario
 from idecomp.decomp.modelos.sumario import BlocoGeracaoTermicaSubsistemaSumario
 from idecomp.decomp.modelos.sumario import BlocoEnergiaArmazenadaREESumario
-from idecomp.decomp.modelos.sumario import BlocoEnergiaArmazenadaSubsistemaSumario  # noqa
+from idecomp.decomp.modelos.sumario import (
+    BlocoEnergiaArmazenadaSubsistemaSumario,
+)  # noqa
 from idecomp.decomp.modelos.sumario import LeituraSumario
 from idecomp._utils.arquivo import ArquivoBlocos
 from idecomp._utils.dadosarquivo import DadosArquivoBlocos
@@ -20,15 +22,15 @@ class Sumario(ArquivoBlocos):
     da execução: custos de operação, despacho de térmicas, etc.
 
     """
-    def __init__(self,
-                 dados: DadosArquivoBlocos) -> None:
+
+    def __init__(self, dados: DadosArquivoBlocos) -> None:
         super().__init__(dados)
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="sumario.rv0") -> 'Sumario':
+    def le_arquivo(
+        cls, diretorio: str, nome_arquivo="sumario.rv0"
+    ) -> "Sumario":
         """
         Realiza a leitura de um arquivo "sumario.rvx" existente em
         um diretório.
@@ -46,8 +48,7 @@ class Sumario(ArquivoBlocos):
         return cls(r)
 
     def __obtem_bloco(self, tipo: Type[Bloco]) -> Bloco:
-        """
-        """
+        """ """
         for b in self._blocos:
             if isinstance(b, tipo):
                 return b

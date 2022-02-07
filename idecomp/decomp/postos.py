@@ -15,34 +15,27 @@ class Postos(ArquivoBinario):
     da execução.
 
     """
-    def __init__(self,
-                 dados: DadosArquivoBinarios) -> None:
+
+    def __init__(self, dados: DadosArquivoBinarios) -> None:
         super().__init__(dados)
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="postos.dat") -> 'Postos':
-        """
-        """
+    def le_arquivo(cls, diretorio: str, nome_arquivo="postos.dat") -> "Postos":
+        """ """
         leitor = LeituraPostos(diretorio)
         r = leitor.le_arquivo(nome_arquivo)
         return cls(r)
 
     # Override
-    def escreve_arquivo(self,
-                        diretorio: str,
-                        nome_arquivo: str = "postos.dat"):
-        """
-        """
+    def escreve_arquivo(self, diretorio: str, nome_arquivo: str = "postos.dat"):
+        """ """
         escritor = EscritaBinario(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
 
     @property
     def postos(self) -> pd.DataFrame:
-        """
-        """
+        """ """
         nome = [b.dados[0] for b in self._dados.blocos]
         ano_inicial = [b.dados[1] for b in self._dados.blocos]
         ano_final = [b.dados[2] for b in self._dados.blocos]

@@ -8,10 +8,8 @@ class Bloco:
     especificado através de uma string de início e uma
     de terminação, com estados de leitura.
     """
-    def __init__(self,
-                 str_inicio: str,
-                 str_final: str,
-                 obrigatorio: bool):
+
+    def __init__(self, str_inicio: str, str_final: str, obrigatorio: bool):
         self._str_inicio = str_inicio
         self._str_final = str_final
         self._obrigatorio = obrigatorio
@@ -31,12 +29,9 @@ class Bloco:
         """
         Verifica se uma linha é início do bloco.
         """
-        return (self._str_inicio in linha
-                and not self._encontrado)
+        return self._str_inicio in linha and not self._encontrado
 
-    def inicia_bloco(self,
-                     linha: str,
-                     ordem: int) -> bool:
+    def inicia_bloco(self, linha: str, ordem: int) -> bool:
         """
         Inicia um bloco com uma linha.
         """
@@ -46,10 +41,8 @@ class Bloco:
             self._ordem = ordem
         return self._encontrado and not self._lido
 
-    def le_bloco(self,
-                 arq: IO) -> Optional[bool]:
-        """
-        """
+    def le_bloco(self, arq: IO) -> Optional[bool]:
+        """ """
         self._lido = True
         return self.le(arq)
 

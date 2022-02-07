@@ -8,6 +8,7 @@ class BlocoBinario:
     Registro genérico dos arquivos do DECOMP,
     especificado através de um mnemônico, com estados de leitura.
     """
+
     def __init__(self):
         self._dados: Any = None
         self._lido = False
@@ -19,8 +20,7 @@ class BlocoBinario:
         return self.dados == bloco.dados
 
     def le_bloco(self, arq: BufferedReader) -> Optional[bool]:
-        """
-        """
+        """ """
         self._lido = True
         return self.le(arq)
 

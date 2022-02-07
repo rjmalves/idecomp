@@ -7,14 +7,13 @@ class RegistroDecomp:
     Registro genérico dos arquivos do DECOMP,
     especificado através de um mnemônico, com estados de leitura.
     """
-    def __init__(self,
-                 mnemonico: str,
-                 obrigatorio: bool):
+
+    def __init__(self, mnemonico: str, obrigatorio: bool):
         self._mnemonico = mnemonico
         self._obrigatorio = obrigatorio
         self._dados: Any = None
         self._encontrado = False
-        self._ordem = 0.
+        self._ordem = 0.0
         self._lido = False
         self._linha = ""
 
@@ -28,13 +27,13 @@ class RegistroDecomp:
         """
         Verifica se uma linha é início do registro.
         """
-        return (self._mnemonico in linha[0:2]
-                and linha[0] != "&"
-                and not self._encontrado)
+        return (
+            self._mnemonico in linha[0:2]
+            and linha[0] != "&"
+            and not self._encontrado
+        )
 
-    def inicia_registro(self,
-                        linha: str,
-                        ordem: float) -> bool:
+    def inicia_registro(self, linha: str, ordem: float) -> bool:
         """
         Inicia um registro com uma linha.
         """
@@ -45,8 +44,7 @@ class RegistroDecomp:
         return self._encontrado and not self._lido
 
     def le_registro(self) -> Optional[bool]:
-        """
-        """
+        """ """
         self._lido = True
         return self.le()
 
@@ -86,10 +84,10 @@ class TipoRegistroAC:
     Classe base para os diferentes tipos possíveis de
     registros AC do Dadger, baseados nos diferentes mnemônicos.
     """
+
     mnemonico = ""
 
-    def __init__(self,
-                 linha: str) -> None:
+    def __init__(self, linha: str) -> None:
         self._linha = linha
         self._dados: Any = []
 

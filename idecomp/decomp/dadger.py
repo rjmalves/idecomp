@@ -33,8 +33,7 @@ class Dadger(ArquivoRegistros):
 
     T = TypeVar("T")
 
-    def __init__(self,
-                 dados: DadosArquivoRegistros) -> None:
+    def __init__(self, dados: DadosArquivoRegistros) -> None:
         """
         Construtor padrão
         """
@@ -42,9 +41,7 @@ class Dadger(ArquivoRegistros):
 
     # Override
     @classmethod
-    def le_arquivo(cls,
-                   diretorio: str,
-                   nome_arquivo="dadger.rv0") -> 'Dadger':
+    def le_arquivo(cls, diretorio: str, nome_arquivo="dadger.rv0") -> "Dadger":
         """
         Realiza a leitura de um arquivo "dadger.rvx" existente em
         um diretório.
@@ -61,9 +58,7 @@ class Dadger(ArquivoRegistros):
         r = leitor.le_arquivo(nome_arquivo)
         return cls(r)
 
-    def escreve_arquivo(self,
-                        diretorio: str,
-                        nome_arquivo="dadger.rv0"):
+    def escreve_arquivo(self, diretorio: str, nome_arquivo="dadger.rv0"):
         """
         Realiza a escrita de um arquivo com as informações do
         objeto :class:`Dadger`
@@ -78,28 +73,23 @@ class Dadger(ArquivoRegistros):
         escritor = EscritaRegistros(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
 
-    def __obtem_registro(self,
-                         tipo: Type[T]) -> T:
-        """
-        """
+    def __obtem_registro(self, tipo: Type[T]) -> T:
+        """ """
         for b in self._registros:
             if isinstance(b, tipo):
                 return b
         raise ValueError(f"Não foi encontrado um registro do tipo {tipo}")
 
-    def __obtem_registro_do_estagio(self,
-                                    tipo: Type[T],
-                                    codigo: int,
-                                    estagio: int) -> Optional[T]:
+    def __obtem_registro_do_estagio(
+        self, tipo: Type[T], codigo: int, estagio: int
+    ) -> Optional[T]:
         regs: List[Any] = self.__obtem_registros(tipo)
         for r in regs:
-            if all([r.codigo == codigo,
-                    r.estagio == estagio]):
+            if all([r.codigo == codigo, r.estagio == estagio]):
                 return r
         return None
 
-    def __obtem_registros(self,
-                          tipo: Type[T]) -> List[T]:
+    def __obtem_registros(self, tipo: Type[T]) -> List[T]:
         registros = []
         for b in self._registros:
             if isinstance(b, tipo):
@@ -131,8 +121,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError("Não foi encontrado registro SB" +
-                         f" para o código {codigo}")
+        raise ValueError(
+            "Não foi encontrado registro SB" + f" para o código {codigo}"
+        )
 
     def uh(self, codigo: int) -> UH:
         """
@@ -148,8 +139,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError("Não foi encontrado registro UH" +
-                         f" para a UHE {codigo}")
+        raise ValueError(
+            "Não foi encontrado registro UH" + f" para a UHE {codigo}"
+        )
 
     def ct(self, codigo: int, estagio: int) -> CT:
         """
@@ -165,12 +157,13 @@ class Dadger(ArquivoRegistros):
         """
         regs: List[CT] = self.__obtem_registros(CT)
         for r in regs:
-            if all([r.codigo == codigo,
-                    r.estagio == estagio]):
+            if all([r.codigo == codigo, r.estagio == estagio]):
                 return r
-        raise ValueError("Não foi encontrado registro CT" +
-                         f" para a UTE {codigo} no estágio" +
-                         f" {estagio}.")
+        raise ValueError(
+            "Não foi encontrado registro CT"
+            + f" para a UTE {codigo} no estágio"
+            + f" {estagio}."
+        )
 
     def dp(self, estagio: int, subsistema: int) -> DP:
         """
@@ -187,20 +180,22 @@ class Dadger(ArquivoRegistros):
         """
         regs: List[DP] = self.__obtem_registros(DP)
         for r in regs:
-            if all([r.estagio == estagio,
-                    r.subsistema == subsistema]):
+            if all([r.estagio == estagio, r.subsistema == subsistema]):
                 return r
-        raise ValueError("Não foi encontrado registro DP" +
-                         f" para o subsistema {subsistema}" +
-                         f" no estágio {estagio})")
+        raise ValueError(
+            "Não foi encontrado registro DP"
+            + f" para o subsistema {subsistema}"
+            + f" no estágio {estagio})"
+        )
 
-    def ac(self,
-           uhe: int,
-           modificacao: str,
-           mes: str = None,
-           semana: int = None,
-           ano: int = None
-           ) -> AC:
+    def ac(
+        self,
+        uhe: int,
+        modificacao: str,
+        mes: str = None,
+        semana: int = None,
+        ano: int = None,
+    ) -> AC:
         """
         Obtém um registro que define modificações nos parâmetros
         das UHE em um :class:`Dadger`.
@@ -213,8 +208,7 @@ class Dadger(ArquivoRegistros):
         """
 
         def __atende(r: AC) -> bool:
-            condicoes: List[bool] = [r.uhe == uhe,
-                                     r.modificacao == modificacao]
+            condicoes: List[bool] = [r.uhe == uhe, r.modificacao == modificacao]
             if mes is not None:
                 condicoes.append(r.mes == mes)
             if semana is not None:
@@ -227,9 +221,11 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if __atende(r):
                 return r
-        raise ValueError("Não foi encontrado registro AC" +
-                         f" para a UHE {uhe}" +
-                         f" que modifique {modificacao})")
+        raise ValueError(
+            "Não foi encontrado registro AC"
+            + f" para a UHE {uhe}"
+            + f" que modifique {modificacao})"
+        )
 
     def cd(self, numero_curva: int, subsistema: int) -> CD:
         """
@@ -246,12 +242,15 @@ class Dadger(ArquivoRegistros):
         """
         regs: List[CD] = self.__obtem_registros(CD)
         for r in regs:
-            if all([r.numero_curva == numero_curva,
-                    r.subsistema == subsistema]):
+            if all(
+                [r.numero_curva == numero_curva, r.subsistema == subsistema]
+            ):
                 return r
-        raise ValueError("Não foi encontrado registro CD" +
-                         f" para o subsistema {subsistema}" +
-                         f" na curva {numero_curva})")
+        raise ValueError(
+            "Não foi encontrado registro CD"
+            + f" para o subsistema {subsistema}"
+            + f" na curva {numero_curva})"
+        )
 
     @property
     def tx(self) -> TX:
@@ -307,8 +306,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError("Não foi encontrado registro RE" +
-                         f" com código {codigo}")
+        raise ValueError(
+            "Não foi encontrado registro RE" + f" com código {codigo}"
+        )
 
     def lu(self, codigo: int, estagio: int) -> LU:
         """
@@ -353,8 +353,7 @@ class Dadger(ArquivoRegistros):
 
         """
 
-        def cria_registro(modelo: LU,
-                          estagio_final: int) -> LU:
+        def cria_registro(modelo: LU, estagio_final: int) -> LU:
             copia = deepcopy(modelo)
             copia.estagio = estagio
             # Procura pelo registro do próximo estágio
@@ -377,8 +376,9 @@ class Dadger(ArquivoRegistros):
         # Confere se o estágio pedido está no intervalo
         # do registro RE
         if not (re.estagio_inicial <= estagio <= re.estagio_final):
-            raise ValueError(f"Estágio {estagio} fora dos limites" +
-                             " do registro RE")
+            raise ValueError(
+                f"Estágio {estagio} fora dos limites" + " do registro RE"
+            )
         # Tenta obter um registro já existente
         reg = self.__obtem_registro_do_estagio(LU, codigo, estagio)
         if reg is not None:
@@ -407,8 +407,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.uhe == uhe:
                 return r
-        raise ValueError("Não foi encontrado registro VI" +
-                         f" para a UHE {uhe}")
+        raise ValueError(
+            "Não foi encontrado registro VI" + f" para a UHE {uhe}"
+        )
 
     def ir(self, tipo: str) -> IR:
         """
@@ -425,8 +426,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.tipo == tipo:
                 return r
-        raise ValueError("Não foi encontrado registro IR" +
-                         f" com mnemônico {tipo}")
+        raise ValueError(
+            "Não foi encontrado registro IR" + f" com mnemônico {tipo}"
+        )
 
     def rt(self, mnemonico: str) -> RT:
         """
@@ -442,8 +444,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.restricao == mnemonico:
                 return r
-        raise ValueError("Não foi encontrado registro RT" +
-                         f" com mnemônico {mnemonico}")
+        raise ValueError(
+            "Não foi encontrado registro RT" + f" com mnemônico {mnemonico}"
+        )
 
     def fc(self, tipo: str) -> FC:
         """
@@ -459,8 +462,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.tipo == tipo:
                 return r
-        raise ValueError("Não foi encontrado registro FC" +
-                         f" com mnemônico {tipo}")
+        raise ValueError(
+            "Não foi encontrado registro FC" + f" com mnemônico {tipo}"
+        )
 
     def ti(self, codigo: int) -> TI:
         """
@@ -476,8 +480,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError("Não foi encontrado registro TI" +
-                         f" para a UHE {codigo}")
+        raise ValueError(
+            "Não foi encontrado registro TI" + f" para a UHE {codigo}"
+        )
 
     def fp(self, codigo: int, estagio: int) -> FP:
         """
@@ -491,14 +496,14 @@ class Dadger(ArquivoRegistros):
         :type estagio: int
         :return: Um registro do tipo :class:`FP`
         """
-        r = self.__obtem_registro_do_estagio(FP,
-                                             codigo,
-                                             estagio)
+        r = self.__obtem_registro_do_estagio(FP, codigo, estagio)
         if r is not None:
             return r
         else:
-            raise ValueError("Registro não encontrado registro FP" +
-                             f"para a UHE {codigo} no estágio {estagio}")
+            raise ValueError(
+                "Registro não encontrado registro FP"
+                + f"para a UHE {codigo} no estágio {estagio}"
+            )
 
     def rq(self, ree: int) -> RQ:
         """
@@ -513,8 +518,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.ree == ree:
                 return r
-        raise ValueError("Não foi encontrado registro RQ" +
-                         f" para o REE {ree}")
+        raise ValueError(
+            "Não foi encontrado registro RQ" + f" para o REE {ree}"
+        )
 
     def ve(self, codigo: int) -> VE:
         """
@@ -529,8 +535,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError("Não foi encontrado registro VE" +
-                         f" para a UHE {codigo}")
+        raise ValueError(
+            "Não foi encontrado registro VE" + f" para a UHE {codigo}"
+        )
 
     def hv(self, codigo: int) -> HV:
         """
@@ -546,8 +553,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError("Não foi encontrado registro HV" +
-                         f" para UHE {codigo}")
+        raise ValueError(
+            "Não foi encontrado registro HV" + f" para UHE {codigo}"
+        )
 
     def lv(self, codigo: int, estagio: int) -> LV:
         """
@@ -591,8 +599,8 @@ class Dadger(ArquivoRegistros):
             True
 
         """
-        def cria_registro(modelo: LV,
-                          estagio_final: int) -> LV:
+
+        def cria_registro(modelo: LV, estagio_final: int) -> LV:
             copia = deepcopy(modelo)
             copia.estagio = estagio
             # Procura pelo registro do próximo estágio
@@ -615,8 +623,9 @@ class Dadger(ArquivoRegistros):
         # Confere se o estágio pedido está no intervalo
         # do registro HV
         if not (hv.estagio_inicial <= estagio <= hv.estagio_final):
-            raise ValueError(f"Estágio {estagio} fora dos limites" +
-                             " do registro HV")
+            raise ValueError(
+                f"Estágio {estagio} fora dos limites" + " do registro HV"
+            )
         # Tenta obter um registro já existente
         reg = self.__obtem_registro_do_estagio(LV, codigo, estagio)
         if reg is not None:
@@ -645,8 +654,9 @@ class Dadger(ArquivoRegistros):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError("Não foi encontrado registro HQ" +
-                         f" com o código {codigo}")
+        raise ValueError(
+            "Não foi encontrado registro HQ" + f" com o código {codigo}"
+        )
 
     def lq(self, codigo: int, estagio: int) -> LQ:
         """
@@ -690,8 +700,8 @@ class Dadger(ArquivoRegistros):
             True
 
         """
-        def cria_registro(modelo: LQ,
-                          estagio_final: int) -> LQ:
+
+        def cria_registro(modelo: LQ, estagio_final: int) -> LQ:
             copia = deepcopy(modelo)
             copia.estagio = estagio
             # Procura pelo registro do próximo estágio
@@ -714,8 +724,9 @@ class Dadger(ArquivoRegistros):
         # Confere se o estágio pedido está no intervalo
         # do registro HQ
         if not (hq.estagio_inicial <= estagio <= hq.estagio_final):
-            raise ValueError(f"Estágio {estagio} fora dos limites" +
-                             " do registro HQ")
+            raise ValueError(
+                f"Estágio {estagio} fora dos limites" + " do registro HQ"
+            )
         # Tenta obter um registro já existente
         reg = self.__obtem_registro_do_estagio(LQ, codigo, estagio)
         if reg is not None:
@@ -743,9 +754,7 @@ class Dadger(ArquivoRegistros):
         :type estagio: int
         :return: Um registro do tipo :class:`HE`
         """
-        r = self.__obtem_registro_do_estagio(HE,
-                                             codigo,
-                                             estagio)
+        r = self.__obtem_registro_do_estagio(HE, codigo, estagio)
         if r is not None:
             return r
         else:
