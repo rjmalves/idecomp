@@ -11,6 +11,7 @@ class TE(RegistroDecomp):
     """
     Registro que contém o nome do estudo do DECOMP.
     """
+
     mnemonico = "TE"
 
     def __init__(self):
@@ -43,6 +44,7 @@ class SB(RegistroDecomp):
     """
     Registro que contém o cadastro dos subsistemas.
     """
+
     mnemonico = "SB"
 
     def __init__(self):
@@ -56,9 +58,13 @@ class SB(RegistroDecomp):
         self._dados[1] = reg_mnemonico.le_registro(self._linha, 9)
 
     def escreve(self, arq: IO):
-        linha = (f"{SB.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(2) + "   " +
-                 f"{self._dados[1]}".ljust(2) + "\n")
+        linha = (
+            f"{SB.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(2)
+            + "   "
+            + f"{self._dados[1]}".ljust(2)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -93,6 +99,7 @@ class UH(RegistroDecomp):
     Registro que contém o cadastro das UHEs, com os seus volumes
     iniciais no estudo.
     """
+
     mnemonico = "UH"
 
     def __init__(self):
@@ -114,11 +121,16 @@ class UH(RegistroDecomp):
             self._dados[4] = reg_vert.le_registro(self._linha, 59)
 
     def escreve(self, arq: IO):
-        linha = (f"{UH.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "       " +
-                 f"{round(self._dados[2], 2)}".rjust(6) + "               " +
-                 f"{int(self._dados[3])}")
+        linha = (
+            f"{UH.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "       "
+            + f"{round(self._dados[2], 2)}".rjust(6)
+            + "               "
+            + f"{int(self._dados[3])}"
+        )
         if self._dados[4] != -1.0:
             linha += "                   "
             linha += f"{round(self._dados[4], 2)}".rjust(10)
@@ -179,14 +191,12 @@ class CT(RegistroDecomp):
     Registro que contém o cadastro das usinas termelétricas com
     os seus custos e capacidades.
     """
+
     mnemonico = "CT"
 
     def __init__(self):
         super().__init__(CT.mnemonico, True)
-        self._dados = [0, 0, "", 0,
-                       0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0]
+        self._dados = [0, 0, "", 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
     def le(self):
         reg_codigo = RegistroIn(3)
@@ -212,20 +222,26 @@ class CT(RegistroDecomp):
 
     def escreve(self, arq: IO):
 
-        linha = (f"{CT.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".ljust(10) +
-                 f"{self._dados[3]}".rjust(2) + "   " +
-                 formata_numero(self._dados[4], 2, 5) +
-                 formata_numero(self._dados[5], 2, 5) +
-                 f"{self._dados[6]:10.2f}" +
-                 formata_numero(self._dados[7], 2, 5) +
-                 formata_numero(self._dados[8], 2, 5) +
-                 f"{self._dados[9]:10.2f}" +
-                 formata_numero(self._dados[10], 2, 5) +
-                 formata_numero(self._dados[11], 2, 5) +
-                 f"{self._dados[12]:10.2f}" + "\n")
+        linha = (
+            f"{CT.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".ljust(10)
+            + f"{self._dados[3]}".rjust(2)
+            + "   "
+            + formata_numero(self._dados[4], 2, 5)
+            + formata_numero(self._dados[5], 2, 5)
+            + f"{self._dados[6]:10.2f}"
+            + formata_numero(self._dados[7], 2, 5)
+            + formata_numero(self._dados[8], 2, 5)
+            + f"{self._dados[9]:10.2f}"
+            + formata_numero(self._dados[10], 2, 5)
+            + formata_numero(self._dados[11], 2, 5)
+            + f"{self._dados[12]:10.2f}"
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -282,8 +298,10 @@ class CT(RegistroDecomp):
         novas = len(inflex)
         atuais = len(self.inflexibilidades)
         if novas != atuais:
-            raise ValueError("Número de inflexibilidades incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de inflexibilidades incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[4::3] = inflex
 
     @property
@@ -300,8 +318,10 @@ class CT(RegistroDecomp):
         novas = len(disp)
         atuais = len(self.disponibilidades)
         if novas != atuais:
-            raise ValueError("Número de disponibilidades incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de disponibilidades incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[5::3] = disp
 
     @property
@@ -318,8 +338,10 @@ class CT(RegistroDecomp):
         novas = len(cvu)
         atuais = len(self.cvus)
         if novas != atuais:
-            raise ValueError("Número de CVUs incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de CVUs incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[6::3] = cvu
 
 
@@ -328,6 +350,7 @@ class UE(RegistroDecomp):
     Registro que contém o cadastro das estações de bombeamento
     (usinas elevatórias).
     """
+
     mnemonico = "UE"
 
     def __init__(self):
@@ -351,15 +374,23 @@ class UE(RegistroDecomp):
         self._dados[7] = reg_bomb.le_registro(self._linha, 59)
 
     def escreve(self, arq: IO):
-        linha = (f"{UE.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".zfill(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".ljust(12) + "   " +
-                 f"{self._dados[3]}".rjust(3) + "  " +
-                 f"{self._dados[4]}".rjust(3) + "  " +
-                 f"{self._dados[5]:10.1f}" +
-                 f"{self._dados[6]:10.1f}" +
-                 f"{self._dados[7]:10.2f}" + "\n")
+        linha = (
+            f"{UE.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".zfill(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".ljust(12)
+            + "   "
+            + f"{self._dados[3]}".rjust(3)
+            + "  "
+            + f"{self._dados[4]}".rjust(3)
+            + "  "
+            + f"{self._dados[5]:10.1f}"
+            + f"{self._dados[6]:10.1f}"
+            + f"{self._dados[7]:10.2f}"
+            + "\n"
+        )
         arq.write(linha)
 
 
@@ -367,14 +398,12 @@ class DP(RegistroDecomp):
     """
     Registro que contém o cadastro das durações dos patamares.
     """
+
     mnemonico = "DP"
 
     def __init__(self):
         super().__init__(DP.mnemonico, True)
-        self._dados = [0, 0, 0,
-                       0.0, 0.0,
-                       0.0, 0.0,
-                       0.0, 0.0]
+        self._dados = [0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
     def le(self):
         reg_estagio = RegistroIn(2)
@@ -396,10 +425,15 @@ class DP(RegistroDecomp):
         self._dados[8] = reg_duracao.le_registro(self._linha, 69)
 
     def escreve(self, arq: IO):
-        linha = (f"{DP.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(2) + "   " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(1) + "    ")
+        linha = (
+            f"{DP.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(2)
+            + "   "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(1)
+            + "    "
+        )
         if self._dados[3] != 0.0:
             linha += f"{self._dados[3]:10.1f}"
         else:
@@ -462,8 +496,10 @@ class DP(RegistroDecomp):
         novas = len(c)
         atuais = len(self.cargas)
         if novas != atuais:
-            raise ValueError("Número de cargas incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de cargas incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[3::2] = c
 
     @property
@@ -480,8 +516,10 @@ class DP(RegistroDecomp):
         novas = len(d)
         atuais = len(self.duracoes)
         if novas != atuais:
-            raise ValueError("Número de durações incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de durações incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[4::2] = d
 
 
@@ -489,14 +527,12 @@ class CD(RegistroDecomp):
     """
     Registro que contém o cadastro dos custos de déficit.
     """
+
     mnemonico = "CD"
 
     def __init__(self):
         super().__init__(CD.mnemonico, True)
-        self._dados = [0, 0, "", 0,
-                       0.0, 0.0,
-                       0.0, 0.0,
-                       0.0, 0.0]
+        self._dados = [0, 0, "", 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
     def le(self):
         reg_num_curva = RegistroIn(2)
@@ -517,17 +553,23 @@ class CD(RegistroDecomp):
         self._dados[9] = reg_custo.le_registro(self._linha, 64)
 
     def escreve(self, arq: IO):
-        linha = (f"{CD.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(2) + "   " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".ljust(10) +
-                 f"{self._dados[3]}".rjust(2) + "   " +
-                 f"{self._dados[4]:5.0f}" +
-                 f"{self._dados[5]:10.2f}" +
-                 f"{self._dados[6]:5.0f}" +
-                 f"{self._dados[7]:10.2f}" +
-                 f"{self._dados[8]:5.0f}" +
-                 f"{self._dados[9]:10.2f}" + "\n")
+        linha = (
+            f"{CD.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(2)
+            + "   "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".ljust(10)
+            + f"{self._dados[3]}".rjust(2)
+            + "   "
+            + f"{self._dados[4]:5.0f}"
+            + f"{self._dados[5]:10.2f}"
+            + f"{self._dados[6]:5.0f}"
+            + f"{self._dados[7]:10.2f}"
+            + f"{self._dados[8]:5.0f}"
+            + f"{self._dados[9]:10.2f}"
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -571,8 +613,10 @@ class CD(RegistroDecomp):
         novos = len(lim)
         atuais = len(self.limites_superiores)
         if novos != atuais:
-            raise ValueError("Número de limites incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de limites incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[4::2] = lim
 
     @property
@@ -584,8 +628,10 @@ class CD(RegistroDecomp):
         novos = len(cus)
         atuais = len(self.custos)
         if novos != atuais:
-            raise ValueError("Número de custos incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de custos incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[5::2] = cus
 
 
@@ -594,6 +640,7 @@ class PQ(RegistroDecomp):
     Registro que contém as gerações de pequenas usinas, não
     incluídas no despacho.
     """
+
     mnemonico = "PQ"
 
     def __init__(self):
@@ -613,13 +660,19 @@ class PQ(RegistroDecomp):
         self._dados[5] = reg_custo.le_registro(self._linha, 34)
 
     def escreve(self, arq: IO):
-        linha = (f"{PQ.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".ljust(10) + " " +
-                 f"{self._dados[1]}".rjust(1) + "   " +
-                 f"{self._dados[2]}".rjust(2) + "   " +
-                 f"{self._dados[3]:5.0f}" +
-                 f"{self._dados[4]:5.0f}" +
-                 f"{self._dados[5]:5.0f}" + "\n")
+        linha = (
+            f"{PQ.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".ljust(10)
+            + " "
+            + f"{self._dados[1]}".rjust(1)
+            + "   "
+            + f"{self._dados[2]}".rjust(2)
+            + "   "
+            + f"{self._dados[3]:5.0f}"
+            + f"{self._dados[4]:5.0f}"
+            + f"{self._dados[5]:5.0f}"
+            + "\n"
+        )
         arq.write(linha)
 
 
@@ -627,14 +680,31 @@ class RI(RegistroDecomp):
     """
     Registro que contém as restrições de Itaipu.
     """
+
     mnemonico = "RI"
 
     def __init__(self):
         super().__init__(RI.mnemonico, True)
-        self._dados = [0, 0, 0,
-                       0.0, 0.0, 0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0, 0.0, 0.0]
+        self._dados = [
+            0,
+            0,
+            0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+        ]
 
     def le(self):
         reg_uhe = RegistroIn(3)
@@ -649,10 +719,15 @@ class RI(RegistroDecomp):
             self._dados[i] = t
 
     def escreve(self, arq: IO):
-        linha = (f"{RI.mnemonico}".ljust(3) +
-                 f"{self._dados[0]}".rjust(3) + "   " +
-                 f"{self._dados[1]}".rjust(2) + "  " +
-                 f"{self._dados[2]}".rjust(2) + " ")
+        linha = (
+            f"{RI.mnemonico}".ljust(3)
+            + f"{self._dados[0]}".rjust(3)
+            + "   "
+            + f"{self._dados[1]}".rjust(2)
+            + "  "
+            + f"{self._dados[2]}".rjust(2)
+            + " "
+        )
         for i in range(3, len(self._dados)):
             linha += f"{self._dados[i]:7.0f}"
         linha += "\n"
@@ -663,14 +738,12 @@ class IA(RegistroDecomp):
     """
     Registro que contém os limites de intercâmbio entre os subsistemas.
     """
+
     mnemonico = "IA"
 
     def __init__(self):
         super().__init__(IA.mnemonico, True)
-        self._dados = [0, "", "",
-                       0.0, 0.0,
-                       0.0, 0.0,
-                       0.0, 0.0]
+        self._dados = [0, "", "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
     def le(self):
         reg_estagio = RegistroIn(2)
@@ -684,10 +757,15 @@ class IA(RegistroDecomp):
             self._dados[i] = t
 
     def escreve(self, arq: IO):
-        linha = (f"{IA.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(2) + "   " +
-                 f"{self._dados[1]}".ljust(2) + "   " +
-                 f"{self._dados[2]}".ljust(2) + "   ")
+        linha = (
+            f"{IA.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(2)
+            + "   "
+            + f"{self._dados[1]}".ljust(2)
+            + "   "
+            + f"{self._dados[2]}".ljust(2)
+            + "   "
+        )
         for i in range(3, len(self._dados)):
             linha += f"{self._dados[i]:10.0f}"
         linha += "\n"
@@ -698,6 +776,7 @@ class TX(RegistroDecomp):
     """
     Registro que contém a taxa de desconto anual do modelo.
     """
+
     mnemonico = "TX"
 
     def __init__(self):
@@ -709,9 +788,11 @@ class TX(RegistroDecomp):
         self._dados = reg_linha.le_registro(self._linha, 4)
 
     def escreve(self, arq: IO):
-        linha = (f"{TX.mnemonico}".ljust(4) +
-                 f"{round(self.dados, 2)}".rjust(5) +
-                 "\n")
+        linha = (
+            f"{TX.mnemonico}".ljust(4)
+            + f"{round(self.dados, 2)}".rjust(5)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -732,6 +813,7 @@ class GP(RegistroDecomp):
     """
     Registro que contém o gap de tolerância para convergência.
     """
+
     mnemonico = "GP"
 
     def __init__(self):
@@ -743,9 +825,11 @@ class GP(RegistroDecomp):
         self._dados = reg_linha.le_registro(self._linha, 4)
 
     def escreve(self, arq: IO):
-        linha = (f"{GP.mnemonico}".ljust(4) +
-                 f"{round(self.dados, 8)}".rjust(10) +
-                 "\n")
+        linha = (
+            f"{GP.mnemonico}".ljust(4)
+            + f"{round(self.dados, 8)}".rjust(10)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -766,6 +850,7 @@ class NI(RegistroDecomp):
     """
     Registro que contém o número máximo de iterações do modelo.
     """
+
     mnemonico = "NI"
 
     def __init__(self):
@@ -798,6 +883,7 @@ class DT(RegistroDecomp):
     """
     Registro que contém a data de referência do estudo.
     """
+
     mnemonico = "DT"
 
     def __init__(self):
@@ -812,10 +898,15 @@ class DT(RegistroDecomp):
         self._dados[2] = reg_ano.le_registro(self._linha, 14)
 
     def escreve(self, arq: IO):
-        linha = (f"{DT.mnemonico}".ljust(4) +
-                 f"{self.dados[0]}".rjust(2) + "   " +
-                 f"{self.dados[1]}".zfill(2) + "   " +
-                 f"{self.dados[2]}".rjust(4) + "\n")
+        linha = (
+            f"{DT.mnemonico}".ljust(4)
+            + f"{self.dados[0]}".rjust(2)
+            + "   "
+            + f"{self.dados[1]}".zfill(2)
+            + "   "
+            + f"{self.dados[2]}".rjust(4)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -862,6 +953,7 @@ class MP(RegistroDecomp):
     """
     Registro que contém as manutenções programadas das UHEs.
     """
+
     mnemonico = "MP"
 
     def __init__(self):
@@ -884,8 +976,7 @@ class MP(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{MP.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3))
+        linha = f"{MP.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3)
         linha += "  " if self._dados[1] == 0 else f"{self._dados[1]}"
         for i in range(2, len(self._dados)):
             linha += f"{self._dados[i]:1.3f}"
@@ -897,6 +988,7 @@ class MT(RegistroDecomp):
     """
     Registro que contém as manutenções programadas das UTEs.
     """
+
     mnemonico = "MT"
 
     def __init__(self):
@@ -918,9 +1010,13 @@ class MT(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{MT.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   ")
+        linha = (
+            f"{MT.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+        )
         for i in range(2, len(self._dados)):
             linha += f"{self._dados[i]:1.3f}"
         linha += "\n"
@@ -931,6 +1027,7 @@ class FD(RegistroDecomp):
     """
     Registro que contém os fatores de disponibilidade das UHEs.
     """
+
     mnemonico = "FD"
 
     def __init__(self):
@@ -953,8 +1050,7 @@ class FD(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{FD.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3))
+        linha = f"{FD.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3)
         linha += "  " if self._dados[1] == 0 else f"{self._dados[1]}"
         for i in range(2, len(self._dados)):
             linha += f"{self._dados[i]:1.3f}"
@@ -966,6 +1062,7 @@ class VE(RegistroDecomp):
     """
     Registro que contém os volumes de espera das UHEs.
     """
+
     mnemonico = "VE"
 
     def __init__(self):
@@ -985,8 +1082,7 @@ class VE(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{VE.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  ")
+        linha = f"{VE.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3) + "  "
         for i in range(1, len(self._dados)):
             a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
             if len(a_escrever) > 5:
@@ -1011,6 +1107,7 @@ class RE(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições elétricas.
     """
+
     mnemonico = "RE"
 
     def __init__(self):
@@ -1025,10 +1122,15 @@ class RE(RegistroDecomp):
         self._dados[2] = reg_estagio.le_registro(self._linha, 14)
 
     def escreve(self, arq: IO):
-        linha = (f"{RE.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(2) + "\n")
+        linha = (
+            f"{RE.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(2)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -1063,6 +1165,7 @@ class LU(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições elétricas.
     """
+
     mnemonico = "LU"
     default = 1e21
 
@@ -1084,9 +1187,13 @@ class LU(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{LU.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   ")
+        linha = (
+            f"{LU.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+        )
         for i in range(2, len(self._dados)):
             if self._dados[i] != LU.default:
                 linha += f"{round(self._dados[i], 2)}".rjust(10)
@@ -1132,8 +1239,10 @@ class LU(RegistroDecomp):
         novos = len(lim)
         atuais = len(self.limites_inferiores)
         if novos != atuais:
-            raise ValueError("Número de limites incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de limites incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[2::2] = lim
 
     @property
@@ -1150,8 +1259,10 @@ class LU(RegistroDecomp):
         novos = len(lim)
         atuais = len(self.limites_superiores)
         if novos != atuais:
-            raise ValueError("Número de limites incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de limites incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[3::2] = lim
 
 
@@ -1160,6 +1271,7 @@ class FU(RegistroDecomp):
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições elétricas.
     """
+
     mnemonico = "FU"
 
     def __init__(self):
@@ -1180,11 +1292,16 @@ class FU(RegistroDecomp):
             self._dados[4] = reg_freq.le_registro(self._linha, 30)
 
     def escreve(self, arq: IO):
-        linha = (f"{FU.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(3) + "  " +
-                 f"{round(self._dados[3], 2)}".rjust(10))
+        linha = (
+            f"{FU.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(3)
+            + "  "
+            + f"{round(self._dados[3], 2)}".rjust(10)
+        )
         if self._dados[4] != 0:
             linha += f" {self._dados[4]}"
         linha += "\n"
@@ -1196,6 +1313,7 @@ class FT(RegistroDecomp):
     Registro que contém os coeficientes das usinas térmicas
     nas restrições elétricas.
     """
+
     mnemonico = "FT"
 
     def __init__(self):
@@ -1215,12 +1333,18 @@ class FT(RegistroDecomp):
         self._dados[4] = reg_fator.le_registro(self._linha, 24)
 
     def escreve(self, arq: IO):
-        linha = (f"{FT.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(3) + "  " +
-                 f"{self._dados[3]}".rjust(2) + "   " +
-                 f"{round(self._dados[4], 2)}".rjust(10))
+        linha = (
+            f"{FT.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(3)
+            + "  "
+            + f"{self._dados[3]}".rjust(2)
+            + "   "
+            + f"{round(self._dados[4], 2)}".rjust(10)
+        )
         linha += "\n"
         arq.write(linha)
 
@@ -1230,6 +1354,7 @@ class FI(RegistroDecomp):
     Registro que contém o sentido do fluxo da interligação
     entre os subsistemas associados à restrição elétrica.
     """
+
     mnemonico = "FI"
 
     def __init__(self):
@@ -1248,12 +1373,18 @@ class FI(RegistroDecomp):
         self._dados[4] = reg_fator.le_registro(self._linha, 24)
 
     def escreve(self, arq: IO):
-        linha = (f"{FI.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(2) + "   " +
-                 f"{self._dados[3]}".rjust(2) + "   " +
-                 f"{round(self._dados[4], 2)}".rjust(10))
+        linha = (
+            f"{FI.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(2)
+            + "   "
+            + f"{self._dados[3]}".rjust(2)
+            + "   "
+            + f"{round(self._dados[4], 2)}".rjust(10)
+        )
         linha += "\n"
         arq.write(linha)
 
@@ -1262,6 +1393,7 @@ class VI(RegistroDecomp):
     """
     Registro que contém os tempos de viagem da água entre usinas.
     """
+
     mnemonico = "VI"
 
     def __init__(self):
@@ -1283,9 +1415,13 @@ class VI(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{VI.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(3) + "  ")
+        linha = (
+            f"{VI.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(3)
+            + "  "
+        )
         for i in range(2, len(self._dados)):
             a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
             if len(a_escrever) > 5:
@@ -1336,8 +1472,10 @@ class VI(RegistroDecomp):
         novos = len(v)
         atuais = len(self.vazoes)
         if novos != atuais:
-            raise ValueError("Número de vazões incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de vazões incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[2:] = v
 
 
@@ -1345,6 +1483,7 @@ class ACNUMPOS(TipoRegistroAC):
     """
     Registro AC específico para alteração no número do posto.
     """
+
     mnemonico = "NUMPOS"
 
     def __init__(self, linha: str):
@@ -1365,6 +1504,7 @@ class ACNUMJUS(TipoRegistroAC):
     """
     Registro AC específico para alteração na usina de jusante.
     """
+
     mnemonico = "NUMJUS"
 
     def __init__(self, linha: str):
@@ -1386,6 +1526,7 @@ class ACDESVIO(TipoRegistroAC):
     Registro AC específico para alteração na usina de jusante
     para canal de desvio e limite da vazão no canal.
     """
+
     mnemonico = "DESVIO"
 
     def __init__(self, linha: str):
@@ -1400,8 +1541,9 @@ class ACDESVIO(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{round(self._dados[1], 2)}".rjust(10))
+        linha = f"{self._dados[0]}".rjust(
+            5
+        ) + f"{round(self._dados[1], 2)}".rjust(10)
         return linha
 
 
@@ -1410,6 +1552,7 @@ class ACVOLMIN(TipoRegistroAC):
     Registro AC específico para alteração na usina de jusante
     para canal de desvio e limite da vazão no canal.
     """
+
     mnemonico = "VOLMIN"
 
     def __init__(self, linha: str):
@@ -1431,6 +1574,7 @@ class ACVOLMAX(TipoRegistroAC):
     Registro AC específico para alteração na usina de jusante
     para canal de desvio e limite da vazão no canal.
     """
+
     mnemonico = "VOLMAX"
 
     def __init__(self, linha: str):
@@ -1452,6 +1596,7 @@ class ACCOTVOL(TipoRegistroAC):
     Registro AC específico para alteração de um coeficiente do
     polinômio cota-volume.
     """
+
     mnemonico = "COTVOL"
 
     def __init__(self, linha: str):
@@ -1466,8 +1611,9 @@ class ACCOTVOL(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{round(self._dados[1], 3)}".rjust(15))
+        linha = f"{self._dados[0]}".rjust(
+            5
+        ) + f"{round(self._dados[1], 3)}".rjust(15)
         return linha
 
 
@@ -1476,6 +1622,7 @@ class ACCOTARE(TipoRegistroAC):
     Registro AC específico para alteração de um coeficiente do
     polinômio cota-área.
     """
+
     mnemonico = "COTARE"
 
     def __init__(self, linha: str):
@@ -1490,8 +1637,9 @@ class ACCOTARE(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{round(self._dados[1], 3)}".rjust(15))
+        linha = f"{self._dados[0]}".rjust(
+            5
+        ) + f"{round(self._dados[1], 3)}".rjust(15)
         return linha
 
 
@@ -1500,6 +1648,7 @@ class ACPROESP(TipoRegistroAC):
     Registro AC específico para alteração do coeficiente de perdas
     hidráulicas em função da queda bruta (%,m,k).
     """
+
     mnemonico = "PROESP"
 
     def __init__(self, linha: str):
@@ -1521,6 +1670,7 @@ class ACPERHID(TipoRegistroAC):
     Registro AC específico para alteração do coeficiente de perdas
     hidráulicas em função da queda bruta (%,m,k).
     """
+
     mnemonico = "PERHID"
 
     def __init__(self, linha: str):
@@ -1542,6 +1692,7 @@ class ACNCHAVE(TipoRegistroAC):
     Registro AC específico para alteração do número da curva-chave
     (cota-vazão) e nível de jusante da faixa associada (m).
     """
+
     mnemonico = "NCHAVE"
 
     def __init__(self, linha: str):
@@ -1556,8 +1707,9 @@ class ACNCHAVE(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{round(self._dados[1], 1)}".rjust(10))
+        linha = f"{self._dados[0]}".rjust(
+            5
+        ) + f"{round(self._dados[1], 1)}".rjust(10)
         return linha
 
 
@@ -1566,6 +1718,7 @@ class ACCOTVAZ(TipoRegistroAC):
     Registro AC específico para alteração de um coeficiente do
     polinômio cota-vazão.
     """
+
     mnemonico = "COTVAZ"
 
     def __init__(self, linha: str):
@@ -1581,9 +1734,11 @@ class ACCOTVAZ(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{self._dados[1]}".rjust(5) +
-                 f"{round(self._dados[2], 3)}".rjust(15))
+        linha = (
+            f"{self._dados[0]}".rjust(5)
+            + f"{self._dados[1]}".rjust(5)
+            + f"{round(self._dados[2], 3)}".rjust(15)
+        )
         return linha
 
 
@@ -1592,6 +1747,7 @@ class ACCOFEVA(TipoRegistroAC):
     Registro AC específico para alteração do coeficiente de evaporação
     mensal para cada mês.
     """
+
     mnemonico = "COFEVA"
 
     def __init__(self, linha: str):
@@ -1604,8 +1760,7 @@ class ACCOFEVA(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{self._dados[1]}".rjust(5))
+        linha = f"{self._dados[0]}".rjust(5) + f"{self._dados[1]}".rjust(5)
         return linha
 
 
@@ -1614,6 +1769,7 @@ class ACNUMCON(TipoRegistroAC):
     Registro AC específico para alteração no número de conjuntos
     de máquinas.
     """
+
     mnemonico = "NUMCON"
 
     def __init__(self, linha: str):
@@ -1635,6 +1791,7 @@ class ACNUMMAQ(TipoRegistroAC):
     Registro AC específico para alteração do número de máquinas
     em cada conjunto de máquinas.
     """
+
     mnemonico = "NUMMAQ"
 
     def __init__(self, linha: str):
@@ -1647,8 +1804,7 @@ class ACNUMMAQ(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{self._dados[1]}".rjust(5))
+        linha = f"{self._dados[0]}".rjust(5) + f"{self._dados[1]}".rjust(5)
         return linha
 
 
@@ -1657,6 +1813,7 @@ class ACPOTEFE(TipoRegistroAC):
     Registro AC específico para alteração da potência efetiva
     por unidade geradora em um conjunto de máquinas.
     """
+
     mnemonico = "POTEFE"
 
     def __init__(self, linha: str):
@@ -1671,8 +1828,9 @@ class ACPOTEFE(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{round(self._dados[1], 1)}".rjust(10))
+        linha = f"{self._dados[0]}".rjust(
+            5
+        ) + f"{round(self._dados[1], 1)}".rjust(10)
         return linha
 
 
@@ -1681,6 +1839,7 @@ class ACALTEFE(TipoRegistroAC):
     Registro AC específico para alteração da altura efetiva
     de queda para um conjunto de máquinas.
     """
+
     mnemonico = "ALTEFE"
 
     def __init__(self, linha: str):
@@ -1695,8 +1854,9 @@ class ACALTEFE(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{round(self._dados[1], 1)}".rjust(10))
+        linha = f"{self._dados[0]}".rjust(
+            5
+        ) + f"{round(self._dados[1], 1)}".rjust(10)
         return linha
 
 
@@ -1705,6 +1865,7 @@ class ACVAZEFE(TipoRegistroAC):
     Registro AC específico para alteração da vazão efetiva
     para um conjunto de máquinas.
     """
+
     mnemonico = "VAZEFE"
 
     def __init__(self, linha: str):
@@ -1719,8 +1880,7 @@ class ACVAZEFE(TipoRegistroAC):
 
     @property
     def linha_escrita(self) -> str:
-        linha = (f"{self._dados[0]}".rjust(5) +
-                 f"{self._dados[1]}".rjust(5))
+        linha = f"{self._dados[0]}".rjust(5) + f"{self._dados[1]}".rjust(5)
         return linha
 
 
@@ -1729,6 +1889,7 @@ class ACJUSMED(TipoRegistroAC):
     Registro AC específico para alteração da cota média do canal
     de fuga em metros.
     """
+
     mnemonico = "JUSMED"
 
     def __init__(self, linha: str):
@@ -1750,6 +1911,7 @@ class ACVERTJU(TipoRegistroAC):
     Registro AC específico para alteração da influência do vertimento
     na cota do canal de fuga.
     """
+
     mnemonico = "VERTJU"
 
     def __init__(self, linha: str):
@@ -1770,6 +1932,7 @@ class ACVAZMIN(TipoRegistroAC):
     """
     Registro AC específico para alteração da vazão mínima histórica.
     """
+
     mnemonico = "VAZMIN"
 
     def __init__(self, linha: str):
@@ -1794,6 +1957,7 @@ class ACTIPERH(TipoRegistroAC):
     """
     Registro AC específico para alteração do tipo de perdas hidráulicas.
     """
+
     mnemonico = "TIPERH"
 
     def __init__(self, linha: str):
@@ -1820,6 +1984,7 @@ class ACJUSENA(TipoRegistroAC):
     aproveitamento de jusante para cálculo das energias
     armazenada e afluente.
     """
+
     mnemonico = "JUSENA"
 
     def __init__(self, linha: str):
@@ -1841,6 +2006,7 @@ class ACVSVERT(TipoRegistroAC):
     Registro AC específico para alteração do volume mínimo para operação
     do vertedor.
     """
+
     mnemonico = "VSVERT"
 
     def __init__(self, linha: str):
@@ -1862,6 +2028,7 @@ class ACVMDESV(TipoRegistroAC):
     Registro AC específico para alteração do volume mínimo para operação
     do canal de desvio.
     """
+
     mnemonico = "VMDESV"
 
     def __init__(self, linha: str):
@@ -1883,6 +2050,7 @@ class ACNPOSNW(TipoRegistroAC):
     Registro AC específico para alteração do posto de acoplamento
     com o NEWAVE.
     """
+
     mnemonico = "NPOSNW"
 
     def __init__(self, linha: str):
@@ -1903,32 +2071,35 @@ class AC(RegistroDecomp):
     """
     Registro que contém as alterações de cadastro das usinas hidrelétricas.
     """
+
     mnemonico = "AC"
-    modificacoes: List[Type[TipoRegistroAC]] = [ACNUMPOS,
-                                                ACNUMJUS,
-                                                ACDESVIO,
-                                                ACVOLMIN,
-                                                ACVOLMAX,
-                                                ACCOTVOL,
-                                                ACCOTARE,
-                                                ACPROESP,
-                                                ACPERHID,
-                                                ACNCHAVE,
-                                                ACCOTVAZ,
-                                                ACCOFEVA,
-                                                ACNUMCON,
-                                                ACNUMMAQ,
-                                                ACPOTEFE,
-                                                ACALTEFE,
-                                                ACVAZEFE,
-                                                ACJUSMED,
-                                                ACVERTJU,
-                                                ACVAZMIN,
-                                                ACTIPERH,
-                                                ACJUSENA,
-                                                ACVSVERT,
-                                                ACVMDESV,
-                                                ACNPOSNW]
+    modificacoes: List[Type[TipoRegistroAC]] = [
+        ACNUMPOS,
+        ACNUMJUS,
+        ACDESVIO,
+        ACVOLMIN,
+        ACVOLMAX,
+        ACCOTVOL,
+        ACCOTARE,
+        ACPROESP,
+        ACPERHID,
+        ACNCHAVE,
+        ACCOTVAZ,
+        ACCOFEVA,
+        ACNUMCON,
+        ACNUMMAQ,
+        ACPOTEFE,
+        ACALTEFE,
+        ACVAZEFE,
+        ACJUSMED,
+        ACVERTJU,
+        ACVAZMIN,
+        ACTIPERH,
+        ACJUSENA,
+        ACVSVERT,
+        ACVMDESV,
+        ACNPOSNW,
+    ]
 
     def __init__(self):
         super().__init__(AC.mnemonico, True)
@@ -1936,13 +2107,14 @@ class AC(RegistroDecomp):
         self._modificacao: TipoRegistroAC = None
 
     def le(self):
-
         def procura_modificacao() -> TipoRegistroAC:
             for m in AC.modificacoes:
                 if m.mnemonico == self._dados[1]:
                     return m(self._linha)
-            raise ValueError(f"Mnemônico {self._dados[1]} não" +
-                             " suportado para registro AC")
+            raise ValueError(
+                f"Mnemônico {self._dados[1]} não"
+                + " suportado para registro AC"
+            )
 
         reg_usi = RegistroIn(3)
         reg_cod = RegistroAn(6)
@@ -1963,14 +2135,17 @@ class AC(RegistroDecomp):
         self._modificacao.le()
 
     def escreve(self, arq: IO):
-        linha = (f"{AC.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(6))
+        linha = (
+            f"{AC.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(6)
+        )
         linha = linha.ljust(19)
         linha += self._modificacao.linha_escrita
-        if any([self._dados[2] != "",
-                self._dados[3] != 0,
-                self._dados[4] != 0]):
+        if any(
+            [self._dados[2] != "", self._dados[3] != 0, self._dados[4] != 0]
+        ):
             linha = linha.ljust(69)
             linha += self._dados[2]
             linha = linha.ljust(74)
@@ -2029,6 +2204,7 @@ class IR(RegistroDecomp):
     Registro que contém as configurações de
     geração de relatórios de saída.
     """
+
     mnemonico = "IR"
 
     def __init__(self):
@@ -2049,8 +2225,7 @@ class IR(RegistroDecomp):
             self._dados[3] = reg_op3.le_registro(self._linha, 24)
 
     def escreve(self, arq: IO):
-        linha = (f"{IR.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".ljust(7))
+        linha = f"{IR.mnemonico}".ljust(4) + f"{self._dados[0]}".ljust(7)
         if self._dados[1] != 0:
             linha += "   " + f"{self._dados[1]}".zfill(2)
         if self._dados[2] != 0:
@@ -2077,15 +2252,27 @@ class CI(RegistroDecomp):
     """
     Registro que define contratos de importação de energia.
     """
+
     mnemonico = "CI"
 
     def __init__(self):
         super().__init__(CI.mnemonico, True)
-        self._dados = [0, 0, "", 0,
-                       0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0,
-                       0.0]
+        self._dados = [
+            0,
+            0,
+            "",
+            0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+        ]
 
     def le(self):
         reg_contrato = RegistroIn(3)
@@ -2100,21 +2287,30 @@ class CI(RegistroDecomp):
         self._dados[2] = reg_nome.le_registro(self._linha, 11)
         self._dados[3] = reg_estagio.le_registro(self._linha, 24)
         for i in range(3):
-            self._dados[4 + i * 3] = reg_limite.le_registro(self._linha,
-                                                            29 + i * 20)
-            self._dados[5 + i * 3] = reg_limite.le_registro(self._linha,
-                                                            34 + i * 20)
-            self._dados[6 + i * 3] = reg_custo.le_registro(self._linha,
-                                                           39 + i * 20)
+            self._dados[4 + i * 3] = reg_limite.le_registro(
+                self._linha, 29 + i * 20
+            )
+            self._dados[5 + i * 3] = reg_limite.le_registro(
+                self._linha, 34 + i * 20
+            )
+            self._dados[6 + i * 3] = reg_custo.le_registro(
+                self._linha, 39 + i * 20
+            )
         if self._linha[89:94].strip().isnumeric():
             self._dados[13] = reg_fator.le_registro(self._linha, 89)
 
     def escreve(self, arq: IO):
-        linha = (f"{CI.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".zfill(3) + " " +
-                 f"{self._dados[1]}".rjust(2) + " " +
-                 f"{self._dados[2]}".ljust(10) + "   " +
-                 f"{self._dados[3]}".rjust(2) + "   ")
+        linha = (
+            f"{CI.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".zfill(3)
+            + " "
+            + f"{self._dados[1]}".rjust(2)
+            + " "
+            + f"{self._dados[2]}".ljust(10)
+            + "   "
+            + f"{self._dados[3]}".rjust(2)
+            + "   "
+        )
         for i in range(3):
             linha += f"{round(self._dados[4 + i * 3], 1)}".rjust(5)
             linha += f"{round(self._dados[5 + i * 3], 1)}".rjust(5)
@@ -2129,15 +2325,27 @@ class CE(RegistroDecomp):
     """
     Registro que define contratos de importação de energia.
     """
+
     mnemonico = "CE"
 
     def __init__(self):
         super().__init__(CE.mnemonico, True)
-        self._dados = [0, 0, "", 0,
-                       0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0,
-                       0.0, 0.0, 0.0,
-                       0.0]
+        self._dados = [
+            0,
+            0,
+            "",
+            0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+        ]
 
     def le(self):
         reg_contrato = RegistroIn(3)
@@ -2152,21 +2360,30 @@ class CE(RegistroDecomp):
         self._dados[2] = reg_nome.le_registro(self._linha, 11)
         self._dados[3] = reg_estagio.le_registro(self._linha, 24)
         for i in range(3):
-            self._dados[4 + i * 3] = reg_limite.le_registro(self._linha,
-                                                            29 + i * 20)
-            self._dados[5 + i * 3] = reg_limite.le_registro(self._linha,
-                                                            34 + i * 20)
-            self._dados[6 + i * 3] = reg_custo.le_registro(self._linha,
-                                                           39 + i * 20)
+            self._dados[4 + i * 3] = reg_limite.le_registro(
+                self._linha, 29 + i * 20
+            )
+            self._dados[5 + i * 3] = reg_limite.le_registro(
+                self._linha, 34 + i * 20
+            )
+            self._dados[6 + i * 3] = reg_custo.le_registro(
+                self._linha, 39 + i * 20
+            )
         if self._linha[89:94].strip().isnumeric():
             self._dados[13] = reg_fator.le_registro(self._linha, 89)
 
     def escreve(self, arq: IO):
-        linha = (f"{CE.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".zfill(3) + " " +
-                 f"{self._dados[1]}".rjust(2) + " " +
-                 f"{self._dados[2]}".ljust(10) + "   " +
-                 f"{self._dados[3]}".rjust(2) + "   ")
+        linha = (
+            f"{CE.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".zfill(3)
+            + " "
+            + f"{self._dados[1]}".rjust(2)
+            + " "
+            + f"{self._dados[2]}".ljust(10)
+            + "   "
+            + f"{self._dados[3]}".rjust(2)
+            + "   "
+        )
         for i in range(3):
             linha += f"{round(self._dados[4 + i * 3], 1)}".rjust(5)
             linha += f"{round(self._dados[5 + i * 3], 1)}".rjust(5)
@@ -2182,6 +2399,7 @@ class FC(RegistroDecomp):
     Registro que contém informações para acessar a FCF fornecida
     pelo NEWAVE.
     """
+
     mnemonico = "FC"
 
     def __init__(self):
@@ -2195,9 +2413,13 @@ class FC(RegistroDecomp):
         self._dados[1] = reg_nome.le_registro(self._linha, 14)
 
     def escreve(self, arq: IO):
-        linha = (f"{FC.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".ljust(6) + "    " +
-                 self._dados[1] + "\n")
+        linha = (
+            f"{FC.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".ljust(6)
+            + "    "
+            + self._dados[1]
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -2230,6 +2452,7 @@ class RT(RegistroDecomp):
     Registro utilizado para retirada de restrições de soleira de
     vertedouro e de canais de desvio.
     """
+
     mnemonico = "RT"
 
     def __init__(self):
@@ -2241,8 +2464,7 @@ class RT(RegistroDecomp):
         self._dados[0] = reg_mne.le_registro(self._linha, 4)
 
     def escreve(self, arq: IO):
-        linha = (f"{RT.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".ljust(6) + "\n")
+        linha = f"{RT.mnemonico}".ljust(4) + f"{self._dados[0]}".ljust(6) + "\n"
         arq.write(linha)
 
     @property
@@ -2263,6 +2485,7 @@ class TI(RegistroDecomp):
     """
     Registro que contém as taxas de irrigação por UHE.
     """
+
     mnemonico = "TI"
 
     def __init__(self):
@@ -2282,8 +2505,7 @@ class TI(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{TI.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  ")
+        linha = f"{TI.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3) + "  "
         for i in range(1, len(self._dados)):
             # Verificação de segurança para tamanho do registro
             a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
@@ -2320,8 +2542,10 @@ class TI(RegistroDecomp):
         novas = len(tx)
         atuais = len(self.taxas)
         if novas != atuais:
-            raise ValueError("Número de taxas incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de taxas incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[1:] = tx
 
 
@@ -2330,6 +2554,7 @@ class FP(RegistroDecomp):
     Registro que contém os cadastros de restrições de alteração na
     função de produção das usinas.
     """
+
     mnemonico = "FP"
 
     def __init__(self):
@@ -2356,15 +2581,24 @@ class FP(RegistroDecomp):
             self._dados[9] = reg_limite.le_registro(self._linha, 47)
 
     def escreve(self, arq: IO):
-        linha = (f"{FP.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(3) + "  " +
-                 f"{self._dados[2]}" + " " +
-                 f"{self._dados[3]}".rjust(4) + " " +
-                 f"{self._dados[4]:.1f}".rjust(5) + " " +
-                 f"{self._dados[5]:.1f}".rjust(5) + "  " +
-                 f"{self._dados[6]}" + " " +
-                 f"{self._dados[7]}".rjust(4))
+        linha = (
+            f"{FP.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(3)
+            + "  "
+            + f"{self._dados[2]}"
+            + " "
+            + f"{self._dados[3]}".rjust(4)
+            + " "
+            + f"{self._dados[4]:.1f}".rjust(5)
+            + " "
+            + f"{self._dados[5]:.1f}".rjust(5)
+            + "  "
+            + f"{self._dados[6]}"
+            + " "
+            + f"{self._dados[7]}".rjust(4)
+        )
         if self._dados[8] != 0:
             linha += " " + f"{self._dados[8]:.1f}".rjust(5)
         if self._dados[9] != 0:
@@ -2516,6 +2750,7 @@ class RQ(RegistroDecomp):
     Registro que contém os percentuais de vazão defluente
     mínima histórica para cada REE.
     """
+
     mnemonico = "RQ"
 
     def __init__(self):
@@ -2535,8 +2770,9 @@ class RQ(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{RQ.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(2) + "   ")
+        linha = (
+            f"{RQ.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(2) + "   "
+        )
         for i in range(1, len(self._dados)):
             linha += f"{round(self._dados[i], 2)}".rjust(5)
         linha += "\n"
@@ -2570,8 +2806,10 @@ class RQ(RegistroDecomp):
         novas = len(tx)
         atuais = len(self.vazoes)
         if novas != atuais:
-            raise ValueError("Número de vazões incompatível. De" +
-                             f"vem ser fornecidas {atuais}, mas foram {novas}")
+            raise ValueError(
+                "Número de vazões incompatível. De"
+                + f"vem ser fornecidas {atuais}, mas foram {novas}"
+            )
         self._dados[1:] = tx
 
 
@@ -2580,6 +2818,7 @@ class EZ(RegistroDecomp):
     Registro que contém o percentual máximo do
     volume útil para acoplamento.
     """
+
     mnemonico = "EZ"
 
     def __init__(self):
@@ -2593,9 +2832,13 @@ class EZ(RegistroDecomp):
         self._dados[1] = reg_volume.le_registro(self._linha, 9)
 
     def escreve(self, arq: IO):
-        linha = (f"{EZ.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{round(self._dados[1], 2)}".rjust(5) + "\n")
+        linha = (
+            f"{EZ.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{round(self._dados[1], 2)}".rjust(5)
+            + "\n"
+        )
         arq.write(linha)
 
 
@@ -2603,6 +2846,7 @@ class HV(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições de volume armazenado.
     """
+
     mnemonico = "HV"
 
     def __init__(self):
@@ -2617,10 +2861,15 @@ class HV(RegistroDecomp):
         self._dados[2] = reg_estagio.le_registro(self._linha, 14)
 
     def escreve(self, arq: IO):
-        linha = (f"{HV.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(2) + "\n")
+        linha = (
+            f"{HV.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(2)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -2655,6 +2904,7 @@ class LV(RegistroDecomp):
     """
     Registro que contém os limites das restrições de volume armazenado.
     """
+
     mnemonico = "LV"
     default = 1e21
 
@@ -2676,9 +2926,13 @@ class LV(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{LV.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   ")
+        linha = (
+            f"{LV.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+        )
         for i in range(2, len(self._dados)):
             if self._dados[i] != LV.default:
                 linha += f"{round(self._dados[i], 2)}".rjust(10)
@@ -2741,6 +2995,7 @@ class CV(RegistroDecomp):
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições de volume armazenado.
     """
+
     mnemonico = "CV"
 
     def __init__(self):
@@ -2760,11 +3015,16 @@ class CV(RegistroDecomp):
         self._dados[4] = reg_tipo.le_registro(self._linha, 34)
 
     def escreve(self, arq: IO):
-        linha = (f"{CV.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(3) + "  " +
-                 f"{round(self._dados[3], 8)}".rjust(10))
+        linha = (
+            f"{CV.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(3)
+            + "  "
+            + f"{round(self._dados[3], 8)}".rjust(10)
+        )
         linha = linha.ljust(34)
         linha += self._dados[4]
         linha += "\n"
@@ -2775,6 +3035,7 @@ class HQ(RegistroDecomp):
     """
     Registro que contém os cadastros de restrições de vazões.
     """
+
     mnemonico = "HQ"
 
     def __init__(self):
@@ -2789,10 +3050,15 @@ class HQ(RegistroDecomp):
         self._dados[2] = reg_estagio.le_registro(self._linha, 14)
 
     def escreve(self, arq: IO):
-        linha = (f"{HQ.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "  " +
-                 f"{self._dados[2]}".rjust(2) + "\n")
+        linha = (
+            f"{HQ.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "  "
+            + f"{self._dados[2]}".rjust(2)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -2827,6 +3093,7 @@ class LQ(RegistroDecomp):
     """
     Registro que contém os limites das restrições de volume armazenado.
     """
+
     mnemonico = "LQ"
     default = 1e21
 
@@ -2848,9 +3115,13 @@ class LQ(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = (f"{LQ.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   ")
+        linha = (
+            f"{LQ.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+        )
         for i in range(2, len(self._dados)):
             if self._dados[i] != LQ.default:
                 linha += f"{round(self._dados[i], 2)}".rjust(10)
@@ -2895,8 +3166,10 @@ class LQ(RegistroDecomp):
         novos = len(lim)
         atuais = len(self.limites_inferiores)
         if novos != atuais:
-            raise ValueError("Número de limites incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de limites incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[2::2] = lim
 
     @property
@@ -2913,8 +3186,10 @@ class LQ(RegistroDecomp):
         novos = len(lim)
         atuais = len(self.limites_superiores)
         if novos != atuais:
-            raise ValueError("Número de limites incompatível. De" +
-                             f"vem ser fornecidos {atuais}, mas foram {novos}")
+            raise ValueError(
+                "Número de limites incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
         self._dados[3::2] = lim
 
 
@@ -2923,6 +3198,7 @@ class CQ(RegistroDecomp):
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições de vazão.
     """
+
     mnemonico = "CQ"
 
     def __init__(self):
@@ -2942,11 +3218,16 @@ class CQ(RegistroDecomp):
         self._dados[4] = reg_tipo.le_registro(self._linha, 34)
 
     def escreve(self, arq: IO):
-        linha = (f"{CQ.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(2) + "   " +
-                 f"{self._dados[2]}".rjust(3) + "  " +
-                 f"{round(self._dados[3], 2)}".rjust(10))
+        linha = (
+            f"{CQ.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(2)
+            + "   "
+            + f"{self._dados[2]}".rjust(3)
+            + "  "
+            + f"{round(self._dados[3], 2)}".rjust(10)
+        )
         linha = linha.ljust(34)
         linha += self._dados[4]
         linha += "\n"
@@ -2957,6 +3238,7 @@ class AR(RegistroDecomp):
     """
     Registro que contém as configurações de aversão a risco.
     """
+
     mnemonico = "AR"
 
     def __init__(self):
@@ -2968,8 +3250,9 @@ class AR(RegistroDecomp):
         self._dados = reg_linha.le_registro(self._linha, 5)
 
     def escreve(self, arq: IO):
-        linha = (f"{AR.mnemonico}".ljust(4) + " " +
-                 f"{self.dados}".rjust(3) + "\n")
+        linha = (
+            f"{AR.mnemonico}".ljust(4) + " " + f"{self.dados}".rjust(3) + "\n"
+        )
         arq.write(linha)
 
 
@@ -2978,6 +3261,7 @@ class EV(RegistroDecomp):
     Registro que contém as configurações de consideração
     da evaporação.
     """
+
     mnemonico = "EV"
 
     def __init__(self):
@@ -2991,9 +3275,13 @@ class EV(RegistroDecomp):
         self._dados[1] = reg_tipo.le_registro(self._linha, 9)
 
     def escreve(self, arq: IO):
-        linha = (f"{EV.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}" + "    " +
-                 f"{self._dados[1]}".rjust(3) + "\n")
+        linha = (
+            f"{EV.mnemonico}".ljust(4)
+            + f"{self._dados[0]}"
+            + "    "
+            + f"{self._dados[1]}".rjust(3)
+            + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -3017,6 +3305,7 @@ class FJ(RegistroDecomp):
     """
     Registro que contém as configurações de aversão a risco.
     """
+
     mnemonico = "FJ"
 
     def __init__(self):
@@ -3028,8 +3317,7 @@ class FJ(RegistroDecomp):
         self._dados = reg_linha.le_registro(self._linha, 4)
 
     def escreve(self, arq: IO):
-        linha = (f"{FJ.mnemonico}".ljust(4) +
-                 f"{self.dados}".rjust(12) + "\n")
+        linha = f"{FJ.mnemonico}".ljust(4) + f"{self.dados}".rjust(12) + "\n"
         arq.write(linha)
 
     @property
@@ -3046,11 +3334,12 @@ class HE(RegistroDecomp):
     Registro que contém o cadastro de uma restrição de volume
     mínimo armazenado.
     """
+
     mnemonico = "HE"
 
     def __init__(self):
         super().__init__(HE.mnemonico, True)
-        self._dados = [0, 0, 0.0, 0, 0.0, 0]
+        self._dados = [0, 0, 0.0, 0, 0.0, 0, 0, 0, ""]
 
     def le(self):
         reg_cod = RegistroIn(3)
@@ -3059,22 +3348,42 @@ class HE(RegistroDecomp):
         reg_estagio = RegistroIn(2)
         reg_penal = RegistroFn(10)
         reg_inviab = RegistroIn(1)
+        reg_prodrhe = RegistroAn(12)
         self._dados[0] = reg_cod.le_registro(self._linha, 4)
         self._dados[1] = reg_tipo_limite.le_registro(self._linha, 9)
         self._dados[2] = reg_limite.le_registro(self._linha, 14)
         self._dados[3] = reg_estagio.le_registro(self._linha, 25)
         self._dados[4] = reg_penal.le_registro(self._linha, 28)
+        if self._linha[39].isnumeric():
+            self._dados[5] = reg_inviab.le_registro(self._linha, 39)
+        if self._linha[41].isnumeric():
+            self._dados[6] = reg_inviab.le_registro(self._linha, 41)
         if self._linha[43].isnumeric():
-            self._dados[5] = reg_inviab.le_registro(self._linha, 43)
+            self._dados[7] = reg_inviab.le_registro(self._linha, 43)
+        if len(self._linha[45:57]) > 2:
+            self._dados[8] = reg_prodrhe.le_registro(self._linha, 45)
 
     def escreve(self, arq: IO):
-        linha = (f"{HE.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}" + "    " +
-                 f"{round(self._dados[2], 2)}".rjust(10) + " " +
-                 f"{self._dados[3]}".rjust(2) + " " +
-                 f"{round(self._dados[4], 2)}".rjust(10) + "     " +
-                 f"{self._dados[5]}")
+        linha = (
+            f"{HE.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}"
+            + "    "
+            + f"{round(self._dados[2], 2)}".rjust(10)
+            + " "
+            + f"{self._dados[3]}".rjust(2)
+            + " "
+            + f"{round(self._dados[4], 2)}".rjust(10)
+            + " "
+            + f"{self._dados[5]}"
+            + " "
+            + f"{self._dados[6]}"
+            + " "
+            + f"{self._dados[7]}"
+            + " "
+            + f"{self._dados[8]}".ljust(60).strip()
+        )
         linha += "\n"
         arq.write(linha)
 
@@ -3142,6 +3451,34 @@ class HE(RegistroDecomp):
         self._dados[4] = p
 
     @property
+    def forma_calculo_produtibilidades(self) -> int:
+        """
+        Flag para indicar a forma de cálculo das produtividades
+        das usinas usadas nas restrição.
+
+        :return: O tipo como `int`.
+        """
+        return self._dados[5]
+
+    @forma_calculo_produtibilidades.setter
+    def forma_calculo_produtibilidades(self, t: int):
+        self._dados[5] = t
+
+    @property
+    def tipo_valores_produtibilidades(self) -> int:
+        """
+        Flag para indicar o tipo dos valores das produtividades
+        das usinas usadas nas restrição.
+
+        :return: O tipo como `int`.
+        """
+        return self._dados[6]
+
+    @tipo_valores_produtibilidades.setter
+    def tipo_valores_produtibilidades(self, t: int):
+        self._dados[6] = t
+
+    @property
     def tipo_penalidade(self) -> int:
         """
         O tipo de penalidade a ser considerada ao violar a
@@ -3149,17 +3486,32 @@ class HE(RegistroDecomp):
 
         :return: O tipo como `int`.
         """
-        return self._dados[5]
+        return self._dados[7]
 
     @tipo_penalidade.setter
     def tipo_penalidade(self, t: int):
-        self._dados[5] = t
+        self._dados[7] = t
+
+    @property
+    def arquivo_produtibilidades(self) -> str:
+        """
+        O arquivo com as definições das produtibilidades usadas
+        para o cálculo da restrição RHE.
+
+        :return: O tipo como `int`.
+        """
+        return self._dados[8]
+
+    @arquivo_produtibilidades.setter
+    def arquivo_produtibilidades(self, t: str):
+        self._dados[8] = t
 
 
 class CM(RegistroDecomp):
     """
     Registro que contém os coeficientes de uma restrição RHE.
     """
+
     mnemonico = "CM"
 
     def __init__(self):
@@ -3175,10 +3527,14 @@ class CM(RegistroDecomp):
         self._dados[2] = reg_coef.le_registro(self._linha, 14)
 
     def escreve(self, arq: IO):
-        linha = (f"{CM.mnemonico}".ljust(4) +
-                 f"{self._dados[0]}".rjust(3) + "  " +
-                 f"{self._dados[1]}".rjust(3) + "  " +
-                 f"{formata_numero(self._dados[2], 2, 10)}")
+        linha = (
+            f"{CM.mnemonico}".ljust(4)
+            + f"{self._dados[0]}".rjust(3)
+            + "  "
+            + f"{self._dados[1]}".rjust(3)
+            + "  "
+            + f"{formata_numero(self._dados[2], 2, 10)}"
+        )
         linha += "\n"
         arq.write(linha)
 
@@ -3208,8 +3564,8 @@ class LeituraDadger(LeituraRegistros):
     Classe com utilidades gerais para leitura de arquivos
     do DECOMP com comentários.
     """
-    def __init__(self,
-                 diretorio: str):
+
+    def __init__(self, diretorio: str):
         super().__init__(diretorio)
 
     def _cria_registros_leitura(self) -> List[RegistroDecomp]:
@@ -3232,15 +3588,19 @@ class LeituraDadger(LeituraRegistros):
         uh: List[RegistroDecomp] = [UH() for _ in range(MAX_UHE)]
         ct: List[RegistroDecomp] = [CT() for _ in range(MAX_UTE)]
         ue: List[RegistroDecomp] = [UE() for _ in range(MAX_UE)]
-        dp: List[RegistroDecomp] = [DP() for _ in
-                                    range(MAX_SUBSIS * MAX_ESTAGIOS)]
-        cd: List[RegistroDecomp] = [CD() for _ in
-                                    range(MAX_SUBSIS * MAX_ESTAGIOS)]
-        pq: List[RegistroDecomp] = [PQ() for _ in
-                                    range(MAX_SUBSIS * MAX_ESTAGIOS)]
+        dp: List[RegistroDecomp] = [
+            DP() for _ in range(MAX_SUBSIS * MAX_ESTAGIOS)
+        ]
+        cd: List[RegistroDecomp] = [
+            CD() for _ in range(MAX_SUBSIS * MAX_ESTAGIOS)
+        ]
+        pq: List[RegistroDecomp] = [
+            PQ() for _ in range(MAX_SUBSIS * MAX_ESTAGIOS)
+        ]
         ri: List[RegistroDecomp] = [RI() for _ in range(MAX_ESTAGIOS)]
-        ia: List[RegistroDecomp] = [IA() for _ in
-                                    range(MAX_SUBSIS * MAX_SUBSIS)]
+        ia: List[RegistroDecomp] = [
+            IA() for _ in range(MAX_SUBSIS * MAX_SUBSIS)
+        ]
         tx: List[RegistroDecomp] = [TX()]
         gp: List[RegistroDecomp] = [GP()]
         ni: List[RegistroDecomp] = [NI()]
@@ -3250,37 +3610,69 @@ class LeituraDadger(LeituraRegistros):
         fd: List[RegistroDecomp] = [FD() for _ in range(MAX_UHE)]
         ve: List[RegistroDecomp] = [VE() for _ in range(MAX_UHE)]
         re: List[RegistroDecomp] = [RE() for _ in range(MAX_RE)]
-        lu: List[RegistroDecomp] = [LU() for _ in
-                                    range(MAX_RE * MAX_ESTAGIOS)]
+        lu: List[RegistroDecomp] = [LU() for _ in range(MAX_RE * MAX_ESTAGIOS)]
         fu: List[RegistroDecomp] = [FU() for _ in range(MAX_RE)]
         ft: List[RegistroDecomp] = [FT() for _ in range(MAX_RE)]
         vi: List[RegistroDecomp] = [VI(), VI()]
-        ac: List[RegistroDecomp] = [AC() for _ in
-                                    range(MAX_UHE * MAX_AC_UHE)]
+        ac: List[RegistroDecomp] = [AC() for _ in range(MAX_UHE * MAX_AC_UHE)]
         ir: List[RegistroDecomp] = [IR() for _ in range(MAX_RELATORIOS)]
         fc: List[RegistroDecomp] = [FC(), FC()]
         ti: List[RegistroDecomp] = [TI() for _ in range(MAX_UHE)]
         rq: List[RegistroDecomp] = [RQ() for _ in range(MAX_REE)]
         ez: List[RegistroDecomp] = [EZ() for _ in range(MAX_UHE)]
         hv: List[RegistroDecomp] = [HV() for _ in range(MAX_UHE)]
-        lv: List[RegistroDecomp] = [LV() for _ in
-                                    range(MAX_UHE * MAX_ESTAGIOS)]
+        lv: List[RegistroDecomp] = [LV() for _ in range(MAX_UHE * MAX_ESTAGIOS)]
         cv: List[RegistroDecomp] = [CV() for _ in range(MAX_UHE)]
         hq: List[RegistroDecomp] = [HQ() for _ in range(MAX_UHE)]
-        lq: List[RegistroDecomp] = [LQ() for _ in
-                                    range(MAX_UHE * MAX_ESTAGIOS)]
-        cq: List[RegistroDecomp] = [CQ() for _ in
-                                    range(MAX_UHE * MAX_ESTAGIOS)]
+        lq: List[RegistroDecomp] = [LQ() for _ in range(MAX_UHE * MAX_ESTAGIOS)]
+        cq: List[RegistroDecomp] = [CQ() for _ in range(MAX_UHE * MAX_ESTAGIOS)]
         ar: List[RegistroDecomp] = [AR()]
         ev: List[RegistroDecomp] = [EV()]
         fj: List[RegistroDecomp] = [FJ()]
-        he: List[RegistroDecomp] = [HE() for _ in
-                                    range(MAX_REE * MAX_ESTAGIOS)]
-        cm: List[RegistroDecomp] = [CM() for _ in
-                                    range(MAX_REE * MAX_ESTAGIOS)]
+        he: List[RegistroDecomp] = [HE() for _ in range(MAX_REE * MAX_ESTAGIOS)]
+        cm: List[RegistroDecomp] = [CM() for _ in range(MAX_REE * MAX_ESTAGIOS)]
         fp: List[RegistroDecomp] = [FP() for _ in range(MAX_UHE)]
-        return (te + rt + sb + uh + ct + ue + dp + cd + pq +
-                ri + ia + tx + gp + ni + dt + mp + mt +
-                fd + ve + re + lu + fu + ft + vi + ac +
-                ir + fc + ti + rq + ez + hv + lv + cv +
-                hq + lq + cq + ar + ev + fj + he + cm + fp)
+        return (
+            te
+            + rt
+            + sb
+            + uh
+            + ct
+            + ue
+            + dp
+            + cd
+            + pq
+            + ri
+            + ia
+            + tx
+            + gp
+            + ni
+            + dt
+            + mp
+            + mt
+            + fd
+            + ve
+            + re
+            + lu
+            + fu
+            + ft
+            + vi
+            + ac
+            + ir
+            + fc
+            + ti
+            + rq
+            + ez
+            + hv
+            + lv
+            + cv
+            + hq
+            + lq
+            + cq
+            + ar
+            + ev
+            + fj
+            + he
+            + cm
+            + fp
+        )

@@ -141,10 +141,13 @@ def test_he():
     he = dadger_he.he(1, 1)
     assert he.codigo == 1
     assert he.estagio == 1
-    assert he.limite == 20.0
+    assert he.limite == 60.0
     assert he.tipo_limite == 2
-    assert he.penalidade == 1864.73
+    assert he.penalidade == 1710.0
+    assert he.forma_calculo_produtibilidades == 1
+    assert he.tipo_valores_produtibilidades == 0
     assert he.tipo_penalidade == 0
+    assert he.arquivo_produtibilidades == "prodrhe.dat"
 
 
 def test_eq_dadger():

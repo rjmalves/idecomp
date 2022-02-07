@@ -4640,102 +4640,24 @@ EV  1    INI
 &
 & ------ META DE ENERGIA ARMAZENADA - BACKTEST CPAMP 2022 -------
 &
-& Submercado SE/CO
-& REE Sudeste
-HE    1  2          20.0  1    1864.73     0
-CM    1    1           1
-HE    1  2          20.0  2    1864.73     0
-CM    1    1           1
-HE    1  2          20.0  3    1864.73     0
-CM    1    1           1
-HE    1  2          20.0  4    1864.73     0
-CM    1    1           1
-HE    1  2          20.0  5    1864.73     0
-CM    1    1           1
-HE  101  2          20.0  6    1864.73     1
-CM  101    1           1
-& REE Parana
-HE    2  2          20.0  1    1864.73     0
-CM    2   10           1
-HE    2  2          20.0  2    1864.73     0
-CM    2   10           1
-HE    2  2          20.0  3    1864.73     0
-CM    2   10           1
-HE    2  2          20.0  4    1864.73     0
-CM    2   10           1
-HE    2  2          20.0  5    1864.73     0
-CM    2   10           1
-HE  102  2          20.0  6    1864.73     1
-CM  102   10           1
-& REE Paranapanema
-HE    3  2          20.0  1    1864.73     0
-CM    3   12           1
-HE    3  2          20.0  2    1864.73     0
-CM    3   12           1
-HE    3  2          20.0  3    1864.73     0
-CM    3   12           1
-HE    3  2          20.0  4    1864.73     0
-CM    3   12           1
-HE    3  2          20.0  5    1864.73     0
-CM    3   12           1
-HE  103  2          20.0  6    1864.73     1
-CM  103   12           1
-& Submercado SUL
-& REE SUL
-HE    4  2          30.0  1    1864.73     0
-CM    4    2           1
-HE    4  2          30.0  2    1864.73     0
-CM    4    2           1
-HE    4  2          30.0  3    1864.73     0
-CM    4    2           1
-HE    4  2          30.0  4    1864.73     0
-CM    4    2           1
-HE    4  2          30.0  5    1864.73     0
-CM    4    2           1
-HE  104  2          30.0  6    1864.73     1
-CM  104    2           1
-& REE IGUACU
-& Flexibilizado para convergencia
-HE    5  2         24.90  1    1864.73     
-CM    5   11           1
-& Flexibilizado para convergencia
-HE    5  2         27.70  2    1864.73     
-CM    5   11           1
-HE    5  2          30.0  3    1864.73     0
-CM    5   11           1
-HE    5  2          30.0  4    1864.73     0
-CM    5   11           1
-HE    5  2          30.0  5    1864.73     0
-CM    5   11           1
-HE  105  2          30.0  6    1864.73     1
-CM  105   11           1
-& REE NORDESTE
-HE    6  2          23.5  1    1864.73     0
-CM    6    3           1
-HE    6  2          23.5  2    1864.73     0
-CM    6    3           1
-HE    6  2          23.5  3    1864.73     0
-CM    6    3           1
-HE    6  2          23.5  4    1864.73     0
-CM    6    3           1
-HE    6  2          23.5  5    1864.73     0
-CM    6    3           1
-HE  106  2          23.5  6    1864.73     1
-CM  106    3           1
-& REE NORTE
-& Flexibilizado para convergencia
-HE    7  2         17.98  1    1864.73     
-CM    7    4           1
-HE    7  2          20.8  2    1864.73     0
-CM    7    4           1
-HE    7  2          20.8  3    1864.73     0
-CM    7    4           1
-HE    7  2          20.8  4    1864.73     0
-CM    7    4           1
-HE    7  2          20.8  5    1864.73     0
-CM    7    4           1
-HE  107  2          20.8  6    1864.73     1
-CM  107    4           1
+& -------- REE Sudeste
+HE    1  2          60.0  1     1710.0 1 0 0 prodrhe.dat
+HE    1  2          60.0  2     1710.0 1 0 0 prodrhe.dat
+HE    1  2          60.0  3     1710.0 1 0 0 prodrhe.dat
+HE    1  2          60.0  4     1710.0 1 0 0 prodrhe.dat
+HE    1  2          60.0  5     1710.0 1 0 0 prodrhe.dat
+CM    1    1         1.0
+HE  101  2          60.0  6     1710.0 1 0 1 prodrhe.dat
+CM  101    1         1.0
+& -------- REE Nordeste
+HE    2  2          60.0  1     1710.0 1 0 0 prodrhe.dat
+HE    2  2          60.0  2     1710.0 1 0 0 prodrhe.dat
+HE    2  2          60.0  3     1710.0 1 0 0 prodrhe.dat
+HE    2  2          60.0  4     1710.0 1 0 0 prodrhe.dat
+HE    2  2          60.0  5     1710.0 1 0 0 prodrhe.dat
+CM    2    3         1.0
+HE  102  2          60.0  6     1710.0 1 0 1 prodrhe.dat
+CM  102    3         1.0
 & --------------------- POLINOMIOS DE JUDANTE -------------------------------
 &x  xxxxxxxxxxxx
 FJ  polinjus.dat
