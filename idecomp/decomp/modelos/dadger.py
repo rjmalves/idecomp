@@ -820,70 +820,58 @@ class VE(Register):
         self.data[1:] = cus
 
 
+class RE(Register):
+    """
+    Registro que contém as manutenções programadas das UTEs.
+    """
+
+    IDENTIFIER = "RE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 14),
+            IntegerField(2, 19),
+        ]
+    )
+
+    @property
+    def codigo(self) -> Optional[int]:
+        """
+        O código de cadastro para a restrição
+
+        :return: O código.
+        :rtype: Optional[int]
+        """
+        return self.data[0]
+
+    @property
+    def estagio_inicial(self) -> Optional[int]:
+        """
+        O estágio inicial para consideração da restrição
+
+        :return: O estágio.
+        :rtype: Optional[int]
+        """
+        return self.data[1]
+
+    @property
+    def estagio_final(self) -> Optional[int]:
+        """
+        O estágio final para consideração da restrição
+
+        :return: O estágio.
+        :rtype: Optional[int]
+        """
+        return self.data[2]
+
+
 from typing import IO, List, Type
 from idecomp._utils.utils import formata_numero
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
 from idecomp._utils.registrodecomp import RegistroDecomp
 from idecomp._utils.registrodecomp import TipoRegistroAC
 from idecomp._utils.leituraregistros import LeituraRegistros
-
-
-class RE(RegistroDecomp):
-    """
-    Registro que contém os cadastros de restrições elétricas.
-    """
-
-    mnemonico = "RE"
-
-    def __init__(self):
-        super().__init__(RE.mnemonico, True)
-        self._dados = [0, 0, 0]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_estagio.le_registro(self._linha, 14)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{RE.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(2)
-            + "\n"
-        )
-        arq.write(linha)
-
-    @property
-    def codigo(self) -> int:
-        """
-        O código de cadastro para a restrição
-
-        :return: O código como `int`.
-        """
-        return self._dados[0]
-
-    @property
-    def estagio_inicial(self) -> int:
-        """
-        O estágio inicial para consideração da restrição
-
-        :return: O estágio como `int`.
-        """
-        return self._dados[1]
-
-    @property
-    def estagio_final(self) -> int:
-        """
-        O estágio final para consideração da restrição
-
-        :return: O estágio como `int`.
-        """
-        return self._dados[2]
 
 
 class LU(RegistroDecomp):
