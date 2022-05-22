@@ -1,297 +1,228 @@
-from typing import IO, List, Type
+from cfinterface.components.register import Register
+from cfinterface.components.line import Line
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.literalfield import LiteralField
+from cfinterface.components.floatfield import FloatField
 
-from idecomp._utils.utils import formata_numero
-from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
-from idecomp._utils.registrodecomp import RegistroDecomp
-from idecomp._utils.registrodecomp import TipoRegistroAC
-from idecomp._utils.leituraregistros import LeituraRegistros
+from typing import Optional, List
 
 
-class TE(RegistroDecomp):
+class TE(Register):
     """
-    Registro que contém o nome do estudo do DECOMP.
+    Registro que contém a usina modificada.
     """
 
-    mnemonico = "TE"
-
-    def __init__(self):
-        super().__init__(TE.mnemonico, True)
-        self._dados: str = ""
-
-    def le(self):
-        reg_linha = RegistroAn(75)
-        self._dados = reg_linha.le_registro(self._linha, 4)
-
-    def escreve(self, arq: IO):
-        linha = f"{TE.mnemonico}".ljust(4) + self.dados + "\n"
-        arq.write(linha)
+    IDENTIFIER = "TE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line([LiteralField(75, 4)])
 
     @property
-    def titulo(self) -> str:
+    def titulo(self) -> Optional[str]:
         """
         O único conteúdo do registro (título do estudo).
 
-        :return: Uma `str` com o título do estudo
+        :return: O título do estudo
+        :rtype: Optional[str]
         """
-        return self._dados
+        return self.data[0]
 
     @titulo.setter
     def titulo(self, t: str):
-        self._dados = t
+        self.data[0] = t
 
 
-class SB(RegistroDecomp):
+class SB(Register):
     """
     Registro que contém o cadastro dos subsistemas.
     """
 
-    mnemonico = "SB"
-
-    def __init__(self):
-        super().__init__(SB.mnemonico, True)
-        self._dados = [0, ""]
-
-    def le(self):
-        reg_indice = RegistroIn(2)
-        reg_mnemonico = RegistroAn(2)
-        self._dados[0] = reg_indice.le_registro(self._linha, 4)
-        self._dados[1] = reg_mnemonico.le_registro(self._linha, 9)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{SB.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(2)
-            + "   "
-            + f"{self._dados[1]}".ljust(2)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "SB  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line([IntegerField(2, 4), LiteralField(2, 9)])
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código de cadastro do subsistema.
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @codigo.setter
     def codigo(self, cod: int):
-        self._dados[0] = cod
+        self.data[0] = cod
 
     @property
-    def nome(self) -> str:
+    def nome(self) -> Optional[str]:
         """
         O nome de cadastro do subsistema.
 
-        :return: O nome como `str`.
+        :return: O nome.
+        :rtype: Optional[str]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @nome.setter
     def nome(self, n: str):
-        self._dados[1] = n
+        self.data[1] = n
 
 
-class UH(RegistroDecomp):
+class UH(Register):
     """
     Registro que contém o cadastro das UHEs, com os seus volumes
     iniciais no estudo.
     """
 
-    mnemonico = "UH"
-
-    def __init__(self):
-        super().__init__(UH.mnemonico, True)
-        self._dados = [0, 0, 0.0, True, -1.0]
-
-    def le(self):
-        reg_indice = RegistroIn(3)
-        reg_ree = RegistroIn(2)
-        reg_vini = RegistroFn(6)
-        reg_evap = RegistroIn(1)
-        reg_vert = RegistroFn(10)
-        self._dados[0] = reg_indice.le_registro(self._linha, 4)
-        self._dados[1] = reg_ree.le_registro(self._linha, 9)
-        self._dados[2] = reg_vini.le_registro(self._linha, 18)
-        if len(self._linha[39:40].strip()) > 0:
-            self._dados[3] = bool(reg_evap.le_registro(self._linha, 39))
-        if len(self._linha[59:69].strip()) > 0:
-            self._dados[4] = reg_vert.le_registro(self._linha, 59)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{UH.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "       "
-            + f"{round(self._dados[2], 2)}".rjust(6)
-            + "               "
-            + f"{int(self._dados[3])}"
-        )
-        if self._dados[4] != -1.0:
-            linha += "                   "
-            linha += f"{round(self._dados[4], 2)}".rjust(10)
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "UH  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            FloatField(6, 18, 2),
+            IntegerField(1, 39),
+            FloatField(10, 59, 2),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código de cadastro da UHE.
 
-        :return: O código como um `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
+
+    @codigo.setter
+    def codigo(self, cod: int):
+        self.data[0] = cod
 
     @property
-    def ree(self) -> int:
+    def ree(self) -> Optional[int]:
         """
         O REE de cadastro da UHE.
 
-        :return: O REE como um `int`.
+        :return: O REE.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @ree.setter
-    def ree(self, r: int):
-        self._dados[1] = r
+    def ree(self, n: str):
+        self.data[1] = n
 
     @property
-    def volume_inicial(self) -> float:
+    def volume_inicial(self) -> Optional[float]:
         """
         O volume inicial da UHE para o estudo.
 
-        :return: O volume como um `float`.
+        :return: O volume.
+        :rtype: Optional[float]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @volume_inicial.setter
     def volume_inicial(self, v: float):
-        self._dados[2] = v
+        self.data[2] = v
 
     @property
-    def evaporacao(self) -> bool:
+    def evaporacao(self) -> Optional[bool]:
         """
         A consideração ou não de evaporação para a UHE.
 
-        :return: A consideração como um `bool`.
+        :return: A consideração.
+        :rtype: Optional[bool]
         """
-        return self._dados[3]
+        return self.data[3]
 
     @evaporacao.setter
     def evaporacao(self, e: bool):
-        self._dados[3] = e
+        self.data[3] = e
 
 
-class CT(RegistroDecomp):
+class CT(Register):
     """
     Registro que contém o cadastro das usinas termelétricas com
     os seus custos e capacidades.
     """
 
-    mnemonico = "CT"
-
-    def __init__(self):
-        super().__init__(CT.mnemonico, True)
-        self._dados = [0, 0, "", 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
-    def le(self):
-        reg_codigo = RegistroIn(3)
-        reg_subsis = RegistroIn(2)
-        reg_nome = RegistroAn(10)
-        reg_estagio = RegistroIn(2)
-        reg_inflex = RegistroFn(5)
-        reg_disp = RegistroFn(5)
-        reg_cvu = RegistroFn(10)
-        self._dados[0] = reg_codigo.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 9)
-        self._dados[2] = reg_nome.le_registro(self._linha, 14)
-        self._dados[3] = reg_estagio.le_registro(self._linha, 24)
-        self._dados[4] = reg_inflex.le_registro(self._linha, 29)
-        self._dados[5] = reg_disp.le_registro(self._linha, 34)
-        self._dados[6] = reg_cvu.le_registro(self._linha, 39)
-        self._dados[7] = reg_inflex.le_registro(self._linha, 49)
-        self._dados[8] = reg_disp.le_registro(self._linha, 54)
-        self._dados[9] = reg_cvu.le_registro(self._linha, 59)
-        self._dados[10] = reg_inflex.le_registro(self._linha, 69)
-        self._dados[11] = reg_disp.le_registro(self._linha, 74)
-        self._dados[12] = reg_cvu.le_registro(self._linha, 79)
-
-    def escreve(self, arq: IO):
-
-        linha = (
-            f"{CT.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".ljust(10)
-            + f"{self._dados[3]}".rjust(2)
-            + "   "
-            + formata_numero(self._dados[4], 2, 5)
-            + formata_numero(self._dados[5], 2, 5)
-            + f"{self._dados[6]:10.2f}"
-            + formata_numero(self._dados[7], 2, 5)
-            + formata_numero(self._dados[8], 2, 5)
-            + f"{self._dados[9]:10.2f}"
-            + formata_numero(self._dados[10], 2, 5)
-            + formata_numero(self._dados[11], 2, 5)
-            + f"{self._dados[12]:10.2f}"
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "CT  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            LiteralField(10, 14),
+            IntegerField(2, 24),
+            FloatField(5, 29, 1),
+            FloatField(5, 34, 1),
+            FloatField(10, 39, 2),
+            FloatField(5, 49, 1),
+            FloatField(5, 54, 1),
+            FloatField(10, 59, 2),
+            FloatField(5, 69, 1),
+            FloatField(5, 74, 1),
+            FloatField(10, 79, 2),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código de cadastro da UTE.
 
-        :return: O código como um `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def subsistema(self) -> int:
+    def subsistema(self) -> Optional[int]:
         """
         O subsistema de cadastro da UTE.
 
-        :return: O subsistema como um `int`.
+        :return: O subsistema.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @property
-    def nome(self) -> str:
+    def nome(self) -> Optional[str]:
         """
         O nome de cadastro da UTE.
 
         :return: O nome como uma `str`.
+        :rtype: Optional[str]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @nome.setter
     def nome(self, nome: str):
-        self._dados[2] = nome
+        self.data[2] = nome
 
     @property
-    def estagio(self) -> str:
+    def estagio(self) -> Optional[str]:
         """
         O estágio associado às propriedades cadastradas.
 
-        :return: O estágio como um `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[3]
+        return self.data[3]
 
     @property
-    def inflexibilidades(self) -> List[float]:
+    def inflexibilidades(self) -> Optional[List[float]]:
         """
         As inflexibilidades da UTE por patamar.
 
-        :return: As inflexibilidades como `list[float]`.
+        :return: As inflexibilidades.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[4::3]
+        return self.data[4::3]
 
     @inflexibilidades.setter
     def inflexibilidades(self, inflex: List[float]):
@@ -302,16 +233,17 @@ class CT(RegistroDecomp):
                 "Número de inflexibilidades incompatível. De"
                 + f"vem ser fornecidas {atuais}, mas foram {novas}"
             )
-        self._dados[4::3] = inflex
+        self.data[4::3] = inflex
 
     @property
-    def disponibilidades(self) -> List[float]:
+    def disponibilidades(self) -> Optional[List[float]]:
         """
         As disponibilidades da UTE por patamar.
 
-        :return: As disponibilidades como `list[float]`.
+        :return: As disponibilidades.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[5::3]
+        return self.data[5::3]
 
     @disponibilidades.setter
     def disponibilidades(self, disp: List[float]):
@@ -322,16 +254,17 @@ class CT(RegistroDecomp):
                 "Número de disponibilidades incompatível. De"
                 + f"vem ser fornecidas {atuais}, mas foram {novas}"
             )
-        self._dados[5::3] = disp
+        self.data[5::3] = disp
 
     @property
-    def cvus(self) -> List[float]:
+    def cvus(self) -> Optional[List[float]]:
         """
         Os CVUs da UTE por patamar.
 
-        :return: Os CVUs como `list[float]`.
+        :return: Os CVUs.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[6::3]
+        return self.data[6::3]
 
     @cvus.setter
     def cvus(self, cvu: List[float]):
@@ -342,154 +275,95 @@ class CT(RegistroDecomp):
                 "Número de CVUs incompatível. De"
                 + f"vem ser fornecidas {atuais}, mas foram {novas}"
             )
-        self._dados[6::3] = cvu
+        self.data[6::3] = cvu
 
 
-class UE(RegistroDecomp):
+class UE(Register):
     """
     Registro que contém o cadastro das estações de bombeamento
     (usinas elevatórias).
     """
 
-    mnemonico = "UE"
-
-    def __init__(self):
-        super().__init__(UE.mnemonico, True)
-        self._dados = [0, 0, "", 0, 0, 0.0, 0.0, 0.0]
-
-    def le(self):
-        reg_codigo = RegistroIn(3)
-        reg_subsis = RegistroIn(2)
-        reg_nome = RegistroAn(12)
-        reg_montante = RegistroIn(3)
-        reg_jusante = RegistroIn(3)
-        reg_bomb = RegistroFn(10)
-        self._dados[0] = reg_codigo.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 9)
-        self._dados[2] = reg_nome.le_registro(self._linha, 14)
-        self._dados[3] = reg_montante.le_registro(self._linha, 29)
-        self._dados[4] = reg_jusante.le_registro(self._linha, 34)
-        self._dados[5] = reg_bomb.le_registro(self._linha, 39)
-        self._dados[6] = reg_bomb.le_registro(self._linha, 49)
-        self._dados[7] = reg_bomb.le_registro(self._linha, 59)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{UE.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".zfill(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".ljust(12)
-            + "   "
-            + f"{self._dados[3]}".rjust(3)
-            + "  "
-            + f"{self._dados[4]}".rjust(3)
-            + "  "
-            + f"{self._dados[5]:10.1f}"
-            + f"{self._dados[6]:10.1f}"
-            + f"{self._dados[7]:10.2f}"
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "UE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            LiteralField(12, 14),
+            IntegerField(3, 29),
+            IntegerField(3, 34),
+            FloatField(10, 39, 1),
+            FloatField(10, 49, 1),
+            FloatField(10, 59, 2),
+        ]
+    )
 
 
-class DP(RegistroDecomp):
+class DP(Register):
     """
     Registro que contém o cadastro das durações dos patamares.
     """
 
-    mnemonico = "DP"
-
-    def __init__(self):
-        super().__init__(DP.mnemonico, True)
-        self._dados = [0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
-    def le(self):
-        reg_estagio = RegistroIn(2)
-        reg_subsis = RegistroIn(2)
-        reg_num = RegistroIn(1)
-        reg_carga = RegistroFn(10)
-        reg_duracao = RegistroFn(10)
-        self._dados[0] = reg_estagio.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 9)
-        self._dados[2] = reg_num.le_registro(self._linha, 14)
-        if len(self._linha[19:29].strip()) > 0:
-            self._dados[3] = reg_carga.le_registro(self._linha, 19)
-        self._dados[4] = reg_duracao.le_registro(self._linha, 29)
-        if len(self._linha[39:49].strip()) > 0:
-            self._dados[5] = reg_carga.le_registro(self._linha, 39)
-        self._dados[6] = reg_duracao.le_registro(self._linha, 49)
-        if len(self._linha[59:69].strip()) > 0:
-            self._dados[7] = reg_carga.le_registro(self._linha, 59)
-        self._dados[8] = reg_duracao.le_registro(self._linha, 69)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{DP.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(2)
-            + "   "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(1)
-            + "    "
-        )
-        if self._dados[3] != 0.0:
-            linha += f"{self._dados[3]:10.1f}"
-        else:
-            linha += "          "
-        linha += f"{self._dados[4]:10.1f}"
-        if self._dados[5] != 0.0:
-            linha += f"{self._dados[5]:10.1f}"
-        else:
-            linha += "          "
-        linha += f"{self._dados[6]:10.1f}"
-        if self._dados[7] != 0.0:
-            linha += f"{self._dados[7]:10.1f}"
-        else:
-            linha += "          "
-        linha += f"{self._dados[8]:10.1f}"
-        arq.write(linha + "\n")
+    IDENTIFIER = "DP  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            IntegerField(2, 9),
+            IntegerField(1, 14),
+            FloatField(10, 19, 1),
+            FloatField(10, 29, 1),
+            FloatField(10, 39, 1),
+            FloatField(10, 49, 1),
+            FloatField(10, 59, 1),
+            FloatField(10, 69, 1),
+        ]
+    )
 
     @property
-    def estagio(self) -> int:
+    def estagio(self) -> Optional[int]:
         """
         O estágio associado às durações especificadas.
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def subsistema(self) -> int:
+    def subsistema(self) -> Optional[int]:
         """
         O subsistema associado às durações especificadas.
 
-        :return: O subsistema como `int`.
+        :return: O subsistema.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @subsistema.setter
     def subsistema(self, sub: int):
-        self._dados[1] = sub
+        self.data[1] = sub
 
     @property
-    def num_patamares(self) -> int:
+    def num_patamares(self) -> Optional[int]:
         """
         O número de patamares.
 
-        :return: O número como `int`.
+        :return: O número de patamares.
+        :rtype: Optional[int]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @property
-    def cargas(self) -> List[float]:
+    def cargas(self) -> Optional[List[float]]:
         """
         As cargas em Mwmed pata cada patamar de carga
 
-        :return: As cargas como `list[float]`.
+        :return: As cargas.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[3::2]
+        return self.data[3::2]
 
     @cargas.setter
     def cargas(self, c: List[float]):
@@ -500,16 +374,17 @@ class DP(RegistroDecomp):
                 "Número de cargas incompatível. De"
                 + f"vem ser fornecidas {atuais}, mas foram {novas}"
             )
-        self._dados[3::2] = c
+        self.data[3::2] = c
 
     @property
-    def duracoes(self) -> List[float]:
+    def duracoes(self) -> Optional[List[float]]:
         """
         As durações de cada patamar de carga em horas
 
-        :return: As durações como `list[float]`.
+        :return: As durações em horas.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[4::2]
+        return self.data[4::2]
 
     @duracoes.setter
     def duracoes(self, d: List[float]):
@@ -520,93 +395,66 @@ class DP(RegistroDecomp):
                 "Número de durações incompatível. De"
                 + f"vem ser fornecidas {atuais}, mas foram {novas}"
             )
-        self._dados[4::2] = d
+        self.data[4::2] = d
 
 
-class CD(RegistroDecomp):
+class CD(Register):
     """
     Registro que contém o cadastro dos custos de déficit.
     """
 
-    mnemonico = "CD"
-
-    def __init__(self):
-        super().__init__(CD.mnemonico, True)
-        self._dados = [0, 0, "", 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
-    def le(self):
-        reg_num_curva = RegistroIn(2)
-        reg_subsis = RegistroIn(2)
-        reg_nome = RegistroAn(10)
-        reg_estagio = RegistroIn(2)
-        reg_limite = RegistroFn(5)
-        reg_custo = RegistroFn(10)
-        self._dados[0] = reg_num_curva.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 9)
-        self._dados[2] = reg_nome.le_registro(self._linha, 14)
-        self._dados[3] = reg_estagio.le_registro(self._linha, 24)
-        self._dados[4] = reg_limite.le_registro(self._linha, 29)
-        self._dados[5] = reg_custo.le_registro(self._linha, 34)
-        self._dados[6] = reg_limite.le_registro(self._linha, 44)
-        self._dados[7] = reg_custo.le_registro(self._linha, 49)
-        self._dados[8] = reg_limite.le_registro(self._linha, 59)
-        self._dados[9] = reg_custo.le_registro(self._linha, 64)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{CD.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(2)
-            + "   "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".ljust(10)
-            + f"{self._dados[3]}".rjust(2)
-            + "   "
-            + f"{self._dados[4]:5.0f}"
-            + f"{self._dados[5]:10.2f}"
-            + f"{self._dados[6]:5.0f}"
-            + f"{self._dados[7]:10.2f}"
-            + f"{self._dados[8]:5.0f}"
-            + f"{self._dados[9]:10.2f}"
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "CD  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            IntegerField(2, 9),
+            LiteralField(10, 14),
+            IntegerField(2, 24),
+            FloatField(5, 29, 1),
+            FloatField(10, 34, 2),
+            FloatField(5, 44, 1),
+            FloatField(10, 49, 2),
+            FloatField(5, 59, 1),
+            FloatField(10, 64, 2),
+        ]
+    )
 
     @property
-    def numero_curva(self) -> int:
-        return self._dados[0]
+    def numero_curva(self) -> Optional[int]:
+        return self.data[0]
 
     @numero_curva.setter
     def numero_curva(self, n: int):
-        self._dados[0] = n
+        self.data[0] = n
 
     @property
-    def subsistema(self) -> int:
-        return self._dados[1]
+    def subsistema(self) -> Optional[int]:
+        return self.data[1]
 
     @subsistema.setter
     def subsistema(self, s: int):
-        self._dados[1] = s
+        self.data[1] = s
 
     @property
-    def nome_curva(self) -> str:
-        return self._dados[2]
+    def nome_curva(self) -> Optional[str]:
+        return self.data[2]
 
     @nome_curva.setter
     def nome_curva(self, n: str):
-        self._dados[2] = n
+        self.data[2] = n
 
     @property
-    def estagio(self) -> int:
-        return self._dados[3]
+    def estagio(self) -> Optional[int]:
+        return self.data[3]
 
     @estagio.setter
     def estagio(self, e: int):
-        self._dados[3] = e
+        self.data[3] = e
 
     @property
-    def limites_superiores(self) -> List[float]:
-        return self._dados[4::2]
+    def limites_superiores(self) -> Optional[List[float]]:
+        return self.data[4::2]
 
     @limites_superiores.setter
     def limites_superiores(self, lim: List[float]):
@@ -617,11 +465,11 @@ class CD(RegistroDecomp):
                 "Número de limites incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[4::2] = lim
+        self.data[4::2] = lim
 
     @property
-    def custos(self) -> List[float]:
-        return self._dados[5::2]
+    def custos(self) -> Optional[List[float]]:
+        return self.data[5::2]
 
     @custos.setter
     def custos(self, cus: List[float]):
@@ -632,475 +480,352 @@ class CD(RegistroDecomp):
                 "Número de custos incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[5::2] = cus
+        self.data[5::2] = cus
 
 
-class PQ(RegistroDecomp):
-    """
-    Registro que contém as gerações de pequenas usinas, não
-    incluídas no despacho.
-    """
-
-    mnemonico = "PQ"
-
-    def __init__(self):
-        super().__init__(PQ.mnemonico, True)
-        self._dados = ["", 0, 0, 0.0, 0.0, 0.0]
-
-    def le(self):
-        reg_nome = RegistroAn(10)
-        reg_subsis = RegistroIn(2)
-        reg_estagio = RegistroIn(2)
-        reg_custo = RegistroFn(5)
-        self._dados[0] = reg_nome.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 15)
-        self._dados[2] = reg_estagio.le_registro(self._linha, 19)
-        self._dados[3] = reg_custo.le_registro(self._linha, 24)
-        self._dados[4] = reg_custo.le_registro(self._linha, 29)
-        self._dados[5] = reg_custo.le_registro(self._linha, 34)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{PQ.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".ljust(10)
-            + " "
-            + f"{self._dados[1]}".rjust(1)
-            + "   "
-            + f"{self._dados[2]}".rjust(2)
-            + "   "
-            + f"{self._dados[3]:5.0f}"
-            + f"{self._dados[4]:5.0f}"
-            + f"{self._dados[5]:5.0f}"
-            + "\n"
-        )
-        arq.write(linha)
-
-
-class RI(RegistroDecomp):
+class RI(Register):
     """
     Registro que contém as restrições de Itaipu.
     """
 
-    mnemonico = "RI"
-
-    def __init__(self):
-        super().__init__(RI.mnemonico, True)
-        self._dados = [
-            0,
-            0,
-            0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
+    IDENTIFIER = "RI  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 13),
+            FloatField(5, 16, 0),
+            FloatField(5, 21, 0),
+            FloatField(5, 26, 0),
+            FloatField(5, 31, 0),
+            FloatField(5, 36, 0),
+            FloatField(5, 41, 0),
+            FloatField(5, 46, 0),
+            FloatField(5, 51, 0),
+            FloatField(5, 56, 0),
+            FloatField(5, 61, 0),
+            FloatField(5, 66, 0),
+            FloatField(5, 71, 0),
+            FloatField(5, 76, 0),
+            FloatField(5, 81, 0),
+            FloatField(5, 86, 0),
         ]
-
-    def le(self):
-        reg_uhe = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_subsis = RegistroIn(3)
-        reg_minmax = RegistroFn(7)
-        self._dados[0] = reg_uhe.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_subsis.le_registro(self._linha, 13)
-        tab = reg_minmax.le_linha_tabela(self._linha, 16, 0, 15)
-        for i, t in enumerate(tab, start=3):
-            self._dados[i] = t
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{RI.mnemonico}".ljust(3)
-            + f"{self._dados[0]}".rjust(3)
-            + "   "
-            + f"{self._dados[1]}".rjust(2)
-            + "  "
-            + f"{self._dados[2]}".rjust(2)
-            + " "
-        )
-        for i in range(3, len(self._dados)):
-            linha += f"{self._dados[i]:7.0f}"
-        linha += "\n"
-        arq.write(linha)
+    )
 
 
-class IA(RegistroDecomp):
+class IA(Register):
     """
     Registro que contém os limites de intercâmbio entre os subsistemas.
     """
 
-    mnemonico = "IA"
-
-    def __init__(self):
-        super().__init__(IA.mnemonico, True)
-        self._dados = [0, "", "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
-    def le(self):
-        reg_estagio = RegistroIn(2)
-        reg_subsis = RegistroAn(2)
-        reg_limite = RegistroFn(10)
-        self._dados[0] = reg_estagio.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 9)
-        self._dados[2] = reg_subsis.le_registro(self._linha, 14)
-        tab = reg_limite.le_linha_tabela(self._linha, 19, 0, 6)
-        for i, t in enumerate(tab, start=3):
-            self._dados[i] = t
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{IA.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(2)
-            + "   "
-            + f"{self._dados[1]}".ljust(2)
-            + "   "
-            + f"{self._dados[2]}".ljust(2)
-            + "   "
-        )
-        for i in range(3, len(self._dados)):
-            linha += f"{self._dados[i]:10.0f}"
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "IA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            IntegerField(2, 9),
+            IntegerField(2, 14),
+            FloatField(10, 19, 0),
+            FloatField(10, 29, 0),
+            FloatField(10, 39, 0),
+            FloatField(10, 49, 0),
+            FloatField(10, 59, 0),
+            FloatField(10, 69, 0),
+        ]
+    )
 
 
-class TX(RegistroDecomp):
+class TX(Register):
     """
     Registro que contém a taxa de desconto anual do modelo.
     """
 
-    mnemonico = "TX"
-
-    def __init__(self):
-        super().__init__(TX.mnemonico, True)
-        self._dados: float = 0.0
-
-    def le(self):
-        reg_linha = RegistroFn(5)
-        self._dados = reg_linha.le_registro(self._linha, 4)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{TX.mnemonico}".ljust(4)
-            + f"{round(self.dados, 2)}".rjust(5)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "TX  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            FloatField(5, 4, 0),
+        ]
+    )
 
     @property
-    def taxa(self) -> float:
+    def taxa(self) -> Optional[float]:
         """
-        A taxa de desconto em % utilizada no estudo
+        A taxa de desconto em % utilizada no estudo.
 
-        :return: As taxa como `float`.
+        :return: A taxa.
+        :rtype: Optional[float]
         """
-        return self._dados
+        return self.data[0]
 
     @taxa.setter
     def taxa(self, t: float):
-        self._dados = t
+        self.data[0] = t
 
 
-class GP(RegistroDecomp):
+class GP(Register):
     """
     Registro que contém o gap de tolerância para convergência.
     """
 
-    mnemonico = "GP"
-
-    def __init__(self):
-        super().__init__(GP.mnemonico, True)
-        self._dados: float = 0.0
-
-    def le(self):
-        reg_linha = RegistroFn(10)
-        self._dados = reg_linha.le_registro(self._linha, 4)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{GP.mnemonico}".ljust(4)
-            + f"{round(self.dados, 8)}".rjust(10)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "GP  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            FloatField(10, 4, 6),
+        ]
+    )
 
     @property
-    def gap(self) -> float:
+    def gap(self) -> Optional[float]:
         """
         O gap considerado para convergência no estudo
 
-        :return: O gap como `float`.
+        :return: O gap.
+        :rtype: Optional[float]
         """
-        return self._dados
+        return self.data[0]
 
     @gap.setter
     def gap(self, g: float):
-        self._dados = g
+        self.data[0] = g
 
 
-class NI(RegistroDecomp):
+class NI(Register):
     """
     Registro que contém o número máximo de iterações do modelo.
     """
 
-    mnemonico = "NI"
-
-    def __init__(self):
-        super().__init__(NI.mnemonico, True)
-        self._dados: int = 0
-
-    def le(self):
-        reg_linha = RegistroIn(3)
-        self._dados = reg_linha.le_registro(self._linha, 4)
-
-    def escreve(self, arq: IO):
-        linha = f"{NI.mnemonico}".ljust(4) + f"{self.dados}".rjust(3) + "\n"
-        arq.write(linha)
+    IDENTIFIER = "NI  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+        ]
+    )
 
     @property
-    def iteracoes(self) -> int:
+    def iteracoes(self) -> Optional[int]:
         """
         O número máximo de iterações do modelo no estudo
 
-        :return: O número de iterações como `int`.
+        :return: O número de iterações.
+        :rtype: Optional[int]
         """
-        return self._dados
+        return self.data[0]
 
     @iteracoes.setter
     def iteracoes(self, i: int):
-        self._dados = i
+        self.data[0] = i
 
 
-class DT(RegistroDecomp):
+class DT(Register):
     """
     Registro que contém a data de referência do estudo.
     """
 
-    mnemonico = "DT"
-
-    def __init__(self):
-        super().__init__(DT.mnemonico, True)
-        self._dados = [0, 0, 0]
-
-    def le(self):
-        reg_diames = RegistroIn(2)
-        reg_ano = RegistroIn(4)
-        self._dados[0] = reg_diames.le_registro(self._linha, 4)
-        self._dados[1] = reg_diames.le_registro(self._linha, 9)
-        self._dados[2] = reg_ano.le_registro(self._linha, 14)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{DT.mnemonico}".ljust(4)
-            + f"{self.dados[0]}".rjust(2)
-            + "   "
-            + f"{self.dados[1]}".zfill(2)
-            + "   "
-            + f"{self.dados[2]}".rjust(4)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "DT  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            IntegerField(2, 9),
+            IntegerField(4, 14),
+        ]
+    )
 
     @property
-    def dia(self) -> int:
+    def dia(self) -> Optional[int]:
         """
         O dia de referência para realização do estudo
 
-        :return: O dia como `int`.
+        :return: O dia
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @dia.setter
     def dia(self, d: int):
-        self._dados[0] = d
+        self.data[0] = d
 
     @property
-    def mes(self) -> int:
+    def mes(self) -> Optional[int]:
         """
         O mês de referência para realização do estudo
 
-        :return: O mês como `int`.
+        :return: O mês
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @mes.setter
     def mes(self, m: int):
-        self._dados[1] = m
+        self.data[1] = m
 
     @property
-    def ano(self) -> int:
+    def ano(self) -> Optional[int]:
         """
         O ano de referência para realização do estudo
 
-        :return: O ano como `int`.
+        :return: O ano
+        :rtype: Optional[int]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @ano.setter
     def ano(self, a: int):
-        self._dados[2] = a
+        self.data[2] = a
 
 
-class MP(RegistroDecomp):
+class MP(Register):
     """
     Registro que contém as manutenções programadas das UHEs.
     """
 
-    mnemonico = "MP"
-
-    def __init__(self):
-        super().__init__(MP.mnemonico, True)
-        self._dados = [0, 0]
-
-    def le(self):
-        reg_uhe = RegistroIn(3)
-        reg_frequencia = RegistroIn(2)
-        reg_manutencao = RegistroFn(5)
-        self._dados[0] = reg_uhe.le_registro(self._linha, 4)
-        if self._linha[7:9].strip().isnumeric():
-            self._dados[1] = reg_frequencia.le_registro(self._linha, 7)
-        ci = 9
-        for i in range(2, 26):
-            cf = ci + 5
-            if len(self._linha[ci:cf].strip()) == 0:
-                break
-            self._dados.append(reg_manutencao.le_registro(self._linha, ci))
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = f"{MP.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3)
-        linha += "  " if self._dados[1] == 0 else f"{self._dados[1]}"
-        for i in range(2, len(self._dados)):
-            linha += f"{self._dados[i]:1.3f}"
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "MP  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 7),
+            FloatField(5, 9, 3),
+            FloatField(5, 12, 3),
+            FloatField(5, 15, 3),
+            FloatField(5, 18, 3),
+            FloatField(5, 21, 3),
+            FloatField(5, 24, 3),
+            FloatField(5, 27, 3),
+            FloatField(5, 30, 3),
+            FloatField(5, 33, 3),
+            FloatField(5, 36, 3),
+            FloatField(5, 39, 3),
+            FloatField(5, 42, 3),
+            FloatField(5, 45, 3),
+        ]
+    )
 
 
-class MT(RegistroDecomp):
+class MT(Register):
     """
     Registro que contém as manutenções programadas das UTEs.
     """
 
-    mnemonico = "MT"
-
-    def __init__(self):
-        super().__init__(MT.mnemonico, True)
-        self._dados = [0, 0]
-
-    def le(self):
-        reg_ute = RegistroIn(3)
-        reg_subsis = RegistroIn(2)
-        reg_manutencao = RegistroFn(5)
-        self._dados[0] = reg_ute.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 9)
-        ci = 14
-        for i in range(2, 26):
-            cf = ci + 5
-            if len(self._linha[ci:cf].strip()) == 0:
-                break
-            self._dados.append(reg_manutencao.le_registro(self._linha, ci))
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{MT.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-        )
-        for i in range(2, len(self._dados)):
-            linha += f"{self._dados[i]:1.3f}"
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "MT  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            FloatField(5, 14, 3),
+            FloatField(5, 19, 3),
+            FloatField(5, 24, 3),
+            FloatField(5, 29, 3),
+            FloatField(5, 34, 3),
+            FloatField(5, 39, 3),
+            FloatField(5, 44, 3),
+            FloatField(5, 49, 3),
+            FloatField(5, 54, 3),
+            FloatField(5, 59, 3),
+            FloatField(5, 64, 3),
+            FloatField(5, 69, 3),
+            FloatField(5, 74, 3),
+        ]
+    )
 
 
-class FD(RegistroDecomp):
+class FD(Register):
     """
-    Registro que contém os fatores de disponibilidade das UHEs.
+    Registro que contém as manutenções programadas das UTEs.
     """
 
-    mnemonico = "FD"
-
-    def __init__(self):
-        super().__init__(FD.mnemonico, True)
-        self._dados = [0, 0]
-
-    def le(self):
-        reg_uhe = RegistroIn(3)
-        reg_manutencao = RegistroFn(5)
-        reg_frequencia = RegistroIn(2)
-        self._dados[0] = reg_uhe.le_registro(self._linha, 4)
-        if self._linha[7:9].strip().isnumeric():
-            self._dados[1] = reg_frequencia.le_registro(self._linha, 7)
-        ci = 9
-        for i in range(2, 25):
-            cf = ci + 5
-            if len(self._linha[ci:cf].strip()) == 0:
-                break
-            self._dados.append(reg_manutencao.le_registro(self._linha, ci))
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = f"{FD.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3)
-        linha += "  " if self._dados[1] == 0 else f"{self._dados[1]}"
-        for i in range(2, len(self._dados)):
-            linha += f"{self._dados[i]:1.3f}"
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "FD  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 7),
+            FloatField(5, 9, 3),
+            FloatField(5, 14, 3),
+            FloatField(5, 19, 3),
+            FloatField(5, 24, 3),
+            FloatField(5, 29, 3),
+            FloatField(5, 34, 3),
+            FloatField(5, 39, 3),
+            FloatField(5, 44, 3),
+            FloatField(5, 49, 3),
+            FloatField(5, 54, 3),
+            FloatField(5, 59, 3),
+            FloatField(5, 64, 3),
+            FloatField(5, 69, 3),
+        ]
+    )
 
 
-class VE(RegistroDecomp):
+class VE(Register):
     """
-    Registro que contém os volumes de espera das UHEs.
+    Registro que contém as manutenções programadas das UTEs.
     """
 
-    mnemonico = "VE"
-
-    def __init__(self):
-        super().__init__(VE.mnemonico, True)
-        self._dados = [0]
-
-    def le(self):
-        reg_uhe = RegistroIn(3)
-        reg_manutencao = RegistroFn(5)
-        self._dados[0] = reg_uhe.le_registro(self._linha, 4)
-        ci = 9
-        for i in range(1, 25):
-            cf = ci + 5
-            if len(self._linha[ci:cf].strip()) == 0:
-                break
-            self._dados.append(reg_manutencao.le_registro(self._linha, ci))
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = f"{VE.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3) + "  "
-        for i in range(1, len(self._dados)):
-            a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
-            if len(a_escrever) > 5:
-                a_escrever = f"{round(self._dados[i], 1)}".rjust(5)
-            if len(a_escrever) > 5:
-                a_escrever = f"{int(self._dados[i])}".rjust(5)
-            linha += a_escrever
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "VE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(5, 9, 2),
+            FloatField(5, 14, 2),
+            FloatField(5, 19, 2),
+            FloatField(5, 24, 2),
+            FloatField(5, 29, 2),
+            FloatField(5, 34, 2),
+            FloatField(5, 39, 2),
+            FloatField(5, 44, 2),
+            FloatField(5, 49, 2),
+            FloatField(5, 54, 2),
+            FloatField(5, 59, 2),
+            FloatField(5, 64, 2),
+            FloatField(5, 69, 2),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
-        O código do posto associado ao volume
+        O código do posto associado ao volume.
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
+
+    @property
+    def volumes(self) -> Optional[List[float]]:
+        """
+        Os volumes de espera por estagio.
+
+        :return: Os volumes.
+        :rtype: Optional[List[float]]
+        """
+        return self.data[1:]
+
+    @volumes.setter
+    def volumes(self, cus: List[float]):
+        novos = len(cus)
+        atuais = len(self.volumes)
+        if novos != atuais:
+            raise ValueError(
+                "Número de volumes incompatível. De"
+                + f"vem ser fornecidos {atuais}, mas foram {novos}"
+            )
+        self.data[1:] = cus
+
+
+from typing import IO, List, Type
+from idecomp._utils.utils import formata_numero
+from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
+from idecomp._utils.registrodecomp import RegistroDecomp
+from idecomp._utils.registrodecomp import TipoRegistroAC
+from idecomp._utils.leituraregistros import LeituraRegistros
 
 
 class RE(RegistroDecomp):
@@ -2464,7 +2189,9 @@ class RT(RegistroDecomp):
         self._dados[0] = reg_mne.le_registro(self._linha, 4)
 
     def escreve(self, arq: IO):
-        linha = f"{RT.mnemonico}".ljust(4) + f"{self._dados[0]}".ljust(6) + "\n"
+        linha = (
+            f"{RT.mnemonico}".ljust(4) + f"{self._dados[0]}".ljust(6) + "\n"
+        )
         arq.write(linha)
 
     @property
@@ -2505,7 +2232,9 @@ class TI(RegistroDecomp):
             ci = cf
 
     def escreve(self, arq: IO):
-        linha = f"{TI.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3) + "  "
+        linha = (
+            f"{TI.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3) + "  "
+        )
         for i in range(1, len(self._dados)):
             # Verificação de segurança para tamanho do registro
             a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
@@ -3621,16 +3350,26 @@ class LeituraDadger(LeituraRegistros):
         rq: List[RegistroDecomp] = [RQ() for _ in range(MAX_REE)]
         ez: List[RegistroDecomp] = [EZ() for _ in range(MAX_UHE)]
         hv: List[RegistroDecomp] = [HV() for _ in range(MAX_UHE)]
-        lv: List[RegistroDecomp] = [LV() for _ in range(MAX_UHE * MAX_ESTAGIOS)]
+        lv: List[RegistroDecomp] = [
+            LV() for _ in range(MAX_UHE * MAX_ESTAGIOS)
+        ]
         cv: List[RegistroDecomp] = [CV() for _ in range(MAX_UHE)]
         hq: List[RegistroDecomp] = [HQ() for _ in range(MAX_UHE)]
-        lq: List[RegistroDecomp] = [LQ() for _ in range(MAX_UHE * MAX_ESTAGIOS)]
-        cq: List[RegistroDecomp] = [CQ() for _ in range(MAX_UHE * MAX_ESTAGIOS)]
+        lq: List[RegistroDecomp] = [
+            LQ() for _ in range(MAX_UHE * MAX_ESTAGIOS)
+        ]
+        cq: List[RegistroDecomp] = [
+            CQ() for _ in range(MAX_UHE * MAX_ESTAGIOS)
+        ]
         ar: List[RegistroDecomp] = [AR()]
         ev: List[RegistroDecomp] = [EV()]
         fj: List[RegistroDecomp] = [FJ()]
-        he: List[RegistroDecomp] = [HE() for _ in range(MAX_REE * MAX_ESTAGIOS)]
-        cm: List[RegistroDecomp] = [CM() for _ in range(MAX_REE * MAX_ESTAGIOS)]
+        he: List[RegistroDecomp] = [
+            HE() for _ in range(MAX_REE * MAX_ESTAGIOS)
+        ]
+        cm: List[RegistroDecomp] = [
+            CM() for _ in range(MAX_REE * MAX_ESTAGIOS)
+        ]
         fp: List[RegistroDecomp] = [FP() for _ in range(MAX_UHE)]
         return (
             te
