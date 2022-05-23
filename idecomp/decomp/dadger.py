@@ -1,19 +1,82 @@
-from idecomp.decomp.modelos.dadger import LeituraDadger
-from idecomp.decomp.modelos.dadger import TE, SB, UH, CT, UE, DP, CD, PQ  # noqa
-from idecomp.decomp.modelos.dadger import RI, IA, TX, GP, NI, DT, MP, MT  # noqa
-from idecomp.decomp.modelos.dadger import FD, VE, RE, LU, FU, FT, FI, VI  # noqa
-from idecomp.decomp.modelos.dadger import AC, IR, CI, CE, FC, TI, RQ, EZ  # noqa
-from idecomp.decomp.modelos.dadger import HV, LV, CV, HQ, LQ, CQ, AR, EV  # noqa
-from idecomp.decomp.modelos.dadger import FJ, HE, CM, RT, FP  # noqa
-from idecomp._utils.arquivo import ArquivoRegistros
-from idecomp._utils.dadosarquivo import DadosArquivoRegistros
-from idecomp._utils.escritaregistros import EscritaRegistros
+from idecomp.decomp.modelos.dadger import (
+    TE,
+    SB,
+    UH,
+    CT,
+    UE,
+    DP,
+    CD,
+    FP,
+    RI,
+    IA,
+    TX,
+    GP,
+    NI,
+    DT,
+    MP,
+    MT,
+    FD,
+    VE,
+    RE,
+    LU,
+    FU,
+    FT,
+    FI,
+    VI,
+    IR,
+    CI,
+    CE,
+    FC,
+    TI,
+    RQ,
+    EZ,
+    RT,
+    HV,
+    LV,
+    CV,
+    HQ,
+    LQ,
+    CQ,
+    AR,
+    EV,
+    FJ,
+    HE,
+    CM,
+    ACNUMPOS,
+    ACNUMJUS,
+    ACDESVIO,
+    ACVOLMIN,
+    ACVOLMAX,
+    ACCOTVOL,
+    ACCOTARE,
+    ACPROESP,
+    ACPERHID,
+    ACNCHAVE,
+    ACCOTVAZ,
+    ACCOFEVA,
+    ACNUMCON,
+    ACNUMMAQ,
+    ACPOTEFE,
+    ACALTEFE,
+    ACVAZEFE,
+    ACJUSMED,
+    ACVERTJU,
+    ACVAZMIN,
+    ACTIPERH,
+    ACJUSENA,
+    ACVSVERT,
+    ACVMDESV,
+    ACNPOSNW,
+)
+
 
 from copy import deepcopy
-from typing import Type, List, Optional, TypeVar, Any
+from cfinterface.components.register import Register
+from cfinterface.files.registerfile import RegisterFile
+from typing import Type, List, Optional, TypeVar, Any, Union
 
 
-class Dadger(ArquivoRegistros):
+class Dadger(RegisterFile):
     """
     Armazena os dados de entrada gerais do DECOMP.
 
@@ -33,68 +96,140 @@ class Dadger(ArquivoRegistros):
 
     T = TypeVar("T")
 
-    def __init__(self, dados: DadosArquivoRegistros) -> None:
-        """
-        Construtor padrão
-        """
-        super().__init__(dados)
+    AC = Union[
+        ACNUMPOS,
+        ACNUMJUS,
+        ACDESVIO,
+        ACVOLMIN,
+        ACVOLMAX,
+        ACCOTVOL,
+        ACCOTARE,
+        ACPROESP,
+        ACPERHID,
+        ACNCHAVE,
+        ACCOTVAZ,
+        ACCOFEVA,
+        ACNUMCON,
+        ACNUMMAQ,
+        ACPOTEFE,
+        ACALTEFE,
+        ACVAZEFE,
+        ACJUSMED,
+        ACVERTJU,
+        ACVAZMIN,
+        ACTIPERH,
+        ACJUSENA,
+        ACVSVERT,
+        ACVMDESV,
+        ACNPOSNW,
+    ]
 
-    # Override
+    REGISTERS = [
+        TE,
+        SB,
+        UH,
+        CT,
+        UE,
+        DP,
+        CD,
+        FP,
+        RI,
+        IA,
+        TX,
+        GP,
+        NI,
+        DT,
+        MP,
+        MT,
+        FD,
+        VE,
+        RE,
+        LU,
+        FU,
+        FT,
+        FI,
+        VI,
+        IR,
+        CI,
+        CE,
+        FC,
+        TI,
+        RQ,
+        EZ,
+        RT,
+        HV,
+        LV,
+        CV,
+        HQ,
+        LQ,
+        CQ,
+        AR,
+        EV,
+        FJ,
+        HE,
+        CM,
+        ACNUMPOS,
+        ACNUMJUS,
+        ACDESVIO,
+        ACVOLMIN,
+        ACVOLMAX,
+        ACCOTVOL,
+        ACCOTARE,
+        ACPROESP,
+        ACPERHID,
+        ACNCHAVE,
+        ACCOTVAZ,
+        ACCOFEVA,
+        ACNUMCON,
+        ACNUMMAQ,
+        ACPOTEFE,
+        ACALTEFE,
+        ACVAZEFE,
+        ACJUSMED,
+        ACVERTJU,
+        ACVAZMIN,
+        ACTIPERH,
+        ACJUSENA,
+        ACVSVERT,
+        ACVMDESV,
+        ACNPOSNW,
+    ]
+
+    def __init__(self, data=...) -> None:
+        super().__init__(data)
+
     @classmethod
     def le_arquivo(cls, diretorio: str, nome_arquivo="dadger.rv0") -> "Dadger":
-        """
-        Realiza a leitura de um arquivo "dadger.rvx" existente em
-        um diretório.
-
-        :param diretorio: O caminho relativo ou completo para o diretório
-            onde se encontra o arquivo
-        :type diretorio: str
-        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
-            especificando a revisão. Tem como valor default "dadger.rv0"
-        :type nome_arquivo: str, optional
-        :return: Um objeto :class:`Dadger` com informações do arquivo lido
-        """
-        leitor = LeituraDadger(diretorio)
-        r = leitor.le_arquivo(nome_arquivo)
-        return cls(r)
+        return cls.read(diretorio, nome_arquivo)
 
     def escreve_arquivo(self, diretorio: str, nome_arquivo="dadger.rv0"):
-        """
-        Realiza a escrita de um arquivo com as informações do
-        objeto :class:`Dadger`
+        self.write(diretorio, nome_arquivo)
 
-        :param diretorio: O caminho relativo ou completo para o diretório
-            onde será escrito o arquivo.
-        :type diretorio: str
-        :param nome_arquivo: Nome do arquivo a ser escrito.Tem como valor
-            default "dadger.rv0"
-        :type nome_arquivo: str, optional
+    def __registros_por_tipo(self, registro: Type[T]) -> List[T]:
         """
-        escritor = EscritaRegistros(diretorio)
-        escritor.escreve_arquivo(self._dados, nome_arquivo)
+        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
+        :param bloco: Um tipo de bloco para ser lido
+        :type bloco: T
+        :param indice: O índice do bloco a ser acessado, dentre os do tipo
+        :type indice: int
+        """
+        return [b for b in self.data.of_type(registro)]
 
     def __obtem_registro(self, tipo: Type[T]) -> T:
         """ """
-        for b in self._registros:
-            if isinstance(b, tipo):
-                return b
-        raise ValueError(f"Não foi encontrado um registro do tipo {tipo}")
+        return self.__registros_por_tipo(tipo)[0]
 
     def __obtem_registro_do_estagio(
         self, tipo: Type[T], codigo: int, estagio: int
     ) -> Optional[T]:
-        regs: List[Any] = self.__obtem_registros(tipo)
+        regs: List[Any] = self.__registros_por_tipo(tipo)
         for r in regs:
             if all([r.codigo == codigo, r.estagio == estagio]):
                 return r
         return None
 
     def __obtem_registros(self, tipo: Type[T]) -> List[T]:
-        registros = []
-        for b in self._registros:
-            if isinstance(b, tipo):
-                registros.append(b)
-        return registros
+        return self.__registros_por_tipo(tipo)
 
     @property
     def te(self) -> TE:
@@ -191,7 +326,7 @@ class Dadger(ArquivoRegistros):
     def ac(
         self,
         uhe: int,
-        modificacao: str,
+        modificacao: Type[Register],
         mes: str = None,
         semana: int = None,
         ano: int = None,
@@ -207,8 +342,10 @@ class Dadger(ArquivoRegistros):
         :return: Um registro do tipo :class:`AC`
         """
 
-        def __atende(r: AC) -> bool:
-            condicoes: List[bool] = [r.uhe == uhe, r.modificacao == modificacao]
+        def __atende(r: Dadger.AC) -> bool:
+            condicoes: List[bool] = [
+                r.uhe == uhe,
+            ]
             if mes is not None:
                 condicoes.append(r.mes == mes)
             if semana is not None:
@@ -217,7 +354,7 @@ class Dadger(ArquivoRegistros):
                 condicoes.append(r.ano == ano)
             return all(condicoes)
 
-        regs: List[AC] = self.__obtem_registros(AC)
+        regs: List[modificacao] = self.__obtem_registros(modificacao)
         for r in regs:
             if __atende(r):
                 return r
@@ -364,11 +501,10 @@ class Dadger(ArquivoRegistros):
                     proximo = r
                     break
             if proximo is not None:
-                delta = (proximo._ordem - modelo._ordem) / 2.0
+                self.data.add_after(proximo, copia)
             else:
-                delta = 0.1
-            copia._ordem += delta
-            self._registros.append(copia)
+                self.data.append(copia)
+            self.data.append(copia)
             return copia
 
         # Obtém o registro RE associado
@@ -611,11 +747,10 @@ class Dadger(ArquivoRegistros):
                     proximo = r
                     break
             if proximo is not None:
-                delta = (proximo._ordem - modelo._ordem) / 2.0
+                self.data.add_after(proximo, copia)
             else:
-                delta = 0.1
-            copia._ordem += delta
-            self._registros.append(copia)
+                self.data.append(copia)
+            self.data.append(copia)
             return copia
 
         # Obtém o registro HV associado
@@ -712,11 +847,10 @@ class Dadger(ArquivoRegistros):
                     proximo = r
                     break
             if proximo is not None:
-                delta = (proximo._ordem - modelo._ordem) / 2.0
+                self.data.add_after(proximo, copia)
             else:
-                delta = 0.1
-            copia._ordem += delta
-            self._registros.append(copia)
+                self.data.append(copia)
+            self.data.append(copia)
             return copia
 
         # Obtém o registro HQ associado

@@ -764,7 +764,7 @@ class FD(Register):
 
 class VE(Register):
     """
-    Registro que contém as manutenções programadas das UTEs.
+    Registro que contém os volumes de espera das UHEs.
     """
 
     IDENTIFIER = "VE  "
@@ -822,7 +822,7 @@ class VE(Register):
 
 class RE(Register):
     """
-    Registro que contém as manutenções programadas das UTEs.
+    Registro que contém os cadastros de restrições elétricas.
     """
 
     IDENTIFIER = "RE  "
@@ -866,86 +866,55 @@ class RE(Register):
         return self.data[2]
 
 
-from typing import IO, List, Type
-from idecomp._utils.utils import formata_numero
-from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
-from idecomp._utils.registrodecomp import RegistroDecomp
-from idecomp._utils.registrodecomp import TipoRegistroAC
-from idecomp._utils.leituraregistros import LeituraRegistros
-
-
-class LU(RegistroDecomp):
+class LU(Register):
     """
-    Registro que contém os cadastros de restrições elétricas.
+    Registro que contém os cadastros de limites das restrições elétricas.
     """
 
-    mnemonico = "LU"
-    default = 1e21
-
-    def __init__(self):
-        super().__init__(LU.mnemonico, True)
-        self._dados = [0, 0] + [LU.default] * 6
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_limite = RegistroFn(10)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        ci = 14
-        for i in range(2, len(self._dados)):
-            cf = ci + 10
-            if len(self._linha[ci:cf].strip()) != 0:
-                self._dados[i] = reg_limite.le_registro(self._linha, ci)
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{LU.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-        )
-        for i in range(2, len(self._dados)):
-            if self._dados[i] != LU.default:
-                linha += f"{round(self._dados[i], 2)}".rjust(10)
-            else:
-                linha += "          "
-
-        arq.write(linha + "\n")
+    IDENTIFIER = "LU  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            FloatField(10, 14, 1),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da restrição RE associada aos limites
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def estagio(self) -> int:
+    def estagio(self) -> Optional[int]:
         """
         O estágio inicial para consideração dos limites, até
         que sejam especificados novos limites.
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @estagio.setter
     def estagio(self, e: int):
-        self._dados[1] = e
+        self.data[1] = e
 
     @property
-    def limites_inferiores(self) -> List[float]:
+    def limites_inferiores(self) -> Optional[List[float]]:
         """
         Os limites inferiores por patamar para a restrição elétrica
 
-        :return: Os limites como `list[float]`
+        :return: Os limites
+        :rtype: Optional[list[float]]
         """
-        return self._dados[2::2]
+        return self.data[2::2]
 
     @limites_inferiores.setter
     def limites_inferiores(self, lim: List[float]):
@@ -956,16 +925,17 @@ class LU(RegistroDecomp):
                 "Número de limites incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[2::2] = lim
+        self.data[2::2] = lim
 
     @property
-    def limites_superiores(self) -> List[float]:
+    def limites_superiores(self) -> Optional[List[float]]:
         """
         Os limites superiores por patamar para a restrição elétrica
 
-        :return: Os limites como `list[float]`
+        :return: Os limites
+        :rtype: Optional[list[float]]
         """
-        return self._dados[3::2]
+        return self.data[3::2]
 
     @limites_superiores.setter
     def limites_superiores(self, lim: List[float]):
@@ -976,209 +946,126 @@ class LU(RegistroDecomp):
                 "Número de limites incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[3::2] = lim
+        self.data[3::2] = lim
 
 
-class FU(RegistroDecomp):
+class FU(Register):
     """
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições elétricas.
     """
 
-    mnemonico = "FU"
-
-    def __init__(self):
-        super().__init__(FU.mnemonico, True)
-        self._dados = [0, 0, 0, 0.0, 0]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_uhe = RegistroIn(3)
-        reg_fator = RegistroFn(10)
-        reg_freq = RegistroIn(2)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_uhe.le_registro(self._linha, 14)
-        self._dados[3] = reg_fator.le_registro(self._linha, 19)
-        if self._linha[30:32].strip().isnumeric():
-            self._dados[4] = reg_freq.le_registro(self._linha, 30)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{FU.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(3)
-            + "  "
-            + f"{round(self._dados[3], 2)}".rjust(10)
-        )
-        if self._dados[4] != 0:
-            linha += f" {self._dados[4]}"
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "FU  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 14),
+            FloatField(10, 19, 7),
+            IntegerField(2, 30),
+        ]
+    )
 
 
-class FT(RegistroDecomp):
+class FT(Register):
     """
     Registro que contém os coeficientes das usinas térmicas
     nas restrições elétricas.
     """
 
-    mnemonico = "FT"
-
-    def __init__(self):
-        super().__init__(FT.mnemonico, True)
-        self._dados = [0, 0, 0, 0, 0.0]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_ute = RegistroIn(3)
-        reg_subsis = RegistroIn(2)
-        reg_fator = RegistroFn(10)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_ute.le_registro(self._linha, 14)
-        self._dados[3] = reg_subsis.le_registro(self._linha, 19)
-        self._dados[4] = reg_fator.le_registro(self._linha, 24)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{FT.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(3)
-            + "  "
-            + f"{self._dados[3]}".rjust(2)
-            + "   "
-            + f"{round(self._dados[4], 2)}".rjust(10)
-        )
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "FT  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 14),
+            IntegerField(2, 19),
+            FloatField(10, 24, 7),
+        ]
+    )
 
 
-class FI(RegistroDecomp):
+class FI(Register):
     """
     Registro que contém o sentido do fluxo da interligação
     entre os subsistemas associados à restrição elétrica.
     """
 
-    mnemonico = "FI"
-
-    def __init__(self):
-        super().__init__(FI.mnemonico, True)
-        self._dados = [0, 0, "", "", 0.0]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_subsis = RegistroAn(2)
-        reg_fator = RegistroFn(10)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_subsis.le_registro(self._linha, 14)
-        self._dados[3] = reg_subsis.le_registro(self._linha, 19)
-        self._dados[4] = reg_fator.le_registro(self._linha, 24)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{FI.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(2)
-            + "   "
-            + f"{self._dados[3]}".rjust(2)
-            + "   "
-            + f"{round(self._dados[4], 2)}".rjust(10)
-        )
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "FI  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(2, 14),
+            IntegerField(2, 19),
+            FloatField(10, 24, 7),
+        ]
+    )
 
 
-class VI(RegistroDecomp):
+class VI(Register):
     """
     Registro que contém os tempos de viagem da água entre usinas.
     """
 
-    mnemonico = "VI"
-
-    def __init__(self):
-        super().__init__(VI.mnemonico, True)
-        self._dados = [0, 0]
-
-    def le(self):
-        reg_usi = RegistroIn(3)
-        reg_dur = RegistroIn(3)
-        reg_tempo = RegistroFn(5)
-        self._dados[0] = reg_usi.le_registro(self._linha, 4)
-        self._dados[1] = reg_dur.le_registro(self._linha, 9)
-        ci = 14
-        for i in range(24):
-            cf = ci + 5
-            if len(self._linha[ci:cf].strip()) == 0:
-                break
-            self._dados.append(reg_tempo.le_registro(self._linha, ci))
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{VI.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(3)
-            + "  "
-        )
-        for i in range(2, len(self._dados)):
-            a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
-            if len(a_escrever) > 5:
-                a_escrever = f"{round(self._dados[i], 1)}".rjust(5)
-            if len(a_escrever) > 5:
-                a_escrever = f"{int(self._dados[i])}".rjust(5)
-            linha += a_escrever
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "VI  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(3, 9),
+            FloatField(5, 14, 0),
+            FloatField(5, 19, 0),
+            FloatField(5, 24, 0),
+            FloatField(5, 29, 0),
+            FloatField(5, 34, 0),
+            FloatField(5, 39, 0),
+            FloatField(5, 44, 0),
+            FloatField(5, 49, 0),
+            FloatField(5, 54, 0),
+        ]
+    )
 
     @property
-    def uhe(self) -> int:
+    def uhe(self) -> Optional[int]:
         """
         O código da UHE a partir do qual é contabilizado
         o tempo de viagem.
 
-        :return: O código como `int`
+        :return: O código
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def duracao(self) -> int:
+    def duracao(self) -> Optional[int]:
         """
         A duração da viagem da água (em horas) entre a UHE do
         código informado e sua usina à jusante segundo o hidr.
 
-        :return: A duração como `int`
+        :return: A duração
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @duracao.setter
     def duracao(self, d: int):
-        self._dados[1] = d
+        self.data[1] = d
 
     @property
-    def vazoes(self) -> List[float]:
+    def vazoes(self) -> Optional[List[float]]:
         """
         As vazões defluentes das semanas passadas para a usina
         do código informado. A posição da vazão na lista indica
         a qual semana passada se refere [s-1, s-2, s-3, ...].
 
-        :return: A duração como `int`
+        :return: As vazões
+        :rtype: Optional[list[float]]
         """
-        return self._dados[2:]
+        return self.data[2:]
 
     @vazoes.setter
     def vazoes(self, v: List[float]):
@@ -1189,1070 +1076,204 @@ class VI(RegistroDecomp):
                 "Número de vazões incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[2:] = v
+        self.data[2:] = v
 
 
-class ACNUMPOS(TipoRegistroAC):
-    """
-    Registro AC específico para alteração no número do posto.
-    """
-
-    mnemonico = "NUMPOS"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        self._dados = reg_usi.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados}".rjust(5)
-        return linha
-
-
-class ACNUMJUS(TipoRegistroAC):
-    """
-    Registro AC específico para alteração na usina de jusante.
-    """
-
-    mnemonico = "NUMJUS"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        self._dados = reg_usi.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados}".rjust(5)
-        return linha
-
-
-class ACDESVIO(TipoRegistroAC):
-    """
-    Registro AC específico para alteração na usina de jusante
-    para canal de desvio e limite da vazão no canal.
-    """
-
-    mnemonico = "DESVIO"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0.0]
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        reg_desvio = RegistroFn(10)
-        self._dados[0] = reg_usi.le_registro(self._linha, 19)
-        self._dados[1] = reg_desvio.le_registro(self._linha, 24)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(
-            5
-        ) + f"{round(self._dados[1], 2)}".rjust(10)
-        return linha
-
-
-class ACVOLMIN(TipoRegistroAC):
-    """
-    Registro AC específico para alteração na usina de jusante
-    para canal de desvio e limite da vazão no canal.
-    """
-
-    mnemonico = "VOLMIN"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0.0
-
-    def le(self):
-        reg_desvio = RegistroFn(10)
-        self._dados = reg_desvio.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{round(self._dados, 2)}".rjust(10)
-        return linha
-
-
-class ACVOLMAX(TipoRegistroAC):
-    """
-    Registro AC específico para alteração na usina de jusante
-    para canal de desvio e limite da vazão no canal.
-    """
-
-    mnemonico = "VOLMAX"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0.0
-
-    def le(self):
-        reg_desvio = RegistroFn(10)
-        self._dados = reg_desvio.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{round(self._dados, 2)}".rjust(10)
-        return linha
-
-
-class ACCOTVOL(TipoRegistroAC):
-    """
-    Registro AC específico para alteração de um coeficiente do
-    polinômio cota-volume.
-    """
-
-    mnemonico = "COTVOL"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0.0]
-
-    def le(self):
-        reg_indice = RegistroIn(5)
-        reg_coef = RegistroFn(15)
-        self._dados[0] = reg_indice.le_registro(self._linha, 19)
-        self._dados[1] = reg_coef.le_registro(self._linha, 24)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(
-            5
-        ) + f"{round(self._dados[1], 3)}".rjust(15)
-        return linha
-
-
-class ACCOTARE(TipoRegistroAC):
-    """
-    Registro AC específico para alteração de um coeficiente do
-    polinômio cota-área.
-    """
-
-    mnemonico = "COTARE"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0.0]
-
-    def le(self):
-        reg_indice = RegistroIn(5)
-        reg_coef = RegistroFn(15)
-        self._dados[0] = reg_indice.le_registro(self._linha, 19)
-        self._dados[1] = reg_coef.le_registro(self._linha, 24)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(
-            5
-        ) + f"{round(self._dados[1], 3)}".rjust(15)
-        return linha
-
-
-class ACPROESP(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do coeficiente de perdas
-    hidráulicas em função da queda bruta (%,m,k).
-    """
-
-    mnemonico = "PROESP"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0.0
-
-    def le(self):
-        reg_desvio = RegistroFn(10)
-        self._dados = reg_desvio.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{round(self._dados, 2)}".rjust(10)
-        return linha
-
-
-class ACPERHID(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do coeficiente de perdas
-    hidráulicas em função da queda bruta (%,m,k).
-    """
-
-    mnemonico = "PERHID"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0.0
-
-    def le(self):
-        reg_desvio = RegistroFn(10)
-        self._dados = reg_desvio.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{round(self._dados, 2)}".rjust(10)
-        return linha
-
-
-class ACNCHAVE(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do número da curva-chave
-    (cota-vazão) e nível de jusante da faixa associada (m).
-    """
-
-    mnemonico = "NCHAVE"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0.0]
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        reg_desvio = RegistroFn(10)
-        self._dados[0] = reg_usi.le_registro(self._linha, 19)
-        self._dados[1] = reg_desvio.le_registro(self._linha, 24)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(
-            5
-        ) + f"{round(self._dados[1], 1)}".rjust(10)
-        return linha
-
-
-class ACCOTVAZ(TipoRegistroAC):
-    """
-    Registro AC específico para alteração de um coeficiente do
-    polinômio cota-vazão.
-    """
-
-    mnemonico = "COTVAZ"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0, 0.0]
-
-    def le(self):
-        reg_indice = RegistroIn(5)
-        reg_coef = RegistroFn(15)
-        self._dados[0] = reg_indice.le_registro(self._linha, 19)
-        self._dados[1] = reg_indice.le_registro(self._linha, 24)
-        self._dados[2] = reg_coef.le_registro(self._linha, 29)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = (
-            f"{self._dados[0]}".rjust(5)
-            + f"{self._dados[1]}".rjust(5)
-            + f"{round(self._dados[2], 3)}".rjust(15)
-        )
-        return linha
-
-
-class ACCOFEVA(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do coeficiente de evaporação
-    mensal para cada mês.
-    """
-
-    mnemonico = "COFEVA"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0]
-
-    def le(self):
-        reg_mes = RegistroIn(5)
-        self._dados = reg_mes.le_linha_tabela(self._linha, 19, 0, 2)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(5) + f"{self._dados[1]}".rjust(5)
-        return linha
-
-
-class ACNUMCON(TipoRegistroAC):
-    """
-    Registro AC específico para alteração no número de conjuntos
-    de máquinas.
-    """
-
-    mnemonico = "NUMCON"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        self._dados = reg_usi.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados}".rjust(5)
-        return linha
-
-
-class ACNUMMAQ(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do número de máquinas
-    em cada conjunto de máquinas.
-    """
-
-    mnemonico = "NUMMAQ"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0]
-
-    def le(self):
-        reg_mes = RegistroIn(5)
-        self._dados = reg_mes.le_linha_tabela(self._linha, 19, 0, 2)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(5) + f"{self._dados[1]}".rjust(5)
-        return linha
-
-
-class ACPOTEFE(TipoRegistroAC):
-    """
-    Registro AC específico para alteração da potência efetiva
-    por unidade geradora em um conjunto de máquinas.
-    """
-
-    mnemonico = "POTEFE"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0.0]
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        reg_desvio = RegistroFn(10)
-        self._dados[0] = reg_usi.le_registro(self._linha, 19)
-        self._dados[1] = reg_desvio.le_registro(self._linha, 24)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(
-            5
-        ) + f"{round(self._dados[1], 1)}".rjust(10)
-        return linha
-
-
-class ACALTEFE(TipoRegistroAC):
-    """
-    Registro AC específico para alteração da altura efetiva
-    de queda para um conjunto de máquinas.
-    """
-
-    mnemonico = "ALTEFE"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0.0]
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        reg_desvio = RegistroFn(10)
-        self._dados[0] = reg_usi.le_registro(self._linha, 19)
-        self._dados[1] = reg_desvio.le_registro(self._linha, 24)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(
-            5
-        ) + f"{round(self._dados[1], 1)}".rjust(10)
-        return linha
-
-
-class ACVAZEFE(TipoRegistroAC):
-    """
-    Registro AC específico para alteração da vazão efetiva
-    para um conjunto de máquinas.
-    """
-
-    mnemonico = "VAZEFE"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = [0, 0]
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        reg_vaz = RegistroIn(5)
-        self._dados[0] = reg_usi.le_registro(self._linha, 19)
-        self._dados[1] = reg_vaz.le_registro(self._linha, 24)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados[0]}".rjust(5) + f"{self._dados[1]}".rjust(5)
-        return linha
-
-
-class ACJUSMED(TipoRegistroAC):
-    """
-    Registro AC específico para alteração da cota média do canal
-    de fuga em metros.
-    """
-
-    mnemonico = "JUSMED"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0.0
-
-    def le(self):
-        reg_desvio = RegistroFn(10)
-        self._dados = reg_desvio.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{round(self._dados, 2)}".rjust(10)
-        return linha
-
-
-class ACVERTJU(TipoRegistroAC):
-    """
-    Registro AC específico para alteração da influência do vertimento
-    na cota do canal de fuga.
-    """
-
-    mnemonico = "VERTJU"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        self._dados = reg_usi.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados}".rjust(5)
-        return linha
-
-
-class ACVAZMIN(TipoRegistroAC):
-    """
-    Registro AC específico para alteração da vazão mínima histórica.
-    """
-
-    mnemonico = "VAZMIN"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = -1
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        if len(self._linha[19:24].strip()) > 0:
-            self._dados = reg_usi.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        if self._dados != -1:
-            linha = f"{self._dados}".rjust(5)
-        else:
-            linha = "".rjust(5)
-        return linha
-
-
-class ACTIPERH(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do tipo de perdas hidráulicas.
-    """
-
-    mnemonico = "TIPERH"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = -1
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        if len(self._linha[19:24].strip()) > 0:
-            self._dados = reg_usi.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        if self._dados != -1:
-            linha = f"{self._dados}".rjust(5)
-        else:
-            linha = "".rjust(5)
-        return linha
-
-
-class ACJUSENA(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do índice de
-    aproveitamento de jusante para cálculo das energias
-    armazenada e afluente.
-    """
-
-    mnemonico = "JUSENA"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        self._dados = reg_usi.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados}".rjust(5)
-        return linha
-
-
-class ACVSVERT(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do volume mínimo para operação
-    do vertedor.
-    """
-
-    mnemonico = "VSVERT"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0.0
-
-    def le(self):
-        reg_desvio = RegistroFn(10)
-        self._dados = reg_desvio.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{round(self._dados, 2)}".rjust(10)
-        return linha
-
-
-class ACVMDESV(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do volume mínimo para operação
-    do canal de desvio.
-    """
-
-    mnemonico = "VMDESV"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0.0
-
-    def le(self):
-        reg_desvio = RegistroFn(10)
-        self._dados = reg_desvio.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{round(self._dados, 2)}".rjust(10)
-        return linha
-
-
-class ACNPOSNW(TipoRegistroAC):
-    """
-    Registro AC específico para alteração do posto de acoplamento
-    com o NEWAVE.
-    """
-
-    mnemonico = "NPOSNW"
-
-    def __init__(self, linha: str):
-        super().__init__(linha)
-        self._dados = 0
-
-    def le(self):
-        reg_usi = RegistroIn(5)
-        self._dados = reg_usi.le_registro(self._linha, 19)
-
-    @property
-    def linha_escrita(self) -> str:
-        linha = f"{self._dados}".rjust(5)
-        return linha
-
-
-class AC(RegistroDecomp):
-    """
-    Registro que contém as alterações de cadastro das usinas hidrelétricas.
-    """
-
-    mnemonico = "AC"
-    modificacoes: List[Type[TipoRegistroAC]] = [
-        ACNUMPOS,
-        ACNUMJUS,
-        ACDESVIO,
-        ACVOLMIN,
-        ACVOLMAX,
-        ACCOTVOL,
-        ACCOTARE,
-        ACPROESP,
-        ACPERHID,
-        ACNCHAVE,
-        ACCOTVAZ,
-        ACCOFEVA,
-        ACNUMCON,
-        ACNUMMAQ,
-        ACPOTEFE,
-        ACALTEFE,
-        ACVAZEFE,
-        ACJUSMED,
-        ACVERTJU,
-        ACVAZMIN,
-        ACTIPERH,
-        ACJUSENA,
-        ACVSVERT,
-        ACVMDESV,
-        ACNPOSNW,
-    ]
-
-    def __init__(self):
-        super().__init__(AC.mnemonico, True)
-        self._dados = [0, "", "", 0, 0]
-        self._modificacao: TipoRegistroAC = None
-
-    def le(self):
-        def procura_modificacao() -> TipoRegistroAC:
-            for m in AC.modificacoes:
-                if m.mnemonico == self._dados[1]:
-                    return m(self._linha)
-            raise ValueError(
-                f"Mnemônico {self._dados[1]} não"
-                + " suportado para registro AC"
-            )
-
-        reg_usi = RegistroIn(3)
-        reg_cod = RegistroAn(6)
-        reg_mes = RegistroAn(3)
-        reg_semana = RegistroIn(1)
-        reg_ano = RegistroIn(4)
-        self._dados[0] = reg_usi.le_registro(self._linha, 4)
-        self._dados[1] = reg_cod.le_registro(self._linha, 9)
-        if len(self._linha[69:72].strip()) == 3:
-            self._dados[2] = reg_mes.le_registro(self._linha, 69)
-        if self._linha[74:75].isnumeric():
-            self._dados[3] = reg_semana.le_registro(self._linha, 74)
-        if self._linha[76:80].isnumeric():
-            self._dados[4] = reg_ano.le_registro(self._linha, 76)
-        # Procura a modificação pelo mnemônico
-        self._modificacao = procura_modificacao()
-        # Faz a leitura segundo a lógica específica
-        self._modificacao.le()
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{AC.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(6)
-        )
-        linha = linha.ljust(19)
-        linha += self._modificacao.linha_escrita
-        if any(
-            [self._dados[2] != "", self._dados[3] != 0, self._dados[4] != 0]
-        ):
-            linha = linha.ljust(69)
-            linha += self._dados[2]
-            linha = linha.ljust(74)
-            if self._dados[3] != 0:
-                linha += f"{self._dados[3]}"
-            linha = linha.ljust(76)
-            if self._dados[4] != 0:
-                linha += f"{self._dados[4]}"
-
-        linha += "\n"
-        arq.write(linha)
-
-    @property
-    def uhe(self) -> int:
-        return self._dados[0]
-
-    @uhe.setter
-    def uhe(self, u: int):
-        self._dados[0] = u
-
-    @property
-    def modificacao(self) -> str:
-        return self._dados[1]
-
-    @modificacao.setter
-    def modificacao(self, m: str):
-        self._dados[1] = m
-
-    @property
-    def mes(self) -> str:
-        return self._dados[2]
-
-    @mes.setter
-    def mes(self, m: str):
-        self._dados[2] = m
-
-    @property
-    def semana(self) -> int:
-        return self._dados[3]
-
-    @semana.setter
-    def semana(self, s: int):
-        self._dados[3] = s
-
-    @property
-    def ano(self) -> int:
-        return self._dados[4]
-
-    @ano.setter
-    def ano(self, m: int):
-        self._dados[4] = m
-
-
-class IR(RegistroDecomp):
+class IR(Register):
     """
     Registro que contém as configurações de
     geração de relatórios de saída.
     """
 
-    mnemonico = "IR"
-
-    def __init__(self):
-        super().__init__(IR.mnemonico, True)
-        self._dados = ["", 0, 0, 0]
-
-    def le(self):
-        reg_mne = RegistroAn(7)
-        reg_op1 = RegistroIn(2)
-        reg_op2 = RegistroIn(2)
-        reg_op3 = RegistroIn(5)
-        self._dados[0] = reg_mne.le_registro(self._linha, 4)
-        if self._linha[14:16].strip().isnumeric():
-            self._dados[1] = reg_op1.le_registro(self._linha, 14)
-        if self._linha[19:21].strip().isnumeric():
-            self._dados[2] = reg_op2.le_registro(self._linha, 19)
-        if self._linha[24:29].strip().isnumeric():
-            self._dados[3] = reg_op3.le_registro(self._linha, 24)
-
-    def escreve(self, arq: IO):
-        linha = f"{IR.mnemonico}".ljust(4) + f"{self._dados[0]}".ljust(7)
-        if self._dados[1] != 0:
-            linha += "   " + f"{self._dados[1]}".zfill(2)
-        if self._dados[2] != 0:
-            linha = linha.ljust(19)
-            linha += f"{self._dados[2]}".rjust(2)
-        if self._dados[3] != 0:
-            linha = linha.ljust(24)
-            linha += f"{self._dados[3]}".rjust(5)
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "IR  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(7, 4),
+            IntegerField(2, 14),
+            IntegerField(2, 19),
+            IntegerField(5, 24),
+        ]
+    )
 
     @property
-    def tipo(self) -> str:
+    def tipo(self) -> Optional[str]:
         """
         Mnemônico que contém o tipo de relatório de
         saída escolhido.
 
-        :return: O mnemônico como `str`.
+        :return: O mnemônico.
+        :rtype: Optional[str]
         """
-        return self._dados[0]
+        return self.data[0]
 
 
-class CI(RegistroDecomp):
+class CI(Register):
     """
     Registro que define contratos de importação de energia.
     """
 
-    mnemonico = "CI"
-
-    def __init__(self):
-        super().__init__(CI.mnemonico, True)
-        self._dados = [
-            0,
-            0,
-            "",
-            0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
+    IDENTIFIER = "CI  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 8),
+            LiteralField(10, 11),
+            IntegerField(2, 24),
+            FloatField(5, 29, 0),
+            FloatField(5, 34, 0),
+            FloatField(10, 39, 2),
+            FloatField(5, 49, 0),
+            FloatField(5, 54, 0),
+            FloatField(10, 59, 2),
+            FloatField(5, 69, 0),
+            FloatField(5, 74, 0),
+            FloatField(10, 79, 2),
+            FloatField(5, 89, 3),
         ]
-
-    def le(self):
-        reg_contrato = RegistroIn(3)
-        reg_subsis = RegistroIn(2)
-        reg_nome = RegistroAn(10)
-        reg_estagio = RegistroIn(2)
-        reg_limite = RegistroFn(5)
-        reg_custo = RegistroFn(10)
-        reg_fator = RegistroFn(5)
-        self._dados[0] = reg_contrato.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 8)
-        self._dados[2] = reg_nome.le_registro(self._linha, 11)
-        self._dados[3] = reg_estagio.le_registro(self._linha, 24)
-        for i in range(3):
-            self._dados[4 + i * 3] = reg_limite.le_registro(
-                self._linha, 29 + i * 20
-            )
-            self._dados[5 + i * 3] = reg_limite.le_registro(
-                self._linha, 34 + i * 20
-            )
-            self._dados[6 + i * 3] = reg_custo.le_registro(
-                self._linha, 39 + i * 20
-            )
-        if self._linha[89:94].strip().isnumeric():
-            self._dados[13] = reg_fator.le_registro(self._linha, 89)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{CI.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".zfill(3)
-            + " "
-            + f"{self._dados[1]}".rjust(2)
-            + " "
-            + f"{self._dados[2]}".ljust(10)
-            + "   "
-            + f"{self._dados[3]}".rjust(2)
-            + "   "
-        )
-        for i in range(3):
-            linha += f"{round(self._dados[4 + i * 3], 1)}".rjust(5)
-            linha += f"{round(self._dados[5 + i * 3], 1)}".rjust(5)
-            linha += f"{round(self._dados[6 + i * 3], 2)}".rjust(10)
-        if self._dados[13] != 0.0:
-            linha += f"{round(self._dados[13], 2)}".rjust(5)
-        linha += "\n"
-        arq.write(linha)
+    )
 
 
-class CE(RegistroDecomp):
+class CE(Register):
     """
-    Registro que define contratos de importação de energia.
+    Registro que define contratos de exportação de energia.
     """
 
-    mnemonico = "CE"
-
-    def __init__(self):
-        super().__init__(CE.mnemonico, True)
-        self._dados = [
-            0,
-            0,
-            "",
-            0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
+    IDENTIFIER = "CE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 8),
+            LiteralField(10, 11),
+            IntegerField(2, 24),
+            FloatField(5, 29, 0),
+            FloatField(5, 34, 0),
+            FloatField(10, 39, 2),
+            FloatField(5, 49, 0),
+            FloatField(5, 54, 0),
+            FloatField(10, 59, 2),
+            FloatField(5, 69, 0),
+            FloatField(5, 74, 0),
+            FloatField(10, 79, 2),
+            FloatField(5, 89, 3),
         ]
-
-    def le(self):
-        reg_contrato = RegistroIn(3)
-        reg_subsis = RegistroIn(2)
-        reg_nome = RegistroAn(10)
-        reg_estagio = RegistroIn(2)
-        reg_limite = RegistroFn(5)
-        reg_custo = RegistroFn(10)
-        reg_fator = RegistroFn(5)
-        self._dados[0] = reg_contrato.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 8)
-        self._dados[2] = reg_nome.le_registro(self._linha, 11)
-        self._dados[3] = reg_estagio.le_registro(self._linha, 24)
-        for i in range(3):
-            self._dados[4 + i * 3] = reg_limite.le_registro(
-                self._linha, 29 + i * 20
-            )
-            self._dados[5 + i * 3] = reg_limite.le_registro(
-                self._linha, 34 + i * 20
-            )
-            self._dados[6 + i * 3] = reg_custo.le_registro(
-                self._linha, 39 + i * 20
-            )
-        if self._linha[89:94].strip().isnumeric():
-            self._dados[13] = reg_fator.le_registro(self._linha, 89)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{CE.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".zfill(3)
-            + " "
-            + f"{self._dados[1]}".rjust(2)
-            + " "
-            + f"{self._dados[2]}".ljust(10)
-            + "   "
-            + f"{self._dados[3]}".rjust(2)
-            + "   "
-        )
-        for i in range(3):
-            linha += f"{round(self._dados[4 + i * 3], 1)}".rjust(5)
-            linha += f"{round(self._dados[5 + i * 3], 1)}".rjust(5)
-            linha += f"{round(self._dados[6 + i * 3], 2)}".rjust(10)
-        if self._dados[13] != 0.0:
-            linha += f"{round(self._dados[13], 2)}".rjust(5)
-        linha += "\n"
-        arq.write(linha)
+    )
 
 
-class FC(RegistroDecomp):
+class FC(Register):
     """
     Registro que contém informações para acessar a FCF fornecida
     pelo NEWAVE.
     """
 
-    mnemonico = "FC"
-
-    def __init__(self):
-        super().__init__(FC.mnemonico, True)
-        self._dados = ["", ""]
-
-    def le(self):
-        reg_mne = RegistroAn(6)
-        reg_nome = RegistroAn(200)
-        self._dados[0] = reg_mne.le_registro(self._linha, 4)
-        self._dados[1] = reg_nome.le_registro(self._linha, 14)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{FC.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".ljust(6)
-            + "    "
-            + self._dados[1]
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "FC  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(6, 4),
+            LiteralField(200, 14),
+        ]
+    )
 
     @property
-    def tipo(self) -> str:
+    def tipo(self) -> Optional[str]:
         """
         O tipo de arquivo da FCF na forma dos mnemônicos
         aceitos pelo DECOMP.
 
-        :return: O mnemônico como `str`.
+        :return: O mnemônico.
+        :rtype: Optional[str]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def caminho(self) -> str:
+    def caminho(self) -> Optional[str]:
         """
         O caminho relativo ou completo para o arquivo da
         FCF.
 
-        :return: O caminho como `str`.
+        :return: O caminho.
+        :rtype: Optional[str]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @caminho.setter
     def caminho(self, c: str):
-        self._dados[1] = c
+        self.data[1] = c
 
 
-class RT(RegistroDecomp):
+class RT(Register):
     """
     Registro utilizado para retirada de restrições de soleira de
     vertedouro e de canais de desvio.
     """
 
-    mnemonico = "RT"
-
-    def __init__(self):
-        super().__init__(RT.mnemonico, True)
-        self._dados = [""]
-
-    def le(self):
-        reg_mne = RegistroAn(6)
-        self._dados[0] = reg_mne.le_registro(self._linha, 4)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{RT.mnemonico}".ljust(4) + f"{self._dados[0]}".ljust(6) + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "RT  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(6, 4),
+        ]
+    )
 
     @property
-    def restricao(self) -> str:
+    def restricao(self) -> Optional[str]:
         """
         O mnemônico da restrição removida.
 
-        :return: O mnemônico como `str`.
+        :return: O mnemônico
+        :rtype: Optional[str]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @restricao.setter
     def restricao(self, m: str):
-        self._dados[0] = m
+        self.data[0] = m
 
 
-class TI(RegistroDecomp):
+class TI(Register):
     """
     Registro que contém as taxas de irrigação por UHE.
     """
 
-    mnemonico = "TI"
-
-    def __init__(self):
-        super().__init__(TI.mnemonico, True)
-        self._dados = [0]
-
-    def le(self):
-        reg_uhe = RegistroIn(3)
-        reg_irrig = RegistroFn(5)
-        self._dados[0] = reg_uhe.le_registro(self._linha, 4)
-        ci = 9
-        for i in range(24):
-            cf = ci + 5
-            if len(self._linha[ci:cf].strip()) == 0:
-                break
-            self._dados.append(reg_irrig.le_registro(self._linha, ci))
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{TI.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(3) + "  "
-        )
-        for i in range(1, len(self._dados)):
-            # Verificação de segurança para tamanho do registro
-            a_escrever = f"{round(self._dados[i], 2)}".rjust(5)
-            if len(a_escrever) > 5:
-                a_escrever = f"{round(self._dados[i], 1)}".rjust(5)
-            if len(a_escrever) > 5:
-                a_escrever = f"{int(self._dados[i])}".rjust(5)
-            linha += a_escrever
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "TI  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(5, 9, 2),
+            FloatField(5, 14, 2),
+            FloatField(5, 19, 2),
+            FloatField(5, 24, 2),
+            FloatField(5, 29, 2),
+            FloatField(5, 34, 2),
+            FloatField(5, 39, 2),
+            FloatField(5, 44, 2),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da UHE associada às taxas de irrigação
 
         :return: O código como `int`.
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def taxas(self) -> List[float]:
+    def taxas(self) -> Optional[List[float]]:
         """
         As taxas de irrigação por estágio do estudo. A
         posição da taxa na lista indica a qual estágio
         ela está associada [e1, e2, e3, ...].
 
-        :return: As taxas como `list[float]`.
+        :return: As taxas.
+        :type: Optional[list[float]]
         """
-        return self._dados[1:]
+        return self.data[1:]
 
     @taxas.setter
     def taxas(self, tx: List[float]):
@@ -2263,260 +1284,227 @@ class TI(RegistroDecomp):
                 "Número de taxas incompatível. De"
                 + f"vem ser fornecidas {atuais}, mas foram {novas}"
             )
-        self._dados[1:] = tx
+        self.data[1:] = tx
 
 
-class FP(RegistroDecomp):
+class FP(Register):
     """
     Registro que contém os cadastros de restrições de alteração na
     função de produção das usinas.
     """
 
-    mnemonico = "FP"
-
-    def __init__(self):
-        super().__init__(FP.mnemonico, True)
-        self._dados = [0, 0, 0, 0, 0.0, 0.0, 0, 0, 0.0, 0.0]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(3)
-        reg_flag = RegistroIn(1)
-        reg_pontos = RegistroIn(4)
-        reg_limite = RegistroFn(5)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_flag.le_registro(self._linha, 14)
-        self._dados[3] = reg_pontos.le_registro(self._linha, 16)
-        self._dados[4] = reg_limite.le_registro(self._linha, 21)
-        self._dados[5] = reg_limite.le_registro(self._linha, 27)
-        self._dados[6] = reg_flag.le_registro(self._linha, 34)
-        self._dados[7] = reg_pontos.le_registro(self._linha, 36)
-        if len(self._linha[41:46].strip()) > 0:
-            self._dados[8] = reg_limite.le_registro(self._linha, 41)
-        if len(self._linha[47:52].strip()) > 0:
-            self._dados[9] = reg_limite.le_registro(self._linha, 47)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{FP.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(3)
-            + "  "
-            + f"{self._dados[2]}"
-            + " "
-            + f"{self._dados[3]}".rjust(4)
-            + " "
-            + f"{self._dados[4]:.1f}".rjust(5)
-            + " "
-            + f"{self._dados[5]:.1f}".rjust(5)
-            + "  "
-            + f"{self._dados[6]}"
-            + " "
-            + f"{self._dados[7]}".rjust(4)
-        )
-        if self._dados[8] != 0:
-            linha += " " + f"{self._dados[8]:.1f}".rjust(5)
-        if self._dados[9] != 0:
-            linha += " " + f"{self._dados[9]:.1f}".rjust(5)
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "FP  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(3, 9),
+            IntegerField(1, 14),
+            IntegerField(4, 16),
+            FloatField(5, 21, 0),
+            FloatField(5, 27, 0),
+            IntegerField(1, 34),
+            IntegerField(4, 36),
+            FloatField(5, 41, 0),
+            FloatField(5, 47, 0),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da UHE associada à restrição FP.
 
-        :return: O código como `int`.
+        :return: O código
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @codigo.setter
     def codigo(self, c: int):
-        self._dados[0] = c
+        self.data[0] = c
 
     @property
-    def estagio(self) -> int:
+    def estagio(self) -> Optional[int]:
         """
         O estágio associado à restrição FP.
 
-        :return: O estágio como `int`.
+        :return: O estágio
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @estagio.setter
     def estagio(self, e: int):
-        self._dados[1] = e
+        self.data[1] = e
 
     @property
-    def tipo_entrada_janela_turbinamento(self) -> int:
+    def tipo_entrada_janela_turbinamento(self) -> Optional[int]:
         """
         O tipo de entrada da janela de turbinamento fornecido
         na restrição FP. 0 para limites em percentual da vazão turbinada
         máxima das usinas, 1 para limites em m3/s.
 
-        :return: O tipo de entrada como `int`.
+        :return: O tipo de entrada
+        :rtype: Optional[int]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @tipo_entrada_janela_turbinamento.setter
     def tipo_entrada_janela_turbinamento(self, t: int):
-        self._dados[2] = t
+        self.data[2] = t
 
     @property
-    def numero_pontos_turbinamento(self) -> int:
+    def numero_pontos_turbinamento(self) -> Optional[int]:
         """
         O número de pontos para discretização da janela de
         turbinamento. Máximo permitido de 1000 pontos.
 
-        :return: O número de pontos como `int`.
+        :return: O número de pontos
+        :rtype: Optional[int]
         """
-        return self._dados[3]
+        return self.data[3]
 
     @numero_pontos_turbinamento.setter
     def numero_pontos_turbinamento(self, n: int):
-        self._dados[3] = n
+        self.data[3] = n
 
     @property
-    def limite_inferior_janela_turbinamento(self) -> float:
+    def limite_inferior_janela_turbinamento(self) -> Optional[float]:
         """
         O limite inferior da janela de turbinamento.
 
-        :return: O limite como `float`.
+        :return: O limite.
+        :rtype: Optional[float]
         """
-        return self._dados[4]
+        return self.data[4]
 
     @limite_inferior_janela_turbinamento.setter
     def limite_inferior_janela_turbinamento(self, lim: float):
-        self._dados[4] = lim
+        self.data[4] = lim
 
     @property
-    def limite_superior_janela_turbinamento(self) -> float:
+    def limite_superior_janela_turbinamento(self) -> Optional[float]:
         """
         O limite superior da janela de turbinamento.
 
-        :return: O limite como `float`.
+        :return: O limite.
+        :rtype: Optional[float]
         """
-        return self._dados[5]
+        return self.data[5]
 
     @limite_superior_janela_turbinamento.setter
     def limite_superior_janela_turbinamento(self, lim: float):
-        self._dados[5] = lim
+        self.data[5] = lim
 
     @property
-    def tipo_entrada_janela_volume(self) -> int:
+    def tipo_entrada_janela_volume(self) -> Optional[int]:
         """
         O tipo de entrada da janela de volume fornecido
         na restrição FP. 0 para limites em percentual do volume útil
         das usinas, 1 para limites em hm3.
 
-        :return: O tipo de entrada como `int`.
+        :return: O tipo de entrada.
+        :rtype: Optional[int]
         """
-        return self._dados[6]
+        return self.data[6]
 
     @tipo_entrada_janela_volume.setter
     def tipo_entrada_janela_volume(self, t: int):
-        self._dados[6] = t
+        self.data[6] = t
 
     @property
-    def numero_pontos_volume(self) -> int:
+    def numero_pontos_volume(self) -> Optional[int]:
         """
         O número de pontos para discretização da janela de
         volume. Máximo permitido de 1000 pontos.
 
-        :return: O número de pontos como `int`.
+        :return: O número de pontos.
+        :rtype: Optional[int]
         """
-        return self._dados[7]
+        return self.data[7]
 
     @numero_pontos_volume.setter
     def numero_pontos_volume(self, n: int):
-        self._dados[7] = n
+        self.data[7] = n
 
     @property
-    def limite_inferior_janela_volume(self) -> float:
+    def limite_inferior_janela_volume(self) -> Optional[float]:
         """
         A redução aplicada ao volume útil da usina, para ser utilizado
         como limite inferior da janela de volume.
 
-        :return: O limite como `float`.
+        :return: O limite.
+        :rtype: Optional[float]
         """
-        return self._dados[8]
+        return self.data[8]
 
     @limite_inferior_janela_volume.setter
     def limite_inferior_janela_volume(self, lim: float):
-        self._dados[8] = lim
+        self.data[8] = lim
 
     @property
-    def limite_superior_janela_volume(self) -> float:
+    def limite_superior_janela_volume(self) -> Optional[float]:
         """
         O acréscimo aplicado ao volume útil da usina, para ser utilizado
         como limite superior da janela de volume.
 
-        :return: O limite como `float`.
+        :return: O limite.
+        :rtype: Optional[float]
         """
-        return self._dados[9]
+        return self.data[9]
 
     @limite_superior_janela_volume.setter
     def limite_superior_janela_volume(self, lim: float):
-        self._dados[9] = lim
+        self.data[9] = lim
 
 
-class RQ(RegistroDecomp):
+class RQ(Register):
     """
     Registro que contém os percentuais de vazão defluente
     mínima histórica para cada REE.
     """
 
-    mnemonico = "RQ"
-
-    def __init__(self):
-        super().__init__(RQ.mnemonico, True)
-        self._dados = [0]
-
-    def le(self):
-        reg_ree = RegistroIn(2)
-        reg_vazao = RegistroFn(5)
-        self._dados[0] = reg_ree.le_registro(self._linha, 4)
-        ci = 9
-        for i in range(24):
-            cf = ci + 5
-            if len(self._linha[ci:cf].strip()) == 0:
-                break
-            self._dados.append(reg_vazao.le_registro(self._linha, ci))
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{RQ.mnemonico}".ljust(4) + f"{self._dados[0]}".rjust(2) + "   "
-        )
-        for i in range(1, len(self._dados)):
-            linha += f"{round(self._dados[i], 2)}".rjust(5)
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "RQ  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            FloatField(5, 9, 2),
+            FloatField(5, 14, 2),
+            FloatField(5, 19, 2),
+            FloatField(5, 24, 2),
+            FloatField(5, 29, 2),
+            FloatField(5, 34, 2),
+            FloatField(5, 39, 2),
+            FloatField(5, 44, 2),
+        ]
+    )
 
     @property
-    def ree(self) -> int:
+    def ree(self) -> Optional[int]:
         """
         O código do REE associado às vazões mínimas.
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @ree.setter
     def ree(self, r: int):
-        self._dados[0] = r
+        self.data[0] = r
 
     @property
-    def vazoes(self) -> List[float]:
+    def vazoes(self) -> Optional[List[float]]:
         """
         As vazões defluentes mínimas (percentuais)
         para o REE, por estágio [e1, e2, e3, ...].
 
-        :return: As vazoes como `list[float]`.
+        :return: As vazoes.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[1:]
+        return self.data[1:]
 
     @vazoes.setter
     def vazoes(self, tx: List[float]):
@@ -2527,356 +1515,260 @@ class RQ(RegistroDecomp):
                 "Número de vazões incompatível. De"
                 + f"vem ser fornecidas {atuais}, mas foram {novas}"
             )
-        self._dados[1:] = tx
+        self.data[1:] = tx
 
 
-class EZ(RegistroDecomp):
+class EZ(Register):
     """
     Registro que contém o percentual máximo do
     volume útil para acoplamento.
     """
 
-    mnemonico = "EZ"
-
-    def __init__(self):
-        super().__init__(EZ.mnemonico, True)
-        self._dados = [0, 0.0]
-
-    def le(self):
-        reg_uhe = RegistroIn(3)
-        reg_volume = RegistroFn(5)
-        self._dados[0] = reg_uhe.le_registro(self._linha, 4)
-        self._dados[1] = reg_volume.le_registro(self._linha, 9)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{EZ.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{round(self._dados[1], 2)}".rjust(5)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "EZ  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(5, 9, 2),
+        ]
+    )
 
 
-class HV(RegistroDecomp):
+class HV(Register):
     """
     Registro que contém os cadastros de restrições de volume armazenado.
     """
 
-    mnemonico = "HV"
-
-    def __init__(self):
-        super().__init__(HV.mnemonico, True)
-        self._dados = [0, 0, 0]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_estagio.le_registro(self._linha, 14)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{HV.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(2)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "HV  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(2, 14),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da UHE associada à restrição HV.
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def estagio_inicial(self) -> int:
+    def estagio_inicial(self) -> Optional[int]:
         """
         O estágio inicial de consideração da restrição HV.
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @property
-    def estagio_final(self) -> int:
+    def estagio_final(self) -> Optional[int]:
         """
         O estágio final de consideração da restrição HV.
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[2]
+        return self.data[2]
 
 
-class LV(RegistroDecomp):
+class LV(Register):
     """
-    Registro que contém os limites das restrições de volume armazenado.
+    Registro que contém os cadastros dos limites das
+    restrições de volume armazenado.
     """
 
-    mnemonico = "LV"
-    default = 1e21
-
-    def __init__(self):
-        super().__init__(LV.mnemonico, True)
-        self._dados = [0, 0] + [LV.default] * 2
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_limite = RegistroFn(10)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        ci = 14
-        for i in range(2, len(self._dados)):
-            cf = ci + 10
-            if len(self._linha[ci:cf].strip()) != 0:
-                self._dados[i] = reg_limite.le_registro(self._linha, ci)
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{LV.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-        )
-        for i in range(2, len(self._dados)):
-            if self._dados[i] != LV.default:
-                linha += f"{round(self._dados[i], 2)}".rjust(10)
-            else:
-                linha += "          "
-
-        arq.write(linha + "\n")
+    IDENTIFIER = "LV  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            FloatField(10, 14, 2),
+            FloatField(10, 24, 2),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da restrição HV associada aos limites
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def estagio(self) -> int:
+    def estagio(self) -> Optional[int]:
         """
         O estágio de consideração dos limites.
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @estagio.setter
     def estagio(self, e: int):
-        self._dados[1] = e
+        self.data[1] = e
 
     @property
-    def limite_inferior(self) -> float:
+    def limite_inferior(self) -> Optional[float]:
         """
         O limite inferior para o armazenamento.
 
-        :return: O limite como `float`.
+        :return: O limite.
+        :rtype: Optional[float]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @limite_inferior.setter
     def limite_inferior(self, lim: float):
-        self._dados[2] = lim
+        self.data[2] = lim
 
     @property
-    def limites_superior(self) -> float:
+    def limite_superior(self) -> Optional[float]:
         """
         O limite superior para o armazenamento.
 
-        :return: O limite como `float`.
+        :return: O limite.
+        :rtype: Optional[float]
         """
-        return self._dados[3]
+        return self.data[3]
 
-    @limites_superior.setter
-    def limites_superior(self, lim: float):
-        self._dados[3] = lim
+    @limite_superior.setter
+    def limite_superior(self, lim: float):
+        self.data[3] = lim
 
 
-class CV(RegistroDecomp):
+class CV(Register):
     """
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições de volume armazenado.
     """
 
-    mnemonico = "CV"
-
-    def __init__(self):
-        super().__init__(CV.mnemonico, True)
-        self._dados = [0, 0, 0, 0.0, ""]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_uhe = RegistroIn(3)
-        reg_fator = RegistroFn(10)
-        reg_tipo = RegistroAn(4)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_uhe.le_registro(self._linha, 14)
-        self._dados[3] = reg_fator.le_registro(self._linha, 19)
-        self._dados[4] = reg_tipo.le_registro(self._linha, 34)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{CV.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(3)
-            + "  "
-            + f"{round(self._dados[3], 8)}".rjust(10)
-        )
-        linha = linha.ljust(34)
-        linha += self._dados[4]
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "CV  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 14),
+            FloatField(10, 19, 7),
+            LiteralField(4, 34),
+        ]
+    )
 
 
-class HQ(RegistroDecomp):
+class HQ(Register):
     """
     Registro que contém os cadastros de restrições de vazões.
     """
 
-    mnemonico = "HQ"
-
-    def __init__(self):
-        super().__init__(HQ.mnemonico, True)
-        self._dados = [0, 0, 0]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_estagio.le_registro(self._linha, 14)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{HQ.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "  "
-            + f"{self._dados[2]}".rjust(2)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "HQ  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(2, 14),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da UHE associada à restrição HQ.
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def estagio_inicial(self) -> int:
+    def estagio_inicial(self) -> Optional[int]:
         """
         O estágio inicial de consideração da restrição HQ.
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @property
-    def estagio_final(self) -> int:
+    def estagio_final(self) -> Optional[int]:
         """
         O estágio final de consideração da restrição HQ.
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[2]
+        return self.data[2]
 
 
-class LQ(RegistroDecomp):
+class LQ(Register):
     """
-    Registro que contém os limites das restrições de volume armazenado.
+    Registro que contém os cadastros dos limites das
+    restrições de vazão.
     """
 
-    mnemonico = "LQ"
-    default = 1e21
-
-    def __init__(self):
-        super().__init__(LQ.mnemonico, True)
-        self._dados = [0, 0] + [LQ.default] * 6
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_limite = RegistroFn(10)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        ci = 14
-        for i in range(2, len(self._dados)):
-            cf = ci + 10
-            if len(self._linha[ci:cf].strip()) != 0:
-                self._dados[i] = reg_limite.le_registro(self._linha, ci)
-            ci = cf
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{LQ.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-        )
-        for i in range(2, len(self._dados)):
-            if self._dados[i] != LQ.default:
-                linha += f"{round(self._dados[i], 2)}".rjust(10)
-            else:
-                linha += "          "
-
-        arq.write(linha + "\n")
+    IDENTIFIER = "LQ  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            FloatField(10, 14, 2),
+            FloatField(10, 24, 2),
+            FloatField(10, 34, 2),
+            FloatField(10, 44, 2),
+            FloatField(10, 54, 2),
+            FloatField(10, 64, 2),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da restrição HQ associada aos limites
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def estagio(self) -> int:
+    def estagio(self) -> Optional[int]:
         """
         O estágio de consideração dos limites.
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @estagio.setter
     def estagio(self, e: int):
-        self._dados[1] = e
+        self.data[1] = e
 
     @property
-    def limites_inferiores(self) -> List[float]:
+    def limites_inferiores(self) -> Optional[List[float]]:
         """
         Os limites inferiores por patamar para a vazão.
 
-        :return: Os limites como `list[float]`.
+        :return: Os limites.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[2::2]
+        return self.data[2::2]
 
     @limites_inferiores.setter
     def limites_inferiores(self, lim: List[float]):
@@ -2887,16 +1779,17 @@ class LQ(RegistroDecomp):
                 "Número de limites incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[2::2] = lim
+        self.data[2::2] = lim
 
     @property
-    def limites_superiores(self) -> List[float]:
+    def limites_superiores(self) -> Optional[List[float]]:
         """
         Os limites superiores por patamar para a vazão.
 
-        :return: Os limites como `list[float]`.
+        :return: Os limites.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[3::2]
+        return self.data[3::2]
 
     @limites_superiores.setter
     def limites_superiores(self, lim: List[float]):
@@ -2907,499 +1800,1588 @@ class LQ(RegistroDecomp):
                 "Número de limites incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[3::2] = lim
+        self.data[3::2] = lim
 
 
-class CQ(RegistroDecomp):
+class CQ(Register):
     """
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições de vazão.
     """
 
-    mnemonico = "CQ"
-
-    def __init__(self):
-        super().__init__(CQ.mnemonico, True)
-        self._dados = [0, 0, 0, 0.0, ""]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_estagio = RegistroIn(2)
-        reg_uhe = RegistroIn(3)
-        reg_fator = RegistroFn(10)
-        reg_tipo = RegistroAn(4)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_estagio.le_registro(self._linha, 9)
-        self._dados[2] = reg_uhe.le_registro(self._linha, 14)
-        self._dados[3] = reg_fator.le_registro(self._linha, 19)
-        self._dados[4] = reg_tipo.le_registro(self._linha, 34)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{CQ.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(3)
-            + "  "
-            + f"{round(self._dados[3], 2)}".rjust(10)
-        )
-        linha = linha.ljust(34)
-        linha += self._dados[4]
-        linha += "\n"
-        arq.write(linha)
+    IDENTIFIER = "CQ  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 14),
+            FloatField(10, 19, 7),
+            LiteralField(4, 34),
+        ]
+    )
 
 
-class AR(RegistroDecomp):
+class AR(Register):
     """
     Registro que contém as configurações de aversão a risco.
     """
 
-    mnemonico = "AR"
-
-    def __init__(self):
-        super().__init__(AR.mnemonico, True)
-        self._dados: int = 0
-
-    def le(self):
-        reg_linha = RegistroIn(3)
-        self._dados = reg_linha.le_registro(self._linha, 5)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{AR.mnemonico}".ljust(4) + " " + f"{self.dados}".rjust(3) + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "AR  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 5),
+        ]
+    )
 
 
-class EV(RegistroDecomp):
+class EV(Register):
     """
     Registro que contém as configurações de consideração
     da evaporação.
     """
 
-    mnemonico = "EV"
-
-    def __init__(self):
-        super().__init__(EV.mnemonico, True)
-        self._dados = [0, ""]
-
-    def le(self):
-        reg_linha = RegistroIn(1)
-        reg_tipo = RegistroAn(3)
-        self._dados[0] = reg_linha.le_registro(self._linha, 4)
-        self._dados[1] = reg_tipo.le_registro(self._linha, 9)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{EV.mnemonico}".ljust(4)
-            + f"{self._dados[0]}"
-            + "    "
-            + f"{self._dados[1]}".rjust(3)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "EV  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(1, 4),
+            LiteralField(3, 9),
+        ]
+    )
 
     @property
-    def modelo(self) -> int:
-        return self._dados[0]
+    def modelo(self) -> Optional[int]:
+        """
+        O modelo de evaporação considerado
+
+        :return: O modelo.
+        :rtype: Optional[int]
+        """
+        return self.data[0]
 
     @modelo.setter
     def modelo(self, m: int):
-        self._dados[0] = m
+        self.data[0] = m
 
     @property
-    def volume_referencia(self) -> str:
-        return self._dados[1]
+    def volume_referencia(self) -> Optional[str]:
+        """
+        O mnemônico para o volume considerado
+
+        :return: O mnemônico.
+        :rtype: Optional[str]
+        """
+        return self.data[1]
 
     @volume_referencia.setter
     def volume_referencia(self, v: str):
-        self._dados[1] = v
+        self.data[1] = v
 
 
-class FJ(RegistroDecomp):
+class FJ(Register):
     """
-    Registro que contém as configurações de aversão a risco.
+    Registro que contém o arquivo de polinômios de jusante.
     """
 
-    mnemonico = "FJ"
-
-    def __init__(self):
-        super().__init__(FJ.mnemonico, True)
-        self._dados: str = ""
-
-    def le(self):
-        reg_linha = RegistroAn(12)
-        self._dados = reg_linha.le_registro(self._linha, 4)
-
-    def escreve(self, arq: IO):
-        linha = f"{FJ.mnemonico}".ljust(4) + f"{self.dados}".rjust(12) + "\n"
-        arq.write(linha)
+    IDENTIFIER = "FJ  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(12, 4),
+        ]
+    )
 
     @property
     def arquivo(self) -> str:
-        return self._dados
+        return self.data[0]
 
     @arquivo.setter
     def arquivo(self, a: str):
-        self._dados = a
+        self.data[0] = a
 
 
-class HE(RegistroDecomp):
+class HE(Register):
     """
-    Registro que contém o cadastro de uma restrição de volume
-    mínimo armazenado.
+    Registro que contém o cadastro de uma restrição de energia
+    armazenada.
     """
 
-    mnemonico = "HE"
+    IDENTIFIER = "HE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(1, 9),
+            FloatField(10, 14, 2),
+            IntegerField(2, 25),
+            FloatField(10, 28, 2),
+            IntegerField(1, 39),
+            IntegerField(1, 41),
+            IntegerField(1, 43),
+            LiteralField(12, 45),
+        ]
+    )
 
-    def __init__(self):
-        super().__init__(HE.mnemonico, True)
-        self._dados = [0, 0, 0.0, 0, 0.0, 0, 0, 0, ""]
+    @property
+    def codigo(self) -> Optional[int]:
+        """
+        O código de cadastro da restrição HE
 
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_tipo_limite = RegistroIn(1)
-        reg_limite = RegistroFn(10)
-        reg_estagio = RegistroIn(2)
-        reg_penal = RegistroFn(10)
-        reg_inviab = RegistroIn(1)
-        reg_prodrhe = RegistroAn(12)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_tipo_limite.le_registro(self._linha, 9)
-        self._dados[2] = reg_limite.le_registro(self._linha, 14)
-        self._dados[3] = reg_estagio.le_registro(self._linha, 25)
-        self._dados[4] = reg_penal.le_registro(self._linha, 28)
-        if self._linha[39].isnumeric():
-            self._dados[5] = reg_inviab.le_registro(self._linha, 39)
-        if self._linha[41].isnumeric():
-            self._dados[6] = reg_inviab.le_registro(self._linha, 41)
-        if self._linha[43].isnumeric():
-            self._dados[7] = reg_inviab.le_registro(self._linha, 43)
-        if len(self._linha[45:57]) > 2:
-            self._dados[8] = reg_prodrhe.le_registro(self._linha, 45)
+        :return: O código.
+        :rtype: Optional[int]
+        """
+        return self.data[0]
 
-    def escreve(self, arq: IO):
-        linha = (
-            f"{HE.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}"
-            + "    "
-            + f"{round(self._dados[2], 2)}".rjust(10)
-            + " "
-            + f"{self._dados[3]}".rjust(2)
-            + " "
-            + f"{round(self._dados[4], 2)}".rjust(10)
-            + " "
-            + f"{self._dados[5]}"
-            + " "
-            + f"{self._dados[6]}"
-            + " "
-            + f"{self._dados[7]}"
-            + " "
-            + f"{self._dados[8]}".ljust(60).strip()
-        )
-        linha += "\n"
-        arq.write(linha)
+    @property
+    def tipo_limite(self) -> Optional[int]:
+        """
+        O tipo de limite especificado na restrição HE,
+        em valor absoluto ou percentual.
+
+        :return: O tipo.
+        :rtype: Optional[int]
+        """
+        return self.data[1]
+
+    @tipo_limite.setter
+    def tipo_limite(self, t: int):
+        self.data[1] = t
+
+    @property
+    def limite(self) -> Optional[float]:
+        """
+        O limite para a energia armazenada associada
+        ao registro HE.
+
+        :return: O limite.
+        :rtype: Optional[float]
+        """
+        return self.data[2]
+
+    @limite.setter
+    def limite(self, lim: float):
+        self.data[2] = lim
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O estágio para consideração da restrição.
+
+        :return: O estágio.
+        :rtype: Optional[int]
+        """
+        return self.data[3]
+
+    @estagio.setter
+    def estagio(self, e: int):
+        self.data[3] = e
+
+    @property
+    def penalidade(self) -> Optional[float]:
+        """
+        O valor da penalidade para a violação da restrição.
+
+        :return: O valor.
+        :rtype: Optional[float]
+        """
+        return self.data[4]
+
+    @penalidade.setter
+    def penalidade(self, p: float):
+        self.data[4] = p
+
+    @property
+    def forma_calculo_produtibilidades(self) -> Optional[int]:
+        """
+        Flag para indicar a forma de cálculo das produtividades
+        das usinas usadas nas restrição.
+
+        :return: A flag.
+        :rtype: Optional[float]
+        """
+        return self.data[5]
+
+    @forma_calculo_produtibilidades.setter
+    def forma_calculo_produtibilidades(self, t: int):
+        self.data[5] = t
+
+    @property
+    def tipo_valores_produtibilidades(self) -> Optional[int]:
+        """
+        Flag para indicar o tipo dos valores das produtividades
+        das usinas usadas nas restrição.
+
+        :return: O tipo.
+        :rtype: Optional[int]
+        """
+        return self.data[6]
+
+    @tipo_valores_produtibilidades.setter
+    def tipo_valores_produtibilidades(self, t: int):
+        self.data[6] = t
+
+    @property
+    def tipo_penalidade(self) -> Optional[int]:
+        """
+        O tipo de penalidade a ser considerada ao violar a
+        restrição (inviabilidade ou penalização).
+
+        :return: O tipo.
+        :rtype: Optional[int]
+        """
+        return self.data[7]
+
+    @tipo_penalidade.setter
+    def tipo_penalidade(self, t: int):
+        self.data[7] = t
+
+    @property
+    def arquivo_produtibilidades(self) -> Optional[str]:
+        """
+        O arquivo com as definições das produtibilidades usadas
+        para o cálculo da restrição RHE.
+
+        :return: O arquivo externo com as produbitibilidades.
+        :rtype: Optional[str]
+        """
+        return self.data[8]
+
+    @arquivo_produtibilidades.setter
+    def arquivo_produtibilidades(self, t: str):
+        self.data[8] = t
+
+
+class CM(Register):
+    """
+    Registro que contém os coeficientes de uma restrição RHE.
+    """
+
+    IDENTIFIER = "CM  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [IntegerField(3, 4), IntegerField(3, 9), FloatField(10, 14, 2)]
+    )
 
     @property
     def codigo(self) -> int:
         """
         O código de cadastro da restrição HE
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
-
-    @property
-    def tipo_limite(self) -> int:
-        """
-        O tipo de limite especificado na restrição HE,
-        em valor absoluto ou percentual.
-
-        :return: O tipo como `int`.
-        """
-        return self._dados[1]
-
-    @tipo_limite.setter
-    def tipo_limite(self, t: int):
-        self._dados[1] = t
-
-    @property
-    def limite(self) -> float:
-        """
-        O limite para a energia armazenada associada
-        ao registro HE.
-
-        :return: O limite como `float`.
-        """
-        return self._dados[2]
-
-    @limite.setter
-    def limite(self, lim: float):
-        self._dados[2] = lim
+        return self.data[0]
 
     @property
     def estagio(self) -> int:
         """
-        O estágio para consideração da restrição.
+        O estágio de vigência do coeficiente
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[3]
+        return self.data[1]
 
     @estagio.setter
     def estagio(self, e: int):
-        self._dados[3] = e
+        self.data[1] = e
 
     @property
-    def penalidade(self) -> float:
+    def coeficiente(self) -> float:
         """
-        O valor da penalidade para a violação da restrição.
+        O coeficiente de energia considerado
 
-        :return: O valor como `float`.
+        :return: O coeficiente.
+        :rtype: Optional[float]
         """
-        return self._dados[4]
-
-    @penalidade.setter
-    def penalidade(self, p: float):
-        self._dados[4] = p
-
-    @property
-    def forma_calculo_produtibilidades(self) -> int:
-        """
-        Flag para indicar a forma de cálculo das produtividades
-        das usinas usadas nas restrição.
-
-        :return: O tipo como `int`.
-        """
-        return self._dados[5]
-
-    @forma_calculo_produtibilidades.setter
-    def forma_calculo_produtibilidades(self, t: int):
-        self._dados[5] = t
-
-    @property
-    def tipo_valores_produtibilidades(self) -> int:
-        """
-        Flag para indicar o tipo dos valores das produtividades
-        das usinas usadas nas restrição.
-
-        :return: O tipo como `int`.
-        """
-        return self._dados[6]
-
-    @tipo_valores_produtibilidades.setter
-    def tipo_valores_produtibilidades(self, t: int):
-        self._dados[6] = t
-
-    @property
-    def tipo_penalidade(self) -> int:
-        """
-        O tipo de penalidade a ser considerada ao violar a
-        restrição (inviabilidade ou penalização).
-
-        :return: O tipo como `int`.
-        """
-        return self._dados[7]
-
-    @tipo_penalidade.setter
-    def tipo_penalidade(self, t: int):
-        self._dados[7] = t
-
-    @property
-    def arquivo_produtibilidades(self) -> str:
-        """
-        O arquivo com as definições das produtibilidades usadas
-        para o cálculo da restrição RHE.
-
-        :return: O tipo como `int`.
-        """
-        return self._dados[8]
-
-    @arquivo_produtibilidades.setter
-    def arquivo_produtibilidades(self, t: str):
-        self._dados[8] = t
-
-
-class CM(RegistroDecomp):
-    """
-    Registro que contém os coeficientes de uma restrição RHE.
-    """
-
-    mnemonico = "CM"
-
-    def __init__(self):
-        super().__init__(CM.mnemonico, True)
-        self._dados = [0, 0, 0.0]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_ree = RegistroIn(3)
-        reg_coef = RegistroFn(10)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_ree.le_registro(self._linha, 9)
-        self._dados[2] = reg_coef.le_registro(self._linha, 14)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{CM.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(3)
-            + "  "
-            + f"{formata_numero(self._dados[2], 2, 10)}"
-        )
-        linha += "\n"
-        arq.write(linha)
-
-    @property
-    def codigo(self) -> int:
-        return self._dados[0]
-
-    @property
-    def estagio(self) -> int:
-        return self._dados[1]
-
-    @estagio.setter
-    def estagio(self, e: int):
-        self._dados[1] = e
-
-    @property
-    def coeficiente(self) -> int:
-        return self._dados[2]
+        return self.data[2]
 
     @coeficiente.setter
     def coeficiente(self, c: float):
-        self._dados[2] = c
+        self.data[2] = c
 
 
-class LeituraDadger(LeituraRegistros):
+class ACNUMPOS(Register):
     """
-    Classe com utilidades gerais para leitura de arquivos
-    do DECOMP com comentários.
+    Registro AC específico para alteração no número do posto.
     """
 
-    def __init__(self, diretorio: str):
-        super().__init__(diretorio)
+    IDENTIFIER = r"AC  ([\d ]{1,3})  NUMPOS"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
 
-    def _cria_registros_leitura(self) -> List[RegistroDecomp]:
-        """
-        Método que cria a lista de registros a serem lidos no arquivo.
-        Implementa o Factory Pattern.
-        """
-        MAX_UHE = 200
-        MAX_UTE = 200
-        MAX_UE = 10
-        MAX_RE = 200
-        MAX_ESTAGIOS = 7
-        MAX_SUBSIS = 5
-        MAX_AC_UHE = 10
-        MAX_REE = 12
-        MAX_RELATORIOS = 10
-        te: List[RegistroDecomp] = [TE()]
-        rt: List[RegistroDecomp] = [RT(), RT()]
-        sb: List[RegistroDecomp] = [SB() for _ in range(MAX_SUBSIS)]
-        uh: List[RegistroDecomp] = [UH() for _ in range(MAX_UHE)]
-        ct: List[RegistroDecomp] = [CT() for _ in range(MAX_UTE)]
-        ue: List[RegistroDecomp] = [UE() for _ in range(MAX_UE)]
-        dp: List[RegistroDecomp] = [
-            DP() for _ in range(MAX_SUBSIS * MAX_ESTAGIOS)
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACNUMJUS(Register):
+    """
+    Registro AC específico para alteração na usina de jusante.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  NUMJUS"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        cd: List[RegistroDecomp] = [
-            CD() for _ in range(MAX_SUBSIS * MAX_ESTAGIOS)
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACDESVIO(Register):
+    """
+    Registro AC específico para alteração na usina de jusante
+    para canal de desvio e limite da vazão no canal.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  DESVIO"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            FloatField(10, 24, 2),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        pq: List[RegistroDecomp] = [
-            PQ() for _ in range(MAX_SUBSIS * MAX_ESTAGIOS)
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACVOLMIN(Register):
+    """
+    Registro AC específico para alteração de volume mínimo.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  VOLMIN"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            FloatField(10, 24, 2),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        ri: List[RegistroDecomp] = [RI() for _ in range(MAX_ESTAGIOS)]
-        ia: List[RegistroDecomp] = [
-            IA() for _ in range(MAX_SUBSIS * MAX_SUBSIS)
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACVOLMAX(Register):
+    """
+    Registro AC específico para alteração de volume máximo.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  VOLMAX"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            FloatField(10, 24, 2),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        tx: List[RegistroDecomp] = [TX()]
-        gp: List[RegistroDecomp] = [GP()]
-        ni: List[RegistroDecomp] = [NI()]
-        dt: List[RegistroDecomp] = [DT()]
-        mp: List[RegistroDecomp] = [MP() for _ in range(MAX_UHE)]
-        mt: List[RegistroDecomp] = [MT() for _ in range(MAX_UTE)]
-        fd: List[RegistroDecomp] = [FD() for _ in range(MAX_UHE)]
-        ve: List[RegistroDecomp] = [VE() for _ in range(MAX_UHE)]
-        re: List[RegistroDecomp] = [RE() for _ in range(MAX_RE)]
-        lu: List[RegistroDecomp] = [LU() for _ in range(MAX_RE * MAX_ESTAGIOS)]
-        fu: List[RegistroDecomp] = [FU() for _ in range(MAX_RE)]
-        ft: List[RegistroDecomp] = [FT() for _ in range(MAX_RE)]
-        vi: List[RegistroDecomp] = [VI(), VI()]
-        ac: List[RegistroDecomp] = [AC() for _ in range(MAX_UHE * MAX_AC_UHE)]
-        ir: List[RegistroDecomp] = [IR() for _ in range(MAX_RELATORIOS)]
-        fc: List[RegistroDecomp] = [FC(), FC()]
-        ti: List[RegistroDecomp] = [TI() for _ in range(MAX_UHE)]
-        rq: List[RegistroDecomp] = [RQ() for _ in range(MAX_REE)]
-        ez: List[RegistroDecomp] = [EZ() for _ in range(MAX_UHE)]
-        hv: List[RegistroDecomp] = [HV() for _ in range(MAX_UHE)]
-        lv: List[RegistroDecomp] = [
-            LV() for _ in range(MAX_UHE * MAX_ESTAGIOS)
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACCOTVOL(Register):
+    """
+    Registro AC específico para alteração de um coeficiente do
+    polinômio cota-volume.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  COTVOL"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            FloatField(15, 24, 3),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        cv: List[RegistroDecomp] = [CV() for _ in range(MAX_UHE)]
-        hq: List[RegistroDecomp] = [HQ() for _ in range(MAX_UHE)]
-        lq: List[RegistroDecomp] = [
-            LQ() for _ in range(MAX_UHE * MAX_ESTAGIOS)
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACCOTARE(Register):
+    """
+    Registro AC específico para alteração de um coeficiente do
+    polinômio cota-área.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  COTARE"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            FloatField(15, 24, 3),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        cq: List[RegistroDecomp] = [
-            CQ() for _ in range(MAX_UHE * MAX_ESTAGIOS)
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACPROESP(Register):
+    """
+    Registro AC específico para alteração do coeficiente de perdas
+    hidráulicas em função da queda bruta (%,m,k).
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  PROESP"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(10, 19, 3),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        ar: List[RegistroDecomp] = [AR()]
-        ev: List[RegistroDecomp] = [EV()]
-        fj: List[RegistroDecomp] = [FJ()]
-        he: List[RegistroDecomp] = [
-            HE() for _ in range(MAX_REE * MAX_ESTAGIOS)
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACPERHID(Register):
+    """
+    Registro AC específico para alteração do coeficiente de perdas
+    hidráulicas em função da queda bruta (%,m,k).
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  PERHID"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(10, 19, 3),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        cm: List[RegistroDecomp] = [
-            CM() for _ in range(MAX_REE * MAX_ESTAGIOS)
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACNCHAVE(Register):
+    """
+    Registro AC específico para alteração do número da curva-chave
+    (cota-vazão) e nível de jusante da faixa associada (m).
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  NCHAVE"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            FloatField(10, 24, 3),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
         ]
-        fp: List[RegistroDecomp] = [FP() for _ in range(MAX_UHE)]
-        return (
-            te
-            + rt
-            + sb
-            + uh
-            + ct
-            + ue
-            + dp
-            + cd
-            + pq
-            + ri
-            + ia
-            + tx
-            + gp
-            + ni
-            + dt
-            + mp
-            + mt
-            + fd
-            + ve
-            + re
-            + lu
-            + fu
-            + ft
-            + vi
-            + ac
-            + ir
-            + fc
-            + ti
-            + rq
-            + ez
-            + hv
-            + lv
-            + cv
-            + hq
-            + lq
-            + cq
-            + ar
-            + ev
-            + fj
-            + he
-            + cm
-            + fp
-        )
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACCOTVAZ(Register):
+    """
+    Registro AC específico para alteração de um coeficiente do
+    polinômio cota-vazão.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  COTVAZ"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            IntegerField(5, 24),
+            FloatField(15, 29, 3),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACCOFEVA(Register):
+    """
+    Registro AC específico para alteração do coeficiente de evaporação
+    mensal para cada mês.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  COFEVA"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            IntegerField(5, 24),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACNUMCON(Register):
+    """
+    Registro AC específico para alteração no número de conjuntos
+    de máquinas.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  NUMCON"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACNUMMAQ(Register):
+    """
+    Registro AC específico para alteração do número de máquinas
+    em cada conjunto de máquinas.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  NUMMAQ"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            IntegerField(5, 24),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACPOTEFE(Register):
+    """
+    Registro AC específico para alteração da potência efetiva
+    por unidade geradora em um conjunto de máquinas.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  POTEFE"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            FloatField(10, 24, 2),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACALTEFE(Register):
+    """
+    Registro AC específico para alteração da altura efetiva
+    de queda para um conjunto de máquinas.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  ALTEFE"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            FloatField(10, 24, 2),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACVAZEFE(Register):
+    """
+    Registro AC específico para alteração da vazão efetiva
+    para um conjunto de máquinas.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  VAZEFE"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            IntegerField(5, 24),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACJUSMED(Register):
+    """
+    Registro AC específico para alteração da cota média do canal
+    de fuga em metros.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  JUSMED"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(10, 19, 2),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACVERTJU(Register):
+    """
+    Registro AC específico para consideração da influência do vertimento
+    no canal de fuga.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  VERTJU"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACVAZMIN(Register):
+    """
+    Registro AC específico para alteração da vazão mínima.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  VAZMIN"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACTIPERH(Register):
+    """
+    Registro AC específico para alteração do tipo de perdas hidráulicas.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  TIPERH"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACJUSENA(Register):
+    """
+    Registro AC específico para alteração do índice de
+    aproveitamento de jusante para cálculo das energias
+    armazenada e afluente.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  JUSENA"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACVSVERT(Register):
+    """
+    Registro AC específico para alteração do volume mínimo para operação
+    do vertedor.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  VSVERT"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(10, 19, 2),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACVMDESV(Register):
+    """
+    Registro AC específico para alteração do volume mínimo para operação
+    do canal de desvio.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  VMDESV"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(10, 19, 2),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
+
+
+class ACNPOSNW(Register):
+    """
+    Registro AC específico para alteração do posto de acoplamento
+    com o NEWAVE.
+    """
+
+    IDENTIFIER = r"AC  ([\d ]{1,3})  NPOSNW"
+    IDENTIFIER_DIGITS = 15
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(3, 4),
+            IntegerField(5, 19),
+            LiteralField(3, 69),
+            IntegerField(2, 73),
+            IntegerField(4, 76),
+        ]
+    )
+
+    @property
+    def uhe(self) -> Optional[int]:
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def mes(self) -> Optional[str]:
+        return self.data[-3]
+
+    @mes.setter
+    def mes(self, m: str):
+        self.data[-3] = m
+
+    @property
+    def semana(self) -> Optional[int]:
+        return self.data[-2]
+
+    @semana.setter
+    def semana(self, s: int):
+        self.data[-2] = s
+
+    @property
+    def ano(self) -> Optional[int]:
+        return self.data[-1]
+
+    @ano.setter
+    def ano(self, m: int):
+        self.data[-1] = m
