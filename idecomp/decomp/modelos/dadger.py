@@ -5,6 +5,7 @@ from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
 
 from typing import Optional, List
+from numpy import abs  # type: ignore
 
 
 class TE(Register):
@@ -83,7 +84,6 @@ class UH(Register):
             IntegerField(2, 9),
             FloatField(6, 18, 2),
             IntegerField(1, 39),
-            FloatField(10, 59, 2),
         ]
     )
 
@@ -180,6 +180,10 @@ class CT(Register):
         """
         return self.data[0]
 
+    @codigo.setter
+    def codigo(self, codigo: int):
+        self.data[0] = codigo
+
     @property
     def subsistema(self) -> Optional[int]:
         """
@@ -189,6 +193,10 @@ class CT(Register):
         :rtype: Optional[int]
         """
         return self.data[1]
+
+    @subsistema.setter
+    def subsistema(self, subsistema: int):
+        self.data[1] = subsistema
 
     @property
     def nome(self) -> Optional[str]:
@@ -214,6 +222,10 @@ class CT(Register):
         """
         return self.data[3]
 
+    @estagio.setter
+    def estagio(self, estagio: int):
+        self.data[3] = estagio
+
     @property
     def inflexibilidades(self) -> Optional[List[float]]:
         """
@@ -224,16 +236,24 @@ class CT(Register):
         """
         return self.data[4::3]
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
     @inflexibilidades.setter
     def inflexibilidades(self, inflex: List[float]):
-        novas = len(inflex)
-        atuais = len(self.inflexibilidades)
-        if novas != atuais:
-            raise ValueError(
-                "Número de inflexibilidades incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self.data[4::3] = inflex
+        self.__atualiza_dados_lista(inflex, 4, 3)
 
     @property
     def disponibilidades(self) -> Optional[List[float]]:
@@ -247,14 +267,7 @@ class CT(Register):
 
     @disponibilidades.setter
     def disponibilidades(self, disp: List[float]):
-        novas = len(disp)
-        atuais = len(self.disponibilidades)
-        if novas != atuais:
-            raise ValueError(
-                "Número de disponibilidades incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self.data[5::3] = disp
+        self.__atualiza_dados_lista(disp, 5, 3)
 
     @property
     def cvus(self) -> Optional[List[float]]:
@@ -268,14 +281,7 @@ class CT(Register):
 
     @cvus.setter
     def cvus(self, cvu: List[float]):
-        novas = len(cvu)
-        atuais = len(self.cvus)
-        if novas != atuais:
-            raise ValueError(
-                "Número de CVUs incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self.data[6::3] = cvu
+        self.__atualiza_dados_lista(cvu, 6, 3)
 
 
 class UE(Register):

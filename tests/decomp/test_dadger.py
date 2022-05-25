@@ -1,181 +1,230 @@
-# Rotinas de testes associadas ao arquivo dadger.rvx do DECOMP
+from idecomp.decomp.modelos.dadger import (
+    TE,
+    SB,
+    UH,
+    CT,
+    UE,
+    DP,
+    CD,
+    RI,
+    IA,
+    TX,
+    GP,
+    NI,
+    DT,
+    MP,
+    MT,
+    FD,
+    VE,
+    RE,
+    LU,
+    FU,
+    FI,
+    FT,
+    VI,
+    ACJUSMED,
+    ACCOTVOL,
+    ACNUMJUS,
+    ACVOLMIN,
+    ACCOFEVA,
+    ACNUMPOS,
+    ACVSVERT,
+    ACVMDESV,
+    ACDESVIO,
+    ACJUSENA,
+    ACVAZMIN,
+    ACNPOSNW,
+    ACVERTJU,
+    ACNUMCON,
+    ACNUMMAQ,
+    ACPOTEFE,
+    FP,
+    IR,
+    CI,
+    FC,
+    TI,
+    RQ,
+    EZ,
+    HV,
+    LV,
+    CV,
+    HQ,
+    LQ,
+    CQ,
+    AR,
+    EV,
+    HE,
+    CM,
+    FJ,
+)
+
 from idecomp.decomp.dadger import Dadger
 
+from tests.mocks.mock_open import mock_open
+from unittest.mock import MagicMock, patch
 
-dadger = Dadger.le_arquivo("tests/_arquivos", "dadger.rv0")
-dadger_he = Dadger.le_arquivo("tests/_arquivos", "dadgerhe.rv0")
-
-
-def test_leitura_escrita():
-    dadger.escreve_arquivo("tests/_saidas", "dadger.rv0")
-    dadger2 = Dadger.le_arquivo("tests/_saidas", "dadger.rv0")
-    assert dadger == dadger2
-
-
-def test_te():
-    te = dadger.te
-    assert "PMO - JUNHO/21 - JULHO/21" in te.titulo
-
-
-def test_rt():
-    rt = dadger.rt("CRISTA")
-    rt2 = dadger.rt("DESVIO")
-    assert rt.restricao == "CRISTA"
-    assert rt2.restricao == "DESVIO"
-
-
-def test_sb():
-    sb = dadger.sb(1)
-    assert sb.codigo == 1
-    assert sb.nome == "SE"
-
-
-def test_uh():
-    uh = dadger.uh(1)
-    assert uh.codigo == 1
-    assert uh.ree == 10
-    assert uh.volume_inicial == 71.96
-    assert uh.evaporacao
-
-
-def test_ct():
-    ct = dadger.ct(1, 1)
-    assert ct.codigo == 1
-    assert ct.nome == "ANGRA 1"
-    assert ct.estagio == 1
-    assert ct.subsistema == 1
-    assert ct.inflexibilidades == [640, 640, 640]
-    assert ct.disponibilidades == [640, 640, 640]
-    assert ct.cvus == [31.17, 31.17, 31.17]
-
-
-def test_dp():
-    dp = dadger.dp(1, 1)
-    assert dp.cargas == [44182.0, 40421.0, 33226.0]
-    assert dp.duracoes == [48.0, 32.0, 88.0]
-
-
-def test_gp():
-    gp = dadger.gp
-    assert gp.gap == 0.001
-
-
-def test_ni():
-    ni = dadger.ni
-    assert ni.iteracoes == 500
-
-
-def test_dt():
-    dt = dadger.dt
-    assert dt.dia == 29
-    assert dt.mes == 5
-    assert dt.ano == 2021
+from tests.mocks.arquivos.dadger import (
+    MockTE,
+    MockSB,
+    MockUH,
+    MockCT,
+    MockUE,
+    MockDP,
+    MockCD,
+    MockRI,
+    MockIA,
+    MockTX,
+    MockGP,
+    MockNI,
+    MockDT,
+    MockMP,
+    MockMT,
+    MockFD,
+    MockVE,
+    MockRE,
+    MockLU,
+    MockFU,
+    MockFI,
+    MockFT,
+    MockVI,
+    MockACJUSMED,
+    MockACCOTVOL,
+    MockACNUMJUS,
+    MockACVOLMIN,
+    MockACCOFEVA,
+    MockACNUMPOS,
+    MockACVSVERT,
+    MockACVMDESV,
+    MockACDESVIO,
+    MockACJUSENA,
+    MockACVAZMIN,
+    MockACNPOSNW,
+    MockACVERTJU,
+    MockACNUMCON,
+    MockACNUMMAQ,
+    MockACPOTEFE,
+    MockFP,
+    MockIR,
+    MockCI,
+    MockFC,
+    MockTI,
+    MockRQ,
+    MockEZ,
+    MockHV,
+    MockLV,
+    MockCV,
+    MockHQ,
+    MockLQ,
+    MockCQ,
+    MockAR,
+    MockEV,
+    MockHE,
+    MockCM,
+    MockFJ,
+    MockDadger,
+)
 
 
-def test_re():
-    re = dadger.re(1)
-    assert re.codigo == 1
-    assert re.estagio_inicial == 1
-    assert re.estagio_final == 6
+def test_registro_te_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockTE))
+    r = TE()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [
+        "PMO - JANEIRO/20 - FEVEREIRO/20 - REV 0 - FCF COM CVAR - 12 REE - VALOR ESP"
+    ]
+    assert (
+        r.titulo
+        == "PMO - JANEIRO/20 - FEVEREIRO/20 - REV 0 - FCF COM CVAR - 12 REE - VALOR ESP"
+    )
+    r.titulo = "Teste123"
+    assert r.titulo == "Teste123"
 
 
-def test_lu():
-    lu = dadger.lu(1, 1)
-    assert lu.codigo == 1
-    assert lu.estagio == 1
-    assert lu.limites_inferiores == [126, 126, 126]
+def test_registro_sb_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockSB))
+    r = SB()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [1, "SE"]
+    assert r.codigo == 1
+    r.codigo = 0
+    assert r.codigo == 0
+    assert r.nome == "SE"
+    r.nome = "AB"
+    assert r.nome == "AB"
 
 
-def test_vi():
-    vi = dadger.vi(156)
-    assert vi.duracao == 360
-    assert vi.vazoes == [404, 402, 398, 396, 354]
+def test_registro_uh_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockUH))
+    r = UH()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [1, 10, 25.29, 1]
+    assert r.codigo == 1
+    r.codigo = 0
+    assert r.codigo == 0
+    assert r.ree == 10
+    r.ree = 0
+    assert r.ree == 0
+    assert r.evaporacao == 1
+    r.evaporacao = 0
+    assert r.evaporacao == 0
+    assert r.volume_inicial == 25.29
+    r.volume_inicial = 0
+    assert r.volume_inicial == 0
 
 
-def test_ir():
-    ir = dadger.ir("ARQFPHA")
-    assert ir.tipo == "ARQFPHA"
+def test_registro_ct_dadger():
 
+    m: MagicMock = mock_open(read_data="".join(MockCT))
+    r = CT()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
 
-def test_fc():
-    fc = dadger.fc("NEWV21")
-    assert fc.tipo == "NEWV21"
-    assert fc.caminho == "CORTESH.P06"
-
-
-def test_ti():
-    ti = dadger.ti(1)
-    assert ti.codigo == 1
-    assert ti.taxas == [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
-
-
-def test_hv():
-    hv = dadger.hv(3)
-    assert hv.codigo == 3
-    assert hv.estagio_inicial == 1
-    assert hv.estagio_final == 6
-
-
-def test_lv():
-    lv = dadger.lv(3, 1)
-    assert lv.codigo == 3
-    assert lv.estagio == 1
-    assert lv.limite_inferior == 622.8
-
-
-def test_hq():
-    hq = dadger.hq(5)
-    assert hq.codigo == 5
-    assert hq.estagio_inicial == 1
-    assert hq.estagio_final == 6
-
-
-def test_lq():
-    lq = dadger.lq(5, 1)
-    assert lq.codigo == 5
-    assert lq.estagio == 1
-    assert lq.limites_inferiores == [256.25, 256.25, 256.25]
-
-
-def test_he():
-    he = dadger_he.he(1, 1)
-    assert he.codigo == 1
-    assert he.estagio == 1
-    assert he.limite == 60.0
-    assert he.tipo_limite == 2
-    assert he.penalidade == 1710.0
-    assert he.forma_calculo_produtibilidades == 1
-    assert he.tipo_valores_produtibilidades == 0
-    assert he.tipo_penalidade == 0
-    assert he.arquivo_produtibilidades == "prodrhe.dat"
-
-
-def test_eq_dadger():
-    dadger2 = Dadger.le_arquivo("tests/_arquivos", "dadger.rv0")
-    assert dadger == dadger2
-
-
-def test_neq_dadger():
-    dadger2 = Dadger.le_arquivo("tests/_arquivos", "dadger.rv0")
-    dadger2.te.titulo = "TESTE"
-    assert dadger != dadger2
-
-
-# def test_leitura_rv1():
-#     rv = Dadger.le_arquivo("tests/_arquivos", "dadger.rv1")
-#     assert "" in rv.te.titulo
-
-
-# def test_leitura_rv2():
-#     rv = Dadger.le_arquivo("tests/_arquivos", "dadger.rv2")
-#     assert "" in rv.te.titulo
-
-
-# def test_leitura_rv3():
-#     rv = Dadger.le_arquivo("tests/_arquivos", "dadger.rv3")
-#     assert "" in rv.te.titulo
-
-
-# def test_leitura_rv4():
-#     rv = Dadger.le_arquivo("tests/_arquivos", "dadger.rv4")
-#     assert "" in rv.te.titulo
+    assert r.data == [
+        13,
+        1,
+        "ANGRA 2",
+        1,
+        1350.0,
+        1350.0,
+        20.12,
+        1350.0,
+        1350.0,
+        20.12,
+        1350.0,
+        1350.0,
+        20.12,
+    ]
+    assert r.codigo == 13
+    r.codigo = 0
+    assert r.codigo == 0
+    assert r.subsistema == 1
+    r.subsistema = 0
+    assert r.subsistema == 0
+    assert r.nome == "ANGRA 2"
+    r.nome = "A"
+    assert r.nome == "A"
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.inflexibilidades == [1350.0, 1350.0, 1350.0]
+    r.inflexibilidades = [999.0]
+    assert r.inflexibilidades == [999.0, None, None]
+    assert r.cvus == [20.12, 20.12, 20.12]
+    r.cvus = [999.0, 999.0, 999.0]
+    assert r.cvus == [999.0, 999.0, 999.0]
+    assert r.disponibilidades == [1350.0, 1350.0, 1350.0]
+    r.disponibilidades = [999.0, 999.0, 999.0, 999.0]
+    assert r.disponibilidades == [999.0, 999.0, 999.0, 999.0]
