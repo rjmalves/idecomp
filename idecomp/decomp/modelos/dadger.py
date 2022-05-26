@@ -1,3 +1,4 @@
+from os import name
 from cfinterface.components.register import Register
 from cfinterface.components.line import Line
 from cfinterface.components.integerfield import IntegerField
@@ -327,6 +328,21 @@ class DP(Register):
         ]
     )
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
     @property
     def estagio(self) -> Optional[int]:
         """
@@ -336,6 +352,10 @@ class DP(Register):
         :rtype: Optional[int]
         """
         return self.data[0]
+
+    @estagio.setter
+    def estagio(self, e: int):
+        self.data[0] = e
 
     @property
     def subsistema(self) -> Optional[int]:
@@ -361,6 +381,10 @@ class DP(Register):
         """
         return self.data[2]
 
+    @num_patamares.setter
+    def num_patamares(self, n: int):
+        self.data[2] = n
+
     @property
     def cargas(self) -> Optional[List[float]]:
         """
@@ -373,14 +397,7 @@ class DP(Register):
 
     @cargas.setter
     def cargas(self, c: List[float]):
-        novas = len(c)
-        atuais = len(self.cargas)
-        if novas != atuais:
-            raise ValueError(
-                "Número de cargas incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self.data[3::2] = c
+        self.__atualiza_dados_lista(c, 3, 2)
 
     @property
     def duracoes(self) -> Optional[List[float]]:
@@ -394,14 +411,7 @@ class DP(Register):
 
     @duracoes.setter
     def duracoes(self, d: List[float]):
-        novas = len(d)
-        atuais = len(self.duracoes)
-        if novas != atuais:
-            raise ValueError(
-                "Número de durações incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self.data[4::2] = d
+        self.__atualiza_dados_lista(d, 4, 2)
 
 
 class CD(Register):
@@ -425,6 +435,21 @@ class CD(Register):
             FloatField(10, 64, 2),
         ]
     )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
 
     @property
     def numero_curva(self) -> Optional[int]:
@@ -464,14 +489,7 @@ class CD(Register):
 
     @limites_superiores.setter
     def limites_superiores(self, lim: List[float]):
-        novos = len(lim)
-        atuais = len(self.limites_superiores)
-        if novos != atuais:
-            raise ValueError(
-                "Número de limites incompatível. De"
-                + f"vem ser fornecidos {atuais}, mas foram {novos}"
-            )
-        self.data[4::2] = lim
+        self.__atualiza_dados_lista(lim, 4, 2)
 
     @property
     def custos(self) -> Optional[List[float]]:
@@ -479,14 +497,7 @@ class CD(Register):
 
     @custos.setter
     def custos(self, cus: List[float]):
-        novos = len(cus)
-        atuais = len(self.custos)
-        if novos != atuais:
-            raise ValueError(
-                "Número de custos incompatível. De"
-                + f"vem ser fornecidos {atuais}, mas foram {novos}"
-            )
-        self.data[5::2] = cus
+        self.__atualiza_dados_lista(cus, 5, 2)
 
 
 class RI(Register):
@@ -501,21 +512,21 @@ class RI(Register):
             IntegerField(3, 4),
             IntegerField(2, 9),
             IntegerField(3, 13),
-            FloatField(5, 16, 0),
-            FloatField(5, 21, 0),
-            FloatField(5, 26, 0),
-            FloatField(5, 31, 0),
-            FloatField(5, 36, 0),
-            FloatField(5, 41, 0),
-            FloatField(5, 46, 0),
-            FloatField(5, 51, 0),
-            FloatField(5, 56, 0),
-            FloatField(5, 61, 0),
-            FloatField(5, 66, 0),
-            FloatField(5, 71, 0),
-            FloatField(5, 76, 0),
-            FloatField(5, 81, 0),
-            FloatField(5, 86, 0),
+            FloatField(7, 16, 0),
+            FloatField(7, 23, 0),
+            FloatField(7, 30, 0),
+            FloatField(7, 37, 0),
+            FloatField(7, 44, 0),
+            FloatField(7, 51, 0),
+            FloatField(7, 58, 0),
+            FloatField(7, 65, 0),
+            FloatField(7, 72, 0),
+            FloatField(7, 79, 0),
+            FloatField(7, 86, 0),
+            FloatField(7, 93, 0),
+            FloatField(7, 100, 0),
+            FloatField(7, 107, 0),
+            FloatField(7, 114, 0),
         ]
     )
 
@@ -530,8 +541,9 @@ class IA(Register):
     LINE = Line(
         [
             IntegerField(2, 4),
-            IntegerField(2, 9),
-            IntegerField(2, 14),
+            LiteralField(2, 9),
+            LiteralField(2, 14),
+            IntegerField(1, 17),
             FloatField(10, 19, 0),
             FloatField(10, 29, 0),
             FloatField(10, 39, 0),
@@ -696,18 +708,18 @@ class MP(Register):
             IntegerField(3, 4),
             IntegerField(2, 7),
             FloatField(5, 9, 3),
-            FloatField(5, 12, 3),
-            FloatField(5, 15, 3),
-            FloatField(5, 18, 3),
-            FloatField(5, 21, 3),
+            FloatField(5, 14, 3),
+            FloatField(5, 19, 3),
             FloatField(5, 24, 3),
-            FloatField(5, 27, 3),
-            FloatField(5, 30, 3),
-            FloatField(5, 33, 3),
-            FloatField(5, 36, 3),
+            FloatField(5, 29, 3),
+            FloatField(5, 34, 3),
             FloatField(5, 39, 3),
-            FloatField(5, 42, 3),
-            FloatField(5, 45, 3),
+            FloatField(5, 44, 3),
+            FloatField(5, 49, 3),
+            FloatField(5, 54, 3),
+            FloatField(5, 59, 3),
+            FloatField(5, 64, 3),
+            FloatField(5, 69, 3),
         ]
     )
 
@@ -794,6 +806,21 @@ class VE(Register):
         ]
     )
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
     @property
     def codigo(self) -> Optional[int]:
         """
@@ -803,6 +830,10 @@ class VE(Register):
         :rtype: Optional[int]
         """
         return self.data[0]
+
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
 
     @property
     def volumes(self) -> Optional[List[float]]:
@@ -816,14 +847,7 @@ class VE(Register):
 
     @volumes.setter
     def volumes(self, cus: List[float]):
-        novos = len(cus)
-        atuais = len(self.volumes)
-        if novos != atuais:
-            raise ValueError(
-                "Número de volumes incompatível. De"
-                + f"vem ser fornecidos {atuais}, mas foram {novos}"
-            )
-        self.data[1:] = cus
+        self.__atualiza_dados_lista(cus, 1, 1)
 
 
 class RE(Register):
