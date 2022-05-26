@@ -70,9 +70,8 @@ from idecomp.decomp.modelos.dadger import (
 )
 
 
-from copy import deepcopy
-from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
+from cfinterface.components.state import ComponentState
 from typing import Type, List, Optional, TypeVar, Any, Union
 
 
@@ -215,9 +214,19 @@ class Dadger(RegisterFile):
         """
         return [b for b in self.data.of_type(registro)]
 
-    def __obtem_registro(self, tipo: Type[T]) -> T:
+    def __obtem_registro(self, tipo: Type[T]) -> Optional[T]:
         """ """
-        return self.__registros_por_tipo(tipo)[0]
+        r = self.__obtem_registros(tipo)
+        return r[0] if len(r) > 0 else None
+
+    def __obtem_registro_com_codigo(
+        self, tipo: Type[T], codigo: int
+    ) -> Optional[T]:
+        regs: List[Any] = self.__registros_por_tipo(tipo)
+        for r in regs:
+            if r.codigo == codigo:
+                return r
+        return None
 
     def __obtem_registro_do_estagio(
         self, tipo: Type[T], codigo: int, estagio: int
@@ -228,21 +237,38 @@ class Dadger(RegisterFile):
                 return r
         return None
 
+    def __obtem_registro_do_subsistema(
+        self, tipo: Type[T], codigo: int, subsistema: int
+    ) -> Optional[T]:
+        regs: List[Any] = self.__registros_por_tipo(tipo)
+        for r in regs:
+            if all([r.codigo == codigo, r.subsistema == subsistema]):
+                return r
+        return None
+
+    def __obtem_registro_do_estagio_para_subsistema(
+        self, tipo: Type[T], estagio: int, subsistema: int
+    ) -> Optional[T]:
+        regs: List[Any] = self.__registros_por_tipo(tipo)
+        for r in regs:
+            if all([r.estagio == estagio, r.subsistema == subsistema]):
+                return r
+        return None
+
     def __obtem_registros(self, tipo: Type[T]) -> List[T]:
         return self.__registros_por_tipo(tipo)
 
     @property
-    def te(self) -> TE:
+    def te(self) -> Optional[TE]:
         """
         Obtém o (único) registro que define o nome do estudo no
         :class:`Dadger`
 
         :return: Um registro do tipo :class:`TE`.
         """
-        r = self.__obtem_registro(TE)
-        return r
+        return self.__obtem_registro(TE)
 
-    def sb(self, codigo: int) -> SB:
+    def sb(self, codigo: int) -> Optional[SB]:
         """
         Obtém um registro que define os subsistemas existentes
         no estudo descrito pelo :class:`Dadger`.
@@ -252,15 +278,9 @@ class Dadger(RegisterFile):
         :type codigo: int
         :return: Um registro do tipo :class:`SB`
         """
-        regs: List[SB] = self.__obtem_registros(SB)
-        for r in regs:
-            if r.codigo == codigo:
-                return r
-        raise ValueError(
-            "Não foi encontrado registro SB" + f" para o código {codigo}"
-        )
+        return self.__obtem_registro_com_codigo(SB, codigo)
 
-    def uh(self, codigo: int) -> UH:
+    def uh(self, codigo: int) -> Optional[UH]:
         """
         Obtém um registro que define uma usina hidrelétrica existente
         no estudo descrito pelo :class:`Dadger`.
@@ -270,15 +290,9 @@ class Dadger(RegisterFile):
         :type codigo: int
         :return: Um registro do tipo :class:`UH`
         """
-        regs: List[UH] = self.__obtem_registros(UH)
-        for r in regs:
-            if r.codigo == codigo:
-                return r
-        raise ValueError(
-            "Não foi encontrado registro UH" + f" para a UHE {codigo}"
-        )
+        return self.__obtem_registro_com_codigo(UH, codigo)
 
-    def ct(self, codigo: int, estagio: int) -> CT:
+    def ct(self, codigo: int, estagio: int) -> Optional[CT]:
         """
         Obtém um registro que define uma usina termelétrica existente
         no estudo descrito pelo :class:`Dadger`.
@@ -290,17 +304,9 @@ class Dadger(RegisterFile):
         :type estagio: int
         :return: Um registro do tipo :class:`CT`
         """
-        regs: List[CT] = self.__obtem_registros(CT)
-        for r in regs:
-            if all([r.codigo == codigo, r.estagio == estagio]):
-                return r
-        raise ValueError(
-            "Não foi encontrado registro CT"
-            + f" para a UTE {codigo} no estágio"
-            + f" {estagio}."
-        )
+        return self.__obtem_registro_do_estagio(CT, codigo, estagio)
 
-    def dp(self, estagio: int, subsistema: int) -> DP:
+    def dp(self, estagio: int, subsistema: int) -> Optional[DP]:
         """
         Obtém um registro que define as durações dos patamares
         no estudo descrito pelo :class:`Dadger`.
@@ -313,24 +319,18 @@ class Dadger(RegisterFile):
         :type subsistema: int
         :return: Um registro do tipo :class:`DP`
         """
-        regs: List[DP] = self.__obtem_registros(DP)
-        for r in regs:
-            if all([r.estagio == estagio, r.subsistema == subsistema]):
-                return r
-        raise ValueError(
-            "Não foi encontrado registro DP"
-            + f" para o subsistema {subsistema}"
-            + f" no estágio {estagio})"
+        return self.__obtem_registro_do_estagio_para_subsistema(
+            DP, estagio, subsistema
         )
 
     def ac(
         self,
         uhe: int,
-        modificacao: Type[Register],
+        modificacao: Any,
         mes: str = None,
         semana: int = None,
         ano: int = None,
-    ) -> AC:
+    ) -> Optional[AC]:
         """
         Obtém um registro que define modificações nos parâmetros
         das UHE em um :class:`Dadger`.
@@ -354,17 +354,13 @@ class Dadger(RegisterFile):
                 condicoes.append(r.ano == ano)
             return all(condicoes)
 
-        regs: List[modificacao] = self.__obtem_registros(modificacao)
+        regs: List[Dadger.AC] = self.__obtem_registros(modificacao)
         for r in regs:
             if __atende(r):
                 return r
-        raise ValueError(
-            "Não foi encontrado registro AC"
-            + f" para a UHE {uhe}"
-            + f" que modifique {modificacao})"
-        )
+        return None
 
-    def cd(self, numero_curva: int, subsistema: int) -> CD:
+    def cd(self, numero_curva: int, subsistema: int) -> Optional[CD]:
         """
         Obtém um registro que define as curvas de déficit
         no estudo descrito pelo :class:`Dadger`.
@@ -377,20 +373,16 @@ class Dadger(RegisterFile):
         :type subsistema: int
         :return: Um registro do tipo :class:`CD`
         """
-        regs: List[CD] = self.__obtem_registros(CD)
+        regs: List[CD] = self.__registros_por_tipo(CD)
         for r in regs:
             if all(
                 [r.numero_curva == numero_curva, r.subsistema == subsistema]
             ):
                 return r
-        raise ValueError(
-            "Não foi encontrado registro CD"
-            + f" para o subsistema {subsistema}"
-            + f" na curva {numero_curva})"
-        )
+        return None
 
     @property
-    def tx(self) -> TX:
+    def tx(self) -> Optional[TX]:
         """
         Obtém o (único) registro que define a taxa de desconto
         aplicada no estudo definido no :class:`Dadger`
@@ -400,7 +392,7 @@ class Dadger(RegisterFile):
         return self.__obtem_registro(TX)
 
     @property
-    def gp(self) -> GP:
+    def gp(self) -> Optional[GP]:
         """
         Obtém o (único) registro que define o gap para convergência
         considerado no estudo definido no :class:`Dadger`
@@ -410,7 +402,7 @@ class Dadger(RegisterFile):
         return self.__obtem_registro(GP)
 
     @property
-    def ni(self) -> NI:
+    def ni(self) -> Optional[NI]:
         """
         Obtém o (único) registro que define o número máximo de iterações
         do DECOMP no estudo definido no :class:`Dadger`
@@ -420,7 +412,7 @@ class Dadger(RegisterFile):
         return self.__obtem_registro(NI)
 
     @property
-    def dt(self) -> DT:
+    def dt(self) -> Optional[DT]:
         """
         Obtém o (único) registro que define a data de referência do
         estudo definido no :class:`Dadger`
@@ -429,7 +421,7 @@ class Dadger(RegisterFile):
         """
         return self.__obtem_registro(DT)
 
-    def re(self, codigo: int) -> RE:
+    def re(self, codigo: int) -> Optional[RE]:
         """
         Obtém um registro que cadastra uma restrição elétrica existente
         no estudo descrito pelo :class:`Dadger`.
@@ -439,15 +431,9 @@ class Dadger(RegisterFile):
         :type codigo: int
         :return: Um registro do tipo :class:`RE`
         """
-        regs: List[RE] = self.__obtem_registros(RE)
-        for r in regs:
-            if r.codigo == codigo:
-                return r
-        raise ValueError(
-            "Não foi encontrado registro RE" + f" com código {codigo}"
-        )
+        return self.__obtem_registro_com_codigo(RE, codigo)
 
-    def lu(self, codigo: int, estagio: int) -> LU:
+    def lu(self, codigo: int, estagio: int) -> Optional[LU]:
         """
         Obtém um registro que especifica os limites inferiores e
         superiores por patamar de uma restrição elétrica existente
@@ -490,46 +476,39 @@ class Dadger(RegisterFile):
 
         """
 
-        def cria_registro(modelo: LU, estagio_final: int) -> LU:
-            copia = deepcopy(modelo)
-            copia.estagio = estagio
-            # Procura pelo registro do próximo estágio
-            proximo = None
-            for est in range(estagio, estagio_final + 1):
-                r = self.__obtem_registro_do_estagio(LU, codigo, est)
-                if r is not None:
-                    proximo = r
-                    break
-            if proximo is not None:
-                self.data.add_after(proximo, copia)
-            else:
-                self.data.append(copia)
-            self.data.append(copia)
-            return copia
+        def cria_registro() -> Optional[LU]:
+            re = self.__obtem_registro_com_codigo(RE, codigo)
+            if re is None:
+                return re
+            ei = re.estagio_inicial
+            ef = re.estagio_final
+            ultimo_registro = None
+            if ei is not None and ef is not None:
+                for e in range(ei, ef + 1):
+                    registro_estagio = self.__obtem_registro_do_estagio(
+                        LU, codigo, e
+                    )
+                    if registro_estagio is not None:
+                        ultimo_registro = registro_estagio
+            if isinstance(ultimo_registro, LU):
+                novo_registro = LU(
+                    state=ComponentState.READ_SUCCESS,
+                    data=[None] * len(ultimo_registro.data),
+                )
+                novo_registro.codigo = ultimo_registro.codigo
+                novo_registro.limites_inferiores = ultimo_registro.limites_inferiores
+                novo_registro.limites_superiores = ultimo_registro.limites_superiores
+                novo_registro.estagio = estagio
+                self.data.add_after(ultimo_registro, novo_registro)
+                return novo_registro
+            return None
 
-        # Obtém o registro RE associado
-        re = self.re(codigo)
-        # Confere se o estágio pedido está no intervalo
-        # do registro RE
-        if not (re.estagio_inicial <= estagio <= re.estagio_final):
-            raise ValueError(
-                f"Estágio {estagio} fora dos limites" + " do registro RE"
-            )
-        # Tenta obter um registro já existente
-        reg = self.__obtem_registro_do_estagio(LU, codigo, estagio)
-        if reg is not None:
-            return reg
-        # Se não conseguir, cria mais um registro, idêntico ao do
-        # último estágio existente, e retorna.
-        for est in range(re.estagio_inicial, estagio):
-            r = self.__obtem_registro_do_estagio(LU, codigo, est)
-            if r is not None:
-                reg = r
-        if reg is None:
-            raise ValueError("Registro não encontrado")
-        return cria_registro(reg, re.estagio_final)
+        lu = self.__obtem_registro_do_estagio(LU, codigo, estagio)
+        if lu is None:
+            lu = cria_registro()
+        return lu
 
-    def vi(self, uhe: int) -> VI:
+    def vi(self, uhe: int) -> Optional[VI]:
         """
         Obtém um registro que especifica os tempos de viagem da
         água em uma UHE existente no no estudo descrito
@@ -543,11 +522,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.uhe == uhe:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro VI" + f" para a UHE {uhe}"
-        )
+        return None
 
-    def ir(self, tipo: str) -> IR:
+    def ir(self, tipo: str) -> Optional[IR]:
         """
         Obtém um registro que especifica os relatórios de saída
         a serem produzidos pelo DECOMP após a execução do estudo
@@ -562,11 +539,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.tipo == tipo:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro IR" + f" com mnemônico {tipo}"
-        )
+        return None
 
-    def rt(self, mnemonico: str) -> RT:
+    def rt(self, mnemonico: str) -> Optional[RT]:
         """
         Obtém um registro que especifica uma retirada de restrição
         de soleira de vertedouro ou canal de desvio.
@@ -580,11 +555,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.restricao == mnemonico:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro RT" + f" com mnemônico {mnemonico}"
-        )
+        return None
 
-    def fc(self, tipo: str) -> FC:
+    def fc(self, tipo: str) -> Optional[FC]:
         """
         Obtém um registro que especifica os caminhos para os
         arquivos com a FCF do NEWAVE.
@@ -598,11 +571,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.tipo == tipo:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro FC" + f" com mnemônico {tipo}"
-        )
+        return None
 
-    def ti(self, codigo: int) -> TI:
+    def ti(self, codigo: int) -> Optional[TI]:
         """
         Obtém um registro que especifica as taxas de irrigação
         por posto (UHE) existente no estudo especificado no :class:`Dadger`
@@ -616,11 +587,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro TI" + f" para a UHE {codigo}"
-        )
+        return None
 
-    def fp(self, codigo: int, estagio: int) -> FP:
+    def fp(self, codigo: int, estagio: int) -> Optional[FP]:
         """
         Obtém um registro que especifica as taxas de irrigação
         por posto (UHE) existente no estudo especificado no :class:`Dadger`
@@ -636,12 +605,9 @@ class Dadger(RegisterFile):
         if r is not None:
             return r
         else:
-            raise ValueError(
-                "Registro não encontrado registro FP"
-                + f"para a UHE {codigo} no estágio {estagio}"
-            )
+            return None
 
-    def rq(self, ree: int) -> RQ:
+    def rq(self, ree: int) -> Optional[RQ]:
         """
         Obtém um registro que especifica as vazões mínimas históricas
         por REE existentes no estudo especificado no :class:`Dadger`
@@ -654,11 +620,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.ree == ree:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro RQ" + f" para o REE {ree}"
-        )
+        return None
 
-    def ve(self, codigo: int) -> VE:
+    def ve(self, codigo: int) -> Optional[VE]:
         """
         Obtém um registro que especifica os volumes de espera
         por posto (UHE) existente no estudo especificado no :class:`Dadger`
@@ -671,11 +635,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro VE" + f" para a UHE {codigo}"
-        )
+        return None
 
-    def hv(self, codigo: int) -> HV:
+    def hv(self, codigo: int) -> Optional[HV]:
         """
         Obtém um registro que cadastra uma restrição de volume mínimo
         armazenado existente no estudo descrito pelo :class:`Dadger`.
@@ -689,11 +651,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro HV" + f" para UHE {codigo}"
-        )
+        return None
 
-    def lv(self, codigo: int, estagio: int) -> LV:
+    def lv(self, codigo: int, estagio: int) -> Optional[LV]:
         """
         Obtém um registro que especifica os limites inferior e
         superior de uma restrição de volume mínimo existente
@@ -736,46 +696,39 @@ class Dadger(RegisterFile):
 
         """
 
-        def cria_registro(modelo: LV, estagio_final: int) -> LV:
-            copia = deepcopy(modelo)
-            copia.estagio = estagio
-            # Procura pelo registro do próximo estágio
-            proximo = None
-            for est in range(estagio, estagio_final + 1):
-                r = self.__obtem_registro_do_estagio(LV, codigo, est)
-                if r is not None:
-                    proximo = r
-                    break
-            if proximo is not None:
-                self.data.add_after(proximo, copia)
-            else:
-                self.data.append(copia)
-            self.data.append(copia)
-            return copia
+        def cria_registro() -> Optional[LV]:
+            hv = self.__obtem_registro_com_codigo(HV, codigo)
+            if hv is None:
+                return hv
+            ei = hv.estagio_inicial
+            ef = hv.estagio_final
+            ultimo_registro = None
+            if ei is not None and ef is not None:
+                for e in range(ei, ef + 1):
+                    registro_estagio = self.__obtem_registro_do_estagio(
+                        LV, codigo, e
+                    )
+                    if registro_estagio is not None:
+                        ultimo_registro = registro_estagio
+            if isinstance(ultimo_registro, LV):
+                novo_registro = LV(
+                    state=ComponentState.READ_SUCCESS,
+                    data=[None] * len(ultimo_registro.data),
+                )
+                novo_registro.codigo = codigo
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior
+                novo_registro.limite_superior = ultimo_registro.limite_superior
+                novo_registro.estagio = estagio
+                self.data.add_after(ultimo_registro, novo_registro)
+                return novo_registro
+            return None
 
-        # Obtém o registro HV associado
-        hv = self.hv(codigo)
-        # Confere se o estágio pedido está no intervalo
-        # do registro HV
-        if not (hv.estagio_inicial <= estagio <= hv.estagio_final):
-            raise ValueError(
-                f"Estágio {estagio} fora dos limites" + " do registro HV"
-            )
-        # Tenta obter um registro já existente
-        reg = self.__obtem_registro_do_estagio(LV, codigo, estagio)
-        if reg is not None:
-            return reg
-        # Se não conseguir, cria mais um registro, idêntico ao do
-        # último estágio existente, e retorna.
-        for est in range(hv.estagio_inicial, estagio):
-            r = self.__obtem_registro_do_estagio(LV, codigo, est)
-            if r is not None:
-                reg = r
-        if reg is None:
-            raise ValueError("Registro não encontrado")
-        return cria_registro(reg, hv.estagio_final)
+        lv = self.__obtem_registro_do_estagio(LV, codigo, estagio)
+        if lv is None:
+            lv = cria_registro()
+        return lv
 
-    def hq(self, codigo: int) -> HQ:
+    def hq(self, codigo: int) -> Optional[HQ]:
         """
         Obtém um registro que cadastra uma restrição de vazão
         existente no estudo descrito pelo :class:`Dadger`.
@@ -789,11 +742,9 @@ class Dadger(RegisterFile):
         for r in regs:
             if r.codigo == codigo:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro HQ" + f" com o código {codigo}"
-        )
+        return None
 
-    def lq(self, codigo: int, estagio: int) -> LQ:
+    def lq(self, codigo: int, estagio: int) -> Optional[LQ]:
         """
         Obtém um registro que especifica os limites inferiores e
         superiores por patamar de uma restrição de vazão existente
@@ -836,46 +787,43 @@ class Dadger(RegisterFile):
 
         """
 
-        def cria_registro(modelo: LQ, estagio_final: int) -> LQ:
-            copia = deepcopy(modelo)
-            copia.estagio = estagio
-            # Procura pelo registro do próximo estágio
-            proximo = None
-            for est in range(estagio, estagio_final + 1):
-                r = self.__obtem_registro_do_estagio(LQ, codigo, est)
-                if r is not None:
-                    proximo = r
-                    break
-            if proximo is not None:
-                self.data.add_after(proximo, copia)
-            else:
-                self.data.append(copia)
-            self.data.append(copia)
-            return copia
+        def cria_registro() -> Optional[LQ]:
+            hq = self.__obtem_registro_com_codigo(HQ, codigo)
+            if hq is None:
+                return hq
+            ei = hq.estagio_inicial
+            ef = hq.estagio_final
+            ultimo_registro = None
+            if ei is not None and ef is not None:
+                for e in range(ei, ef + 1):
+                    registro_estagio = self.__obtem_registro_do_estagio(
+                        LQ, codigo, e
+                    )
+                    if registro_estagio is not None:
+                        ultimo_registro = registro_estagio
+            if isinstance(ultimo_registro, LQ):
+                novo_registro = LQ(
+                    state=ComponentState.READ_SUCCESS,
+                    data=[None] * len(ultimo_registro.data),
+                )
+                novo_registro.codigo = codigo
+                novo_registro.limites_superiores = (
+                    ultimo_registro.limites_superiores
+                )
+                novo_registro.limites_inferiores = (
+                    ultimo_registro.limites_inferiores
+                )
+                novo_registro.estagio = estagio
+                self.data.add_after(ultimo_registro, novo_registro)
+                return novo_registro
+            return None
 
-        # Obtém o registro HQ associado
-        hq = self.hq(codigo)
-        # Confere se o estágio pedido está no intervalo
-        # do registro HQ
-        if not (hq.estagio_inicial <= estagio <= hq.estagio_final):
-            raise ValueError(
-                f"Estágio {estagio} fora dos limites" + " do registro HQ"
-            )
-        # Tenta obter um registro já existente
-        reg = self.__obtem_registro_do_estagio(LQ, codigo, estagio)
-        if reg is not None:
-            return reg
-        # Se não conseguir, cria mais um registro, idêntico ao do
-        # último estágio existente, e retorna.
-        for est in range(hq.estagio_inicial, estagio):
-            r = self.__obtem_registro_do_estagio(LQ, codigo, est)
-            if r is not None:
-                reg = r
-        if reg is None:
-            raise ValueError("Registro não encontrado")
-        return cria_registro(reg, hq.estagio_final)
+        lq = self.__obtem_registro_do_estagio(LQ, codigo, estagio)
+        if lq is None:
+            lq = cria_registro()
+        return lq
 
-    def he(self, codigo: int, estagio: int) -> HE:
+    def he(self, codigo: int, estagio: int) -> Optional[HE]:
         """
         Obtém um registro que cadastra uma restrição de energia
         armazenada existente no estudo descrito pelo :class:`Dadger`.
@@ -892,26 +840,39 @@ class Dadger(RegisterFile):
         if r is not None:
             return r
         else:
-            raise ValueError("Registro não encontrado")
+            return None
+
+    def cm(self, codigo: int) -> Optional[CM]:
+        """
+        Obtém um registro que cadastra os coeficientes das restrições
+        de energia armazenada.
+
+        :param codigo: Índice do código que especifica o registro
+        :type codigo: int
+        :return: Um registro do tipo :class:`CM`
+        """
+        regs: List[CM] = self.__obtem_registros(CM)
+        for r in regs:
+            if r.codigo == codigo:
+                return r
+        return None
 
     @property
-    def ev(self) -> EV:
+    def ev(self) -> Optional[EV]:
         """
         Obtém o (único) registro que define a evaporação
         :class:`Dadger`
 
         :return: Um registro do tipo :class:`EV`.
         """
-        r = self.__obtem_registro(EV)
-        return r
+        return self.__obtem_registro(EV)
 
     @property
-    def fj(self) -> FJ:
+    def fj(self) -> Optional[FJ]:
         """
         Obtém o (único) registro que define o arquivo `polinjus`
         :class:`Dadger`
 
         :return: Um registro do tipo :class:`FJ`.
         """
-        r = self.__obtem_registro(FJ)
-        return r
+        return self.__obtem_registro(FJ)

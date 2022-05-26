@@ -1,11 +1,10 @@
-from os import name
 from cfinterface.components.register import Register
 from cfinterface.components.line import Line
 from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
 
-from typing import Optional, List
+from typing import Optional, List, IO
 from numpy import abs  # type: ignore
 
 
@@ -159,17 +158,32 @@ class CT(Register):
             IntegerField(2, 9),
             LiteralField(10, 14),
             IntegerField(2, 24),
-            FloatField(5, 29, 1),
-            FloatField(5, 34, 1),
+            FloatField(5, 29, 2),
+            FloatField(5, 34, 2),
             FloatField(10, 39, 2),
-            FloatField(5, 49, 1),
-            FloatField(5, 54, 1),
+            FloatField(5, 49, 2),
+            FloatField(5, 54, 2),
             FloatField(10, 59, 2),
-            FloatField(5, 69, 1),
-            FloatField(5, 74, 1),
+            FloatField(5, 69, 2),
+            FloatField(5, 74, 2),
             FloatField(10, 79, 2),
         ]
     )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
 
     @property
     def codigo(self) -> Optional[int]:
@@ -235,22 +249,7 @@ class CT(Register):
         :return: As inflexibilidades.
         :rtype: Optional[list[float]]
         """
-        return self.data[4::3]
-
-    def __atualiza_dados_lista(
-        self,
-        novos_dados: list,
-        indice_inicial: int,
-        espacamento: int,
-    ):
-        atuais = len(self.data)
-        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
-        diferenca = (ultimo_indice - atuais) // espacamento
-        if diferenca > 0:
-            self.data += [None] * (ultimo_indice - atuais)
-            diferenca -= 1
-        novos_dados += [None] * abs(diferenca)
-        self.data[indice_inicial::espacamento] = novos_dados
+        return [v for v in self.data[4::3] if v is not None]
 
     @inflexibilidades.setter
     def inflexibilidades(self, inflex: List[float]):
@@ -264,7 +263,7 @@ class CT(Register):
         :return: As disponibilidades.
         :rtype: Optional[list[float]]
         """
-        return self.data[5::3]
+        return [v for v in self.data[5::3] if v is not None]
 
     @disponibilidades.setter
     def disponibilidades(self, disp: List[float]):
@@ -278,7 +277,7 @@ class CT(Register):
         :return: Os CVUs.
         :rtype: Optional[list[float]]
         """
-        return self.data[6::3]
+        return [v for v in self.data[6::3] if v is not None]
 
     @cvus.setter
     def cvus(self, cvu: List[float]):
@@ -393,7 +392,7 @@ class DP(Register):
         :return: As cargas.
         :rtype: Optional[list[float]]
         """
-        return self.data[3::2]
+        return [v for v in self.data[3::2] if v is not None]
 
     @cargas.setter
     def cargas(self, c: List[float]):
@@ -407,7 +406,7 @@ class DP(Register):
         :return: As durações em horas.
         :rtype: Optional[list[float]]
         """
-        return self.data[4::2]
+        return [v for v in self.data[4::2] if v is not None]
 
     @duracoes.setter
     def duracoes(self, d: List[float]):
@@ -485,7 +484,7 @@ class CD(Register):
 
     @property
     def limites_superiores(self) -> Optional[List[float]]:
-        return self.data[4::2]
+        return [v for v in self.data[4::2] if v is not None]
 
     @limites_superiores.setter
     def limites_superiores(self, lim: List[float]):
@@ -493,7 +492,7 @@ class CD(Register):
 
     @property
     def custos(self) -> Optional[List[float]]:
-        return self.data[5::2]
+        return [v for v in self.data[5::2] if v is not None]
 
     @custos.setter
     def custos(self, cus: List[float]):
@@ -843,7 +842,7 @@ class VE(Register):
         :return: Os volumes.
         :rtype: Optional[List[float]]
         """
-        return self.data[1:]
+        return [v for v in self.data[1:] if v is not None]
 
     @volumes.setter
     def volumes(self, cus: List[float]):
@@ -860,8 +859,8 @@ class RE(Register):
     LINE = Line(
         [
             IntegerField(3, 4),
+            IntegerField(2, 9),
             IntegerField(2, 14),
-            IntegerField(2, 19),
         ]
     )
 
@@ -875,6 +874,10 @@ class RE(Register):
         """
         return self.data[0]
 
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
+
     @property
     def estagio_inicial(self) -> Optional[int]:
         """
@@ -885,6 +888,10 @@ class RE(Register):
         """
         return self.data[1]
 
+    @estagio_inicial.setter
+    def estagio_inicial(self, e: int):
+        self.data[1] = e
+
     @property
     def estagio_final(self) -> Optional[int]:
         """
@@ -894,6 +901,10 @@ class RE(Register):
         :rtype: Optional[int]
         """
         return self.data[2]
+
+    @estagio_final.setter
+    def estagio_final(self, e: int):
+        self.data[2] = e
 
 
 class LU(Register):
@@ -908,8 +919,28 @@ class LU(Register):
             IntegerField(3, 4),
             IntegerField(2, 9),
             FloatField(10, 14, 1),
+            FloatField(10, 24, 1),
+            FloatField(10, 34, 1),
+            FloatField(10, 44, 1),
+            FloatField(10, 54, 1),
+            FloatField(10, 64, 1),
         ]
     )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
 
     @property
     def codigo(self) -> Optional[int]:
@@ -920,6 +951,10 @@ class LU(Register):
         :rtype: Optional[int]
         """
         return self.data[0]
+
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
 
     @property
     def estagio(self) -> Optional[int]:
@@ -948,14 +983,7 @@ class LU(Register):
 
     @limites_inferiores.setter
     def limites_inferiores(self, lim: List[float]):
-        novos = len(lim)
-        atuais = len(self.limites_inferiores)
-        if novos != atuais:
-            raise ValueError(
-                "Número de limites incompatível. De"
-                + f"vem ser fornecidos {atuais}, mas foram {novos}"
-            )
-        self.data[2::2] = lim
+        self.__atualiza_dados_lista(lim, 2, 2)
 
     @property
     def limites_superiores(self) -> Optional[List[float]]:
@@ -969,14 +997,7 @@ class LU(Register):
 
     @limites_superiores.setter
     def limites_superiores(self, lim: List[float]):
-        novos = len(lim)
-        atuais = len(self.limites_superiores)
-        if novos != atuais:
-            raise ValueError(
-                "Número de limites incompatível. De"
-                + f"vem ser fornecidos {atuais}, mas foram {novos}"
-            )
-        self.data[3::2] = lim
+        self.__atualiza_dados_lista(lim, 3, 2)
 
 
 class FU(Register):
@@ -1029,8 +1050,8 @@ class FI(Register):
         [
             IntegerField(3, 4),
             IntegerField(2, 9),
-            IntegerField(2, 14),
-            IntegerField(2, 19),
+            LiteralField(2, 14),
+            LiteralField(2, 19),
             FloatField(10, 24, 7),
         ]
     )
@@ -1059,6 +1080,21 @@ class VI(Register):
         ]
     )
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
     @property
     def uhe(self) -> Optional[int]:
         """
@@ -1069,6 +1105,10 @@ class VI(Register):
         :rtype: Optional[int]
         """
         return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
 
     @property
     def duracao(self) -> Optional[int]:
@@ -1095,18 +1135,11 @@ class VI(Register):
         :return: As vazões
         :rtype: Optional[list[float]]
         """
-        return self.data[2:]
+        return [v for v in self.data[2::] if v is not None]
 
     @vazoes.setter
     def vazoes(self, v: List[float]):
-        novos = len(v)
-        atuais = len(self.vazoes)
-        if novos != atuais:
-            raise ValueError(
-                "Número de vazões incompatível. De"
-                + f"vem ser fornecidos {atuais}, mas foram {novos}"
-            )
-        self.data[2:] = v
+        self.__atualiza_dados_lista(v, 2, 1)
 
 
 class IR(Register):
@@ -1136,6 +1169,10 @@ class IR(Register):
         :rtype: Optional[str]
         """
         return self.data[0]
+
+    @tipo.setter
+    def tipo(self, t: str):
+        self.data[0] = t
 
 
 class CI(Register):
@@ -1284,6 +1321,21 @@ class TI(Register):
         ]
     )
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
     @property
     def codigo(self) -> Optional[int]:
         """
@@ -1292,6 +1344,10 @@ class TI(Register):
         :return: O código como `int`.
         """
         return self.data[0]
+
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
 
     @property
     def taxas(self) -> Optional[List[float]]:
@@ -1303,18 +1359,11 @@ class TI(Register):
         :return: As taxas.
         :type: Optional[list[float]]
         """
-        return self.data[1:]
+        return [v for v in self.data[1::] if v is not None]
 
     @taxas.setter
     def taxas(self, tx: List[float]):
-        novas = len(tx)
-        atuais = len(self.taxas)
-        if novas != atuais:
-            raise ValueError(
-                "Número de taxas incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self.data[1:] = tx
+        self.__atualiza_dados_lista(tx, 1, 1)
 
 
 class FP(Register):
@@ -1337,6 +1386,9 @@ class FP(Register):
             IntegerField(4, 36),
             FloatField(5, 41, 0),
             FloatField(5, 47, 0),
+            FloatField(5, 54, 0),
+            FloatField(5, 60, 0),
+            FloatField(5, 66, 0),
         ]
     )
 
@@ -1511,6 +1563,21 @@ class RQ(Register):
         ]
     )
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
     @property
     def ree(self) -> Optional[int]:
         """
@@ -1534,18 +1601,12 @@ class RQ(Register):
         :return: As vazoes.
         :rtype: Optional[list[float]]
         """
-        return self.data[1:]
+        return [v for v in self.data[1:] if v is not None]
 
     @vazoes.setter
-    def vazoes(self, tx: List[float]):
-        novas = len(tx)
-        atuais = len(self.vazoes)
-        if novas != atuais:
-            raise ValueError(
-                "Número de vazões incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self.data[1:] = tx
+    def vazoes(self, v: List[float]):
+        self.__atualiza_dados_lista(v, 1, 1)
+        self.data[1:] = v
 
 
 class EZ(Register):
@@ -1589,6 +1650,10 @@ class HV(Register):
         """
         return self.data[0]
 
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
+
     @property
     def estagio_inicial(self) -> Optional[int]:
         """
@@ -1599,6 +1664,10 @@ class HV(Register):
         """
         return self.data[1]
 
+    @estagio_inicial.setter
+    def estagio_inicial(self, e: int):
+        self.data[1] = e
+
     @property
     def estagio_final(self) -> Optional[int]:
         """
@@ -1608,6 +1677,10 @@ class HV(Register):
         :rtype: Optional[int]
         """
         return self.data[2]
+
+    @estagio_final.setter
+    def estagio_final(self, e: int):
+        self.data[2] = e
 
 
 class LV(Register):
@@ -1636,6 +1709,10 @@ class LV(Register):
         :rtype: Optional[int]
         """
         return self.data[0]
+
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
 
     @property
     def estagio(self) -> Optional[int]:
@@ -1724,6 +1801,10 @@ class HQ(Register):
         """
         return self.data[0]
 
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
+
     @property
     def estagio_inicial(self) -> Optional[int]:
         """
@@ -1734,6 +1815,10 @@ class HQ(Register):
         """
         return self.data[1]
 
+    @estagio_inicial.setter
+    def estagio_inicial(self, e: int):
+        self.data[1] = e
+
     @property
     def estagio_final(self) -> Optional[int]:
         """
@@ -1743,6 +1828,10 @@ class HQ(Register):
         :rtype: Optional[int]
         """
         return self.data[2]
+
+    @estagio_final.setter
+    def estagio_final(self, e: int):
+        self.data[2] = e
 
 
 class LQ(Register):
@@ -1766,6 +1855,21 @@ class LQ(Register):
         ]
     )
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
     @property
     def codigo(self) -> Optional[int]:
         """
@@ -1775,6 +1879,10 @@ class LQ(Register):
         :rtype: Optional[int]
         """
         return self.data[0]
+
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
 
     @property
     def estagio(self) -> Optional[int]:
@@ -1802,14 +1910,7 @@ class LQ(Register):
 
     @limites_inferiores.setter
     def limites_inferiores(self, lim: List[float]):
-        novos = len(lim)
-        atuais = len(self.limites_inferiores)
-        if novos != atuais:
-            raise ValueError(
-                "Número de limites incompatível. De"
-                + f"vem ser fornecidos {atuais}, mas foram {novos}"
-            )
-        self.data[2::2] = lim
+        self.__atualiza_dados_lista(lim, 2, 2)
 
     @property
     def limites_superiores(self) -> Optional[List[float]]:
@@ -1823,14 +1924,7 @@ class LQ(Register):
 
     @limites_superiores.setter
     def limites_superiores(self, lim: List[float]):
-        novos = len(lim)
-        atuais = len(self.limites_superiores)
-        if novos != atuais:
-            raise ValueError(
-                "Número de limites incompatível. De"
-                + f"vem ser fornecidos {atuais}, mas foram {novos}"
-            )
-        self.data[3::2] = lim
+        self.__atualiza_dados_lista(lim, 3, 2)
 
 
 class CQ(Register):
@@ -1963,6 +2057,10 @@ class HE(Register):
         :rtype: Optional[int]
         """
         return self.data[0]
+
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
 
     @property
     def tipo_limite(self) -> Optional[int]:
@@ -2097,25 +2195,29 @@ class CM(Register):
     @property
     def codigo(self) -> int:
         """
-        O código de cadastro da restrição HE
+        O código de cadastro da restrição CM
 
         :return: O código.
         :rtype: Optional[int]
         """
         return self.data[0]
 
-    @property
-    def estagio(self) -> int:
-        """
-        O estágio de vigência do coeficiente
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
 
-        :return: O estágio.
+    @property
+    def ree(self) -> int:
+        """
+        O REE do coeficiente
+
+        :return: O REE.
         :rtype: Optional[int]
         """
         return self.data[1]
 
-    @estagio.setter
-    def estagio(self, e: int):
+    @ree.setter
+    def ree(self, e: int):
         self.data[1] = e
 
     @property
@@ -2149,6 +2251,18 @@ class ACNUMPOS(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -2199,6 +2313,18 @@ class ACNUMJUS(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -2252,6 +2378,18 @@ class ACDESVIO(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2303,6 +2441,18 @@ class ACVOLMIN(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2353,6 +2503,18 @@ class ACVOLMAX(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -2406,6 +2568,18 @@ class ACCOTVOL(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2458,6 +2632,18 @@ class ACCOTARE(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2508,6 +2694,18 @@ class ACPROESP(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -2560,6 +2758,18 @@ class ACPERHID(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2611,6 +2821,18 @@ class ACNCHAVE(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -2665,6 +2887,18 @@ class ACCOTVAZ(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2717,6 +2951,18 @@ class ACCOFEVA(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2767,6 +3013,18 @@ class ACNUMCON(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -2820,6 +3078,18 @@ class ACNUMMAQ(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2871,6 +3141,18 @@ class ACPOTEFE(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -2924,6 +3206,18 @@ class ACALTEFE(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -2976,6 +3270,18 @@ class ACVAZEFE(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -3026,6 +3332,18 @@ class ACJUSMED(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -3078,6 +3396,18 @@ class ACVERTJU(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -3128,6 +3458,18 @@ class ACVAZMIN(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -3177,6 +3519,18 @@ class ACTIPERH(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -3230,6 +3584,18 @@ class ACJUSENA(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -3280,6 +3646,18 @@ class ACVSVERT(Register):
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:
@@ -3332,6 +3710,18 @@ class ACVMDESV(Register):
         ]
     )
 
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
+
     @property
     def uhe(self) -> Optional[int]:
         return self.data[0]
@@ -3376,13 +3766,24 @@ class ACNPOSNW(Register):
     LINE = Line(
         [
             IntegerField(3, 4),
-            IntegerField(3, 4),
             IntegerField(5, 19),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),
         ]
     )
+
+    # Override
+    def write(self, file: IO) -> bool:
+        line = self.__class__.LINE.write(self.data)
+        line = (
+            self.__class__.IDENTIFIER[:2]
+            + line[2:9]
+            + self.__class__.IDENTIFIER[18:]
+            + line[15:]
+        )
+        file.write(line)
+        return True
 
     @property
     def uhe(self) -> Optional[int]:

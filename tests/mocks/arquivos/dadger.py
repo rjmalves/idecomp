@@ -79,7 +79,7 @@ MockACNUMMAQ = "AC  275  NUMMAQ        1    2                                   
 MockACPOTEFE = "AC  275  POTEFE        1      22.5                                   JAN  1"
 
 MockFP = (
-    "FP  999    1  0    5     0   100  0    5    20    20                   0"
+    "FP  999    1  0    5     0   100  0    5    20    20                 0"
 )
 
 MockIR = "IR  NORMAL    17   61"
@@ -3427,9 +3427,9 @@ MockDadger = [
     "&                 Discret. Q         Discret. V        Janela GH                NptIni NptAd                 \n",
     "&   usi  iper tp Npt  QMin  QMax  tp Npt  VMin  VMax  GHmin GHmax Tol FlgD  tp %/n    %/n NI Verif\n",
     "&X  XXX  XXX  x XXXX XXXXX XXXXX  x XXXX XXXXX XXXXX  XXXXX XXXXX XXX  X    X XXXXX XXXXX XX   X\n",
-    "&FP  999    1  0    5     0   100  0    5    20    20                   0                       \n",
-    "&FP  111    2  0    5     0   100  0    5    97    20\n",
-    "&FP  135    1  0    5     0   100  0    5    80    20   \n",
+    "FP  999    1  0    5     0   100  0    5    20    20                   0                       \n",
+    "FP  111    2  0    5     0   100  0    5    97    20\n",
+    "FP  135    1  0    5     0   100  0    5    80    20   \n",
     "&PS\n",
     "&----------------------------------------------------------------------------------------------\n",
     "&         BLOCO 28 ***  RELATORIOS DE SAIDA  ***\n",
@@ -4780,6 +4780,7 @@ MockDadger = [
     "& --------------------- POLINOMIOS DE JUDANTE -------------------------------\n",
     "&x  xxxxxxxxxxxx\n",
     "FJ  polinjus.dat\n",
+    "RT  CRISTA \n"
     "& ----------------------------------------------------------------------------\n",
     "&   DADOS PARA O PROGRAMA CONFIGURADOR DO ARQUIVO DE CENARIOS DE VAZOES:\n",
     '&   -  IDENTIFICADOR "& VAZOES" NO INICIO DO REGISTROS;\n',
