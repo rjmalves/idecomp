@@ -1,75 +1,126 @@
-# Rotinas de testes associadas ao arquivo dadger.rvx do DECOMP
+from idecomp.decomp.modelos.dadgnl import TG, GL, GS, NL
+
 from idecomp.decomp.dadgnl import DadGNL
 
+from tests.mocks.mock_open import mock_open
+from unittest.mock import MagicMock, patch
 
-dadgnl = DadGNL.le_arquivo("tests/_arquivos", "dadgnl.rv0")
-
-
-def test_leitura_escrita():
-    dadgnl.escreve_arquivo("tests/_saidas", "dadgnl.rv0")
-    dadgnl2 = DadGNL.le_arquivo("tests/_saidas", "dadgnl.rv0")
-    assert dadgnl == dadgnl2
-
-
-def test_tg():
-    tg = dadgnl.tg(86, 1)
-    assert tg.codigo == 86
-    assert tg.subsistema == 1
-    assert tg.nome == "SANTA CRUZ"
-    assert tg.estagio == 1
-    assert tg.inflexibilidades == [0.0, 0.0, 0.0]
-    assert tg.disponibilidades == [350.0, 350.0, 350.0]
-    assert tg.cvus == [204.96, 204.96, 204.96]
+from tests.mocks.arquivos.dadgnl import (
+    MockTG,
+    MockGL,
+    MockGS,
+    MockNL,
+    MockDadGNL,
+)
 
 
-def test_gs():
-    gs = dadgnl.gs(1)
-    assert gs.mes == 1
-    assert gs.semanas == 5
+def test_registro_tg_dadgnl():
+
+    m: MagicMock = mock_open(read_data="".join(MockTG))
+    r = TG()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [
+        86,
+        1,
+        "SANTA CRUZ",
+        1,
+        0.0,
+        350.0,
+        204.96,
+        0.0,
+        350.0,
+        204.96,
+        0.0,
+        350.0,
+        204.96,
+    ]
+    assert r.codigo == 86
+    r.codigo = 0
+    assert r.codigo == 0
+    assert r.subsistema == 1
+    r.subsistema = 0
+    assert r.subsistema == 0
+    assert r.nome == "SANTA CRUZ"
+    r.nome = "A"
+    assert r.nome == "A"
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.inflexibilidades == [0.0, 0.0, 0.0]
+    r.inflexibilidades = [999.0]
+    assert r.inflexibilidades == [999.0]
+    assert r.cvus == [204.96, 204.96, 204.96]
+    r.cvus = [999.0, 999.0, 999.0]
+    assert r.cvus == [999.0, 999.0, 999.0]
+    assert r.disponibilidades == [350.0, 350.0, 350.0]
+    r.disponibilidades = [0.0, 0.0, 0.0]
+    assert r.disponibilidades == [0.0, 0.0, 0.0]
 
 
-def test_nl():
-    nl = dadgnl.nl(86)
-    assert nl.codigo == 86
-    assert nl.subsistema == 1
-    assert nl.lag == 2
+def test_registro_gs_dadgnl():
+
+    m: MagicMock = mock_open(read_data="".join(MockGS))
+    r = GS()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [
+        1,
+        5,
+    ]
+    assert r.mes == 1
+    r.mes = 0
+    assert r.mes == 0
+    assert r.semanas == 5
+    r.semanas = 0
+    assert r.semanas == 0
 
 
-def test_gl():
-    gl = dadgnl.gl(86, 1)
-    assert gl.codigo == 86
-    assert gl.subsistema == 1
-    assert gl.estagio == 1
-    assert gl.geracoes == [0.0, 0.0, 0.0]
-    assert gl.duracoes == [48.0, 32.0, 88.0]
+def test_registro_nl_dadgnl():
+
+    m: MagicMock = mock_open(read_data="".join(MockNL))
+    r = NL()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [86, 1, 2]
+    assert r.codigo == 86
+    r.codigo = 0
+    assert r.codigo == 0
+    assert r.subsistema == 1
+    r.subsistema = 0
+    assert r.subsistema == 0
+    assert r.lag == 2
+    r.lag = 0
+    assert r.lag == 0
 
 
-def test_eq_dadgnl():
-    dadgnl2 = DadGNL.le_arquivo("tests/_arquivos", "dadgnl.rv0")
-    assert dadgnl == dadgnl2
+def test_registro_gl_dadgnl():
 
+    m: MagicMock = mock_open(read_data="".join(MockGL))
+    r = GL()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
 
-def test_neq_dadgnl():
-    dadgnl2 = DadGNL.le_arquivo("tests/_arquivos", "dadgnl.rv0")
-    dadgnl2.nl(86).lag = 3
-    assert dadgnl != dadgnl2
-
-
-# def test_leitura_rv1():
-#     rv = Dadger.le_arquivo("tests/_arquivos", "dadger.rv1")
-#     assert "" in rv.te.titulo
-
-
-# def test_leitura_rv2():
-#     rv = Dadger.le_arquivo("tests/_arquivos", "dadger.rv2")
-#     assert "" in rv.te.titulo
-
-
-# def test_leitura_rv3():
-#     rv = Dadger.le_arquivo("tests/_arquivos", "dadger.rv3")
-#     assert "" in rv.te.titulo
-
-
-# def test_leitura_rv4():
-#     rv = Dadger.le_arquivo("tests/_arquivos", "dadger.rv4")
-#     assert "" in rv.te.titulo
+    assert r.data == [86, 1, 1, 0.0, 48, 0.0, 32, 0.0, 88, "29052021"]
+    assert r.codigo == 86
+    r.codigo = 0
+    assert r.codigo == 0
+    assert r.subsistema == 1
+    r.subsistema = 0
+    assert r.subsistema == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.geracoes == [0.0, 0.0, 0.0]
+    r.geracoes = [1.0, 1.0, 1.0]
+    assert r.geracoes == [1.0, 1.0, 1.0]
+    assert r.duracoes == [48, 32, 88]
+    r.duracoes = [0, 0, 0]
+    assert r.duracoes == [0, 0, 0]

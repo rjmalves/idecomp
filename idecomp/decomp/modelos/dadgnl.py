@@ -1,4 +1,10 @@
-from typing import IO, List
+from cfinterface.components.register import Register
+from cfinterface.components.line import Line
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.literalfield import LiteralField
+from cfinterface.components.floatfield import FloatField
+
+from typing import IO, List, Optional
 
 from idecomp._utils.utils import formata_numero
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
@@ -6,394 +12,306 @@ from idecomp._utils.registrodecomp import RegistroDecomp
 from idecomp._utils.leituraregistros import LeituraRegistros
 
 
-class TG(RegistroDecomp):
+class TG(Register):
     """
     Registro que contém o cadastro das térmicas a GNL
     """
 
-    mnemonico = "TG"
+    IDENTIFIER = "TG  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            LiteralField(10, 14),
+            IntegerField(2, 24),
+            FloatField(5, 29, 0),
+            FloatField(5, 34, 0),
+            FloatField(10, 39, 2),
+            FloatField(5, 49, 0),
+            FloatField(5, 54, 0),
+            FloatField(10, 59, 2),
+            FloatField(5, 69, 0),
+            FloatField(5, 74, 0),
+            FloatField(10, 79, 2),
+        ]
+    )
 
-    def __init__(self):
-        super().__init__(TG.mnemonico, True)
-        self._dados = [0, 0, "", 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
-    def le(self):
-        reg_codigo = RegistroIn(3)
-        reg_subsis = RegistroIn(2)
-        reg_nome = RegistroAn(10)
-        reg_estagio = RegistroIn(2)
-        reg_inflex = RegistroFn(5)
-        reg_disp = RegistroFn(5)
-        reg_cvu = RegistroFn(10)
-        self._dados[0] = reg_codigo.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 9)
-        self._dados[2] = reg_nome.le_registro(self._linha, 14)
-        self._dados[3] = reg_estagio.le_registro(self._linha, 24)
-        for j in range(3):
-            self._dados[4 + 3 * j] = reg_inflex.le_registro(
-                self._linha, 29 + 20 * j
-            )
-            self._dados[5 + 3 * j] = reg_disp.le_registro(
-                self._linha, 34 + 20 * j
-            )
-            self._dados[6 + 3 * j] = reg_cvu.le_registro(
-                self._linha, 39 + 20 * j
-            )
-
-    def escreve(self, arq: IO):
-
-        linha = (
-            f"{TG.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".ljust(10)
-            + f"{self._dados[3]}".rjust(2)
-            + "   "
-            + formata_numero(self._dados[4], 2, 5)
-            + formata_numero(self._dados[5], 2, 5)
-            + f"{self._dados[6]:10.2f}"
-            + formata_numero(self._dados[7], 2, 5)
-            + formata_numero(self._dados[8], 2, 5)
-            + f"{self._dados[9]:10.2f}"
-            + formata_numero(self._dados[10], 2, 5)
-            + formata_numero(self._dados[11], 2, 5)
-            + f"{self._dados[12]:10.2f}"
-            + "\n"
-        )
-        arq.write(linha)
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código de cadastro da UTE.
 
-        :return: O código como um `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
+
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
 
     @property
-    def subsistema(self) -> int:
+    def subsistema(self) -> Optional[int]:
         """
         O subsistema de cadastro da UTE.
 
         :return: O subsistema como um `int`.
         """
-        return self._dados[1]
+        return self.data[1]
+
+    @subsistema.setter
+    def subsistema(self, c: int):
+        self.data[1] = c
 
     @property
-    def nome(self) -> str:
+    def nome(self) -> Optional[str]:
         """
         O nome de cadastro da UTE.
 
-        :return: O nome como uma `str`.
+        :return: O nome.
+        :rtype: Optional[str]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @nome.setter
     def nome(self, nome: str):
-        self._dados[2] = nome
+        self.data[2] = nome
 
     @property
-    def estagio(self) -> int:
+    def estagio(self) -> Optional[int]:
         """
         O estágio do despacho da UTE.
 
-        :return: O estágio como um `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[3]
+        return self.data[3]
 
     @estagio.setter
     def estagio(self, estagio: int):
-        self._dados[3] = estagio
+        self.data[3] = estagio
 
     @property
     def inflexibilidades(self) -> List[float]:
         """
         As inflexibilidades da UTE por patamar.
 
-        :return: As inflexibilidades como `list[float]`.
+        :return: As inflexibilidades.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[4::3]
+        return [v for v in self.data[4::3] if v is not None]
 
     @inflexibilidades.setter
     def inflexibilidades(self, inflex: List[float]):
-        novas = len(inflex)
-        atuais = len(self.inflexibilidades)
-        if novas != atuais:
-            raise ValueError(
-                "Número de inflexibilidades incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self._dados[4::3] = inflex
+        self.__atualiza_dados_lista(inflex, 4, 3)
 
     @property
     def disponibilidades(self) -> List[float]:
         """
         As disponibilidades da UTE por patamar.
 
-        :return: As disponibilidades como `list[float]`.
+        :return: As disponibilidades.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[5::3]
+        return [v for v in self.data[5::3] if v is not None]
 
     @disponibilidades.setter
     def disponibilidades(self, disp: List[float]):
-        novas = len(disp)
-        atuais = len(self.disponibilidades)
-        if novas != atuais:
-            raise ValueError(
-                "Número de disponibilidades incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self._dados[5::3] = disp
+        self.__atualiza_dados_lista(disp, 5, 3)
 
     @property
     def cvus(self) -> List[float]:
         """
         Os CVUs da UTE por patamar.
 
-        :return: Os CVUs como `list[float]`.
+        :return: Os CVUs.
+        :rtype: Optional[list[float]]
         """
-        return self._dados[6::3]
+        return [v for v in self.data[6::3] if v is not None]
 
     @cvus.setter
     def cvus(self, cvu: List[float]):
-        novas = len(cvu)
-        atuais = len(self.cvus)
-        if novas != atuais:
-            raise ValueError(
-                "Número de CVUs incompatível. De"
-                + f"vem ser fornecidas {atuais}, mas foram {novas}"
-            )
-        self._dados[6::3] = cvu
+        self.__atualiza_dados_lista(cvu, 6, 3)
 
 
-class GS(RegistroDecomp):
+class GS(Register):
     """
     Registro que contém o número de semanas dos meses envolvidos
     no estudo.
     """
 
-    mnemonico = "GS"
-
-    def __init__(self):
-        super().__init__(GS.mnemonico, True)
-        self._dados = [0, 0]
-
-    def le(self):
-        reg_mes = RegistroIn(2)
-        reg_semanas = RegistroIn(1)
-        self._dados[0] = reg_mes.le_registro(self._linha, 4)
-        self._dados[1] = reg_semanas.le_registro(self._linha, 9)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{GS.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(2)
-            + "   "
-            + f"{self._dados[1]}".rjust(1)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "GS  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            IntegerField(1, 9),
+        ]
+    )
 
     @property
-    def mes(self) -> int:
+    def mes(self) -> Optional[int]:
         """
         O índice do mês associado ao registro GS
 
-        :return: O índice como `int`.
+        :return: O índice.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @mes.setter
     def mes(self, m: int):
-        self._dados[0] = m
+        self.data[0] = m
 
     @property
-    def semanas(self) -> int:
+    def semanas(self) -> Optional[int]:
         """
         O número de semanas do mês associado ao registro GS
 
-        :return: O número de semanas como `int`.
+        :return: O número de semanas.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @semanas.setter
     def semanas(self, s: int):
-        self._dados[1] = s
+        self.data[1] = s
 
 
-class NL(RegistroDecomp):
+class NL(Register):
     """
     Registro que contém o número de lags para o despacho de cada térmica
     de despacho antecipado em cada subsistema.
     """
 
-    mnemonico = "NL"
-
-    def __init__(self):
-        super().__init__(NL.mnemonico, True)
-        self._dados = [0, 0, 0]
-
-    def le(self):
-        reg_codigo = RegistroIn(3)
-        reg_subsis = RegistroIn(2)
-        reg_lag = RegistroIn(1)
-        self._dados[0] = reg_codigo.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsis.le_registro(self._linha, 9)
-        self._dados[2] = reg_lag.le_registro(self._linha, 14)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{NL.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(1)
-            + "\n"
-        )
-        arq.write(linha)
+    IDENTIFIER = "NL  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(1, 14),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da UTE associada ao registro NL
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @codigo.setter
     def codigo(self, c: int):
-        self._dados[0] = c
+        self.data[0] = c
 
     @property
-    def subsistema(self) -> int:
+    def subsistema(self) -> Optional[int]:
         """
         O índice do subsistema de despacho da UTE
 
-        :return: O índice do subsistema como `int`.
+        :return: O subsistema.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @subsistema.setter
     def subsistema(self, s: int):
-        self._dados[1] = s
+        self.data[1] = s
 
     @property
-    def lag(self) -> int:
+    def lag(self) -> Optional[int]:
         """
         O lag de despacho da UTE
 
-        :return: O lag como `int`.
+        :return: O lag
+        :rtype: Optional[int]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @lag.setter
     def lag(self, lag: int):
-        self._dados[2] = lag
+        self.data[2] = lag
 
 
-class GL(RegistroDecomp):
+class GL(Register):
     """
     Registro que contém os cadastros de restrições elétricas.
     """
 
-    mnemonico = "GL"
-
-    def __init__(self):
-        super().__init__(GL.mnemonico, True)
-        self._dados = [0, 0, 0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ""]
-
-    def le(self):
-        reg_cod = RegistroIn(3)
-        reg_subsistema = RegistroIn(2)
-        reg_estagio = RegistroIn(2)
-        reg_geracao = RegistroFn(10)
-        reg_duracao = RegistroFn(5)
-        reg_data = RegistroAn(8)
-        self._dados[0] = reg_cod.le_registro(self._linha, 4)
-        self._dados[1] = reg_subsistema.le_registro(self._linha, 9)
-        self._dados[2] = reg_estagio.le_registro(self._linha, 14)
-        self._dados[3] = reg_geracao.le_registro(self._linha, 19)
-        if len(self._linha[29:34].strip()) > 0:
-            self._dados[4] = reg_duracao.le_registro(self._linha, 29)
-        self._dados[5] = reg_geracao.le_registro(self._linha, 34)
-        if len(self._linha[44:49].strip()) > 0:
-            self._dados[6] = reg_duracao.le_registro(self._linha, 44)
-        self._dados[7] = reg_geracao.le_registro(self._linha, 49)
-        if len(self._linha[59:64].strip()) > 0:
-            self._dados[8] = reg_duracao.le_registro(self._linha, 59)
-        self._dados[9] = reg_data.le_registro(self._linha, 65)
-
-    def escreve(self, arq: IO):
-        linha = (
-            f"{GL.mnemonico}".ljust(4)
-            + f"{self._dados[0]}".rjust(3)
-            + "  "
-            + f"{self._dados[1]}".rjust(2)
-            + "   "
-            + f"{self._dados[2]}".rjust(2)
-            + "   "
-            + f"{formata_numero(self._dados[3], 1, 10)}"
-        )
-        if self._dados[4] == 0.0:
-            str_dur_1 = "".rjust(5)
-        else:
-            str_dur_1 = f"{formata_numero(self._dados[4], 1, 5)}"
-        linha += str_dur_1
-        linha += f"{formata_numero(self._dados[5], 1, 10)}"
-        if self._dados[6] == 0.0:
-            str_dur_2 = "".rjust(5)
-        else:
-            str_dur_2 = f"{formata_numero(self._dados[6], 1, 5)}"
-        linha += str_dur_2
-        linha += f"{formata_numero(self._dados[7], 1, 10)}"
-        if self._dados[8] == 0.0:
-            str_dur_3 = "".rjust(5)
-        else:
-            str_dur_3 = f"{formata_numero(self._dados[8], 1, 5)}"
-        linha += str_dur_3
-        linha += f" {self._dados[9]}"
-
-        arq.write(linha + "\n")
+    IDENTIFIER = "GL  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(2, 14),
+            FloatField(10, 19, 2),
+            FloatField(5, 29, 0),
+            FloatField(10, 34, 2),
+            FloatField(5, 44, 0),
+            FloatField(10, 49, 2),
+            FloatField(5, 59, 0),
+            LiteralField(8, 65),
+        ]
+    )
 
     @property
-    def codigo(self) -> int:
+    def codigo(self) -> Optional[int]:
         """
         O código da UTE despachada no registro GL
 
-        :return: O código como `int`.
+        :return: O código.
+        :rtype: Optional[int]
         """
-        return self._dados[0]
+        return self.data[0]
 
     @property
-    def subsistema(self) -> int:
+    def subsistema(self) -> Optional[int]:
         """
         O índice do subsistema de despacho da UTE
 
-        :return: O índice do subsistema como `int`.
+        :return: O subsistema.
+        :rtype: Optional[int]
         """
-        return self._dados[1]
+        return self.data[1]
 
     @subsistema.setter
     def subsistema(self, e: int):
-        self._dados[1] = e
+        self.data[1] = e
 
     @property
-    def estagio(self) -> int:
+    def estagio(self) -> Optional[int]:
         """
         O estágio de despacho da UTE
 
-        :return: O estágio como `int`.
+        :return: O estágio.
+        :rtype: Optional[int]
         """
-        return self._dados[2]
+        return self.data[2]
 
     @estagio.setter
     def estagio(self, e: int):
-        self._dados[2] = e
+        self.data[2] = e
 
     @property
     def geracoes(self) -> List[float]:
@@ -403,7 +321,7 @@ class GL(RegistroDecomp):
 
         :return: As geracoes como `list[float]`
         """
-        return self._dados[3:8:2]
+        return [v for v in self.data[3:8:2] if v is not None]
 
     @geracoes.setter
     def geracoes(self, gers: List[float]):
@@ -414,7 +332,7 @@ class GL(RegistroDecomp):
                 "Número de gerações incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[3:8:2] = gers
+        self.data[3:8:2] = gers
 
     @property
     def duracoes(self) -> List[float]:
@@ -424,7 +342,7 @@ class GL(RegistroDecomp):
 
         :return: As durações como `list[float]`
         """
-        return self._dados[4::2]
+        return [v for v in self.data[4:7:2] if v is not None]
 
     @duracoes.setter
     def duracoes(self, durs: List[float]):
@@ -435,28 +353,18 @@ class GL(RegistroDecomp):
                 "Número de durações incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self._dados[4::2] = durs
+        self.data[4:7:2] = durs
 
-
-class LeituraDadGNL(LeituraRegistros):
-    """
-    Classe com utilidades gerais para leitura de arquivos
-    do DECOMP com comentários.
-    """
-
-    def __init__(self, diretorio: str):
-        super().__init__(diretorio)
-
-    def _cria_registros_leitura(self) -> List[RegistroDecomp]:
+    @property
+    def data(self) -> Optional[str]:
         """
-        Método que cria a lista de registros a serem lidos no arquivo.
-        Implementa o Factory Pattern.
+        A data de despacho da UTE
+
+        :return: A data no formato DDMMYYYY.
+        :rtype: Optional[str]
         """
-        MAX_UTE = 200
-        MAX_MESES = 5
-        MAX_ESTAGIOS = 10
-        tg: List[RegistroDecomp] = [TG() for _ in range(MAX_UTE)]
-        gs: List[RegistroDecomp] = [GS() for _ in range(MAX_MESES)]
-        nl: List[RegistroDecomp] = [NL() for _ in range(MAX_UTE)]
-        gl: List[RegistroDecomp] = [GL() for _ in range(MAX_UTE * MAX_ESTAGIOS)]
-        return tg + gs + nl + gl
+        return self.data[9]
+
+    @data.setter
+    def data(self, d: str):
+        self.data[9] = d

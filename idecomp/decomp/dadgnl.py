@@ -1,20 +1,19 @@
-from idecomp.decomp.modelos.dadgnl import LeituraDadGNL
+from cfinterface.files.registerfile import RegisterFile
 from idecomp.decomp.modelos.dadgnl import TG, GS, NL, GL
-from idecomp._utils.arquivo import ArquivoRegistros
-from idecomp._utils.dadosarquivo import DadosArquivoRegistros
-from idecomp._utils.escritaregistros import EscritaRegistros
-
 from typing import Type, List, Optional, TypeVar, Any
 
 
-class DadGNL(ArquivoRegistros):
+class DadGNL(RegisterFile):
     """
-    Armazena os dados de entrada das térmicas de
-    despacho antecipado do DECOMP.
+    Armazena os dados de entrada gerais do DECOMP.
 
     Esta classe lida com as informações de entrada fornecidas ao
-    DECOMP no `dadgnl.rvx`. Possui métodos para acessar individualmente
+    DECOMP no `dadger.rvx`. Possui métodos para acessar individualmente
     cada registro, editá-lo e também cria alguns novos registros.
+
+    Atualmente, são suportados os registros:
+    `TE`, `SB`, `UH`, `CT`, `DP`, `TX`, `GP`, `NI`, `DT`, `RE`, `LU`,
+    `VI`, `IR`, `FC`, `TI`, `HV`, `LV`, `HQ`, `LQ` `HE`, `EV` e `FJ`.
 
     É possível ler as informações existentes em arquivos a partir do
     método `le_arquivo()` e escreve um novo arquivo a partir do método
@@ -24,60 +23,50 @@ class DadGNL(ArquivoRegistros):
 
     T = TypeVar("T")
 
-    def __init__(self, dados: DadosArquivoRegistros) -> None:
-        super().__init__(dados)
+    REGISTERS = [TG, GS, NL, GL]
 
-    # Override
+    def __init__(self, data=...) -> None:
+        super().__init__(data)
+
     @classmethod
     def le_arquivo(cls, diretorio: str, nome_arquivo="dadgnl.rv0") -> "DadGNL":
-        """
-        Realiza a leitura de um arquivo "dadgnl.rvx" existente em
-        um diretório.
-
-        :param diretorio: O caminho relativo ou completo para o diretório
-            onde se encontra o arquivo
-        :type diretorio: str
-        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
-            especificando a revisão. Tem como valor default "dadgnl.rv0"
-        :type nome_arquivo: str, optional
-        :return: Um objeto :class:`DadGNL` com informações do arquivo lido
-        """
-        leitor = LeituraDadGNL(diretorio)
-        r = leitor.le_arquivo(nome_arquivo)
-        return cls(r)
+        return cls.read(diretorio, nome_arquivo)
 
     def escreve_arquivo(self, diretorio: str, nome_arquivo="dadgnl.rv0"):
-        """
-        Realiza a escrita de um arquivo com as informações do
-        objeto :class:`DadGNL`
+        self.write(diretorio, nome_arquivo)
 
-        :param diretorio: O caminho relativo ou completo para o diretório
-            onde será escrito o arquivo.
-        :type diretorio: str
-        :param nome_arquivo: Nome do arquivo a ser escrito.Tem como valor
-            default "dadgnl.rv0"
-        :type nome_arquivo: str, optional
+    def __registros_por_tipo(self, registro: Type[T]) -> List[T]:
         """
-        escritor = EscritaRegistros(diretorio)
-        escritor.escreve_arquivo(self._dados, nome_arquivo)
+        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
+        :param bloco: Um tipo de bloco para ser lido
+        :type bloco: T
+        :param indice: O índice do bloco a ser acessado, dentre os do tipo
+        :type indice: int
+        """
+        return [b for b in self.data.of_type(registro)]
+
+    def __obtem_registro_com_codigo(
+        self, tipo: Type[T], codigo: int
+    ) -> Optional[T]:
+        regs: List[Any] = self.__registros_por_tipo(tipo)
+        for r in regs:
+            if r.codigo == codigo:
+                return r
+        return None
 
     def __obtem_registro_do_estagio(
         self, tipo: Type[T], codigo: int, estagio: int
     ) -> Optional[T]:
-        regs: List[Any] = self.__obtem_registros(tipo)
+        regs: List[Any] = self.__registros_por_tipo(tipo)
         for r in regs:
             if all([r.codigo == codigo, r.estagio == estagio]):
                 return r
         return None
 
     def __obtem_registros(self, tipo: Type[T]) -> List[T]:
-        registros = []
-        for b in self._registros:
-            if isinstance(b, tipo):
-                registros.append(b)
-        return registros
+        return self.__registros_por_tipo(tipo)
 
-    def tg(self, codigo: int, estagio: int) -> TG:
+    def tg(self, codigo: int, estagio: int) -> Optional[TG]:
         """
         Obtém um registro que define uma usina termelétrica existente
         no estudo descrito pelo :class:`DadGNL`.
@@ -90,15 +79,9 @@ class DadGNL(ArquivoRegistros):
         :type estagio: int
         :return: Um registro do tipo :class:`TG`
         """
-        reg = self.__obtem_registro_do_estagio(TG, codigo, estagio)
-        if reg is None:
-            raise ValueError(
-                "Não foi encontrado registro TG com"
-                + f" código {codigo} no estágio {estagio}"
-            )
-        return reg
+        return self.__obtem_registro_do_estagio(TG, codigo, estagio)
 
-    def gs(self, mes: int) -> GS:
+    def gs(self, mes: int) -> Optional[GS]:
         """
         Obtém um registro que define o número de semanas em cada
         mês de estudo no :class:`DadGNL`.
@@ -112,11 +95,9 @@ class DadGNL(ArquivoRegistros):
         for r in regs:
             if r.mes == mes:
                 return r
-        raise ValueError(
-            "Não foi encontrado registro GS" + f" para o mês {mes}"
-        )
+        return None
 
-    def nl(self, codigo: int) -> NL:
+    def nl(self, codigo: int) -> Optional[NL]:
         """
         Obtém um registro que define o número de lags para o despacho
         de uma UTE.
@@ -126,13 +107,7 @@ class DadGNL(ArquivoRegistros):
 
         :return: Um registro do tipo :class:`NL`
         """
-        regs: List[NL] = self.__obtem_registros(NL)
-        for r in regs:
-            if r.codigo == codigo:
-                return r
-        raise ValueError(
-            "Não foi encontrado registro GS" + f" para o código {codigo}"
-        )
+        return self.__obtem_registro_com_codigo(NL, codigo)
 
     def gl(self, codigo: int, estagio: int) -> GL:
         """
@@ -147,10 +122,4 @@ class DadGNL(ArquivoRegistros):
         :type estagio: int
         :return: Um registro do tipo :class:`GL`
         """
-        reg = self.__obtem_registro_do_estagio(GL, codigo, estagio)
-        if reg is None:
-            raise ValueError(
-                "Não foi encontrado registro GL com"
-                + f" código {codigo} no estágio {estagio}"
-            )
-        return reg
+        return self.__obtem_registro_do_estagio(GL, codigo, estagio)
