@@ -1,35 +1,51 @@
-from idecomp._utils.bloco import Bloco
-from idecomp._utils.registros import RegistroAn, RegistroIn
-from idecomp._utils.leiturablocos import LeituraBlocos
-
-# Imports de módulos externos
+from cfinterface.components.block import Block
+from cfinterface.components.line import Line
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.floatfield import FloatField
+from cfinterface.components.literalfield import LiteralField
+from typing import List, IO
 import pandas as pd  # type: ignore
-from typing import IO, List
 
 
-class BlocoInviabilidadesIteracoes(Bloco):
+class BlocoInviabilidadesIteracoes(Block):
     """
     Bloco com as informações das inviabilidades visitadas
     pelo DECOMP durante o processo iterativo.
     """
 
-    str_inicio = "TERACAO  FWD(1)/BWD(0)  ESTAGIO  CENARIO"
-    str_fim = ""
+    BEGIN_PATTERN = "RELATORIO DE VIOLACOES DAS RESTRICOES"
+    END_PATTERN = ""
 
-    def __init__(self):
+    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
+        super().__init__(state, previous, next, data)
+        self.__linha = Line(
+            [
+                IntegerField(9, 4),
+                LiteralField(14, 14),
+                IntegerField(8, 29),
+                IntegerField(8, 38),
+                LiteralField(51, 47),
+                FloatField(16, 99, 8),
+                LiteralField(5, 116),
+            ]
+        )
 
-        super().__init__(BlocoInviabilidadesIteracoes.str_inicio, "", True)
-
-        self._dados: pd.DataFrame = pd.DataFrame()
-
-    def __eq__(self, o: object):
+    def __eq__(self, o: object) -> bool:
         if not isinstance(o, BlocoInviabilidadesIteracoes):
             return False
         bloco: BlocoInviabilidadesIteracoes = o
-        return self._dados.equals(bloco._dados)
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
 
     # Override
-    def le(self, arq: IO):
+    def read(self, arq: IO):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
             df["Iteração"] = iteracoes
@@ -41,14 +57,9 @@ class BlocoInviabilidadesIteracoes(Bloco):
             df["Unidade"] = unidades
             return df
 
-        # Salta uma linha
-        arq.readline()
-        reg_iter = RegistroIn(9)
-        reg_fwdbwd = RegistroIn(14)
-        reg_estagio = RegistroIn(8)
-        reg_cenario = RegistroIn(8)
-        reg_restricao = RegistroAn(51)
-        reg_violacao = RegistroAn(22)
+        # Salta linhas de cabeçalho
+        for _ in range(4):
+            arq.readline()
         iteracoes: List[int] = []
         fwds_bwds: List[int] = []
         estagios: List[int] = []
@@ -60,48 +71,56 @@ class BlocoInviabilidadesIteracoes(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if len(linha.strip()) < 5:
-                self._dados = converte_tabela_em_df()
+                self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
-            iteracoes.append(reg_iter.le_registro(linha, 4))
-            fwds_bwds.append(reg_fwdbwd.le_registro(linha, 14))
-            estagios.append(reg_estagio.le_registro(linha, 29))
-            cenarios.append(reg_cenario.le_registro(linha, 38))
-            restricoes.append(reg_restricao.le_registro(linha, 47))
-            viol = reg_violacao.le_registro(linha, 99)
-            violacao = float(viol.strip().split(" ")[0])
-            unidade = viol.strip().split(" ")[1]
-            violacoes.append(violacao)
-            unidades.append(unidade)
-
-    # Override
-    def escreve(self, arq: IO):
-        pass
+            dados = self.__linha.read(linha)
+            iteracoes.append(dados[0])
+            fwds_bwds.append(dados[1])
+            estagios.append(dados[2])
+            cenarios.append(dados[3])
+            restricoes.append(dados[4])
+            violacoes.append(dados[5])
+            unidades.append(dados[6])
 
 
-class BlocoInviabilidadesSimFinal(Bloco):
+class BlocoInviabilidadesSimFinal(Block):
     """
     Bloco com as informações das inviabilidades visitadas
     pelo DECOMP durante a simulação final.
     """
 
-    str_inicio = "    ESTAGIO  CENARIO         RESTRICAO"
-    str_fim = ""
+    BEGIN_PATTERN = "SIMULACAO FINAL:"
+    END_PATTERN = ""
 
-    def __init__(self):
+    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
+        super().__init__(state, previous, next, data)
+        self.__linha = Line(
+            [
+                IntegerField(8, 4),
+                IntegerField(8, 13),
+                LiteralField(76, 22),
+                FloatField(16, 99, 8),
+                LiteralField(5, 116),
+            ]
+        )
 
-        super().__init__(BlocoInviabilidadesSimFinal.str_inicio, "", True)
-
-        self._dados: pd.DataFrame = pd.DataFrame()
-
-    def __eq__(self, o: object):
+    def __eq__(self, o: object) -> bool:
         if not isinstance(o, BlocoInviabilidadesSimFinal):
             return False
         bloco: BlocoInviabilidadesSimFinal = o
-        return self._dados.equals(bloco._dados)
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
 
     # Override
-    def le(self, arq: IO):
+    def read(self, arq: IO):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
             df["Estágio"] = estagios
@@ -111,12 +130,10 @@ class BlocoInviabilidadesSimFinal(Bloco):
             df["Unidade"] = unidades
             return df
 
-        # Salta uma linha
-        arq.readline()
-        reg_estagio = RegistroIn(8)
-        reg_cenario = RegistroIn(8)
-        reg_restricao = RegistroAn(76)
-        reg_violacao = RegistroAn(22)
+        # Salta linhas de cabeçalho
+        for _ in range(4):
+            arq.readline()
+
         estagios: List[int] = []
         cenarios: List[int] = []
         restricoes: List[str] = []
@@ -126,44 +143,12 @@ class BlocoInviabilidadesSimFinal(Bloco):
             # Confere se a leitura não acabou
             linha = arq.readline()
             if len(linha.strip()) < 5:
-                self._dados = converte_tabela_em_df()
+                self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
-            estagios.append(reg_estagio.le_registro(linha, 4))
-            cenarios.append(reg_cenario.le_registro(linha, 13))
-            restricoes.append(reg_restricao.le_registro(linha, 22))
-            viol = reg_violacao.le_registro(linha, 99)
-            violacao = float(viol.strip().split(" ")[0])
-            unidade = viol.strip().split(" ")[1]
-            violacoes.append(violacao)
-            unidades.append(unidade)
-
-    # Override
-    def escreve(self, arq: IO):
-        pass
-
-
-class LeituraInviabUnic(LeituraBlocos):
-    """
-    Realiza a leitura do arquivo inviab_unic.rvx
-    existente em um diretório de saídas do DECOMP.
-
-    Esta classe contém o conjunto de utilidades para ler
-    e interpretar os campos de um arquivo inviab_unic.rvx, construindo
-    um objeto `InviabUnic` cujas informações são as mesmas do sumario.rvx.
-
-    Este objeto existe para retirar do modelo de dados a complexidade
-    de iterar pelas linhas do arquivo, recortar colunas, converter
-    tipos de dados, dentre outras tarefas necessárias para a leitura.
-
-    """
-
-    def __init__(self, diretorio: str):
-        super().__init__(diretorio)
-
-    # Override
-    def _cria_blocos_leitura(self) -> List[Bloco]:
-        """
-        Cria a lista de blocos a serem lidos no arquivo inviab_unic.rvx.
-        """
-        return [BlocoInviabilidadesIteracoes(), BlocoInviabilidadesSimFinal()]
+            dados = self.__linha.read(linha)
+            estagios.append(dados[0])
+            cenarios.append(dados[1])
+            restricoes.append(dados[2])
+            violacoes.append(dados[3])
+            unidades.append(dados[4])

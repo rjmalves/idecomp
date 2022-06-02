@@ -109,7 +109,7 @@ class DadGNL(RegisterFile):
         """
         return self.__obtem_registro_com_codigo(NL, codigo)
 
-    def gl(self, codigo: int, estagio: int) -> GL:
+    def gl(self, codigo: int, estagio: int) -> Optional[GL]:
         """
         Obtém um registro que define o despacho por patamar
         e a duração dos patamares para uma UTE GNL.

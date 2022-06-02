@@ -1,56 +1,58 @@
-from idecomp._utils.bloco import Bloco
 from idecomp.decomp.modelos.inviabunic import BlocoInviabilidadesIteracoes
 from idecomp.decomp.modelos.inviabunic import BlocoInviabilidadesSimFinal
-from idecomp.decomp.modelos.inviabunic import LeituraInviabUnic
-from idecomp._utils.arquivo import ArquivoBlocos
-from idecomp._utils.dadosarquivo import DadosArquivoBlocos
-from typing import Type
+
+from cfinterface.files.blockfile import BlockFile
+from typing import Type, TypeVar, Optional
 import pandas as pd  # type: ignore
 
 
-class InviabUnic(ArquivoBlocos):
+class InviabUnic(BlockFile):
     """
     Armazena os dados de saída do DECOMP referentes às inviabilidades
     ocorridas durante o processo de execução.
 
     Esta classe lida com as informações de saída fornecidas pelo
     DECOMP e reproduzidas no `inviab_unic.rvx`.
-
     """
 
-    def __init__(self, dados: DadosArquivoBlocos) -> None:
-        super().__init__(dados)
+    T = TypeVar("T")
 
-    # Override
+    BLOCKS = [
+        BlocoInviabilidadesIteracoes,
+        BlocoInviabilidadesSimFinal,
+    ]
+
+    def __init__(self, data=...) -> None:
+        super().__init__(data)
+
     @classmethod
     def le_arquivo(
         cls, diretorio: str, nome_arquivo="inviab_unic.rv0"
     ) -> "InviabUnic":
-        """
-        Realiza a leitura de um arquivo "inviab_unic.rvx" existente em
-        um diretório.
+        return cls.read(diretorio, nome_arquivo)
 
-        :param diretorio: O caminho relativo ou completo para o diretório
-            onde se encontra o arquivo
-        :type diretorio: str
-        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
-            especificando a revisão. Tem como valor default "inviab_unic.rv0"
-        :type nome_arquivo: str, optional
-        :return: Um objeto :class:`InviabUnic` com informações do arquivo lido
+    def __bloco_por_tipo(self, bloco: Type[T], indice: int) -> Optional[T]:
         """
-        leitor = LeituraInviabUnic(diretorio)
-        r = leitor.le_arquivo(nome_arquivo)
-        return cls(r)
+        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
 
-    def __obtem_bloco(self, tipo: Type[Bloco]) -> Bloco:
-        """ """
-        for b in self._blocos:
-            if isinstance(b, tipo):
-                return b
-        raise ValueError(f"Não foi encontrado um bloco do tipo {tipo}")
+        :param bloco: Um tipo de bloco para ser lido
+        :type bloco: T
+        :param indice: O índice do bloco a ser acessado, dentre os do tipo
+        :type indice: int
+        :return: O gerador de blocos, se houver
+        :rtype: Optional[Generator[T], None, None]
+        """
+        try:
+            return next(
+                b.data
+                for i, b in enumerate(self.data.of_type(bloco))
+                if i == indice
+            )
+        except StopIteration:
+            return None
 
     @property
-    def inviabilidades_iteracoes(self) -> pd.DataFrame:
+    def inviabilidades_iteracoes(self) -> Optional[pd.DataFrame]:
         """
         Tabela das inviabilidades visitadas pelo modelo durante
         as iterações. As colunas são:
@@ -65,13 +67,12 @@ class InviabUnic(ArquivoBlocos):
 
         :return: Tabela das inviabilidades no mesmo formato do
             arquivo `inviab_unic.rvX`.
-        :rtype: pd.DataFrame
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoInviabilidadesIteracoes)
-        return b.dados
+        return self.__bloco_por_tipo(BlocoInviabilidadesIteracoes, 0)
 
     @property
-    def inviabilidades_simulacao_final(self) -> pd.DataFrame:
+    def inviabilidades_simulacao_final(self) -> Optional[pd.DataFrame]:
         """
         Tabela das inviabilidades visitadas pelo modelo durante
         a simulação final. As colunas são:
@@ -86,5 +87,4 @@ class InviabUnic(ArquivoBlocos):
             arquivo `inviab_unic.rvX`.
         :rtype: pd.DataFrame
         """
-        b = self.__obtem_bloco(BlocoInviabilidadesSimFinal)
-        return b.dados
+        return self.__bloco_por_tipo(BlocoInviabilidadesSimFinal, 0)

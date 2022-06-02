@@ -124,3 +124,61 @@ def test_registro_gl_dadgnl():
     assert r.duracoes == [48, 32, 88]
     r.duracoes = [0, 0, 0]
     assert r.duracoes == [0, 0, 0]
+    assert r.data_inicio == "29052021"
+    r.data_inicio = ""
+    assert r.data_inicio == ""
+
+
+def test_campos_nao_encontrados_dadgnl():
+    m: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m):
+        d = DadGNL.le_arquivo("", "")
+    assert d.tg(0, 0) is None
+    assert d.gs(0) is None
+    assert d.nl(0) is None
+    assert d.gl(0, 0) is None
+
+
+def test_campos_encontrados_dadgnl():
+    m: MagicMock = mock_open(read_data="".join(MockDadGNL))
+    with patch("builtins.open", m):
+        d = DadGNL.le_arquivo("", "")
+    assert d.tg(86, 1) is not None
+    assert d.gs(1) is not None
+    assert d.nl(86) is not None
+    assert d.gl(86, 1) is not None
+
+
+def test_eq_dadgnl():
+    m: MagicMock = mock_open(read_data="".join(MockDadGNL))
+    with patch("builtins.open", m):
+        d1 = DadGNL.le_arquivo("")
+        d2 = DadGNL.le_arquivo("")
+        assert d1 == d2
+
+
+def test_neq_dadgnl():
+    m: MagicMock = mock_open(read_data="".join(MockDadGNL))
+    with patch("builtins.open", m):
+        d1 = DadGNL.le_arquivo("")
+        d2 = DadGNL.le_arquivo("")
+        d2.gs(1).semanas = 0
+        assert d1 != d2
+
+
+def test_leitura_escrita_dadgnl():
+    m_leitura: MagicMock = mock_open(read_data="".join(MockDadGNL))
+    with patch("builtins.open", m_leitura):
+        d1 = DadGNL.le_arquivo("")
+    m_escrita: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m_escrita):
+        d1.escreve_arquivo("", "")
+        # Recupera o que foi escrito
+        chamadas = m_escrita.mock_calls
+        linhas_escritas = [
+            chamadas[i].args[0] for i in range(3, len(chamadas) - 1)
+        ]
+    m_releitura: MagicMock = mock_open(read_data="".join(linhas_escritas))
+    with patch("builtins.open", m_releitura):
+        d2 = DadGNL.le_arquivo("")
+        assert d1 == d2

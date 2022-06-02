@@ -25,14 +25,14 @@ class TG(Register):
             IntegerField(2, 9),
             LiteralField(10, 14),
             IntegerField(2, 24),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
+            FloatField(5, 29, 1),
+            FloatField(5, 34, 1),
             FloatField(10, 39, 2),
-            FloatField(5, 49, 0),
-            FloatField(5, 54, 0),
+            FloatField(5, 49, 1),
+            FloatField(5, 54, 1),
             FloatField(10, 59, 2),
-            FloatField(5, 69, 0),
-            FloatField(5, 74, 0),
+            FloatField(5, 69, 1),
+            FloatField(5, 74, 1),
             FloatField(10, 79, 2),
         ]
     )
@@ -285,6 +285,10 @@ class GL(Register):
         """
         return self.data[0]
 
+    @codigo.setter
+    def codigo(self, c: int):
+        self.data[0] = c
+
     @property
     def subsistema(self) -> Optional[int]:
         """
@@ -332,7 +336,7 @@ class GL(Register):
                 "Número de gerações incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self.data[3:8:2] = gers
+        self.data[3:9:2] = gers
 
     @property
     def duracoes(self) -> List[float]:
@@ -342,7 +346,7 @@ class GL(Register):
 
         :return: As durações como `list[float]`
         """
-        return [v for v in self.data[4:7:2] if v is not None]
+        return [v for v in self.data[4:9:2] if v is not None]
 
     @duracoes.setter
     def duracoes(self, durs: List[float]):
@@ -353,10 +357,10 @@ class GL(Register):
                 "Número de durações incompatível. De"
                 + f"vem ser fornecidos {atuais}, mas foram {novos}"
             )
-        self.data[4:7:2] = durs
+        self.data[4:9:2] = durs
 
     @property
-    def data(self) -> Optional[str]:
+    def data_inicio(self) -> Optional[str]:
         """
         A data de despacho da UTE
 
@@ -365,6 +369,6 @@ class GL(Register):
         """
         return self.data[9]
 
-    @data.setter
-    def data(self, d: str):
+    @data_inicio.setter
+    def data_inicio(self, d: str):
         self.data[9] = d
