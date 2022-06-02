@@ -1,72 +1,69 @@
 # Imports do próprio módulo
-from idecomp.config import MAX_ESTAGIOS, MAX_SUBSISTEMAS, MAX_REES
+from idecomp.config import (
+    MAX_ESTAGIOS,
+    MAX_PATAMARES,
+    MAX_SUBSISTEMAS,
+    MAX_REES,
+)
 from idecomp.config import SUBSISTEMAS
 from idecomp._utils.bloco import Bloco
 from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
 from idecomp._utils.leiturablocos import LeituraBlocos
 
 # Imports de módulos externos
+from cfinterface.components.block import Block
+from cfinterface.components.line import Line
+from cfinterface.components.field import Field
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.literalfield import LiteralField
+from cfinterface.components.floatfield import FloatField
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
 from typing import IO, List
 
 
-# TODO - LER BLOCO DE ENA PREVISTA SEMANAL POR REE
-# TODO - LER BLOCO DE ENA PASSADA POR REE
-
-
-class BlocoDadosGeraisRelato(Bloco):
-    """
-    Bloco com as informações de eco dos dados gerais
-    utilizados na execução do caso.
-    """
-
-    str_inicio = "Relatorio  dos  Dados  Gerais"
-    str_fim = ""
-
-    def __init__(self):
-
-        super().__init__(BlocoDadosGeraisRelato.str_inicio, "", True)
-
-        self._dados: pd.DataFrame = pd.DataFrame()
-
-    def __eq__(self, o: object):
-        if not isinstance(o, BlocoDadosGeraisRelato):
-            return False
-        bloco: BlocoDadosGeraisRelato = o
-        return self._dados.equals(bloco._dados)
-
-    # Override
-    def le(self, arq: IO):
-        pass
-
-    # Override
-    def escreve(self, arq: IO):
-        pass
-
-
-class BlocoConvergenciaRelato(Bloco):
+class BlocoConvergenciaRelato(Block):
     """
     Bloco com as informações de convergência do DECOMP no relato.rvX.
     """
 
-    str_inicio = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
-    str_fim = ""
+    BEGIN_PATTERN = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
+    END_PATTERN = ""
 
-    def __init__(self):
+    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
+        super().__init__(state, previous, next, data)
+        self.__line = Line(
+            [
+                IntegerField(4, 4),
+                FloatField(12, 9, 1),
+                FloatField(12, 22, 1),
+                FloatField(16, 35, 7),
+                LiteralField(8, 52),
+                FloatField(61),
+                FloatField(72),
+                IntegerField(85),
+                FloatField(93),
+                FloatField(106),
+                FloatField(119),
+            ]
+        )
 
-        super().__init__(BlocoConvergenciaRelato.str_inicio, "", True)
-
-        self._dados: pd.DataFrame = pd.DataFrame()
-
-    def __eq__(self, o: object):
+    def __eq__(self, o: object) -> bool:
         if not isinstance(o, BlocoConvergenciaRelato):
             return False
         bloco: BlocoConvergenciaRelato = o
-        return self._dados.equals(bloco._dados)
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
 
     # Override
-    def le(self, arq: IO):
+    def read(self, arq: IO):
         def converte_tabela_em_df() -> pd.DataFrame:
             colunas = [
                 "Iteração",
@@ -102,14 +99,6 @@ class BlocoConvergenciaRelato(Bloco):
         for _ in range(9):
             arq.readline()
 
-        reg_iter = RegistroIn(4)
-        reg_z = RegistroFn(12)
-        reg_gap = RegistroFn(16)
-        reg_tempo = RegistroAn(8)
-        reg_def_demanda = RegistroFn(10)
-        reg_def_niv_seg = RegistroFn(12)
-        reg_num_inviab = RegistroIn(7)
-        reg_tot_inviab = RegistroFn(12)
         tabela = np.zeros((999, 11))
         i = 0
         while True:
@@ -121,58 +110,64 @@ class BlocoConvergenciaRelato(Bloco):
                 break
             if "----" in linha:
                 continue
+            dados = self.__line.read(linha)
             # Senão, lê mais uma linha
-            tabela[i, 0] = reg_iter.le_registro(linha, 4)
-            if "*" in linha[9:21]:
-                tabela[i, 1] = np.nan
-            else:
-                tabela[i, 1] = reg_z.le_registro(linha, 9)
-            if "*" in linha[22:34]:
-                tabela[i, 2] = np.nan
-            else:
-                tabela[i, 2] = reg_z.le_registro(linha, 22)
-            tabela[i, 3] = reg_gap.le_registro(linha, 35)
-            tempo = reg_tempo.le_registro(linha, 52)
-            parcelas = tempo.split(":")
+            tabela[i, 0:4] = dados[0:4]
+            parcelas = dados[4].split(":")
             segundos = (
                 int(parcelas[0]) * 3600
                 + int(parcelas[1]) * 60
                 + int(parcelas[2])
             )
             tabela[i, 4] = segundos
-            tabela[i, 5] = reg_def_demanda.le_registro(linha, 61)
-            if str(linha[72:85]).isnumeric():
-                tabela[i, 6] = reg_def_niv_seg.le_registro(linha, 72)
-            else:
-                tabela[i, 6] = np.nan
-            tabela[i, 7] = reg_num_inviab.le_registro(linha, 85)
-            tabela[i, 8] = reg_tot_inviab.le_registro(linha, 93)
-            tabela[i, 9] = reg_tot_inviab.le_registro(linha, 106)
-            tabela[i, 10] = reg_tot_inviab.le_registro(linha, 119)
+            tabela[i, 5:11] = dados[5:11]
             i += 1
 
-    # Override
-    def escreve(self, arq: IO):
-        pass
 
-
-class BlocoRelatorioOperacaoUHERelato(Bloco):
+class BlocoRelatorioOperacaoUHERelato(Block):
     """ """
 
-    str_inicio = "No.       Usina       Volume (% V.U.)"
-    str_fim = "X----X-"
+    BEGIN_PATTERN = "No.       Usina       Volume (% V.U.)"
+    END_PATTERN = "X----X-"
 
-    def __init__(self):
+    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
+        super().__init__(state, previous, next, data)
+        self.__line = Line(
+            [
+                IntegerField(4, 4),
+                LiteralField(12, 9),
+                LiteralField(5, 21),
+                FloatField(5, 27, 1),
+                FloatField(5, 33, 1),
+                FloatField(5, 39, 1),
+                FloatField(7, 45, 1),
+                FloatField(6, 54, 1),
+                FloatField(8, 62, 1),
+                FloatField(8, 71, 1),
+                FloatField(7, 80, 1),
+                FloatField(7, 88, 1),
+                FloatField(7, 96, 1),
+                FloatField(7, 104, 1),
+                FloatField(7, 112, 1),
+                FloatField(7, 120, 1),
+                FloatField(7, 128, 1),
+                FloatField(7, 136, 1),
+            ]
+        )
 
-        super().__init__(BlocoRelatorioOperacaoUHERelato.str_inicio, "", True)
-
-        self._dados: pd.DataFrame = pd.DataFrame()
-
-    def __eq__(self, o: object):
+    def __eq__(self, o: object) -> bool:
         if not isinstance(o, BlocoRelatorioOperacaoUHERelato):
             return False
         bloco: BlocoRelatorioOperacaoUHERelato = o
-        return self._dados.equals(bloco._dados)
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
 
     # Override
     def le(self, arq: IO):
@@ -212,26 +207,11 @@ class BlocoRelatorioOperacaoUHERelato(Bloco):
             df = df[cols_adic + cols]
             return df
 
-        def le_se_tem_valor(digitos: int, linha: str, coluna_inicio: int):
-            coluna_fim = coluna_inicio + digitos
-            trecho = linha[coluna_inicio:coluna_fim].strip()
-            valor = None
-            if len(trecho) > 0 and "---" not in trecho:
-                reg = RegistroFn(digitos)
-                valor = reg.le_registro(linha, coluna_inicio)
-            else:
-                valor = np.nan
-            return valor
-
         # Salta duas linhas
         arq.readline()
         arq.readline()
+
         # Variáveis auxiliares
-        reg_numero = RegistroIn(4)
-        reg_usina = RegistroAn(12)
-        reg_flags = RegistroAn(4)
-        reg_volume = RegistroFn(5)
-        reg_tabela = RegistroFn(7)
         numeros: List[int] = []
         usinas: List[str] = []
         evaporacao: List[bool] = []
@@ -244,60 +224,83 @@ class BlocoRelatorioOperacaoUHERelato(Bloco):
         while True:
             linha: str = arq.readline()
             # Verifica se acabou
-            if BlocoRelatorioOperacaoUHERelato.str_fim in linha:
+            if self.ends(linha):
                 tabela = tabela[:i, :]
                 self._dados = converte_tabela_para_df()
                 break
-            numeros.append(reg_numero.le_registro(linha, 4))
-            usinas.append(reg_usina.le_registro(linha, 9))
-            flags = reg_flags.le_registro(linha, 22)
+            dados = self.__line.read(linha)
+            numeros.append(dados[0])
+            usinas.append(dados[1])
+            flags = dados[2]
             evaporacao.append("#" in flags)
             tv_afluencia.append("*" in flags)
             cota_abaixo_crista.append("@" in flags)
             def_minima_zero.append("$" in flags)
-            tem_volume = len(linha[27:33].strip()) > 0
-            if tem_volume:
-                tabela[i, :3] = reg_volume.le_linha_tabela(linha, 27, 1, 3)
-            else:
-                tabela[i, :3] = np.nan
-            tabela[i, 3] = le_se_tem_valor(7, linha, 45)
-            tabela[i, 4] = le_se_tem_valor(6, linha, 54)
-            tabela[i, 5] = le_se_tem_valor(7, linha, 63)
-            tabela[i, 6:11] = reg_tabela.le_linha_tabela(linha, 72, 5, 1)
-            tabela[i, 11] = le_se_tem_valor(7, linha, 112)
-            tabela[i, 12] = le_se_tem_valor(7, linha, 120)
-            tabela[i, 13] = le_se_tem_valor(7, linha, 128)
-            tabela[i, 14] = le_se_tem_valor(7, linha, 136)
+            tabela[i, :] = dados[3:]
             i += 1
 
-    # Override
-    def escreve(self, arq: IO):
-        pass
 
-
-class BlocoBalancoEnergeticoRelato(Bloco):
+class BlocoBalancoEnergeticoRelato(Block):
     """
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
 
-    str_inicio = "RELATORIO  DO  BALANCO  ENERGETICO"
-    str_fim = "RELATORIO  DA  OPERACAO"
+    BEGIN_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
+    END_PATTERN = "RELATORIO  DA  OPERACAO"
 
-    def __init__(self):
+    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
+        super().__init__(state, previous, next, data)
+        self.__linha_cenario = Line(
+            [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
+        )
+        self.__linha_subsistema = Line([LiteralField(3, 16)])
+        self.__linha_ear_ena = Line(
+            [FloatField(8, 13, 1), FloatField(8, 36, 1), FloatField(8, 63, 1)]
+        )
+        self.__linha_balanco = Line(
+            [
+                LiteralField(5, 4),
+                FloatField(7, 10, 1),
+                FloatField(7, 18, 1),
+                FloatField(7, 26, 1),
+                FloatField(7, 34, 1),
+                FloatField(7, 42, 1),
+                FloatField(7, 50, 1),
+                FloatField(7, 58, 1),
+                FloatField(7, 66, 1),
+                FloatField(7, 74, 1),
+                LiteralField(2, 83),
+                FloatField(8, 86, 1),
+                FloatField(7, 97, 1),
+                FloatField(7, 105, 1),
+            ]
+        )
+        # self.__linha_intercambio = Line(
+        #     [
+        #         LiteralField(2, 83),
+        #         FloatField(8, 86, 1),
+        #     ]
+        # )
 
-        super().__init__(BlocoBalancoEnergeticoRelato.str_inicio, "", True)
-
-        self._dados: pd.DataFrame = pd.DataFrame()
-
-    def __eq__(self, o: object):
+    def __eq__(self, o: object) -> bool:
         if not isinstance(o, BlocoBalancoEnergeticoRelato):
             return False
         bloco: BlocoBalancoEnergeticoRelato = o
-        return self._dados.equals(bloco._dados)
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
 
     # Override
-    def le(self, arq: IO):
+    def read(self, arq: IO):
+        # Por retrocompatibilidade só lê valores médios.
+        # TODO - Ler tudo. As linhas já estão modeladas.
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [
@@ -319,63 +322,88 @@ class BlocoBalancoEnergeticoRelato(Bloco):
             return df
 
         # Variáveis auxiliares
-        reg_tabela = RegistroFn(7)
         str_subsis = "     Subsistema"
         str_medio = "    Medio"
         subsis = "FC"
+        estagios = []
+        cenarios = []
+        probabilidades = []
         subsistemas = []
-        # Salta uma linha e extrai a semana
+        earms_iniciais_abs = []
+        earms_iniciais_per = []
+        ena_abs = []
+        earms_finais_abs = []
+        earms_finais_per = []
+        # Salta duas linhas e extrai a semana
+        arq.readline()
+        arq.readline()
+        dados = self.__linha_cenario(arq.readline())
+        estagio = dados[0]
+        cenario = dados[1]
+        probabilidade = dados[2]
         tabela = np.zeros((MAX_ESTAGIOS * MAX_SUBSISTEMAS, 11))
         i = 0
         while True:
             linha = arq.readline()
             # Verifica se acabou
-            if BlocoBalancoEnergeticoRelato.str_fim in linha:
+            if self.ends(linha):
                 tabela = tabela[:i, :]
                 self._dados = converte_tabela_para_df()
                 break
             # Senão, procura a linha que identifica o subsistema
             if str_subsis in linha:
-                subsis = linha.split(str_subsis)[1][:3].strip()
+                subsis = self.__linha_subsistema.read(linha)[0]
+                dados_ear_ena_abs = self.__linha_ear_ena.read(arq.readline())
+                dados_ear_ena_per = self.__linha_ear_ena.read(arq.readline())
+                earms_iniciais_abs.append(dados_ear_ena_abs[0])
+                earms_iniciais_per.append(dados_ear_ena_per[0])
+                ena_abs.append(dados_ear_ena_abs[1])
+                earms_finais_abs.append(dados_ear_ena_abs[2])
+                earms_finais_per.append(dados_ear_ena_per[2])
             # Se está lendo um subsistema e achou a linha de valores médios
             if subsis != "FC" and str_medio in linha:
+                estagios.append(estagio)
+                cenarios.append(cenario)
+                probabilidades.append(probabilidade)
                 subsistemas.append(subsis)
-                tabela[i, :9] = reg_tabela.le_linha_tabela(linha, 10, 1, 9)
-                # TODO - Começar a ler a interligação
-                # Para o SE, lê as gerações de Itaipu50 e Itaipu60
-                if subsis == "SE":
-                    tabela[i, 9:] = reg_tabela.le_linha_tabela(linha, 96, 1, 2)
+                dados = self.__linha_balanco.read(linha)
+                tabela[i, :] = dados[1:10] + dados[11:]
                 # Reseta o indicador de subsistema
                 subsis = "FC"
                 i += 1
 
-    # Override
-    def escreve(self, arq: IO):
-        pass
 
-
-class BlocoCMORelato(Bloco):
+class BlocoCMORelato(Block):
     """
     Bloco com as informações do CMO por estágio e por subsistema.
     """
 
-    str_inicio = "CUSTO MARGINAL DE OPERACAO  ($/MWh)"
-    str_fim = ""
+    BEEGIN_PATTERN = "CUSTO MARGINAL DE OPERACAO  ($/MWh)"
+    END_PATTERN = ""
 
-    def __init__(self):
-
-        super().__init__(BlocoCMORelato.str_inicio, "", True)
-
-        self._dados: pd.DataFrame = pd.DataFrame()
-
-    def __eq__(self, o: object):
+    def __eq__(self, o: object) -> bool:
         if not isinstance(o, BlocoCMORelato):
             return False
         bloco: BlocoCMORelato = o
-        return self._dados.equals(bloco._dados)
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
 
     # Override
-    def le(self, arq: IO):
+    def read(self, arq: IO):
+        def gera_coluna_patamares_subsistemas():
+            n_patamares = len(patamares_distintos)
+            n_subsistemas = len(subsistemas_distintos)
+            col_subsistemas: List[str] = []
+
+            pass
+
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"Estágio {s}" for s in range(1, n_semanas + 1)]
@@ -387,22 +415,25 @@ class BlocoCMORelato(Bloco):
 
         # Salta uma linha
         arq.readline()
-        # Descobre o número de semanas
-        linha = arq.readline()
-        sems = [
-            s
-            for s in linha.split(" ")
-            if (len(s) > 0 and ("Sem" in s or "Mes" in s))
+        arq.readline()
+        num_estagios = (
+            len([e for e in arq.readline().strip().split(" ") if len(e) > 0])
+            - 1
+        )
+        campo_subsis: List[Field] = [LiteralField(6, 4)]
+        campos_cmos: List[Field] = [
+            FloatField(10, 11 + i * 11, 2) for i in range(num_estagios)
         ]
-        reg_pat = RegistroAn(6)
-        reg_cmo = RegistroFn(10)
-        n_semanas = len(sems)
-        subsistemas: List[str] = []
-        patamares: List[str] = []
-        tabela = np.zeros((4 * len(SUBSISTEMAS), n_semanas))
+        self.__linha = Line(campo_subsis + campos_cmos)
+        # Descobre o número de semanas
+        subsistemas_distintos: list = []
+        patamares_distintos: list = []
+        tabela = np.zeros((MAX_SUBSISTEMAS * MAX_PATAMARES, num_estagios))
         # Salta outra linha
         arq.readline()
         i = 0
+        # TODO - refazer: ler todos os patamares antes de fazer as colunas
+        # separadas de subsistemas e patamares.
         while True:
             # Confere se a leitura não acabou
             linha = arq.readline()
@@ -410,14 +441,17 @@ class BlocoCMORelato(Bloco):
                 self._dados = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
-            # Subsistema e patamar
-            ssis = SUBSISTEMAS[int(i / 4)]
-            str_pat = reg_pat.le_registro(linha, 4)
-            pat = "Médio" if "Med" in str_pat else str_pat.split("_")[1]
-            subsistemas.append(ssis)
-            patamares.append(pat)
-            # Semanas
-            tabela[i, :] = reg_cmo.le_linha_tabela(linha, 11, 1, n_semanas)
+            dados = self.__linha.read(linha)
+
+            pat = "Médio" if "Med" in dados[0] else dados[0].split("_")[1]
+            if pat.isnumeric():
+                if pat not in subsistemas_distintos:
+                    subsistemas_distintos.append(pat)
+            else:
+                if pat not in patamares_distintos:
+                    patamares_distintos.append(pat)
+
+            tabela[i, :] = dados[1:]
             i += 1
 
     # Override
@@ -506,7 +540,9 @@ class BlocoVolumeUtilReservatorioRelato(Bloco):
 
     def __init__(self):
 
-        super().__init__(BlocoVolumeUtilReservatorioRelato.str_inicio, "", True)
+        super().__init__(
+            BlocoVolumeUtilReservatorioRelato.str_inicio, "", True
+        )
 
         self._dados: pd.DataFrame = pd.DataFrame()
 
@@ -1046,7 +1082,9 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Bloco):
             ssis = reg_ssis.le_registro(linha, 4)
             subsistemas.append(ssis)
             # Semanas
-            tabela[i, :] = reg_earm.le_linha_tabela(linha, 23, 1, n_semanas + 1)
+            tabela[i, :] = reg_earm.le_linha_tabela(
+                linha, 23, 1, n_semanas + 1
+            )
             i += 1
 
     # Override
@@ -1185,7 +1223,9 @@ class BlocoENAPreEstudoSemanalREERelato(Bloco):
 
     def __init__(self):
 
-        super().__init__(BlocoENAPreEstudoSemanalREERelato.str_inicio, "", True)
+        super().__init__(
+            BlocoENAPreEstudoSemanalREERelato.str_inicio, "", True
+        )
 
         self._dados = pd.DataFrame()
 
