@@ -1,51 +1,143 @@
-# Rotinas de testes associadas ao arquivo relato.rvx do DECOMP
+# Rotinas de testes associadas ao arquivo relgnl.rvx do DECOMP
+from idecomp.decomp.modelos.relgnl import (
+    BlocoDadosUsinasRelGNL,
+    BlocoComandosUsinasAjustesTGRelGNL,
+    BlocoComandosUsinasAjustesRERelGNL,
+    BlocoRelatorioOperacaoRelGNL,
+)
+
 from idecomp.decomp.relgnl import RelGNL
 
+from tests.mocks.mock_open import mock_open
+from unittest.mock import MagicMock, patch
 
-rel = RelGNL.le_arquivo("tests/_arquivos", "relgnl.rv0")
-
-
-def test_usinas_termicas():
-    usinas = rel.usinas_termicas
-    assert (
-        float(
-            usinas.loc[
-                (usinas["Código"] == 86) & (usinas["Estágio"] == 1),
-                "Custo GT Pat 1",
-            ]
-        )
-        == 133.15
-    )
+from tests.mocks.arquivos.relgnl import (
+    MockDadosTermicasGNL,
+    MockPossiveisAjustesRelGNL,
+    MockPossiveisAjustesRERelGNL,
+    MockRelatorioOperacao,
+    MockRelGNL,
+)
 
 
-def test_comandos_registros_tg():
-    com = rel.comandos_usinas_registros_tg
-    assert (
-        float(
-            com.loc[
-                (com["Código"] == 86) & (com["Semana"] == "28/12/2019"), "Pat 1"
-            ]
-        )
-        == 350.00
-    )
+def test_bloco_dados_termicas_relgnl():
+    m: MagicMock = mock_open(read_data="".join(MockDadosTermicasGNL))
+    b = BlocoDadosUsinasRelGNL()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+
+    assert b.data.shape[0] == 24
+    assert b.data.shape[1] == 13
+    assert b.data.iloc[0, 0] == 86
+    assert b.data.iloc[0, 1] == "SANTA CRUZ"
+    assert b.data.iloc[0, 2] == "SE"
+    assert b.data.iloc[0, 3] == 1
+    assert b.data.iloc[0, 4] == 0.00
+    assert b.data.iloc[0, 5] == 350.00
+    assert b.data.iloc[0, 6] == 133.15
+    assert b.data.iloc[0, 7] == 0.00
+    assert b.data.iloc[0, 8] == 350.00
+    assert b.data.iloc[0, 9] == 133.15
+    assert b.data.iloc[0, 10] == 0.00
+    assert b.data.iloc[0, 11] == 350.00
+    assert b.data.iloc[0, 12] == 133.15
 
 
-def test_comandos_restricoes_eletricas():
-    com = rel.comandos_usinas_restricoes_eletricas
-    assert (
-        float(com.loc[(com["Código"] == 86) & (com["Período"] == 1), "Pat 1"])
-        == 350.00
-    )
+def test_bloco_possiveis_ajustes_relgnl():
+    m: MagicMock = mock_open(read_data="".join(MockPossiveisAjustesRelGNL))
+    b = BlocoComandosUsinasAjustesTGRelGNL()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+    assert b.data.shape[0] == 27
+    assert b.data.shape[1] == 8
+    assert b.data.iloc[0, 0] == 86
+    assert b.data.iloc[0, 1] == "SANTA CRUZ"
+    assert b.data.iloc[0, 2] == 2
+    assert b.data.iloc[0, 3] == "SE"
+    assert b.data.iloc[0, 4] == "28/12/2019"
+    assert b.data.iloc[0, 5] == 350.00
+    assert b.data.iloc[0, 6] == 350.00
+    assert b.data.iloc[0, 7] == 350.00
 
 
-def test_relatorio_operacao():
-    ope = rel.relatorio_operacao_termica
-    assert (
-        float(
-            ope.loc[
-                (ope["Usina"] == "SANTA CRUZ") & (ope["Estágio"] == "MENSAL"),
-                "Custo",
-            ]
-        )
-        == 33373.8
-    )
+def test_bloco_possiveis_ajustes_re_relgnl():
+    m: MagicMock = mock_open(read_data="".join(MockPossiveisAjustesRERelGNL))
+    b = BlocoComandosUsinasAjustesRERelGNL()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+    assert b.data.shape[0] == 18
+    assert b.data.shape[1] == 8
+    assert b.data.iloc[0, 0] == 86
+    assert b.data.iloc[0, 1] == "SANTA CRUZ"
+    assert b.data.iloc[0, 2] == 2
+    assert b.data.iloc[0, 3] == "SE"
+    assert b.data.iloc[0, 4] == 1
+    assert b.data.iloc[0, 5] == 350.00
+    assert b.data.iloc[0, 6] == 350.00
+    assert b.data.iloc[0, 7] == 350.00
+
+
+def test_bloco_relatorio_operacao_relgnl():
+    m: MagicMock = mock_open(read_data="".join(MockRelatorioOperacao))
+    b = BlocoRelatorioOperacaoRelGNL()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+
+    assert b.data.shape[0] == 18
+    assert b.data.shape[1] == 15
+    assert b.data.iloc[0, 0] == 1
+    assert b.data.iloc[0, 1] == 1
+    assert b.data.iloc[0, 2] == 1.0
+    assert b.data.iloc[0, 3] == "SE"
+    assert b.data.iloc[0, 4] == "SANTA CRUZ"
+    assert b.data.iloc[0, 5] == 2
+    assert b.data.iloc[0, 6] == "Sem 10"
+    assert b.data.iloc[0, 7] == "29/02/2020"
+    assert b.data.iloc[0, 8] == 350.0
+    assert b.data.iloc[0, 9] == 34.57
+    assert b.data.iloc[0, 10] == 350.0
+    assert b.data.iloc[0, 11] == 39.86
+    assert b.data.iloc[0, 12] == 350.0
+    assert b.data.iloc[0, 13] == 71.68
+    assert b.data.iloc[0, 14] == 6674.8
+
+
+def test_atributos_encontrados_relgnl():
+    m: MagicMock = mock_open(read_data="".join(MockRelGNL))
+    with patch("builtins.open", m):
+        rel = RelGNL.le_arquivo("")
+        assert rel.usinas_termicas is not None
+        assert rel.comandos_usinas_registros_tg is not None
+        assert rel.comandos_usinas_restricoes_eletricas is not None
+        assert rel.relatorio_operacao_termica is not None
+
+
+def test_atributos_nao_encontrados_relgnl():
+    m: MagicMock = mock_open(read_data="".join(""))
+    with patch("builtins.open", m):
+        rel = RelGNL.le_arquivo("")
+        assert rel.usinas_termicas is None
+        assert rel.comandos_usinas_registros_tg is None
+        assert rel.comandos_usinas_restricoes_eletricas is None
+        assert rel.relatorio_operacao_termica is None
+
+
+# def test_eq_relgnl():
+#     m: MagicMock = mock_open(read_data="".join(MockRelGNL))
+#     with patch("builtins.open", m):
+#         rel1 = RelGNL.le_arquivo("")
+#         rel2 = RelGNL.le_arquivo("")
+#         assert rel1 == rel2
+
+
+# def test_neq_relgnl():
+#     m: MagicMock = mock_open(read_data="".join(MockRelGNL))
+#     with patch("builtins.open", m):
+#         rel1 = RelGNL.le_arquivo("")
+#         rel2 = RelGNL.le_arquivo("")
+#         rel1.relatorio_operacao_termica.iloc[0, 0] = 0
+#         assert rel1 != rel2

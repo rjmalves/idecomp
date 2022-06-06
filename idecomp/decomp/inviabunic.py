@@ -44,7 +44,7 @@ class InviabUnic(BlockFile):
         """
         try:
             return next(
-                b.data
+                b
                 for i, b in enumerate(self.data.of_type(bloco))
                 if i == indice
             )
@@ -69,7 +69,10 @@ class InviabUnic(BlockFile):
             arquivo `inviab_unic.rvX`.
         :rtype: Optional[pd.DataFrame]
         """
-        return self.__bloco_por_tipo(BlocoInviabilidadesIteracoes, 0)
+        b = self.__bloco_por_tipo(BlocoInviabilidadesIteracoes, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
     def inviabilidades_simulacao_final(self) -> Optional[pd.DataFrame]:
@@ -87,4 +90,7 @@ class InviabUnic(BlockFile):
             arquivo `inviab_unic.rvX`.
         :rtype: pd.DataFrame
         """
-        return self.__bloco_por_tipo(BlocoInviabilidadesSimFinal, 0)
+        b = self.__bloco_por_tipo(BlocoInviabilidadesSimFinal, 0)
+        if b is not None:
+            return b.data
+        return None

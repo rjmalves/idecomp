@@ -4,12 +4,7 @@ from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
 
-from typing import IO, List, Optional
-
-from idecomp._utils.utils import formata_numero
-from idecomp._utils.registros import RegistroAn, RegistroFn, RegistroIn
-from idecomp._utils.registrodecomp import RegistroDecomp
-from idecomp._utils.leituraregistros import LeituraRegistros
+from typing import List, Optional
 
 
 class TG(Register):

@@ -1,6 +1,3 @@
-from idecomp._utils.bloco import Bloco
-
-# from idecomp.decomp.modelos.relato import BlocoDadosGeraisRelato
 from idecomp.decomp.modelos.relato import BlocoConvergenciaRelato
 from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
 from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
@@ -24,14 +21,14 @@ from idecomp.decomp.modelos.relato import (
     BlocoENAPreEstudoSemanalSubsistemaRelato,
 )  # noqa
 from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
-from idecomp.decomp.modelos.relato import LeituraRelato
-from idecomp._utils.arquivo import ArquivoBlocos
-from idecomp._utils.dadosarquivo import DadosArquivoBlocos
-from typing import Type, List
+
+from cfinterface.components.block import Block
+from cfinterface.files.blockfile import BlockFile
+from typing import Type, List, TypeVar, Optional
 import pandas as pd  # type: ignore
 
 
-class Relato(ArquivoBlocos):
+class Relato(BlockFile):
     """
     Armazena os dados de saída do DECOMP referentes ao
     acompanhamento do programa.
@@ -42,276 +39,360 @@ class Relato(ArquivoBlocos):
 
     """
 
-    def __init__(self, dados: DadosArquivoBlocos) -> None:
-        super().__init__(dados)
+    T = TypeVar("T")
 
-    # Override
+    BLOCKS = [
+        BlocoConvergenciaRelato,
+        BlocoRelatorioOperacaoUHERelato,
+        BlocoBalancoEnergeticoRelato,
+        BlocoCMORelato,
+        BlocoGeracaoTermicaSubsistemaRelato,
+        BlocoENAAcoplamentoREERelato,
+        BlocoVolumeUtilReservatorioRelato,
+        BlocoDadosTermicasRelato,
+        BlocoDisponibilidadesTermicasRelato,
+        BlocoDadosMercadoRelato,
+        BlocoEnergiaArmazenadaREERelato,
+        BlocoEnergiaArmazenadaSubsistemaRelato,
+        BlocoENAPreEstudoMensalREERelato,
+        BlocoENAPreEstudoMensalSubsistemaRelato,
+        BlocoENAPreEstudoSemanalREERelato,
+        BlocoENAPreEstudoSemanalSubsistemaRelato,
+        BlocoDiasExcluidosSemanas,
+    ]
+
+    def __init__(self, data=...) -> None:
+        super().__init__(data)
+        self.__relatorios_operacao_uhe = None
+        self.__balanco_energetico = None
+
     @classmethod
     def le_arquivo(cls, diretorio: str, nome_arquivo="relato.rv0") -> "Relato":
+        return cls.read(diretorio, nome_arquivo)
+
+    def escreve_arquivo(self, diretorio: str, nome_arquivo="relato.rv0"):
+        self.write(diretorio, nome_arquivo)
+
+    def __bloco_por_tipo(self, bloco: Type[T], indice: int) -> Optional[T]:
         """
-        Realiza a leitura de um arquivo "relato.rvx" existente em
-        um diretório.
-
-        :param diretorio: O caminho relativo ou completo para o diretório
-            onde se encontra o arquivo
-        :type diretorio: str
-        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
-            especificando a revisão. Tem como valor default "relato.rv0"
-        :type nome_arquivo: str, optional
-        :return: Um objeto :class:`Relato` com informações do arquivo lido
+        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
+        :param bloco: Um tipo de bloco para ser lido
+        :type bloco: T
+        :param indice: O índice do bloco a ser acessado, dentre os do tipo
+        :type indice: int
+        :return: O gerador de blocos, se houver
+        :rtype: Optional[Generator[T], None, None]
         """
-        leitor = LeituraRelato(diretorio)
-        r = leitor.le_arquivo(nome_arquivo)
-        return cls(r)
+        try:
+            return next(
+                b
+                for i, b in enumerate(self.data.of_type(bloco))
+                if i == indice
+            )
+        except StopIteration:
+            return None
 
-    def __obtem_bloco(self, tipo: Type[Bloco]) -> Bloco:
-        """ """
-        for b in self._blocos:
-            if isinstance(b, tipo):
-                return b
-        raise ValueError(f"Não foi encontrado um bloco do tipo {tipo}")
+    def __blocos_adicionando_coluna_estagios(
+        self, bloco: Type[T]
+    ) -> Optional[pd.DataFrame]:
+        """
+        Adiciona uma coluna com o estágio de cada bloco, assumindo
+        a mesma ordem das séries de energia.
+        :param bloco: O tipo de bloco
+        :type bloco: Type[T]
+        :return: O DataFrame com os estágios
+        :rtype: pd.DataFrame
+        """
 
-    def __obtem_blocos(self, tipo: Type[Bloco]) -> List[Bloco]:
-        """ """
-        blocos = []
-        for b in self._blocos:
-            if isinstance(b, tipo):
-                blocos.append(b)
-        if len(blocos) == 0:
-            raise ValueError(f"Não foi encontrado um bloco do tipo {tipo}")
-        return blocos
+        col_estagio: List[int] = []
+        df = None
+        for i, b in enumerate(self.data.of_type(bloco)):
+            if not isinstance(b, Block):
+                continue
+            df_estagio = b.data.copy()
+            col_estagio += [i + 1] * df_estagio.shape[0]
+            if df is None:
+                df = df_estagio
+            else:
+                df = pd.concat([df, df_estagio], ignore_index=True)
+        if df is not None:
+            cols = list(df.columns)
+            df["Estágio"] = col_estagio
+            return df[["Estágio"] + cols]
+        return None
 
     @property
-    def convergencia(self) -> pd.DataFrame:
+    def convergencia(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de convergência do DECOMP existente no
         :class:`Relato`
 
-        :return: A tabela de convergência como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoConvergenciaRelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoConvergenciaRelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def relatorio_operacao_uhe(self) -> pd.DataFrame:
+    def relatorio_operacao_uhe(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de operação de cada UHE por estágio do DECOMP
         existente no :class:`Relato`
 
-        :return: O relatório de operação como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        relatorios = self.__obtem_blocos(BlocoRelatorioOperacaoUHERelato)
-        relat_final = None
-        for i, r in enumerate(relatorios):
-            df_r: pd.DataFrame = r.dados.copy()
-            cols_sem_estagio = list(df_r.columns)
-            df_r["Estágio"] = i + 1
-            df_r = df_r[["Estágio"] + cols_sem_estagio]
-            if relat_final is None:
-                relat_final = df_r
-            else:
-                relat_final = pd.concat([relat_final, df_r], ignore_index=True)
-        return relat_final
+        if self.__relatorios_operacao_uhe is None:
+            self.__relatorios_operacao_uhe = (
+                self.__blocos_adicionando_coluna_estagios(
+                    BlocoRelatorioOperacaoUHERelato
+                )
+            )
+        return self.__relatorios_operacao_uhe
 
     @property
-    def balanco_energetico(self) -> pd.DataFrame:
+    def balanco_energetico(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de balanço energético entre os patamares para
         cada estágio do DECOMP existente no :class:`Relato`
 
-        :return: O relatório de balanço energético como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        balancos = self.__obtem_blocos(BlocoBalancoEnergeticoRelato)
-        balanc_final = None
-        for i, r in enumerate(balancos):
-            df_r: pd.DataFrame = r.dados.copy()
-            cols_sem_estagio = list(df_r.columns)
-            df_r["Estágio"] = i + 1
-            df_r = df_r[["Estágio"] + cols_sem_estagio]
-            if balanc_final is None:
-                balanc_final = df_r
-            else:
-                balanc_final = pd.concat(
-                    [balanc_final, df_r], ignore_index=True
+        if self.__balanco_energetico is None:
+            self.__balanco_energetico = (
+                self.__blocos_adicionando_coluna_estagios(
+                    BlocoBalancoEnergeticoRelato
                 )
-        return balanc_final
+            )
+        return self.__balanco_energetico
 
     @property
-    def cmo_medio_subsistema(self) -> pd.DataFrame:
+    def cmo_medio_subsistema(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de CMO existente no :class:`Relato`
 
-        :return: A tabela de CMO como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoCMORelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoCMORelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def geracao_termica_subsistema(self) -> pd.DataFrame:
+    def geracao_termica_subsistema(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de Geração Térmica existente no :class:`Relato`
 
-        :return: A tabela de Geração Térmica como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoGeracaoTermicaSubsistemaRelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoGeracaoTermicaSubsistemaRelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def energia_armazenada_ree(self) -> pd.DataFrame:
+    def energia_armazenada_ree(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de Energia Armazenada por REE (em %)
         existente no :class:`Relato`
 
-        :return: A tabela de EARM como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoEnergiaArmazenadaREERelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaREERelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def energia_armazenada_subsistema(self) -> pd.DataFrame:
+    def energia_armazenada_subsistema(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de Energia Armazenada por Subsistema (em %)
         existente no :class:`Relato`
 
-        :return: A tabela de EARM como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoEnergiaArmazenadaSubsistemaRelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaSubsistemaRelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def volume_util_reservatorios(self) -> pd.DataFrame:
+    def volume_util_reservatorios(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de Volumes Úteis por reservatório (em %)
         existente no :class:`Relato`
 
-        :return: A tabela de volumes como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoVolumeUtilReservatorioRelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoVolumeUtilReservatorioRelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def dados_termicas(self) -> pd.DataFrame:
+    def dados_termicas(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de dados cadastrais das usinas térmicas
         existente no :class:`Relato`.
 
-        :return: A tabela de dados como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoDadosTermicasRelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoDadosTermicasRelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def disponibilidades_termicas(self) -> pd.DataFrame:
+    def disponibilidades_termicas(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de disponibilidades das usinas térmicas
         existente no :class:`Relato`.
 
-        :return: A tabela de disponibilidades como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoDisponibilidadesTermicasRelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoDisponibilidadesTermicasRelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def dados_mercado(self) -> pd.DataFrame:
+    def dados_mercado(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de dados do mercado de energia
         existente no :class:`Relato`.
 
-        :return: A tabela de dados como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoDadosMercadoRelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoDadosMercadoRelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def ena_acoplamento_ree(self) -> pd.DataFrame:
+    def ena_acoplamento_ree(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de ENA para acoplamento com o longo prazo
         (em MWmed) existente no :class:`Relato`
 
-        :return: A tabela de volumes como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoENAAcoplamentoREERelato)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoENAAcoplamentoREERelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
-    def ena_pre_estudo_mensal_ree(self) -> pd.DataFrame:
+    def ena_pre_estudo_mensal_ree(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de ENA Pré-Estudo Mensal por REE
         existente no :class:`Relato`
 
-        :return: A tabela de ENA como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoENAPreEstudoMensalREERelato)
-        df: pd.DataFrame = b.dados.copy()
-        df.drop(columns=["Earmax"], inplace=True)
-        return df
+        b = self.__bloco_por_tipo(BlocoENAPreEstudoMensalREERelato, 0)
+        if b is not None:
+            df: pd.DataFrame = b.data.copy()
+            df.drop(columns=["Earmax"], inplace=True)
+            return df
+        return None
 
     @property
-    def ena_pre_estudo_mensal_subsistema(self) -> pd.DataFrame:
+    def ena_pre_estudo_mensal_subsistema(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de ENA Pré-Estudo Mensal por Subsistema
         existente no :class:`Relato`
 
-        :return: A tabela de ENA como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoENAPreEstudoMensalSubsistemaRelato)
-        df: pd.DataFrame = b.dados.copy()
-        df.drop(columns=["Earmax"], inplace=True)
-        return df
+        b = self.__bloco_por_tipo(BlocoENAPreEstudoMensalSubsistemaRelato, 0)
+        if b is not None:
+            df: pd.DataFrame = b.data.copy()
+            df.drop(columns=["Earmax"], inplace=True)
+            return df
+        return None
 
     @property
-    def ena_pre_estudo_semanal_ree(self) -> pd.DataFrame:
+    def ena_pre_estudo_semanal_ree(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de ENA Pré-Estudo Semanal por REE
         existente no :class:`Relato`
 
-        :return: A tabela de ENA como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoENAPreEstudoSemanalREERelato)
-        df: pd.DataFrame = b.dados.copy()
-        df.drop(columns=["Earmax"], inplace=True)
-        return df
+        b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalREERelato, 0)
+        if b is not None:
+            df: pd.DataFrame = b.data.copy()
+            df.drop(columns=["Earmax"], inplace=True)
+            return df
+        return None
 
     @property
-    def ena_pre_estudo_semanal_subsistema(self) -> pd.DataFrame:
+    def ena_pre_estudo_semanal_subsistema(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de ENA Pré-Estudo Semanal por Subsistema
         existente no :class:`Relato`
 
-        :return: A tabela de ENA como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoENAPreEstudoSemanalSubsistemaRelato)
-        df: pd.DataFrame = b.dados.copy()
-        df.drop(columns=["Earmax"], inplace=True)
-        return df
+        b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalSubsistemaRelato, 0)
+        if b is not None:
+            df: pd.DataFrame = b.data.copy()
+            df.drop(columns=["Earmax"], inplace=True)
+            return df
+        return None
 
     @property
-    def energia_armazenada_maxima_subsistema(self) -> pd.DataFrame:
+    def energia_armazenada_maxima_subsistema(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de Energia Armazenada Máxima (EARMax) em MWmes
         por subsistema existente no :class:`Relato`
 
-        :return: A tabela de EARMax como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoENAPreEstudoSemanalSubsistemaRelato)
-        return b.dados[["Subsistema", "Earmax"]]
+        b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalSubsistemaRelato, 0)
+        if b is not None:
+            return b.data[["Subsistema", "Earmax"]]
+        return None
 
     @property
-    def dias_excluidos_semana_inicial(self) -> int:
+    def dias_excluidos_semana_inicial(self) -> Optional[int]:
         """
         Obtém o número de dias excluídos da semana inicial.
 
-        :return: O número de dias como um `int`.
+        :return: O número de dias
+        :rtype: Optional[int]
         """
-        b = self.__obtem_bloco(BlocoDiasExcluidosSemanas)
-        return b.dados[0]
+        b = self.__bloco_por_tipo(BlocoDiasExcluidosSemanas, 0)
+        if b is not None:
+            return b.data[0]
+        return None
 
     @property
-    def dias_excluidos_semana_final(self) -> int:
+    def dias_excluidos_semana_final(self) -> Optional[int]:
         """
         Obtém o número de dias excluídos da semana final.
 
-        :return: O número de dias como um `int`.
+        :return: O número de dias
+        :rtype: Optional[int]
         """
-        b = self.__obtem_bloco(BlocoDiasExcluidosSemanas)
-        return b.dados[1]
+        b = self.__bloco_por_tipo(BlocoDiasExcluidosSemanas, 0)
+        if b is not None:
+            return b.data[1]
+        return None
