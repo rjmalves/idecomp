@@ -1,76 +1,36 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="pt-BR" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.25</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/gallery-binder.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/gallery-dataframe.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/gallery-rendered-html.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.30</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/translations.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../../../index.html" class="icon icon-home"> idecomp
-          
-
-          
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Pesquisar documentos" />
@@ -78,104 +38,117 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../install.html">Instalação</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Referência</a></li>
 </ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">idecomp</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Navegação da página">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="../../index.html">Código do módulo</a> &raquo;</li>
-        
       <li>idecomp.decomp.dadger</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Código fonte para idecomp.decomp.dadger</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">LeituraDadger</span>
-<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">TE</span><span class="p">,</span> <span class="n">SB</span><span class="p">,</span> <span class="n">UH</span><span class="p">,</span> <span class="n">CT</span><span class="p">,</span> <span class="n">UE</span><span class="p">,</span> <span class="n">DP</span><span class="p">,</span> <span class="n">CD</span><span class="p">,</span> <span class="n">PQ</span>  <span class="c1"># noqa</span>
-<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">RI</span><span class="p">,</span> <span class="n">IA</span><span class="p">,</span> <span class="n">TX</span><span class="p">,</span> <span class="n">GP</span><span class="p">,</span> <span class="n">NI</span><span class="p">,</span> <span class="n">DT</span><span class="p">,</span> <span class="n">MP</span><span class="p">,</span> <span class="n">MT</span>  <span class="c1"># noqa</span>
-<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">FD</span><span class="p">,</span> <span class="n">VE</span><span class="p">,</span> <span class="n">RE</span><span class="p">,</span> <span class="n">LU</span><span class="p">,</span> <span class="n">FU</span><span class="p">,</span> <span class="n">FT</span><span class="p">,</span> <span class="n">FI</span><span class="p">,</span> <span class="n">VI</span>  <span class="c1"># noqa</span>
-<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">AC</span><span class="p">,</span> <span class="n">IR</span><span class="p">,</span> <span class="n">CI</span><span class="p">,</span> <span class="n">CE</span><span class="p">,</span> <span class="n">FC</span><span class="p">,</span> <span class="n">TI</span><span class="p">,</span> <span class="n">RQ</span><span class="p">,</span> <span class="n">EZ</span>  <span class="c1"># noqa</span>
-<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">HV</span><span class="p">,</span> <span class="n">LV</span><span class="p">,</span> <span class="n">CV</span><span class="p">,</span> <span class="n">HQ</span><span class="p">,</span> <span class="n">LQ</span><span class="p">,</span> <span class="n">CQ</span><span class="p">,</span> <span class="n">AR</span><span class="p">,</span> <span class="n">EV</span>  <span class="c1"># noqa</span>
-<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="n">FJ</span><span class="p">,</span> <span class="n">HE</span><span class="p">,</span> <span class="n">CM</span><span class="p">,</span> <span class="n">RT</span><span class="p">,</span> <span class="n">FP</span>  <span class="c1"># noqa</span>
-<span class="kn">from</span> <span class="nn">idecomp._utils.arquivo</span> <span class="kn">import</span> <span class="n">ArquivoRegistros</span>
-<span class="kn">from</span> <span class="nn">idecomp._utils.dadosarquivo</span> <span class="kn">import</span> <span class="n">DadosArquivoRegistros</span>
-<span class="kn">from</span> <span class="nn">idecomp._utils.escritaregistros</span> <span class="kn">import</span> <span class="n">EscritaRegistros</span>
+<span></span><span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadger</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">TE</span><span class="p">,</span>
+    <span class="n">SB</span><span class="p">,</span>
+    <span class="n">UH</span><span class="p">,</span>
+    <span class="n">CT</span><span class="p">,</span>
+    <span class="n">UE</span><span class="p">,</span>
+    <span class="n">DP</span><span class="p">,</span>
+    <span class="n">CD</span><span class="p">,</span>
+    <span class="n">FP</span><span class="p">,</span>
+    <span class="n">RI</span><span class="p">,</span>
+    <span class="n">IA</span><span class="p">,</span>
+    <span class="n">TX</span><span class="p">,</span>
+    <span class="n">GP</span><span class="p">,</span>
+    <span class="n">NI</span><span class="p">,</span>
+    <span class="n">DT</span><span class="p">,</span>
+    <span class="n">MP</span><span class="p">,</span>
+    <span class="n">MT</span><span class="p">,</span>
+    <span class="n">FD</span><span class="p">,</span>
+    <span class="n">VE</span><span class="p">,</span>
+    <span class="n">RE</span><span class="p">,</span>
+    <span class="n">LU</span><span class="p">,</span>
+    <span class="n">FU</span><span class="p">,</span>
+    <span class="n">FT</span><span class="p">,</span>
+    <span class="n">FI</span><span class="p">,</span>
+    <span class="n">VI</span><span class="p">,</span>
+    <span class="n">IR</span><span class="p">,</span>
+    <span class="n">CI</span><span class="p">,</span>
+    <span class="n">CE</span><span class="p">,</span>
+    <span class="n">FC</span><span class="p">,</span>
+    <span class="n">TI</span><span class="p">,</span>
+    <span class="n">RQ</span><span class="p">,</span>
+    <span class="n">EZ</span><span class="p">,</span>
+    <span class="n">RT</span><span class="p">,</span>
+    <span class="n">HV</span><span class="p">,</span>
+    <span class="n">LV</span><span class="p">,</span>
+    <span class="n">CV</span><span class="p">,</span>
+    <span class="n">HQ</span><span class="p">,</span>
+    <span class="n">LQ</span><span class="p">,</span>
+    <span class="n">CQ</span><span class="p">,</span>
+    <span class="n">AR</span><span class="p">,</span>
+    <span class="n">EV</span><span class="p">,</span>
+    <span class="n">FJ</span><span class="p">,</span>
+    <span class="n">HE</span><span class="p">,</span>
+    <span class="n">CM</span><span class="p">,</span>
+    <span class="n">ACNUMPOS</span><span class="p">,</span>
+    <span class="n">ACNUMJUS</span><span class="p">,</span>
+    <span class="n">ACDESVIO</span><span class="p">,</span>
+    <span class="n">ACVOLMIN</span><span class="p">,</span>
+    <span class="n">ACVOLMAX</span><span class="p">,</span>
+    <span class="n">ACCOTVOL</span><span class="p">,</span>
+    <span class="n">ACCOTARE</span><span class="p">,</span>
+    <span class="n">ACPROESP</span><span class="p">,</span>
+    <span class="n">ACPERHID</span><span class="p">,</span>
+    <span class="n">ACNCHAVE</span><span class="p">,</span>
+    <span class="n">ACCOTVAZ</span><span class="p">,</span>
+    <span class="n">ACCOFEVA</span><span class="p">,</span>
+    <span class="n">ACNUMCON</span><span class="p">,</span>
+    <span class="n">ACNUMMAQ</span><span class="p">,</span>
+    <span class="n">ACPOTEFE</span><span class="p">,</span>
+    <span class="n">ACALTEFE</span><span class="p">,</span>
+    <span class="n">ACVAZEFE</span><span class="p">,</span>
+    <span class="n">ACJUSMED</span><span class="p">,</span>
+    <span class="n">ACVERTJU</span><span class="p">,</span>
+    <span class="n">ACVAZMIN</span><span class="p">,</span>
+    <span class="n">ACTIPERH</span><span class="p">,</span>
+    <span class="n">ACJUSENA</span><span class="p">,</span>
+    <span class="n">ACVSVERT</span><span class="p">,</span>
+    <span class="n">ACVMDESV</span><span class="p">,</span>
+    <span class="n">ACNPOSNW</span><span class="p">,</span>
+<span class="p">)</span>
 
-<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Any</span>
+
+<span class="kn">from</span> <span class="nn">cfinterface.files.registerfile</span> <span class="kn">import</span> <span class="n">RegisterFile</span>
+<span class="kn">from</span> <span class="nn">cfinterface.components.state</span> <span class="kn">import</span> <span class="n">ComponentState</span>
+<span class="kn">from</span> <span class="nn">cfinterface.components.register</span> <span class="kn">import</span> <span class="n">Register</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span>
 
 
-<div class="viewcode-block" id="Dadger"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger">[documentos]</a><span class="k">class</span> <span class="nc">Dadger</span><span class="p">(</span><span class="n">ArquivoRegistros</span><span class="p">):</span>
+<div class="viewcode-block" id="Dadger"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger">[documentos]</a><span class="k">class</span> <span class="nc">Dadger</span><span class="p">(</span><span class="n">RegisterFile</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Armazena os dados de entrada gerais do DECOMP.</span>
 
@@ -195,91 +168,199 @@
 
     <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                 <span class="n">dados</span><span class="p">:</span> <span class="n">DadosArquivoRegistros</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">AC</span> <span class="o">=</span> <span class="n">Union</span><span class="p">[</span>
+        <span class="n">ACNUMPOS</span><span class="p">,</span>
+        <span class="n">ACNUMJUS</span><span class="p">,</span>
+        <span class="n">ACDESVIO</span><span class="p">,</span>
+        <span class="n">ACVOLMIN</span><span class="p">,</span>
+        <span class="n">ACVOLMAX</span><span class="p">,</span>
+        <span class="n">ACCOTVOL</span><span class="p">,</span>
+        <span class="n">ACCOTARE</span><span class="p">,</span>
+        <span class="n">ACPROESP</span><span class="p">,</span>
+        <span class="n">ACPERHID</span><span class="p">,</span>
+        <span class="n">ACNCHAVE</span><span class="p">,</span>
+        <span class="n">ACCOTVAZ</span><span class="p">,</span>
+        <span class="n">ACCOFEVA</span><span class="p">,</span>
+        <span class="n">ACNUMCON</span><span class="p">,</span>
+        <span class="n">ACNUMMAQ</span><span class="p">,</span>
+        <span class="n">ACPOTEFE</span><span class="p">,</span>
+        <span class="n">ACALTEFE</span><span class="p">,</span>
+        <span class="n">ACVAZEFE</span><span class="p">,</span>
+        <span class="n">ACJUSMED</span><span class="p">,</span>
+        <span class="n">ACVERTJU</span><span class="p">,</span>
+        <span class="n">ACVAZMIN</span><span class="p">,</span>
+        <span class="n">ACTIPERH</span><span class="p">,</span>
+        <span class="n">ACJUSENA</span><span class="p">,</span>
+        <span class="n">ACVSVERT</span><span class="p">,</span>
+        <span class="n">ACVMDESV</span><span class="p">,</span>
+        <span class="n">ACNPOSNW</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="n">REGISTERS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">TE</span><span class="p">,</span>
+        <span class="n">SB</span><span class="p">,</span>
+        <span class="n">UH</span><span class="p">,</span>
+        <span class="n">CT</span><span class="p">,</span>
+        <span class="n">UE</span><span class="p">,</span>
+        <span class="n">DP</span><span class="p">,</span>
+        <span class="n">CD</span><span class="p">,</span>
+        <span class="n">FP</span><span class="p">,</span>
+        <span class="n">RI</span><span class="p">,</span>
+        <span class="n">IA</span><span class="p">,</span>
+        <span class="n">TX</span><span class="p">,</span>
+        <span class="n">GP</span><span class="p">,</span>
+        <span class="n">NI</span><span class="p">,</span>
+        <span class="n">DT</span><span class="p">,</span>
+        <span class="n">MP</span><span class="p">,</span>
+        <span class="n">MT</span><span class="p">,</span>
+        <span class="n">FD</span><span class="p">,</span>
+        <span class="n">VE</span><span class="p">,</span>
+        <span class="n">RE</span><span class="p">,</span>
+        <span class="n">LU</span><span class="p">,</span>
+        <span class="n">FU</span><span class="p">,</span>
+        <span class="n">FT</span><span class="p">,</span>
+        <span class="n">FI</span><span class="p">,</span>
+        <span class="n">VI</span><span class="p">,</span>
+        <span class="n">IR</span><span class="p">,</span>
+        <span class="n">CI</span><span class="p">,</span>
+        <span class="n">CE</span><span class="p">,</span>
+        <span class="n">FC</span><span class="p">,</span>
+        <span class="n">TI</span><span class="p">,</span>
+        <span class="n">RQ</span><span class="p">,</span>
+        <span class="n">EZ</span><span class="p">,</span>
+        <span class="n">RT</span><span class="p">,</span>
+        <span class="n">HV</span><span class="p">,</span>
+        <span class="n">LV</span><span class="p">,</span>
+        <span class="n">CV</span><span class="p">,</span>
+        <span class="n">HQ</span><span class="p">,</span>
+        <span class="n">LQ</span><span class="p">,</span>
+        <span class="n">CQ</span><span class="p">,</span>
+        <span class="n">AR</span><span class="p">,</span>
+        <span class="n">EV</span><span class="p">,</span>
+        <span class="n">FJ</span><span class="p">,</span>
+        <span class="n">HE</span><span class="p">,</span>
+        <span class="n">CM</span><span class="p">,</span>
+        <span class="n">ACNUMPOS</span><span class="p">,</span>
+        <span class="n">ACNUMJUS</span><span class="p">,</span>
+        <span class="n">ACDESVIO</span><span class="p">,</span>
+        <span class="n">ACVOLMIN</span><span class="p">,</span>
+        <span class="n">ACVOLMAX</span><span class="p">,</span>
+        <span class="n">ACCOTVOL</span><span class="p">,</span>
+        <span class="n">ACCOTARE</span><span class="p">,</span>
+        <span class="n">ACPROESP</span><span class="p">,</span>
+        <span class="n">ACPERHID</span><span class="p">,</span>
+        <span class="n">ACNCHAVE</span><span class="p">,</span>
+        <span class="n">ACCOTVAZ</span><span class="p">,</span>
+        <span class="n">ACCOFEVA</span><span class="p">,</span>
+        <span class="n">ACNUMCON</span><span class="p">,</span>
+        <span class="n">ACNUMMAQ</span><span class="p">,</span>
+        <span class="n">ACPOTEFE</span><span class="p">,</span>
+        <span class="n">ACALTEFE</span><span class="p">,</span>
+        <span class="n">ACVAZEFE</span><span class="p">,</span>
+        <span class="n">ACJUSMED</span><span class="p">,</span>
+        <span class="n">ACVERTJU</span><span class="p">,</span>
+        <span class="n">ACVAZMIN</span><span class="p">,</span>
+        <span class="n">ACTIPERH</span><span class="p">,</span>
+        <span class="n">ACJUSENA</span><span class="p">,</span>
+        <span class="n">ACVSVERT</span><span class="p">,</span>
+        <span class="n">ACVMDESV</span><span class="p">,</span>
+        <span class="n">ACNPOSNW</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">le_arquivo</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;dadger.rv0&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;Dadger&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">diretorio</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;dadger.rv0&quot;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diretorio</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__registros_por_tipo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Construtor padrão</span>
+<span class="sd">        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.</span>
+<span class="sd">        :param bloco: Um tipo de bloco para ser lido</span>
+<span class="sd">        :type bloco: T</span>
+<span class="sd">        :param indice: O índice do bloco a ser acessado, dentre os do tipo</span>
+<span class="sd">        :type indice: int</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">dados</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">registro</span><span class="p">)]</span>
 
-    <span class="c1"># Override</span>
-<div class="viewcode-block" id="Dadger.le_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.le_arquivo">[documentos]</a>    <span class="nd">@classmethod</span>
-    <span class="k">def</span> <span class="nf">le_arquivo</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span>
-                   <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                   <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;dadger.rv0&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s1">&#39;Dadger&#39;</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Realiza a leitura de um arquivo &quot;dadger.rvx&quot; existente em</span>
-<span class="sd">        um diretório.</span>
+    <span class="k">def</span> <span class="nf">__obtem_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 
-<span class="sd">        :param diretorio: O caminho relativo ou completo para o diretório</span>
-<span class="sd">            onde se encontra o arquivo</span>
-<span class="sd">        :type diretorio: str</span>
-<span class="sd">        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente</span>
-<span class="sd">            especificando a revisão. Tem como valor default &quot;dadger.rv0&quot;</span>
-<span class="sd">        :type nome_arquivo: str, optional</span>
-<span class="sd">        :return: Um objeto :class:`Dadger` com informações do arquivo lido</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">leitor</span> <span class="o">=</span> <span class="n">LeituraDadger</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="n">leitor</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="n">nome_arquivo</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="n">r</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Dadger.escreve_arquivo"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.escreve_arquivo">[documentos]</a>    <span class="k">def</span> <span class="nf">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                        <span class="n">diretorio</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-                        <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;dadger.rv0&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Realiza a escrita de um arquivo com as informações do</span>
-<span class="sd">        objeto :class:`Dadger`</span>
-
-<span class="sd">        :param diretorio: O caminho relativo ou completo para o diretório</span>
-<span class="sd">            onde será escrito o arquivo.</span>
-<span class="sd">        :type diretorio: str</span>
-<span class="sd">        :param nome_arquivo: Nome do arquivo a ser escrito.Tem como valor</span>
-<span class="sd">            default &quot;dadger.rv0&quot;</span>
-<span class="sd">        :type nome_arquivo: str, optional</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">escritor</span> <span class="o">=</span> <span class="n">EscritaRegistros</span><span class="p">(</span><span class="n">diretorio</span><span class="p">)</span>
-        <span class="n">escritor</span><span class="o">.</span><span class="n">escreve_arquivo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_dados</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span></div>
-
-    <span class="k">def</span> <span class="nf">__obtem_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                         <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">tipo</span><span class="p">):</span>
-                <span class="k">return</span> <span class="n">b</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Não foi encontrado um registro do tipo </span><span class="si">{</span><span class="n">tipo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__obtem_registro_do_estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                                    <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
-                                    <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-                                    <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">__obtem_registro_com_codigo</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">,</span>
-                    <span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
         <span class="k">return</span> <span class="kc">None</span>
 
-    <span class="k">def</span> <span class="nf">__obtem_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-                          <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="n">registros</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">tipo</span><span class="p">):</span>
-                <span class="n">registros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">registros</span>
+    <span class="k">def</span> <span class="nf">__obtem_registro_do_estagio</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="n">r</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__obtem_registro_do_subsistema</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">==</span> <span class="n">subsistema</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="n">r</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__obtem_registro_do_estagio_para_subsistema</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">==</span> <span class="n">subsistema</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="n">r</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__obtem_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Dadger.cria_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.cria_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anterior</span><span class="p">:</span> <span class="n">Register</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adiciona um registro ao arquivo após um outro registro previamente</span>
+<span class="sd">        existente.</span>
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_after</span><span class="p">(</span><span class="n">anterior</span><span class="p">,</span> <span class="n">registro</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.deleta_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.deleta_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">deleta_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove um registro existente no arquivo.</span>
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">registro</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">te</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TE</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">te</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TE</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém o (único) registro que define o nome do estudo no</span>
 <span class="sd">        :class:`Dadger`</span>
 
 <span class="sd">        :return: Um registro do tipo :class:`TE`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">TE</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">r</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">TE</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Dadger.sb"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.sb">[documentos]</a>    <span class="k">def</span> <span class="nf">sb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SB</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.sb"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.sb">[documentos]</a>    <span class="k">def</span> <span class="nf">sb</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">SB</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define os subsistemas existentes</span>
 <span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
@@ -289,14 +370,9 @@
 <span class="sd">        :type codigo: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`SB`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">SB</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">SB</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro SB&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para o código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_com_codigo</span><span class="p">(</span><span class="n">SB</span><span class="p">,</span> <span class="n">codigo</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Dadger.uh"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.uh">[documentos]</a>    <span class="k">def</span> <span class="nf">uh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">UH</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.uh"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.uh">[documentos]</a>    <span class="k">def</span> <span class="nf">uh</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">UH</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define uma usina hidrelétrica existente</span>
 <span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
@@ -306,14 +382,9 @@
 <span class="sd">        :type codigo: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`UH`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">UH</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">UH</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro UH&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_com_codigo</span><span class="p">(</span><span class="n">UH</span><span class="p">,</span> <span class="n">codigo</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Dadger.ct"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ct">[documentos]</a>    <span class="k">def</span> <span class="nf">ct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CT</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ct"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ct">[documentos]</a>    <span class="k">def</span> <span class="nf">ct</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CT</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define uma usina termelétrica existente</span>
 <span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
@@ -325,16 +396,9 @@
 <span class="sd">        :type estagio: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`CT`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CT</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">CT</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">,</span>
-                    <span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">]):</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro CT&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UTE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2"> no estágio&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">CT</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Dadger.dp"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.dp">[documentos]</a>    <span class="k">def</span> <span class="nf">dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DP</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.dp"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.dp">[documentos]</a>    <span class="k">def</span> <span class="nf">dp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DP</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define as durações dos patamares</span>
 <span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
@@ -347,22 +411,18 @@
 <span class="sd">        :type subsistema: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`DP`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">DP</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">DP</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">,</span>
-                    <span class="n">r</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">==</span> <span class="n">subsistema</span><span class="p">]):</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro DP&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para o subsistema </span><span class="si">{</span><span class="n">subsistema</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; no estágio </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio_para_subsistema</span><span class="p">(</span>
+            <span class="n">DP</span><span class="p">,</span> <span class="n">estagio</span><span class="p">,</span> <span class="n">subsistema</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="Dadger.ac"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ac">[documentos]</a>    <span class="k">def</span> <span class="nf">ac</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
-           <span class="n">uhe</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
-           <span class="n">modificacao</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-           <span class="n">mes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-           <span class="n">semana</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-           <span class="n">ano</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span>
-           <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">AC</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ac"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ac">[documentos]</a>    <span class="k">def</span> <span class="nf">ac</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">uhe</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">modificacao</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">mes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">semana</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ano</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AC</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define modificações nos parâmetros</span>
 <span class="sd">        das UHE em um :class:`Dadger`.</span>
@@ -374,9 +434,10 @@
 <span class="sd">        :return: Um registro do tipo :class:`AC`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">__atende</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">AC</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-            <span class="n">condicoes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">uhe</span> <span class="o">==</span> <span class="n">uhe</span><span class="p">,</span>
-                                     <span class="n">r</span><span class="o">.</span><span class="n">modificacao</span> <span class="o">==</span> <span class="n">modificacao</span><span class="p">]</span>
+        <span class="k">def</span> <span class="nf">__atende</span><span class="p">(</span><span class="n">r</span><span class="p">:</span> <span class="n">Dadger</span><span class="o">.</span><span class="n">AC</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="n">condicoes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">r</span><span class="o">.</span><span class="n">uhe</span> <span class="o">==</span> <span class="n">uhe</span><span class="p">,</span>
+            <span class="p">]</span>
             <span class="k">if</span> <span class="n">mes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="n">condicoes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">mes</span> <span class="o">==</span> <span class="n">mes</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">semana</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -385,15 +446,13 @@
                 <span class="n">condicoes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">ano</span> <span class="o">==</span> <span class="n">ano</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">condicoes</span><span class="p">)</span>
 
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">AC</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">AC</span><span class="p">)</span>
+        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dadger</span><span class="o">.</span><span class="n">AC</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">modificacao</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">__atende</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro AC&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">uhe</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; que modifique </span><span class="si">{</span><span class="n">modificacao</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.cd"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.cd">[documentos]</a>    <span class="k">def</span> <span class="nf">cd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero_curva</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CD</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.cd"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.cd">[documentos]</a>    <span class="k">def</span> <span class="nf">cd</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numero_curva</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">subsistema</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CD</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define as curvas de déficit</span>
 <span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
@@ -406,17 +465,16 @@
 <span class="sd">        :type subsistema: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`CD`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CD</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">CD</span><span class="p">)</span>
+        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CD</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">CD</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">numero_curva</span> <span class="o">==</span> <span class="n">numero_curva</span><span class="p">,</span>
-                    <span class="n">r</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">==</span> <span class="n">subsistema</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">numero_curva</span> <span class="o">==</span> <span class="n">numero_curva</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">subsistema</span> <span class="o">==</span> <span class="n">subsistema</span><span class="p">]</span>
+            <span class="p">):</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro CD&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para o subsistema </span><span class="si">{</span><span class="n">subsistema</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; na curva </span><span class="si">{</span><span class="n">numero_curva</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">tx</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TX</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">tx</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TX</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém o (único) registro que define a taxa de desconto</span>
 <span class="sd">        aplicada no estudo definido no :class:`Dadger`</span>
@@ -426,7 +484,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">TX</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">gp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GP</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">gp</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GP</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém o (único) registro que define o gap para convergência</span>
 <span class="sd">        considerado no estudo definido no :class:`Dadger`</span>
@@ -436,7 +494,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">GP</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">ni</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">NI</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">ni</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NI</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém o (único) registro que define o número máximo de iterações</span>
 <span class="sd">        do DECOMP no estudo definido no :class:`Dadger`</span>
@@ -446,7 +504,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">NI</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">dt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DT</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">dt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">DT</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém o (único) registro que define a data de referência do</span>
 <span class="sd">        estudo definido no :class:`Dadger`</span>
@@ -455,7 +513,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">DT</span><span class="p">)</span>
 
-<div class="viewcode-block" id="Dadger.re"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.re">[documentos]</a>    <span class="k">def</span> <span class="nf">re</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RE</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.re"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.re">[documentos]</a>    <span class="k">def</span> <span class="nf">re</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RE</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que cadastra uma restrição elétrica existente</span>
 <span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
@@ -465,14 +523,9 @@
 <span class="sd">        :type codigo: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`RE`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">RE</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">RE</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro RE&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_com_codigo</span><span class="p">(</span><span class="n">RE</span><span class="p">,</span> <span class="n">codigo</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Dadger.lu"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lu">[documentos]</a>    <span class="k">def</span> <span class="nf">lu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LU</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.lu"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lu">[documentos]</a>    <span class="k">def</span> <span class="nf">lu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LU</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica os limites inferiores e</span>
 <span class="sd">        superiores por patamar de uma restrição elétrica existente</span>
@@ -515,47 +568,43 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="n">modelo</span><span class="p">:</span> <span class="n">LU</span><span class="p">,</span>
-                          <span class="n">estagio_final</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LU</span><span class="p">:</span>
-            <span class="n">copia</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">modelo</span><span class="p">)</span>
-            <span class="n">copia</span><span class="o">.</span><span class="n">estagio</span> <span class="o">=</span> <span class="n">estagio</span>
-            <span class="c1"># Procura pelo registro do próximo estágio</span>
-            <span class="n">proximo</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">estagio</span><span class="p">,</span> <span class="n">estagio_final</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LU</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">est</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">proximo</span> <span class="o">=</span> <span class="n">r</span>
-                    <span class="k">break</span>
-            <span class="k">if</span> <span class="n">proximo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">proximo</span><span class="o">.</span><span class="n">_ordem</span> <span class="o">-</span> <span class="n">modelo</span><span class="o">.</span><span class="n">_ordem</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
-            <span class="n">copia</span><span class="o">.</span><span class="n">_ordem</span> <span class="o">+=</span> <span class="n">delta</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copia</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">copia</span>
+        <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LU</span><span class="p">]:</span>
+            <span class="n">re</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_com_codigo</span><span class="p">(</span><span class="n">RE</span><span class="p">,</span> <span class="n">codigo</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">re</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">re</span>
+            <span class="n">ei</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">estagio_inicial</span>
+            <span class="n">ef</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">estagio_final</span>
+            <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ef</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">ef</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">registro_estagio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span>
+                        <span class="n">LU</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">e</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">registro_estagio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="n">registro_estagio</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">LU</span><span class="p">):</span>
+                <span class="n">novo_registro</span> <span class="o">=</span> <span class="n">LU</span><span class="p">(</span>
+                    <span class="n">state</span><span class="o">=</span><span class="n">ComponentState</span><span class="o">.</span><span class="n">READ_SUCCESS</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">codigo</span> <span class="o">=</span> <span class="n">ultimo_registro</span><span class="o">.</span><span class="n">codigo</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">limites_inferiores</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">ultimo_registro</span><span class="o">.</span><span class="n">limites_inferiores</span>
+                <span class="p">)</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">limites_superiores</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">ultimo_registro</span><span class="o">.</span><span class="n">limites_superiores</span>
+                <span class="p">)</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">estagio</span> <span class="o">=</span> <span class="n">estagio</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_after</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">novo_registro</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">novo_registro</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-        <span class="c1"># Obtém o registro RE associado</span>
-        <span class="n">re</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">re</span><span class="p">(</span><span class="n">codigo</span><span class="p">)</span>
-        <span class="c1"># Confere se o estágio pedido está no intervalo</span>
-        <span class="c1"># do registro RE</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">estagio_inicial</span> <span class="o">&lt;=</span> <span class="n">estagio</span> <span class="o">&lt;=</span> <span class="n">re</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estágio </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2"> fora dos limites&quot;</span> <span class="o">+</span>
-                             <span class="s2">&quot; do registro RE&quot;</span><span class="p">)</span>
-        <span class="c1"># Tenta obter um registro já existente</span>
-        <span class="n">reg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LU</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">reg</span>
-        <span class="c1"># Se não conseguir, cria mais um registro, idêntico ao do</span>
-        <span class="c1"># último estágio existente, e retorna.</span>
-        <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">estagio_inicial</span><span class="p">,</span> <span class="n">estagio</span><span class="p">):</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LU</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">est</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">reg</span> <span class="o">=</span> <span class="n">r</span>
-        <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span></div>
+        <span class="n">lu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LU</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lu</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lu</span> <span class="o">=</span> <span class="n">cria_registro</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">lu</span></div>
 
-<div class="viewcode-block" id="Dadger.vi"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.vi">[documentos]</a>    <span class="k">def</span> <span class="nf">vi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uhe</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VI</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.vi"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.vi">[documentos]</a>    <span class="k">def</span> <span class="nf">vi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uhe</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">VI</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica os tempos de viagem da</span>
 <span class="sd">        água em uma UHE existente no no estudo descrito</span>
@@ -569,10 +618,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">uhe</span> <span class="o">==</span> <span class="n">uhe</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro VI&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">uhe</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.ir"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ir">[documentos]</a>    <span class="k">def</span> <span class="nf">ir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">IR</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ir"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ir">[documentos]</a>    <span class="k">def</span> <span class="nf">ir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">IR</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica os relatórios de saída</span>
 <span class="sd">        a serem produzidos pelo DECOMP após a execução do estudo</span>
@@ -587,10 +635,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">tipo</span> <span class="o">==</span> <span class="n">tipo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro IR&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com mnemônico </span><span class="si">{</span><span class="n">tipo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.rt"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.rt">[documentos]</a>    <span class="k">def</span> <span class="nf">rt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mnemonico</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RT</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.rt"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.rt">[documentos]</a>    <span class="k">def</span> <span class="nf">rt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mnemonico</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RT</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica uma retirada de restrição</span>
 <span class="sd">        de soleira de vertedouro ou canal de desvio.</span>
@@ -604,10 +651,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">restricao</span> <span class="o">==</span> <span class="n">mnemonico</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro RT&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com mnemônico </span><span class="si">{</span><span class="n">mnemonico</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.fc"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.fc">[documentos]</a>    <span class="k">def</span> <span class="nf">fc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FC</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.fc"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.fc">[documentos]</a>    <span class="k">def</span> <span class="nf">fc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FC</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica os caminhos para os</span>
 <span class="sd">        arquivos com a FCF do NEWAVE.</span>
@@ -621,10 +667,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">tipo</span> <span class="o">==</span> <span class="n">tipo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro FC&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com mnemônico </span><span class="si">{</span><span class="n">tipo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.ti"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ti">[documentos]</a>    <span class="k">def</span> <span class="nf">ti</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TI</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ti"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ti">[documentos]</a>    <span class="k">def</span> <span class="nf">ti</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TI</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica as taxas de irrigação</span>
 <span class="sd">        por posto (UHE) existente no estudo especificado no :class:`Dadger`</span>
@@ -638,10 +683,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro TI&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.fp"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.fp">[documentos]</a>    <span class="k">def</span> <span class="nf">fp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FP</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.fp"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.fp">[documentos]</a>    <span class="k">def</span> <span class="nf">fp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FP</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica as taxas de irrigação</span>
 <span class="sd">        por posto (UHE) existente no estudo especificado no :class:`Dadger`</span>
@@ -653,16 +697,13 @@
 <span class="sd">        :type estagio: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`FP`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">FP</span><span class="p">,</span>
-                                             <span class="n">codigo</span><span class="p">,</span>
-                                             <span class="n">estagio</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">FP</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">r</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado registro FP&quot;</span> <span class="o">+</span>
-                             <span class="sa">f</span><span class="s2">&quot;para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2"> no estágio </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.rq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.rq">[documentos]</a>    <span class="k">def</span> <span class="nf">rq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ree</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">RQ</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.rq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.rq">[documentos]</a>    <span class="k">def</span> <span class="nf">rq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ree</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RQ</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica as vazões mínimas históricas</span>
 <span class="sd">        por REE existentes no estudo especificado no :class:`Dadger`</span>
@@ -675,10 +716,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">ree</span> <span class="o">==</span> <span class="n">ree</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro RQ&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para o REE </span><span class="si">{</span><span class="n">ree</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.ve"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ve">[documentos]</a>    <span class="k">def</span> <span class="nf">ve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VE</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.ve"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ve">[documentos]</a>    <span class="k">def</span> <span class="nf">ve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">VE</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica os volumes de espera</span>
 <span class="sd">        por posto (UHE) existente no estudo especificado no :class:`Dadger`</span>
@@ -691,10 +731,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro VE&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para a UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.hv"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.hv">[documentos]</a>    <span class="k">def</span> <span class="nf">hv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HV</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.hv"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.hv">[documentos]</a>    <span class="k">def</span> <span class="nf">hv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HV</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que cadastra uma restrição de volume mínimo</span>
 <span class="sd">        armazenado existente no estudo descrito pelo :class:`Dadger`.</span>
@@ -708,10 +747,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro HV&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; para UHE </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.lv"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lv">[documentos]</a>    <span class="k">def</span> <span class="nf">lv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LV</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.lv"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lv">[documentos]</a>    <span class="k">def</span> <span class="nf">lv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LV</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica os limites inferior e</span>
 <span class="sd">        superior de uma restrição de volume mínimo existente</span>
@@ -753,47 +791,40 @@
 <span class="sd">            True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="n">modelo</span><span class="p">:</span> <span class="n">LV</span><span class="p">,</span>
-                          <span class="n">estagio_final</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LV</span><span class="p">:</span>
-            <span class="n">copia</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">modelo</span><span class="p">)</span>
-            <span class="n">copia</span><span class="o">.</span><span class="n">estagio</span> <span class="o">=</span> <span class="n">estagio</span>
-            <span class="c1"># Procura pelo registro do próximo estágio</span>
-            <span class="n">proximo</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">estagio</span><span class="p">,</span> <span class="n">estagio_final</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LV</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">est</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">proximo</span> <span class="o">=</span> <span class="n">r</span>
-                    <span class="k">break</span>
-            <span class="k">if</span> <span class="n">proximo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">proximo</span><span class="o">.</span><span class="n">_ordem</span> <span class="o">-</span> <span class="n">modelo</span><span class="o">.</span><span class="n">_ordem</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
-            <span class="n">copia</span><span class="o">.</span><span class="n">_ordem</span> <span class="o">+=</span> <span class="n">delta</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copia</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">copia</span>
 
-        <span class="c1"># Obtém o registro HV associado</span>
-        <span class="n">hv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hv</span><span class="p">(</span><span class="n">codigo</span><span class="p">)</span>
-        <span class="c1"># Confere se o estágio pedido está no intervalo</span>
-        <span class="c1"># do registro HV</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">hv</span><span class="o">.</span><span class="n">estagio_inicial</span> <span class="o">&lt;=</span> <span class="n">estagio</span> <span class="o">&lt;=</span> <span class="n">hv</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estágio </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2"> fora dos limites&quot;</span> <span class="o">+</span>
-                             <span class="s2">&quot; do registro HV&quot;</span><span class="p">)</span>
-        <span class="c1"># Tenta obter um registro já existente</span>
-        <span class="n">reg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LV</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">reg</span>
-        <span class="c1"># Se não conseguir, cria mais um registro, idêntico ao do</span>
-        <span class="c1"># último estágio existente, e retorna.</span>
-        <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hv</span><span class="o">.</span><span class="n">estagio_inicial</span><span class="p">,</span> <span class="n">estagio</span><span class="p">):</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LV</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">est</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">reg</span> <span class="o">=</span> <span class="n">r</span>
-        <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">hv</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span></div>
+        <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LV</span><span class="p">]:</span>
+            <span class="n">hv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_com_codigo</span><span class="p">(</span><span class="n">HV</span><span class="p">,</span> <span class="n">codigo</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">hv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">hv</span>
+            <span class="n">ei</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">estagio_inicial</span>
+            <span class="n">ef</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">estagio_final</span>
+            <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ef</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">ef</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">registro_estagio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span>
+                        <span class="n">LV</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">e</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">registro_estagio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="n">registro_estagio</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">LV</span><span class="p">):</span>
+                <span class="n">novo_registro</span> <span class="o">=</span> <span class="n">LV</span><span class="p">(</span>
+                    <span class="n">state</span><span class="o">=</span><span class="n">ComponentState</span><span class="o">.</span><span class="n">READ_SUCCESS</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">codigo</span> <span class="o">=</span> <span class="n">codigo</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">limite_inferior</span> <span class="o">=</span> <span class="n">ultimo_registro</span><span class="o">.</span><span class="n">limite_inferior</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">limite_superior</span> <span class="o">=</span> <span class="n">ultimo_registro</span><span class="o">.</span><span class="n">limite_superior</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">estagio</span> <span class="o">=</span> <span class="n">estagio</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_after</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">novo_registro</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">novo_registro</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Dadger.hq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.hq">[documentos]</a>    <span class="k">def</span> <span class="nf">hq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HQ</span><span class="p">:</span>
+        <span class="n">lv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LV</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lv</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lv</span> <span class="o">=</span> <span class="n">cria_registro</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">lv</span></div>
+
+<div class="viewcode-block" id="Dadger.hq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.hq">[documentos]</a>    <span class="k">def</span> <span class="nf">hq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HQ</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que cadastra uma restrição de vazão</span>
 <span class="sd">        existente no estudo descrito pelo :class:`Dadger`.</span>
@@ -807,10 +838,9 @@
         <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">r</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Não foi encontrado registro HQ&quot;</span> <span class="o">+</span>
-                         <span class="sa">f</span><span class="s2">&quot; com o código </span><span class="si">{</span><span class="n">codigo</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
-<div class="viewcode-block" id="Dadger.lq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lq">[documentos]</a>    <span class="k">def</span> <span class="nf">lq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LQ</span><span class="p">:</span>
+<div class="viewcode-block" id="Dadger.lq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.lq">[documentos]</a>    <span class="k">def</span> <span class="nf">lq</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LQ</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que especifica os limites inferiores e</span>
 <span class="sd">        superiores por patamar de uma restrição de vazão existente</span>
@@ -852,47 +882,44 @@
 <span class="sd">            True</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="n">modelo</span><span class="p">:</span> <span class="n">LQ</span><span class="p">,</span>
-                          <span class="n">estagio_final</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">LQ</span><span class="p">:</span>
-            <span class="n">copia</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">modelo</span><span class="p">)</span>
-            <span class="n">copia</span><span class="o">.</span><span class="n">estagio</span> <span class="o">=</span> <span class="n">estagio</span>
-            <span class="c1"># Procura pelo registro do próximo estágio</span>
-            <span class="n">proximo</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">estagio</span><span class="p">,</span> <span class="n">estagio_final</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
-                <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LQ</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">est</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="n">proximo</span> <span class="o">=</span> <span class="n">r</span>
-                    <span class="k">break</span>
-            <span class="k">if</span> <span class="n">proximo</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">delta</span> <span class="o">=</span> <span class="p">(</span><span class="n">proximo</span><span class="o">.</span><span class="n">_ordem</span> <span class="o">-</span> <span class="n">modelo</span><span class="o">.</span><span class="n">_ordem</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">delta</span> <span class="o">=</span> <span class="mf">0.1</span>
-            <span class="n">copia</span><span class="o">.</span><span class="n">_ordem</span> <span class="o">+=</span> <span class="n">delta</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_registros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">copia</span><span class="p">)</span>
-            <span class="k">return</span> <span class="n">copia</span>
 
-        <span class="c1"># Obtém o registro HQ associado</span>
-        <span class="n">hq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hq</span><span class="p">(</span><span class="n">codigo</span><span class="p">)</span>
-        <span class="c1"># Confere se o estágio pedido está no intervalo</span>
-        <span class="c1"># do registro HQ</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">hq</span><span class="o">.</span><span class="n">estagio_inicial</span> <span class="o">&lt;=</span> <span class="n">estagio</span> <span class="o">&lt;=</span> <span class="n">hq</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estágio </span><span class="si">{</span><span class="n">estagio</span><span class="si">}</span><span class="s2"> fora dos limites&quot;</span> <span class="o">+</span>
-                             <span class="s2">&quot; do registro HQ&quot;</span><span class="p">)</span>
-        <span class="c1"># Tenta obter um registro já existente</span>
-        <span class="n">reg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LQ</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">reg</span>
-        <span class="c1"># Se não conseguir, cria mais um registro, idêntico ao do</span>
-        <span class="c1"># último estágio existente, e retorna.</span>
-        <span class="k">for</span> <span class="n">est</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">hq</span><span class="o">.</span><span class="n">estagio_inicial</span><span class="p">,</span> <span class="n">estagio</span><span class="p">):</span>
-            <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LQ</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">est</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">reg</span> <span class="o">=</span> <span class="n">r</span>
-        <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">cria_registro</span><span class="p">(</span><span class="n">reg</span><span class="p">,</span> <span class="n">hq</span><span class="o">.</span><span class="n">estagio_final</span><span class="p">)</span></div>
+        <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">LQ</span><span class="p">]:</span>
+            <span class="n">hq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_com_codigo</span><span class="p">(</span><span class="n">HQ</span><span class="p">,</span> <span class="n">codigo</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">hq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">hq</span>
+            <span class="n">ei</span> <span class="o">=</span> <span class="n">hq</span><span class="o">.</span><span class="n">estagio_inicial</span>
+            <span class="n">ef</span> <span class="o">=</span> <span class="n">hq</span><span class="o">.</span><span class="n">estagio_final</span>
+            <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ef</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">ef</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="n">registro_estagio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span>
+                        <span class="n">LQ</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">e</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">registro_estagio</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="n">registro_estagio</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">LQ</span><span class="p">):</span>
+                <span class="n">novo_registro</span> <span class="o">=</span> <span class="n">LQ</span><span class="p">(</span>
+                    <span class="n">state</span><span class="o">=</span><span class="n">ComponentState</span><span class="o">.</span><span class="n">READ_SUCCESS</span><span class="p">,</span>
+                    <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">codigo</span> <span class="o">=</span> <span class="n">codigo</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">limites_superiores</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">ultimo_registro</span><span class="o">.</span><span class="n">limites_superiores</span>
+                <span class="p">)</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">limites_inferiores</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">ultimo_registro</span><span class="o">.</span><span class="n">limites_inferiores</span>
+                <span class="p">)</span>
+                <span class="n">novo_registro</span><span class="o">.</span><span class="n">estagio</span> <span class="o">=</span> <span class="n">estagio</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_after</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">novo_registro</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">novo_registro</span>
+            <span class="k">return</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Dadger.he"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.he">[documentos]</a>    <span class="k">def</span> <span class="nf">he</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">HE</span><span class="p">:</span>
+        <span class="n">lq</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">LQ</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">lq</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">lq</span> <span class="o">=</span> <span class="n">cria_registro</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">lq</span></div>
+
+<div class="viewcode-block" id="Dadger.he"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.he">[documentos]</a>    <span class="k">def</span> <span class="nf">he</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">HE</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que cadastra uma restrição de energia</span>
 <span class="sd">        armazenada existente no estudo descrito pelo :class:`Dadger`.</span>
@@ -905,78 +932,73 @@
 <span class="sd">        :type estagio: int</span>
 <span class="sd">        :return: Um registro do tipo :class:`HE`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">HE</span><span class="p">,</span>
-                                             <span class="n">codigo</span><span class="p">,</span>
-                                             <span class="n">estagio</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">HE</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">r</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">r</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Registro não encontrado&quot;</span><span class="p">)</span></div>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Dadger.cm"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.cm">[documentos]</a>    <span class="k">def</span> <span class="nf">cm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CM</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que cadastra os coeficientes das restrições</span>
+<span class="sd">        de energia armazenada.</span>
+
+<span class="sd">        :param codigo: Índice do código que especifica o registro</span>
+<span class="sd">        :type codigo: int</span>
+<span class="sd">        :return: Um registro do tipo :class:`CM`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">CM</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">CM</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">r</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">ev</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">EV</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">ev</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">EV</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém o (único) registro que define a evaporação</span>
 <span class="sd">        :class:`Dadger`</span>
 
 <span class="sd">        :return: Um registro do tipo :class:`EV`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">EV</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">r</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">EV</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">fj</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FJ</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">fj</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FJ</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém o (único) registro que define o arquivo `polinjus`</span>
 <span class="sd">        :class:`Dadger`</span>
 
 <span class="sd">        :return: Um registro do tipo :class:`FJ`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">FJ</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">r</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">FJ</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rogerio Alves.
-
-    </p>
+    <p>&#169; Copyright 2021, Rogerio Alves.</p>
   </div>
-    
-    
-    
-    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
-    
+
+  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
-    
-    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

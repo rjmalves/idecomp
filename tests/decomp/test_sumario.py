@@ -1,35 +1,43 @@
-# Rotinas de testes associadas ao arquivo relato.rvx do DECOMP
 from idecomp.decomp.sumario import Sumario
 
+from tests.mocks.mock_open import mock_open
+from unittest.mock import MagicMock, patch
 
-sum = Sumario.le_arquivo("tests/_arquivos", "sumario.rv0")
-
-
-def test_leitura():
-    n_semanas = sum.cmo_medio_subsistema.shape[1] - 2
-    assert n_semanas == 6
+from tests.mocks.arquivos.sumario import MockSumario
 
 
-def test_cmo():
-    cmo_medio = sum.cmo_medio_subsistema
-    assert cmo_medio.loc[0, "Estágio 1"] == 117.59
+def test_atributos_encontrados_sumario():
+    m: MagicMock = mock_open(read_data="".join(MockSumario))
+    with patch("builtins.open", m):
+        rel = Sumario.le_arquivo("")
+        assert rel.cmo_medio_subsistema is not None
+        assert rel.geracao_termica_subsistema is not None
+        assert rel.energia_armazenada_ree is not None
+        assert rel.energia_armazenada_subsistema is not None
 
 
-def test_geracao_termica_subsistema():
-    gt = sum.geracao_termica_subsistema
-    assert float(gt.loc[gt["Subsistema"] == "SE", "Estágio 1"]) == 3213.8
-
-
-def test_energia_armazenada_subsistema():
-    earm = sum.energia_armazenada_subsistema
-    assert float(earm.loc[earm["Subsistema"] == "SE", "Inicial"]) == 17.0
-
-
-def test_energia_armazenada_ree():
-    earm = sum.energia_armazenada_ree
-    assert float(earm.loc[earm["REE"] == "SUDESTE", "Inicial"]) == 25.4
+def test_atributos_nao_encontrados_sumario():
+    m: MagicMock = mock_open(read_data="".join(""))
+    with patch("builtins.open", m):
+        rel = Sumario.le_arquivo("")
+        assert rel.cmo_medio_subsistema is None
+        assert rel.geracao_termica_subsistema is None
+        assert rel.energia_armazenada_ree is None
+        assert rel.energia_armazenada_subsistema is None
 
 
 def test_eq_sumario():
-    sum2 = Sumario.le_arquivo("tests/_arquivos", "sumario.rv0")
-    assert sum == sum2
+    m: MagicMock = mock_open(read_data="".join(MockSumario))
+    with patch("builtins.open", m):
+        rel1 = Sumario.le_arquivo("")
+        rel2 = Sumario.le_arquivo("")
+        assert rel1 == rel2
+
+
+def test_neq_sumario():
+    m: MagicMock = mock_open(read_data="".join(MockSumario))
+    with patch("builtins.open", m):
+        rel1 = Sumario.le_arquivo("")
+        rel2 = Sumario.le_arquivo("")
+        rel1.cmo_medio_subsistema.iloc[0, 0] = 0
+        assert rel1 != rel2

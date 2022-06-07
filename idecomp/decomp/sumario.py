@@ -1,18 +1,16 @@
-from idecomp._utils.bloco import Bloco
-from idecomp.decomp.modelos.sumario import BlocoCMOSumario
-from idecomp.decomp.modelos.sumario import BlocoGeracaoTermicaSubsistemaSumario
-from idecomp.decomp.modelos.sumario import BlocoEnergiaArmazenadaREESumario
-from idecomp.decomp.modelos.sumario import (
-    BlocoEnergiaArmazenadaSubsistemaSumario,
-)  # noqa
-from idecomp.decomp.modelos.sumario import LeituraSumario
-from idecomp._utils.arquivo import ArquivoBlocos
-from idecomp._utils.dadosarquivo import DadosArquivoBlocos
-from typing import Type
+from idecomp.decomp.modelos.relato import BlocoCMORelato
+from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
+from idecomp.decomp.modelos.relato import BlocoVolumeUtilReservatorioRelato
+from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaREERelato
+from idecomp.decomp.modelos.relato import (
+    BlocoEnergiaArmazenadaSubsistemaRelato,
+)
+from cfinterface.files.blockfile import BlockFile
+from typing import Type, TypeVar, Optional
 import pandas as pd  # type: ignore
 
 
-class Sumario(ArquivoBlocos):
+class Sumario(BlockFile):
     """
     Armazena os dados de saída do DECOMP referentes ao
     acompanhamento do programa.
@@ -23,56 +21,83 @@ class Sumario(ArquivoBlocos):
 
     """
 
-    def __init__(self, dados: DadosArquivoBlocos) -> None:
-        super().__init__(dados)
+    T = TypeVar("T")
 
-    # Override
+    BLOCKS = [
+        BlocoCMORelato,
+        BlocoGeracaoTermicaSubsistemaRelato,
+        BlocoVolumeUtilReservatorioRelato,
+        BlocoEnergiaArmazenadaREERelato,
+        BlocoEnergiaArmazenadaSubsistemaRelato,
+    ]
+
     @classmethod
     def le_arquivo(
         cls, diretorio: str, nome_arquivo="sumario.rv0"
     ) -> "Sumario":
-        """
-        Realiza a leitura de um arquivo "sumario.rvx" existente em
-        um diretório.
+        return cls.read(diretorio, nome_arquivo)
 
-        :param diretorio: O caminho relativo ou completo para o diretório
-            onde se encontra o arquivo
-        :type diretorio: str
-        :param nome_arquivo: Nome do arquivo a ser lido, potencialmente
-            especificando a revisão. Tem como valor default "sumario.rv0"
-        :type nome_arquivo: str, optional
-        :return: Um objeto :class:`Sumario` com informações do arquivo lido
-        """
-        leitor = LeituraSumario(diretorio)
-        r = leitor.le_arquivo(nome_arquivo)
-        return cls(r)
+    def escreve_arquivo(self, diretorio: str, nome_arquivo="sumario.rv0"):
+        self.write(diretorio, nome_arquivo)
 
-    def __obtem_bloco(self, tipo: Type[Bloco]) -> Bloco:
-        """ """
-        for b in self._blocos:
-            if isinstance(b, tipo):
-                return b
-        raise ValueError(f"Não foi encontrado um bloco do tipo {tipo}")
+    def __bloco_por_tipo(self, bloco: Type[T], indice: int) -> Optional[T]:
+        """
+        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
+        :param bloco: Um tipo de bloco para ser lido
+        :type bloco: T
+        :param indice: O índice do bloco a ser acessado, dentre os do tipo
+        :type indice: int
+        :return: O gerador de blocos, se houver
+        :rtype: Optional[Generator[T], None, None]
+        """
+        try:
+            return next(
+                b
+                for i, b in enumerate(self.data.of_type(bloco))
+                if i == indice
+            )
+        except StopIteration:
+            return None
 
     @property
     def cmo_medio_subsistema(self) -> pd.DataFrame:
         """
         Obtém a tabela de CMO existente no :class:`Sumario`
 
-        :return: A tabela de CMO como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoCMOSumario)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoCMORelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
     def geracao_termica_subsistema(self) -> pd.DataFrame:
         """
         Obtém a tabela de Geração Térmica existente no :class:`Sumario`
 
-        :return: A tabela de Geração Térmica como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoGeracaoTermicaSubsistemaSumario)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoGeracaoTermicaSubsistemaRelato, 0)
+        if b is not None:
+            return b.data
+        return None
+
+    @property
+    def volume_util_reservatorios(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela de Volumes Úteis por reservatório (em %)
+        existente no :class:`Sumario`
+
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
+        """
+        b = self.__bloco_por_tipo(BlocoVolumeUtilReservatorioRelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
     def energia_armazenada_ree(self) -> pd.DataFrame:
@@ -80,10 +105,13 @@ class Sumario(ArquivoBlocos):
         Obtém a tabela de Energia Armazenada por REE (em %)
         existente no :class:`Sumario`
 
-        :return: A tabela de EARM como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoEnergiaArmazenadaREESumario)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaREERelato, 0)
+        if b is not None:
+            return b.data
+        return None
 
     @property
     def energia_armazenada_subsistema(self) -> pd.DataFrame:
@@ -91,7 +119,10 @@ class Sumario(ArquivoBlocos):
         Obtém a tabela de Energia Armazenada por Subsistema (em %)
         existente no :class:`Sumario`
 
-        :return: A tabela de EARM como um `pd.DataFrame`.
+        :return: O DataFrame com os valores
+        :rtype: Optional[pd.DataFrame]
         """
-        b = self.__obtem_bloco(BlocoEnergiaArmazenadaSubsistemaSumario)
-        return b.dados
+        b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaSubsistemaRelato, 0)
+        if b is not None:
+            return b.data
+        return None

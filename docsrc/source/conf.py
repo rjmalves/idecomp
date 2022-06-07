@@ -45,7 +45,6 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "sphinx_gallery.gen_gallery",
-    "nb2plots",
     "texext",
     "numpydoc",
     "sphinx_rtd_theme",

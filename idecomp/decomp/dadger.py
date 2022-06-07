@@ -72,6 +72,7 @@ from idecomp.decomp.modelos.dadger import (
 
 from cfinterface.files.registerfile import RegisterFile
 from cfinterface.components.state import ComponentState
+from cfinterface.components.register import Register
 from typing import Type, List, Optional, TypeVar, Any, Union
 
 
@@ -257,6 +258,25 @@ class Dadger(RegisterFile):
 
     def __obtem_registros(self, tipo: Type[T]) -> List[T]:
         return self.__registros_por_tipo(tipo)
+
+    def cria_registro(self, anterior: Register, registro: Register):
+        """
+        Adiciona um registro ao arquivo após um outro registro previamente
+        existente.
+
+        Este método existe para retrocompatibilidade e deve ser substituído
+        quando for suportado na classe :class:`RegisterFile`.
+        """
+        self.data.add_after(anterior, registro)
+
+    def deleta_registro(self, registro: Register):
+        """
+        Remove um registro existente no arquivo.
+
+        Este método existe para retrocompatibilidade e deve ser substituído
+        quando for suportado na classe :class:`RegisterFile`.
+        """
+        self.data.remove(registro)
 
     @property
     def te(self) -> Optional[TE]:
@@ -496,8 +516,12 @@ class Dadger(RegisterFile):
                     data=[None] * len(ultimo_registro.data),
                 )
                 novo_registro.codigo = ultimo_registro.codigo
-                novo_registro.limites_inferiores = ultimo_registro.limites_inferiores
-                novo_registro.limites_superiores = ultimo_registro.limites_superiores
+                novo_registro.limites_inferiores = (
+                    ultimo_registro.limites_inferiores
+                )
+                novo_registro.limites_superiores = (
+                    ultimo_registro.limites_superiores
+                )
                 novo_registro.estagio = estagio
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro

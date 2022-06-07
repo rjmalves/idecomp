@@ -46,8 +46,6 @@ de operação:
 .. autoclass:: CD
    :members:
 
-.. autoclass:: PQ
-   :members:
 
 .. autoclass:: RI
    :members:
@@ -95,9 +93,6 @@ de operação:
    :members:
 
 .. autoclass:: VI
-   :members:
-
-.. autoclass:: AC
    :members:
 
 .. autoclass:: IR
