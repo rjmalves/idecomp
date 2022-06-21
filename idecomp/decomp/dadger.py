@@ -278,6 +278,15 @@ class Dadger(RegisterFile):
         """
         self.data.remove(registro)
 
+    def lista_registros(self, tipo: Type[T]) -> List[T]:
+        """
+        Lista todos os registros presentes no arquivo que tenham o tipo `T`.
+
+        Este método existe para retrocompatibilidade e deve ser substituído
+        quando for suportado na classe :class:`RegisterFile`.
+        """
+        return [r for r in self.data.of_type(tipo)]
+
     @property
     def te(self) -> Optional[TE]:
         """
@@ -357,8 +366,8 @@ class Dadger(RegisterFile):
 
         :param uhe: código da UHE modificada
         :type uhe: int
-        :param modificacao: mnemônico da modificação realizada
-        :type modificacao: str
+        :param modificacao: classe da modificação realizada
+        :type modificacao: subtipos do tipo `AC`
         :return: Um registro do tipo :class:`AC`
         """
 

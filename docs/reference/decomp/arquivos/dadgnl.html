@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dados de Térmicas GNL (dadgnl.rvX) &mdash; documentação idecomp 0.0.30</title>
+  <title>Dados de Térmicas GNL (dadgnl.rvX) &mdash; documentação idecomp 0.0.31</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -18,6 +18,7 @@
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/translations.js"></script>
     <script src="../../../_static/js/theme.js"></script>
@@ -91,9 +92,9 @@
            <div itemprop="articleBody">
              
   <section id="dados-de-termicas-gnl-dadgnl-rvx">
-<span id="dadgnl"></span><h1>Dados de Térmicas GNL (dadgnl.rvX)<a class="headerlink" href="#dados-de-termicas-gnl-dadgnl-rvx" title="Link permanente para este título"></a></h1>
+<span id="dadgnl"></span><h1>Dados de Térmicas GNL (dadgnl.rvX)<a class="headerlink" href="#dados-de-termicas-gnl-dadgnl-rvx" title="Link permanente para este cabeçalho"></a></h1>
 <section id="visao-geral-do-modelo">
-<h2>Visão geral do modelo<a class="headerlink" href="#visao-geral-do-modelo" title="Link permanente para este título"></a></h2>
+<h2>Visão geral do modelo<a class="headerlink" href="#visao-geral-do-modelo" title="Link permanente para este cabeçalho"></a></h2>
 <p>As informações de entrada das térmicas de despacho antecipado (GNL) do DECOMP, localizadas no arquivo geralmente denominado
 dadgnl.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
 <dl class="py class">
@@ -111,7 +112,7 @@ método <code class="xref py py-obj docutils literal notranslate"><span class="p
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">escreve_arquivo()</span></code>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.gl">
-<span class="sig-name descname"><span class="pre">gl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GL" title="idecomp.decomp.modelos.dadgnl.GL"><span class="pre">idecomp.decomp.modelos.dadgnl.GL</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.gl"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.gl" title="Link permanente para esta definição"></a></dt>
+<span class="sig-name descname"><span class="pre">gl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GL" title="idecomp.decomp.modelos.dadgnl.GL"><span class="pre">GL</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.gl"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.gl" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém um registro que define o despacho por patamar
 e a duração dos patamares para uma UTE GNL.</p>
 <dl class="field-list simple">
@@ -131,7 +132,7 @@ o despacho da UTE</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.gs">
-<span class="sig-name descname"><span class="pre">gs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GS" title="idecomp.decomp.modelos.dadgnl.GS"><span class="pre">idecomp.decomp.modelos.dadgnl.GS</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.gs"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.gs" title="Link permanente para esta definição"></a></dt>
+<span class="sig-name descname"><span class="pre">gs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GS" title="idecomp.decomp.modelos.dadgnl.GS"><span class="pre">GS</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.gs"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.gs" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém um registro que define o número de semanas em cada
 mês de estudo no <a class="reference internal" href="#idecomp.decomp.dadgnl.DadGNL" title="idecomp.decomp.dadgnl.DadGNL"><code class="xref py py-class docutils literal notranslate"><span class="pre">DadGNL</span></code></a>.</p>
 <dl class="field-list simple">
@@ -146,7 +147,7 @@ mês de estudo no <a class="reference internal" href="#idecomp.decomp.dadgnl.Dad
 
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.nl">
-<span class="sig-name descname"><span class="pre">nl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.NL" title="idecomp.decomp.modelos.dadgnl.NL"><span class="pre">idecomp.decomp.modelos.dadgnl.NL</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.nl"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.nl" title="Link permanente para esta definição"></a></dt>
+<span class="sig-name descname"><span class="pre">nl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.NL" title="idecomp.decomp.modelos.dadgnl.NL"><span class="pre">NL</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.nl"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.nl" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém um registro que define o número de lags para o despacho
 de uma UTE.</p>
 <dl class="field-list simple">
@@ -161,7 +162,7 @@ de uma UTE.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.tg">
-<span class="sig-name descname"><span class="pre">tg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.TG" title="idecomp.decomp.modelos.dadgnl.TG"><span class="pre">idecomp.decomp.modelos.dadgnl.TG</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.tg"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.tg" title="Link permanente para esta definição"></a></dt>
+<span class="sig-name descname"><span class="pre">tg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.TG" title="idecomp.decomp.modelos.dadgnl.TG"><span class="pre">TG</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.tg"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.tg" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém um registro que define uma usina termelétrica existente
 no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadgnl.DadGNL" title="idecomp.decomp.dadgnl.DadGNL"><code class="xref py py-class docutils literal notranslate"><span class="pre">DadGNL</span></code></a>.</p>
 <dl class="field-list simple">
@@ -183,7 +184,7 @@ o despacho da UTE</p></li>
 
 </section>
 <section id="registros">
-<h2>Registros<a class="headerlink" href="#registros" title="Link permanente para este título"></a></h2>
+<h2>Registros<a class="headerlink" href="#registros" title="Link permanente para este cabeçalho"></a></h2>
 <p>As informações existentes em cada um dos registros são armazenadas em modelos próprios
 para cada um. Os registros suportados até o momento são os utilizados nos estudos oficiais
 de operação:</p>
