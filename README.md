@@ -4,8 +4,7 @@
 [![codecov](https://codecov.io/gh/rjmalves/idecomp/branch/main/graph/badge.svg?token=ZSJBGO81JP)](https://codecov.io/gh/rjmalves/idecomp)
 
 O *idecomp* é um pacote Python para manipulação dos arquivos
-de entrada e saída do programa [DECOMP](http://www.cepel.br/pt_br/produtos/decomp-modelo-de-planejamento-da-operacao-de-sistemas-hidrotermicos-interligados-de-curto-prazo.htm),
-desenvolvido pelo [CEPEL](http://www.cepel.br/) e utilizado para os estudos de planejamento e operação do Sistema Interligado Nacional (SIN).
+de entrada e saída do programa [DECOMP](http://www.cepel.br/pt_br/produtos/decomp-modelo-de-planejamento-da-operacao-de-sistemas-hidrotermicos-interligados-de-curto-prazo.htm). O DECOMP é desenvolvido pelo [CEPEL](http://www.cepel.br/) e utilizado para os estudos de planejamento e operação do Sistema Interligado Nacional (SIN).
 
 O idecomp oferece:
 
