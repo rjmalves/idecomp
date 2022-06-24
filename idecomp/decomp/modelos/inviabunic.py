@@ -16,8 +16,8 @@ class BlocoInviabilidadesIteracoes(Block):
     BEGIN_PATTERN = "RELATORIO DE VIOLACOES DAS RESTRICOES"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__linha = Line(
             [
                 IntegerField(9, 4),
@@ -93,8 +93,8 @@ class BlocoInviabilidadesSimFinal(Block):
     BEGIN_PATTERN = "SIMULACAO FINAL:"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__linha = Line(
             [
                 IntegerField(8, 4),

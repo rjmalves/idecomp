@@ -30,8 +30,8 @@ class BlocoConvergenciaRelato(Block):
     BEGIN_PATTERN = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__line = Line(
             [
                 IntegerField(4, 4),
@@ -130,8 +130,8 @@ class BlocoRelatorioOperacaoUHERelato(Block):
     BEGIN_PATTERN = r"No\.       Usina       Volume \(\% V\.U\.\)"
     END_PATTERN = "X----X-"
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__line = Line(
             [
                 IntegerField(4, 4),
@@ -249,8 +249,8 @@ class BlocoBalancoEnergeticoRelato(Block):
     BEGIN_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
     END_PATTERN = "RELATORIO  DA  OPERACAO"
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__linha_cenario = Line(
             [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
         )
@@ -601,8 +601,8 @@ class BlocoDadosTermicasRelato(Block):
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Usinas  Termicas"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__line = Line(
             [
                 IntegerField(3, 4),
@@ -775,8 +775,8 @@ class BlocoDadosMercadoRelato(Block):
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Mercado"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__line = Line(
             [
                 IntegerField(9, 4),
@@ -1103,8 +1103,8 @@ class BlocoENAPreEstudoMensalREERelato(Block):
     BEGIN_PATTERN = r"ENERGIA NATURAL AFLUENTE POR REE \(MESES"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         campos_ree: List[Field] = [
             LiteralField(14, 4),
             IntegerField(4, 19),
@@ -1172,8 +1172,8 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
     BEGIN_PATTERN = r"ENERGIA NATURAL AFLUENTE POR SUBSISTEMA \(MESES"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         campos_subsis: List[Field] = [
             LiteralField(14, 4),
             IntegerField(4, 19),
@@ -1240,8 +1240,8 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
     BEGIN_PATTERN = r"DADOS DE ENERGIA NATURAL AFLUENTE POR REE \(SEMANAS"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         campos_ree: List[Field] = [
             LiteralField(14, 4),
             IntegerField(4, 19),
@@ -1313,8 +1313,8 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
     BEGIN_PATTERN = r"NATURAL AFLUENTE POR SUBSISTEMA\(SEMANAS"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         campos_subsis: List[Field] = [
             LiteralField(14, 4),
             IntegerField(4, 19),
@@ -1385,8 +1385,8 @@ class BlocoDiasExcluidosSemanas(Block):
     BEGIN_PATTERN = " Mes inicial do periodo de estudos"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
 
         self.__line = Line([IntegerField(2, 53)])
 

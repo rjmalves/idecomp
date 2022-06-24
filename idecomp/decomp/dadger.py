@@ -71,7 +71,6 @@ from idecomp.decomp.modelos.dadger import (
 
 
 from cfinterface.files.registerfile import RegisterFile
-from cfinterface.components.state import ComponentState
 from cfinterface.components.register import Register
 from typing import Type, List, Optional, TypeVar, Any, Union
 
@@ -356,9 +355,7 @@ class Dadger(RegisterFile):
         self,
         uhe: int,
         modificacao: Any,
-        mes: str = None,
-        semana: int = None,
-        ano: int = None,
+        **kwargs,
     ) -> Optional[AC]:
         """
         Obtém um registro que define modificações nos parâmetros
@@ -375,12 +372,8 @@ class Dadger(RegisterFile):
             condicoes: List[bool] = [
                 r.uhe == uhe,
             ]
-            if mes is not None:
-                condicoes.append(r.mes == mes)
-            if semana is not None:
-                condicoes.append(r.semana == semana)
-            if ano is not None:
-                condicoes.append(r.ano == ano)
+            for k, v in kwargs.items():
+                condicoes.append(getattr(r, k) == v)
             return all(condicoes)
 
         regs: List[Dadger.AC] = self.__obtem_registros(modificacao)
@@ -521,7 +514,6 @@ class Dadger(RegisterFile):
                         ultimo_registro = registro_estagio
             if isinstance(ultimo_registro, LU):
                 novo_registro = LU(
-                    state=ComponentState.READ_SUCCESS,
                     data=[None] * len(ultimo_registro.data),
                 )
                 novo_registro.codigo = ultimo_registro.codigo
@@ -745,7 +737,6 @@ class Dadger(RegisterFile):
                         ultimo_registro = registro_estagio
             if isinstance(ultimo_registro, LV):
                 novo_registro = LV(
-                    state=ComponentState.READ_SUCCESS,
                     data=[None] * len(ultimo_registro.data),
                 )
                 novo_registro.codigo = codigo
@@ -836,7 +827,6 @@ class Dadger(RegisterFile):
                         ultimo_registro = registro_estagio
             if isinstance(ultimo_registro, LQ):
                 novo_registro = LQ(
-                    state=ComponentState.READ_SUCCESS,
                     data=[None] * len(ultimo_registro.data),
                 )
                 novo_registro.codigo = codigo

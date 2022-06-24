@@ -1168,7 +1168,7 @@ def test_campos_nao_encontrados_dadger():
     assert d.uh(0) is None
     assert d.ct(0, 0) is None
     assert d.dp(0, 0) is None
-    assert d.ac(0, ACNUMCON, "", 0, 0) is None
+    assert d.ac(0, ACNUMCON, mes="", revisao=0, ano=0) is None
     assert d.cd(0, 0) is None
     assert d.tx is None
     assert d.gp is None

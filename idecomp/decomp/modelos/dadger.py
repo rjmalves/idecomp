@@ -2589,6 +2589,22 @@ class ACCOTVOL(Register):
         self.data[0] = u
 
     @property
+    def ordem(self) -> Optional[int]:
+        return self.data[1]
+
+    @ordem.setter
+    def ordem(self, u: int):
+        self.data[1] = u
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        return self.data[2]
+
+    @coeficiente.setter
+    def coeficiente(self, u: float):
+        self.data[2] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -2651,6 +2667,22 @@ class ACCOTARE(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def ordem(self) -> Optional[int]:
+        return self.data[1]
+
+    @ordem.setter
+    def ordem(self, u: int):
+        self.data[1] = u
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        return self.data[2]
+
+    @coeficiente.setter
+    def coeficiente(self, u: float):
+        self.data[2] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -2908,6 +2940,30 @@ class ACCOTVAZ(Register):
         self.data[0] = u
 
     @property
+    def polimonio(self) -> Optional[int]:
+        return self.data[1]
+
+    @polimonio.setter
+    def polimonio(self, u: int):
+        self.data[1] = u
+
+    @property
+    def ordem(self) -> Optional[int]:
+        return self.data[2]
+
+    @ordem.setter
+    def ordem(self, u: int):
+        self.data[2] = u
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        return self.data[3]
+
+    @coeficiente.setter
+    def coeficiente(self, u: float):
+        self.data[3] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -2970,6 +3026,22 @@ class ACCOFEVA(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def mes_coeficiente(self) -> Optional[int]:
+        return self.data[1]
+
+    @mes_coeficiente.setter
+    def mes_coeficiente(self, u: int):
+        self.data[1] = u
+
+    @property
+    def coeficiente(self) -> Optional[int]:
+        return self.data[2]
+
+    @coeficiente.setter
+    def coeficiente(self, u: int):
+        self.data[2] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -3354,6 +3426,14 @@ class ACJUSMED(Register):
         self.data[0] = u
 
     @property
+    def cota(self) -> Optional[float]:
+        return self.data[1]
+
+    @cota.setter
+    def cota(self, u: float):
+        self.data[1] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -3415,6 +3495,14 @@ class ACVERTJU(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def influi(self) -> Optional[int]:
+        return self.data[1]
+
+    @influi.setter
+    def influi(self, u: int):
+        self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -3792,6 +3880,14 @@ class ACNPOSNW(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def posto(self) -> Optional[int]:
+        return self.data[1]
+
+    @posto.setter
+    def posto(self, u: int):
+        self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:

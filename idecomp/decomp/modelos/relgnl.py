@@ -22,8 +22,8 @@ class BlocoDadosUsinasRelGNL(Block):
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Usinas  Termicas GNL"
     END_PATTERN = ""
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__line = Line(
             [
                 IntegerField(3, 4),
@@ -284,8 +284,8 @@ class BlocoRelatorioOperacaoRelGNL(Block):
     BEGIN_PATTERN = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
     END_PATTERN = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
 
-    def __init__(self, state=..., previous=None, next=None, data=None) -> None:
-        super().__init__(state, previous, next, data)
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
         self.__linha_cenario = Line(
             [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
         )

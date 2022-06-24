@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.31</title>
+  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.32</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -144,7 +144,6 @@
 
 
 <span class="kn">from</span> <span class="nn">cfinterface.files.registerfile</span> <span class="kn">import</span> <span class="n">RegisterFile</span>
-<span class="kn">from</span> <span class="nn">cfinterface.components.state</span> <span class="kn">import</span> <span class="n">ComponentState</span>
 <span class="kn">from</span> <span class="nn">cfinterface.components.register</span> <span class="kn">import</span> <span class="n">Register</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Union</span>
 
@@ -429,9 +428,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">uhe</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
         <span class="n">modificacao</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-        <span class="n">mes</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">semana</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">ano</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">AC</span><span class="p">]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define modificações nos parâmetros</span>
@@ -448,12 +445,8 @@
             <span class="n">condicoes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
                 <span class="n">r</span><span class="o">.</span><span class="n">uhe</span> <span class="o">==</span> <span class="n">uhe</span><span class="p">,</span>
             <span class="p">]</span>
-            <span class="k">if</span> <span class="n">mes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">condicoes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">mes</span> <span class="o">==</span> <span class="n">mes</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">semana</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">condicoes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">semana</span> <span class="o">==</span> <span class="n">semana</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">ano</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="n">condicoes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r</span><span class="o">.</span><span class="n">ano</span> <span class="o">==</span> <span class="n">ano</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">condicoes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span>
             <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">condicoes</span><span class="p">)</span>
 
         <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Dadger</span><span class="o">.</span><span class="n">AC</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">modificacao</span><span class="p">)</span>
@@ -594,7 +587,6 @@
                         <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="n">registro_estagio</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">LU</span><span class="p">):</span>
                 <span class="n">novo_registro</span> <span class="o">=</span> <span class="n">LU</span><span class="p">(</span>
-                    <span class="n">state</span><span class="o">=</span><span class="n">ComponentState</span><span class="o">.</span><span class="n">READ_SUCCESS</span><span class="p">,</span>
                     <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
                 <span class="p">)</span>
                 <span class="n">novo_registro</span><span class="o">.</span><span class="n">codigo</span> <span class="o">=</span> <span class="n">ultimo_registro</span><span class="o">.</span><span class="n">codigo</span>
@@ -818,7 +810,6 @@
                         <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="n">registro_estagio</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">LV</span><span class="p">):</span>
                 <span class="n">novo_registro</span> <span class="o">=</span> <span class="n">LV</span><span class="p">(</span>
-                    <span class="n">state</span><span class="o">=</span><span class="n">ComponentState</span><span class="o">.</span><span class="n">READ_SUCCESS</span><span class="p">,</span>
                     <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
                 <span class="p">)</span>
                 <span class="n">novo_registro</span><span class="o">.</span><span class="n">codigo</span> <span class="o">=</span> <span class="n">codigo</span>
@@ -909,7 +900,6 @@
                         <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="n">registro_estagio</span>
             <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="p">,</span> <span class="n">LQ</span><span class="p">):</span>
                 <span class="n">novo_registro</span> <span class="o">=</span> <span class="n">LQ</span><span class="p">(</span>
-                    <span class="n">state</span><span class="o">=</span><span class="n">ComponentState</span><span class="o">.</span><span class="n">READ_SUCCESS</span><span class="p">,</span>
                     <span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">ultimo_registro</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
                 <span class="p">)</span>
                 <span class="n">novo_registro</span><span class="o">.</span><span class="n">codigo</span> <span class="o">=</span> <span class="n">codigo</span>
