@@ -1071,7 +1071,7 @@ def test_registro_ar_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [1]
+    assert r.data == [1, None, None]
 
 
 def test_registro_ev_dadger():

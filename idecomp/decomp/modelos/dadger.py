@@ -112,7 +112,7 @@ class UH(Register):
         return self.data[1]
 
     @ree.setter
-    def ree(self, n: str):
+    def ree(self, n: int):
         self.data[1] = n
 
     @property
@@ -130,17 +130,17 @@ class UH(Register):
         self.data[2] = v
 
     @property
-    def evaporacao(self) -> Optional[bool]:
+    def evaporacao(self) -> Optional[int]:
         """
         A consideração ou não de evaporação para a UHE.
 
         :return: A consideração.
-        :rtype: Optional[bool]
+        :rtype: Optional[int]
         """
         return self.data[3]
 
     @evaporacao.setter
-    def evaporacao(self, e: bool):
+    def evaporacao(self, e: int):
         self.data[3] = e
 
 
@@ -1018,6 +1018,72 @@ class FU(Register):
         ]
     )
 
+    @property
+    def restricao(self) -> Optional[int]:
+        """
+        O código da restrição elétrica, segundo registro RE.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @restricao.setter
+    def restricao(self, c: int):
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int):
+        self.data[1] = c
+
+    @property
+    def uhe(self) -> Optional[int]:
+        """
+        O número da UHE conforme registro UH.
+
+        :return: O número da UHE como `int`.
+        """
+        return self.data[2]
+
+    @uhe.setter
+    def uhe(self, c: int):
+        self.data[2] = c
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        """
+        O coeficiente de participação da usina na restrição.
+
+        :return: O coeficiente como `float`
+        """
+        return self.data[3]
+
+    @coeficiente.setter
+    def coeficiente(self, f: float):
+        self.data[3] = f
+
+    @property
+    def frequencia(self) -> Optional[int]:
+        """
+        A frequência para restrição elétrica, valendo 50 ou 60
+        para Itaipu e 0 para as demais.
+
+        :return: O número da frequencia como `int`.
+        """
+        return self.data[4]
+
+    @frequencia.setter
+    def frequencia(self, c: int):
+        self.data[4] = c
+
 
 class FT(Register):
     """
@@ -1037,6 +1103,71 @@ class FT(Register):
         ]
     )
 
+    @property
+    def restricao(self) -> Optional[int]:
+        """
+        O código da restrição elétrica, segundo registro RE.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @restricao.setter
+    def restricao(self, c: int):
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int):
+        self.data[1] = c
+
+    @property
+    def ute(self) -> Optional[int]:
+        """
+        O número da UTE conforme registro CT.
+
+        :return: O número da UTE como `int`.
+        """
+        return self.data[2]
+
+    @ute.setter
+    def ute(self, c: int):
+        self.data[2] = c
+
+    @property
+    def subsistema(self) -> Optional[int]:
+        """
+        O número do subsistema conforme registros CT ou TG.
+
+        :return: O número do subsistema como `int`.
+        """
+        return self.data[3]
+
+    @subsistema.setter
+    def subsistema(self, s: int):
+        self.data[3] = s
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        """
+        O coeficiente de participação da usina na restrição.
+
+        :return: O coeficiente como `float`
+        """
+        return self.data[4]
+
+    @coeficiente.setter
+    def coeficiente(self, f: float):
+        self.data[4] = f
+
 
 class FI(Register):
     """
@@ -1055,6 +1186,71 @@ class FI(Register):
             FloatField(10, 24, 7),
         ]
     )
+
+    @property
+    def restricao(self) -> Optional[int]:
+        """
+        O código da restrição elétrica, segundo registro RE.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @restricao.setter
+    def restricao(self, c: int):
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int):
+        self.data[1] = c
+
+    @property
+    def de(self) -> Optional[int]:
+        """
+        O número do subsistema "DE" conforme registros SB.
+
+        :return: O número do subsistema como `int`.
+        """
+        return self.data[2]
+
+    @de.setter
+    def de(self, s: int):
+        self.data[2] = s
+
+    @property
+    def para(self) -> Optional[int]:
+        """
+        O número do subsistema "PARA" conforme registros SB.
+
+        :return: O número do subsistema como `int`.
+        """
+        return self.data[3]
+
+    @para.setter
+    def para(self, s: int):
+        self.data[3] = s
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        """
+        O coeficiente de participação da interligação.
+
+        :return: O coeficiente como `float`
+        """
+        return self.data[4]
+
+    @coeficiente.setter
+    def coeficiente(self, f: float):
+        self.data[4] = f
 
 
 class VI(Register):
@@ -1624,6 +1820,34 @@ class EZ(Register):
         ]
     )
 
+    @property
+    def uhe(self) -> Optional[int]:
+        """
+        Código da UHE associada, conforme registro UH.
+
+        :return: O código da UHE.
+        :rtype: Optional[int]
+        """
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, u: int):
+        self.data[0] = u
+
+    @property
+    def volume(self) -> Optional[float]:
+        """
+        O volume útil considerado para cálculo.
+
+        :return: O volume útil em % do volume máximo.
+        :rtype: Optional[float]
+        """
+        return self.data[1]
+
+    @volume.setter
+    def volume(self, u: float):
+        self.data[1] = u
+
 
 class HV(Register):
     """
@@ -1774,6 +1998,71 @@ class CV(Register):
             LiteralField(4, 34),
         ]
     )
+
+    @property
+    def restricao(self) -> Optional[int]:
+        """
+        O código da restrição de volume, segundo registro HV.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @restricao.setter
+    def restricao(self, c: int):
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int):
+        self.data[1] = c
+
+    @property
+    def uhe(self) -> Optional[int]:
+        """
+        O número da UHE ou estação de bombeamento conforme registros UH ou UE.
+
+        :return: O número da UHE como `int`.
+        """
+        return self.data[2]
+
+    @uhe.setter
+    def uhe(self, c: int):
+        self.data[2] = c
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        """
+        O coeficiente da variável na restrição.
+
+        :return: O coeficiente como `float`
+        """
+        return self.data[3]
+
+    @coeficiente.setter
+    def coeficiente(self, f: float):
+        self.data[3] = f
+
+    @property
+    def tipo(self) -> Optional[str]:
+        """
+        O mnemônico de tipo da restrição.
+
+        :return: O tipo como `str`.
+        """
+        return self.data[4]
+
+    @tipo.setter
+    def tipo(self, t: str):
+        self.data[4] = t
 
 
 class HQ(Register):
@@ -1945,6 +2234,71 @@ class CQ(Register):
         ]
     )
 
+    @property
+    def restricao(self) -> Optional[int]:
+        """
+        O código da restrição de vazão, segundo registro HQ.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @restricao.setter
+    def restricao(self, c: int):
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int):
+        self.data[1] = c
+
+    @property
+    def uhe(self) -> Optional[int]:
+        """
+        O número da UHE conforme registro UH.
+
+        :return: O número da UHE como `int`.
+        """
+        return self.data[2]
+
+    @uhe.setter
+    def uhe(self, c: int):
+        self.data[2] = c
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        """
+        O coeficiente da variável na restrição.
+
+        :return: O coeficiente como `float`
+        """
+        return self.data[3]
+
+    @coeficiente.setter
+    def coeficiente(self, f: float):
+        self.data[3] = f
+
+    @property
+    def tipo(self) -> Optional[str]:
+        """
+        O mnemônico de tipo da restrição.
+
+        :return: O tipo como `str`.
+        """
+        return self.data[4]
+
+    @tipo.setter
+    def tipo(self, t: str):
+        self.data[4] = t
+
 
 class AR(Register):
     """
@@ -1954,10 +2308,50 @@ class AR(Register):
     IDENTIFIER = "AR  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
-        [
-            IntegerField(3, 5),
-        ]
+        [IntegerField(3, 5), FloatField(5, 11, 0), FloatField(5, 17, 0)]
     )
+
+    @property
+    def periodo(self) -> Optional[int]:
+        """
+        O período inicial de aplicação do CVaR.
+
+        :return: O índice do período inicial.
+        :rtype: Optional[int]
+        """
+        return self.data[0]
+
+    @periodo.setter
+    def periodo(self, p: int):
+        self.data[0] = p
+
+    @property
+    def lamb(self) -> Optional[float]:
+        """
+        O valor de lambda utilizado no CVaR.
+
+        :return: O valor de lambda
+        :rtype: Optional[float]
+        """
+        return self.data[1]
+
+    @lamb.setter
+    def lamb(self, v: float):
+        self.data[1] = v
+
+    @property
+    def alfa(self) -> Optional[float]:
+        """
+        O valor de alfa utilizado no CVaR.
+
+        :return: O valor de alfa
+        :rtype: Optional[float]
+        """
+        return self.data[2]
+
+    @alfa.setter
+    def alfa(self, v: float):
+        self.data[2] = v
 
 
 class EV(Register):
@@ -2127,7 +2521,7 @@ class HE(Register):
         das usinas usadas nas restrição.
 
         :return: A flag.
-        :rtype: Optional[float]
+        :rtype: Optional[int]
         """
         return self.data[5]
 
