@@ -7,12 +7,11 @@ import pandas as pd  # type: ignore
 
 class Hidr(ArquivoBinario):
     """
-    Armazena os dados de saída do DECOMP referentes às térmicas de
-    despacho antecipado (GNL).
+    Armazena os dados de entrada do DECOMP relacionados ao cadastro
+    das usinas hidráulicas.
 
     Esta classe lida com as informações de entrada fornecidas ao
-    DECOMP e reproduzidas no `relgnl.rvx`, bem como as saídas finais
-    da execução.
+    DECOMP fornecidas através do arquivo binário `hidr.dat`.
 
     """
 
