@@ -288,6 +288,25 @@ class Dadger(RegisterFile):
         """
         return [r for r in self.data.of_type(tipo)]
 
+    def append_registro(self, registro: Register):
+        """
+        Adiciona um registro ao arquivo na última posição.
+
+
+        Este método existe para retrocompatibilidade e deve ser substituído
+        quando for suportado na classe :class:`RegisterFile`.
+        """
+        self.data.append(registro)
+
+    def preppend_registro(self, registro: Register):
+        """
+        Adiciona um registro ao arquivo na primeira posição.
+
+        Este método existe para retrocompatibilidade e deve ser substituído
+        quando for suportado na classe :class:`RegisterFile`.
+        """
+        self.data.preppend(registro)
+
     @property
     def te(self) -> Optional[TE]:
         """

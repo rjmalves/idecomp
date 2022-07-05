@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.32</title>
+  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.34</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -360,6 +360,25 @@
 <span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">tipo</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="Dadger.append_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.append_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">append_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adiciona um registro ao arquivo na última posição.</span>
+
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">registro</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.preppend_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.preppend_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">preppend_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adiciona um registro ao arquivo na primeira posição.</span>
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">preppend</span><span class="p">(</span><span class="n">registro</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">te</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TE</span><span class="p">]:</span>

@@ -82,8 +82,13 @@ class UH(Register):
         [
             IntegerField(3, 4),
             IntegerField(2, 9),
-            FloatField(6, 18, 2),
+            FloatField(10, 14, 2),
+            FloatField(10, 25, 2),
             IntegerField(1, 39),
+            IntegerField(2, 44),
+            FloatField(10, 49, 2),
+            FloatField(10, 59, 2),
+            IntegerField(1, 69),
         ]
     )
 
@@ -130,6 +135,20 @@ class UH(Register):
         self.data[2] = v
 
     @property
+    def vazao_defluente_minima(self) -> Optional[float]:
+        """
+        O vazão defluente mínima da usina em m3/s.
+
+        :return: A vazão em m3/s.
+        :rtype: Optional[float]
+        """
+        return self.data[3]
+
+    @vazao_defluente_minima.setter
+    def vazao_defluente_minima(self, v: float):
+        self.data[3] = v
+
+    @property
     def evaporacao(self) -> Optional[int]:
         """
         A consideração ou não de evaporação para a UHE.
@@ -137,17 +156,75 @@ class UH(Register):
         :return: A consideração.
         :rtype: Optional[int]
         """
-        return self.data[3]
+        return self.data[4]
 
     @evaporacao.setter
     def evaporacao(self, e: int):
-        self.data[3] = e
+        self.data[4] = e
+
+    @property
+    def estagio_inicio_producao(self) -> Optional[int]:
+        """
+        Estágio a partir da qual a usina começa a produzir energia.
+
+        :return: O índice do estágio.
+        :rtype: Optional[int]
+        """
+        return self.data[5]
+
+    @estagio_inicio_producao.setter
+    def estagio_inicio_producao(self, e: int):
+        self.data[5] = e
+
+    @property
+    def volume_morto_inicial(self) -> Optional[float]:
+        """
+        Volume morto inicial da usina.
+
+        :return: O volume em hm3.
+        :rtype: Optional[float]
+        """
+        return self.data[6]
+
+    @volume_morto_inicial.setter
+    def volume_morto_inicial(self, e: float):
+        self.data[6] = e
+
+    @property
+    def limite_superior_vertimento(self) -> Optional[float]:
+        """
+        O limite superior para vertimento da usina.
+
+        :return: O limite em m3/s.
+        :rtype: Optional[float]
+        """
+        return self.data[7]
+
+    @limite_superior_vertimento.setter
+    def limite_superior_vertimento(self, e: float):
+        self.data[7] = e
+
+    @property
+    def balanco_hidrico_patamar(self) -> Optional[int]:
+        """
+        Consideração do balanço hídrico por patamar.
+
+        :return: C consideração, ou não.
+        :rtype: Optional[int]
+        """
+        return self.data[8]
+
+    @balanco_hidrico_patamar.setter
+    def balanco_hidrico_patamar(self, e: int):
+        self.data[8] = e
 
 
 class CT(Register):
     """
     Registro que contém o cadastro das usinas termelétricas com
     os seus custos e capacidades.
+
+    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "CT  "
@@ -305,10 +382,124 @@ class UE(Register):
         ]
     )
 
+    @property
+    def codigo(self) -> Optional[int]:
+        """
+        O código de cadastro da UE.
+
+        :return: O código.
+        :rtype: Optional[int]
+        """
+        return self.data[0]
+
+    @codigo.setter
+    def codigo(self, cod: int):
+        self.data[0] = cod
+
+    @property
+    def subsistema(self) -> Optional[int]:
+        """
+        O subsistema de cadastro da UE, conforme registro SB.
+
+        :return: O subsistema.
+        :rtype: Optional[int]
+        """
+        return self.data[1]
+
+    @subsistema.setter
+    def subsistema(self, n: int):
+        self.data[1] = n
+
+    @property
+    def nome(self) -> Optional[str]:
+        """
+        O nome da estação de bombeamento.
+
+        :return: O nome.
+        :rtype: Optional[str]
+        """
+        return self.data[2]
+
+    @nome.setter
+    def nome(self, v: str):
+        self.data[2] = v
+
+    @property
+    def uhe_montante(self) -> Optional[int]:
+        """
+        O código da UHE a montante, conforme registro UH.
+
+        :return: O código.
+        :rtype: Optional[int]
+        """
+        return self.data[3]
+
+    @uhe_montante.setter
+    def uhe_montante(self, v: int):
+        self.data[3] = v
+
+    @property
+    def uhe_jusante(self) -> Optional[int]:
+        """
+        O código da UHE a jusante, conforme registro UH.
+
+        :return: O código.
+        :rtype: Optional[int]
+        """
+        return self.data[4]
+
+    @uhe_jusante.setter
+    def uhe_jusante(self, e: int):
+        self.data[4] = e
+
+    @property
+    def vazao_minima_bombeavel(self) -> Optional[float]:
+        """
+        A vazão mínima bombeável.
+
+        :return: A vazão em m3/s
+        :rtype: Optional[float]
+        """
+        return self.data[5]
+
+    @vazao_minima_bombeavel.setter
+    def vazao_minima_bombeavel(self, e: float):
+        self.data[5] = e
+
+    @property
+    def vazao_maxima_bombeavel(self) -> Optional[float]:
+        """
+        A vazão mínima bombeável.
+
+        :return: A vazão em m3/s
+        :rtype: Optional[float]
+        """
+        return self.data[6]
+
+    @vazao_maxima_bombeavel.setter
+    def vazao_maxima_bombeavel(self, e: float):
+        self.data[6] = e
+
+    @property
+    def taxa_consumo(self) -> Optional[float]:
+        """
+        A taxa de consumo.
+
+        :return: A taxa em MWmed/m3/s.
+        :rtype: Optional[float]
+        """
+        return self.data[7]
+
+    @taxa_consumo.setter
+    def taxa_consumo(self, e: float):
+        self.data[7] = e
+
 
 class DP(Register):
     """
     Registro que contém o cadastro das durações dos patamares.
+
+    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "DP  "
@@ -416,6 +607,8 @@ class DP(Register):
 class CD(Register):
     """
     Registro que contém o cadastro dos custos de déficit.
+
+    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "CD  "
@@ -502,6 +695,8 @@ class CD(Register):
 class RI(Register):
     """
     Registro que contém as restrições de Itaipu.
+
+    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "RI  "
@@ -509,8 +704,8 @@ class RI(Register):
     LINE = Line(
         [
             IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 13),
+            IntegerField(3, 8),
+            IntegerField(3, 12),
             FloatField(7, 16, 0),
             FloatField(7, 23, 0),
             FloatField(7, 30, 0),
@@ -533,6 +728,8 @@ class RI(Register):
 class IA(Register):
     """
     Registro que contém os limites de intercâmbio entre os subsistemas.
+
+    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "IA  "
@@ -616,11 +813,7 @@ class NI(Register):
 
     IDENTIFIER = "NI  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-        ]
-    )
+    LINE = Line([IntegerField(3, 4), IntegerField(1, 8)])
 
     @property
     def iteracoes(self) -> Optional[int]:
@@ -635,6 +828,20 @@ class NI(Register):
     @iteracoes.setter
     def iteracoes(self, i: int):
         self.data[0] = i
+
+    @property
+    def tipo_limite(self) -> Optional[int]:
+        """
+        Se o número de interações fornecido é mínimo ou máximo.
+
+        :return: O tipo de limite de iterações
+        :rtype: Optional[int]
+        """
+        return self.data[1]
+
+    @tipo_limite.setter
+    def tipo_limite(self, i: int):
+        self.data[1] = i
 
 
 class DT(Register):
@@ -698,6 +905,8 @@ class DT(Register):
 class MP(Register):
     """
     Registro que contém as manutenções programadas das UHEs.
+
+    *OBS: Suporta apenas 12 estágios no momento*
     """
 
     IDENTIFIER = "MP  "
@@ -726,6 +935,8 @@ class MP(Register):
 class MT(Register):
     """
     Registro que contém as manutenções programadas das UTEs.
+
+    *OBS: Suporta apenas 12 estágios no momento*
     """
 
     IDENTIFIER = "MT  "
@@ -754,6 +965,8 @@ class MT(Register):
 class FD(Register):
     """
     Registro que contém as manutenções programadas das UTEs.
+
+    *OBS: Suporta apenas 12 estágios no momento*
     """
 
     IDENTIFIER = "FD  "
@@ -782,6 +995,8 @@ class FD(Register):
 class VE(Register):
     """
     Registro que contém os volumes de espera das UHEs.
+
+    *OBS: Suporta apenas 12 estágios no momento*
     """
 
     IDENTIFIER = "VE  "
@@ -910,6 +1125,8 @@ class RE(Register):
 class LU(Register):
     """
     Registro que contém os cadastros de limites das restrições elétricas.
+
+    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "LU  "
@@ -1214,29 +1431,29 @@ class FI(Register):
         self.data[1] = c
 
     @property
-    def de(self) -> Optional[int]:
+    def de(self) -> Optional[str]:
         """
-        O número do subsistema "DE" conforme registros SB.
+        O subsistema "DE" conforme registros SB.
 
-        :return: O número do subsistema como `int`.
+        :return: O subsistema como `str`.
         """
         return self.data[2]
 
     @de.setter
-    def de(self, s: int):
+    def de(self, s: str):
         self.data[2] = s
 
     @property
-    def para(self) -> Optional[int]:
+    def para(self) -> Optional[str]:
         """
-        O número do subsistema "PARA" conforme registros SB.
+        O subsistema "PARA" conforme registros SB.
 
-        :return: O número do subsistema como `int`.
+        :return: O  subsistema como `str`.
         """
         return self.data[3]
 
     @para.setter
-    def para(self, s: int):
+    def para(self, s: str):
         self.data[3] = s
 
     @property
@@ -2667,6 +2884,14 @@ class ACNUMPOS(Register):
         self.data[0] = u
 
     @property
+    def posto(self) -> Optional[int]:
+        return self.data[1]
+
+    @posto.setter
+    def posto(self, u: int):
+        self.data[1] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -2727,6 +2952,14 @@ class ACNUMJUS(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def jusante(self) -> Optional[int]:
+        return self.data[1]
+
+    @jusante.setter
+    def jusante(self, u: int):
+        self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -2793,6 +3026,22 @@ class ACDESVIO(Register):
         self.data[0] = u
 
     @property
+    def jusante(self) -> Optional[int]:
+        return self.data[1]
+
+    @jusante.setter
+    def jusante(self, u: int):
+        self.data[1] = u
+
+    @property
+    def limite_vazao(self) -> Optional[float]:
+        return self.data[2]
+
+    @limite_vazao.setter
+    def limite_vazao(self, u: float):
+        self.data[2] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -2827,8 +3076,7 @@ class ACVOLMIN(Register):
     LINE = Line(
         [
             IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(10, 24, 2),
+            FloatField(10, 19, 2),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),
@@ -2854,6 +3102,14 @@ class ACVOLMIN(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def volume(self) -> Optional[float]:
+        return self.data[1]
+
+    @volume.setter
+    def volume(self, u: float):
+        self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -2890,8 +3146,7 @@ class ACVOLMAX(Register):
     LINE = Line(
         [
             IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(10, 24, 2),
+            FloatField(10, 19, 2),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),
@@ -2917,6 +3172,14 @@ class ACVOLMAX(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def volume(self) -> Optional[float]:
+        return self.data[1]
+
+    @volume.setter
+    def volume(self, u: float):
+        self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -3142,6 +3405,14 @@ class ACPROESP(Register):
         self.data[0] = u
 
     @property
+    def produtibilidade(self) -> Optional[float]:
+        return self.data[1]
+
+    @produtibilidade.setter
+    def produtibilidade(self, u: float):
+        self.data[1] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -3203,6 +3474,14 @@ class ACPERHID(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def coeficiente(self) -> Optional[float]:
+        return self.data[1]
+
+    @coeficiente.setter
+    def coeficiente(self, u: float):
+        self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -3267,6 +3546,22 @@ class ACNCHAVE(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def numero_curva(self) -> Optional[int]:
+        return self.data[1]
+
+    @numero_curva.setter
+    def numero_curva(self, u: int):
+        self.data[1] = u
+
+    @property
+    def nivel(self) -> Optional[float]:
+        return self.data[2]
+
+    @nivel.setter
+    def nivel(self, u: float):
+        self.data[2] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -3501,6 +3796,14 @@ class ACNUMCON(Register):
         self.data[0] = u
 
     @property
+    def conjunto(self) -> Optional[int]:
+        return self.data[1]
+
+    @conjunto.setter
+    def conjunto(self, u: int):
+        self.data[1] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -3565,6 +3868,22 @@ class ACNUMMAQ(Register):
         self.data[0] = u
 
     @property
+    def conjunto(self) -> Optional[int]:
+        return self.data[1]
+
+    @conjunto.setter
+    def conjunto(self, u: int):
+        self.data[1] = u
+
+    @property
+    def maquinas(self) -> Optional[int]:
+        return self.data[2]
+
+    @maquinas.setter
+    def maquinas(self, u: int):
+        self.data[2] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -3627,6 +3946,22 @@ class ACPOTEFE(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def conjunto(self) -> Optional[int]:
+        return self.data[1]
+
+    @conjunto.setter
+    def conjunto(self, u: int):
+        self.data[1] = u
+
+    @property
+    def potencia(self) -> Optional[float]:
+        return self.data[2]
+
+    @potencia.setter
+    def potencia(self, u: float):
+        self.data[2] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -3755,6 +4090,22 @@ class ACVAZEFE(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def conjunto(self) -> Optional[int]:
+        return self.data[1]
+
+    @conjunto.setter
+    def conjunto(self, u: int):
+        self.data[1] = u
+
+    @property
+    def vazao(self) -> Optional[int]:
+        return self.data[2]
+
+    @vazao.setter
+    def vazao(self, u: int):
+        self.data[2] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -3961,6 +4312,14 @@ class ACVAZMIN(Register):
         self.data[0] = u
 
     @property
+    def vazao(self) -> Optional[int]:
+        return self.data[1]
+
+    @vazao.setter
+    def vazao(self, u: int):
+        self.data[1] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -4021,6 +4380,14 @@ class ACTIPERH(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def tipo_perda(self) -> Optional[int]:
+        return self.data[1]
+
+    @tipo_perda.setter
+    def tipo_perda(self, u: int):
+        self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:
@@ -4087,6 +4454,14 @@ class ACJUSENA(Register):
         self.data[0] = u
 
     @property
+    def aproveitamento(self) -> Optional[int]:
+        return self.data[1]
+
+    @aproveitamento.setter
+    def aproveitamento(self, u: int):
+        self.data[1] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -4150,6 +4525,14 @@ class ACVSVERT(Register):
         self.data[0] = u
 
     @property
+    def volume(self) -> Optional[float]:
+        return self.data[1]
+
+    @volume.setter
+    def volume(self, u: float):
+        self.data[1] = u
+
+    @property
     def mes(self) -> Optional[str]:
         return self.data[-3]
 
@@ -4211,6 +4594,14 @@ class ACVMDESV(Register):
     @uhe.setter
     def uhe(self, u: int):
         self.data[0] = u
+
+    @property
+    def volume(self) -> Optional[float]:
+        return self.data[1]
+
+    @volume.setter
+    def volume(self, u: float):
+        self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:

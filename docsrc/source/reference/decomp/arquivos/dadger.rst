@@ -46,7 +46,6 @@ de operação:
 .. autoclass:: CD
    :members:
 
-
 .. autoclass:: RI
    :members:
 
@@ -113,6 +112,9 @@ de operação:
 .. autoclass:: TI
    :members:
 
+.. autoclass:: FP
+   :members:
+
 .. autoclass:: RQ
    :members:
 
@@ -151,3 +153,79 @@ de operação:
 
 .. autoclass:: CM
    :members:
+
+.. autoclass:: ACNUMPOS
+   :members:
+
+.. autoclass:: ACNUMJUS
+   :members:
+
+.. autoclass:: ACDESVIO
+   :members:
+
+.. autoclass:: ACVOLMIN
+   :members:
+
+.. autoclass:: ACVOLMAX
+   :members:
+
+.. autoclass:: ACCOTVOL
+   :members:
+
+.. autoclass:: ACCOTARE
+   :members:
+
+.. autoclass:: ACPROESP
+   :members:
+
+.. autoclass:: ACPERHID
+   :members:
+
+.. autoclass:: ACNCHAVE
+   :members:
+
+.. autoclass:: ACCOTVAZ
+   :members:
+
+.. autoclass:: ACCOFEVA
+   :members:
+
+.. autoclass:: ACNUMCON
+   :members:
+
+.. autoclass:: ACNUMMAQ
+   :members:
+
+.. autoclass:: ACPOTEFE
+   :members:
+
+.. autoclass:: ACALTEFE
+   :members:
+
+.. autoclass:: ACVAZEFE
+   :members:
+
+.. autoclass:: ACJUSMED
+   :members:
+
+.. autoclass:: ACVERTJU
+   :members:
+
+.. autoclass:: ACVAZMIN
+   :members:
+
+.. autoclass:: ACTIPERH
+   :members:
+
+.. autoclass:: ACJUSENA
+   :members:
+
+.. autoclass:: ACVSVERT
+   :members:
+
+.. autoclass:: ACVMDESV
+   :members:
+
+.. autoclass:: ACNPOSNW
+   :members:
+

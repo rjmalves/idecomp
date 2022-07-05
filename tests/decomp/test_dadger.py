@@ -169,7 +169,7 @@ def test_registro_uh_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [1, 10, 25.29, 1]
+    assert r.data == [1, 10, 25.29, None, 1, None, None, None, None]
     assert r.codigo == 1
     r.codigo = 0
     assert r.codigo == 0
@@ -248,6 +248,14 @@ def test_registro_ue_dadger():
         160.0,
         0.2,
     ]
+    assert r.codigo == 1
+    assert r.subsistema == 1
+    assert r.nome == "Sta Cecilia"
+    assert r.uhe_montante == 181
+    assert r.uhe_jusante == 125
+    assert r.vazao_minima_bombeavel == 0.0
+    assert r.vazao_maxima_bombeavel == 160.0
+    assert r.taxa_consumo == 0.2
 
 
 def test_registro_dp_dadger():
@@ -393,10 +401,13 @@ def test_registro_ni_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [200]
+    assert r.data == [200, None]
     assert r.iteracoes == 200
     r.iteracoes = 0
     assert r.iteracoes == 0
+    assert r.tipo_limite == None
+    r.tipo_limite = 1
+    assert r.tipo_limite == 1
 
 
 def test_registro_dt_dadger():
@@ -593,6 +604,11 @@ def test_registro_fu_dadger():
             r.read(fp)
 
     assert r.data == [43, 1, 47, 1, None]
+    assert r.restricao == 43
+    assert r.estagio == 1
+    assert r.uhe == 47
+    assert r.coeficiente == 1
+    assert r.frequencia == None
 
 
 def test_registro_fi_dadger():
@@ -604,6 +620,10 @@ def test_registro_fi_dadger():
             r.read(fp)
 
     assert r.data == [417, 1, "NE", "SE", 1]
+    assert r.restricao == 417
+    assert r.estagio == 1
+    assert r.de == "NE"
+    assert r.coeficiente == 1
 
 
 def test_registro_ft_dadger():
@@ -615,6 +635,11 @@ def test_registro_ft_dadger():
             r.read(fp)
 
     assert r.data == [449, 1, 310, 4, 1]
+    assert r.restricao == 449
+    assert r.estagio == 1
+    assert r.ute == 310
+    assert r.subsistema == 4
+    assert r.coeficiente == 1
 
 
 def test_registro_vi_dadger():
@@ -670,6 +695,21 @@ def test_registro_acjusmed_dadger():
         1,
         2020,
     ]
+    assert r.uhe == 285
+    r.uhe = 20
+    assert r.uhe == 20
+    assert r.cota == 73.47
+    r.cota = 55.0
+    assert r.cota == 55.0
+    assert r.mes == "JAN"
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana == 1
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano == 2020
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_accotvol_dadger():
@@ -688,6 +728,24 @@ def test_registro_accotvol_dadger():
         1,
         2020,
     ]
+    assert r.uhe == 285
+    r.uhe = 10
+    assert r.uhe == 10
+    assert r.ordem == 1
+    r.ordem = 2
+    assert r.ordem == 2
+    assert r.coeficiente == 90.0
+    r.coeficiente = 3.14
+    assert r.coeficiente == 3.14
+    assert r.mes == "JAN"
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana == 1
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano == 2020
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acvolmin_dadger():
@@ -698,7 +756,22 @@ def test_registro_acvolmin_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [34, None, 15563, "", None, None]
+    assert r.data == [34, 15563, "", None, None]
+    assert r.uhe == 34
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.volume == 15563
+    r.volume = 50.5
+    assert r.volume == 50.5
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_accofeva_dadger():
@@ -709,7 +782,25 @@ def test_registro_accofeva_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [95, 10.0, 0.0, "", None, None]
+    assert r.data == [95, 10, 0, "", None, None]
+    assert r.uhe == 95
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.mes_coeficiente == 10
+    r.mes_coeficiente = 5
+    assert r.mes_coeficiente == 5
+    assert r.coeficiente == 0
+    r.coeficiente = 5
+    assert r.coeficiente == 5
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acnumpos_dadger():
@@ -721,6 +812,21 @@ def test_registro_acnumpos_dadger():
             r.read(fp)
 
     assert r.data == [119, 300, "", None, None]
+    assert r.uhe == 119
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.posto == 300
+    r.posto = 50
+    assert r.posto == 50
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acvsvert_dadger():
@@ -732,6 +838,21 @@ def test_registro_acvsvert_dadger():
             r.read(fp)
 
     assert r.data == [117, 144.14, "", None, None]
+    assert r.uhe == 117
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.volume == 144.14
+    r.volume = 50
+    assert r.volume == 50
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acvmdesv_dadger():
@@ -743,6 +864,21 @@ def test_registro_acvmdesv_dadger():
             r.read(fp)
 
     assert r.data == [124, 102.0, "", None, None]
+    assert r.uhe == 124
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.volume == 102
+    r.volume = 50
+    assert r.volume == 50
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acnumjus_dadger():
@@ -754,6 +890,21 @@ def test_registro_acnumjus_dadger():
             r.read(fp)
 
     assert r.data == [117, 108.0, "", None, None]
+    assert r.uhe == 117
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.jusante == 108.0
+    r.jusante = 50
+    assert r.jusante == 50
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acdesvio_dadger():
@@ -765,6 +916,24 @@ def test_registro_acdesvio_dadger():
             r.read(fp)
 
     assert r.data == [118, 119, 100.0, "", None, None]
+    assert r.uhe == 118
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.jusante == 119
+    r.jusante = 50
+    assert r.jusante == 50
+    assert r.limite_vazao == 100.0
+    r.limite_vazao = 50.0
+    assert r.limite_vazao == 50.0
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acjusena_dadger():
@@ -776,6 +945,21 @@ def test_registro_acjusena_dadger():
             r.read(fp)
 
     assert r.data == [172, 176, "", None, None]
+    assert r.uhe == 172
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.aproveitamento == 176
+    r.aproveitamento = 50
+    assert r.aproveitamento == 50
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acvazmin_dadger():
@@ -787,6 +971,21 @@ def test_registro_acvazmin_dadger():
             r.read(fp)
 
     assert r.data == [4, 0, "", None, None]
+    assert r.uhe == 4
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.vazao == 0
+    r.vazao = 50
+    assert r.vazao == 50
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acnposnw_dadger():
@@ -798,6 +997,21 @@ def test_registro_acnposnw_dadger():
             r.read(fp)
 
     assert r.data == [43, 43, "", None, None]
+    assert r.uhe == 43
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.posto == 43
+    r.posto = 50
+    assert r.posto == 50
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acvertju_dadger():
@@ -809,6 +1023,21 @@ def test_registro_acvertju_dadger():
             r.read(fp)
 
     assert r.data == [103, 1, "", None, None]
+    assert r.uhe == 103
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.influi == 1
+    r.influi = 0
+    assert r.influi == 0
+    assert r.mes == ""
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana is None
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acnumcon_dadger():
@@ -820,6 +1049,21 @@ def test_registro_acnumcon_dadger():
             r.read(fp)
 
     assert r.data == [275, 2, "JAN", 1, None]
+    assert r.uhe == 275
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.conjunto == 2
+    r.conjunto = 0
+    assert r.conjunto == 0
+    assert r.mes == "JAN"
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana == 1
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acnummaq_dadger():
@@ -831,6 +1075,24 @@ def test_registro_acnummaq_dadger():
             r.read(fp)
 
     assert r.data == [275, 1, 2, "JAN", 1, None]
+    assert r.uhe == 275
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.conjunto == 1
+    r.conjunto = 0
+    assert r.conjunto == 0
+    assert r.maquinas == 2
+    r.maquinas = 0
+    assert r.maquinas == 0
+    assert r.mes == "JAN"
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana == 1
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_acpotefe_dadger():
@@ -842,6 +1104,24 @@ def test_registro_acpotefe_dadger():
             r.read(fp)
 
     assert r.data == [275, 1, 22.5, "JAN", 1, None]
+    assert r.uhe == 275
+    r.uhe = 40
+    assert r.uhe == 40
+    assert r.conjunto == 1
+    r.conjunto = 0
+    assert r.conjunto == 0
+    assert r.potencia == 22.5
+    r.potencia = 0
+    assert r.potencia == 0
+    assert r.mes == "JAN"
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana == 1
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano is None
+    r.ano = 2022
+    assert r.ano == 2022
 
 
 def test_registro_fp_dadger():
@@ -876,6 +1156,12 @@ def test_registro_fp_dadger():
     assert r.numero_pontos_volume == 5
     r.numero_pontos_volume = 0
     assert r.numero_pontos_volume == 0
+    assert r.limite_inferior_janela_volume == 20
+    r.limite_inferior_janela_volume = 1
+    assert r.limite_inferior_janela_volume == 1
+    assert r.limite_superior_janela_volume == 20
+    r.limite_superior_janela_volume = 0
+    assert r.limite_superior_janela_volume == 0
 
 
 def test_registro_ir_dadger():
@@ -950,6 +1236,8 @@ def test_registro_rq_dadger():
     r.ree = 0
     assert r.ree == 0
     assert r.vazoes == [100, 100, 100, 100, 100, 0]
+    r.vazoes = [100, 100, 100]
+    assert r.vazoes == [100, 100, 100]
 
 
 def test_registro_ez_dadger():
@@ -960,6 +1248,12 @@ def test_registro_ez_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [251, 55.0]
+    assert r.uhe == 251
+    r.uhe = 200
+    assert r.uhe == 200
+    assert r.volume == 55.0
+    r.volume = 100.0
+    assert r.volume == 100.0
 
 
 def test_registro_hv_dadger():
@@ -1011,6 +1305,21 @@ def test_registro_cv_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [117, 1, 43, -1.5866762, "VARM"]
+    assert r.restricao == 117
+    r.restricao = 0
+    assert r.restricao == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.uhe == 43
+    r.uhe = 10
+    assert r.uhe == 10
+    assert r.coeficiente == -1.5866762
+    r.coeficiente = 1
+    assert r.coeficiente == 1
+    assert r.tipo == "VARM"
+    r.tipo = ""
+    assert r.tipo == ""
 
 
 def test_registro_hq_dadger():
@@ -1062,6 +1371,21 @@ def test_registro_cq_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [11, 1, 27, 1, "QDEF"]
+    assert r.restricao == 11
+    r.restricao = 5
+    assert r.restricao == 5
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.uhe == 27
+    r.uhe = 10
+    assert r.uhe == 10
+    assert r.coeficiente == 1
+    r.coeficiente = -1
+    assert r.coeficiente == -1
+    assert r.tipo == "QDEF"
+    r.tipo = ""
+    assert r.tipo == ""
 
 
 def test_registro_ar_dadger():
@@ -1072,6 +1396,15 @@ def test_registro_ar_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [1, None, None]
+    assert r.periodo == 1
+    r.periodo = 2
+    assert r.periodo == 2
+    assert r.alfa is None
+    r.alfa = 50
+    assert r.alfa == 50
+    assert r.lamb is None
+    r.lamb = 10
+    assert r.lamb == 10
 
 
 def test_registro_ev_dadger():
