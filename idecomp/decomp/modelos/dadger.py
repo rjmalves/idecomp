@@ -23,7 +23,7 @@ class TE(Register):
         O único conteúdo do registro (título do estudo).
 
         :return: O título do estudo
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[0]
 
@@ -47,7 +47,7 @@ class SB(Register):
         O código de cadastro do subsistema.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None]
         """
         return self.data[0]
 
@@ -61,7 +61,7 @@ class SB(Register):
         O nome de cadastro do subsistema.
 
         :return: O nome.
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[1]
 
@@ -98,7 +98,7 @@ class UH(Register):
         O código de cadastro da UHE.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -112,7 +112,7 @@ class UH(Register):
         O REE de cadastro da UHE.
 
         :return: O REE.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -126,7 +126,7 @@ class UH(Register):
         O volume inicial da UHE para o estudo.
 
         :return: O volume.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[2]
 
@@ -140,7 +140,7 @@ class UH(Register):
         O vazão defluente mínima da usina em m3/s.
 
         :return: A vazão em m3/s.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[3]
 
@@ -154,7 +154,7 @@ class UH(Register):
         A consideração ou não de evaporação para a UHE.
 
         :return: A consideração.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[4]
 
@@ -168,7 +168,7 @@ class UH(Register):
         Estágio a partir da qual a usina começa a produzir energia.
 
         :return: O índice do estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[5]
 
@@ -182,7 +182,7 @@ class UH(Register):
         Volume morto inicial da usina.
 
         :return: O volume em hm3.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[6]
 
@@ -196,7 +196,7 @@ class UH(Register):
         O limite superior para vertimento da usina.
 
         :return: O limite em m3/s.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[7]
 
@@ -210,7 +210,7 @@ class UH(Register):
         Consideração do balanço hídrico por patamar.
 
         :return: C consideração, ou não.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[8]
 
@@ -268,7 +268,7 @@ class CT(Register):
         O código de cadastro da UTE.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -282,7 +282,7 @@ class CT(Register):
         O subsistema de cadastro da UTE.
 
         :return: O subsistema.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -296,7 +296,7 @@ class CT(Register):
         O nome de cadastro da UTE.
 
         :return: O nome como uma `str`.
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[2]
 
@@ -310,7 +310,7 @@ class CT(Register):
         O estágio associado às propriedades cadastradas.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[3]
 
@@ -324,7 +324,7 @@ class CT(Register):
         As inflexibilidades da UTE por patamar.
 
         :return: As inflexibilidades.
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return [v for v in self.data[4::3] if v is not None]
 
@@ -338,7 +338,7 @@ class CT(Register):
         As disponibilidades da UTE por patamar.
 
         :return: As disponibilidades.
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return [v for v in self.data[5::3] if v is not None]
 
@@ -352,7 +352,7 @@ class CT(Register):
         Os CVUs da UTE por patamar.
 
         :return: Os CVUs.
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return [v for v in self.data[6::3] if v is not None]
 
@@ -388,7 +388,7 @@ class UE(Register):
         O código de cadastro da UE.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -402,7 +402,7 @@ class UE(Register):
         O subsistema de cadastro da UE, conforme registro SB.
 
         :return: O subsistema.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -416,7 +416,7 @@ class UE(Register):
         O nome da estação de bombeamento.
 
         :return: O nome.
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[2]
 
@@ -430,7 +430,7 @@ class UE(Register):
         O código da UHE a montante, conforme registro UH.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[3]
 
@@ -444,7 +444,7 @@ class UE(Register):
         O código da UHE a jusante, conforme registro UH.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[4]
 
@@ -458,7 +458,7 @@ class UE(Register):
         A vazão mínima bombeável.
 
         :return: A vazão em m3/s
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[5]
 
@@ -472,7 +472,7 @@ class UE(Register):
         A vazão mínima bombeável.
 
         :return: A vazão em m3/s
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[6]
 
@@ -486,7 +486,7 @@ class UE(Register):
         A taxa de consumo.
 
         :return: A taxa em MWmed/m3/s.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[7]
 
@@ -539,7 +539,7 @@ class DP(Register):
         O estágio associado às durações especificadas.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -553,7 +553,7 @@ class DP(Register):
         O subsistema associado às durações especificadas.
 
         :return: O subsistema.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -567,7 +567,7 @@ class DP(Register):
         O número de patamares.
 
         :return: O número de patamares.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[2]
 
@@ -581,7 +581,7 @@ class DP(Register):
         As cargas em Mwmed pata cada patamar de carga
 
         :return: As cargas.
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return [v for v in self.data[3::2] if v is not None]
 
@@ -595,7 +595,7 @@ class DP(Register):
         As durações de cada patamar de carga em horas
 
         :return: As durações em horas.
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return [v for v in self.data[4::2] if v is not None]
 
@@ -769,7 +769,7 @@ class TX(Register):
         A taxa de desconto em % utilizada no estudo.
 
         :return: A taxa.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[0]
 
@@ -797,7 +797,7 @@ class GP(Register):
         O gap considerado para convergência no estudo
 
         :return: O gap.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[0]
 
@@ -821,7 +821,7 @@ class NI(Register):
         O número máximo de iterações do modelo no estudo
 
         :return: O número de iterações.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -835,7 +835,7 @@ class NI(Register):
         Se o número de interações fornecido é mínimo ou máximo.
 
         :return: O tipo de limite de iterações
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -865,7 +865,7 @@ class DT(Register):
         O dia de referência para realização do estudo
 
         :return: O dia
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -879,7 +879,7 @@ class DT(Register):
         O mês de referência para realização do estudo
 
         :return: O mês
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -893,7 +893,7 @@ class DT(Register):
         O ano de referência para realização do estudo
 
         :return: O ano
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[2]
 
@@ -1041,7 +1041,7 @@ class VE(Register):
         O código do posto associado ao volume.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -1055,7 +1055,7 @@ class VE(Register):
         Os volumes de espera por estagio.
 
         :return: Os volumes.
-        :rtype: Optional[List[float]]
+        :rtype: list[float] | None
         """
         return [v for v in self.data[1:] if v is not None]
 
@@ -1085,7 +1085,7 @@ class RE(Register):
         O código de cadastro para a restrição
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -1099,7 +1099,7 @@ class RE(Register):
         O estágio inicial para consideração da restrição
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -1113,7 +1113,7 @@ class RE(Register):
         O estágio final para consideração da restrição
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[2]
 
@@ -1165,7 +1165,7 @@ class LU(Register):
         O código da restrição RE associada aos limites
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -1180,7 +1180,7 @@ class LU(Register):
         que sejam especificados novos limites.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -1194,7 +1194,7 @@ class LU(Register):
         Os limites inferiores por patamar para a restrição elétrica
 
         :return: Os limites
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return self.data[2::2]
 
@@ -1208,7 +1208,7 @@ class LU(Register):
         Os limites superiores por patamar para a restrição elétrica
 
         :return: Os limites
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return self.data[3::2]
 
@@ -1515,7 +1515,7 @@ class VI(Register):
         o tempo de viagem.
 
         :return: O código
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -1530,7 +1530,7 @@ class VI(Register):
         código informado e sua usina à jusante segundo o hidr.
 
         :return: A duração
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -1546,7 +1546,7 @@ class VI(Register):
         a qual semana passada se refere [s-1, s-2, s-3, ...].
 
         :return: As vazões
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return [v for v in self.data[2::] if v is not None]
 
@@ -1579,7 +1579,7 @@ class IR(Register):
         saída escolhido.
 
         :return: O mnemônico.
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[0]
 
@@ -1664,7 +1664,7 @@ class FC(Register):
         aceitos pelo DECOMP.
 
         :return: O mnemônico.
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[0]
 
@@ -1675,7 +1675,7 @@ class FC(Register):
         FCF.
 
         :return: O caminho.
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[1]
 
@@ -1704,7 +1704,7 @@ class RT(Register):
         O mnemônico da restrição removida.
 
         :return: O mnemônico
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[0]
 
@@ -1811,7 +1811,7 @@ class FP(Register):
         O código da UHE associada à restrição FP.
 
         :return: O código
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -1825,7 +1825,7 @@ class FP(Register):
         O estágio associado à restrição FP.
 
         :return: O estágio
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -1841,7 +1841,7 @@ class FP(Register):
         máxima das usinas, 1 para limites em m3/s.
 
         :return: O tipo de entrada
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[2]
 
@@ -1856,7 +1856,7 @@ class FP(Register):
         turbinamento. Máximo permitido de 1000 pontos.
 
         :return: O número de pontos
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[3]
 
@@ -1870,7 +1870,7 @@ class FP(Register):
         O limite inferior da janela de turbinamento.
 
         :return: O limite.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[4]
 
@@ -1884,7 +1884,7 @@ class FP(Register):
         O limite superior da janela de turbinamento.
 
         :return: O limite.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[5]
 
@@ -1900,7 +1900,7 @@ class FP(Register):
         das usinas, 1 para limites em hm3.
 
         :return: O tipo de entrada.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[6]
 
@@ -1915,7 +1915,7 @@ class FP(Register):
         volume. Máximo permitido de 1000 pontos.
 
         :return: O número de pontos.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[7]
 
@@ -1930,7 +1930,7 @@ class FP(Register):
         como limite inferior da janela de volume.
 
         :return: O limite.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[8]
 
@@ -1945,7 +1945,7 @@ class FP(Register):
         como limite superior da janela de volume.
 
         :return: O limite.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[9]
 
@@ -1997,7 +1997,7 @@ class RQ(Register):
         O código do REE associado às vazões mínimas.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2012,7 +2012,7 @@ class RQ(Register):
         para o REE, por estágio [e1, e2, e3, ...].
 
         :return: As vazoes.
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return [v for v in self.data[1:] if v is not None]
 
@@ -2043,7 +2043,7 @@ class EZ(Register):
         Código da UHE associada, conforme registro UH.
 
         :return: O código da UHE.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2057,7 +2057,7 @@ class EZ(Register):
         O volume útil considerado para cálculo.
 
         :return: O volume útil em % do volume máximo.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[1]
 
@@ -2087,7 +2087,7 @@ class HV(Register):
         O código da UHE associada à restrição HV.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2101,7 +2101,7 @@ class HV(Register):
         O estágio inicial de consideração da restrição HV.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -2115,7 +2115,7 @@ class HV(Register):
         O estágio final de consideração da restrição HV.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[2]
 
@@ -2147,7 +2147,7 @@ class LV(Register):
         O código da restrição HV associada aos limites
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2161,7 +2161,7 @@ class LV(Register):
         O estágio de consideração dos limites.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -2175,7 +2175,7 @@ class LV(Register):
         O limite inferior para o armazenamento.
 
         :return: O limite.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[2]
 
@@ -2189,7 +2189,7 @@ class LV(Register):
         O limite superior para o armazenamento.
 
         :return: O limite.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[3]
 
@@ -2303,7 +2303,7 @@ class HQ(Register):
         O código da UHE associada à restrição HQ.
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2317,7 +2317,7 @@ class HQ(Register):
         O estágio inicial de consideração da restrição HQ.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -2331,7 +2331,7 @@ class HQ(Register):
         O estágio final de consideração da restrição HQ.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[2]
 
@@ -2382,7 +2382,7 @@ class LQ(Register):
         O código da restrição HQ associada aos limites
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2396,7 +2396,7 @@ class LQ(Register):
         O estágio de consideração dos limites.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -2410,7 +2410,7 @@ class LQ(Register):
         Os limites inferiores por patamar para a vazão.
 
         :return: Os limites.
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return self.data[2::2]
 
@@ -2424,7 +2424,7 @@ class LQ(Register):
         Os limites superiores por patamar para a vazão.
 
         :return: Os limites.
-        :rtype: Optional[list[float]]
+        :rtype: list[float] | None
         """
         return self.data[3::2]
 
@@ -2534,7 +2534,7 @@ class AR(Register):
         O período inicial de aplicação do CVaR.
 
         :return: O índice do período inicial.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2548,7 +2548,7 @@ class AR(Register):
         O valor de lambda utilizado no CVaR.
 
         :return: O valor de lambda
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[1]
 
@@ -2562,7 +2562,7 @@ class AR(Register):
         O valor de alfa utilizado no CVaR.
 
         :return: O valor de alfa
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[2]
 
@@ -2592,7 +2592,7 @@ class EV(Register):
         O modelo de evaporação considerado
 
         :return: O modelo.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2606,7 +2606,7 @@ class EV(Register):
         O mnemônico para o volume considerado
 
         :return: O mnemônico.
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[1]
 
@@ -2665,7 +2665,7 @@ class HE(Register):
         O código de cadastro da restrição HE
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2680,7 +2680,7 @@ class HE(Register):
         em valor absoluto ou percentual.
 
         :return: O tipo.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -2695,7 +2695,7 @@ class HE(Register):
         ao registro HE.
 
         :return: O limite.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[2]
 
@@ -2709,7 +2709,7 @@ class HE(Register):
         O estágio para consideração da restrição.
 
         :return: O estágio.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[3]
 
@@ -2723,7 +2723,7 @@ class HE(Register):
         O valor da penalidade para a violação da restrição.
 
         :return: O valor.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[4]
 
@@ -2738,7 +2738,7 @@ class HE(Register):
         das usinas usadas nas restrição.
 
         :return: A flag.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[5]
 
@@ -2753,7 +2753,7 @@ class HE(Register):
         das usinas usadas nas restrição.
 
         :return: O tipo.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[6]
 
@@ -2768,7 +2768,7 @@ class HE(Register):
         restrição (inviabilidade ou penalização).
 
         :return: O tipo.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[7]
 
@@ -2783,7 +2783,7 @@ class HE(Register):
         para o cálculo da restrição RHE.
 
         :return: O arquivo externo com as produbitibilidades.
-        :rtype: Optional[str]
+        :rtype: str | None
         """
         return self.data[8]
 
@@ -2809,7 +2809,7 @@ class CM(Register):
         O código de cadastro da restrição CM
 
         :return: O código.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[0]
 
@@ -2823,7 +2823,7 @@ class CM(Register):
         O REE do coeficiente
 
         :return: O REE.
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         return self.data[1]
 
@@ -2837,7 +2837,7 @@ class CM(Register):
         O coeficiente de energia considerado
 
         :return: O coeficiente.
-        :rtype: Optional[float]
+        :rtype: float | None
         """
         return self.data[2]
 

@@ -96,7 +96,7 @@
 <span class="sd">        O único conteúdo do registro (título do estudo).</span>
 
 <span class="sd">        :return: O título do estudo</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -120,7 +120,7 @@
 <span class="sd">        O código de cadastro do subsistema.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None]</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -134,7 +134,7 @@
 <span class="sd">        O nome de cadastro do subsistema.</span>
 
 <span class="sd">        :return: O nome.</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -171,7 +171,7 @@
 <span class="sd">        O código de cadastro da UHE.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -185,7 +185,7 @@
 <span class="sd">        O REE de cadastro da UHE.</span>
 
 <span class="sd">        :return: O REE.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -199,7 +199,7 @@
 <span class="sd">        O volume inicial da UHE para o estudo.</span>
 
 <span class="sd">        :return: O volume.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -213,7 +213,7 @@
 <span class="sd">        O vazão defluente mínima da usina em m3/s.</span>
 
 <span class="sd">        :return: A vazão em m3/s.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
@@ -227,7 +227,7 @@
 <span class="sd">        A consideração ou não de evaporação para a UHE.</span>
 
 <span class="sd">        :return: A consideração.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
@@ -241,7 +241,7 @@
 <span class="sd">        Estágio a partir da qual a usina começa a produzir energia.</span>
 
 <span class="sd">        :return: O índice do estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
 
@@ -255,7 +255,7 @@
 <span class="sd">        Volume morto inicial da usina.</span>
 
 <span class="sd">        :return: O volume em hm3.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
 
@@ -269,7 +269,7 @@
 <span class="sd">        O limite superior para vertimento da usina.</span>
 
 <span class="sd">        :return: O limite em m3/s.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
 
@@ -283,7 +283,7 @@
 <span class="sd">        Consideração do balanço hídrico por patamar.</span>
 
 <span class="sd">        :return: C consideração, ou não.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
 
@@ -341,7 +341,7 @@
 <span class="sd">        O código de cadastro da UTE.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -355,7 +355,7 @@
 <span class="sd">        O subsistema de cadastro da UTE.</span>
 
 <span class="sd">        :return: O subsistema.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -369,7 +369,7 @@
 <span class="sd">        O nome de cadastro da UTE.</span>
 
 <span class="sd">        :return: O nome como uma `str`.</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -383,7 +383,7 @@
 <span class="sd">        O estágio associado às propriedades cadastradas.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
@@ -461,7 +461,7 @@
 <span class="sd">        O código de cadastro da UE.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -475,7 +475,7 @@
 <span class="sd">        O subsistema de cadastro da UE, conforme registro SB.</span>
 
 <span class="sd">        :return: O subsistema.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -489,7 +489,7 @@
 <span class="sd">        O nome da estação de bombeamento.</span>
 
 <span class="sd">        :return: O nome.</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -503,7 +503,7 @@
 <span class="sd">        O código da UHE a montante, conforme registro UH.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
@@ -517,7 +517,7 @@
 <span class="sd">        O código da UHE a jusante, conforme registro UH.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
@@ -531,7 +531,7 @@
 <span class="sd">        A vazão mínima bombeável.</span>
 
 <span class="sd">        :return: A vazão em m3/s</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
 
@@ -545,7 +545,7 @@
 <span class="sd">        A vazão mínima bombeável.</span>
 
 <span class="sd">        :return: A vazão em m3/s</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
 
@@ -559,7 +559,7 @@
 <span class="sd">        A taxa de consumo.</span>
 
 <span class="sd">        :return: A taxa em MWmed/m3/s.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
 
@@ -612,7 +612,7 @@
 <span class="sd">        O estágio associado às durações especificadas.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -626,7 +626,7 @@
 <span class="sd">        O subsistema associado às durações especificadas.</span>
 
 <span class="sd">        :return: O subsistema.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -640,7 +640,7 @@
 <span class="sd">        O número de patamares.</span>
 
 <span class="sd">        :return: O número de patamares.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -842,7 +842,7 @@
 <span class="sd">        A taxa de desconto em % utilizada no estudo.</span>
 
 <span class="sd">        :return: A taxa.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -870,7 +870,7 @@
 <span class="sd">        O gap considerado para convergência no estudo</span>
 
 <span class="sd">        :return: O gap.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -894,7 +894,7 @@
 <span class="sd">        O número máximo de iterações do modelo no estudo</span>
 
 <span class="sd">        :return: O número de iterações.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -908,7 +908,7 @@
 <span class="sd">        Se o número de interações fornecido é mínimo ou máximo.</span>
 
 <span class="sd">        :return: O tipo de limite de iterações</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -938,7 +938,7 @@
 <span class="sd">        O dia de referência para realização do estudo</span>
 
 <span class="sd">        :return: O dia</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -952,7 +952,7 @@
 <span class="sd">        O mês de referência para realização do estudo</span>
 
 <span class="sd">        :return: O mês</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -966,7 +966,7 @@
 <span class="sd">        O ano de referência para realização do estudo</span>
 
 <span class="sd">        :return: O ano</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -1114,7 +1114,7 @@
 <span class="sd">        O código do posto associado ao volume.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1158,7 +1158,7 @@
 <span class="sd">        O código de cadastro para a restrição</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1172,7 +1172,7 @@
 <span class="sd">        O estágio inicial para consideração da restrição</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -1186,7 +1186,7 @@
 <span class="sd">        O estágio final para consideração da restrição</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -1238,7 +1238,7 @@
 <span class="sd">        O código da restrição RE associada aos limites</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1253,7 +1253,7 @@
 <span class="sd">        que sejam especificados novos limites.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -1588,7 +1588,7 @@
 <span class="sd">        o tempo de viagem.</span>
 
 <span class="sd">        :return: O código</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1603,7 +1603,7 @@
 <span class="sd">        código informado e sua usina à jusante segundo o hidr.</span>
 
 <span class="sd">        :return: A duração</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -1652,7 +1652,7 @@
 <span class="sd">        saída escolhido.</span>
 
 <span class="sd">        :return: O mnemônico.</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1737,7 +1737,7 @@
 <span class="sd">        aceitos pelo DECOMP.</span>
 
 <span class="sd">        :return: O mnemônico.</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1748,7 +1748,7 @@
 <span class="sd">        FCF.</span>
 
 <span class="sd">        :return: O caminho.</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -1777,7 +1777,7 @@
 <span class="sd">        O mnemônico da restrição removida.</span>
 
 <span class="sd">        :return: O mnemônico</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1884,7 +1884,7 @@
 <span class="sd">        O código da UHE associada à restrição FP.</span>
 
 <span class="sd">        :return: O código</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -1898,7 +1898,7 @@
 <span class="sd">        O estágio associado à restrição FP.</span>
 
 <span class="sd">        :return: O estágio</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -1914,7 +1914,7 @@
 <span class="sd">        máxima das usinas, 1 para limites em m3/s.</span>
 
 <span class="sd">        :return: O tipo de entrada</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -1929,7 +1929,7 @@
 <span class="sd">        turbinamento. Máximo permitido de 1000 pontos.</span>
 
 <span class="sd">        :return: O número de pontos</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
@@ -1943,7 +1943,7 @@
 <span class="sd">        O limite inferior da janela de turbinamento.</span>
 
 <span class="sd">        :return: O limite.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
@@ -1957,7 +1957,7 @@
 <span class="sd">        O limite superior da janela de turbinamento.</span>
 
 <span class="sd">        :return: O limite.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
 
@@ -1973,7 +1973,7 @@
 <span class="sd">        das usinas, 1 para limites em hm3.</span>
 
 <span class="sd">        :return: O tipo de entrada.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
 
@@ -1988,7 +1988,7 @@
 <span class="sd">        volume. Máximo permitido de 1000 pontos.</span>
 
 <span class="sd">        :return: O número de pontos.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
 
@@ -2003,7 +2003,7 @@
 <span class="sd">        como limite inferior da janela de volume.</span>
 
 <span class="sd">        :return: O limite.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
 
@@ -2018,7 +2018,7 @@
 <span class="sd">        como limite superior da janela de volume.</span>
 
 <span class="sd">        :return: O limite.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">9</span><span class="p">]</span>
 
@@ -2070,7 +2070,7 @@
 <span class="sd">        O código do REE associado às vazões mínimas.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2116,7 +2116,7 @@
 <span class="sd">        Código da UHE associada, conforme registro UH.</span>
 
 <span class="sd">        :return: O código da UHE.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2130,7 +2130,7 @@
 <span class="sd">        O volume útil considerado para cálculo.</span>
 
 <span class="sd">        :return: O volume útil em % do volume máximo.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2160,7 +2160,7 @@
 <span class="sd">        O código da UHE associada à restrição HV.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2174,7 +2174,7 @@
 <span class="sd">        O estágio inicial de consideração da restrição HV.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2188,7 +2188,7 @@
 <span class="sd">        O estágio final de consideração da restrição HV.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -2220,7 +2220,7 @@
 <span class="sd">        O código da restrição HV associada aos limites</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2234,7 +2234,7 @@
 <span class="sd">        O estágio de consideração dos limites.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2248,7 +2248,7 @@
 <span class="sd">        O limite inferior para o armazenamento.</span>
 
 <span class="sd">        :return: O limite.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -2262,7 +2262,7 @@
 <span class="sd">        O limite superior para o armazenamento.</span>
 
 <span class="sd">        :return: O limite.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
@@ -2376,7 +2376,7 @@
 <span class="sd">        O código da UHE associada à restrição HQ.</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2390,7 +2390,7 @@
 <span class="sd">        O estágio inicial de consideração da restrição HQ.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2404,7 +2404,7 @@
 <span class="sd">        O estágio final de consideração da restrição HQ.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -2455,7 +2455,7 @@
 <span class="sd">        O código da restrição HQ associada aos limites</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2469,7 +2469,7 @@
 <span class="sd">        O estágio de consideração dos limites.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2607,7 +2607,7 @@
 <span class="sd">        O período inicial de aplicação do CVaR.</span>
 
 <span class="sd">        :return: O índice do período inicial.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2621,7 +2621,7 @@
 <span class="sd">        O valor de lambda utilizado no CVaR.</span>
 
 <span class="sd">        :return: O valor de lambda</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2635,7 +2635,7 @@
 <span class="sd">        O valor de alfa utilizado no CVaR.</span>
 
 <span class="sd">        :return: O valor de alfa</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -2665,7 +2665,7 @@
 <span class="sd">        O modelo de evaporação considerado</span>
 
 <span class="sd">        :return: O modelo.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2679,7 +2679,7 @@
 <span class="sd">        O mnemônico para o volume considerado</span>
 
 <span class="sd">        :return: O mnemônico.</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2738,7 +2738,7 @@
 <span class="sd">        O código de cadastro da restrição HE</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2753,7 +2753,7 @@
 <span class="sd">        em valor absoluto ou percentual.</span>
 
 <span class="sd">        :return: O tipo.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2768,7 +2768,7 @@
 <span class="sd">        ao registro HE.</span>
 
 <span class="sd">        :return: O limite.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
@@ -2782,7 +2782,7 @@
 <span class="sd">        O estágio para consideração da restrição.</span>
 
 <span class="sd">        :return: O estágio.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
@@ -2796,7 +2796,7 @@
 <span class="sd">        O valor da penalidade para a violação da restrição.</span>
 
 <span class="sd">        :return: O valor.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
 
@@ -2811,7 +2811,7 @@
 <span class="sd">        das usinas usadas nas restrição.</span>
 
 <span class="sd">        :return: A flag.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
 
@@ -2826,7 +2826,7 @@
 <span class="sd">        das usinas usadas nas restrição.</span>
 
 <span class="sd">        :return: O tipo.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
 
@@ -2841,7 +2841,7 @@
 <span class="sd">        restrição (inviabilidade ou penalização).</span>
 
 <span class="sd">        :return: O tipo.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span>
 
@@ -2856,7 +2856,7 @@
 <span class="sd">        para o cálculo da restrição RHE.</span>
 
 <span class="sd">        :return: O arquivo externo com as produbitibilidades.</span>
-<span class="sd">        :rtype: Optional[str]</span>
+<span class="sd">        :rtype: str | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">8</span><span class="p">]</span>
 
@@ -2882,7 +2882,7 @@
 <span class="sd">        O código de cadastro da restrição CM</span>
 
 <span class="sd">        :return: O código.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -2896,7 +2896,7 @@
 <span class="sd">        O REE do coeficiente</span>
 
 <span class="sd">        :return: O REE.</span>
-<span class="sd">        :rtype: Optional[int]</span>
+<span class="sd">        :rtype: int | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
@@ -2910,7 +2910,7 @@
 <span class="sd">        O coeficiente de energia considerado</span>
 
 <span class="sd">        :return: O coeficiente.</span>
-<span class="sd">        :rtype: Optional[float]</span>
+<span class="sd">        :rtype: float | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
