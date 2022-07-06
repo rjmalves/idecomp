@@ -1770,7 +1770,7 @@ class TI(Register):
         ela está associada [e1, e2, e3, ...].
 
         :return: As taxas.
-        :type: Optional[list[float]]
+        :type: list[float] | None
         """
         return [v for v in self.data[1::] if v is not None]
 

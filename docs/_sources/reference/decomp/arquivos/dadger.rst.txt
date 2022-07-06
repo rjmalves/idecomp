@@ -228,4 +228,3 @@ de operação:
 
 .. autoclass:: ACNPOSNW
    :members:
-

@@ -397,7 +397,7 @@
 <span class="sd">        As inflexibilidades da UTE por patamar.</span>
 
 <span class="sd">        :return: As inflexibilidades.</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -411,7 +411,7 @@
 <span class="sd">        As disponibilidades da UTE por patamar.</span>
 
 <span class="sd">        :return: As disponibilidades.</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -425,7 +425,7 @@
 <span class="sd">        Os CVUs da UTE por patamar.</span>
 
 <span class="sd">        :return: Os CVUs.</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">6</span><span class="p">::</span><span class="mi">3</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -654,7 +654,7 @@
 <span class="sd">        As cargas em Mwmed pata cada patamar de carga</span>
 
 <span class="sd">        :return: As cargas.</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -668,7 +668,7 @@
 <span class="sd">        As durações de cada patamar de carga em horas</span>
 
 <span class="sd">        :return: As durações em horas.</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -1128,7 +1128,7 @@
 <span class="sd">        Os volumes de espera por estagio.</span>
 
 <span class="sd">        :return: Os volumes.</span>
-<span class="sd">        :rtype: Optional[List[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -1267,7 +1267,7 @@
 <span class="sd">        Os limites inferiores por patamar para a restrição elétrica</span>
 
 <span class="sd">        :return: Os limites</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
 
@@ -1281,7 +1281,7 @@
 <span class="sd">        Os limites superiores por patamar para a restrição elétrica</span>
 
 <span class="sd">        :return: Os limites</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
 
@@ -1619,7 +1619,7 @@
 <span class="sd">        a qual semana passada se refere [s-1, s-2, s-3, ...].</span>
 
 <span class="sd">        :return: As vazões</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">::]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -1843,7 +1843,7 @@
 <span class="sd">        ela está associada [e1, e2, e3, ...].</span>
 
 <span class="sd">        :return: As taxas.</span>
-<span class="sd">        :type: Optional[list[float]]</span>
+<span class="sd">        :type: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">::]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -2085,7 +2085,7 @@
 <span class="sd">        para o REE, por estágio [e1, e2, e3, ...].</span>
 
 <span class="sd">        :return: As vazoes.</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
@@ -2483,7 +2483,7 @@
 <span class="sd">        Os limites inferiores por patamar para a vazão.</span>
 
 <span class="sd">        :return: Os limites.</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
 
@@ -2497,7 +2497,7 @@
 <span class="sd">        Os limites superiores por patamar para a vazão.</span>
 
 <span class="sd">        :return: Os limites.</span>
-<span class="sd">        :rtype: Optional[list[float]]</span>
+<span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span>
 
