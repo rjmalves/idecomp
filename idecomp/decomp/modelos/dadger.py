@@ -1684,6 +1684,218 @@ class FC(Register):
         self.data[1] = c
 
 
+class EA(Register):
+    """
+    Registro que a ENA dos meses que antecedem o estudo.
+    """
+
+    IDENTIFIER = "EA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            FloatField(10, 11, 2),
+            FloatField(10, 21, 2),
+            FloatField(10, 31, 2),
+            FloatField(10, 41, 2),
+            FloatField(10, 51, 2),
+            FloatField(10, 61, 2),
+            FloatField(10, 71, 2),
+            FloatField(10, 81, 2),
+            FloatField(10, 91, 2),
+            FloatField(10, 101, 2),
+            FloatField(10, 111, 2),
+        ]
+    )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
+    @property
+    def ree(self) -> Optional[int]:
+        """
+        O índice do REE
+
+        :return: O índice.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @property
+    def ena(self) -> Optional[List[float]]:
+        """
+        A ENA passada para o REE.
+
+        :return: O ena.
+        :rtype: list[float] | None
+        """
+        return self.data[1:]
+
+    @ena.setter
+    def ena(self, c: List[float]):
+        self.__atualiza_dados_lista(c, 1, 1)
+        self.data[1:] = c
+
+
+class ES(Register):
+    """
+    Registro que define a ENA das semanas que antecedem o estudo.
+    """
+
+    IDENTIFIER = "ES  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            IntegerField(1, 9),
+            FloatField(10, 14, 2),
+            FloatField(10, 24, 2),
+            FloatField(10, 34, 2),
+            FloatField(10, 44, 2),
+            FloatField(10, 54, 2),
+            FloatField(10, 64, 2),
+            FloatField(10, 74, 2),
+            FloatField(10, 84, 2),
+            FloatField(10, 94, 2),
+            FloatField(10, 104, 2),
+            FloatField(10, 114, 2),
+        ]
+    )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
+    @property
+    def ree(self) -> Optional[int]:
+        """
+        O índice do REE
+
+        :return: O índice.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @ree.setter
+    def ree(self, c: int):
+        self.data[0] = c
+
+    @property
+    def numero_semanas(self) -> Optional[int]:
+        """
+        O número de semanas do mês anterior
+
+        :return: O número de semanas.
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @numero_semanas.setter
+    def numero_semanas(self, c: int):
+        self.data[1] = c
+
+    @property
+    def ena(self) -> Optional[List[float]]:
+        """
+        A ENA passada para o REE.
+
+        :return: O ena.
+        :rtype: list[float] | None
+        """
+        return self.data[2:]
+
+    @ena.setter
+    def ena(self, c: List[float]):
+        self.__atualiza_dados_lista(c, 1, 1)
+        self.data[2:] = c
+
+
+class QI(Register):
+    """
+    Registro que define o tempo de viagem para o cálculo da ENA.
+    """
+
+    IDENTIFIER = "QI  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            FloatField(9, 5, 2),
+            FloatField(14, 5, 2),
+            FloatField(19, 5, 2),
+            FloatField(24, 5, 2),
+            FloatField(29, 5, 2),
+        ]
+    )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
+    @property
+    def uhe(self) -> Optional[int]:
+        """
+        O índice da UHE
+
+        :return: O índice.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @uhe.setter
+    def uhe(self, c: int):
+        self.data[0] = c
+
+    @property
+    def vazoes(self) -> Optional[List[float]]:
+        """
+        As vazões incrementais cálculo da ENA.
+
+        :return: As incrementais para cálculo do tempo de viagem.
+        :rtype: list[float] | None
+        """
+        return self.data[1:]
+
+    @vazoes.setter
+    def vazoes(self, c: List[float]):
+        self.__atualiza_dados_lista(c, 1, 1)
+        self.data[1:] = c
+
+
 class RT(Register):
     """
     Registro utilizado para retirada de restrições de soleira de

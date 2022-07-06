@@ -27,6 +27,9 @@ from idecomp.decomp.modelos.dadger import (
     CI,
     CE,
     FC,
+    EA,
+    ES,
+    QI,
     TI,
     RQ,
     EZ,
@@ -152,6 +155,9 @@ class Dadger(RegisterFile):
         CI,
         CE,
         FC,
+        EA,
+        ES,
+        QI,
         TI,
         RQ,
         EZ,
@@ -218,24 +224,6 @@ class Dadger(RegisterFile):
         """ """
         r = self.__obtem_registros(tipo)
         return r[0] if len(r) > 0 else None
-
-    def __obtem_registro_com_codigo(
-        self, tipo: Type[T], codigo: int
-    ) -> Optional[T]:
-        regs: List[Any] = self.__registros_por_tipo(tipo)
-        for r in regs:
-            if r.codigo == codigo:
-                return r
-        return None
-
-    def __obtem_registro_do_estagio(
-        self, tipo: Type[T], codigo: int, estagio: int
-    ) -> Optional[T]:
-        regs: List[Any] = self.__registros_por_tipo(tipo)
-        for r in regs:
-            if all([r.codigo == codigo, r.estagio == estagio]):
-                return r
-        return None
 
     def __obtem_registros(self, tipo: Type[T]) -> List[T]:
         return self.__registros_por_tipo(tipo)
@@ -788,6 +776,8 @@ class Dadger(RegisterFile):
         return self.__obtem_registros_com_filtros(
             FC, tipo=tipo, caminho=caminho
         )
+
+    # TODO - adicionar novos campos
 
     def ti(
         self, codigo: Optional[int] = None
