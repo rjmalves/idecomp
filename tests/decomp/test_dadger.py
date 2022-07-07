@@ -1,4 +1,7 @@
 from idecomp.decomp.modelos.dadger import (
+    EA,
+    ES,
+    QI,
     TE,
     SB,
     UH,
@@ -64,6 +67,9 @@ from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
 from tests.mocks.arquivos.dadger import (
+    MockEA,
+    MockES,
+    MockQI,
     MockTE,
     MockSB,
     MockUH,
@@ -1198,6 +1204,96 @@ def test_registro_fc_dadger():
     assert r.caminho == "../../cortesh.dat"
     r.caminho = "."
     assert r.caminho == "."
+
+
+def test_registro_ea_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockEA))
+    r = EA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [
+        1,
+        1917.35,
+        1405.37,
+        1633.83,
+        1622.15,
+        2694.79,
+        2352.88,
+        2843.12,
+        5599.16,
+        6315.02,
+        10150.71,
+        3773.21,
+    ]
+    assert r.ree == 1
+    r.ree = 2
+    assert r.ree == 2
+    assert r.ena == [
+        1917.35,
+        1405.37,
+        1633.83,
+        1622.15,
+        2694.79,
+        2352.88,
+        2843.12,
+        5599.16,
+        6315.02,
+        10150.71,
+        3773.21,
+    ]
+    r.ena = [1, 2, 3]
+    assert r.ena == [1, 2, 3]
+
+
+def test_registro_es_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockES))
+    r = ES()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [
+        1,
+        5,
+        1917.35,
+        1405.37,
+        1633.83,
+        1622.15,
+        2694.79,
+    ]
+    assert r.ree == 1
+    r.ree = 2
+    assert r.ree == 2
+    assert r.numero_semanas == 5
+    r.numero_semanas = 4
+    assert r.numero_semanas == 4
+    assert r.ena == [
+        1917.35,
+        1405.37,
+        1633.83,
+        1622.15,
+        2694.79,
+    ]
+    r.ena = [1, 2, 3]
+    assert r.ena == [1, 2, 3]
+
+
+def test_registro_qi_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockQI))
+    r = QI()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [156, 136, 168, 174, 152, 128]
+    assert r.uhe == 156
+    r.uhe = 2
+    assert r.uhe == 2
+    assert r.vazoes == [136, 168, 174, 152, 128]
+    r.vazoes = [1, 2, 3]
+    assert r.vazoes == [1, 2, 3]
 
 
 def test_registro_ti_dadger():

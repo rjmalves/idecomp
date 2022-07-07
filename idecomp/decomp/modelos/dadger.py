@@ -1733,6 +1733,10 @@ class EA(Register):
         """
         return self.data[0]
 
+    @ree.setter
+    def ree(self, c: int):
+        self.data[0] = c
+
     @property
     def ena(self) -> Optional[List[float]]:
         """
@@ -1741,7 +1745,7 @@ class EA(Register):
         :return: O ena.
         :rtype: list[float] | None
         """
-        return self.data[1:]
+        return [v for v in self.data[1::] if v is not None]
 
     @ena.setter
     def ena(self, c: List[float]):
@@ -1765,12 +1769,6 @@ class ES(Register):
             FloatField(10, 34, 2),
             FloatField(10, 44, 2),
             FloatField(10, 54, 2),
-            FloatField(10, 64, 2),
-            FloatField(10, 74, 2),
-            FloatField(10, 84, 2),
-            FloatField(10, 94, 2),
-            FloatField(10, 104, 2),
-            FloatField(10, 114, 2),
         ]
     )
 
@@ -1825,7 +1823,7 @@ class ES(Register):
         :return: O ena.
         :rtype: list[float] | None
         """
-        return self.data[2:]
+        return [v for v in self.data[2::] if v is not None]
 
     @ena.setter
     def ena(self, c: List[float]):
@@ -1843,11 +1841,11 @@ class QI(Register):
     LINE = Line(
         [
             IntegerField(3, 4),
-            FloatField(9, 5, 2),
-            FloatField(14, 5, 2),
-            FloatField(19, 5, 2),
-            FloatField(24, 5, 2),
-            FloatField(29, 5, 2),
+            FloatField(5, 9, 1),
+            FloatField(5, 14, 1),
+            FloatField(5, 19, 1),
+            FloatField(5, 24, 1),
+            FloatField(5, 29, 1),
         ]
     )
 
@@ -1888,7 +1886,7 @@ class QI(Register):
         :return: As incrementais para cálculo do tempo de viagem.
         :rtype: list[float] | None
         """
-        return self.data[1:]
+        return [v for v in self.data[1::] if v is not None]
 
     @vazoes.setter
     def vazoes(self, c: List[float]):
