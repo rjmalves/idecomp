@@ -106,6 +106,15 @@ de operação:
 .. autoclass:: FC
    :members:
 
+.. autoclass:: EA
+   :members:
+
+.. autoclass:: ES
+   :members:
+
+.. autoclass:: QI
+   :members:
+
 .. autoclass:: RT
    :members:
 

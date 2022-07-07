@@ -1757,6 +1757,218 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span></div>
 
 
+<div class="viewcode-block" id="EA"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.EA">[documentos]</a><span class="k">class</span> <span class="nc">EA</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro que a ENA dos meses que antecedem o estudo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">IDENTIFIER</span> <span class="o">=</span> <span class="s2">&quot;EA  &quot;</span>
+    <span class="n">IDENTIFIER_DIGITS</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">LINE</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">IntegerField</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">41</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">71</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">81</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">91</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">101</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">111</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__atualiza_dados_lista</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">novos_dados</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">indice_inicial</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">espacamento</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">ultimo_indice</span> <span class="o">=</span> <span class="n">indice_inicial</span> <span class="o">+</span> <span class="n">espacamento</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">novos_dados</span><span class="p">)</span>
+        <span class="n">diferenca</span> <span class="o">=</span> <span class="p">(</span><span class="n">ultimo_indice</span> <span class="o">-</span> <span class="n">atuais</span><span class="p">)</span> <span class="o">//</span> <span class="n">espacamento</span>
+        <span class="k">if</span> <span class="n">diferenca</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ultimo_indice</span> <span class="o">-</span> <span class="n">atuais</span><span class="p">)</span>
+            <span class="n">diferenca</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">novos_dados</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">diferenca</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indice_inicial</span><span class="p">::</span><span class="n">espacamento</span><span class="p">]</span> <span class="o">=</span> <span class="n">novos_dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O índice do REE</span>
+
+<span class="sd">        :return: O índice.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ena</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A ENA passada para o REE.</span>
+
+<span class="sd">        :return: O ena.</span>
+<span class="sd">        :rtype: list[float] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="nd">@ena</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">ena</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atualiza_dados_lista</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">c</span></div>
+
+
+<div class="viewcode-block" id="ES"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.ES">[documentos]</a><span class="k">class</span> <span class="nc">ES</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro que define a ENA das semanas que antecedem o estudo.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">IDENTIFIER</span> <span class="o">=</span> <span class="s2">&quot;ES  &quot;</span>
+    <span class="n">IDENTIFIER_DIGITS</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">LINE</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">IntegerField</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="n">IntegerField</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__atualiza_dados_lista</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">novos_dados</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">indice_inicial</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">espacamento</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">ultimo_indice</span> <span class="o">=</span> <span class="n">indice_inicial</span> <span class="o">+</span> <span class="n">espacamento</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">novos_dados</span><span class="p">)</span>
+        <span class="n">diferenca</span> <span class="o">=</span> <span class="p">(</span><span class="n">ultimo_indice</span> <span class="o">-</span> <span class="n">atuais</span><span class="p">)</span> <span class="o">//</span> <span class="n">espacamento</span>
+        <span class="k">if</span> <span class="n">diferenca</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ultimo_indice</span> <span class="o">-</span> <span class="n">atuais</span><span class="p">)</span>
+            <span class="n">diferenca</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">novos_dados</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">diferenca</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indice_inicial</span><span class="p">::</span><span class="n">espacamento</span><span class="p">]</span> <span class="o">=</span> <span class="n">novos_dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ree</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O índice do REE</span>
+
+<span class="sd">        :return: O índice.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@ree</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">ree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">numero_semanas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O número de semanas do mês anterior</span>
+
+<span class="sd">        :return: O número de semanas.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@numero_semanas</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">numero_semanas</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ena</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A ENA passada para o REE.</span>
+
+<span class="sd">        :return: O ena.</span>
+<span class="sd">        :rtype: list[float] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+
+    <span class="nd">@ena</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">ena</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atualiza_dados_lista</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="n">c</span></div>
+
+
+<div class="viewcode-block" id="QI"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.QI">[documentos]</a><span class="k">class</span> <span class="nc">QI</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro que define o tempo de viagem para o cálculo da ENA.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">IDENTIFIER</span> <span class="o">=</span> <span class="s2">&quot;QI  &quot;</span>
+    <span class="n">IDENTIFIER_DIGITS</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">LINE</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">IntegerField</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__atualiza_dados_lista</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">novos_dados</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">indice_inicial</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">espacamento</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">ultimo_indice</span> <span class="o">=</span> <span class="n">indice_inicial</span> <span class="o">+</span> <span class="n">espacamento</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">novos_dados</span><span class="p">)</span>
+        <span class="n">diferenca</span> <span class="o">=</span> <span class="p">(</span><span class="n">ultimo_indice</span> <span class="o">-</span> <span class="n">atuais</span><span class="p">)</span> <span class="o">//</span> <span class="n">espacamento</span>
+        <span class="k">if</span> <span class="n">diferenca</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ultimo_indice</span> <span class="o">-</span> <span class="n">atuais</span><span class="p">)</span>
+            <span class="n">diferenca</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">novos_dados</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">diferenca</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indice_inicial</span><span class="p">::</span><span class="n">espacamento</span><span class="p">]</span> <span class="o">=</span> <span class="n">novos_dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uhe</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O índice da UHE</span>
+
+<span class="sd">        :return: O índice.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@uhe</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">uhe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vazoes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        As vazões incrementais cálculo da ENA.</span>
+
+<span class="sd">        :return: As incrementais para cálculo do tempo de viagem.</span>
+<span class="sd">        :rtype: list[float] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+    <span class="nd">@vazoes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">vazoes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atualiza_dados_lista</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">c</span></div>
+
+
 <div class="viewcode-block" id="RT"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.RT">[documentos]</a><span class="k">class</span> <span class="nc">RT</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro utilizado para retirada de restrições de soleira de</span>

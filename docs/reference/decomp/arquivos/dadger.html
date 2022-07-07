@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.34</title>
+  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.35</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -308,6 +308,45 @@ estudo definido no <a class="reference internal" href="#idecomp.decomp.dadger.Da
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">DT</span></code> | None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ea">
+<span class="sig-name descname"><span class="pre">ea</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.EA" title="idecomp.decomp.modelos.dadger.EA"><span class="pre">EA</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.EA" title="idecomp.decomp.modelos.dadger.EA"><span class="pre">EA</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ea"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ea" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém um registro que especifica a ENA dos meses anteriores
+ao estudo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>ree</strong> (<em>int</em><em> | </em><em>None</em>) – Código do REE</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EA</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">EA</span></code>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.es">
+<span class="sig-name descname"><span class="pre">es</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ree</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numero_semanas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.ES" title="idecomp.decomp.modelos.dadger.ES"><span class="pre">ES</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.ES" title="idecomp.decomp.modelos.dadger.ES"><span class="pre">ES</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.es"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.es" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém um registro que especifica a ENA das semanas anteriores
+ao estudo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ree</strong> (<em>int</em><em> | </em><em>None</em>) – Código do REE</p></li>
+<li><p><strong>numero_semanas</strong> (<em>int</em><em> | </em><em>None</em>) – Número de semanas do mês anterior</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ES</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">ES</span></code>] | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -767,6 +806,24 @@ do DECOMP no estudo definido no <a class="reference internal" href="#idecomp.dec
 <dd><p>Adiciona um registro ao arquivo na primeira posição.</p>
 <p>Este método existe para retrocompatibilidade e deve ser substituído
 quando for suportado na classe <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterFile</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.qi">
+<span class="sig-name descname"><span class="pre">qi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">uhe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.QI" title="idecomp.decomp.modelos.dadger.QI"><span class="pre">QI</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.QI" title="idecomp.decomp.modelos.dadger.QI"><span class="pre">QI</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.qi"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.qi" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém um registro que especifica o tempo de viagem
+para cálculo da ENA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>uhe</strong> (<em>int</em><em> | </em><em>None</em>) – Código da UHE</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">QI</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">QI</span></code>] | None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2073,6 +2130,122 @@ aceitos pelo DECOMP.</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
 <dd class="field-even"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.EA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">EA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#EA"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.EA" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que a ENA dos meses que antecedem o estudo.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.EA.ena">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ena</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.EA.ena" title="Link permanente para esta definição"></a></dt>
+<dd><p>A ENA passada para o REE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O ena.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>list[float] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.EA.ree">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ree</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.EA.ree" title="Link permanente para esta definição"></a></dt>
+<dd><p>O índice do REE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O índice.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.ES">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ES</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#ES"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.ES" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que define a ENA das semanas que antecedem o estudo.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.ES.ena">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ena</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.ES.ena" title="Link permanente para esta definição"></a></dt>
+<dd><p>A ENA passada para o REE.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O ena.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>list[float] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.ES.numero_semanas">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">numero_semanas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.ES.numero_semanas" title="Link permanente para esta definição"></a></dt>
+<dd><p>O número de semanas do mês anterior</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O número de semanas.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.ES.ree">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ree</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.ES.ree" title="Link permanente para esta definição"></a></dt>
+<dd><p>O índice do REE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O índice.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.QI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">QI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#QI"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.QI" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que define o tempo de viagem para o cálculo da ENA.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.QI.uhe">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uhe</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.QI.uhe" title="Link permanente para esta definição"></a></dt>
+<dd><p>O índice da UHE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O índice.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.QI.vazoes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vazoes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.QI.vazoes" title="Link permanente para esta definição"></a></dt>
+<dd><p>As vazões incrementais cálculo da ENA.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>As incrementais para cálculo do tempo de viagem.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>list[float] | None</p>
 </dd>
 </dl>
 </dd></dl>

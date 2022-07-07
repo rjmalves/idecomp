@@ -777,7 +777,47 @@ class Dadger(RegisterFile):
             FC, tipo=tipo, caminho=caminho
         )
 
-    # TODO - adicionar novos campos
+    def ea(self, ree: Optional[int] = None) -> Optional[Union[EA, List[EA]]]:
+        """
+        Obtém um registro que especifica a ENA dos meses anteriores
+        ao estudo.
+
+        :param ree: Código do REE
+        :type ree: int | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`EA` | list[:class:`EA`] | None
+        """
+        return self.__obtem_registros_com_filtros(EA, ree=ree)
+
+    def es(
+        self, ree: Optional[int] = None, numero_semanas: Optional[int] = None
+    ) -> Optional[Union[ES, List[ES]]]:
+        """
+        Obtém um registro que especifica a ENA das semanas anteriores
+        ao estudo.
+
+        :param ree: Código do REE
+        :type ree: int | None
+        :param numero_semanas: Número de semanas do mês anterior
+        :type numero_semanas: int | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`ES` | list[:class:`ES`] | None
+        """
+        return self.__obtem_registros_com_filtros(
+            ES, ree=ree, numero_semanas=numero_semanas
+        )
+
+    def qi(self, uhe: Optional[int] = None) -> Optional[Union[QI, List[QI]]]:
+        """
+        Obtém um registro que especifica o tempo de viagem
+        para cálculo da ENA.
+
+        :param uhe: Código da UHE
+        :type uhe: int | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`QI` | list[:class:`QI`] | None
+        """
+        return self.__obtem_registros_com_filtros(QI, uhe=uhe)
 
     def ti(
         self, codigo: Optional[int] = None

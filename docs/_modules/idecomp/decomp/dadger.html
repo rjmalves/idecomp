@@ -100,6 +100,9 @@
     <span class="n">CI</span><span class="p">,</span>
     <span class="n">CE</span><span class="p">,</span>
     <span class="n">FC</span><span class="p">,</span>
+    <span class="n">EA</span><span class="p">,</span>
+    <span class="n">ES</span><span class="p">,</span>
+    <span class="n">QI</span><span class="p">,</span>
     <span class="n">TI</span><span class="p">,</span>
     <span class="n">RQ</span><span class="p">,</span>
     <span class="n">EZ</span><span class="p">,</span>
@@ -225,6 +228,9 @@
         <span class="n">CI</span><span class="p">,</span>
         <span class="n">CE</span><span class="p">,</span>
         <span class="n">FC</span><span class="p">,</span>
+        <span class="n">EA</span><span class="p">,</span>
+        <span class="n">ES</span><span class="p">,</span>
+        <span class="n">QI</span><span class="p">,</span>
         <span class="n">TI</span><span class="p">,</span>
         <span class="n">RQ</span><span class="p">,</span>
         <span class="n">EZ</span><span class="p">,</span>
@@ -291,24 +297,6 @@
         <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
-
-    <span class="k">def</span> <span class="nf">__obtem_registro_com_codigo</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">def</span> <span class="nf">__obtem_registro_do_estagio</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">]):</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__obtem_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
@@ -861,6 +849,48 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
             <span class="n">FC</span><span class="p">,</span> <span class="n">tipo</span><span class="o">=</span><span class="n">tipo</span><span class="p">,</span> <span class="n">caminho</span><span class="o">=</span><span class="n">caminho</span>
         <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.ea"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ea">[documentos]</a>    <span class="k">def</span> <span class="nf">ea</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">EA</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">EA</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica a ENA dos meses anteriores</span>
+<span class="sd">        ao estudo.</span>
+
+<span class="sd">        :param ree: Código do REE</span>
+<span class="sd">        :type ree: int | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`EA` | list[:class:`EA`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span><span class="n">EA</span><span class="p">,</span> <span class="n">ree</span><span class="o">=</span><span class="n">ree</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.es"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.es">[documentos]</a>    <span class="k">def</span> <span class="nf">es</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">ree</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">numero_semanas</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">ES</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">ES</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica a ENA das semanas anteriores</span>
+<span class="sd">        ao estudo.</span>
+
+<span class="sd">        :param ree: Código do REE</span>
+<span class="sd">        :type ree: int | None</span>
+<span class="sd">        :param numero_semanas: Número de semanas do mês anterior</span>
+<span class="sd">        :type numero_semanas: int | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`ES` | list[:class:`ES`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">ES</span><span class="p">,</span> <span class="n">ree</span><span class="o">=</span><span class="n">ree</span><span class="p">,</span> <span class="n">numero_semanas</span><span class="o">=</span><span class="n">numero_semanas</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.qi"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.qi">[documentos]</a>    <span class="k">def</span> <span class="nf">qi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uhe</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">QI</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">QI</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica o tempo de viagem</span>
+<span class="sd">        para cálculo da ENA.</span>
+
+<span class="sd">        :param uhe: Código da UHE</span>
+<span class="sd">        :type uhe: int | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`QI` | list[:class:`QI`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span><span class="n">QI</span><span class="p">,</span> <span class="n">uhe</span><span class="o">=</span><span class="n">uhe</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Dadger.ti"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ti">[documentos]</a>    <span class="k">def</span> <span class="nf">ti</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
