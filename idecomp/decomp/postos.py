@@ -28,14 +28,26 @@ class Postos(ArquivoBinario):
         return cls(r)
 
     # Override
-    def escreve_arquivo(self, diretorio: str, nome_arquivo: str = "postos.dat"):
+    def escreve_arquivo(
+        self, diretorio: str, nome_arquivo: str = "postos.dat"
+    ):
         """ """
         escritor = EscritaBinario(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
 
     @property
     def postos(self) -> pd.DataFrame:
-        """ """
+        """
+        Tabela das inviabilidades visitadas pelo modelo durante
+        a simulação final. As colunas são:
+
+        - Nome (`str`)
+        - Ano Inicial Histórico (`int`)
+        - Ano Final Histórico (`int`)
+
+        :return: Tabela das inviabilidades
+        :rtype: pd.DataFrame | None
+        """
         nome = [b.dados[0] for b in self._dados.blocos]
         ano_inicial = [b.dados[1] for b in self._dados.blocos]
         ano_final = [b.dados[2] for b in self._dados.blocos]

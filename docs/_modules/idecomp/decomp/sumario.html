@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.sumario &mdash; documentação idecomp 0.0.31</title>
+  <title>idecomp.decomp.sumario &mdash; documentação idecomp 0.0.35</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -137,8 +137,15 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém a tabela de CMO existente no :class:`Sumario`</span>
 
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - Patamar (`str`)</span>
+<span class="sd">        - Estágio 1 (`float`)</span>
+<span class="sd">        - Estágio 2 (`float`)</span>
+<span class="sd">        - ...</span>
+<span class="sd">        - Estágio N (`float`)</span>
+
 <span class="sd">        :return: O DataFrame com os valores</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoCMORelato</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -150,8 +157,14 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém a tabela de Geração Térmica existente no :class:`Sumario`</span>
 
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - Estágio 1 (`float`)</span>
+<span class="sd">        - Estágio 2 (`float`)</span>
+<span class="sd">        - ...</span>
+<span class="sd">        - Estágio N (`float`)</span>
+
 <span class="sd">        :return: O DataFrame com os valores</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoGeracaoTermicaSubsistemaRelato</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -164,8 +177,16 @@
 <span class="sd">        Obtém a tabela de Volumes Úteis por reservatório (em %)</span>
 <span class="sd">        existente no :class:`Sumario`</span>
 
+<span class="sd">        - Número (`int`)</span>
+<span class="sd">        - Usina (`str`)</span>
+<span class="sd">        - Inicial (`float`)</span>
+<span class="sd">        - Estágio 1 (`float`)</span>
+<span class="sd">        - Estágio 2 (`float`)</span>
+<span class="sd">        - ...</span>
+<span class="sd">        - Estágio N (`float`)</span>
+
 <span class="sd">        :return: O DataFrame com os valores</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoVolumeUtilReservatorioRelato</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -178,8 +199,16 @@
 <span class="sd">        Obtém a tabela de Energia Armazenada por REE (em %)</span>
 <span class="sd">        existente no :class:`Sumario`</span>
 
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - REE (`str`)</span>
+<span class="sd">        - Inicial (`float`)</span>
+<span class="sd">        - Estágio 1 (`float`)</span>
+<span class="sd">        - Estágio 2 (`float`)</span>
+<span class="sd">        - ...</span>
+<span class="sd">        - Estágio N (`float`)</span>
+
 <span class="sd">        :return: O DataFrame com os valores</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoEnergiaArmazenadaREERelato</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -192,8 +221,15 @@
 <span class="sd">        Obtém a tabela de Energia Armazenada por Subsistema (em %)</span>
 <span class="sd">        existente no :class:`Sumario`</span>
 
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - Inicial (`float`)</span>
+<span class="sd">        - Estágio 1 (`float`)</span>
+<span class="sd">        - Estágio 2 (`float`)</span>
+<span class="sd">        - ...</span>
+<span class="sd">        - Estágio N (`float`)</span>
+
 <span class="sd">        :return: O DataFrame com os valores</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoEnergiaArmazenadaSubsistemaRelato</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

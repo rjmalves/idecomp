@@ -93,8 +93,6 @@
              
   <section id="sumario-sumario-rvx">
 <span id="sumario"></span><h1>Sumario (sumario.rvX)<a class="headerlink" href="#sumario-sumario-rvx" title="Link permanente para este cabeçalho"></a></h1>
-<section id="visao-geral-do-modelo">
-<h2>Visão geral do modelo<a class="headerlink" href="#visao-geral-do-modelo" title="Link permanente para este cabeçalho"></a></h2>
 <p>As informações de saída do DECOMP, localizadas no arquivo geralmente denominado
 sumario.rvX, onde X varia de 0 a 4, são armazenadas na classe:</p>
 <dl class="py class">
@@ -109,12 +107,20 @@ da execução: custos de operação, despacho de térmicas, etc.</p>
 <dt class="sig sig-object py" id="idecomp.decomp.sumario.Sumario.cmo_medio_subsistema">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cmo_medio_subsistema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.sumario.Sumario.cmo_medio_subsistema" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém a tabela de CMO existente no <a class="reference internal" href="#idecomp.decomp.sumario.Sumario" title="idecomp.decomp.sumario.Sumario"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sumario</span></code></a></p>
+<ul class="simple">
+<li><p>Subsistema (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p>Patamar (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p>Estágio 1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Estágio 2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>Estágio N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>O DataFrame com os valores</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
-<dd class="field-even"><p>Optional[pd.DataFrame]</p>
+<dd class="field-even"><p>pd.DataFrame | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -124,12 +130,21 @@ da execução: custos de operação, despacho de térmicas, etc.</p>
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">energia_armazenada_ree</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.sumario.Sumario.energia_armazenada_ree" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém a tabela de Energia Armazenada por REE (em %)
 existente no <a class="reference internal" href="#idecomp.decomp.sumario.Sumario" title="idecomp.decomp.sumario.Sumario"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sumario</span></code></a></p>
+<ul class="simple">
+<li><p>Subsistema (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p>REE (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p>Inicial (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Estágio 1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Estágio 2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>Estágio N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>O DataFrame com os valores</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
-<dd class="field-even"><p>Optional[pd.DataFrame]</p>
+<dd class="field-even"><p>pd.DataFrame | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -139,12 +154,20 @@ existente no <a class="reference internal" href="#idecomp.decomp.sumario.Sumario
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">energia_armazenada_subsistema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.sumario.Sumario.energia_armazenada_subsistema" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém a tabela de Energia Armazenada por Subsistema (em %)
 existente no <a class="reference internal" href="#idecomp.decomp.sumario.Sumario" title="idecomp.decomp.sumario.Sumario"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sumario</span></code></a></p>
+<ul class="simple">
+<li><p>Subsistema (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p>Inicial (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Estágio 1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Estágio 2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>Estágio N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>O DataFrame com os valores</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
-<dd class="field-even"><p>Optional[pd.DataFrame]</p>
+<dd class="field-even"><p>pd.DataFrame | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -153,12 +176,19 @@ existente no <a class="reference internal" href="#idecomp.decomp.sumario.Sumario
 <dt class="sig sig-object py" id="idecomp.decomp.sumario.Sumario.geracao_termica_subsistema">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">geracao_termica_subsistema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.sumario.Sumario.geracao_termica_subsistema" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém a tabela de Geração Térmica existente no <a class="reference internal" href="#idecomp.decomp.sumario.Sumario" title="idecomp.decomp.sumario.Sumario"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sumario</span></code></a></p>
+<ul class="simple">
+<li><p>Subsistema (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p>Estágio 1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Estágio 2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>Estágio N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>O DataFrame com os valores</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
-<dd class="field-even"><p>Optional[pd.DataFrame]</p>
+<dd class="field-even"><p>pd.DataFrame | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -168,19 +198,27 @@ existente no <a class="reference internal" href="#idecomp.decomp.sumario.Sumario
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">volume_util_reservatorios</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.sumario.Sumario.volume_util_reservatorios" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém a tabela de Volumes Úteis por reservatório (em %)
 existente no <a class="reference internal" href="#idecomp.decomp.sumario.Sumario" title="idecomp.decomp.sumario.Sumario"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sumario</span></code></a></p>
+<ul class="simple">
+<li><p>Número (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>Usina (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p>Inicial (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Estágio 1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Estágio 2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>Estágio N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>O DataFrame com os valores</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
-<dd class="field-even"><p>Optional[pd.DataFrame]</p>
+<dd class="field-even"><p>pd.DataFrame | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-</section>
 </section>
 
 

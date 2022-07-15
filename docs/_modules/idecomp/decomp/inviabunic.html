@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.inviabunic &mdash; documentação idecomp 0.0.31</title>
+  <title>idecomp.decomp.inviabunic &mdash; documentação idecomp 0.0.35</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -138,9 +138,8 @@
 <span class="sd">        - Violação (`float`): quantidade de violação da restrição</span>
 <span class="sd">        - Unidade (`str`): unidade de medição da restrição violada</span>
 
-<span class="sd">        :return: Tabela das inviabilidades no mesmo formato do</span>
-<span class="sd">            arquivo `inviab_unic.rvX`.</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        :return: Tabela das inviabilidades</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoInviabilidadesIteracoes</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -159,9 +158,8 @@
 <span class="sd">        - Violação (`float`): quantidade de violação da restrição</span>
 <span class="sd">        - Unidade (`str`): unidade de medição da restrição violada</span>
 
-<span class="sd">        :return: Tabela das inviabilidades no mesmo formato do</span>
-<span class="sd">            arquivo `inviab_unic.rvX`.</span>
-<span class="sd">        :rtype: pd.DataFrame</span>
+<span class="sd">        :return: Tabela das inviabilidades</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoInviabilidadesSimFinal</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

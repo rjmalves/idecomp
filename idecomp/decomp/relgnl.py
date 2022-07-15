@@ -91,8 +91,22 @@ class RelGNL(BlockFile):
         """
         Tabela de informações das usinas térmicas GNL.
 
-        :return: O DataFrame com os dados
-        :rtype: Optional[pd.DataFrame]
+        - Código (`int`)
+        - Usina (`str`)
+        - Subsistema (`str`)
+        - Estágio (`int`)
+        - GT Min Pat. 1 (`float`)
+        - GT Max Pat. 1 (`float`)
+        - Custo Pat. 1 (`float`)
+        - GT Min Pat. 2 (`float`)
+        - GT Max Pat. 2 (`float`)
+        - Custo Pat. 2 (`float`)
+        - GT Min Pat. 3 (`float`)
+        - GT Max Pat. 3 (`float`)
+        - Custo Pat. 3 (`float`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoDadosUsinasRelGNL, 0)
         if b is not None:
@@ -105,8 +119,17 @@ class RelGNL(BlockFile):
         Tabela de comandos das usinas térmicas GNL com ajustes
         devido aos registros TG.
 
-        :return: O DataFrame com os comandos
-        :rtype: Optional[pd.DataFrame]
+        - Código (`int`)
+        - Usina (`str`)
+        - Lag (`int`)
+        - Subsistema (`str`)
+        - Semana (`int`)
+        - Pat 1 (`float`)
+        - Pat 2 (`float`)
+        - Pat 3 (`float`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoComandosUsinasAjustesTGRelGNL, 0)
         if b is not None:
@@ -119,8 +142,17 @@ class RelGNL(BlockFile):
         Tabela de comandos das usinas térmicas GNL com ajustes
         devido a restrições elétricas especiais.
 
-        :return: O DataFrame com os comandos
-        :rtype: Optional[pd.DataFrame]
+        - Código (`int`)
+        - Usina (`str`)
+        - Lag (`int`)
+        - Subsistema (`str`)
+        - Semana (`int`)
+        - Pat 1 (`float`)
+        - Pat 2 (`float`)
+        - Pat 3 (`float`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoComandosUsinasAjustesRERelGNL, 0)
         if b is not None:
@@ -133,8 +165,17 @@ class RelGNL(BlockFile):
         Tabela com o relatório do despacho sinalizado para as usinas
         térmicas GNL.
 
-        :return: O DataFrame com os estágios
-        :rtype: Optional[pd.DataFrame]
+        - Período (`int`)
+        - Cenário (`int`)
+        - Probabilidade (`float`)
+        - Subsistema (`str`)
+        - Usina (`str`)
+        - Lag (`int`)
+        - Estágio (`int`)
+        - Início Semana (`str`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None
         """
 
         if self.__relatorio_operacao_gnl is None:

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.relgnl &mdash; documentação idecomp 0.0.31</title>
+  <title>idecomp.decomp.relgnl &mdash; documentação idecomp 0.0.35</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -164,8 +164,22 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tabela de informações das usinas térmicas GNL.</span>
 
-<span class="sd">        :return: O DataFrame com os dados</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        - Código (`int`)</span>
+<span class="sd">        - Usina (`str`)</span>
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - Estágio (`int`)</span>
+<span class="sd">        - GT Min Pat. 1 (`float`)</span>
+<span class="sd">        - GT Max Pat. 1 (`float`)</span>
+<span class="sd">        - Custo Pat. 1 (`float`)</span>
+<span class="sd">        - GT Min Pat. 2 (`float`)</span>
+<span class="sd">        - GT Max Pat. 2 (`float`)</span>
+<span class="sd">        - Custo Pat. 2 (`float`)</span>
+<span class="sd">        - GT Min Pat. 3 (`float`)</span>
+<span class="sd">        - GT Max Pat. 3 (`float`)</span>
+<span class="sd">        - Custo Pat. 3 (`float`)</span>
+
+<span class="sd">        :return: O DataFrame com os valores</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoDadosUsinasRelGNL</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -178,8 +192,17 @@
 <span class="sd">        Tabela de comandos das usinas térmicas GNL com ajustes</span>
 <span class="sd">        devido aos registros TG.</span>
 
-<span class="sd">        :return: O DataFrame com os comandos</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        - Código (`int`)</span>
+<span class="sd">        - Usina (`str`)</span>
+<span class="sd">        - Lag (`int`)</span>
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - Semana (`int`)</span>
+<span class="sd">        - Pat 1 (`float`)</span>
+<span class="sd">        - Pat 2 (`float`)</span>
+<span class="sd">        - Pat 3 (`float`)</span>
+
+<span class="sd">        :return: O DataFrame com os valores</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoComandosUsinasAjustesTGRelGNL</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -192,8 +215,17 @@
 <span class="sd">        Tabela de comandos das usinas térmicas GNL com ajustes</span>
 <span class="sd">        devido a restrições elétricas especiais.</span>
 
-<span class="sd">        :return: O DataFrame com os comandos</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        - Código (`int`)</span>
+<span class="sd">        - Usina (`str`)</span>
+<span class="sd">        - Lag (`int`)</span>
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - Semana (`int`)</span>
+<span class="sd">        - Pat 1 (`float`)</span>
+<span class="sd">        - Pat 2 (`float`)</span>
+<span class="sd">        - Pat 3 (`float`)</span>
+
+<span class="sd">        :return: O DataFrame com os valores</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoComandosUsinasAjustesRERelGNL</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -206,8 +238,17 @@
 <span class="sd">        Tabela com o relatório do despacho sinalizado para as usinas</span>
 <span class="sd">        térmicas GNL.</span>
 
-<span class="sd">        :return: O DataFrame com os estágios</span>
-<span class="sd">        :rtype: Optional[pd.DataFrame]</span>
+<span class="sd">        - Período (`int`)</span>
+<span class="sd">        - Cenário (`int`)</span>
+<span class="sd">        - Probabilidade (`float`)</span>
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - Usina (`str`)</span>
+<span class="sd">        - Lag (`int`)</span>
+<span class="sd">        - Estágio (`int`)</span>
+<span class="sd">        - Início Semana (`str`)</span>
+
+<span class="sd">        :return: O DataFrame com os valores</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__relatorio_operacao_gnl</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>

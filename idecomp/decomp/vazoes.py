@@ -30,7 +30,9 @@ class Vazoes(ArquivoBinario):
         return cls(r)
 
     # Override
-    def escreve_arquivo(self, diretorio: str, nome_arquivo: str = "vazoes.dat"):
+    def escreve_arquivo(
+        self, diretorio: str, nome_arquivo: str = "vazoes.dat"
+    ):
         """ """
         escritor = EscritaBinario(diretorio)
         escritor.escreve_arquivo(self._dados, nome_arquivo)
@@ -47,7 +49,18 @@ class Vazoes(ArquivoBinario):
 
     @property
     def vazoes(self) -> pd.DataFrame:
-        """ """
+        """
+        Obtém a tabela de vazões fornecidas ao DECOMP e armazenadas na classe
+        :class:`Vazoes`
+
+        - Posto 1 (`int`)
+        - Posto 2 (`int`)
+        - ...
+        - Posto N (`int`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None.
+        """
         if self.__df is None:
             self.__calcula_df()
         return self.__df

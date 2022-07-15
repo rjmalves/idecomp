@@ -65,9 +65,8 @@ class InviabUnic(BlockFile):
         - Violação (`float`): quantidade de violação da restrição
         - Unidade (`str`): unidade de medição da restrição violada
 
-        :return: Tabela das inviabilidades no mesmo formato do
-            arquivo `inviab_unic.rvX`.
-        :rtype: Optional[pd.DataFrame]
+        :return: Tabela das inviabilidades
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoInviabilidadesIteracoes, 0)
         if b is not None:
@@ -86,9 +85,8 @@ class InviabUnic(BlockFile):
         - Violação (`float`): quantidade de violação da restrição
         - Unidade (`str`): unidade de medição da restrição violada
 
-        :return: Tabela das inviabilidades no mesmo formato do
-            arquivo `inviab_unic.rvX`.
-        :rtype: pd.DataFrame
+        :return: Tabela das inviabilidades
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoInviabilidadesSimFinal, 0)
         if b is not None:

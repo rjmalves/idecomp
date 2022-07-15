@@ -127,8 +127,20 @@ class Relato(BlockFile):
         Obtém a tabela de convergência do DECOMP existente no
         :class:`Relato`
 
+        - Iteração (`int`)
+        - Zinf (`float`)
+        - Zsup (`float`)
+        - Gap (%) (`float`)
+        - Tempo (s) (`int`)
+        - Tot. Def. Demanda (MWmed) (`float`)
+        - Tot. Def. Niv. Seg. (MWmes) (`float`)
+        - Num. Inviab" (`int`)
+        - Tot. Inviab (MWmed) (`float`)
+        - Tot. Inviab (m3/s) (`float`)
+        - Tot. Inviab (Hm3) (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None.
         """
         b = self.__bloco_por_tipo(BlocoConvergenciaRelato, 0)
         if b is not None:
@@ -141,8 +153,30 @@ class Relato(BlockFile):
         Obtém a tabela de operação de cada UHE por estágio do DECOMP
         existente no :class:`Relato`
 
+        - Código (`int`)
+        - Usina (`str`)
+        - Evaporação (`bool`)
+        - Tempo de Viagem (`bool`)
+        - Cota Abaixo da Crista do Vert (`bool`)
+        - Def. Mínima = 0 (`bool`)
+        - Volume Ini (% V.U) (`float`)
+        - Volume Fin (% V.U) (`float`)
+        - Volume Esp. (% V.U) (`float`)
+        - Qnat (m3/s) (`float`)
+        - Qnat (% MLT) (`float`)
+        - Qafl (m3/s) (`float`)
+        - Qdef (m3/s) (`float`)
+        - Geração Pat 1 (`float`)
+        - Geração Pat 2 (`float`)
+        - Geração Pat 3 (`float`)
+        - Geração Média (`float`)
+        - Vertimento Turbinável (`float`)
+        - Vertimento Não-Turbinável (`float`)
+        - Ponta (`float`)
+        - FPCGC (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         if self.__relatorios_operacao_uhe is None:
             self.__relatorios_operacao_uhe = (
@@ -158,8 +192,21 @@ class Relato(BlockFile):
         Obtém a tabela de balanço energético entre os patamares para
         cada estágio do DECOMP existente no :class:`Relato`
 
+        - Subsistema (`str`)
+        - Mercado (`float`)
+        - Bacia (`float`)
+        - Cbomba (`float`)
+        - Ghid (`float`)
+        - Gter (`float`)
+        - GterAT (`float`)
+        - Deficit (`float`)
+        - Compra (`float`)
+        - Venda (`float`)
+        - Itaipu50 (`float`)
+        - Itaipu60 (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         if self.__balanco_energetico is None:
             self.__balanco_energetico = (
@@ -174,8 +221,15 @@ class Relato(BlockFile):
         """
         Obtém a tabela de CMO existente no :class:`Relato`
 
+        - Subsistema (`str`)
+        - Patamar (`str`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoCMORelato, 0)
         if b is not None:
@@ -187,8 +241,14 @@ class Relato(BlockFile):
         """
         Obtém a tabela de Geração Térmica existente no :class:`Relato`
 
+        - Subsistema (`str`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoGeracaoTermicaSubsistemaRelato, 0)
         if b is not None:
@@ -201,8 +261,16 @@ class Relato(BlockFile):
         Obtém a tabela de Energia Armazenada por REE (em %)
         existente no :class:`Relato`
 
+        - Subsistema (`str`)
+        - REE (`str`)
+        - Inicial (`float`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaREERelato, 0)
         if b is not None:
@@ -215,8 +283,15 @@ class Relato(BlockFile):
         Obtém a tabela de Energia Armazenada por Subsistema (em %)
         existente no :class:`Relato`
 
+        - Subsistema (`str`)
+        - Inicial (`float`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaSubsistemaRelato, 0)
         if b is not None:
@@ -229,8 +304,16 @@ class Relato(BlockFile):
         Obtém a tabela de Volumes Úteis por reservatório (em %)
         existente no :class:`Relato`
 
+        - Número (`int`)
+        - Usina (`str`)
+        - Inicial (`float`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoVolumeUtilReservatorioRelato, 0)
         if b is not None:
@@ -243,8 +326,22 @@ class Relato(BlockFile):
         Obtém a tabela de dados cadastrais das usinas térmicas
         existente no :class:`Relato`.
 
+        - Código (`int`)
+        - Usina (`str`)
+        - Subsistema (`str`)
+        - Estágio (`int`)
+        - GT Min Pat. 1 (`float`)
+        - GT Max Pat. 1 (`float`)
+        - Custo Pat. 1 (`float`)
+        - GT Min Pat. 2 (`float`)
+        - GT Max Pat. 2 (`float`)
+        - Custo Pat. 2 (`float`)
+        - GT Min Pat. 3 (`float`)
+        - GT Max Pat. 3 (`float`)
+        - Custo Pat. 3 (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoDadosTermicasRelato, 0)
         if b is not None:
@@ -257,8 +354,15 @@ class Relato(BlockFile):
         Obtém a tabela de disponibilidades das usinas térmicas
         existente no :class:`Relato`.
 
+        - Número (`int`)
+        - Usina (`str`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoDisponibilidadesTermicasRelato, 0)
         if b is not None:
@@ -271,8 +375,16 @@ class Relato(BlockFile):
         Obtém a tabela de dados do mercado de energia
         existente no :class:`Relato`.
 
+        - Estágio (`int`)
+        - Subsistema (`str`)
+        - Patamar 1 (`float`)
+        - Mercado 1 (`float`)
+        - ...
+        - Patamar N (`float`)
+        - Mercado N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoDadosMercadoRelato, 0)
         if b is not None:
@@ -285,8 +397,16 @@ class Relato(BlockFile):
         Obtém a tabela de ENA para acoplamento com o longo prazo
         (em MWmed) existente no :class:`Relato`
 
+        - Índice (`int`)
+        - REE (`str`)
+        - Subsistema (`str`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoENAAcoplamentoREERelato, 0)
         if b is not None:
@@ -299,8 +419,15 @@ class Relato(BlockFile):
         Obtém a tabela de ENA Pré-Estudo Mensal por REE
         existente no :class:`Relato`
 
+        - REE (`str`)
+        - Earmax (`float`)
+        - Estágio Pré 1 (`float`)
+        - Estágio Pré 2 (`float`)
+        - ...
+        - Estágio Pré 11 (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoENAPreEstudoMensalREERelato, 0)
         if b is not None:
@@ -315,8 +442,15 @@ class Relato(BlockFile):
         Obtém a tabela de ENA Pré-Estudo Mensal por Subsistema
         existente no :class:`Relato`
 
+        - Subsistema (`str`)
+        - Earmax (`float`)
+        - Estágio Pré 1 (`float`)
+        - Estágio Pré 2 (`float`)
+        - ...
+        - Estágio Pré 11 (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoENAPreEstudoMensalSubsistemaRelato, 0)
         if b is not None:
@@ -331,8 +465,15 @@ class Relato(BlockFile):
         Obtém a tabela de ENA Pré-Estudo Semanal por REE
         existente no :class:`Relato`
 
+        - REE (`str`)
+        - Earmax (`float`)
+        - Estágio Pré 1 (`float`)
+        - Estágio Pré 2 (`float`)
+        - ...
+        - Estágio Pré 5 (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalREERelato, 0)
         if b is not None:
@@ -347,8 +488,15 @@ class Relato(BlockFile):
         Obtém a tabela de ENA Pré-Estudo Semanal por Subsistema
         existente no :class:`Relato`
 
+        - Subsistema (`str`)
+        - Earmax (`float`)
+        - Estágio Pré 1 (`float`)
+        - Estágio Pré 2 (`float`)
+        - ...
+        - Estágio Pré 5 (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalSubsistemaRelato, 0)
         if b is not None:
@@ -363,8 +511,11 @@ class Relato(BlockFile):
         Obtém a tabela de Energia Armazenada Máxima (EARMax) em MWmes
         por subsistema existente no :class:`Relato`
 
+        - Subsistema (`str`)
+        - Earmax (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalSubsistemaRelato, 0)
         if b is not None:
@@ -377,7 +528,7 @@ class Relato(BlockFile):
         Obtém o número de dias excluídos da semana inicial.
 
         :return: O número de dias
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         b = self.__bloco_por_tipo(BlocoDiasExcluidosSemanas, 0)
         if b is not None:
@@ -390,7 +541,7 @@ class Relato(BlockFile):
         Obtém o número de dias excluídos da semana final.
 
         :return: O número de dias
-        :rtype: Optional[int]
+        :rtype: int | None
         """
         b = self.__bloco_por_tipo(BlocoDiasExcluidosSemanas, 0)
         if b is not None:

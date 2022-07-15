@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.34</title>
+  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.35</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/sg_gallery.css" type="text/css" />
@@ -1806,6 +1806,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
+    <span class="nd">@ree</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">ree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ena</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -1814,7 +1818,7 @@
 <span class="sd">        :return: O ena.</span>
 <span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">::]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="nd">@ena</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">ena</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
@@ -1838,12 +1842,6 @@
             <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
             <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
             <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">54</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">64</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">74</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">84</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">94</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">114</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
         <span class="p">]</span>
     <span class="p">)</span>
 
@@ -1898,7 +1896,7 @@
 <span class="sd">        :return: O ena.</span>
 <span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">::]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="nd">@ena</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">ena</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
@@ -1916,11 +1914,11 @@
     <span class="n">LINE</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span>
         <span class="p">[</span>
             <span class="n">IntegerField</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">19</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">24</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
-            <span class="n">FloatField</span><span class="p">(</span><span class="mi">29</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
         <span class="p">]</span>
     <span class="p">)</span>
 
@@ -1961,7 +1959,7 @@
 <span class="sd">        :return: As incrementais para cálculo do tempo de viagem.</span>
 <span class="sd">        :rtype: list[float] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">::]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="nd">@vazoes</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">vazoes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>

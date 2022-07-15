@@ -6,8 +6,6 @@ Dados gerais (dadger.rvX)
 
 .. currentmodule:: idecomp.decomp.dadger
 
-Visão geral do modelo
-======================
 
 As informações de entrada gerais do DECOMP, localizadas no arquivo geralmente denominado
 dadger.rvX, onde X varia de 0 a 4, são armazenadas na classe:
@@ -18,8 +16,6 @@ dadger.rvX, onde X varia de 0 a 4, são armazenadas na classe:
 
 .. currentmodule:: idecomp.decomp.modelos.dadger
 
-Registros
-======================
 
 As informações existentes em cada um dos registros são armazenadas em modelos próprios
 para cada um. Os registros suportados até o momento são os utilizados nos estudos oficiais

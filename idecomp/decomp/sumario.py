@@ -64,8 +64,15 @@ class Sumario(BlockFile):
         """
         Obtém a tabela de CMO existente no :class:`Sumario`
 
+        - Subsistema (`str`)
+        - Patamar (`str`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoCMORelato, 0)
         if b is not None:
@@ -77,8 +84,14 @@ class Sumario(BlockFile):
         """
         Obtém a tabela de Geração Térmica existente no :class:`Sumario`
 
+        - Subsistema (`str`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoGeracaoTermicaSubsistemaRelato, 0)
         if b is not None:
@@ -91,8 +104,16 @@ class Sumario(BlockFile):
         Obtém a tabela de Volumes Úteis por reservatório (em %)
         existente no :class:`Sumario`
 
+        - Número (`int`)
+        - Usina (`str`)
+        - Inicial (`float`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoVolumeUtilReservatorioRelato, 0)
         if b is not None:
@@ -105,8 +126,16 @@ class Sumario(BlockFile):
         Obtém a tabela de Energia Armazenada por REE (em %)
         existente no :class:`Sumario`
 
+        - Subsistema (`str`)
+        - REE (`str`)
+        - Inicial (`float`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaREERelato, 0)
         if b is not None:
@@ -119,8 +148,15 @@ class Sumario(BlockFile):
         Obtém a tabela de Energia Armazenada por Subsistema (em %)
         existente no :class:`Sumario`
 
+        - Subsistema (`str`)
+        - Inicial (`float`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
         :return: O DataFrame com os valores
-        :rtype: Optional[pd.DataFrame]
+        :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaSubsistemaRelato, 0)
         if b is not None:
