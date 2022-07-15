@@ -317,8 +317,29 @@ class BlocoBalancoEnergeticoRelato(Block):
                 "Itaipu60",
             ]
             df.columns = cols
+            df["Estágio"] = estagios
+            df["Cenário"] = cenarios
+            df["Probabilidade"] = probabilidades
             df["Subsistema"] = subsistemas
-            df = df[["Subsistema"] + cols]
+            df["Earm Inicial Absoluto"] = earms_iniciais_abs
+            df["Earm Inicial Percentual"] = earms_iniciais_per
+            df["ENA Absoluta"] = ena_abs
+            df["ENA Percentual"] = ena_per
+            df["Earm Final Absoluto"] = earms_finais_abs
+            df["Earm Final Percentual"] = earms_finais_per
+            cols_adic = [
+                "Estágio",
+                "Cenário",
+                "Probabilidade",
+                "Subsistema",
+                "Earm Inicial Absoluto",
+                "Earm Inicial Percentual",
+                "ENA Absoluta",
+                "ENA Percentual",
+                "Earm Final Absoluto",
+                "Earm Final Percentual",
+            ]
+            df = df[cols_adic + cols]
             return df
 
         # Variáveis auxiliares
@@ -332,6 +353,7 @@ class BlocoBalancoEnergeticoRelato(Block):
         earms_iniciais_abs = []
         earms_iniciais_per = []
         ena_abs = []
+        ena_per = []
         earms_finais_abs = []
         earms_finais_per = []
         # Salta duas linhas e extrai a semana
@@ -355,17 +377,18 @@ class BlocoBalancoEnergeticoRelato(Block):
                 subsis = self.__linha_subsistema.read(linha)[0]
                 dados_ear_ena_abs = self.__linha_ear_ena.read(arq.readline())
                 dados_ear_ena_per = self.__linha_ear_ena.read(arq.readline())
-                earms_iniciais_abs.append(dados_ear_ena_abs[0])
-                earms_iniciais_per.append(dados_ear_ena_per[0])
-                ena_abs.append(dados_ear_ena_abs[1])
-                earms_finais_abs.append(dados_ear_ena_abs[2])
-                earms_finais_per.append(dados_ear_ena_per[2])
             # Se está lendo um subsistema e achou a linha de valores médios
             if subsis != "FC" and str_medio in linha:
                 estagios.append(estagio)
                 cenarios.append(cenario)
                 probabilidades.append(probabilidade)
                 subsistemas.append(subsis)
+                earms_iniciais_abs.append(dados_ear_ena_abs[0])
+                earms_iniciais_per.append(dados_ear_ena_per[0])
+                ena_abs.append(dados_ear_ena_abs[1])
+                ena_per.append(dados_ear_ena_per[1])
+                earms_finais_abs.append(dados_ear_ena_abs[2])
+                earms_finais_per.append(dados_ear_ena_per[2])
                 dados = self.__linha_balanco.read(linha)
                 tabela[i, :] = dados[1:10] + dados[12:]
                 # Reseta o indicador de subsistema

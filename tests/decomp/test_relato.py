@@ -108,19 +108,28 @@ def test_bloco_balanco_energetico():
             b.read(fp)
 
     assert b.data.shape[0] == 4
-    assert b.data.shape[1] == 12
-    assert b.data.iloc[0, 0] == "SE"
-    assert b.data.iloc[0, 1] == 37924.4
-    assert b.data.iloc[0, 2] == 3374.0
-    assert b.data.iloc[0, 3] == 77.6
-    assert b.data.iloc[0, 4] == 30056.3
-    assert b.data.iloc[0, 5] == 4529.8
-    assert b.data.iloc[0, 6] == 554.0
-    assert b.data.iloc[0, 7] == 0.0
-    assert b.data.iloc[0, 8] == 0.0
-    assert b.data.iloc[0, 9] == 0.0
-    assert b.data.iloc[0, 10] == 4333.5
-    assert b.data.iloc[0, 11] == 3434.1
+    assert b.data.shape[1] == 21
+    assert b.data.loc[0, "Estágio"] == 1
+    assert b.data.loc[0, "Cenário"] == 1
+    assert b.data.loc[0, "Probabilidade"] == 1
+    assert b.data.loc[0, "Earm Inicial Absoluto"] == 41766.0
+    assert b.data.loc[0, "Earm Inicial Percentual"] == 20.4
+    assert b.data.loc[0, "ENA Absoluta"] == 36314.0
+    assert b.data.loc[0, "ENA Percentual"] == 17.8
+    assert b.data.loc[0, "Earm Final Absoluto"] == 42365.0
+    assert b.data.loc[0, "Earm Final Percentual"] == 20.7
+    assert b.data.loc[0, "Subsistema"] == "SE"
+    assert b.data.loc[0, "Mercado"] == 37924.4
+    assert b.data.loc[0, "Bacia"] == 3374.0
+    assert b.data.loc[0, "Cbomba"] == 77.6
+    assert b.data.loc[0, "Ghid"] == 30056.3
+    assert b.data.loc[0, "Gter"] == 4529.8
+    assert b.data.loc[0, "GterAT"] == 554.0
+    assert b.data.loc[0, "Deficit"] == 0.0
+    assert b.data.loc[0, "Compra"] == 0.0
+    assert b.data.loc[0, "Venda"] == 0.0
+    assert b.data.loc[0, "Itaipu50"] == 4333.5
+    assert b.data.loc[0, "Itaipu60"] == 3434.1
 
 
 def test_bloco_cmo():

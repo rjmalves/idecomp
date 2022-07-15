@@ -92,6 +92,28 @@ class Relato(BlockFile):
         except StopIteration:
             return None
 
+    def __concatena_blocos(self, bloco: Type[T]) -> Optional[pd.DataFrame]:
+        """
+        Adiciona uma coluna com o estágio de cada bloco, assumindo
+        a mesma ordem das séries de energia.
+        :param bloco: O tipo de bloco
+        :type bloco: Type[T]
+        :return: O DataFrame com os estágios
+        :rtype: pd.DataFrame
+        """
+        df = None
+        for i, b in enumerate(self.data.of_type(bloco)):
+            if not isinstance(b, Block):
+                continue
+            df_estagio = b.data
+            if df is None:
+                df = df_estagio
+            else:
+                df = pd.concat([df, df_estagio], ignore_index=True)
+        if df is not None:
+            return df
+        return None
+
     def __blocos_adicionando_coluna_estagios(
         self, bloco: Type[T]
     ) -> Optional[pd.DataFrame]:
@@ -153,6 +175,7 @@ class Relato(BlockFile):
         Obtém a tabela de operação de cada UHE por estágio do DECOMP
         existente no :class:`Relato`
 
+        - Estágio (`int`)
         - Código (`int`)
         - Usina (`str`)
         - Evaporação (`bool`)
@@ -192,7 +215,16 @@ class Relato(BlockFile):
         Obtém a tabela de balanço energético entre os patamares para
         cada estágio do DECOMP existente no :class:`Relato`
 
+        - Estágio (`int`)
+        - Cenário (`int`)
+        - Probabilidade (`float`)
         - Subsistema (`str`)
+        - Earm Inicial Absoluto (`float`)
+        - Earm Inicial Percentual (`float`)
+        - ENA Absoluta (`float`)
+        - ENA Percentual (`float`)
+        - Earm Final Absoluto (`float`)
+        - Earm Final Percentual (`float`)
         - Mercado (`float`)
         - Bacia (`float`)
         - Cbomba (`float`)
@@ -209,10 +241,8 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__balanco_energetico is None:
-            self.__balanco_energetico = (
-                self.__blocos_adicionando_coluna_estagios(
-                    BlocoBalancoEnergeticoRelato
-                )
+            self.__balanco_energetico = self.__concatena_blocos(
+                BlocoBalancoEnergeticoRelato
             )
         return self.__balanco_energetico
 
