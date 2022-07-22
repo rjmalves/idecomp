@@ -4,6 +4,7 @@ from cfinterface.components.literalfield import LiteralField
 from typing import IO, List
 import pandas as pd  # type: ignore
 
+
 class BlocoNomesArquivos(Section):
     """
     Bloco de informações do arquivo que contém os
