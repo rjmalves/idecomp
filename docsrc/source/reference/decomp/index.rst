@@ -37,6 +37,8 @@ Arquivos
 .. toctree::
    :maxdepth: 2
 
+   arquivos/caso
+   arquivos/arquivos
    arquivos/dadger
    arquivos/dadgnl
    arquivos/hidr
