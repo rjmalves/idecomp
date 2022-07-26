@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dados de Térmicas GNL (dadgnl.rvX) &mdash; documentação idecomp 0.0.37</title>
+  <title>Dados de Térmicas GNL (dadgnl.rvX) &mdash; documentação idecomp 0.0.38</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -111,71 +111,136 @@ cada registro, editá-lo e também cria alguns novos registros.</p>
 método <code class="xref py py-obj docutils literal notranslate"><span class="pre">le_arquivo()</span></code> e escreve um novo arquivo a partir do método
 <code class="xref py py-obj docutils literal notranslate"><span class="pre">escreve_arquivo()</span></code>.</p>
 <dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.append_registro">
+<span class="sig-name descname"><span class="pre">append_registro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">registro</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Register</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.append_registro"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.append_registro" title="Link permanente para esta definição"></a></dt>
+<dd><p>Adiciona um registro ao arquivo na última posição.</p>
+<p>Este método existe para retrocompatibilidade e deve ser substituído
+quando for suportado na classe <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterFile</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.cria_registro">
+<span class="sig-name descname"><span class="pre">cria_registro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anterior</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Register</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">registro</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Register</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.cria_registro"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.cria_registro" title="Link permanente para esta definição"></a></dt>
+<dd><p>Adiciona um registro ao arquivo após um outro registro previamente
+existente.</p>
+<p>Este método existe para retrocompatibilidade e deve ser substituído
+quando for suportado na classe <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterFile</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.deleta_registro">
+<span class="sig-name descname"><span class="pre">deleta_registro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">registro</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Register</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.deleta_registro"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.deleta_registro" title="Link permanente para esta definição"></a></dt>
+<dd><p>Remove um registro existente no arquivo.</p>
+<p>Este método existe para retrocompatibilidade e deve ser substituído
+quando for suportado na classe <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterFile</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.gl">
-<span class="sig-name descname"><span class="pre">gl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GL" title="idecomp.decomp.modelos.dadgnl.GL"><span class="pre">GL</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.gl"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.gl" title="Link permanente para esta definição"></a></dt>
+<span class="sig-name descname"><span class="pre">gl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsistema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_inicio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GL" title="idecomp.decomp.modelos.dadgnl.GL"><span class="pre">GL</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GL" title="idecomp.decomp.modelos.dadgnl.GL"><span class="pre">GL</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.gl"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.gl" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém um registro que define o despacho por patamar
 e a duração dos patamares para uma UTE GNL.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parâmetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>codigo</strong> (<em>int</em>) – código que especifica o registro
+<li><p><strong>codigo</strong> (<em>int</em><em> | </em><em>None</em>) – código que especifica o registro
 da UTE</p></li>
-<li><p><strong>estagio</strong> (<em>int</em>) – Índice do estágio para o qual foi cadastrado
-o despacho da UTE</p></li>
+<li><p><strong>subsistema</strong> (<em>int</em><em> | </em><em>None</em>) – subsistema da UTE</p></li>
+<li><p><strong>estagio</strong> (<em>int</em><em> | </em><em>None</em>) – estágio do despacho da UTE</p></li>
+<li><p><strong>data_inicio</strong> (<em>str</em><em> | </em><em>None</em>) – data de início do estágio
+do despacho da UTE</p></li>
 </ul>
 </dd>
 <dt class="field-even">Retorna</dt>
-<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">GL</span></code></p>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GL</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">GL</span></code>] | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.gs">
-<span class="sig-name descname"><span class="pre">gs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GS" title="idecomp.decomp.modelos.dadgnl.GS"><span class="pre">GS</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.gs"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.gs" title="Link permanente para esta definição"></a></dt>
+<span class="sig-name descname"><span class="pre">gs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">semanas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GS" title="idecomp.decomp.modelos.dadgnl.GS"><span class="pre">GS</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.GS" title="idecomp.decomp.modelos.dadgnl.GS"><span class="pre">GS</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.gs"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.gs" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém um registro que define o número de semanas em cada
 mês de estudo no <a class="reference internal" href="#idecomp.decomp.dadgnl.DadGNL" title="idecomp.decomp.dadgnl.DadGNL"><code class="xref py py-class docutils literal notranslate"><span class="pre">DadGNL</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parâmetros</dt>
-<dd class="field-odd"><p><strong>mes</strong> (<em>int</em>) – índice do mês no estudo</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mes</strong> (<em>int</em><em> | </em><em>None</em>) – índice do mês no estudo</p></li>
+<li><p><strong>semanas</strong> (<em>int</em><em> | </em><em>None</em>) – número de semanas do mês</p></li>
+</ul>
 </dd>
 <dt class="field-even">Retorna</dt>
-<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">GS</span></code></p>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">GS</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">GS</span></code>] | None</p>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.lista_registros">
+<span class="sig-name descname"><span class="pre">lista_registros</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tipo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Type</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">T</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.lista_registros"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.lista_registros" title="Link permanente para esta definição"></a></dt>
+<dd><p>Lista todos os registros presentes no arquivo que tenham o tipo <code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>.</p>
+<p>Este método existe para retrocompatibilidade e deve ser substituído
+quando for suportado na classe <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterFile</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.nl">
-<span class="sig-name descname"><span class="pre">nl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.NL" title="idecomp.decomp.modelos.dadgnl.NL"><span class="pre">NL</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.nl"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.nl" title="Link permanente para esta definição"></a></dt>
+<span class="sig-name descname"><span class="pre">nl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsistema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.NL" title="idecomp.decomp.modelos.dadgnl.NL"><span class="pre">NL</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.NL" title="idecomp.decomp.modelos.dadgnl.NL"><span class="pre">NL</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.nl"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.nl" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém um registro que define o número de lags para o despacho
 de uma UTE.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parâmetros</dt>
-<dd class="field-odd"><p><strong>codigo</strong> (<em>int</em>) – código da UTE</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codigo</strong> (<em>int</em><em> | </em><em>None</em>) – código da UTE</p></li>
+<li><p><strong>subsistema</strong> (<em>int</em><em> | </em><em>None</em>) – subsistema da UTE</p></li>
+<li><p><strong>lag</strong> (<em>int</em><em> | </em><em>None</em>) – número de lags da UTE</p></li>
+</ul>
 </dd>
 <dt class="field-even">Retorna</dt>
-<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">NL</span></code></p>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">NL</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">NL</span></code>] | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.preppend_registro">
+<span class="sig-name descname"><span class="pre">preppend_registro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">registro</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Register</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.preppend_registro"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.preppend_registro" title="Link permanente para esta definição"></a></dt>
+<dd><p>Adiciona um registro ao arquivo na primeira posição.</p>
+<p>Este método existe para retrocompatibilidade e deve ser substituído
+quando for suportado na classe <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterFile</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadgnl.DadGNL.tg">
-<span class="sig-name descname"><span class="pre">tg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.TG" title="idecomp.decomp.modelos.dadgnl.TG"><span class="pre">TG</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.tg"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.tg" title="Link permanente para esta definição"></a></dt>
+<span class="sig-name descname"><span class="pre">tg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsistema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.TG" title="idecomp.decomp.modelos.dadgnl.TG"><span class="pre">TG</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadgnl.TG" title="idecomp.decomp.modelos.dadgnl.TG"><span class="pre">TG</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadgnl.html#DadGNL.tg"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadgnl.DadGNL.tg" title="Link permanente para esta definição"></a></dt>
 <dd><p>Obtém um registro que define uma usina termelétrica existente
 no estudo descrito pelo <a class="reference internal" href="#idecomp.decomp.dadgnl.DadGNL" title="idecomp.decomp.dadgnl.DadGNL"><code class="xref py py-class docutils literal notranslate"><span class="pre">DadGNL</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parâmetros</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>codigo</strong> (<em>int</em>) – código que especifica o registro
+<li><p><strong>codigo</strong> (<em>int</em><em> | </em><em>None</em>) – código que especifica o registro
 da UTE</p></li>
-<li><p><strong>estagio</strong> (<em>int</em>) – Índice do estágio para o qual foi cadastrado
+<li><p><strong>subsistema</strong> (<em>int</em><em> | </em><em>None</em>) – código que especifica o subsistema
+da UTE</p></li>
+<li><p><strong>nome</strong> (<em>str</em><em> | </em><em>None</em>) – nome da UTE</p></li>
+<li><p><strong>estagio</strong> (<em>int</em><em> | </em><em>None</em>) – Índice do estágio para o qual foi cadastrado
 o despacho da UTE</p></li>
 </ul>
 </dd>
 <dt class="field-even">Retorna</dt>
-<dd class="field-even"><p>Um registro do tipo <code class="xref py py-class docutils literal notranslate"><span class="pre">TG</span></code></p>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TG</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">TG</span></code>] | None</p>
 </dd>
 </dl>
 </dd></dl>

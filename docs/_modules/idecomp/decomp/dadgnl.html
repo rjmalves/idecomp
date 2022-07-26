@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.dadgnl &mdash; documentação idecomp 0.0.37</title>
+  <title>idecomp.decomp.dadgnl &mdash; documentação idecomp 0.0.38</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -72,8 +72,9 @@
              
   <h1>Código fonte para idecomp.decomp.dadgnl</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">cfinterface.files.registerfile</span> <span class="kn">import</span> <span class="n">RegisterFile</span>
+<span class="kn">from</span> <span class="nn">cfinterface.components.register</span> <span class="kn">import</span> <span class="n">Register</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.dadgnl</span> <span class="kn">import</span> <span class="n">TG</span><span class="p">,</span> <span class="n">GS</span><span class="p">,</span> <span class="n">NL</span><span class="p">,</span> <span class="n">GL</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Type</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">TypeVar</span><span class="p">,</span> <span class="n">Union</span>
 
 
 <div class="viewcode-block" id="DadGNL"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL">[documentos]</a><span class="k">class</span> <span class="nc">DadGNL</span><span class="p">(</span><span class="n">RegisterFile</span><span class="p">):</span>
@@ -118,84 +119,194 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">registro</span><span class="p">)]</span>
 
-    <span class="k">def</span> <span class="nf">__obtem_registro_com_codigo</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-    <span class="k">def</span> <span class="nf">__obtem_registro_do_estagio</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">all</span><span class="p">([</span><span class="n">r</span><span class="o">.</span><span class="n">codigo</span> <span class="o">==</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">r</span><span class="o">.</span><span class="n">estagio</span> <span class="o">==</span> <span class="n">estagio</span><span class="p">]):</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">def</span> <span class="nf">__obtem_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__obtem_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__registros_por_tipo</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
 
-<div class="viewcode-block" id="DadGNL.tg"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.tg">[documentos]</a>    <span class="k">def</span> <span class="nf">tg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TG</span><span class="p">]:</span>
+    <span class="k">def</span> <span class="nf">__obtem_registros_com_filtros</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">tipo_registro</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">T</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]]]:</span>
+        <span class="k">def</span> <span class="nf">__atende</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="n">condicoes</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">bool</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">condicoes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> <span class="o">==</span> <span class="n">v</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">all</span><span class="p">(</span><span class="n">condicoes</span><span class="p">)</span>
+
+        <span class="n">regs_filtro</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">tipo_registro</span><span class="p">)</span> <span class="k">if</span> <span class="n">__atende</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">regs_filtro</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">regs_filtro</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">regs_filtro</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">regs_filtro</span>
+
+<div class="viewcode-block" id="DadGNL.cria_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.cria_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anterior</span><span class="p">:</span> <span class="n">Register</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adiciona um registro ao arquivo após um outro registro previamente</span>
+<span class="sd">        existente.</span>
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_after</span><span class="p">(</span><span class="n">anterior</span><span class="p">,</span> <span class="n">registro</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DadGNL.deleta_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.deleta_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">deleta_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Remove um registro existente no arquivo.</span>
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">registro</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DadGNL.lista_registros"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.lista_registros">[documentos]</a>    <span class="k">def</span> <span class="nf">lista_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lista todos os registros presentes no arquivo que tenham o tipo `T`.</span>
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">tipo</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="DadGNL.append_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.append_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">append_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adiciona um registro ao arquivo na última posição.</span>
+
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">registro</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DadGNL.preppend_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.preppend_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">preppend_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adiciona um registro ao arquivo na primeira posição.</span>
+
+<span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
+<span class="sd">        quando for suportado na classe :class:`RegisterFile`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">preppend</span><span class="p">(</span><span class="n">registro</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DadGNL.tg"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.tg">[documentos]</a>    <span class="k">def</span> <span class="nf">tg</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">codigo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">subsistema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">nome</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">estagio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">TG</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">TG</span><span class="p">]]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define uma usina termelétrica existente</span>
 <span class="sd">        no estudo descrito pelo :class:`DadGNL`.</span>
 
 <span class="sd">        :param codigo: código que especifica o registro</span>
 <span class="sd">            da UTE</span>
-<span class="sd">        :type codigo: int</span>
+<span class="sd">        :type codigo: int | None</span>
+<span class="sd">        :param subsistema: código que especifica o subsistema</span>
+<span class="sd">            da UTE</span>
+<span class="sd">        :type subsistema: int | None</span>
+<span class="sd">        :param nome: nome da UTE</span>
+<span class="sd">        :type nome: str | None</span>
 <span class="sd">        :param estagio: Índice do estágio para o qual foi cadastrado</span>
 <span class="sd">            o despacho da UTE</span>
-<span class="sd">        :type estagio: int</span>
-<span class="sd">        :return: Um registro do tipo :class:`TG`</span>
+<span class="sd">        :type estagio: int | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`TG` | list[:class:`TG`] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">TG</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">TG</span><span class="p">,</span>
+            <span class="n">codigo</span><span class="o">=</span><span class="n">codigo</span><span class="p">,</span>
+            <span class="n">subsistema</span><span class="o">=</span><span class="n">subsistema</span><span class="p">,</span>
+            <span class="n">nome</span><span class="o">=</span><span class="n">nome</span><span class="p">,</span>
+            <span class="n">estagio</span><span class="o">=</span><span class="n">estagio</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DadGNL.gs"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.gs">[documentos]</a>    <span class="k">def</span> <span class="nf">gs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mes</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GS</span><span class="p">]:</span>
+<div class="viewcode-block" id="DadGNL.gs"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.gs">[documentos]</a>    <span class="k">def</span> <span class="nf">gs</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">mes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">semanas</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">GS</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">GS</span><span class="p">]]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define o número de semanas em cada</span>
 <span class="sd">        mês de estudo no :class:`DadGNL`.</span>
 
 <span class="sd">        :param mes: índice do mês no estudo</span>
-<span class="sd">        :type mes: int</span>
+<span class="sd">        :type mes: int | None</span>
+<span class="sd">        :param semanas: número de semanas do mês</span>
+<span class="sd">        :type semanas: int | None</span>
 
-<span class="sd">        :return: Um registro do tipo :class:`GS`</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`GS` | list[:class:`GS`] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">regs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">GS</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">GS</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">regs</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">mes</span> <span class="o">==</span> <span class="n">mes</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">r</span>
-        <span class="k">return</span> <span class="kc">None</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">GS</span><span class="p">,</span>
+            <span class="n">mes</span><span class="o">=</span><span class="n">mes</span><span class="p">,</span>
+            <span class="n">semanas</span><span class="o">=</span><span class="n">semanas</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DadGNL.nl"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.nl">[documentos]</a>    <span class="k">def</span> <span class="nf">nl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">NL</span><span class="p">]:</span>
+<div class="viewcode-block" id="DadGNL.nl"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.nl">[documentos]</a>    <span class="k">def</span> <span class="nf">nl</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">codigo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">subsistema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">lag</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">NL</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">NL</span><span class="p">]]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define o número de lags para o despacho</span>
 <span class="sd">        de uma UTE.</span>
 
 <span class="sd">        :param codigo: código da UTE</span>
-<span class="sd">        :type codigo: int</span>
+<span class="sd">        :type codigo: int | None</span>
+<span class="sd">        :param subsistema: subsistema da UTE</span>
+<span class="sd">        :type subsistema: int | None</span>
+<span class="sd">        :param lag: número de lags da UTE</span>
+<span class="sd">        :type lag: int | None</span>
 
-<span class="sd">        :return: Um registro do tipo :class:`NL`</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`NL` | list[:class:`NL`] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_com_codigo</span><span class="p">(</span><span class="n">NL</span><span class="p">,</span> <span class="n">codigo</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">NL</span><span class="p">,</span>
+            <span class="n">codigo</span><span class="o">=</span><span class="n">codigo</span><span class="p">,</span>
+            <span class="n">subsistema</span><span class="o">=</span><span class="n">subsistema</span><span class="p">,</span>
+            <span class="n">lag</span><span class="o">=</span><span class="n">lag</span><span class="p">,</span>
+        <span class="p">)</span></div>
 
-<div class="viewcode-block" id="DadGNL.gl"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.gl">[documentos]</a>    <span class="k">def</span> <span class="nf">gl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">codigo</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">estagio</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">GL</span><span class="p">]:</span>
+<div class="viewcode-block" id="DadGNL.gl"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.gl">[documentos]</a>    <span class="k">def</span> <span class="nf">gl</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">codigo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">subsistema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">estagio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data_inicio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">GL</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">GL</span><span class="p">]]]:</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define o despacho por patamar</span>
 <span class="sd">        e a duração dos patamares para uma UTE GNL.</span>
 
 <span class="sd">        :param codigo: código que especifica o registro</span>
 <span class="sd">            da UTE</span>
-<span class="sd">        :type codigo: int</span>
-<span class="sd">        :param estagio: Índice do estágio para o qual foi cadastrado</span>
-<span class="sd">            o despacho da UTE</span>
-<span class="sd">        :type estagio: int</span>
-<span class="sd">        :return: Um registro do tipo :class:`GL`</span>
+<span class="sd">        :type codigo: int | None</span>
+<span class="sd">        :param subsistema: subsistema da UTE</span>
+<span class="sd">        :type subsistema: int | None</span>
+<span class="sd">        :param estagio: estágio do despacho da UTE</span>
+<span class="sd">        :type estagio: int | None</span>
+<span class="sd">        :param data_inicio: data de início do estágio</span>
+<span class="sd">            do despacho da UTE</span>
+<span class="sd">        :type data_inicio: str | None</span>
+
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`GL` | list[:class:`GL`] | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro_do_estagio</span><span class="p">(</span><span class="n">GL</span><span class="p">,</span> <span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">GL</span><span class="p">,</span>
+            <span class="n">codigo</span><span class="o">=</span><span class="n">codigo</span><span class="p">,</span>
+            <span class="n">subsistema</span><span class="o">=</span><span class="n">subsistema</span><span class="p">,</span>
+            <span class="n">estagio</span><span class="o">=</span><span class="n">estagio</span><span class="p">,</span>
+            <span class="n">data_inicio</span><span class="o">=</span><span class="n">data_inicio</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
            </div>
