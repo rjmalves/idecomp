@@ -42,6 +42,8 @@ Arquivos
    arquivos/dadger
    arquivos/dadgnl
    arquivos/hidr
+   arquivos/vazoes
+   arquivos/postos
    arquivos/relato
    arquivos/sumario
    arquivos/relgnl

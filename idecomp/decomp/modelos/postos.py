@@ -1,52 +1,42 @@
-from typing import List, BinaryIO
-import numpy as np  # type: ignore
-from io import BufferedReader
-
-from idecomp._utils.registrosbinario import RegistroAnBinario
-from idecomp._utils.registrosbinario import RegistroInBinario
-from idecomp._utils.leiturabinario import LeituraBinario
-from idecomp._utils.blocobinario import BlocoBinario
+from cfinterface.components.register import Register
+from cfinterface.components.line import Line
+from cfinterface.components.literalfield import LiteralField
+from cfinterface.components.integerfield import IntegerField
+from typing import List
 
 
-class BlocoBinarioPosto(BlocoBinario):
-    def __init__(self):
-        super().__init__()
-        self._dados = []
-
-    # Override
-    def le(self, arq: BufferedReader):
-        """ """
-        reg_nome = RegistroAnBinario(12)
-        reg_ano = RegistroInBinario(32)
-        nome = reg_nome.le_registro(arq)
-        anos = reg_ano.le_linha_tabela(arq, 2)
-        self._dados = [nome, *anos]
-
-    # Override
-    def escreve(self, arq: BinaryIO):
-        """ """
-        arq.write(self._dados[0].ljust(12).encode("ISO-8859-1"))
-        anos = np.array(self._dados[1:]).astype("int32")
-        anos.tofile(arq)
-        pass
-
-
-class LeituraPostos(LeituraBinario):
+class RegistroPostos(Register):
     """
-    Classe com utilidades gerais para leitura de arquivos
-    do DECOMP com comentários.
+    Registro com os dados associados às informações dos postos.
     """
 
-    def __init__(self, diretorio: str):
-        super().__init__(diretorio)
+    POSTOS = 320
 
-    def _cria_blocos_leitura(self) -> List[BlocoBinario]:
-        """
-        Método que cria a lista de blocos a serem lidos no arquivo.
-        Implementa o Factory Pattern.
-        """
-        MAX_BLOCOS = 600
+    LINE = Line(
+        [
+            LiteralField(size=12, starting_position=0),
+            IntegerField(size=4, starting_position=12),
+            IntegerField(size=4, starting_position=16),
+        ],
+        storage="BINARY",
+    )
 
-        b: List[BlocoBinario] = [BlocoBinarioPosto() for _ in range(MAX_BLOCOS)]
+    @classmethod
+    def set_postos(cls, postos: int):
+        cls.POSTOS = postos
+        cls.LINE = Line(
+            [
+                LiteralField(size=12, starting_position=0),
+                IntegerField(size=4, starting_position=12),
+                IntegerField(size=4, starting_position=16),
+            ],
+            storage="BINARY",
+        )
 
-        return b
+    @property
+    def postos(self) -> List[int]:
+        return self.data
+
+    @postos.setter
+    def postos(self, v: List[int]):
+        self.data = v

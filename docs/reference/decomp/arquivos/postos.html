@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Caso (caso.dat) &mdash; documentação idecomp 0.0.39</title>
+  <title>Postos (postos.rvX) &mdash; documentação idecomp 0.0.39</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -24,8 +24,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" />
-    <link rel="next" title="Arquivos (rv0, jan, …)" href="arquivos.html" />
-    <link rel="prev" title="DECOMP" href="../index.html" /> 
+    <link rel="next" title="Relato (relato.rvX)" href="relato.html" />
+    <link rel="prev" title="Vazões por Posto (vazoes.rvX)" href="vazoes.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -50,13 +50,13 @@
 <li class="toctree-l2 current"><a class="reference internal" href="../index.html">DECOMP</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="../index.html#basico-da-interface-decomp">Básico da interface DECOMP</a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="../index.html#arquivos">Arquivos</a><ul class="current">
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Caso (caso.dat)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="caso.html">Caso (caso.dat)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="arquivos.html">Arquivos (rv0, jan, …)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="dadger.html">Dados gerais (dadger.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="dadgnl.html">Dados de Térmicas GNL (dadgnl.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hidr.html">Hidr (hidr.dat)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="vazoes.html">Vazões por Posto (vazoes.rvX)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="postos.html">Postos (postos.rvX)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Postos (postos.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relato.html">Relato (relato.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sumario.html">Sumario (sumario.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relgnl.html">Relatório de Térmicas GNL (relgnl.rvX)</a></li>
@@ -85,9 +85,9 @@
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../reference.html">Referência</a> &raquo;</li>
           <li><a href="../index.html">DECOMP</a> &raquo;</li>
-      <li>Caso (caso.dat)</li>
+      <li>Postos (postos.rvX)</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/reference/decomp/arquivos/caso.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+            <a href="../../../_sources/reference/decomp/arquivos/postos.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
       </li>
   </ul>
   <hr/>
@@ -95,26 +95,31 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="caso-caso-dat">
-<span id="caso"></span><h1>Caso (caso.dat)<a class="headerlink" href="#caso-caso-dat" title="Link permanente para este cabeçalho"></a></h1>
-<p>A informação do nome do arquivo que define o caso é armazenada na classe:</p>
+  <section id="postos-postos-rvx">
+<span id="postos"></span><h1>Postos (postos.rvX)<a class="headerlink" href="#postos-postos-rvx" title="Link permanente para este cabeçalho"></a></h1>
+<p>Os postos do DECOMP, localizados no arquivo geralmente denominado
+postos.rvX, são armazenadas na classe:</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="idecomp.decomp.caso.Caso">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Caso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/caso.html#Caso"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.caso.Caso" title="Link permanente para esta definição"></a></dt>
-<dd><p>Armazena os dados de entrada do NEWAVE referentes ao nome do arquivo
-que define os arquivos do caso.</p>
-<p>Esta classe lida com informações de entrada fornecidas ao NEWAVE e
-que podem ser modificadas através do arquivo <code class="xref py py-obj docutils literal notranslate"><span class="pre">caso.dat</span></code>.</p>
+<dt class="sig sig-object py" id="idecomp.decomp.postos.Postos">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Postos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/postos.html#Postos"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.postos.Postos" title="Link permanente para esta definição"></a></dt>
+<dd><p>Armazena os dados de entrada do DECOMP referentes ao postos
+e seus históricos.</p>
 <dl class="py property">
-<dt class="sig sig-object py" id="idecomp.decomp.caso.Caso.arquivos">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arquivos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.caso.Caso.arquivos" title="Link permanente para esta definição"></a></dt>
-<dd><p>Caminho para o arquivo <code class="xref py py-obj docutils literal notranslate"><span class="pre">arquivos.dat</span></code> de entrada do DECOMP.</p>
+<dt class="sig sig-object py" id="idecomp.decomp.postos.Postos.postos">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">postos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.postos.Postos.postos" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém a tabela com os dados dos postos existentes no arquivo
+binário.</p>
+<ul class="simple">
+<li><p>Nome (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
+<li><p>Ano Inicial Histórico (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>Ano Final Histórico (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+</ul>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
-<dd class="field-odd"><p>O caminho para o arquivo</p>
+<dd class="field-odd"><p>A tabela com os postos</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
-<dd class="field-even"><p>str | None</p>
+<dd class="field-even"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -127,8 +132,8 @@ que podem ser modificadas através do arquivo <code class="xref py py-obj docuti
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
-        <a href="../index.html" class="btn btn-neutral float-left" title="DECOMP" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="arquivos.html" class="btn btn-neutral float-right" title="Arquivos (rv0, jan, …)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="vazoes.html" class="btn btn-neutral float-left" title="Vazões por Posto (vazoes.rvX)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="relato.html" class="btn btn-neutral float-right" title="Relato (relato.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

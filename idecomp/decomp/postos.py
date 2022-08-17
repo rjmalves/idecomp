@@ -1,67 +1,90 @@
-from idecomp.decomp.modelos.postos import LeituraPostos
-from idecomp._utils.arquivo import ArquivoBinario
-from idecomp._utils.escritabinario import EscritaBinario
-from idecomp._utils.dadosarquivo import DadosArquivoBinarios
+from cfinterface.files.registerfile import RegisterFile
+from idecomp.decomp.modelos.postos import RegistroPostos
 import pandas as pd  # type: ignore
 
 
-class Postos(ArquivoBinario):
+from typing import TypeVar, List, Optional
+
+
+class Postos(RegisterFile):
     """
-    Armazena os dados de saída do DECOMP referentes às térmicas de
-    despacho antecipado (GNL).
-
-    Esta classe lida com as informações de entrada fornecidas ao
-    DECOMP e reproduzidas no `relgnl.rvx`, bem como as saídas finais
-    da execução.
-
+    Armazena os dados de entrada do DECOMP referentes ao postos
+    e seus históricos.
     """
 
-    def __init__(self, dados: DadosArquivoBinarios) -> None:
-        super().__init__(dados)
+    T = TypeVar("T")
 
-    # Override
+    REGISTERS = [RegistroPostos]
+    POSTOS = 320
+    STORAGE = "BINARY"
+
+    def __init__(self, data=...) -> None:
+        super().__init__(data)
+        self.__df: Optional[pd.DataFrame] = None
+        RegistroPostos.set_postos(self.POSTOS)
+
     @classmethod
     def le_arquivo(cls, diretorio: str, nome_arquivo="postos.dat") -> "Postos":
-        """ """
-        leitor = LeituraPostos(diretorio)
-        r = leitor.le_arquivo(nome_arquivo)
-        return cls(r)
+        return cls.read(diretorio, nome_arquivo)
 
-    # Override
-    def escreve_arquivo(
-        self, diretorio: str, nome_arquivo: str = "postos.dat"
-    ):
-        """ """
-        escritor = EscritaBinario(diretorio)
-        escritor.escreve_arquivo(self._dados, nome_arquivo)
+    def escreve_arquivo(self, diretorio: str, nome_arquivo="postos.dat"):
+        self.__atualiza_registros()
+        self.write(diretorio, nome_arquivo)
+
+    def __monta_df_de_registros(self) -> Optional[pd.DataFrame]:
+        registros: List[RegistroPostos] = [
+            r for r in self.data.of_type(RegistroPostos)
+        ]
+        if len(registros) == 0:
+            return None
+        df = pd.DataFrame(
+            data={
+                "Nome": [r.data[0] for r in registros],
+                "Ano Inicial Historico": [r.data[1] for r in registros],
+                "Ano Final Historico": [r.data[2] for r in registros],
+            }
+        )
+
+        df = df.astype(
+            {
+                "Nome": str,
+                "Ano Inicial Historico": int,
+                "Ano Final Historico": int,
+            }
+        )
+        return df
+
+    def __atualiza_registros(self):
+        registros: List[RegistroPostos] = [r for r in self.data][1:]
+        n_registros = len(registros)
+        n_meses = self.postos.shape[0]
+        # Deleta os registros que sobraram
+        for i in range(n_meses, n_registros):
+            self.data.remove(registros[i])
+        # Cria registros se faltaram
+        for i in range(n_registros, n_meses):
+            self.data.append(RegistroPostos())
+        # Atualiza os dados
+        for (_, linha), r in zip(self.postos.iterrows(), registros):
+            r.data = linha.tolist()
 
     @property
     def postos(self) -> pd.DataFrame:
         """
-        Tabela das inviabilidades visitadas pelo modelo durante
-        a simulação final. As colunas são:
+        Obtém a tabela com os dados dos postos existentes no arquivo
+        binário.
 
         - Nome (`str`)
         - Ano Inicial Histórico (`int`)
         - Ano Final Histórico (`int`)
 
-        :return: Tabela das inviabilidades
-        :rtype: pd.DataFrame | None
+        :return: A tabela com os postos
+        :rtype: pd.DataFrame
         """
-        nome = [b.dados[0] for b in self._dados.blocos]
-        ano_inicial = [b.dados[1] for b in self._dados.blocos]
-        ano_final = [b.dados[2] for b in self._dados.blocos]
-        df = pd.DataFrame(index=list(range(1, len(nome) + 1)))
-        df["Nome"] = nome
-        df["Ano Inicial Histórico"] = ano_inicial
-        df["Ano Final Histórico"] = ano_final
-        return df
+        if self.__df is None:
+            self.__df = self.__monta_df_de_registros()
+        return self.__df
 
     @postos.setter
-    def postos(self, p: pd.DataFrame):
-        n_postos = p.shape[0]
-        n_postos_arquivo = self.postos.shape[0]
-        if n_postos != n_postos_arquivo:
-            raise ValueError(f"Número de postos incompatível ({n_postos})")
-        for i in range(n_postos):
-            self._dados.blocos[i]._dados = p.iloc[i, :].tolist()
+    def postos(self, df: pd.DataFrame):
+        self.__df = df
