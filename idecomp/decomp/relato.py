@@ -231,6 +231,7 @@ class Relato(BlockFile):
         - Ghid (`float`)
         - Gter (`float`)
         - GterAT (`float`)
+        - Geol (`float`)
         - Deficit (`float`)
         - Compra (`float`)
         - Venda (`float`)

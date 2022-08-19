@@ -19,7 +19,7 @@ from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
-from typing import IO, List
+from typing import IO, List, Tuple
 
 
 class BlocoConvergenciaRelato(Block):
@@ -258,24 +258,7 @@ class BlocoBalancoEnergeticoRelato(Block):
         self.__linha_ear_ena = Line(
             [FloatField(8, 13, 1), FloatField(8, 36, 1), FloatField(8, 63, 1)]
         )
-        self.__linha_balanco = Line(
-            [
-                LiteralField(5, 4),
-                FloatField(7, 10, 1),
-                FloatField(7, 18, 1),
-                FloatField(7, 26, 1),
-                FloatField(7, 34, 1),
-                FloatField(7, 42, 1),
-                FloatField(7, 50, 1),
-                FloatField(7, 58, 1),
-                FloatField(7, 66, 1),
-                FloatField(7, 74, 1),
-                LiteralField(2, 83),
-                FloatField(8, 86, 1),
-                FloatField(7, 97, 1),
-                FloatField(7, 105, 1),
-            ]
-        )
+
         # self.__linha_intercambio = Line(
         #     [
         #         LiteralField(2, 83),
@@ -302,21 +285,12 @@ class BlocoBalancoEnergeticoRelato(Block):
         # Por retrocompatibilidade só lê valores médios.
         # TODO - Ler tudo. As linhas já estão modeladas.
         def converte_tabela_para_df() -> pd.DataFrame:
+            tamanho_maior_linha = max([len(lin) for lin in linhas])
+            tabela = np.zeros((len(linhas), tamanho_maior_linha))
+            for i, lin in enumerate(linhas):
+                tabela[i, : len(lin)] = lin
             df = pd.DataFrame(tabela)
-            cols = [
-                "Mercado",
-                "Bacia",
-                "Cbomba",
-                "Ghid",
-                "Gter",
-                "GterAT",
-                "Deficit",
-                "Compra",
-                "Venda",
-                "Itaipu50",
-                "Itaipu60",
-            ]
-            df.columns = cols
+            df.columns = colunas_balanco
             df["Estágio"] = estagios
             df["Cenário"] = cenarios
             df["Probabilidade"] = probabilidades
@@ -339,8 +313,35 @@ class BlocoBalancoEnergeticoRelato(Block):
                 "Earm Final Absoluto",
                 "Earm Final Percentual",
             ]
-            df = df[cols_adic + cols]
+            df = df[cols_adic + colunas_balanco]
             return df
+
+        def define_linha_balanco(cabecalho: str) -> Tuple[Line, List[str]]:
+            colunas = [c for c in cabecalho.split(" ") if len(c) > 2]
+            if "Interligacao" not in colunas:
+                return Line([]), []
+            indice_intercambio = colunas.index("Interligacao")
+            campo_patamar: List[Field] = [LiteralField(5, 4)]
+            campos_balanco: List[Field] = [
+                FloatField(7, 10 + 8 * i, 1) for i in range(indice_intercambio)
+            ]
+            campo_subsis: List[Field] = [
+                LiteralField(2, 10 + 8 * indice_intercambio + 1)
+            ]
+            campo_interligacao: List[Field] = [
+                FloatField(8, 10 + 8 * indice_intercambio + 4, 1)
+            ]
+            campos_apos_interligacao: List[Field] = [
+                FloatField(7, 25 + 8 * indice_intercambio + 8 * i, 1)
+                for i in range(2)
+            ]
+            return Line(
+                campo_patamar
+                + campos_balanco
+                + campo_subsis
+                + campo_interligacao
+                + campos_apos_interligacao
+            ), [c for c in colunas if c != "Interligacao"]
 
         # Variáveis auxiliares
         str_subsis = "     Subsistema"
@@ -363,13 +364,12 @@ class BlocoBalancoEnergeticoRelato(Block):
         estagio = dados[0]
         cenario = dados[1]
         probabilidade = dados[2]
-        tabela = np.zeros((MAX_ESTAGIOS * MAX_SUBSISTEMAS, 11))
-        i = 0
+        linhas: List[List[float]] = []
+        colunas_balanco: List[str] = []
         while True:
             linha = arq.readline()
             # Verifica se acabou
             if self.ends(linha):
-                tabela = tabela[:i, :]
                 self.data = converte_tabela_para_df()
                 break
             # Senão, procura a linha que identifica o subsistema
@@ -377,6 +377,13 @@ class BlocoBalancoEnergeticoRelato(Block):
                 subsis = self.__linha_subsistema.read(linha)[0]
                 dados_ear_ena_abs = self.__linha_ear_ena.read(arq.readline())
                 dados_ear_ena_per = self.__linha_ear_ena.read(arq.readline())
+                # Ignora uma linha
+                arq.readline()
+                self.__linha_balanco, colunas = define_linha_balanco(
+                    arq.readline()
+                )
+                if len(colunas_balanco) < len(colunas):
+                    colunas_balanco = colunas
             # Se está lendo um subsistema e achou a linha de valores médios
             if subsis != "FC" and str_medio in linha:
                 estagios.append(estagio)
@@ -390,10 +397,20 @@ class BlocoBalancoEnergeticoRelato(Block):
                 earms_finais_abs.append(dados_ear_ena_abs[2])
                 earms_finais_per.append(dados_ear_ena_per[2])
                 dados = self.__linha_balanco.read(linha)
-                tabela[i, :] = dados[1:10] + dados[12:]
+                indice_subsis = dados.index(
+                    [d for d in dados if type(d) == str][1]
+                )
+                dados_antes_interligacao: List[float] = [
+                    d for d in dados[1:indice_subsis] if d is not None
+                ]
+                dados_apos_interligacao: List[float] = [
+                    d for d in dados[indice_subsis + 2 :] if d is not None
+                ]
+                linhas.append(
+                    dados_antes_interligacao + dados_apos_interligacao
+                )
                 # Reseta o indicador de subsistema
                 subsis = "FC"
-                i += 1
 
 
 class BlocoCMORelato(Block):
