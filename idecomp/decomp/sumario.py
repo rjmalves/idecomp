@@ -1,5 +1,6 @@
 from idecomp.decomp.modelos.relato import BlocoCMORelato
 from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
+from idecomp.decomp.modelos.relato import BlocoCustoOperacaoValorEsperadoRelato
 from idecomp.decomp.modelos.relato import BlocoVolumeUtilReservatorioRelato
 from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaREERelato
 from idecomp.decomp.modelos.relato import (
@@ -26,6 +27,7 @@ class Sumario(BlockFile):
     BLOCKS = [
         BlocoCMORelato,
         BlocoGeracaoTermicaSubsistemaRelato,
+        BlocoCustoOperacaoValorEsperadoRelato,
         BlocoVolumeUtilReservatorioRelato,
         BlocoEnergiaArmazenadaREERelato,
         BlocoEnergiaArmazenadaSubsistemaRelato,

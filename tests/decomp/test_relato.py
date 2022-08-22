@@ -5,6 +5,7 @@ from idecomp.decomp.modelos.relato import (
     BlocoBalancoEnergeticoRelato,
     BlocoCMORelato,
     BlocoGeracaoTermicaSubsistemaRelato,
+    BlocoCustoOperacaoValorEsperadoRelato,
     BlocoVolumeUtilReservatorioRelato,
     BlocoDadosTermicasRelato,
     BlocoDisponibilidadesTermicasRelato,
@@ -40,6 +41,7 @@ from tests.mocks.arquivos.relato import (
     MockEnergiaArmazenadaREE,
     MockEnergiaArmazenadaSubsistema,
     MockGeracaoTermicaSubsistema,
+    MockCustoOperacaoValorEsperado,
     MockRelato,
     MockRelatorioOperacaoUHE,
     MockVolumeUtilReservatorio,
@@ -165,6 +167,23 @@ def test_bloco_geracao_termica_subsistema():
     assert b.data.iloc[0, 3] == 4315.4
     assert b.data.iloc[0, 4] == 4632.2
     assert b.data.iloc[0, 5] == 4705.9
+
+
+def test_bloco_custo_operacao_valor_esperado():
+    m: MagicMock = mock_open(read_data="".join(MockCustoOperacaoValorEsperado))
+    b = BlocoCustoOperacaoValorEsperadoRelato()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+
+    assert b.data.shape[0] == 2
+    assert b.data.shape[1] == 6
+    assert b.data.iloc[0, 0] == "*COP"
+    assert b.data.iloc[0, 1] == 90662.8
+    assert b.data.iloc[0, 2] == 79546.7
+    assert b.data.iloc[0, 3] == 81339.2
+    assert b.data.iloc[0, 4] == 89975.9
+    assert b.data.iloc[0, 5] == 85036.6
 
 
 def test_bloco_volume_util_reservatorios():

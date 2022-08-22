@@ -3,6 +3,7 @@ from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
 from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
 from idecomp.decomp.modelos.relato import BlocoCMORelato
 from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
+from idecomp.decomp.modelos.relato import BlocoCustoOperacaoValorEsperadoRelato
 from idecomp.decomp.modelos.relato import BlocoENAAcoplamentoREERelato
 from idecomp.decomp.modelos.relato import BlocoVolumeUtilReservatorioRelato
 from idecomp.decomp.modelos.relato import BlocoDadosTermicasRelato
@@ -47,6 +48,7 @@ class Relato(BlockFile):
         BlocoBalancoEnergeticoRelato,
         BlocoCMORelato,
         BlocoGeracaoTermicaSubsistemaRelato,
+        BlocoCustoOperacaoValorEsperadoRelato,
         BlocoENAAcoplamentoREERelato,
         BlocoVolumeUtilReservatorioRelato,
         BlocoDadosTermicasRelato,
@@ -282,6 +284,25 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         b = self.__bloco_por_tipo(BlocoGeracaoTermicaSubsistemaRelato, 0)
+        if b is not None:
+            return b.data
+        return None
+
+    @property
+    def custo_operacao_valor_esperado(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela de Custo de Operação existente no :class:`Relato`
+
+        - Parcela (`str`)
+        - Estágio 1 (`float`)
+        - Estágio 2 (`float`)
+        - ...
+        - Estágio N (`float`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None
+        """
+        b = self.__bloco_por_tipo(BlocoCustoOperacaoValorEsperadoRelato, 0)
         if b is not None:
             return b.data
         return None

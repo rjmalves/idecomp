@@ -496,6 +496,63 @@ class BlocoCMORelato(Block):
             i += 1
 
 
+class BlocoCustoOperacaoValorEsperadoRelato(Block):
+    """
+    Bloco com as informações de custo de operação
+    presente e futuro por estágio.
+    """
+
+    BEGIN_PATTERN = r"CUSTO DE OPERACAO E VALOR ESPERADO DO C\.FUTURO"
+    END_PATTERN = ""
+
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, BlocoCustoOperacaoValorEsperadoRelato):
+            return False
+        bloco: BlocoCustoOperacaoValorEsperadoRelato = o
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
+
+    # Override
+    def read(self, arq: IO):
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(tabela)
+            cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
+            df.columns = cols
+            df["Parcela"] = parcelas
+            df = df[["Parcela"] + cols]
+            return df
+
+        # Salta duas linhas
+        arq.readline()
+        arq.readline()
+        num_estagios = len(
+            [e for e in arq.readline().strip().split(" ") if len(e) > 2]
+        )
+        print("ESTAGIOS: ", num_estagios)
+        campo_parcela: List[Field] = [LiteralField(6, 4)]
+        campos_custos: List[Field] = [
+            FloatField(12, 11 + i * 13, 1) for i in range(num_estagios)
+        ]
+        self.__linha = Line(campo_parcela + campos_custos)
+        parcelas: list = []
+        tabela = np.zeros((2, num_estagios))
+        # Salta outra linha
+        arq.readline()
+        for i in range(2):
+            linha = arq.readline()
+            dados = self.__linha.read(linha)
+            parcelas.append(dados[0])
+            tabela[i, :] = dados[1:]
+        self.data = converte_tabela_em_df()
+
+
 class BlocoGeracaoTermicaSubsistemaRelato(Block):
     """
     Bloco com as informações de eco dos dados gerais

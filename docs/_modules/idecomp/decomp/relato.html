@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.40</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.41</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
@@ -76,6 +76,7 @@
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoBalancoEnergeticoRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoCMORelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoGeracaoTermicaSubsistemaRelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoCustoOperacaoValorEsperadoRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoENAAcoplamentoREERelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoVolumeUtilReservatorioRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoDadosTermicasRelato</span>
@@ -120,6 +121,7 @@
         <span class="n">BlocoBalancoEnergeticoRelato</span><span class="p">,</span>
         <span class="n">BlocoCMORelato</span><span class="p">,</span>
         <span class="n">BlocoGeracaoTermicaSubsistemaRelato</span><span class="p">,</span>
+        <span class="n">BlocoCustoOperacaoValorEsperadoRelato</span><span class="p">,</span>
         <span class="n">BlocoENAAcoplamentoREERelato</span><span class="p">,</span>
         <span class="n">BlocoVolumeUtilReservatorioRelato</span><span class="p">,</span>
         <span class="n">BlocoDadosTermicasRelato</span><span class="p">,</span>
@@ -355,6 +357,25 @@
 <span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoGeracaoTermicaSubsistemaRelato</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">custo_operacao_valor_esperado</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém a tabela de Custo de Operação existente no :class:`Relato`</span>
+
+<span class="sd">        - Parcela (`str`)</span>
+<span class="sd">        - Estágio 1 (`float`)</span>
+<span class="sd">        - Estágio 2 (`float`)</span>
+<span class="sd">        - ...</span>
+<span class="sd">        - Estágio N (`float`)</span>
+
+<span class="sd">        :return: O DataFrame com os valores</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoCustoOperacaoValorEsperadoRelato</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">data</span>
         <span class="k">return</span> <span class="kc">None</span>

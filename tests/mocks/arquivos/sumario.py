@@ -39,6 +39,17 @@ MockGeracaoTermicaSubsistema = [
     "   X------X----------X----------X----------X----------X----------X                                                                                                                                      \n",
 ]
 
+MockCustoOperacaoValorEsperado = [
+    "    CUSTO DE OPERACAO E VALOR ESPERADO DO C.FUTURO ( 1.000 $ )                                                                                                                                           ",
+    "X------X------------X------------X------------X------------X------------X                                                                                                                            ",
+    "           Sem_01       Sem_02       Sem_03       Sem_04       Sem_05                                                                                                                                ",
+    "X------X------------X------------X------------X------------X------------X                                                                                                                            ",
+    " *COP        90662.8      79546.7      81339.2      89975.9      85036.6                                                                                                                             ",
+    " E(CF)   194072319.4  194414075.1  194755137.6  195088616.8  195427943.0                                                                                                                             "
+    "X------X------------X------------X------------X------------X------------X  ",
+]
+
+
 MockVolumeUtilReservatorio = [
     "   VOLUME UTIL DOS RESERVATORIOS                                                                                                                                                                        \n",
     "   X----X------------X-------X------X------X------X------X------X                                                                                                                                       \n",
@@ -150,6 +161,7 @@ MockEnergiaArmazenadaSubsistema = [
 MockSumario = (
     MockCMO
     + MockGeracaoTermicaSubsistema
+    + MockCustoOperacaoValorEsperado
     + MockVolumeUtilReservatorio
     + MockEnergiaArmazenadaREE
     + MockEnergiaArmazenadaSubsistema
