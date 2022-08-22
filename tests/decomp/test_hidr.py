@@ -57,7 +57,6 @@ def test_leitura_escrita_hidr():
         linhas_escritas = [
             chamadas[i].args[0] for i in range(1, len(chamadas) - 1)
         ]
-        print(linhas_escritas[0])
     m_releitura: MagicMock = mock_open(read_data=b"".join(linhas_escritas))
     with patch("builtins.open", m_releitura):
         h2 = Hidr.le_arquivo("")

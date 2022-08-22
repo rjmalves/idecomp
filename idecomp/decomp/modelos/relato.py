@@ -535,7 +535,6 @@ class BlocoCustoOperacaoValorEsperadoRelato(Block):
         num_estagios = len(
             [e for e in arq.readline().strip().split(" ") if len(e) > 2]
         )
-        print("ESTAGIOS: ", num_estagios)
         campo_parcela: List[Field] = [LiteralField(6, 4)]
         campos_custos: List[Field] = [
             FloatField(12, 11 + i * 13, 1) for i in range(num_estagios)
