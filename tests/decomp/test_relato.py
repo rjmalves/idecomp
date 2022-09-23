@@ -2,6 +2,7 @@
 from idecomp.decomp.modelos.relato import (
     BlocoConvergenciaRelato,
     BlocoRelatorioOperacaoUHERelato,
+    BlocoRelatorioOperacaoUTERelato,
     BlocoBalancoEnergeticoRelato,
     BlocoCMORelato,
     BlocoGeracaoTermicaSubsistemaRelato,
@@ -44,6 +45,7 @@ from tests.mocks.arquivos.relato import (
     MockCustoOperacaoValorEsperado,
     MockRelato,
     MockRelatorioOperacaoUHE,
+    MockRelatorioOperacaoUTE,
     MockVolumeUtilReservatorio,
 )
 
@@ -70,36 +72,60 @@ def test_bloco_convergencia():
     assert b.data.iloc[-1, -1] == 0.0
 
 
-def test_bloco_relatorio_operacao():
+def test_bloco_relatorio_operacao_uhe():
     m: MagicMock = mock_open(read_data="".join(MockRelatorioOperacaoUHE))
     b = BlocoRelatorioOperacaoUHERelato()
     with patch("builtins.open", m):
         with open("", "") as fp:
             b.read(fp)
 
+    print(b.data.iloc[0, :])
     assert b.data.shape[0] == 166
-    assert b.data.shape[1] == 21
+    assert b.data.shape[1] == 24
     assert b.data.iloc[0, 0] == 1
-    assert b.data.iloc[0, 1] == "CAMARGOS"
-    assert b.data.iloc[0, 2] == True
-    assert b.data.iloc[0, 3] == False
-    assert b.data.iloc[0, 4] == False
-    assert b.data.iloc[0, 5] == False
-    assert b.data.iloc[0, 6] == 25.3
-    assert b.data.iloc[0, 7] == 24.9
-    assert b.data.iloc[0, 8] == 55.1
-    assert b.data.iloc[0, 9] == 98.0
-    assert b.data.iloc[0, 10] == 39.8
-    assert b.data.iloc[0, 11] == 98.0
-    assert b.data.iloc[0, 12] == 102.3
-    assert b.data.iloc[0, 13] == 17.8
-    assert b.data.iloc[0, 14] == 17.8
-    assert b.data.iloc[0, 15] == 17.8
+    assert b.data.iloc[0, 1] == 1
+    assert b.data.iloc[0, 2] == 1.0
+    assert b.data.iloc[0, 3] == 1
+    assert b.data.iloc[0, 4] == "CAMARGOS"
+    assert b.data.iloc[0, 5] == True
+    assert b.data.iloc[0, 6] == False
+    assert b.data.iloc[0, 7] == False
+    assert b.data.iloc[0, 8] == False
+    assert b.data.iloc[0, 9] == 25.3
+    assert b.data.iloc[0, 10] == 24.9
+    assert b.data.iloc[0, 11] == 55.1
+    assert b.data.iloc[0, 12] == 98.0
+    assert b.data.iloc[0, 13] == 39.8
+    assert b.data.iloc[0, 14] == 98.0
+    assert b.data.iloc[0, 15] == 102.3
     assert b.data.iloc[0, 16] == 17.8
-    assert b.data.iloc[0, 17] == 0.0
-    assert b.data.iloc[0, 18] == 0.0
-    assert b.data.iloc[0, 19] == 31.5
+    assert b.data.iloc[0, 17] == 17.8
+    assert b.data.iloc[0, 18] == 17.8
+    assert b.data.iloc[0, 19] == 17.8
     assert b.data.iloc[0, 20] == 0.0
+    assert b.data.iloc[0, 21] == 0.0
+    assert b.data.iloc[0, 22] == 31.5
+    assert b.data.iloc[0, 23] == 0.0
+
+
+def test_bloco_relatorio_operacao_ute():
+    m: MagicMock = mock_open(read_data="".join(MockRelatorioOperacaoUTE))
+    b = BlocoRelatorioOperacaoUTERelato()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+    assert b.data.shape[0] == 29
+    assert b.data.shape[1] == 10
+    assert b.data.iloc[0, 0] == 1
+    assert b.data.iloc[0, 1] == 1
+    assert b.data.iloc[0, 2] == 1.0
+    assert b.data.iloc[0, 3] == "SE"
+    assert b.data.iloc[0, 4] == "SANTA CRUZ"
+    assert b.data.iloc[0, 5] == None
+    assert b.data.iloc[0, 6] == 350.0
+    assert b.data.iloc[0, 7] == 350.0
+    assert b.data.iloc[0, 8] == 350.0
+    assert b.data.iloc[0, 9] == 6099.91
 
 
 def test_bloco_balanco_energetico():
@@ -431,6 +457,7 @@ def test_atributos_encontrados_relato():
         rel = Relato.le_arquivo("")
         assert rel.convergencia is not None
         assert rel.relatorio_operacao_uhe is not None
+        assert rel.relatorio_operacao_ute is not None
         assert rel.balanco_energetico is not None
         assert rel.cmo_medio_subsistema is not None
         assert rel.geracao_termica_subsistema is not None

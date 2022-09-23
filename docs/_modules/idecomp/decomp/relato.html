@@ -3,13 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.41</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.43</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -20,6 +16,7 @@
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/translations.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" /> 
@@ -73,6 +70,7 @@
   <h1>Código fonte para idecomp.decomp.relato</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoConvergenciaRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoRelatorioOperacaoUHERelato</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoRelatorioOperacaoUTERelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoBalancoEnergeticoRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoCMORelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoGeracaoTermicaSubsistemaRelato</span>
@@ -117,6 +115,7 @@
 
     <span class="n">BLOCKS</span> <span class="o">=</span> <span class="p">[</span>
         <span class="n">BlocoConvergenciaRelato</span><span class="p">,</span>
+        <span class="n">BlocoRelatorioOperacaoUTERelato</span><span class="p">,</span>
         <span class="n">BlocoRelatorioOperacaoUHERelato</span><span class="p">,</span>
         <span class="n">BlocoBalancoEnergeticoRelato</span><span class="p">,</span>
         <span class="n">BlocoCMORelato</span><span class="p">,</span>
@@ -138,6 +137,7 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_ute</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_uhe</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__balanco_energetico</span> <span class="o">=</span> <span class="kc">None</span>
 
@@ -251,6 +251,8 @@
 <span class="sd">        existente no :class:`Relato`</span>
 
 <span class="sd">        - Estágio (`int`)</span>
+<span class="sd">        - Cenário (`int`)</span>
+<span class="sd">        - Probabilidade (`float`)</span>
 <span class="sd">        - Código (`int`)</span>
 <span class="sd">        - Usina (`str`)</span>
 <span class="sd">        - Evaporação (`bool`)</span>
@@ -277,12 +279,36 @@
 <span class="sd">        :rtype: pd.DataFrame | None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_uhe</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_uhe</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">__blocos_adicionando_coluna_estagios</span><span class="p">(</span>
-                    <span class="n">BlocoRelatorioOperacaoUHERelato</span>
-                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_uhe</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__concatena_blocos</span><span class="p">(</span>
+                <span class="n">BlocoRelatorioOperacaoUHERelato</span>
             <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_uhe</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">relatorio_operacao_ute</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém a tabela de operação de cada UTE por estágio do DECOMP</span>
+<span class="sd">        existente no :class:`Relato`</span>
+
+<span class="sd">        - Estágio (`int`)</span>
+<span class="sd">        - Cenário (`int`)</span>
+<span class="sd">        - Probabilidade (`float`)</span>
+<span class="sd">        - Subsistema (`str`)</span>
+<span class="sd">        - Usina (`str`)</span>
+<span class="sd">        - FPCGC (`float`)</span>
+<span class="sd">        - Patamar 1 (`float`)</span>
+<span class="sd">        - ...</span>
+<span class="sd">        - Patamar N (`float`)</span>
+<span class="sd">        - Custo (`float`)</span>
+
+<span class="sd">        :return: O DataFrame com os valores</span>
+<span class="sd">        :rtype: pd.DataFrame | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_ute</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_ute</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__concatena_blocos</span><span class="p">(</span>
+                <span class="n">BlocoRelatorioOperacaoUTERelato</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__relatorios_operacao_ute</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">balanco_energetico</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
@@ -681,7 +707,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Rogerio Alves.</p>
+    <p>&#169; Copyright 2022, Rogerio Alves.</p>
   </div>
 
   Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um

@@ -1,5 +1,6 @@
 from idecomp.decomp.modelos.relato import BlocoConvergenciaRelato
 from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
+from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUTERelato
 from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
 from idecomp.decomp.modelos.relato import BlocoCMORelato
 from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
@@ -44,6 +45,7 @@ class Relato(BlockFile):
 
     BLOCKS = [
         BlocoConvergenciaRelato,
+        BlocoRelatorioOperacaoUTERelato,
         BlocoRelatorioOperacaoUHERelato,
         BlocoBalancoEnergeticoRelato,
         BlocoCMORelato,
@@ -65,6 +67,7 @@ class Relato(BlockFile):
 
     def __init__(self, data=...) -> None:
         super().__init__(data)
+        self.__relatorios_operacao_ute = None
         self.__relatorios_operacao_uhe = None
         self.__balanco_energetico = None
 
@@ -178,6 +181,8 @@ class Relato(BlockFile):
         existente no :class:`Relato`
 
         - Estágio (`int`)
+        - Cenário (`int`)
+        - Probabilidade (`float`)
         - Código (`int`)
         - Usina (`str`)
         - Evaporação (`bool`)
@@ -204,12 +209,36 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__relatorios_operacao_uhe is None:
-            self.__relatorios_operacao_uhe = (
-                self.__blocos_adicionando_coluna_estagios(
-                    BlocoRelatorioOperacaoUHERelato
-                )
+            self.__relatorios_operacao_uhe = self.__concatena_blocos(
+                BlocoRelatorioOperacaoUHERelato
             )
         return self.__relatorios_operacao_uhe
+
+    @property
+    def relatorio_operacao_ute(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela de operação de cada UTE por estágio do DECOMP
+        existente no :class:`Relato`
+
+        - Estágio (`int`)
+        - Cenário (`int`)
+        - Probabilidade (`float`)
+        - Subsistema (`str`)
+        - Usina (`str`)
+        - FPCGC (`float`)
+        - Patamar 1 (`float`)
+        - ...
+        - Patamar N (`float`)
+        - Custo (`float`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None
+        """
+        if self.__relatorios_operacao_ute is None:
+            self.__relatorios_operacao_ute = self.__concatena_blocos(
+                BlocoRelatorioOperacaoUTERelato
+            )
+        return self.__relatorios_operacao_ute
 
     @property
     def balanco_energetico(self) -> Optional[pd.DataFrame]:

@@ -127,11 +127,14 @@ class BlocoConvergenciaRelato(Block):
 class BlocoRelatorioOperacaoUHERelato(Block):
     """ """
 
-    BEGIN_PATTERN = r"No\.       Usina       Volume \(\% V\.U\.\)"
+    BEGIN_PATTERN = r"RELATORIO  DA  OPERACAO "
     END_PATTERN = "X----X-"
 
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
+        self.__scenario_line = Line(
+            [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
+        )
         self.__line = Line(
             [
                 IntegerField(4, 4),
@@ -191,6 +194,9 @@ class BlocoRelatorioOperacaoUHERelato(Block):
             ]
             df = pd.DataFrame(tabela, columns=cols)
             cols_adic = [
+                "Estágio",
+                "Cenário",
+                "Probabilidade",
                 "Código",
                 "Usina",
                 "Evaporação",
@@ -198,6 +204,9 @@ class BlocoRelatorioOperacaoUHERelato(Block):
                 "Cota Abaixo da Crista do Vert",
                 "Def. Mínima = 0",
             ]
+            df["Estágio"] = [estagio] * len(numeros)
+            df["Cenário"] = [cenario] * len(numeros)
+            df["Probabilidade"] = [probabilidade] * len(numeros)
             df["Código"] = numeros
             df["Usina"] = usinas
             df["Evaporação"] = evaporacao
@@ -207,8 +216,33 @@ class BlocoRelatorioOperacaoUHERelato(Block):
             df = df[cols_adic + cols]
             return df
 
-        # Salta três linhas
-        for _ in range(3):
+        str_bloco_operacao_uhe = "# Aproveitamento(s) com evaporacao "
+        # str_bloco_restricoes_rhe = (
+        #     "Relatorio das restricoes de meta de armazenamento (MWmes) "
+        # )
+
+        # Salta duas linhas e extrai a semana
+        for _ in range(2):
+            arq.readline()
+        dados = self.__scenario_line.read(arq.readline())
+
+        # Salta duas linhas e extrai o tipo do bloco
+        arq.readline()
+        linha_tipo_bloco = arq.readline()
+        bloco_operacao_uhe = str_bloco_operacao_uhe in linha_tipo_bloco
+        # bloco_restricoes_rhe = str_bloco_restricoes_rhe in linha_tipo_bloco
+
+        # TODO - não ignorar bloco RHE, ler ambos
+        if not bloco_operacao_uhe:
+            self.data = pd.DataFrame()
+            return
+
+        estagio = dados[0]
+        cenario = dados[1]
+        probabilidade = dados[2]
+
+        # Salta 7 linhas
+        for _ in range(7):
             arq.readline()
 
         # Variáveis auxiliares
@@ -238,6 +272,114 @@ class BlocoRelatorioOperacaoUHERelato(Block):
             def_minima_zero.append("$" in flags)
             tabela[i, :] = dados[3:]
             i += 1
+
+
+class BlocoRelatorioOperacaoUTERelato(Block):
+    """ """
+
+    BEGIN_PATTERN = r"RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
+    END_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
+
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
+        self.__scenario_line = Line(
+            [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
+        )
+        self.__line = Line(
+            [
+                LiteralField(3, 4),
+                LiteralField(11, 8),
+                FloatField(7, 20, 2),
+                FloatField(10, 28, 2),
+                FloatField(10, 40, 2),
+                FloatField(10, 52, 2),
+                FloatField(11, 64, 2),
+            ]
+        )
+
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, BlocoRelatorioOperacaoUTERelato):
+            return False
+        bloco: BlocoRelatorioOperacaoUTERelato = o
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
+
+    # Override
+    def read(self, arq: IO):
+        def converte_tabela_para_df() -> pd.DataFrame:
+            cols = [f"Patamar {i}" for i in range(1, n_pats + 1)] + ["Custo"]
+            df = pd.DataFrame(tabela, columns=cols)
+            cols_adic = [
+                "Estágio",
+                "Cenário",
+                "Probabilidade",
+                "Subsistema",
+                "Usina",
+                "FPCGC",
+            ]
+            df["Estágio"] = [estagio] * len(subsistemas)
+            df["Cenário"] = [cenario] * len(subsistemas)
+            df["Probabilidade"] = [probabilidade] * len(subsistemas)
+            df["Subsistema"] = subsistemas
+            df["Usina"] = nomes_usinas
+            df["FPCGC"] = fpcgcs
+            df = df[cols_adic + cols]
+            return df
+
+        subsistemas = []
+        nomes_usinas = []
+        fpcgcs = []
+        str_bloco_subsistema = " Contrato    (%) "
+        str_ignorar = "X---X---------"
+        str_fim_bloco = "      T o t a l  Termica"
+        # Salta duas linhas e extrai a semana
+        for _ in range(2):
+            arq.readline()
+        dados = self.__scenario_line.read(arq.readline())
+
+        # Salta duas linhas e extrai o número de patamares
+        for _ in range(2):
+            arq.readline()
+        n_pats = len([s for s in arq.readline().split() if "Ene_pat_" in s])
+
+        estagio = dados[0]
+        cenario = dados[1]
+        probabilidade = dados[2]
+
+        # Salta uma linha e extrai a semana
+        tabela = np.zeros((MAX_UTES, n_pats + 1))
+        i = 0
+        while True:
+            posicao_ultima_linha = arq.tell()
+            linha: str = arq.readline()
+            # Verifica se acabou
+            if self.ends(linha):
+                tabela = tabela[:i, :]
+                arq.seek(posicao_ultima_linha)
+                self.data = converte_tabela_para_df()
+                break
+            # Verifica se começou um bloco de usinas
+            if str_bloco_subsistema in linha:
+                iniciou_bloco = True
+            elif str_ignorar in linha:
+                continue
+            elif str_fim_bloco in linha:
+                iniciou_bloco = False
+            elif iniciou_bloco:
+                # Lê o conteúdo de um bloco
+                dados = self.__line.read(linha)
+                subsistemas.append(dados[0])
+                nomes_usinas.append(dados[1])
+                fpcgcs.append(dados[2])
+                tabela[i, :] = dados[3 : (3 + n_pats + 1)]
+                i += 1
 
 
 class BlocoBalancoEnergeticoRelato(Block):

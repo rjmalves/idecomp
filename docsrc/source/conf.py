@@ -22,7 +22,7 @@ from idecomp import __version__  # noqa: E402
 # -- Project information -----------------------------------------------------
 
 project = "idecomp"
-copyright = "2021, Rogerio Alves"
+copyright = "2022, Rogerio Alves"
 author = "Rogerio Alves"
 
 # The full version, including alpha/beta/rc tags
@@ -44,21 +44,22 @@ extensions = [
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
-    "sphinx_gallery.gen_gallery",
+    # "sphinx_gallery.gen_gallery",
+    "nbsphinx",
     "texext",
     "numpydoc",
     "sphinx_rtd_theme",
 ]
 
 # https://github.com/sphinx-gallery/sphinx-gallery
-sphinx_gallery_conf = {
-    # path to your examples scripts
-    "examples_dirs": "../examples",
-    # path where to save gallery generated examples
-    "gallery_dirs": "auto_examples",
-    "backreferences_dir": "modules/generated",
-    "image_scrapers": ("matplotlib", "mayavi"),
-}
+# sphinx_gallery_conf = {
+#     # path to your examples scripts
+#     "examples_dirs": "../../examples",
+#     # path where to save gallery generated examples
+#     "gallery_dirs": "examples",
+#     "backreferences_dir": "modules/generated",
+#     "image_scrapers": ("matplotlib", "mayavi"),
+# }
 
 # generate autosummary pages
 autosummary_generate = True
