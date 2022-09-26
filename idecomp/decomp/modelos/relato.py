@@ -19,7 +19,7 @@ from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
-from typing import IO, List, Tuple
+from typing import IO, List, Tuple, Dict
 
 
 class BlocoConvergenciaRelato(Block):
@@ -124,7 +124,7 @@ class BlocoConvergenciaRelato(Block):
             i += 1
 
 
-class BlocoRelatorioOperacaoUHERelato(Block):
+class BlocoRelatorioOperacaoRelato(Block):
     """ """
 
     BEGIN_PATTERN = r"RELATORIO  DA  OPERACAO "
@@ -159,21 +159,25 @@ class BlocoRelatorioOperacaoUHERelato(Block):
         )
 
     def __eq__(self, o: object) -> bool:
-        if not isinstance(o, BlocoRelatorioOperacaoUHERelato):
+        if not isinstance(o, BlocoRelatorioOperacaoRelato):
             return False
-        bloco: BlocoRelatorioOperacaoUHERelato = o
+        bloco: BlocoRelatorioOperacaoRelato = o
         if not all(
             [
-                isinstance(self.data, pd.DataFrame),
-                isinstance(o.data, pd.DataFrame),
+                isinstance(self.data, list),
+                isinstance(bloco.data, list),
             ]
         ):
             return False
         else:
-            return self.data.equals(bloco.data)
+            return all(
+                [
+                    self.data[0] == bloco.data[0],
+                    self.data[1].equals(bloco.data[1]),
+                ]
+            )
 
-    # Override
-    def read(self, arq: IO):
+    def __read_bloco_operacao_uhe(self, arq: IO):
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [
                 "Volume Ini (% V.U)",
@@ -216,30 +220,9 @@ class BlocoRelatorioOperacaoUHERelato(Block):
             df = df[cols_adic + cols]
             return df
 
-        str_bloco_operacao_uhe = "# Aproveitamento(s) com evaporacao "
-        # str_bloco_restricoes_rhe = (
-        #     "Relatorio das restricoes de meta de armazenamento (MWmes) "
-        # )
-
-        # Salta duas linhas e extrai a semana
-        for _ in range(2):
-            arq.readline()
-        dados = self.__scenario_line.read(arq.readline())
-
-        # Salta duas linhas e extrai o tipo do bloco
-        arq.readline()
-        linha_tipo_bloco = arq.readline()
-        bloco_operacao_uhe = str_bloco_operacao_uhe in linha_tipo_bloco
-        # bloco_restricoes_rhe = str_bloco_restricoes_rhe in linha_tipo_bloco
-
-        # TODO - não ignorar bloco RHE, ler ambos
-        if not bloco_operacao_uhe:
-            self.data = pd.DataFrame()
-            return
-
-        estagio = dados[0]
-        cenario = dados[1]
-        probabilidade = dados[2]
+        estagio: int = self.dados_cenario[0]
+        cenario: int = self.dados_cenario[1]
+        probabilidade: float = self.dados_cenario[2]
 
         # Salta 7 linhas
         for _ in range(7):
@@ -253,14 +236,14 @@ class BlocoRelatorioOperacaoUHERelato(Block):
         cota_abaixo_crista: List[bool] = []
         def_minima_zero: List[bool] = []
         # Salta uma linha e extrai a semana
-        tabela = np.zeros((MAX_UHES, 15))
+        tabela: np.ndarray = np.zeros((MAX_UHES, 15))
         i = 0
         while True:
             linha: str = arq.readline()
             # Verifica se acabou
             if self.ends(linha):
                 tabela = tabela[:i, :]
-                self.data = converte_tabela_para_df()
+                self.data = ["UHE", converte_tabela_para_df()]
                 break
             dados = self.__line.read(linha)
             numeros.append(dados[0])
@@ -272,6 +255,102 @@ class BlocoRelatorioOperacaoUHERelato(Block):
             def_minima_zero.append("$" in flags)
             tabela[i, :] = dados[3:]
             i += 1
+
+    def __read_bloco_operacao_geral(self, arq: IO):
+        def converte_tabela_para_df() -> pd.DataFrame:
+            df = pd.DataFrame(
+                data={
+                    "Estágio": estagio,
+                    "Cenário": cenario,
+                    "Probabilidade": probabilidade,
+                    "Custo Futuro": custo_futuro,
+                    "Custo Total no Estágio": custo_estagio,
+                    "Geração Térmica": custo_gt,
+                    "Violação Desvio": custo_desvio,
+                    "Penalidade de Vertimento em Reservatórios": custo_vert_reservatorio,
+                    "Penalidade de Vertimento em Fio": custo_vert_fio,
+                    "Violação de Turbinamento em Reservatórios": custo_turbinamento_reservatorio,
+                    "Violação de Turbinamento em Fio": custo_turbinamento_fio,
+                    "Penalidade de Intercâmbio": custo_intercambio,
+                }
+            )
+            for subsis, cmo in cmos.items():
+                df[f"CMO {subsis}"] = cmo
+            return df
+
+        estagio: int = self.dados_cenario[0]
+        cenario: int = self.dados_cenario[1]
+        probabilidade: float = self.dados_cenario[2]
+
+        linha_custo = Line([FloatField(14, 54, 2)])
+        linha_custo_exp = Line([FloatField(14, 54, 2, format="E")])
+        linha_custo_subsis = Line([LiteralField(2, 44), FloatField(14, 54, 2)])
+
+        custo_futuro: list = linha_custo.read(arq.readline())
+        arq.readline()
+        arq.readline()
+        custo_estagio: list = linha_custo.read(arq.readline())
+        arq.readline()
+        arq.readline()
+        custo_gt: list = linha_custo.read(arq.readline())
+        arq.readline()
+        arq.readline()
+        arq.readline()
+        arq.readline()
+        custo_desvio: list = linha_custo.read(arq.readline())
+        custo_vert_reservatorio: list = linha_custo.read(arq.readline())
+        custo_vert_fio: list = linha_custo.read(arq.readline())
+        custo_turbinamento_reservatorio: list = linha_custo.read(
+            arq.readline()
+        )
+        custo_turbinamento_fio: list = linha_custo.read(arq.readline())
+        custo_intercambio: list = linha_custo_exp.read(arq.readline())
+        arq.readline()
+
+        cmos: Dict[str, float] = {}
+        while True:
+            linha = arq.readline()
+            if len(linha.strip()) < 4:
+                self.data = ["GERAL", converte_tabela_para_df()]
+                break
+            dados_linha = linha_custo_subsis.read(linha)
+            cmos[dados_linha[0]] = dados_linha[1]
+
+    # Override
+    def read(self, arq: IO):
+        str_bloco_operacao_uhe = "# Aproveitamento(s) com evaporacao "
+        str_bloco_operacao_geral = "Valor  esperado  do  custo  futuro:"
+        # str_bloco_restricoes_rhe = (
+        #     "Relatorio das restricoes de meta de armazenamento (MWmes) "
+        # )
+
+        # Salta duas linhas e extrai a semana
+        for _ in range(2):
+            arq.readline()
+        self.dados_cenario = self.__scenario_line.read(arq.readline())
+
+        # Salta duas linhas e extrai o tipo do bloco
+        arq.readline()
+        linha_tipo_bloco = arq.readline()
+        bloco_operacao_uhe = str_bloco_operacao_uhe in linha_tipo_bloco
+        bloco_operacao_geral = False
+        # bloco_restricoes_rhe = str_bloco_restricoes_rhe in linha_tipo_bloco
+
+        if not bloco_operacao_uhe:
+            pos = arq.tell()
+            linha_tipo_bloco = arq.readline()
+            arq.seek(pos)
+            bloco_operacao_geral = str_bloco_operacao_geral in linha_tipo_bloco
+
+        # TODO - não ignorar bloco RHE, ler
+        if not (bloco_operacao_uhe or bloco_operacao_geral):
+            self.data = ["RHE", pd.DataFrame()]
+            return
+
+        if bloco_operacao_uhe:
+            self.__read_bloco_operacao_uhe(arq)
+        elif bloco_operacao_geral:
+            self.__read_bloco_operacao_geral(arq)
 
 
 class BlocoRelatorioOperacaoUTERelato(Block):
@@ -509,9 +588,11 @@ class BlocoBalancoEnergeticoRelato(Block):
         linhas: List[List[float]] = []
         colunas_balanco: List[str] = []
         while True:
+            pos = arq.tell()
             linha = arq.readline()
             # Verifica se acabou
             if self.ends(linha):
+                arq.seek(pos)
                 self.data = converte_tabela_para_df()
                 break
             # Senão, procura a linha que identifica o subsistema

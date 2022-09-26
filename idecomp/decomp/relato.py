@@ -1,5 +1,5 @@
 from idecomp.decomp.modelos.relato import BlocoConvergenciaRelato
-from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUHERelato
+from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoRelato
 from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUTERelato
 from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
 from idecomp.decomp.modelos.relato import BlocoCMORelato
@@ -46,7 +46,7 @@ class Relato(BlockFile):
     BLOCKS = [
         BlocoConvergenciaRelato,
         BlocoRelatorioOperacaoUTERelato,
-        BlocoRelatorioOperacaoUHERelato,
+        BlocoRelatorioOperacaoRelato,
         BlocoBalancoEnergeticoRelato,
         BlocoCMORelato,
         BlocoGeracaoTermicaSubsistemaRelato,
@@ -69,6 +69,7 @@ class Relato(BlockFile):
         super().__init__(data)
         self.__relatorios_operacao_ute = None
         self.__relatorios_operacao_uhe = None
+        self.__relatorios_operacao_custos = None
         self.__balanco_energetico = None
 
     @classmethod
@@ -111,6 +112,30 @@ class Relato(BlockFile):
             if not isinstance(b, Block):
                 continue
             df_estagio = b.data
+            if df is None:
+                df = df_estagio
+            else:
+                df = pd.concat([df, df_estagio], ignore_index=True)
+        if df is not None:
+            return df
+        return None
+
+    def __concatena_blocos_por_tipo(
+        self, blocos, indice_data: int
+    ) -> Optional[pd.DataFrame]:
+        """
+        Adiciona uma coluna com o estágio de cada bloco, assumindo
+        a mesma ordem das séries de energia.
+        :param blocos: Os blocos a serem concatenados
+        :type bloco: List[Type[T]]
+        :return: O DataFrame com os estágios
+        :rtype: pd.DataFrame
+        """
+        df = None
+        for b in blocos:
+            if not isinstance(b, Block):
+                continue
+            df_estagio = b.data[indice_data]
             if df is None:
                 df = df_estagio
             else:
@@ -175,6 +200,41 @@ class Relato(BlockFile):
         return None
 
     @property
+    def relatorio_operacao_custos(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela de operação de cada UHE por estágio do DECOMP
+        existente no :class:`Relato`
+
+        - Estágio (`int`)
+        - Cenário (`int`)
+        - Probabilidade (`float`)
+        - Custo Futuro (`float`)
+        - Custo Total no Estágio (`float`)
+        - Geração Térmica (`float`)
+        - Violação Desvio (`float`)
+        - Penalidade de Vertimento em Reservatórios (`float`)
+        - Penalidade de Vertimento em Fio (`float`)
+        - Violação de Turbinamento em Reservatórios (`float`)
+        - Violação de Turbinamento em Fio (`float`)
+        - Penalidade de Intercâmbio (`float`)
+        - CMO <subsis1> (`float`)
+        - ...
+        - CMO <subsisN> (`float`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None
+        """
+        if self.__relatorios_operacao_custos is None:
+            blocos_custos: List[BlocoRelatorioOperacaoRelato] = []
+            for b in self.data.of_type(BlocoRelatorioOperacaoRelato):
+                if b.data[0] == "GERAL":
+                    blocos_custos.append(b)
+            self.__relatorios_operacao_custos = (
+                self.__concatena_blocos_por_tipo(blocos_custos, 1)
+            )
+        return self.__relatorios_operacao_custos
+
+    @property
     def relatorio_operacao_uhe(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela de operação de cada UHE por estágio do DECOMP
@@ -209,8 +269,12 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__relatorios_operacao_uhe is None:
-            self.__relatorios_operacao_uhe = self.__concatena_blocos(
-                BlocoRelatorioOperacaoUHERelato
+            blocos_uhe: List[BlocoRelatorioOperacaoRelato] = []
+            for b in self.data.of_type(BlocoRelatorioOperacaoRelato):
+                if b.data[0] == "UHE":
+                    blocos_uhe.append(b)
+            self.__relatorios_operacao_uhe = self.__concatena_blocos_por_tipo(
+                blocos_uhe, 1
             )
         return self.__relatorios_operacao_uhe
 

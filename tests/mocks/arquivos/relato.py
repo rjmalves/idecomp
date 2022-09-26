@@ -63,6 +63,38 @@ MockConvergencia = [
     "   TEMPO DE CPU PARA POLITICA 00:10:14\n",
 ]
 
+MockRelatorioOperacaoCustos = [
+    "   RELATORIO  DA  OPERACAO                                                                                                                                                                              \n",
+    "                                                                                                                                                                                                        \n",
+    "   MARCO     / SEMANA 1 - ESTAGIO  1 /  CENARIO   1 - PROB ACUMUL: 1.000000 PROB SUBPROB: 1.000000                                                                                                      \n",
+    "                                                                                                                                                                                                        \n",
+    "                                                                                                                                                                                                        \n",
+    "   Valor  esperado  do  custo  futuro:                  408096349.11 (1000 $)                                                                                                                           \n",
+    "                                                                                                                                                                                                        \n",
+    "   Custo total de operacao no estagio:                     126483.42 (1000 $)                                                                                                                           \n",
+    "   Custo total de operacao no estagio:                     126483.42 (1000 $) (Atualizado para valor presente)                                                                                          \n",
+    "                                                                                                                                                                                                        \n",
+    "   Parcela referente a geracao termica        minima:       62421.07 (1000 $)                                                                                                                           \n",
+    "                                              total :      126469.80 (1000 $)                                                                                                                           \n",
+    "   Parcela referente a contrato de importacao minimo:           0.00 (1000 $)                                                                                                                           \n",
+    "                                              total :           0.00 (1000 $)                                                                                                                           \n",
+    "   Parcela referente a contrato de exportacao minimo:           0.00 (1000 $)                                                                                                                           \n",
+    "                                              total :           0.00 (1000 $)                                                                                                                           \n",
+    "   Parcela referente a nao atendimento do desvio:               0.00 (1000 $)                                                                                                                           \n",
+    "   Parcela referente a vertimento em reservatorio:              0.13 (1000 $)                                                                                                                           \n",
+    "   Parcela referente a vertimento em usinas fio dagua           1.95 (1000 $)                                                                                                                           \n",
+    "   Parcela referente a turbinamento em reservatorio:            3.34 (1000 $)                                                                                                                           \n",
+    "   Parcela referente a turbinamento em usinas fio dag           7.90 (1000 $)                                                                                                                           \n",
+    "   Parcela referente a intercambio entre subsistemas:       0.29E+00 (1000 $)                                                                                                                           \n",
+    "                                                                                                                                                                                                        \n",
+    "   Custo marginal de operacao do subsistema SE:                 0.00 ($/MWh)                                                                                                                            \n",
+    "   Custo marginal de operacao do subsistema S :               355.15 ($/MWh)                                                                                                                            \n",
+    "   Custo marginal de operacao do subsistema NE:                 0.00 ($/MWh)                                                                                                                            \n",
+    "   Custo marginal de operacao do subsistema N :                 0.00 ($/MWh)                                                                                                                            \n",
+    "   Custo marginal de operacao do subsistema FC:                 0.00 ($/MWh)                                                                                                                            \n",
+    "                                                                                                                                                                                                        \n",
+]
+
 MockRelatorioOperacaoUHE = [
     "   RELATORIO  DA  OPERACAO                                                                                                                                                                              \n",
     "\n",
@@ -2988,9 +3020,10 @@ MockBlocoDiasExcluidosSemanas = [
 
 MockRelato = (
     MockConvergencia
-    + MockRelatorioOperacaoUHE
     + MockRelatorioOperacaoUTE[:-1]
-    + MockBalancoEnergetico
+    + MockBalancoEnergetico[:-1]
+    + MockRelatorioOperacaoUHE
+    + MockRelatorioOperacaoCustos
     + MockCMO
     + MockGeracaoTermicaSubsistema
     + MockCustoOperacaoValorEsperado

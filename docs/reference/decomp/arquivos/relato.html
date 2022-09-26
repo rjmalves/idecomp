@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.43</title>
+  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.44</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -535,6 +535,38 @@ existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" 
 <li><p>Estágio 2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
 <li><p>…</p></li>
 <li><p>Estágio N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O DataFrame com os valores</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>pd.DataFrame | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.relatorio_operacao_custos">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relatorio_operacao_custos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.relatorio_operacao_custos" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém a tabela de operação de cada UHE por estágio do DECOMP
+existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<ul class="simple">
+<li><p>Estágio (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>Cenário (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>Probabilidade (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Custo Futuro (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Custo Total no Estágio (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Geração Térmica (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Violação Desvio (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Penalidade de Vertimento em Reservatórios (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Penalidade de Vertimento em Fio (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Violação de Turbinamento em Reservatórios (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Violação de Turbinamento em Fio (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>Penalidade de Intercâmbio (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>CMO &lt;subsis1&gt; (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>CMO &lt;subsisN&gt; (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>

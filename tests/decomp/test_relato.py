@@ -1,7 +1,7 @@
 # Rotinas de testes associadas ao arquivo relato.rvx do DECOMP
 from idecomp.decomp.modelos.relato import (
     BlocoConvergenciaRelato,
-    BlocoRelatorioOperacaoUHERelato,
+    BlocoRelatorioOperacaoRelato,
     BlocoRelatorioOperacaoUTERelato,
     BlocoBalancoEnergeticoRelato,
     BlocoCMORelato,
@@ -44,6 +44,7 @@ from tests.mocks.arquivos.relato import (
     MockGeracaoTermicaSubsistema,
     MockCustoOperacaoValorEsperado,
     MockRelato,
+    MockRelatorioOperacaoCustos,
     MockRelatorioOperacaoUHE,
     MockRelatorioOperacaoUTE,
     MockVolumeUtilReservatorio,
@@ -72,40 +73,67 @@ def test_bloco_convergencia():
     assert b.data.iloc[-1, -1] == 0.0
 
 
-def test_bloco_relatorio_operacao_uhe():
-    m: MagicMock = mock_open(read_data="".join(MockRelatorioOperacaoUHE))
-    b = BlocoRelatorioOperacaoUHERelato()
+def test_bloco_relatorio_operacao_custos():
+    m: MagicMock = mock_open(read_data="".join(MockRelatorioOperacaoCustos))
+    b = BlocoRelatorioOperacaoRelato()
     with patch("builtins.open", m):
         with open("", "") as fp:
             b.read(fp)
 
-    print(b.data.iloc[0, :])
-    assert b.data.shape[0] == 166
-    assert b.data.shape[1] == 24
-    assert b.data.iloc[0, 0] == 1
-    assert b.data.iloc[0, 1] == 1
-    assert b.data.iloc[0, 2] == 1.0
-    assert b.data.iloc[0, 3] == 1
-    assert b.data.iloc[0, 4] == "CAMARGOS"
-    assert b.data.iloc[0, 5] == True
-    assert b.data.iloc[0, 6] == False
-    assert b.data.iloc[0, 7] == False
-    assert b.data.iloc[0, 8] == False
-    assert b.data.iloc[0, 9] == 25.3
-    assert b.data.iloc[0, 10] == 24.9
-    assert b.data.iloc[0, 11] == 55.1
-    assert b.data.iloc[0, 12] == 98.0
-    assert b.data.iloc[0, 13] == 39.8
-    assert b.data.iloc[0, 14] == 98.0
-    assert b.data.iloc[0, 15] == 102.3
-    assert b.data.iloc[0, 16] == 17.8
-    assert b.data.iloc[0, 17] == 17.8
-    assert b.data.iloc[0, 18] == 17.8
-    assert b.data.iloc[0, 19] == 17.8
-    assert b.data.iloc[0, 20] == 0.0
-    assert b.data.iloc[0, 21] == 0.0
-    assert b.data.iloc[0, 22] == 31.5
-    assert b.data.iloc[0, 23] == 0.0
+    assert b.data[1].shape[0] == 1
+    assert b.data[1].shape[1] == 17
+    assert b.data[1].iloc[0, 0] == 1
+    assert b.data[1].iloc[0, 1] == 1
+    assert b.data[1].iloc[0, 2] == 1.0
+    assert b.data[1].iloc[0, 3] == 408096349.11
+    assert b.data[1].iloc[0, 4] == 126483.42
+    assert b.data[1].iloc[0, 5] == 126469.80
+    assert b.data[1].iloc[0, 6] == 0.0
+    assert b.data[1].iloc[0, 7] == 0.13
+    assert b.data[1].iloc[0, 8] == 1.95
+    assert b.data[1].iloc[0, 9] == 3.34
+    assert b.data[1].iloc[0, 10] == 7.90
+    assert b.data[1].iloc[0, 11] == 0.29
+    assert b.data[1].iloc[0, 12] == 0.0
+    assert b.data[1].iloc[0, 13] == 355.15
+    assert b.data[1].iloc[0, 14] == 0.0
+    assert b.data[1].iloc[0, 15] == 0.0
+    assert b.data[1].iloc[0, 16] == 0.0
+
+
+def test_bloco_relatorio_operacao_uhe():
+    m: MagicMock = mock_open(read_data="".join(MockRelatorioOperacaoUHE))
+    b = BlocoRelatorioOperacaoRelato()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+
+    assert b.data[1].shape[0] == 166
+    assert b.data[1].shape[1] == 24
+    assert b.data[1].iloc[0, 0] == 1
+    assert b.data[1].iloc[0, 1] == 1
+    assert b.data[1].iloc[0, 2] == 1.0
+    assert b.data[1].iloc[0, 3] == 1
+    assert b.data[1].iloc[0, 4] == "CAMARGOS"
+    assert b.data[1].iloc[0, 5] == True
+    assert b.data[1].iloc[0, 6] == False
+    assert b.data[1].iloc[0, 7] == False
+    assert b.data[1].iloc[0, 8] == False
+    assert b.data[1].iloc[0, 9] == 25.3
+    assert b.data[1].iloc[0, 10] == 24.9
+    assert b.data[1].iloc[0, 11] == 55.1
+    assert b.data[1].iloc[0, 12] == 98.0
+    assert b.data[1].iloc[0, 13] == 39.8
+    assert b.data[1].iloc[0, 14] == 98.0
+    assert b.data[1].iloc[0, 15] == 102.3
+    assert b.data[1].iloc[0, 16] == 17.8
+    assert b.data[1].iloc[0, 17] == 17.8
+    assert b.data[1].iloc[0, 18] == 17.8
+    assert b.data[1].iloc[0, 19] == 17.8
+    assert b.data[1].iloc[0, 20] == 0.0
+    assert b.data[1].iloc[0, 21] == 0.0
+    assert b.data[1].iloc[0, 22] == 31.5
+    assert b.data[1].iloc[0, 23] == 0.0
 
 
 def test_bloco_relatorio_operacao_ute():
@@ -456,6 +484,7 @@ def test_atributos_encontrados_relato():
     with patch("builtins.open", m):
         rel = Relato.le_arquivo("")
         assert rel.convergencia is not None
+        assert rel.relatorio_operacao_custos is not None
         assert rel.relatorio_operacao_uhe is not None
         assert rel.relatorio_operacao_ute is not None
         assert rel.balanco_energetico is not None
@@ -481,6 +510,7 @@ def test_atributos_nao_encontrados_relato():
     with patch("builtins.open", m):
         rel = Relato.le_arquivo("")
         assert rel.convergencia is None
+        assert rel.relatorio_operacao_custos is None
         assert rel.relatorio_operacao_uhe is None
         assert rel.balanco_energetico is None
         assert rel.cmo_medio_subsistema is None
