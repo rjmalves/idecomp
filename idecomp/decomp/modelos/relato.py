@@ -501,10 +501,35 @@ class BlocoBalancoEnergeticoRelato(Block):
         else:
             return self.data.equals(bloco.data)
 
+    def __define_linha_balanco(self, cabecalho: str) -> Tuple[Line, List[str]]:
+        colunas = [c for c in cabecalho.split(" ") if len(c) > 2]
+        if "Interligacao" not in colunas:
+            return Line([]), []
+        indice_intercambio = colunas.index("Interligacao")
+        campo_patamar: List[Field] = [LiteralField(5, 4)]
+        campos_balanco: List[Field] = [
+            FloatField(7, 10 + 8 * i, 1) for i in range(indice_intercambio)
+        ]
+        campo_subsis: List[Field] = [
+            LiteralField(2, 10 + 8 * indice_intercambio + 1)
+        ]
+        campo_interligacao: List[Field] = [
+            FloatField(8, 10 + 8 * indice_intercambio + 4, 1)
+        ]
+        campos_apos_interligacao: List[Field] = [
+            FloatField(7, 25 + 8 * indice_intercambio + 8 * i, 1)
+            for i in range(2)
+        ]
+        return Line(
+            campo_patamar
+            + campos_balanco
+            + campo_subsis
+            + campo_interligacao
+            + campos_apos_interligacao
+        ), [c for c in colunas if c != "Interligacao"]
+
     # Override
     def read(self, arq: IO):
-        # Por retrocompatibilidade só lê valores médios.
-        # TODO - Ler tudo. As linhas já estão modeladas.
         def converte_tabela_para_df() -> pd.DataFrame:
             tamanho_maior_linha = max([len(lin) for lin in linhas])
             tabela = np.zeros((len(linhas), tamanho_maior_linha))
@@ -516,6 +541,7 @@ class BlocoBalancoEnergeticoRelato(Block):
             df["Cenário"] = cenarios
             df["Probabilidade"] = probabilidades
             df["Subsistema"] = subsistemas
+            df["Patamar"] = patamares
             df["Earm Inicial Absoluto"] = earms_iniciais_abs
             df["Earm Inicial Percentual"] = earms_iniciais_per
             df["ENA Absoluta"] = ena_abs
@@ -527,6 +553,7 @@ class BlocoBalancoEnergeticoRelato(Block):
                 "Cenário",
                 "Probabilidade",
                 "Subsistema",
+                "Patamar",
                 "Earm Inicial Absoluto",
                 "Earm Inicial Percentual",
                 "ENA Absoluta",
@@ -537,41 +564,16 @@ class BlocoBalancoEnergeticoRelato(Block):
             df = df[cols_adic + colunas_balanco]
             return df
 
-        def define_linha_balanco(cabecalho: str) -> Tuple[Line, List[str]]:
-            colunas = [c for c in cabecalho.split(" ") if len(c) > 2]
-            if "Interligacao" not in colunas:
-                return Line([]), []
-            indice_intercambio = colunas.index("Interligacao")
-            campo_patamar: List[Field] = [LiteralField(5, 4)]
-            campos_balanco: List[Field] = [
-                FloatField(7, 10 + 8 * i, 1) for i in range(indice_intercambio)
-            ]
-            campo_subsis: List[Field] = [
-                LiteralField(2, 10 + 8 * indice_intercambio + 1)
-            ]
-            campo_interligacao: List[Field] = [
-                FloatField(8, 10 + 8 * indice_intercambio + 4, 1)
-            ]
-            campos_apos_interligacao: List[Field] = [
-                FloatField(7, 25 + 8 * indice_intercambio + 8 * i, 1)
-                for i in range(2)
-            ]
-            return Line(
-                campo_patamar
-                + campos_balanco
-                + campo_subsis
-                + campo_interligacao
-                + campos_apos_interligacao
-            ), [c for c in colunas if c != "Interligacao"]
-
         # Variáveis auxiliares
         str_subsis = "     Subsistema"
+        str_pat = "   Pat_"
         str_medio = "    Medio"
-        subsis = "FC"
+        subsis = "NAN"
         estagios = []
         cenarios = []
         probabilidades = []
         subsistemas = []
+        patamares = []
         earms_iniciais_abs = []
         earms_iniciais_per = []
         ena_abs = []
@@ -602,13 +604,13 @@ class BlocoBalancoEnergeticoRelato(Block):
                 dados_ear_ena_per = self.__linha_ear_ena.read(arq.readline())
                 # Ignora uma linha
                 arq.readline()
-                self.__linha_balanco, colunas = define_linha_balanco(
+                self.__linha_balanco, colunas = self.__define_linha_balanco(
                     arq.readline()
                 )
                 if len(colunas_balanco) < len(colunas):
                     colunas_balanco = colunas
             # Se está lendo um subsistema e achou a linha de valores médios
-            if subsis != "FC" and str_medio in linha:
+            if subsis != "FC" and (str_medio in linha or str_pat in linha):
                 estagios.append(estagio)
                 cenarios.append(cenario)
                 probabilidades.append(probabilidade)
@@ -620,6 +622,11 @@ class BlocoBalancoEnergeticoRelato(Block):
                 earms_finais_abs.append(dados_ear_ena_abs[2])
                 earms_finais_per.append(dados_ear_ena_per[2])
                 dados = self.__linha_balanco.read(linha)
+                patamares.append(
+                    dados[0]
+                    if str_pat not in linha
+                    else dados[0].strip(str_pat)
+                )
                 indice_subsis = dados.index(
                     [d for d in dados if type(d) == str][1]
                 )
@@ -632,8 +639,9 @@ class BlocoBalancoEnergeticoRelato(Block):
                 linhas.append(
                     dados_antes_interligacao + dados_apos_interligacao
                 )
-                # Reseta o indicador de subsistema
-                subsis = "FC"
+                if str_medio in linha:
+                    # Reseta o indicador de subsistema
+                    subsis = "FC"
 
 
 class BlocoCMORelato(Block):
