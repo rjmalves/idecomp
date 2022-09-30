@@ -503,6 +503,7 @@ class BlocoBalancoEnergeticoRelato(Block):
 
     def __define_linha_balanco(self, cabecalho: str) -> Tuple[Line, List[str]]:
         colunas = [c for c in cabecalho.split(" ") if len(c) > 2]
+        colunas = [c.strip("\n") for c in colunas]
         if "Interligacao" not in colunas:
             return Line([]), []
         indice_intercambio = colunas.index("Interligacao")
