@@ -46,6 +46,26 @@ MockFT = "FT  449   1   310  4             1"
 
 MockVI = "VI  156  360    296  296  293  328  455"
 
+MockPD = "PD  PRIMAL"
+
+MockPU = "PU  1"
+
+MockRC = "RC  ESCADA"
+
+MockPE = "PE   1 0 10000.00"
+
+MockTS = "TS  0.000000000010000 0.000000000001000   1   0.000000000001000"
+
+MockPV = "PV   10000000000000000.00   10000000000000000.00   001   1.2   10000000000000000.00   10000000000000000.00"
+
+MockCX = "CX  101   102"
+
+MockFA = "FA  indices.csv"
+
+MockVT = "VT  ventos.dat"
+
+MockCS = "CS  1"
+
 MockACJUSMED = "AC  285  JUSMED         73.47                                        JAN  1 2020"
 
 MockACCOTVOL = "AC  285  COTVOL        1         90.000                              JAN  1 2020"

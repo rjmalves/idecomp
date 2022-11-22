@@ -25,6 +25,16 @@ from idecomp.decomp.modelos.dadger import (
     FI,
     FT,
     VI,
+    PD,
+    PU,
+    RC,
+    PE,
+    TS,
+    PV,
+    CX,
+    FA,
+    VT,
+    CS,
     ACJUSMED,
     ACCOTVOL,
     ACNUMJUS,
@@ -93,6 +103,16 @@ from tests.mocks.arquivos.dadger import (
     MockFI,
     MockFT,
     MockVI,
+    MockPD,
+    MockPU,
+    MockRC,
+    MockPE,
+    MockTS,
+    MockPV,
+    MockCX,
+    MockFA,
+    MockVT,
+    MockCS,
     MockACJUSMED,
     MockACCOTVOL,
     MockACNUMJUS,
@@ -175,7 +195,7 @@ def test_registro_uh_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [1, 10, 25.29, None, 1, None, None, None, None]
+    assert r.data == [1, 10, 25.29, None, 1, None, None, None, None, ""]
     assert r.codigo == 1
     r.codigo = 0
     assert r.codigo == 0
@@ -188,6 +208,9 @@ def test_registro_uh_dadger():
     assert r.volume_inicial == 25.29
     r.volume_inicial = 0
     assert r.volume_inicial == 0
+    assert r.configuracao_newave == ""
+    r.configuracao_newave = "NW"
+    assert r.configuracao_newave == "NW"
 
 
 def test_registro_ct_dadger():
@@ -1586,6 +1609,176 @@ def test_registro_fj_dadger():
     assert r.arquivo == "polinjus.dat"
     r.arquivo = "teste.dat"
     assert r.arquivo == "teste.dat"
+
+
+def test_registro_pd_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockPD))
+    r = PD()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == ["PRIMAL"]
+    assert r.algoritmo == "PRIMAL"
+    r.algoritmo = "DUAL"
+    assert r.algoritmo == "DUAL"
+
+
+def test_registro_pu_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockPU))
+    r = PU()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [1]
+    assert r.pl == 1
+    r.pl = 0
+    assert r.pl == 0
+
+
+def test_registro_rc_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockRC))
+    r = RC()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == ["ESCADA"]
+    assert r.mnemonico == "ESCADA"
+    r.mnemonico = ""
+    assert r.mnemonico == ""
+
+
+def test_registro_pe_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockPE))
+    r = PE()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [1, 0, 10000.00]
+    assert r.subsistema == 1
+    r.subsistema = 2
+    assert r.subsistema == 2
+    assert r.tipo == 0
+    r.tipo = 1
+    assert r.tipo == 1
+    assert r.penalidade == 10000.00
+    r.penalidade = 500.00
+    assert r.penalidade == 500.00
+
+
+def test_registro_ts_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockTS))
+    r = TS()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [0.00000000001, 0.000000000001, 1, 0.000000000001]
+    assert r.tolerancia_primaria == 0.00000000001
+    r.tolerancia_primaria = 0.00000000002
+    assert r.tolerancia_primaria == 0.00000000002
+    assert r.tolerancia_secundaria == 0.000000000001
+    r.tolerancia_secundaria = 0.00000000002
+    assert r.tolerancia_secundaria == 0.00000000002
+    assert r.zera_coeficientes == 1
+    r.zera_coeficientes = 0
+    assert r.zera_coeficientes == 0
+    assert r.tolerancia_teste_otimalidade == 0.000000000001
+    r.tolerancia_teste_otimalidade = 0.00000000002
+    assert r.tolerancia_teste_otimalidade == 0.00000000002
+
+
+def test_registro_pv_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockPV))
+    r = PV()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [
+        10000000000000000.00,
+        10000000000000000.00,
+        1,
+        1.2,
+        10000000000000000.00,
+        10000000000000000.00,
+    ]
+    assert r.penalidade_variaveis_folga == 10000000000000000.00
+    r.penalidade_variaveis_folga = 12000000000000000.00
+    assert r.penalidade_variaveis_folga == 12000000000000000.00
+    assert r.tolerancia_viabilidade_restricoes == 10000000000000000.00
+    r.tolerancia_viabilidade_restricoes = 12000000000000000.00
+    assert r.tolerancia_viabilidade_restricoes == 12000000000000000.00
+    assert r.iteracoes_atualizacao_penalidade == 1
+    r.iteracoes_atualizacao_penalidade = 0
+    assert r.iteracoes_atualizacao_penalidade == 0
+    assert r.fator_multiplicacao_folga == 1.2
+    r.fator_multiplicacao_folga = 1.5
+    assert r.fator_multiplicacao_folga == 1.5
+    assert r.valor_inicial_variaveis_folga == 10000000000000000.00
+    r.valor_inicial_variaveis_folga = 12000000000000000.00
+    assert r.valor_inicial_variaveis_folga == 12000000000000000.00
+    assert r.valor_final_variaveis_folga == 10000000000000000.00
+    r.valor_final_variaveis_folga = 12000000000000000.00
+    assert r.valor_final_variaveis_folga == 12000000000000000.00
+
+
+def test_registro_cx_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockCX))
+    r = CX()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [101, 102]
+    assert r.codigo_newave == 101
+    r.codigo_newave = 105
+    assert r.codigo_newave == 105
+    assert r.codigo_decomp == 102
+    r.codigo_decomp = 110
+    assert r.codigo_decomp == 110
+
+
+def test_registro_fa_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockFA))
+    r = FA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == ["indices.csv"]
+    assert r.arquivo == "indices.csv"
+    r.arquivo = "indices2.csv"
+    assert r.arquivo == "indices2.csv"
+
+
+def test_registro_vt_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockVT))
+    r = VT()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == ["ventos.dat"]
+    assert r.arquivo == "ventos.dat"
+    r.arquivo = "ventos2.dat"
+    assert r.arquivo == "ventos2.dat"
+
+
+def test_registro_cs_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockCS))
+    r = CS()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [1]
+    assert r.consistencia == 1
+    r.consistencia = 0
+    assert r.consistencia == 0
 
 
 def test_campos_nao_encontrados_dadger():

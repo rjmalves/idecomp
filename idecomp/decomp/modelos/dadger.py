@@ -89,6 +89,7 @@ class UH(Register):
             FloatField(10, 49, 2),
             FloatField(10, 59, 2),
             IntegerField(1, 69),
+            LiteralField(2, 71),
         ]
     )
 
@@ -209,7 +210,7 @@ class UH(Register):
         """
         Consideração do balanço hídrico por patamar.
 
-        :return: C consideração, ou não.
+        :return: A consideração, ou não.
         :rtype: int | None
         """
         return self.data[8]
@@ -217,6 +218,21 @@ class UH(Register):
     @balanco_hidrico_patamar.setter
     def balanco_hidrico_patamar(self, e: int):
         self.data[8] = e
+
+    @property
+    def configuracao_newave(self) -> Optional[str]:
+        """
+        Sinaliza a existência da usina na configuração
+        do NEWAVE, para compatibilização.
+
+        :return: A existência da usina na configuração.
+        :rtype: str | None
+        """
+        return self.data[9]
+
+    @configuracao_newave.setter
+    def configuracao_newave(self, e: str):
+        self.data[9] = e
 
 
 class CT(Register):
@@ -3054,6 +3070,459 @@ class CM(Register):
     @coeficiente.setter
     def coeficiente(self, c: float):
         self.data[2] = c
+
+
+class PD(Register):
+    """
+    Registro que contém a escolha do algoritmo para
+    resolução do PL.
+    """
+
+    IDENTIFIER = "PD  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(6, 4),
+        ]
+    )
+
+    @property
+    def algoritmo(self) -> Optional[str]:
+        """
+        O algoritmo considerado.
+
+        :return: O identificador do algoritmo.
+        :rtype: str | None
+        """
+        return self.data[0]
+
+    @algoritmo.setter
+    def algoritmo(self, m: str):
+        self.data[0] = m
+
+
+class PU(Register):
+    """
+    Registro que habilita a solução do problema
+    via PL único.
+    """
+
+    IDENTIFIER = "PU  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(1, 4),
+        ]
+    )
+
+    @property
+    def pl(self) -> Optional[int]:
+        """
+        O tipo de pl considerado.
+
+        :return: O identificador do pl.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @pl.setter
+    def pl(self, m: int):
+        self.data[0] = m
+
+
+class RC(Register):
+    """
+    Registro que inclui restrições do tipo escada.
+    """
+
+    IDENTIFIER = "RC  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(6, 4),
+        ]
+    )
+
+    @property
+    def mnemonico(self) -> Optional[str]:
+        """
+        O tipo de mnemonico considerado.
+
+        :return: O identificador do mnemonico.
+        :rtype: str | None
+        """
+        return self.data[0]
+
+    @mnemonico.setter
+    def mnemonico(self, m: str):
+        self.data[0] = m
+
+
+class PE(Register):
+    """
+    Registro que altera as penalidades de vertimento,
+    intercâmbio e desvios.
+    """
+
+    IDENTIFIER = "PE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(2, 4),
+            IntegerField(1, 7),
+            FloatField(10, 9, 6),
+        ]
+    )
+
+    @property
+    def subsistema(self) -> Optional[int]:
+        """
+        O índice do subsistema considerado
+
+        :return: O índice do subsistema.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @subsistema.setter
+    def subsistema(self, m: int):
+        self.data[0] = m
+
+    @property
+    def tipo(self) -> Optional[int]:
+        """
+        O tipo de penalidade a ser modificado
+
+        :return: O indice do tipo de penalidade
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @tipo.setter
+    def tipo(self, m: int):
+        self.data[1] = m
+
+    @property
+    def penalidade(self) -> Optional[float]:
+        """
+        O novo valor de penalidade
+
+        :return: O valor da penalidade
+        :rtype: float | None
+        """
+        return self.data[2]
+
+    @penalidade.setter
+    def penalidade(self, m: float):
+        self.data[2] = m
+
+
+class TS(Register):
+    """
+    Registro que altera as tolerâncias do solver.
+    """
+
+    IDENTIFIER = "TS  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            FloatField(17, 4, 15),
+            FloatField(17, 22, 15),
+            IntegerField(1, 42),
+            FloatField(17, 22, 15),
+        ]
+    )
+
+    @property
+    def tolerancia_primaria(self) -> Optional[float]:
+        """
+        A nova tolerância primária do solver.
+
+        :return: A tolerância
+        :rtype: float | None
+        """
+        return self.data[0]
+
+    @tolerancia_primaria.setter
+    def tolerancia_primaria(self, m: float):
+        self.data[0] = m
+
+    @property
+    def tolerancia_secundaria(self) -> Optional[float]:
+        """
+        A nova tolerância secundária do solver.
+
+        :return: A tolerância
+        :rtype: float | None
+        """
+        return self.data[1]
+
+    @tolerancia_secundaria.setter
+    def tolerancia_secundaria(self, m: float):
+        self.data[1] = m
+
+    @property
+    def zera_coeficientes(self) -> Optional[int]:
+        """
+        Habilita ou não a funcionalidade de zerar coeficientes
+        em casos de cortes não ótimos.
+
+        :return: O valor do flag
+        :rtype: int | None
+        """
+        return self.data[2]
+
+    @zera_coeficientes.setter
+    def zera_coeficientes(self, m: int):
+        self.data[2] = m
+
+    @property
+    def tolerancia_teste_otimalidade(self) -> Optional[float]:
+        """
+        A nova tolerância usada no teste de otimalidade da
+        solução do PL.
+
+        :return: A tolerância
+        :rtype: float | None
+        """
+        return self.data[3]
+
+    @tolerancia_teste_otimalidade.setter
+    def tolerancia_teste_otimalidade(self, m: float):
+        self.data[3] = m
+
+
+class PV(Register):
+    """
+    Registro que altera as penalidades das variáveis de folga
+    do problema e as tolerâncias para a viabilidade das restrições.
+    """
+
+    IDENTIFIER = "PV  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            FloatField(20, 5, 5),
+            FloatField(20, 28, 5),
+            IntegerField(3, 51),
+            FloatField(3, 57, 1),
+            FloatField(20, 63, 5),
+            FloatField(20, 86, 5),
+        ]
+    )
+
+    @property
+    def penalidade_variaveis_folga(self) -> Optional[float]:
+        """
+        A nova penalidade para as variáveis de folga (R$/MWh).
+
+        :return: A tolerância
+        :rtype: float | None
+        """
+        return self.data[0]
+
+    @penalidade_variaveis_folga.setter
+    def penalidade_variaveis_folga(self, m: float):
+        self.data[0] = m
+
+    @property
+    def tolerancia_viabilidade_restricoes(self) -> Optional[float]:
+        """
+        A nova tolerância para a viabilidade das restrições.
+
+        :return: A tolerância
+        :rtype: float | None
+        """
+        return self.data[1]
+
+    @tolerancia_viabilidade_restricoes.setter
+    def tolerancia_viabilidade_restricoes(self, m: float):
+        self.data[1] = m
+
+    @property
+    def iteracoes_atualizacao_penalidade(self) -> Optional[int]:
+        """
+        O número de iterações para atualização da penalidade variável
+        iterativa para as folgas.
+
+        :return: O número de iterações
+        :rtype: int | None
+        """
+        return self.data[2]
+
+    @iteracoes_atualizacao_penalidade.setter
+    def iteracoes_atualizacao_penalidade(self, m: int):
+        self.data[2] = m
+
+    @property
+    def fator_multiplicacao_folga(self) -> Optional[float]:
+        """
+        O fator para multiplicação da folga ao longo das restrições.
+
+        :return: A tolerância
+        :rtype: float | None
+        """
+        return self.data[3]
+
+    @fator_multiplicacao_folga.setter
+    def fator_multiplicacao_folga(self, m: float):
+        self.data[3] = m
+
+    @property
+    def valor_inicial_variaveis_folga(self) -> Optional[float]:
+        """
+        O valor inicial ou mínimo para as variáveis de folga.
+
+        :return: O valor mínimo
+        :rtype: float | None
+        """
+        return self.data[4]
+
+    @valor_inicial_variaveis_folga.setter
+    def valor_inicial_variaveis_folga(self, m: float):
+        self.data[4] = m
+
+    @property
+    def valor_final_variaveis_folga(self) -> Optional[float]:
+        """
+        O valor final ou máximo para as variáveis de folga.
+
+        :return: O valor máximo
+        :rtype: float | None
+        """
+        return self.data[5]
+
+    @valor_final_variaveis_folga.setter
+    def valor_final_variaveis_folga(self, m: float):
+        self.data[5] = m
+
+
+class CX(Register):
+    """
+    Registro que mapeia o acoplamento de usinas que representam
+    complexos no NEWAVE com o DECOMP.
+    """
+
+    IDENTIFIER = "CX  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(4, 4),
+            IntegerField(4, 9),
+        ]
+    )
+
+    @property
+    def codigo_newave(self) -> Optional[int]:
+        """
+        O código da usina no NEWAVE
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_newave.setter
+    def codigo_newave(self, m: int):
+        self.data[0] = m
+
+    @property
+    def codigo_decomp(self) -> Optional[int]:
+        """
+        O código da usina no DECOMP
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @codigo_decomp.setter
+    def codigo_decomp(self, m: int):
+        self.data[1] = m
+
+
+class FA(Register):
+    """
+    Registro que indica o nome do arquivo índice CSV.
+    """
+
+    IDENTIFIER = "FA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(50, 4),
+        ]
+    )
+
+    @property
+    def arquivo(self) -> Optional[str]:
+        """
+        O nome do arquivo índice CSV.
+
+        :return: O nome do arquivo
+        :rtype: str | None
+        """
+        return self.data[0]
+
+    @arquivo.setter
+    def arquivo(self, m: str):
+        self.data[0] = m
+
+
+class VT(Register):
+    """
+    Registro que indica o nome do arquivo com cenários de vento.
+    """
+
+    IDENTIFIER = "VT  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(50, 4),
+        ]
+    )
+
+    @property
+    def arquivo(self) -> Optional[str]:
+        """
+        O nome do arquivo com cenários de vento.
+
+        :return: O nome do arquivo
+        :rtype: str | None
+        """
+        return self.data[0]
+
+    @arquivo.setter
+    def arquivo(self, m: str):
+        self.data[0] = m
+
+
+class CS(Register):
+    """
+    Registro que habilita a consistência de dados.
+    """
+
+    IDENTIFIER = "CS  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(1, 4),
+        ]
+    )
+
+    @property
+    def consistencia(self) -> Optional[int]:
+        """
+        Habilita ou não a consistência de dados.
+
+        :return: O nvalor do flag
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @consistencia.setter
+    def consistencia(self, m: int):
+        self.data[0] = m
 
 
 class ACNUMPOS(Register):

@@ -45,6 +45,16 @@ from idecomp.decomp.modelos.dadger import (
     FJ,
     HE,
     CM,
+    PD,
+    PU,
+    RC,
+    PE,
+    TS,
+    PV,
+    CX,
+    FA,
+    VT,
+    CS,
     ACNUMPOS,
     ACNUMJUS,
     ACDESVIO,
@@ -1310,3 +1320,188 @@ class Dadger(RegisterFile):
         :rtype: :class:`FJ` | None.
         """
         return self.__obtem_registro(FJ)
+
+    def pd(
+        self, algoritmo: Optional[str] = None
+    ) -> Optional[Union[PD, List[PD]]]:
+        """
+        Obtém um registro que especifica o algoritmo usado para a solução.
+
+        :param algoritmo: Mnemônico do algoritmo
+        :type algoritmo: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`PD` | list[:class:`PD`] | None
+        """
+        return self.__obtem_registros_com_filtros(PD, algoritmo=algoritmo)
+
+    @property
+    def pu(self) -> Optional[PU]:
+        """
+        Obtém o (único) registro que define se será usado PL único.
+
+        :return: Um registro, se existir.
+        :rtype: :class:`PU` | None.
+        """
+        return self.__obtem_registro(PU)
+
+    @property
+    def rc(self) -> Optional[RC]:
+        """
+        Obtém o (único) registro que insere restrições do tipo
+        escada.
+
+        :return: Um registro, se existir.
+        :rtype: :class:`RC` | None.
+        """
+        return self.__obtem_registro(RC)
+
+    def pe(
+        self,
+        subsistema: Optional[int] = None,
+        tipo: Optional[int] = None,
+        penalidade: Optional[float] = None,
+    ) -> Optional[Union[PE, List[PE]]]:
+        """
+        Obtém um registro que altera penalidades de vertimento,
+            intercâmbio e desvios.
+
+        :param subsistema: Índice do subsistema
+        :type subsistema: int | None
+        :param tipo: tipo de restrição a ser modificada
+        :type tipo: int | None
+        :param penalidade: valor da penalidade
+        :type penalidade: float | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`PE` | list[:class:`PE`] | None
+        """
+        return self.__obtem_registros_com_filtros(
+            PE, subsistema=subsistema, tipo=tipo, penalidade=penalidade
+        )
+
+    def ts(
+        self,
+        tolerancia_primaria: Optional[float] = None,
+        tolerancia_secundaria: Optional[float] = None,
+        zera_coeficientes: Optional[int] = None,
+        tolerancia_teste_otimalidade: Optional[float] = None,
+    ) -> Optional[Union[TS, List[TS]]]:
+        """
+        Obtém um registro que altera as tolerâncias do solver.
+
+        :param tolerancia_primaria: valor da tolerância primária do solver.
+        :type tolerancia_primaria: float | None
+        :param tolerancia_secundaria: valor da tolerância secundária do solver.
+        :type tolerancia_secundaria: float | None
+        :param zera_coeficientes: funcionalidade de zerar os coeficientes de
+            cortes não ótimos.
+        :type zera_coeficientes: int | None
+        :param tolerancia_teste_otimalidade: valor da tolerância usada no
+            teste de otimalidade.
+        :type tolerancia_teste_otimalidade: float | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`TS` | list[:class:`TS`] | None
+        """
+        return self.__obtem_registros_com_filtros(
+            TS,
+            tolerancia_primaria=tolerancia_primaria,
+            tolerancia_secundaria=tolerancia_secundaria,
+            zera_coeficientes=zera_coeficientes,
+            tolerancia_teste_otimalidade=tolerancia_teste_otimalidade,
+        )
+
+    def pv(
+        self,
+        penalidade_variaveis_folga: Optional[float] = None,
+        tolerancia_viabilidade_restricoes: Optional[float] = None,
+        iteracoes_atualizacao_penalidade: Optional[int] = None,
+        fator_multiplicacao_folga: Optional[float] = None,
+        valor_inicial_variaveis_folga: Optional[float] = None,
+        valor_final_variaveis_folga: Optional[float] = None,
+    ) -> Optional[Union[PV, List[PV]]]:
+        """
+        Obtém um registro que altera as penalidades das variáveis
+            de folga.
+
+        :param penalidade_variaveis_folga: valor da nova penalidade das
+            variáveis de folga
+        :type penalidade_variaveis_folga: float | None
+        :param tolerancia_viabilidade_restricoes: valor da tolerância para
+            a viabilidade das restrições
+        :type tolerancia_viabilidade_restricoes: float | None
+        :param iteracoes_atualizacao_penalidade: número de iterações para
+            a atualização da penalidade variável
+        :type iteracoes_atualizacao_penalidade: int | None
+        :param fator_multiplicacao_folga: o fator para multiplicação da
+            folga
+        :type fator_multiplicacao_folga: float | None
+        :param valor_inicial_variaveis_folga: o valor inicial para as
+            variáveis de folga
+        :type valor_inicial_variaveis_folga: float | None
+        :param valor_final_variaveis_folga: o valor final para as
+            variáveis de folga
+        :type valor_final_variaveis_folga: float | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`PV` | list[:class:`PV`] | None
+        """
+        return self.__obtem_registros_com_filtros(
+            PV,
+            penalidade_variaveis_folga=penalidade_variaveis_folga,
+            tolerancia_viabilidade_restricoes=tolerancia_viabilidade_restricoes,
+            iteracoes_atualizacao_penalidade=iteracoes_atualizacao_penalidade,
+            fator_multiplicacao_folga=fator_multiplicacao_folga,
+            valor_inicial_variaveis_folga=valor_inicial_variaveis_folga,
+            valor_final_variaveis_folga=valor_final_variaveis_folga,
+        )
+
+    def cx(
+        self,
+        codigo_newave: Optional[int] = None,
+        codigo_decomp: Optional[int] = None,
+    ) -> Optional[Union[CX, List[CX]]]:
+        """
+        Obtém um registro que altera as tolerâncias do solver.
+
+        :param codigo_newave: código da usina no NEWAVE
+        :type codigo_newave: int | None
+        :param codigo_decomp: código da usina no DECOMP
+        :type codigo_decomp: int | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`CX` | list[:class:`CX`] | None
+        """
+        return self.__obtem_registros_com_filtros(
+            CX,
+            codigo_newave=codigo_newave,
+            codigo_decomp=codigo_decomp,
+        )
+
+    @property
+    def fa(self) -> Optional[FA]:
+        """
+        Obtém o (único) registro que define o arquivo de índices.
+
+        :return: Um registro, se existir.
+        :rtype: :class:`FA` | None.
+        """
+        return self.__obtem_registro(FA)
+
+    @property
+    def vt(self) -> Optional[VT]:
+        """
+        Obtém o (único) registro que define o arquivo com
+            cenários de vento.
+
+        :return: Um registro, se existir.
+        :rtype: :class:`VT` | None.
+        """
+        return self.__obtem_registro(VT)
+
+    @property
+    def cs(self) -> Optional[CS]:
+        """
+        Obtém o (único) registro que habilita a
+            consistência de dados.
+
+        :return: Um registro, se existir.
+        :rtype: :class:`CS` | None.
+        """
+        return self.__obtem_registro(CS)
