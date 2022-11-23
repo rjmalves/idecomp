@@ -661,6 +661,12 @@ class CD(Register):
 
     @property
     def numero_curva(self) -> Optional[int]:
+        """
+        O número da curva de déficit.
+
+        :return: O índice da curva.
+        :rtype: int | None
+        """
         return self.data[0]
 
     @numero_curva.setter
@@ -669,6 +675,12 @@ class CD(Register):
 
     @property
     def subsistema(self) -> Optional[int]:
+        """
+        O índice do subsistema associado.
+
+        :return: O subsistema.
+        :rtype: int | None
+        """
         return self.data[1]
 
     @subsistema.setter
@@ -677,6 +689,12 @@ class CD(Register):
 
     @property
     def nome_curva(self) -> Optional[str]:
+        """
+        O nome da curva de défitict
+
+        :return: O nome.
+        :rtype: str | None
+        """
         return self.data[2]
 
     @nome_curva.setter
@@ -685,6 +703,12 @@ class CD(Register):
 
     @property
     def estagio(self) -> Optional[int]:
+        """
+        O estágio de vigência do custo de déficit
+
+        :return: O estágio.
+        :rtype: int | None
+        """
         return self.data[3]
 
     @estagio.setter
@@ -693,6 +717,12 @@ class CD(Register):
 
     @property
     def limites_superiores(self) -> Optional[List[float]]:
+        """
+        Os limites superiores para consideração dos custos.
+
+        :return: Os limites.
+        :rtype: list[float] | None
+        """
         return [v for v in self.data[4::2] if v is not None]
 
     @limites_superiores.setter
@@ -701,6 +731,12 @@ class CD(Register):
 
     @property
     def custos(self) -> Optional[List[float]]:
+        """
+        Os custos de déficit.
+
+        :return: Os custos.
+        :rtype: list[float] | None
+        """
         return [v for v in self.data[5::2] if v is not None]
 
     @custos.setter
@@ -2856,6 +2892,12 @@ class FJ(Register):
 
     @property
     def arquivo(self) -> str:
+        """
+        O nome do arquivo.
+
+        :return: O nome
+        :rtype: str | None
+        """
         return self.data[0]
 
     @arquivo.setter

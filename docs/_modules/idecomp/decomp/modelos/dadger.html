@@ -731,6 +731,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">numero_curva</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O número da curva de déficit.</span>
+
+<span class="sd">        :return: O índice da curva.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@numero_curva</span><span class="o">.</span><span class="n">setter</span>
@@ -739,6 +745,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O índice do subsistema associado.</span>
+
+<span class="sd">        :return: O subsistema.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
     <span class="nd">@subsistema</span><span class="o">.</span><span class="n">setter</span>
@@ -747,6 +759,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nome_curva</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O nome da curva de défitict</span>
+
+<span class="sd">        :return: O nome.</span>
+<span class="sd">        :rtype: str | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
 
     <span class="nd">@nome_curva</span><span class="o">.</span><span class="n">setter</span>
@@ -755,6 +773,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O estágio de vigência do custo de déficit</span>
+
+<span class="sd">        :return: O estágio.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
     <span class="nd">@estagio</span><span class="o">.</span><span class="n">setter</span>
@@ -763,6 +787,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">limites_superiores</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Os limites superiores para consideração dos custos.</span>
+
+<span class="sd">        :return: Os limites.</span>
+<span class="sd">        :rtype: list[float] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="nd">@limites_superiores</span><span class="o">.</span><span class="n">setter</span>
@@ -771,6 +801,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">custos</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Os custos de déficit.</span>
+
+<span class="sd">        :return: Os custos.</span>
+<span class="sd">        :rtype: list[float] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">5</span><span class="p">::</span><span class="mi">2</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
 
     <span class="nd">@custos</span><span class="o">.</span><span class="n">setter</span>
@@ -2926,6 +2962,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">arquivo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O nome do arquivo.</span>
+
+<span class="sd">        :return: O nome</span>
+<span class="sd">        :rtype: str | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
     <span class="nd">@arquivo</span><span class="o">.</span><span class="n">setter</span>
