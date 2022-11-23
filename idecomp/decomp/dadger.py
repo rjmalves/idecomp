@@ -96,10 +96,6 @@ class Dadger(RegisterFile):
     DECOMP no `dadger.rvx`. Possui métodos para acessar individualmente
     cada registro, editá-lo e também cria alguns novos registros.
 
-    Atualmente, são suportados os registros:
-    `TE`, `SB`, `UH`, `CT`, `DP`, `TX`, `GP`, `NI`, `DT`, `RE`, `LU`,
-    `VI`, `IR`, `FC`, `TI`, `HV`, `LV`, `HQ`, `LQ` `HE`, `EV` e `FJ`.
-
     É possível ler as informações existentes em arquivos a partir do
     método `le_arquivo()` e escreve um novo arquivo a partir do método
     `escreve_arquivo()`.
