@@ -42,9 +42,9 @@ class BlocoCortesFCF(Block):
                 ]
                 if gnl:
                     colunas += [
-                        f"coef_GNL_pat{p}_lag{l}"
+                        f"coef_GNL_pat{p}_lag{la}"
                         for p in range(1, n_patamares + 1)
-                        for l in [1, 2]
+                        for la in [1, 2]
                     ]
                 if vminop_max:
                     colunas += ["coef_vminop_max"]

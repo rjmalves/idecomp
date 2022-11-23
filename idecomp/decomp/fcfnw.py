@@ -1,7 +1,7 @@
 from idecomp.decomp.modelos.fcfnw import BlocoCortesFCF
 
 from cfinterface.files.blockfile import BlockFile
-from typing import Type, List, TypeVar, Optional
+from typing import Type, TypeVar, Optional
 import pandas as pd  # type: ignore
 
 
@@ -20,7 +20,7 @@ class Fcfnw(BlockFile):
     BLOCKS = [BlocoCortesFCF]
 
     @classmethod
-    def le_arquivo(cls, diretorio: str, nome_arquivo="fcfnwn.rv0") -> "Relato":
+    def le_arquivo(cls, diretorio: str, nome_arquivo="fcfnwn.rv0") -> "Fcfnw":
         return cls.read(diretorio, nome_arquivo)
 
     def escreve_arquivo(self, diretorio: str, nome_arquivo="fcfnwn.rv0"):
