@@ -3,13 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.37</title>
+  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.48</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -20,6 +16,7 @@
         <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/translations.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" /> 
@@ -118,6 +115,16 @@
     <span class="n">FJ</span><span class="p">,</span>
     <span class="n">HE</span><span class="p">,</span>
     <span class="n">CM</span><span class="p">,</span>
+    <span class="n">PD</span><span class="p">,</span>
+    <span class="n">PU</span><span class="p">,</span>
+    <span class="n">RC</span><span class="p">,</span>
+    <span class="n">PE</span><span class="p">,</span>
+    <span class="n">TS</span><span class="p">,</span>
+    <span class="n">PV</span><span class="p">,</span>
+    <span class="n">CX</span><span class="p">,</span>
+    <span class="n">FA</span><span class="p">,</span>
+    <span class="n">VT</span><span class="p">,</span>
+    <span class="n">CS</span><span class="p">,</span>
     <span class="n">ACNUMPOS</span><span class="p">,</span>
     <span class="n">ACNUMJUS</span><span class="p">,</span>
     <span class="n">ACDESVIO</span><span class="p">,</span>
@@ -1382,7 +1389,192 @@
 <span class="sd">        :return: Um registro, se existir.</span>
 <span class="sd">        :rtype: :class:`FJ` | None.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">FJ</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">FJ</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Dadger.pd"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.pd">[documentos]</a>    <span class="k">def</span> <span class="nf">pd</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">algoritmo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">PD</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">PD</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que especifica o algoritmo usado para a solução.</span>
+
+<span class="sd">        :param algoritmo: Mnemônico do algoritmo</span>
+<span class="sd">        :type algoritmo: str | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`PD` | list[:class:`PD`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span><span class="n">PD</span><span class="p">,</span> <span class="n">algoritmo</span><span class="o">=</span><span class="n">algoritmo</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pu</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">PU</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que define se será usado PL único.</span>
+
+<span class="sd">        :return: Um registro, se existir.</span>
+<span class="sd">        :rtype: :class:`PU` | None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">PU</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">RC</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que insere restrições do tipo</span>
+<span class="sd">        escada.</span>
+
+<span class="sd">        :return: Um registro, se existir.</span>
+<span class="sd">        :rtype: :class:`RC` | None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">RC</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Dadger.pe"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.pe">[documentos]</a>    <span class="k">def</span> <span class="nf">pe</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">subsistema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tipo</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">penalidade</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">PE</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">PE</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que altera penalidades de vertimento,</span>
+<span class="sd">            intercâmbio e desvios.</span>
+
+<span class="sd">        :param subsistema: Índice do subsistema</span>
+<span class="sd">        :type subsistema: int | None</span>
+<span class="sd">        :param tipo: tipo de restrição a ser modificada</span>
+<span class="sd">        :type tipo: int | None</span>
+<span class="sd">        :param penalidade: valor da penalidade</span>
+<span class="sd">        :type penalidade: float | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`PE` | list[:class:`PE`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">PE</span><span class="p">,</span> <span class="n">subsistema</span><span class="o">=</span><span class="n">subsistema</span><span class="p">,</span> <span class="n">tipo</span><span class="o">=</span><span class="n">tipo</span><span class="p">,</span> <span class="n">penalidade</span><span class="o">=</span><span class="n">penalidade</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.ts"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ts">[documentos]</a>    <span class="k">def</span> <span class="nf">ts</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">tolerancia_primaria</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tolerancia_secundaria</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">zera_coeficientes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tolerancia_teste_otimalidade</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">TS</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">TS</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que altera as tolerâncias do solver.</span>
+
+<span class="sd">        :param tolerancia_primaria: valor da tolerância primária do solver.</span>
+<span class="sd">        :type tolerancia_primaria: float | None</span>
+<span class="sd">        :param tolerancia_secundaria: valor da tolerância secundária do solver.</span>
+<span class="sd">        :type tolerancia_secundaria: float | None</span>
+<span class="sd">        :param zera_coeficientes: funcionalidade de zerar os coeficientes de</span>
+<span class="sd">            cortes não ótimos.</span>
+<span class="sd">        :type zera_coeficientes: int | None</span>
+<span class="sd">        :param tolerancia_teste_otimalidade: valor da tolerância usada no</span>
+<span class="sd">            teste de otimalidade.</span>
+<span class="sd">        :type tolerancia_teste_otimalidade: float | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`TS` | list[:class:`TS`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">TS</span><span class="p">,</span>
+            <span class="n">tolerancia_primaria</span><span class="o">=</span><span class="n">tolerancia_primaria</span><span class="p">,</span>
+            <span class="n">tolerancia_secundaria</span><span class="o">=</span><span class="n">tolerancia_secundaria</span><span class="p">,</span>
+            <span class="n">zera_coeficientes</span><span class="o">=</span><span class="n">zera_coeficientes</span><span class="p">,</span>
+            <span class="n">tolerancia_teste_otimalidade</span><span class="o">=</span><span class="n">tolerancia_teste_otimalidade</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.pv"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.pv">[documentos]</a>    <span class="k">def</span> <span class="nf">pv</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">penalidade_variaveis_folga</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tolerancia_viabilidade_restricoes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">iteracoes_atualizacao_penalidade</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">fator_multiplicacao_folga</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">valor_inicial_variaveis_folga</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">valor_final_variaveis_folga</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">PV</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">PV</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que altera as penalidades das variáveis</span>
+<span class="sd">            de folga.</span>
+
+<span class="sd">        :param penalidade_variaveis_folga: valor da nova penalidade das</span>
+<span class="sd">            variáveis de folga</span>
+<span class="sd">        :type penalidade_variaveis_folga: float | None</span>
+<span class="sd">        :param tolerancia_viabilidade_restricoes: valor da tolerância para</span>
+<span class="sd">            a viabilidade das restrições</span>
+<span class="sd">        :type tolerancia_viabilidade_restricoes: float | None</span>
+<span class="sd">        :param iteracoes_atualizacao_penalidade: número de iterações para</span>
+<span class="sd">            a atualização da penalidade variável</span>
+<span class="sd">        :type iteracoes_atualizacao_penalidade: int | None</span>
+<span class="sd">        :param fator_multiplicacao_folga: o fator para multiplicação da</span>
+<span class="sd">            folga</span>
+<span class="sd">        :type fator_multiplicacao_folga: float | None</span>
+<span class="sd">        :param valor_inicial_variaveis_folga: o valor inicial para as</span>
+<span class="sd">            variáveis de folga</span>
+<span class="sd">        :type valor_inicial_variaveis_folga: float | None</span>
+<span class="sd">        :param valor_final_variaveis_folga: o valor final para as</span>
+<span class="sd">            variáveis de folga</span>
+<span class="sd">        :type valor_final_variaveis_folga: float | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`PV` | list[:class:`PV`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">PV</span><span class="p">,</span>
+            <span class="n">penalidade_variaveis_folga</span><span class="o">=</span><span class="n">penalidade_variaveis_folga</span><span class="p">,</span>
+            <span class="n">tolerancia_viabilidade_restricoes</span><span class="o">=</span><span class="n">tolerancia_viabilidade_restricoes</span><span class="p">,</span>
+            <span class="n">iteracoes_atualizacao_penalidade</span><span class="o">=</span><span class="n">iteracoes_atualizacao_penalidade</span><span class="p">,</span>
+            <span class="n">fator_multiplicacao_folga</span><span class="o">=</span><span class="n">fator_multiplicacao_folga</span><span class="p">,</span>
+            <span class="n">valor_inicial_variaveis_folga</span><span class="o">=</span><span class="n">valor_inicial_variaveis_folga</span><span class="p">,</span>
+            <span class="n">valor_final_variaveis_folga</span><span class="o">=</span><span class="n">valor_final_variaveis_folga</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.cx"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.cx">[documentos]</a>    <span class="k">def</span> <span class="nf">cx</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">codigo_newave</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">codigo_decomp</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">CX</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">CX</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que altera as tolerâncias do solver.</span>
+
+<span class="sd">        :param codigo_newave: código da usina no NEWAVE</span>
+<span class="sd">        :type codigo_newave: int | None</span>
+<span class="sd">        :param codigo_decomp: código da usina no DECOMP</span>
+<span class="sd">        :type codigo_decomp: int | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`CX` | list[:class:`CX`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">CX</span><span class="p">,</span>
+            <span class="n">codigo_newave</span><span class="o">=</span><span class="n">codigo_newave</span><span class="p">,</span>
+            <span class="n">codigo_decomp</span><span class="o">=</span><span class="n">codigo_decomp</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fa</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">FA</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que define o arquivo de índices.</span>
+
+<span class="sd">        :return: Um registro, se existir.</span>
+<span class="sd">        :rtype: :class:`FA` | None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">FA</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">vt</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">VT</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que define o arquivo com</span>
+<span class="sd">            cenários de vento.</span>
+
+<span class="sd">        :return: Um registro, se existir.</span>
+<span class="sd">        :rtype: :class:`VT` | None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">VT</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">CS</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém o (único) registro que habilita a</span>
+<span class="sd">            consistência de dados.</span>
+
+<span class="sd">        :return: Um registro, se existir.</span>
+<span class="sd">        :rtype: :class:`CS` | None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registro</span><span class="p">(</span><span class="n">CS</span><span class="p">)</span></div>
 </pre></div>
 
            </div>
@@ -1392,7 +1584,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Rogerio Alves.</p>
+    <p>&#169; Copyright 2022, Rogerio Alves.</p>
   </div>
 
   Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um

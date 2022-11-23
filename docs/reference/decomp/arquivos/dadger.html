@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.47</title>
+  <title>Dados gerais (dadger.rvX) &mdash; documentação idecomp 0.0.48</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -56,6 +56,7 @@
 <li class="toctree-l4"><a class="reference internal" href="postos.html">Postos (postos.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relato.html">Relato (relato.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sumario.html">Sumario (sumario.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fcfnw.html">Função de Custo Futuro do NEWAVE (fcfnwX.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="decomptim.html">Tempos de Execução (decomp.tim)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relgnl.html">Relatório de Térmicas GNL (relgnl.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inviabunic.html">InviabUnic (inviab_unic.rvX)</a></li>
@@ -242,6 +243,23 @@ existente.</p>
 quando for suportado na classe <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterFile</span></code>.</p>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.cs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.CS" title="idecomp.decomp.modelos.dadger.CS"><span class="pre">CS</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.cs" title="Link permanente para esta definição"></a></dt>
+<dd><dl class="simple">
+<dt>Obtém o (único) registro que habilita a</dt><dd><p>consistência de dados.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro, se existir.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CS</span></code> | None.</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ct">
 <span class="sig-name descname"><span class="pre">ct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">estagio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subsistema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nome</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.CT" title="idecomp.decomp.modelos.dadger.CT"><span class="pre">CT</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.CT" title="idecomp.decomp.modelos.dadger.CT"><span class="pre">CT</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ct"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ct" title="Link permanente para esta definição"></a></dt>
@@ -285,6 +303,26 @@ na restrição</p></li>
 </dd>
 <dt class="field-odd">Tipo de retorno</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CV</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">CV</span></code>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.cx">
+<span class="sig-name descname"><span class="pre">cx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">codigo_newave</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codigo_decomp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.CX" title="idecomp.decomp.modelos.dadger.CX"><span class="pre">CX</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.CX" title="idecomp.decomp.modelos.dadger.CX"><span class="pre">CX</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.cx"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.cx" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém um registro que altera as tolerâncias do solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>codigo_newave</strong> (<em>int</em><em> | </em><em>None</em>) – código da usina no NEWAVE</p></li>
+<li><p><strong>codigo_decomp</strong> (<em>int</em><em> | </em><em>None</em>) – código da usina no DECOMP</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CX</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">CX</span></code>] | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -386,6 +424,20 @@ ao estudo.</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">EV</span></code> | None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.fa">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fa</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.FA" title="idecomp.decomp.modelos.dadger.FA"><span class="pre">FA</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.fa" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém o (único) registro que define o arquivo de índices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro, se existir.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">FA</span></code> | None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -825,11 +877,99 @@ do DECOMP no estudo definido no <a class="reference internal" href="#idecomp.dec
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.pd">
+<span class="sig-name descname"><span class="pre">pd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algoritmo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.PD" title="idecomp.decomp.modelos.dadger.PD"><span class="pre">PD</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.PD" title="idecomp.decomp.modelos.dadger.PD"><span class="pre">PD</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.pd"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.pd" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém um registro que especifica o algoritmo usado para a solução.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><p><strong>algoritmo</strong> (<em>str</em><em> | </em><em>None</em>) – Mnemônico do algoritmo</p>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PD</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">PD</span></code>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.pe">
+<span class="sig-name descname"><span class="pre">pe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subsistema</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tipo</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">penalidade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.PE" title="idecomp.decomp.modelos.dadger.PE"><span class="pre">PE</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.PE" title="idecomp.decomp.modelos.dadger.PE"><span class="pre">PE</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.pe"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.pe" title="Link permanente para esta definição"></a></dt>
+<dd><dl class="simple">
+<dt>Obtém um registro que altera penalidades de vertimento,</dt><dd><p>intercâmbio e desvios.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subsistema</strong> (<em>int</em><em> | </em><em>None</em>) – Índice do subsistema</p></li>
+<li><p><strong>tipo</strong> (<em>int</em><em> | </em><em>None</em>) – tipo de restrição a ser modificada</p></li>
+<li><p><strong>penalidade</strong> (<em>float</em><em> | </em><em>None</em>) – valor da penalidade</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PE</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">PE</span></code>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.preppend_registro">
 <span class="sig-name descname"><span class="pre">preppend_registro</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">registro</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Register</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.preppend_registro"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.preppend_registro" title="Link permanente para esta definição"></a></dt>
 <dd><p>Adiciona um registro ao arquivo na primeira posição.</p>
 <p>Este método existe para retrocompatibilidade e deve ser substituído
 quando for suportado na classe <code class="xref py py-class docutils literal notranslate"><span class="pre">RegisterFile</span></code>.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.pu">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pu</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.PU" title="idecomp.decomp.modelos.dadger.PU"><span class="pre">PU</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.pu" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém o (único) registro que define se será usado PL único.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro, se existir.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PU</span></code> | None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.pv">
+<span class="sig-name descname"><span class="pre">pv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">penalidade_variaveis_folga</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerancia_viabilidade_restricoes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iteracoes_atualizacao_penalidade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fator_multiplicacao_folga</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valor_inicial_variaveis_folga</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">valor_final_variaveis_folga</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.PV" title="idecomp.decomp.modelos.dadger.PV"><span class="pre">PV</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.PV" title="idecomp.decomp.modelos.dadger.PV"><span class="pre">PV</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.pv"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.pv" title="Link permanente para esta definição"></a></dt>
+<dd><dl class="simple">
+<dt>Obtém um registro que altera as penalidades das variáveis</dt><dd><p>de folga.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>penalidade_variaveis_folga</strong> (<em>float</em><em> | </em><em>None</em>) – valor da nova penalidade das
+variáveis de folga</p></li>
+<li><p><strong>tolerancia_viabilidade_restricoes</strong> (<em>float</em><em> | </em><em>None</em>) – valor da tolerância para
+a viabilidade das restrições</p></li>
+<li><p><strong>iteracoes_atualizacao_penalidade</strong> (<em>int</em><em> | </em><em>None</em>) – número de iterações para
+a atualização da penalidade variável</p></li>
+<li><p><strong>fator_multiplicacao_folga</strong> (<em>float</em><em> | </em><em>None</em>) – o fator para multiplicação da
+folga</p></li>
+<li><p><strong>valor_inicial_variaveis_folga</strong> (<em>float</em><em> | </em><em>None</em>) – o valor inicial para as
+variáveis de folga</p></li>
+<li><p><strong>valor_final_variaveis_folga</strong> (<em>float</em><em> | </em><em>None</em>) – o valor final para as
+variáveis de folga</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">PV</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">PV</span></code>] | None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -846,6 +986,21 @@ para cálculo da ENA.</p>
 </dd>
 <dt class="field-odd">Tipo de retorno</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">QI</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">QI</span></code>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.rc">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rc</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.RC" title="idecomp.decomp.modelos.dadger.RC"><span class="pre">RC</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.rc" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém o (único) registro que insere restrições do tipo
+escada.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro, se existir.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RC</span></code> | None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -964,6 +1119,30 @@ por posto (UHE) existente no estudo especificado no <a class="reference internal
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.ts">
+<span class="sig-name descname"><span class="pre">ts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tolerancia_primaria</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerancia_secundaria</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zera_coeficientes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerancia_teste_otimalidade</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.TS" title="idecomp.decomp.modelos.dadger.TS"><span class="pre">TS</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.TS" title="idecomp.decomp.modelos.dadger.TS"><span class="pre">TS</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../../../_modules/idecomp/decomp/dadger.html#Dadger.ts"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.ts" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém um registro que altera as tolerâncias do solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parâmetros</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tolerancia_primaria</strong> (<em>float</em><em> | </em><em>None</em>) – valor da tolerância primária do solver.</p></li>
+<li><p><strong>tolerancia_secundaria</strong> (<em>float</em><em> | </em><em>None</em>) – valor da tolerância secundária do solver.</p></li>
+<li><p><strong>zera_coeficientes</strong> (<em>int</em><em> | </em><em>None</em>) – funcionalidade de zerar os coeficientes de
+cortes não ótimos.</p></li>
+<li><p><strong>tolerancia_teste_otimalidade</strong> (<em>float</em><em> | </em><em>None</em>) – valor da tolerância usada no
+teste de otimalidade.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Retorna</dt>
+<dd class="field-even"><p>Um ou mais registros, se existirem.</p>
+</dd>
+<dt class="field-odd">Tipo de retorno</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">TS</span></code> | list[<code class="xref py py-class docutils literal notranslate"><span class="pre">TS</span></code>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.tx">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tx</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.TX" title="idecomp.decomp.modelos.dadger.TX"><span class="pre">TX</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.tx" title="Link permanente para esta definição"></a></dt>
@@ -1042,6 +1221,23 @@ pelo <a class="reference internal" href="#idecomp.decomp.dadger.Dadger" title="i
 </dl>
 </dd></dl>
 
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.dadger.Dadger.vt">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vt</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#idecomp.decomp.modelos.dadger.VT" title="idecomp.decomp.modelos.dadger.VT"><span class="pre">VT</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.dadger.Dadger.vt" title="Link permanente para esta definição"></a></dt>
+<dd><dl class="simple">
+<dt>Obtém o (único) registro que define o arquivo com</dt><dd><p>cenários de vento.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>Um registro, se existir.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">VT</span></code> | None.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <p>As informações existentes em cada um dos registros são armazenadas em modelos próprios
@@ -1112,7 +1308,7 @@ iniciais no estudo.</p>
 <dd><p>Consideração do balanço hídrico por patamar.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
-<dd class="field-odd"><p>C consideração, ou não.</p>
+<dd class="field-odd"><p>A consideração, ou não.</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
 <dd class="field-even"><p>int | None</p>
@@ -1130,6 +1326,21 @@ iniciais no estudo.</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
 <dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.UH.configuracao_newave">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">configuracao_newave</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.UH.configuracao_newave" title="Link permanente para esta definição"></a></dt>
+<dd><p>Sinaliza a existência da usina na configuração
+do NEWAVE, para compatibilização.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A existência da usina na configuração.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>str | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -3166,6 +3377,368 @@ das usinas usadas nas restrição.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
 <dd class="field-odd"><p>O REE.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#PD"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PD" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que contém a escolha do algoritmo para
+resolução do PL.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PD.algoritmo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">algoritmo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PD.algoritmo" title="Link permanente para esta definição"></a></dt>
+<dd><p>O algoritmo considerado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O identificador do algoritmo.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PU">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#PU"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PU" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que habilita a solução do problema
+via PL único.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PU.pl">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pl</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PU.pl" title="Link permanente para esta definição"></a></dt>
+<dd><p>O tipo de pl considerado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O identificador do pl.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">RC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#RC"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RC" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que inclui restrições do tipo escada.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.RC.mnemonico">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mnemonico</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.RC.mnemonico" title="Link permanente para esta definição"></a></dt>
+<dd><p>O tipo de mnemonico considerado.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O identificador do mnemonico.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PE">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#PE"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PE" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que altera as penalidades de vertimento,
+intercâmbio e desvios.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PE.penalidade">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">penalidade</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PE.penalidade" title="Link permanente para esta definição"></a></dt>
+<dd><p>O novo valor de penalidade</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O valor da penalidade</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PE.subsistema">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">subsistema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PE.subsistema" title="Link permanente para esta definição"></a></dt>
+<dd><p>O índice do subsistema considerado</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O índice do subsistema.</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PE.tipo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tipo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PE.tipo" title="Link permanente para esta definição"></a></dt>
+<dd><p>O tipo de penalidade a ser modificado</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O indice do tipo de penalidade</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">TS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#TS"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TS" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que altera as tolerâncias do solver.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TS.tolerancia_primaria">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tolerancia_primaria</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TS.tolerancia_primaria" title="Link permanente para esta definição"></a></dt>
+<dd><p>A nova tolerância primária do solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tolerância</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TS.tolerancia_secundaria">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tolerancia_secundaria</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TS.tolerancia_secundaria" title="Link permanente para esta definição"></a></dt>
+<dd><p>A nova tolerância secundária do solver.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tolerância</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TS.tolerancia_teste_otimalidade">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tolerancia_teste_otimalidade</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TS.tolerancia_teste_otimalidade" title="Link permanente para esta definição"></a></dt>
+<dd><p>A nova tolerância usada no teste de otimalidade da
+solução do PL.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tolerância</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.TS.zera_coeficientes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">zera_coeficientes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.TS.zera_coeficientes" title="Link permanente para esta definição"></a></dt>
+<dd><p>Habilita ou não a funcionalidade de zerar coeficientes
+em casos de cortes não ótimos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O valor do flag</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PV">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">PV</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#PV"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PV" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que altera as penalidades das variáveis de folga
+do problema e as tolerâncias para a viabilidade das restrições.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PV.fator_multiplicacao_folga">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fator_multiplicacao_folga</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PV.fator_multiplicacao_folga" title="Link permanente para esta definição"></a></dt>
+<dd><p>O fator para multiplicação da folga ao longo das restrições.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tolerância</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PV.iteracoes_atualizacao_penalidade">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">iteracoes_atualizacao_penalidade</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PV.iteracoes_atualizacao_penalidade" title="Link permanente para esta definição"></a></dt>
+<dd><p>O número de iterações para atualização da penalidade variável
+iterativa para as folgas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O número de iterações</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PV.penalidade_variaveis_folga">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">penalidade_variaveis_folga</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PV.penalidade_variaveis_folga" title="Link permanente para esta definição"></a></dt>
+<dd><p>A nova penalidade para as variáveis de folga (R$/MWh).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tolerância</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PV.tolerancia_viabilidade_restricoes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tolerancia_viabilidade_restricoes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PV.tolerancia_viabilidade_restricoes" title="Link permanente para esta definição"></a></dt>
+<dd><p>A nova tolerância para a viabilidade das restrições.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>A tolerância</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PV.valor_final_variaveis_folga">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">valor_final_variaveis_folga</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PV.valor_final_variaveis_folga" title="Link permanente para esta definição"></a></dt>
+<dd><p>O valor final ou máximo para as variáveis de folga.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O valor máximo</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.PV.valor_inicial_variaveis_folga">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">valor_inicial_variaveis_folga</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.PV.valor_inicial_variaveis_folga" title="Link permanente para esta definição"></a></dt>
+<dd><p>O valor inicial ou mínimo para as variáveis de folga.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O valor mínimo</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CX">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CX"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CX" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que mapeia o acoplamento de usinas que representam
+complexos no NEWAVE com o DECOMP.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CX.codigo_decomp">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">codigo_decomp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CX.codigo_decomp" title="Link permanente para esta definição"></a></dt>
+<dd><p>O código da usina no DECOMP</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CX.codigo_newave">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">codigo_newave</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CX.codigo_newave" title="Link permanente para esta definição"></a></dt>
+<dd><p>O código da usina no NEWAVE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O código</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>int | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#FA"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FA" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que indica o nome do arquivo índice CSV.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.FA.arquivo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arquivo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.FA.arquivo" title="Link permanente para esta definição"></a></dt>
+<dd><p>O nome do arquivo índice CSV.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O nome do arquivo</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.VT">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">VT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#VT"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.VT" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que indica o nome do arquivo com cenários de vento.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.VT.arquivo">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">arquivo</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.VT.arquivo" title="Link permanente para esta definição"></a></dt>
+<dd><p>O nome do arquivo com cenários de vento.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O nome do arquivo</p>
+</dd>
+<dt class="field-even">Tipo de retorno</dt>
+<dd class="field-even"><p>str | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">CS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">previous</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">next</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/modelos/dadger.html#CS"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CS" title="Link permanente para esta definição"></a></dt>
+<dd><p>Registro que habilita a consistência de dados.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.modelos.dadger.CS.consistencia">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">consistencia</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.modelos.dadger.CS.consistencia" title="Link permanente para esta definição"></a></dt>
+<dd><p>Habilita ou não a consistência de dados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna</dt>
+<dd class="field-odd"><p>O nvalor do flag</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
 <dd class="field-even"><p>int | None</p>

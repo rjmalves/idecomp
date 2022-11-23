@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vazões por Posto (vazoes.rvX) &mdash; documentação idecomp 0.0.48</title>
+  <title>Função de Custo Futuro do NEWAVE (fcfnwX.rvX) &mdash; documentação idecomp 0.0.48</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -21,8 +21,8 @@
     <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" />
-    <link rel="next" title="Postos (postos.rvX)" href="postos.html" />
-    <link rel="prev" title="Hidr (hidr.dat)" href="hidr.html" /> 
+    <link rel="next" title="Tempos de Execução (decomp.tim)" href="decomptim.html" />
+    <link rel="prev" title="Sumario (sumario.rvX)" href="sumario.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -52,11 +52,11 @@
 <li class="toctree-l4"><a class="reference internal" href="dadger.html">Dados gerais (dadger.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="dadgnl.html">Dados de Térmicas GNL (dadgnl.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="hidr.html">Hidr (hidr.dat)</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">Vazões por Posto (vazoes.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="vazoes.html">Vazões por Posto (vazoes.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="postos.html">Postos (postos.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relato.html">Relato (relato.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="sumario.html">Sumario (sumario.rvX)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="fcfnw.html">Função de Custo Futuro do NEWAVE (fcfnwX.rvX)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Função de Custo Futuro do NEWAVE (fcfnwX.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="decomptim.html">Tempos de Execução (decomp.tim)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="relgnl.html">Relatório de Térmicas GNL (relgnl.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inviabunic.html">InviabUnic (inviab_unic.rvX)</a></li>
@@ -84,9 +84,9 @@
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="../../../reference.html">Referência</a> &raquo;</li>
           <li><a href="../index.html">DECOMP</a> &raquo;</li>
-      <li>Vazões por Posto (vazoes.rvX)</li>
+      <li>Função de Custo Futuro do NEWAVE (fcfnwX.rvX)</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../../../_sources/reference/decomp/arquivos/vazoes.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+            <a href="../../../_sources/reference/decomp/arquivos/fcfnw.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
       </li>
   </ul>
   <hr/>
@@ -118,29 +118,56 @@
     text-align: unset;
 }
 </style>
-<section id="vazoes-por-posto-vazoes-rvx">
-<span id="vazoes"></span><h1>Vazões por Posto (vazoes.rvX)<a class="headerlink" href="#vazoes-por-posto-vazoes-rvx" title="Link permanente para este cabeçalho"></a></h1>
-<p>As vazões por posto do DECOMP, localizadas no arquivo geralmente denominado
-vazoes.rvX, são armazenadas na classe:</p>
+<section id="funcao-de-custo-futuro-do-newave-fcfnwx-rvx">
+<span id="fcfnw"></span><h1>Função de Custo Futuro do NEWAVE (fcfnwX.rvX)<a class="headerlink" href="#funcao-de-custo-futuro-do-newave-fcfnwx-rvx" title="Link permanente para este cabeçalho"></a></h1>
+<p>As informações de saída do DECOMP, localizadas no arquivo geralmente denominado
+fcfnwX.rvX, são armazenadas na classe:</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="idecomp.decomp.vazoes.Vazoes">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Vazoes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/vazoes.html#Vazoes"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.vazoes.Vazoes" title="Link permanente para esta definição"></a></dt>
-<dd><p>Armazena os dados de entrada do DECOMP referentes ao cadastro das
-usinas hidroelétricas.</p>
+<dt class="sig sig-object py" id="idecomp.decomp.fcfnw.Fcfnw">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Fcfnw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=&lt;cfinterface.data.blockdata.BlockData</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/fcfnw.html#Fcfnw"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.fcfnw.Fcfnw" title="Link permanente para esta definição"></a></dt>
+<dd><p>Armazena os dados de saída do DECOMP referentes ao
+acoplamento realizado com a FCF do NEWAVE.</p>
+<p>Esta classe lida com as informações de entrada ao
+DECOMP e reproduzidas no <code class="xref py py-obj docutils literal notranslate"><span class="pre">fcfnwX.rvx</span></code>.</p>
 <dl class="py property">
-<dt class="sig sig-object py" id="idecomp.decomp.vazoes.Vazoes.vazoes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vazoes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.vazoes.Vazoes.vazoes" title="Link permanente para esta definição"></a></dt>
-<dd><p>Obtém a tabela com os dados de vazão existentes no arquivo
-binário.</p>
+<dt class="sig sig-object py" id="idecomp.decomp.fcfnw.Fcfnw.cortes">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cortes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.fcfnw.Fcfnw.cortes" title="Link permanente para esta definição"></a></dt>
+<dd><p>Obtém a tabela de cortes do NEWAVE existente no
+<a class="reference internal" href="#idecomp.decomp.fcfnw.Fcfnw" title="idecomp.decomp.fcfnw.Fcfnw"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fcfnw</span></code></a>.</p>
+<p>Os nomes da colunas podem variar de acordo com o
+período de acoplamento (NEWAVE REE ou individualizado).</p>
+<p>Caso REE:</p>
 <ul class="simple">
-<li><p>1…N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) - onde N é o número de postos</p></li>
+<li><p>corte (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>RHS (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>REE (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>coef_earm (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>coef_eafl_1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>coef_eafl_N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>coef_GNL_pat1_lag1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>coef_GNL_pat1_lag2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>coef_GNL_patK_lag1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>coef_GNL_patK_lag2 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>coef_vminop_max (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+</ul>
+<p>Caso individualizado:</p>
+<ul class="simple">
+<li><p>corte (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>RHS (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>UHE (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
+<li><p>coef_varm (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>coef_afl_1 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>…</p></li>
+<li><p>coef_afl_N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
 </ul>
 <dl class="field-list simple">
 <dt class="field-odd">Retorna</dt>
-<dd class="field-odd"><p>A tabela com as vazões por posto</p>
+<dd class="field-odd"><p>O DataFrame com os valores</p>
 </dd>
 <dt class="field-even">Tipo de retorno</dt>
-<dd class="field-even"><p>pd.DataFrame</p>
+<dd class="field-even"><p>pd.DataFrame | None.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -153,8 +180,8 @@ binário.</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
-        <a href="hidr.html" class="btn btn-neutral float-left" title="Hidr (hidr.dat)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
-        <a href="postos.html" class="btn btn-neutral float-right" title="Postos (postos.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="sumario.html" class="btn btn-neutral float-left" title="Sumario (sumario.rvX)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="decomptim.html" class="btn btn-neutral float-right" title="Tempos de Execução (decomp.tim)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

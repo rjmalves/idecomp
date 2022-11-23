@@ -46,6 +46,7 @@ Arquivos
    arquivos/postos
    arquivos/relato
    arquivos/sumario
+   arquivos/fcfnw
    arquivos/decomptim
    arquivos/relgnl
    arquivos/inviabunic

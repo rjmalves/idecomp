@@ -159,6 +159,36 @@ de operação:
 .. autoclass:: CM
    :members:
 
+.. autoclass:: PD
+   :members:
+
+.. autoclass:: PU
+   :members:
+
+.. autoclass:: RC
+   :members:
+
+.. autoclass:: PE
+   :members:
+
+.. autoclass:: TS
+   :members:
+
+.. autoclass:: PV
+   :members:
+
+.. autoclass:: CX
+   :members:
+
+.. autoclass:: FA
+   :members:
+
+.. autoclass:: VT
+   :members:
+
+.. autoclass:: CS
+   :members:
+
 .. autoclass:: ACNUMPOS
    :members:
 
