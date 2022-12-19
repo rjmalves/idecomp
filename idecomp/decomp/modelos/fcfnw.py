@@ -116,7 +116,7 @@ class BlocoCortesFCF(Block):
         # Faz a leitura
         corte_atual = 0
         rhs_atual = 0
-        tabela = np.zeros((100000, num_elementos + 3 + int(uhe)))
+        tabela = np.zeros((4950000, num_elementos + 3 + int(uhe)))
         i = 0
         while True:
             # Confere se a leitura não acabou
