@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.48</title>
+  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.50</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -75,6 +75,7 @@
     <span class="n">CT</span><span class="p">,</span>
     <span class="n">UE</span><span class="p">,</span>
     <span class="n">DP</span><span class="p">,</span>
+    <span class="n">PQ</span><span class="p">,</span>
     <span class="n">CD</span><span class="p">,</span>
     <span class="n">FP</span><span class="p">,</span>
     <span class="n">RI</span><span class="p">,</span>
@@ -209,6 +210,7 @@
         <span class="n">CT</span><span class="p">,</span>
         <span class="n">UE</span><span class="p">,</span>
         <span class="n">DP</span><span class="p">,</span>
+        <span class="n">PQ</span><span class="p">,</span>
         <span class="n">CD</span><span class="p">,</span>
         <span class="n">FP</span><span class="p">,</span>
         <span class="n">RI</span><span class="p">,</span>
@@ -482,6 +484,33 @@
             <span class="n">estagio</span><span class="o">=</span><span class="n">estagio</span><span class="p">,</span>
             <span class="n">subsistema</span><span class="o">=</span><span class="n">subsistema</span><span class="p">,</span>
             <span class="n">num_patamares</span><span class="o">=</span><span class="n">num_patamares</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="Dadger.pq"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.pq">[documentos]</a>    <span class="k">def</span> <span class="nf">pq</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">nome</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">subsistema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">estagio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">PQ</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">PQ</span><span class="p">]]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém um registro que define as gerações das pequenas usinas</span>
+<span class="sd">        no estudo descrito pelo :class:`Dadger`.</span>
+
+<span class="sd">        :param nome: o nome das gerações</span>
+<span class="sd">        :param subsistema: subsistema para o qual</span>
+<span class="sd">            valerão as gerações</span>
+<span class="sd">        :param estagio: estágio sobre o qual serão</span>
+<span class="sd">            definidas as gerações</span>
+<span class="sd">        :type estagio: int | None</span>
+<span class="sd">        :type subsistema: int | None</span>
+<span class="sd">        :return: Um ou mais registros, se existirem.</span>
+<span class="sd">        :rtype: :class:`PQ` | list[:class:`PQ`] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
+            <span class="n">PQ</span><span class="p">,</span>
+            <span class="n">nome</span><span class="o">=</span><span class="n">nome</span><span class="p">,</span>
+            <span class="n">estagio</span><span class="o">=</span><span class="n">estagio</span><span class="p">,</span>
+            <span class="n">subsistema</span><span class="o">=</span><span class="n">subsistema</span><span class="p">,</span>
         <span class="p">)</span></div>
 
 <div class="viewcode-block" id="Dadger.ac"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.dadger.Dadger.ac">[documentos]</a>    <span class="k">def</span> <span class="nf">ac</span><span class="p">(</span>

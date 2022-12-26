@@ -8,6 +8,7 @@ from idecomp.decomp.modelos.dadger import (
     CT,
     UE,
     DP,
+    PQ,
     CD,
     RI,
     IA,
@@ -86,6 +87,7 @@ from tests.mocks.arquivos.dadger import (
     MockCT,
     MockUE,
     MockDP,
+    MockPQ,
     MockCD,
     MockRI,
     MockIA,
@@ -311,6 +313,29 @@ def test_registro_dp_dadger():
     assert r.duracoes == [32.0, 41.0, 95.0]
     r.duracoes = [0, 0, 0, 0]
     assert r.duracoes == [0, 0, 0, 0]
+
+
+def test_registro_pq_dadger():
+
+    m: MagicMock = mock_open(read_data="".join(MockPQ))
+    r = PQ()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == ["SECO_PCH", 1, 1, 2527, 2553, 2503]
+    assert r.nome == "SECO_PCH"
+    r.nome = "TESTE"
+    assert r.nome == "TESTE"
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.subsistema == 1
+    r.subsistema = 0
+    assert r.subsistema == 0
+    assert r.geracoes == [2527., 2553., 2503.]
+    r.geracoes = [0]
+    assert r.geracoes == [0]
 
 
 def test_registro_cd_dadger():

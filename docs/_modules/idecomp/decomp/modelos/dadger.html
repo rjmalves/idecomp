@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.48</title>
+  <title>idecomp.decomp.modelos.dadger &mdash; documentação idecomp 0.0.50</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -688,6 +688,98 @@
     <span class="nd">@duracoes</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">duracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__atualiza_dados_lista</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">PQ</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Registro que contém o cadastro da geração por pequenas usinas.</span>
+
+<span class="sd">    *OBS: Suporta apenas 3 patamares no momento*</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">IDENTIFIER</span> <span class="o">=</span> <span class="s2">&quot;PQ  &quot;</span>
+    <span class="n">IDENTIFIER_DIGITS</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">LINE</span> <span class="o">=</span> <span class="n">Line</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">LiteralField</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+            <span class="n">IntegerField</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">14</span><span class="p">),</span>
+            <span class="n">IntegerField</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">19</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="n">FloatField</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__atualiza_dados_lista</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">novos_dados</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span>
+        <span class="n">indice_inicial</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">espacamento</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">atuais</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">ultimo_indice</span> <span class="o">=</span> <span class="n">indice_inicial</span> <span class="o">+</span> <span class="n">espacamento</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">novos_dados</span><span class="p">)</span>
+        <span class="n">diferenca</span> <span class="o">=</span> <span class="p">(</span><span class="n">ultimo_indice</span> <span class="o">-</span> <span class="n">atuais</span><span class="p">)</span> <span class="o">//</span> <span class="n">espacamento</span>
+        <span class="k">if</span> <span class="n">diferenca</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">ultimo_indice</span> <span class="o">-</span> <span class="n">atuais</span><span class="p">)</span>
+            <span class="n">diferenca</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">novos_dados</span> <span class="o">+=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">abs</span><span class="p">(</span><span class="n">diferenca</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">indice_inicial</span><span class="p">::</span><span class="n">espacamento</span><span class="p">]</span> <span class="o">=</span> <span class="n">novos_dados</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O nome da geração.</span>
+
+<span class="sd">        :return: O nome.</span>
+<span class="sd">        :rtype: str | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="nd">@nome</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">nome</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nome</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">nome</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O subsistema associado à geração.</span>
+
+<span class="sd">        :return: O subsistema.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@subsistema</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sub</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sub</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        O estágio associado à geração.</span>
+
+<span class="sd">        :return: O estágio.</span>
+<span class="sd">        :rtype: int | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+    <span class="nd">@estagio</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">e</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">geracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        As gerações em Mwmed para cada patamar de carga.</span>
+
+<span class="sd">        :return: As gerações.</span>
+<span class="sd">        :rtype: list[float] | None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">]</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">]</span>
+
+    <span class="nd">@geracoes</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">geracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__atualiza_dados_lista</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 
 <div class="viewcode-block" id="CD"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadger.html#idecomp.decomp.modelos.dadger.CD">[documentos]</a><span class="k">class</span> <span class="nc">CD</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>

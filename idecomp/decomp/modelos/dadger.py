@@ -620,6 +620,98 @@ class DP(Register):
         self.__atualiza_dados_lista(d, 4, 2)
 
 
+class PQ(Register):
+    """
+    Registro que contém o cadastro da geração por pequenas usinas.
+
+    *OBS: Suporta apenas 3 patamares no momento*
+    """
+
+    IDENTIFIER = "PQ  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            LiteralField(10, 4),
+            IntegerField(2, 14),
+            IntegerField(2, 19),
+            FloatField(5, 24, 0),
+            FloatField(5, 29, 0),
+            FloatField(5, 34, 0),
+        ]
+    )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
+    @property
+    def nome(self) -> Optional[str]:
+        """
+        O nome da geração.
+
+        :return: O nome.
+        :rtype: str | None
+        """
+        return self.data[0]
+
+    @nome.setter
+    def nome(self, nome: str):
+        self.data[0] = nome
+
+    @property
+    def subsistema(self) -> Optional[int]:
+        """
+        O subsistema associado à geração.
+
+        :return: O subsistema.
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @subsistema.setter
+    def subsistema(self, sub: int):
+        self.data[1] = sub
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O estágio associado à geração.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[2]
+
+    @estagio.setter
+    def estagio(self, e: int):
+        self.data[2] = e
+
+    @property
+    def geracoes(self) -> Optional[List[float]]:
+        """
+        As gerações em Mwmed para cada patamar de carga.
+
+        :return: As gerações.
+        :rtype: list[float] | None
+        """
+        return [v for v in self.data[3:6] if v is not None]
+
+    @geracoes.setter
+    def geracoes(self, c: List[float]):
+        self.__atualiza_dados_lista(c, 3, 1)
+
+
 class CD(Register):
     """
     Registro que contém o cadastro dos custos de déficit.

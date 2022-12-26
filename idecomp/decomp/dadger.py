@@ -5,6 +5,7 @@ from idecomp.decomp.modelos.dadger import (
     CT,
     UE,
     DP,
+    PQ,
     CD,
     FP,
     RI,
@@ -139,6 +140,7 @@ class Dadger(RegisterFile):
         CT,
         UE,
         DP,
+        PQ,
         CD,
         FP,
         RI,
@@ -412,6 +414,33 @@ class Dadger(RegisterFile):
             estagio=estagio,
             subsistema=subsistema,
             num_patamares=num_patamares,
+        )
+
+    def pq(
+        self,
+        nome: Optional[str] = None,
+        subsistema: Optional[int] = None,
+        estagio: Optional[int] = None,
+    ) -> Optional[Union[PQ, List[PQ]]]:
+        """
+        Obtém um registro que define as gerações das pequenas usinas
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param nome: o nome das gerações
+        :param subsistema: subsistema para o qual
+            valerão as gerações
+        :param estagio: estágio sobre o qual serão
+            definidas as gerações
+        :type estagio: int | None
+        :type subsistema: int | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`PQ` | list[:class:`PQ`] | None
+        """
+        return self.__obtem_registros_com_filtros(
+            PQ,
+            nome=nome,
+            estagio=estagio,
+            subsistema=subsistema,
         )
 
     def ac(

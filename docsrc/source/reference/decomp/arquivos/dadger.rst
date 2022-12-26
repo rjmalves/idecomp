@@ -39,6 +39,9 @@ de operação:
 .. autoclass:: DP
    :members:
 
+.. autoclass:: PQ
+   :members:
+
 .. autoclass:: CD
    :members:
 
