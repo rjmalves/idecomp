@@ -468,7 +468,7 @@ class BlocoBalancoEnergeticoRelato(Block):
     """
 
     BEGIN_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
-    END_PATTERN = "RELATORIO  DA  OPERACAO"
+    END_PATTERN = "RELATORIO\s+DA\s+OPERACAO"  # noqa
 
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
