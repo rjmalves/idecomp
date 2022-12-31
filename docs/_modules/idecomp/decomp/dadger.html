@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.50</title>
+  <title>idecomp.decomp.dadger &mdash; documentação idecomp 0.0.52</title>
       <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -687,9 +687,11 @@
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">ei</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">estagio_inicial</span>
             <span class="n">ef</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">estagio_final</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">estagio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ei</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ef</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="kc">None</span>
             <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ef</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">ef</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">estagio</span> <span class="o">&lt;=</span> <span class="n">ef</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">estagio</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
                     <span class="n">registro_estagio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
                         <span class="n">LU</span><span class="p">,</span> <span class="n">codigo</span><span class="o">=</span><span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="o">=</span><span class="n">e</span>
                     <span class="p">)</span>
@@ -1105,9 +1107,11 @@
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">ei</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">estagio_inicial</span>
             <span class="n">ef</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">estagio_final</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">estagio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ei</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ef</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="kc">None</span>
             <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ef</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">ef</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">estagio</span> <span class="o">&lt;=</span> <span class="n">ef</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">estagio</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
                     <span class="n">registro_estagio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
                         <span class="n">LV</span><span class="p">,</span> <span class="n">codigo</span><span class="o">=</span><span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="o">=</span><span class="n">e</span>
                     <span class="p">)</span>
@@ -1248,9 +1252,11 @@
                 <span class="k">return</span> <span class="kc">None</span>
             <span class="n">ei</span> <span class="o">=</span> <span class="n">hq</span><span class="o">.</span><span class="n">estagio_inicial</span>
             <span class="n">ef</span> <span class="o">=</span> <span class="n">hq</span><span class="o">.</span><span class="n">estagio_final</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">([</span><span class="n">estagio</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ei</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">,</span> <span class="n">ef</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">]):</span>
+                <span class="k">return</span> <span class="kc">None</span>
             <span class="n">ultimo_registro</span> <span class="o">=</span> <span class="kc">None</span>
-            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ef</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">ef</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">ei</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">estagio</span> <span class="o">&lt;=</span> <span class="n">ef</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
+                <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ei</span><span class="p">,</span> <span class="n">estagio</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>  <span class="c1"># type: ignore</span>
                     <span class="n">registro_estagio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros_com_filtros</span><span class="p">(</span>
                         <span class="n">LQ</span><span class="p">,</span> <span class="n">codigo</span><span class="o">=</span><span class="n">codigo</span><span class="p">,</span> <span class="n">estagio</span><span class="o">=</span><span class="n">e</span>
                     <span class="p">)</span>

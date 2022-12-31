@@ -617,9 +617,11 @@ class Dadger(RegisterFile):
                 return None
             ei = re.estagio_inicial
             ef = re.estagio_final
+            if any([estagio is None, ei is None, ef is None]):
+                return None
             ultimo_registro = None
-            if ei is not None and ef is not None:
-                for e in range(ei, ef + 1):
+            if ei is not None and estagio <= ef:  # type: ignore
+                for e in range(ei, estagio + 1):  # type: ignore
                     registro_estagio = self.__obtem_registros_com_filtros(
                         LU, codigo=codigo, estagio=e
                     )
@@ -1035,9 +1037,11 @@ class Dadger(RegisterFile):
                 return None
             ei = hv.estagio_inicial
             ef = hv.estagio_final
+            if any([estagio is None, ei is None, ef is None]):
+                return None
             ultimo_registro = None
-            if ei is not None and ef is not None:
-                for e in range(ei, ef + 1):
+            if ei is not None and estagio <= ef:  # type: ignore
+                for e in range(ei, estagio + 1):  # type: ignore
                     registro_estagio = self.__obtem_registros_com_filtros(
                         LV, codigo=codigo, estagio=e
                     )
@@ -1178,9 +1182,11 @@ class Dadger(RegisterFile):
                 return None
             ei = hq.estagio_inicial
             ef = hq.estagio_final
+            if any([estagio is None, ei is None, ef is None]):
+                return None
             ultimo_registro = None
-            if ei is not None and ef is not None:
-                for e in range(ei, ef + 1):
+            if ei is not None and estagio <= ef:  # type: ignore
+                for e in range(ei, estagio + 1):  # type: ignore
                     registro_estagio = self.__obtem_registros_com_filtros(
                         LQ, codigo=codigo, estagio=e
                     )
