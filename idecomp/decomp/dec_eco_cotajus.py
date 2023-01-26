@@ -3,7 +3,7 @@ from idecomp.decomp.modelos.dec_eco_cotajus import TabelaEcoCotajus
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from typing import Optional
-import pandas as pd
+import pandas as pd  # type: ignore
 
 
 class DecEcoCotajus(ArquivoCSV):

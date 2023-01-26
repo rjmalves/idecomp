@@ -1,9 +1,8 @@
 from cfinterface.components.block import Block
-from cfinterface.components.datetimefield import DatetimeField
 from cfinterface.components.line import Line
 
-from typing import IO
-import pandas as pd
+from typing import IO, List, Dict
+import pandas as pd  # type: ignore
 
 
 class TabelaCSV(Block):
@@ -14,7 +13,7 @@ class TabelaCSV(Block):
 
     BEGIN_PATTERN = "-----;------;"
     LINE_MODEL = Line([])
-    COLUMN_NAMES = []
+    COLUMN_NAMES: List[str] = []
     END_PATTERN = ""
 
     def _monta_df(self, dados: dict) -> pd.DataFrame:
@@ -50,7 +49,7 @@ class TabelaCSV(Block):
             elif len(linha) < 3:
                 return
         # Lê a tabela
-        dados = {c: [] for c in self.__class__.COLUMN_NAMES}
+        dados: Dict[str, List] = {c: [] for c in self.__class__.COLUMN_NAMES}
         while True:
             linha = file.readline()
             if len(linha) < 3:

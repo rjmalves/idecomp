@@ -1,9 +1,10 @@
 from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
 from idecomp.decomp.modelos.blocos.tabelacsv import TabelaCSV
 
+from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
-import pandas as pd
-from typing import Type, TypeVar, Optional
+import pandas as pd  # type: ignore
+from typing import List, Type, TypeVar, Optional
 
 
 class ArquivoCSV(BlockFile):
@@ -19,7 +20,7 @@ class ArquivoCSV(BlockFile):
     implementado para cada arquivo específico a ser lido.
     """
 
-    BLOCKS = [VersaoModelo]
+    BLOCKS: List[Type[Block]] = [VersaoModelo]
 
     T = TypeVar("T")
 
