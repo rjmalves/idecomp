@@ -7,3 +7,5 @@ e saída do DECOMP.
 """
 
 __version__ = "0.0.53"
+
+from . import decomp  # noqa

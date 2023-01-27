@@ -30,6 +30,7 @@ Documentação
    ./install.rst
    ./tutorial.rst
    ./reference.rst
+   auto_examples/index.rst
 
 
 Índices e Tabelas

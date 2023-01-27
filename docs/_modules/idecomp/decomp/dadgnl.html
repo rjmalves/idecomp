@@ -1,37 +1,75 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="pt-BR" >
 <head>
   <meta charset="utf-8" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.dadgnl &mdash; documentação idecomp 0.0.38</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+  
+  <title>idecomp.decomp.dadgnl &mdash; documentação idecomp 0.0.53</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script src="../../../_static/translations.js"></script>
-    <script src="../../../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../../../index.html" class="icon icon-home"> idecomp
+          
+
+          
           </a>
+
+          
+            
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Pesquisar documentos" />
@@ -39,37 +77,88 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../install.html">Instalação</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Referência</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Exemplos</a></li>
 </ul>
 
+            
+          
         </div>
+        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">idecomp</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Navegação da página">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
+    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
           <li><a href="../../index.html">Código do módulo</a> &raquo;</li>
+        
       <li>idecomp.decomp.dadgnl</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   <h1>Código fonte para idecomp.decomp.dadgnl</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">cfinterface.files.registerfile</span> <span class="kn">import</span> <span class="n">RegisterFile</span>
 <span class="kn">from</span> <span class="nn">cfinterface.components.register</span> <span class="kn">import</span> <span class="n">Register</span>
@@ -78,7 +167,7 @@
 
 
 <div class="viewcode-block" id="DadGNL"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL">[documentos]</a><span class="k">class</span> <span class="nc">DadGNL</span><span class="p">(</span><span class="n">RegisterFile</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Armazena os dados de entrada gerais do DECOMP.</span>
 
 <span class="sd">    Esta classe lida com as informações de entrada fornecidas ao</span>
@@ -110,7 +199,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">diretorio</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__registros_por_tipo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.</span>
 <span class="sd">        :param bloco: Um tipo de bloco para ser lido</span>
 <span class="sd">        :type bloco: T</span>
@@ -120,7 +209,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">registro</span><span class="p">)]</span>
 
     <span class="k">def</span> <span class="nf">__obtem_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; &quot;&quot;&quot;</span>
         <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__obtem_registros</span><span class="p">(</span><span class="n">tipo</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 
@@ -148,7 +237,7 @@
             <span class="k">return</span> <span class="n">regs_filtro</span>
 
 <div class="viewcode-block" id="DadGNL.cria_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.cria_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">cria_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anterior</span><span class="p">:</span> <span class="n">Register</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adiciona um registro ao arquivo após um outro registro previamente</span>
 <span class="sd">        existente.</span>
 
@@ -158,7 +247,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">add_after</span><span class="p">(</span><span class="n">anterior</span><span class="p">,</span> <span class="n">registro</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DadGNL.deleta_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.deleta_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">deleta_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove um registro existente no arquivo.</span>
 
 <span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
@@ -167,7 +256,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">registro</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DadGNL.lista_registros"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.lista_registros">[documentos]</a>    <span class="k">def</span> <span class="nf">lista_registros</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tipo</span><span class="p">:</span> <span class="n">Type</span><span class="p">[</span><span class="n">T</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">T</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Lista todos os registros presentes no arquivo que tenham o tipo `T`.</span>
 
 <span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
@@ -176,7 +265,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="n">r</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">of_type</span><span class="p">(</span><span class="n">tipo</span><span class="p">)]</span></div>
 
 <div class="viewcode-block" id="DadGNL.append_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.append_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">append_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adiciona um registro ao arquivo na última posição.</span>
 
 
@@ -186,7 +275,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">registro</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DadGNL.preppend_registro"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.preppend_registro">[documentos]</a>    <span class="k">def</span> <span class="nf">preppend_registro</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">registro</span><span class="p">:</span> <span class="n">Register</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adiciona um registro ao arquivo na primeira posição.</span>
 
 <span class="sd">        Este método existe para retrocompatibilidade e deve ser substituído</span>
@@ -201,7 +290,7 @@
         <span class="n">nome</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">estagio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">TG</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">TG</span><span class="p">]]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define uma usina termelétrica existente</span>
 <span class="sd">        no estudo descrito pelo :class:`DadGNL`.</span>
 
@@ -230,7 +319,7 @@
 <div class="viewcode-block" id="DadGNL.gs"><a class="viewcode-back" href="../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.dadgnl.DadGNL.gs">[documentos]</a>    <span class="k">def</span> <span class="nf">gs</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span> <span class="n">mes</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">semanas</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">GS</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">GS</span><span class="p">]]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define o número de semanas em cada</span>
 <span class="sd">        mês de estudo no :class:`DadGNL`.</span>
 
@@ -254,7 +343,7 @@
         <span class="n">subsistema</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">lag</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">NL</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">NL</span><span class="p">]]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define o número de lags para o despacho</span>
 <span class="sd">        de uma UTE.</span>
 
@@ -282,7 +371,7 @@
         <span class="n">estagio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">data_inicio</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="n">GL</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="n">GL</span><span class="p">]]]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Obtém um registro que define o despacho por patamar</span>
 <span class="sd">        e a duração dos patamares para uma UTE GNL.</span>
 
@@ -310,30 +399,46 @@
 </pre></div>
 
            </div>
+           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Rogerio Alves.</p>
-  </div>
+    <p>
+        &#169; Copyright 2023, Rogerio Alves.
 
-  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
-    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

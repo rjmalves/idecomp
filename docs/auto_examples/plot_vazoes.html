@@ -1,0 +1,279 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="pt-BR" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>vazoes.dat &mdash; documentação idecomp 0.0.53</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sg_gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sg_gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/sg_gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Buscar" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> idecomp
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Pesquisar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Instalação</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../reference.html">Referência</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Exemplos</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">idecomp</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>vazoes.dat</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/auto_examples/plot_vazoes.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Nota</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-auto-examples-plot-vazoes-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="vazoes-dat">
+<span id="sphx-glr-auto-examples-plot-vazoes-py"></span><h1>vazoes.dat<a class="headerlink" href="#vazoes-dat" title="Link permanente para este cabeçalho">¶</a></h1>
+<p>O primeiro passo para realizar o processamento do arquivo, assim como os
+demais arquivos de saída, é a leitura. A função de leitura recebe dois argumentos,
+sendo que o segundo é opcional.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">idecomp.decomp</span> <span class="kn">import</span> <span class="n">Vazoes</span>
+
+<span class="n">arq</span> <span class="o">=</span> <span class="n">Vazoes</span><span class="o">.</span><span class="n">le_arquivo</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">nome_arquivo</span><span class="o">=</span><span class="s2">&quot;vazoes.rv0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>O arquivo de vazões contém informações do histórico de vazões por posto de medição, servindo
+de entrada para os modelos de planejamento.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a> <span class="o">=</span> <span class="n">arq</span><span class="o">.</span><span class="n">vazoes</span>
+<span class="nb">print</span><span class="p">(</span><a href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>            1           2           3           4    ...  317  318  319  320
+0           162           6           1           1  ...    0    0    0    0
+1             1           2           4           6  ...    0    0    0    0
+2             5           6           2        2020  ...    0    0    0    0
+3    1065353216  1065353216  1065353216  1065353216  ...    0    0    0    0
+4            73           0           0           0  ...    0    0    0    0
+..          ...         ...         ...         ...  ...  ...  ...  ...  ...
+306          32           0           0           0  ...    0   51    0    0
+307          40           0           0           0  ...    0   39    0    0
+308          53           0           0           0  ...    0   46    0    0
+309          98           0           0           0  ...    0   49    0    0
+310         106           0           0           0  ...    0   78    0    0
+
+[311 rows x 320 columns]
+</pre></div>
+</div>
+<p>A partir deste dataframe é possível realizar análises e produzir visualizações. Por exemplo,
+utilizando o módulo plotly. Deste ponto em diante, não é mais necessário o conhecimento
+específico do arquivo ou da idecomp.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">plotly.graph_objects</span> <span class="k">as</span> <span class="nn">go</span>
+
+<span class="c1"># sphinx_gallery_thumbnail_number = 1</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">go</span><span class="o">.</span><span class="n">Figure</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><a href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Int64Index.html#pandas.Int64Index" title="pandas.core.indexes.numeric.Int64Index" class="sphx-glr-backref-module-pandas-core-indexes-numeric sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">index</span></a><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><a href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">[</span><span class="s2">&quot;66&quot;</span><span class="p">]],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Vazao Posto 66&quot;</span><span class="p">))</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+<div class="sphx-glr-script-out highlight-pytb notranslate"><div class="highlight"><pre><span></span><span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;/home/rogerio/git/idecomp/examples/plot_vazoes.py&quot;</span>, line <span class="m">31</span>, in <span class="n">&lt;module&gt;</span>
+<span class="w">    </span><span class="n">fig</span><span class="o">.</span><span class="n">add_trace</span><span class="p">(</span><span class="n">go</span><span class="o">.</span><span class="n">Scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><a href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Int64Index.html#pandas.Int64Index" title="pandas.core.indexes.numeric.Int64Index" class="sphx-glr-backref-module-pandas-core-indexes-numeric sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span><span class="o">.</span><span class="n">index</span></a><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><a href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.core.frame.DataFrame" class="sphx-glr-backref-module-pandas-core-frame sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">df</span></a><span class="p">[</span><span class="s2">&quot;66&quot;</span><span class="p">]],</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Vazao Posto 66&quot;</span><span class="p">))</span>
+  File <span class="nb">&quot;/home/rogerio/git/idecomp/venv/lib/python3.10/site-packages/pandas/core/frame.py&quot;</span>, line <span class="m">3505</span>, in <span class="n">__getitem__</span>
+<span class="w">    </span><span class="n">indexer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+  File <span class="nb">&quot;/home/rogerio/git/idecomp/venv/lib/python3.10/site-packages/pandas/core/indexes/base.py&quot;</span>, line <span class="m">3623</span>, in <span class="n">get_loc</span>
+<span class="w">    </span><span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="n">key</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
+<span class="gr">KeyError</span>: <span class="n">&#39;66&#39;</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  0.264 seconds)</p>
+<div class="sphx-glr-footer sphx-glr-footer-example docutils container" id="sphx-glr-download-auto-examples-plot-vazoes-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/a15c335c7dbe0023444e9b583ccb29b5/plot_vazoes.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_vazoes.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../_downloads/d2e33df8027c230e1f84c0bdbc89896a/plot_vazoes.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_vazoes.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2023, Rogerio Alves.
+
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

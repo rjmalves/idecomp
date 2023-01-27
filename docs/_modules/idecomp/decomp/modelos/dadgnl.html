@@ -1,37 +1,75 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="pt-BR" >
 <head>
   <meta charset="utf-8" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>idecomp.decomp.modelos.dadgnl &mdash; documentação idecomp 0.0.31</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/sg_gallery.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/sg_gallery-binder.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/sg_gallery-dataframe.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+  
+  <title>idecomp.decomp.modelos.dadgnl &mdash; documentação idecomp 0.0.53</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/sg_gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/sg_gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/sphinx_highlight.js"></script>
         <script src="../../../../_static/translations.js"></script>
-    <script src="../../../../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Índice" href="../../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../../../../index.html" class="icon icon-home"> idecomp
+          
+
+          
           </a>
+
+          
+            
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
     <input type="text" name="q" placeholder="Pesquisar documentos" />
@@ -39,37 +77,88 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../install.html">Instalação</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../reference.html">Referência</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../auto_examples/index.html">Exemplos</a></li>
 </ul>
 
+            
+          
         </div>
+        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../../index.html">idecomp</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Navegação da página">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
+    
       <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
           <li><a href="../../../index.html">Código do módulo</a> &raquo;</li>
+        
       <li>idecomp.decomp.modelos.dadgnl</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   <h1>Código fonte para idecomp.decomp.modelos.dadgnl</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">cfinterface.components.register</span> <span class="kn">import</span> <span class="n">Register</span>
 <span class="kn">from</span> <span class="nn">cfinterface.components.line</span> <span class="kn">import</span> <span class="n">Line</span>
@@ -81,7 +170,7 @@
 
 
 <div class="viewcode-block" id="TG"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.modelos.dadgnl.TG">[documentos]</a><span class="k">class</span> <span class="nc">TG</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o cadastro das térmicas a GNL</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -122,7 +211,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O código de cadastro da UTE.</span>
 
 <span class="sd">        :return: O código.</span>
@@ -136,7 +225,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O subsistema de cadastro da UTE.</span>
 
 <span class="sd">        :return: O subsistema como um `int`.</span>
@@ -149,7 +238,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nome</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O nome de cadastro da UTE.</span>
 
 <span class="sd">        :return: O nome.</span>
@@ -163,7 +252,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio do despacho da UTE.</span>
 
 <span class="sd">        :return: O estágio.</span>
@@ -177,7 +266,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">inflexibilidades</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        As inflexibilidades da UTE por patamar.</span>
 
 <span class="sd">        :return: As inflexibilidades.</span>
@@ -191,7 +280,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">disponibilidades</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        As disponibilidades da UTE por patamar.</span>
 
 <span class="sd">        :return: As disponibilidades.</span>
@@ -205,7 +294,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">cvus</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Os CVUs da UTE por patamar.</span>
 
 <span class="sd">        :return: Os CVUs.</span>
@@ -219,7 +308,7 @@
 
 
 <div class="viewcode-block" id="GS"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.modelos.dadgnl.GS">[documentos]</a><span class="k">class</span> <span class="nc">GS</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o número de semanas dos meses envolvidos</span>
 <span class="sd">    no estudo.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -235,7 +324,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O índice do mês associado ao registro GS</span>
 
 <span class="sd">        :return: O índice.</span>
@@ -249,7 +338,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">semanas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O número de semanas do mês associado ao registro GS</span>
 
 <span class="sd">        :return: O número de semanas.</span>
@@ -263,7 +352,7 @@
 
 
 <div class="viewcode-block" id="NL"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.modelos.dadgnl.NL">[documentos]</a><span class="k">class</span> <span class="nc">NL</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém o número de lags para o despacho de cada térmica</span>
 <span class="sd">    de despacho antecipado em cada subsistema.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -280,7 +369,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O código da UTE associada ao registro NL</span>
 
 <span class="sd">        :return: O código.</span>
@@ -294,7 +383,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O índice do subsistema de despacho da UTE</span>
 
 <span class="sd">        :return: O subsistema.</span>
@@ -308,7 +397,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">lag</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O lag de despacho da UTE</span>
 
 <span class="sd">        :return: O lag</span>
@@ -322,7 +411,7 @@
 
 
 <div class="viewcode-block" id="GL"><a class="viewcode-back" href="../../../../reference/decomp/arquivos/dadgnl.html#idecomp.decomp.modelos.dadgnl.GL">[documentos]</a><span class="k">class</span> <span class="nc">GL</span><span class="p">(</span><span class="n">Register</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Registro que contém os cadastros de restrições elétricas.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -345,7 +434,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">codigo</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O código da UTE despachada no registro GL</span>
 
 <span class="sd">        :return: O código.</span>
@@ -359,7 +448,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">subsistema</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O índice do subsistema de despacho da UTE</span>
 
 <span class="sd">        :return: O subsistema.</span>
@@ -373,7 +462,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">estagio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        O estágio de despacho da UTE</span>
 
 <span class="sd">        :return: O estágio.</span>
@@ -387,7 +476,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">geracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Os valores de geração por patamar para o despacho</span>
 <span class="sd">        da UTE</span>
 
@@ -408,7 +497,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">duracoes</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Os valores de geração por patamar para o despacho</span>
 <span class="sd">        da UTE</span>
 
@@ -429,7 +518,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">data_inicio</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A data de despacho da UTE</span>
 
 <span class="sd">        :return: A data no formato DDMMYYYY.</span>
@@ -443,30 +532,46 @@
 </pre></div>
 
            </div>
+           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2021, Rogerio Alves.</p>
-  </div>
+    <p>
+        &#169; Copyright 2023, Rogerio Alves.
 
-  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
-    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

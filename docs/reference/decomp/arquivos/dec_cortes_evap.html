@@ -1,35 +1,78 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="pt-BR" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
   <title>Cortes da Evaporação Linear (dec_cortes_evap.csv) &mdash; documentação idecomp 0.0.53</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script src="../../../_static/translations.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../../../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Índice" href="../../../genindex.html" />
-    <link rel="search" title="Buscar" href="../../../search.html" /> 
+    <link rel="search" title="Buscar" href="../../../search.html" />
+    <link rel="next" title="Eco dos Polinômios de Jusante (dec_eco_cotajus.csv)" href="dec_eco_cotajus.html" />
+    <link rel="prev" title="Avaliação da Evaporação Linear (dec_avl_evap.csv)" href="dec_avl_evap.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../../../index.html" class="icon icon-home"> idecomp
+          
+
+          
           </a>
+
+          
+            
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Pesquisar documentos" />
@@ -37,90 +80,156 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
-              <ul>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../install.html">Instalação</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../reference.html">Referência</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../reference.html">Referência</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">DECOMP</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#basico-da-interface-decomp">Básico da interface DECOMP</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#arquivos">Arquivos</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="caso.html">Caso (caso.dat)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="arquivos.html">Arquivos (rv0, jan, …)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dadger.html">Dados gerais (dadger.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dadgnl.html">Dados de Térmicas GNL (dadgnl.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="hidr.html">Hidr (hidr.dat)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="vazoes.html">Vazões por Posto (vazoes.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="postos.html">Postos (postos.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="relato.html">Relato (relato.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="sumario.html">Sumario (sumario.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="fcfnw.html">Função de Custo Futuro do NEWAVE (fcfnwX.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="decomptim.html">Tempos de Execução (decomp.tim)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="relgnl.html">Relatório de Térmicas GNL (relgnl.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="inviabunic.html">InviabUnic (inviab_unic.rvX)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_avl_evap.html">Avaliação da Evaporação Linear (dec_avl_evap.csv)</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Cortes da Evaporação Linear (dec_cortes_evap.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_eco_cotajus.html">Eco dos Polinômios de Jusante (dec_eco_cotajus.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_eco_discr.html">Eco da Discretização Temporal (dec_eco_discr.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_gnl.html">Operação das Térmicas GNL (dec_oper_gnl.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_interc.html">Operação dos Intercâmbios (dec_oper_interc.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_ree.html">Operação dos Reservatórios Equivalentes de Energia (dec_oper_ree.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_sist.html">Operação dos Submercados (dec_oper_sist.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_usie.html">Operação das Estações de Bombeamento (dec_oper_usie.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_usih.html">Operação das Usinas Hidroelétricas (dec_oper_usih.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_usit.html">Operação das Usinas Termoelétricas (dec_oper_usit.csv)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Exemplos</a></li>
 </ul>
 
+            
+          
         </div>
+        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">idecomp</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Navegação da página">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
+    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../reference.html">Referência</a> &raquo;</li>
+        
+          <li><a href="../index.html">DECOMP</a> &raquo;</li>
+        
       <li>Cortes da Evaporação Linear (dec_cortes_evap.csv)</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
+          
             <a href="../../../_sources/reference/decomp/arquivos/dec_cortes_evap.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+          
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="cortes-da-evaporacao-linear-dec-cortes-evap-csv">
-<span id="dec-cortes-evap"></span><h1>Cortes da Evaporação Linear (dec_cortes_evap.csv)<a class="headerlink" href="#cortes-da-evaporacao-linear-dec-cortes-evap-csv" title="Link permanente para este cabeçalho"></a></h1>
+            
+  <section id="cortes-da-evaporacao-linear-dec-cortes-evap-csv">
+<span id="dec-cortes-evap"></span><h1>Cortes da Evaporação Linear (dec_cortes_evap.csv)<a class="headerlink" href="#cortes-da-evaporacao-linear-dec-cortes-evap-csv" title="Link permanente para este cabeçalho">¶</a></h1>
 <p>Os cortes para aproximação da evaporação linear são armazenados na classe:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="idecomp.decomp.dec_cortes_evap.DecCortesEvap">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DecCortesEvap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=&lt;cfinterface.data.blockdata.BlockData</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dec_cortes_evap.html#DecCortesEvap"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dec_cortes_evap.DecCortesEvap" title="Link permanente para esta definição"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DecCortesEvap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=&lt;cfinterface.data.blockdata.BlockData</span> <span class="pre">object&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/dec_cortes_evap.html#DecCortesEvap"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.dec_cortes_evap.DecCortesEvap" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Arquivo com os cortes da evaporação linear do DECOMP.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="idecomp.decomp.dec_cortes_evap.DecCortesEvap.tabela">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tabela</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">DataFrame</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#idecomp.decomp.dec_cortes_evap.DecCortesEvap.tabela" title="Link permanente para esta definição"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tabela</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(em pandas v1.5.3)"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(em Python v3.11)"><span class="pre">None</span></a></em><a class="headerlink" href="#idecomp.decomp.dec_cortes_evap.DecCortesEvap.tabela" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>A tabela de dados que está contida no arquivo.</p>
 <ul class="simple">
-<li><p>periodo (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
-<li><p>indiceUsina (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
-<li><p>nomeUsina (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p></li>
-<li><p>submercado (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
-<li><p>ree (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>)</p></li>
-<li><p>derivadaCotaArea (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
-<li><p>derivadaVolumeCota (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
-<li><p>volumeReferenciaHm3 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
-<li><p>evaporacaoReferenciaHm3 (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
-<li><p>coeficienteVolume (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
-<li><p>rhsVolume (<code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code>)</p></li>
+<li><p>periodo (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>indiceUsina (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>nomeUsina (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p>submercado (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>ree (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>derivadaCotaArea (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>)</p></li>
+<li><p>derivadaVolumeCota (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>)</p></li>
+<li><p>volumeReferenciaHm3 (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>)</p></li>
+<li><p>evaporacaoReferenciaHm3 (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>)</p></li>
+<li><p>coeficienteVolume (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>)</p></li>
+<li><p>rhsVolume (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">float</span></code></a>)</p></li>
 </ul>
 <dl class="field-list simple">
-<dt class="field-odd">Retorna</dt>
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A tabela como um dataframe</p>
 </dd>
-<dt class="field-even">Tipo de retorno</dt>
+<dt class="field-even">Tipo de retorno<span class="colon">:</span></dt>
 <dd class="field-even"><p>pd.DataFrame | None</p>
 </dd>
 </dl>
@@ -132,30 +241,50 @@
 
 
            </div>
+           
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="dec_eco_cotajus.html" class="btn btn-neutral float-right" title="Eco dos Polinômios de Jusante (dec_eco_cotajus.csv)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="dec_avl_evap.html" class="btn btn-neutral float-left" title="Avaliação da Evaporação Linear (dec_avl_evap.csv)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+    </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Rogerio Alves.</p>
-  </div>
+    <p>
+        &#169; Copyright 2023, Rogerio Alves.
 
-  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
-    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>

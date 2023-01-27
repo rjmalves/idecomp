@@ -1,37 +1,78 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="pt-BR" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
   <title>Vazões por Posto (vazoes.rvX) &mdash; documentação idecomp 0.0.53</title>
-      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-binder.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-dataframe.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/sg_gallery-rendered-html.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
-        <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
-        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
         <script src="../../../_static/translations.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script src="../../../_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Índice" href="../../../genindex.html" />
     <link rel="search" title="Buscar" href="../../../search.html" />
     <link rel="next" title="Postos (postos.rvX)" href="postos.html" />
     <link rel="prev" title="Hidr (hidr.dat)" href="hidr.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="../../../index.html" class="icon icon-home"> idecomp
+          
+
+          
           </a>
+
+          
+            
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
     <input type="text" name="q" placeholder="Pesquisar documentos" />
@@ -39,7 +80,18 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Menu de navegação">
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../../install.html">Instalação</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
@@ -61,86 +113,116 @@
 <li class="toctree-l4"><a class="reference internal" href="relgnl.html">Relatório de Térmicas GNL (relgnl.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="inviabunic.html">InviabUnic (inviab_unic.rvX)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="dec_avl_evap.html">Avaliação da Evaporação Linear (dec_avl_evap.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_cortes_evap.html">Cortes da Evaporação Linear (dec_cortes_evap.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_eco_cotajus.html">Eco dos Polinômios de Jusante (dec_eco_cotajus.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_eco_discr.html">Eco da Discretização Temporal (dec_eco_discr.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_gnl.html">Operação das Térmicas GNL (dec_oper_gnl.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_interc.html">Operação dos Intercâmbios (dec_oper_interc.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_ree.html">Operação dos Reservatórios Equivalentes de Energia (dec_oper_ree.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_sist.html">Operação dos Submercados (dec_oper_sist.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_usie.html">Operação das Estações de Bombeamento (dec_oper_usie.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_usih.html">Operação das Usinas Hidroelétricas (dec_oper_usih.csv)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dec_oper_usit.html">Operação das Usinas Termoelétricas (dec_oper_usit.csv)</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../../auto_examples/index.html">Exemplos</a></li>
 </ul>
 
+            
+          
         </div>
+        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Menu de navegação móvel" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">idecomp</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Navegação da página">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
+    
       <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
           <li><a href="../../../reference.html">Referência</a> &raquo;</li>
+        
           <li><a href="../index.html">DECOMP</a> &raquo;</li>
+        
       <li>Vazões por Posto (vazoes.rvX)</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
+          
             <a href="../../../_sources/reference/decomp/arquivos/vazoes.rst.txt" rel="nofollow"> Ver código-fonte da página</a>
+          
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="vazoes-por-posto-vazoes-rvx">
-<span id="vazoes"></span><h1>Vazões por Posto (vazoes.rvX)<a class="headerlink" href="#vazoes-por-posto-vazoes-rvx" title="Link permanente para este cabeçalho"></a></h1>
+            
+  <section id="vazoes-por-posto-vazoes-rvx">
+<span id="vazoes"></span><h1>Vazões por Posto (vazoes.rvX)<a class="headerlink" href="#vazoes-por-posto-vazoes-rvx" title="Link permanente para este cabeçalho">¶</a></h1>
 <p>As vazões por posto do DECOMP, localizadas no arquivo geralmente denominado
 vazoes.rvX, são armazenadas na classe:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="idecomp.decomp.vazoes.Vazoes">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Vazoes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/vazoes.html#Vazoes"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.vazoes.Vazoes" title="Link permanente para esta definição"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Vazoes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Ellipsis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/idecomp/decomp/vazoes.html#Vazoes"><span class="viewcode-link"><span class="pre">[código</span> <span class="pre">fonte]</span></span></a><a class="headerlink" href="#idecomp.decomp.vazoes.Vazoes" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Armazena os dados de entrada do DECOMP referentes ao cadastro das
 usinas hidroelétricas.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="idecomp.decomp.vazoes.Vazoes.vazoes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vazoes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">DataFrame</span></em><a class="headerlink" href="#idecomp.decomp.vazoes.Vazoes.vazoes" title="Link permanente para esta definição"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">vazoes</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(em pandas v1.5.3)"><span class="pre">DataFrame</span></a></em><a class="headerlink" href="#idecomp.decomp.vazoes.Vazoes.vazoes" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Obtém a tabela com os dados de vazão existentes no arquivo
 binário.</p>
 <ul class="simple">
-<li><p>1…N (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>) - onde N é o número de postos</p></li>
+<li><p>1…N (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>) - onde N é o número de postos</p></li>
 </ul>
 <dl class="field-list simple">
-<dt class="field-odd">Retorna</dt>
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
 <dd class="field-odd"><p>A tabela com as vazões por posto</p>
 </dd>
-<dt class="field-even">Tipo de retorno</dt>
+<dt class="field-even">Tipo de retorno<span class="colon">:</span></dt>
 <dd class="field-even"><p>pd.DataFrame</p>
 </dd>
 </dl>
@@ -152,33 +234,50 @@ binário.</p>
 
 
            </div>
+           
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Rodapé">
-        <a href="hidr.html" class="btn btn-neutral float-left" title="Hidr (hidr.dat)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="postos.html" class="btn btn-neutral float-right" title="Postos (postos.rvX)" accesskey="n" rel="next">Próximo <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="hidr.html" class="btn btn-neutral float-left" title="Hidr (hidr.dat)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Rogerio Alves.</p>
-  </div>
+    <p>
+        &#169; Copyright 2023, Rogerio Alves.
 
-  Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    </p>
+  </div>
+    
+    
+    
+    Compilado com <a href="https://www.sphinx-doc.org/">Sphinx</a> usando um
+    
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
-    fornecido por <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    
+    fornecido por <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
