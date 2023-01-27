@@ -13,6 +13,12 @@ class DecOperRee(ArquivoCSV):
 
     BLOCKS = [VersaoModelo, TabelaOperRee]
 
+    @classmethod
+    def le_arquivo(
+        cls, diretorio: str, arquivo: str = "dec_oper_ree.csv"
+    ) -> "DecOperRee":
+        return cls.read(diretorio, arquivo)
+
     @property
     def tabela(self) -> Optional[pd.DataFrame]:
         """

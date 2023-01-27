@@ -28,7 +28,7 @@ class TabelaCSV(Block):
             ):
                 return False
             else:
-                return self.data == o.data
+                return self.data.equals(o.data)
 
     def read(self, file: IO):
         if len(self.__class__.LINE_MODEL.fields) != len(

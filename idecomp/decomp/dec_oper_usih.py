@@ -13,6 +13,12 @@ class DecOperUsih(ArquivoCSV):
 
     BLOCKS = [VersaoModelo, TabelaOperUsih]
 
+    @classmethod
+    def le_arquivo(
+        cls, diretorio: str, arquivo: str = "dec_oper_usih.csv"
+    ) -> "DecOperUsih":
+        return cls.read(diretorio, arquivo)
+
     @property
     def tabela(self) -> Optional[pd.DataFrame]:
         """

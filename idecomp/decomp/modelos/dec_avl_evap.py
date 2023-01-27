@@ -32,7 +32,7 @@ class TabelaAvlEvap(TabelaCSV):
     )
     COLUMN_NAMES = [
         "periodo",
-        "codigoUsina",
+        "indiceUsina",
         "nomeUsina",
         "submercado",
         "ree",

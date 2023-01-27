@@ -1,17 +1,23 @@
 from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.dec_oper_usit import TabelaOperUsit
+from idecomp.decomp.modelos.dec_oper_usie import TabelaOperUsie
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from typing import Optional
 import pandas as pd  # type: ignore
 
 
-class DecOperUsit(ArquivoCSV):
+class DecOperUsie(ArquivoCSV):
     """
-    Arquivo com a operação por usina termoelétrica do DECOMP.
+    Arquivo com a operação por estação elevatória do DECOMP.
     """
 
-    BLOCKS = [VersaoModelo, TabelaOperUsit]
+    BLOCKS = [VersaoModelo, TabelaOperUsie]
+
+    @classmethod
+    def le_arquivo(
+        cls, diretorio: str, arquivo: str = "dec_oper_usit.csv"
+    ) -> "DecOperUsie":
+        return cls.read(diretorio, arquivo)
 
     @property
     def tabela(self) -> Optional[pd.DataFrame]:

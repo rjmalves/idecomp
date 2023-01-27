@@ -14,6 +14,12 @@ class DecOperGnl(ArquivoCSV):
 
     BLOCKS = [VersaoModelo, TabelaOperGnl]
 
+    @classmethod
+    def le_arquivo(
+        cls, diretorio: str, arquivo: str = "dec_oper_gnl.csv"
+    ) -> "DecOperGnl":
+        return cls.read(diretorio, arquivo)
+
     @property
     def tabela(self) -> Optional[pd.DataFrame]:
         """

@@ -14,6 +14,12 @@ class DecEcoDiscr(ArquivoCSV):
 
     BLOCKS = [VersaoModelo, TabelaEcoDiscr]
 
+    @classmethod
+    def le_arquivo(
+        cls, diretorio: str, arquivo: str = "dec_eco_discr.csv"
+    ) -> "DecEcoDiscr":
+        return cls.read(diretorio, arquivo)
+
     @property
     def tabela(self) -> Optional[pd.DataFrame]:
         """

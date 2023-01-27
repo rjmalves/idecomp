@@ -14,12 +14,18 @@ class DecEcoCotajus(ArquivoCSV):
 
     BLOCKS = [VersaoModelo, TabelaEcoCotajus]
 
+    @classmethod
+    def le_arquivo(
+        cls, diretorio: str, arquivo: str = "dec_eco_cotajus.csv"
+    ) -> "DecEcoCotajus":
+        return cls.read(diretorio, arquivo)
+
     @property
     def tabela(self) -> Optional[pd.DataFrame]:
         """
         A tabela de dados que está contida no arquivo.
 
-        - codigoUsina (`int`)
+        - indiceUsina (`int`)
         - nomeUsina (`str`)
         - indiceCurvaJusante (`int`)
         - alturaReferenciaUsinaJusante (`float`)

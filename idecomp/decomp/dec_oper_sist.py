@@ -13,6 +13,12 @@ class DecOperSist(ArquivoCSV):
 
     BLOCKS = [VersaoModelo, TabelaOperSist]
 
+    @classmethod
+    def le_arquivo(
+        cls, diretorio: str, arquivo: str = "dec_oper_sist.csv"
+    ) -> "DecOperSist":
+        return cls.read(diretorio, arquivo)
+
     @property
     def tabela(self) -> Optional[pd.DataFrame]:
         """

@@ -13,6 +13,12 @@ class DecOperInterc(ArquivoCSV):
 
     BLOCKS = [VersaoModelo, TabelaOperInterc]
 
+    @classmethod
+    def le_arquivo(
+        cls, diretorio: str, arquivo: str = "dec_oper_interc.csv"
+    ) -> "DecOperInterc":
+        return cls.read(diretorio, arquivo)
+
     @property
     def tabela(self) -> Optional[pd.DataFrame]:
         """

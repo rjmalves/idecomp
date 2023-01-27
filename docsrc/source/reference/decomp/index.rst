@@ -50,3 +50,14 @@ Arquivos
    arquivos/decomptim
    arquivos/relgnl
    arquivos/inviabunic
+   arquivos/dec_avl_evap
+   arquivos/dec_cortes_evap
+   arquivos/dec_eco_cotajus
+   arquivos/dec_eco_discr
+   arquivos/dec_oper_gnl
+   arquivos/dec_oper_interc
+   arquivos/dec_oper_ree
+   arquivos/dec_oper_sist
+   arquivos/dec_oper_usie
+   arquivos/dec_oper_usih
+   arquivos/dec_oper_usit
