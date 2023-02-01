@@ -21,6 +21,7 @@ class ArquivoCSV(BlockFile):
     """
 
     BLOCKS: List[Type[Block]] = [VersaoModelo]
+    ENCODING = "iso-8859-1"
 
     T = TypeVar("T")
 
