@@ -333,7 +333,7 @@ def test_registro_pq_dadger():
     assert r.subsistema == 1
     r.subsistema = 0
     assert r.subsistema == 0
-    assert r.geracoes == [2527., 2553., 2503.]
+    assert r.geracoes == [2527.0, 2553.0, 2503.0]
     r.geracoes = [0]
     assert r.geracoes == [0]
 
