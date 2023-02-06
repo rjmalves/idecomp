@@ -522,6 +522,8 @@ def test_atributos_encontrados_relato():
     m: MagicMock = mock_open(read_data="".join(MockRelato))
     with patch("builtins.open", m):
         rel = Relato.le_arquivo("")
+        assert rel.rees_subsistemas is not None
+        assert rel.uhes_rees_subsistemas is not None
         assert rel.convergencia is not None
         assert rel.relatorio_operacao_custos is not None
         assert rel.relatorio_operacao_uhe is not None
@@ -548,6 +550,8 @@ def test_atributos_nao_encontrados_relato():
     m: MagicMock = mock_open(read_data="".join(""))
     with patch("builtins.open", m):
         rel = Relato.le_arquivo("")
+        assert rel.rees_subsistemas is None
+        assert rel.uhes_rees_subsistemas is None
         assert rel.convergencia is None
         assert rel.relatorio_operacao_custos is None
         assert rel.relatorio_operacao_uhe is None

@@ -214,7 +214,7 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None.
         """
-        b = self.__bloco_por_tipo(BlocoREEsSubsistemas, 0)
+        b = self.__bloco_por_tipo(BlocoUHEsREEsSubsistemas, 0)
         if b is not None:
             return b.data
         return None
