@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.53</title>
+  <title>idecomp.decomp.relato &mdash; documentação idecomp 0.0.54</title>
   
 
   
@@ -160,7 +160,9 @@
            <div itemprop="articleBody">
             
   <h1>Código fonte para idecomp.decomp.relato</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoConvergenciaRelato</span>
+<span></span><span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoREEsSubsistemas</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoUHEsREEsSubsistemas</span>
+<span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoConvergenciaRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoRelatorioOperacaoRelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoRelatorioOperacaoUTERelato</span>
 <span class="kn">from</span> <span class="nn">idecomp.decomp.modelos.relato</span> <span class="kn">import</span> <span class="n">BlocoBalancoEnergeticoRelato</span>
@@ -206,6 +208,8 @@
     <span class="n">T</span> <span class="o">=</span> <span class="n">TypeVar</span><span class="p">(</span><span class="s2">&quot;T&quot;</span><span class="p">)</span>
 
     <span class="n">BLOCKS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">BlocoREEsSubsistemas</span><span class="p">,</span>
+        <span class="n">BlocoUHEsREEsSubsistemas</span><span class="p">,</span>
         <span class="n">BlocoConvergenciaRelato</span><span class="p">,</span>
         <span class="n">BlocoRelatorioOperacaoUTERelato</span><span class="p">,</span>
         <span class="n">BlocoRelatorioOperacaoRelato</span><span class="p">,</span>
@@ -333,6 +337,48 @@
             <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
             <span class="n">df</span><span class="p">[</span><span class="s2">&quot;Estágio&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">col_estagio</span>
             <span class="k">return</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;Estágio&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">cols</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">rees_subsistemas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém a tabela de relação entre os REEs e os Subsistemas do</span>
+<span class="sd">        DECOMP existente no :class:`Relato`</span>
+
+<span class="sd">        - Numero REE (`int`)</span>
+<span class="sd">        - Nome REE (`str`)</span>
+<span class="sd">        - Numero Subsistema (`int`)</span>
+<span class="sd">        - Nome Subsistema (`str`)</span>
+<span class="sd">        - Nome NEWAVE (`str`)</span>
+
+<span class="sd">        :return: O DataFrame com os valores</span>
+<span class="sd">        :rtype: pd.DataFrame | None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoREEsSubsistemas</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">uhes_rees_subsistemas</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Obtém a tabela de relação entre as UHEs, REEs e os Subsistemas do</span>
+<span class="sd">        DECOMP existente no :class:`Relato`</span>
+
+<span class="sd">        - Numero UHE (`int`)</span>
+<span class="sd">        - Nome UHE (`str`)</span>
+<span class="sd">        - Numero REE (`int`)</span>
+<span class="sd">        - Nome REE (`str`)</span>
+<span class="sd">        - Numero Subsistema (`int`)</span>
+<span class="sd">        - Nome Subsistema (`str`)</span>
+<span class="sd">        - Nome NEWAVE (`str`)</span>
+
+<span class="sd">        :return: O DataFrame com os valores</span>
+<span class="sd">        :rtype: pd.DataFrame | None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__bloco_por_tipo</span><span class="p">(</span><span class="n">BlocoREEsSubsistemas</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">b</span><span class="o">.</span><span class="n">data</span>
         <span class="k">return</span> <span class="kc">None</span>
 
     <span class="nd">@property</span>

@@ -22,6 +22,166 @@ import pandas as pd  # type: ignore
 from typing import IO, List, Tuple, Dict
 
 
+class BlocoREEsSubsistemas(Block):
+    """
+    Bloco com as informações de relação entre os REEs e os
+    Subsistemas do DECOMP no relato.rvX.
+    """
+
+    BEGIN_PATTERN = "Relatorio dos dados da configuracao dos Reservatorios"
+    END_PATTERN = ""
+
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
+        self.__line = Line(
+            [
+                IntegerField(4, 4),
+                LiteralField(15, 9),
+                IntegerField(4, 25),
+                LiteralField(6, 30),
+                LiteralField(11, 38),
+            ]
+        )
+
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, BlocoREEsSubsistemas):
+            return False
+        bloco: BlocoREEsSubsistemas = o
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
+
+    # Override
+    def read(self, arq: IO):
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(
+                data={
+                    "Numero REE": numeros,
+                    "Nome REE": nomes,
+                    "Numero Subsistema": numeros_subsistema,
+                    "Nome Subsistema": nomes_subsistema,
+                    "Nome NEWAVE": nomes_newave,
+                },
+            )
+            return df
+
+        comecou = False
+        numeros: List[int] = []
+        nomes: List[str] = []
+        numeros_subsistema: List[int] = []
+        nomes_subsistema: List[str] = []
+        nomes_newave: List[str] = []
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X----X-----" in linha:
+                if not comecou:
+                    comecou = True
+                    continue
+                else:
+                    self.data = converte_tabela_em_df()
+                    break
+            if comecou:
+                # Senão, lê mais uma linha
+                dados = self.__line.read(linha)
+                numeros.append(dados[0])
+                nomes.append(dados[1])
+                numeros_subsistema.append(dados[2])
+                nomes_subsistema.append(dados[3])
+                nomes_newave.append(dados[4])
+
+
+class BlocoUHEsREEsSubsistemas(Block):
+    """
+    Bloco com as informações de relação entre os REEs e os
+    Subsistemas do DECOMP no relato.rvX.
+    """
+
+    BEGIN_PATTERN = (
+        "Relatorio dos dados de Configuracao das Usinas Hidroeletricas"
+    )
+    END_PATTERN = ""
+
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
+        self.__line = Line(
+            [
+                IntegerField(4, 4),
+                LiteralField(15, 9),
+                IntegerField(4, 25),
+                LiteralField(15, 30),
+                IntegerField(4, 46),
+                LiteralField(6, 51),
+                LiteralField(11, 63),
+            ]
+        )
+
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, BlocoUHEsREEsSubsistemas):
+            return False
+        bloco: BlocoUHEsREEsSubsistemas = o
+        if not all(
+            [
+                isinstance(self.data, pd.DataFrame),
+                isinstance(o.data, pd.DataFrame),
+            ]
+        ):
+            return False
+        else:
+            return self.data.equals(bloco.data)
+
+    # Override
+    def read(self, arq: IO):
+        def converte_tabela_em_df() -> pd.DataFrame:
+            df = pd.DataFrame(
+                data={
+                    "Numero UHE": numeros,
+                    "Nome UHE": nomes,
+                    "Numero REE": numeros_rees,
+                    "Nome REE": nomes_rees,
+                    "Numero Subsistema": numeros_subsistema,
+                    "Nome Subsistema": nomes_subsistema,
+                    "Nome NEWAVE": nomes_newave,
+                },
+            )
+            return df
+
+        comecou = False
+        numeros: List[int] = []
+        nomes: List[str] = []
+        numeros_rees: List[int] = []
+        nomes_rees: List[str] = []
+        numeros_subsistema: List[int] = []
+        nomes_subsistema: List[str] = []
+        nomes_newave: List[str] = []
+        while True:
+            # Confere se a leitura não acabou
+            linha = arq.readline()
+            if "X----X-----" in linha:
+                if not comecou:
+                    comecou = True
+                    continue
+                else:
+                    self.data = converte_tabela_em_df()
+                    break
+            if comecou:
+                # Senão, lê mais uma linha
+                dados = self.__line.read(linha)
+                numeros.append(dados[0])
+                nomes.append(dados[1])
+                numeros_rees.append(dados[2])
+                nomes_rees.append(dados[3])
+                numeros_subsistema.append(dados[4])
+                nomes_subsistema.append(dados[5])
+                nomes_newave.append(dados[6])
+
+
 class BlocoConvergenciaRelato(Block):
     """
     Bloco com as informações de convergência do DECOMP no relato.rvX.

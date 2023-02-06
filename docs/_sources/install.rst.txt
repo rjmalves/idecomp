@@ -1,7 +1,7 @@
 Instalação
 ============
 
-O *idecomp* é compatível com versões de Python >= 3.5. A única dependência formal é o módulo NumPy, que deve sempre ser mantido na versão mais atualizada para a distribuição de Python instalada.
+O *idecomp* é compatível com versões de Python >= 3.8.
 
 Em posse de uma instalação local de Python, é recomendado que se use um ambiente virtual para instalação de módulos de terceiros, sendo que o *idecomp* não é uma exceção.
 Para mais detalhes sobre o uso de ambientes virtuais, recomenda-se a leitura do recurso oficial de Python para ambientes virtuais: `venv <https://docs.python.org/3/library/venv.html>`_.
@@ -54,4 +54,4 @@ Procedimentos de teste
 
 O *idecomp* realiza testes utilizando o pacote de testes de Python ``pytest``. Para maiores informações, é recomendado acessar a `página <https://pytest.org>`_.
 
-Além dos testes, o código também tem sua qualidade aferida com o uso de `flake8 <https://flake8.pycqa.org/en/latest/>`_ e `mypy <http://mypy-lang.org/>`_.
+Além dos testes, o código também tem sua qualidade aferida com o uso de `pylama <https://github.com/klen/pylama>`_ e `mypy <http://mypy-lang.org/>`_.

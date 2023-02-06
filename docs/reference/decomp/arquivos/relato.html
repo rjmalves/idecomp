@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.53</title>
+  <title>Relato (relato.rvX) &mdash; documentação idecomp 0.0.54</title>
   
 
   
@@ -632,6 +632,28 @@ existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" 
 </dd></dl>
 
 <dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.rees_subsistemas">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">rees_subsistemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(em pandas v1.5.3)"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(em Python v3.11)"><span class="pre">None</span></a></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.rees_subsistemas" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de relação entre os REEs e os Subsistemas do
+DECOMP existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<ul class="simple">
+<li><p>Numero REE (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>Nome REE (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p>Numero Subsistema (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>Nome Subsistema (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p>Nome NEWAVE (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>O DataFrame com os valores</p>
+</dd>
+<dt class="field-even">Tipo de retorno<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame | None.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
 <dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.relatorio_operacao_custos">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">relatorio_operacao_custos</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(em pandas v1.5.3)"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(em Python v3.11)"><span class="pre">None</span></a></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.relatorio_operacao_custos" title="Link permanente para esta definição">¶</a></dt>
 <dd><p>Obtém a tabela de operação de cada UHE por estágio do DECOMP
@@ -727,6 +749,30 @@ existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" 
 </dd>
 <dt class="field-even">Tipo de retorno<span class="colon">:</span></dt>
 <dd class="field-even"><p>pd.DataFrame | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="idecomp.decomp.relato.Relato.uhes_rees_subsistemas">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uhes_rees_subsistemas</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(em pandas v1.5.3)"><span class="pre">DataFrame</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(em Python v3.11)"><span class="pre">None</span></a></em><a class="headerlink" href="#idecomp.decomp.relato.Relato.uhes_rees_subsistemas" title="Link permanente para esta definição">¶</a></dt>
+<dd><p>Obtém a tabela de relação entre as UHEs, REEs e os Subsistemas do
+DECOMP existente no <a class="reference internal" href="#idecomp.decomp.relato.Relato" title="idecomp.decomp.relato.Relato"><code class="xref py py-class docutils literal notranslate"><span class="pre">Relato</span></code></a></p>
+<ul class="simple">
+<li><p>Numero UHE (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>Nome UHE (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p>Numero REE (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>Nome REE (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p>Numero Subsistema (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code></a>)</p></li>
+<li><p>Nome Subsistema (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+<li><p>Nome NEWAVE (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(em Python v3.11)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code></a>)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Retorna<span class="colon">:</span></dt>
+<dd class="field-odd"><p>O DataFrame com os valores</p>
+</dd>
+<dt class="field-even">Tipo de retorno<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame | None.</p>
 </dd>
 </dl>
 </dd></dl>

@@ -1,5 +1,7 @@
 # Rotinas de testes associadas ao arquivo relato.rvx do DECOMP
 from idecomp.decomp.modelos.relato import (
+    BlocoREEsSubsistemas,
+    BlocoUHEsREEsSubsistemas,
     BlocoConvergenciaRelato,
     BlocoRelatorioOperacaoRelato,
     BlocoRelatorioOperacaoUTERelato,
@@ -27,6 +29,8 @@ from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
 from tests.mocks.arquivos.relato import (
+    MockREEsSubmercado,
+    MockUHEsREEsSubmercado,
     MockBalancoEnergetico,
     MockBlocoDiasExcluidosSemanas,
     MockCMO,
@@ -49,6 +53,40 @@ from tests.mocks.arquivos.relato import (
     MockRelatorioOperacaoUTE,
     MockVolumeUtilReservatorio,
 )
+
+
+def test_bloco_rees_submercado():
+    m: MagicMock = mock_open(read_data="".join(MockREEsSubmercado))
+    b = BlocoREEsSubsistemas()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+
+    assert b.data.shape[0] == 12
+    assert b.data.shape[1] == 5
+    assert b.data.iloc[0, 0] == 1
+    assert b.data.iloc[0, 1] == "SUDESTE"
+    assert b.data.iloc[0, 2] == 1
+    assert b.data.iloc[0, 3] == "SE"
+    assert b.data.iloc[0, 4] == "SUDESTE"
+
+
+def test_bloco_uhes_rees_submercado():
+    m: MagicMock = mock_open(read_data="".join(MockUHEsREEsSubmercado))
+    b = BlocoUHEsREEsSubsistemas()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+
+    assert b.data.shape[0] == 163
+    assert b.data.shape[1] == 7
+    assert b.data.iloc[0, 0] == 108
+    assert b.data.iloc[0, 1] == "TRAICAO"
+    assert b.data.iloc[0, 2] == 1
+    assert b.data.iloc[0, 3] == "SUDESTE"
+    assert b.data.iloc[0, 4] == 1
+    assert b.data.iloc[0, 5] == "SE"
+    assert b.data.iloc[0, 6] == "SUDESTE"
 
 
 def test_bloco_convergencia():

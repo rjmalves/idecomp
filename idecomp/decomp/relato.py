@@ -1,3 +1,5 @@
+from idecomp.decomp.modelos.relato import BlocoREEsSubsistemas
+from idecomp.decomp.modelos.relato import BlocoUHEsREEsSubsistemas
 from idecomp.decomp.modelos.relato import BlocoConvergenciaRelato
 from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoRelato
 from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUTERelato
@@ -44,6 +46,8 @@ class Relato(BlockFile):
     T = TypeVar("T")
 
     BLOCKS = [
+        BlocoREEsSubsistemas,
+        BlocoUHEsREEsSubsistemas,
         BlocoConvergenciaRelato,
         BlocoRelatorioOperacaoUTERelato,
         BlocoRelatorioOperacaoRelato,
@@ -171,6 +175,48 @@ class Relato(BlockFile):
             cols = list(df.columns)
             df["Estágio"] = col_estagio
             return df[["Estágio"] + cols]
+        return None
+
+    @property
+    def rees_subsistemas(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela de relação entre os REEs e os Subsistemas do
+        DECOMP existente no :class:`Relato`
+
+        - Numero REE (`int`)
+        - Nome REE (`str`)
+        - Numero Subsistema (`int`)
+        - Nome Subsistema (`str`)
+        - Nome NEWAVE (`str`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None.
+        """
+        b = self.__bloco_por_tipo(BlocoREEsSubsistemas, 0)
+        if b is not None:
+            return b.data
+        return None
+
+    @property
+    def uhes_rees_subsistemas(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela de relação entre as UHEs, REEs e os Subsistemas do
+        DECOMP existente no :class:`Relato`
+
+        - Numero UHE (`int`)
+        - Nome UHE (`str`)
+        - Numero REE (`int`)
+        - Nome REE (`str`)
+        - Numero Subsistema (`int`)
+        - Nome Subsistema (`str`)
+        - Nome NEWAVE (`str`)
+
+        :return: O DataFrame com os valores
+        :rtype: pd.DataFrame | None.
+        """
+        b = self.__bloco_por_tipo(BlocoREEsSubsistemas, 0)
+        if b is not None:
+            return b.data
         return None
 
     @property
