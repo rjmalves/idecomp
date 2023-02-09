@@ -16,10 +16,10 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Instala os requisitos do módulo
       run: |
-        python -m pip install -r deploy-requirements.txt
+        pip install -r deploy-requirements.txt
     - name: Executa os testes do pacote
       run: |
-        python -m pytest --cov-report=xml --cov=idecomp tests/
+        pytest --cov-report=xml --cov=idecomp tests/
     - uses: codecov/codecov-action@v1
       with:
         token: ${{ secrets.CODECOV_TOKEN }} 
@@ -31,7 +31,7 @@ jobs:
         verbose: true 
     - name: Veriricações de qualidade de código - tipagem estática
       run: |
-        python -m mypy ./idecomp
+        mypy ./idecomp
     - name: Verificações de qualidade de código - linter PEP8
       run: |
-        python -m pylama --ignore E203 ./idecomp
+        pylama --ignore E203 ./idecomp
