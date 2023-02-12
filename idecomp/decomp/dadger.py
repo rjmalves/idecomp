@@ -358,6 +358,10 @@ class Dadger(RegisterFile):
         :type volume_inicial: float | None
         :param evaporacao: consideração da evaporação na UHE
         :type evaporacao: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`UH` | list[:class:`UH`] | :class:`pd.DataFrame` | None
         """
@@ -390,6 +394,10 @@ class Dadger(RegisterFile):
         :type estagio: int | None
         :param subsistema: subsistema da UTE
         :type subsistema: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`CT` | list[:class:`CT`] | :class:`pd.DataFrame` | None
         """
@@ -423,6 +431,10 @@ class Dadger(RegisterFile):
         :type subsistema: int | None
         :param num_patamares: número de patamares
         :type num_patamares: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`DP` | list[:class:`DP`] |
             :class:`pd.DataFrame` | None
@@ -455,6 +467,10 @@ class Dadger(RegisterFile):
             definidas as gerações
         :type estagio: int | None
         :type subsistema: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`PQ` | list[:class:`PQ`] | :class:`pd.DataFrame` | None
         """
@@ -483,6 +499,10 @@ class Dadger(RegisterFile):
         :type uhe: int
         :param modificacao: classe da modificação realizada
         :type modificacao: subtipos do tipo `AC`
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: `AC` | list[`AC`] | :class:`pd.DataFrame` | None
         """
@@ -513,6 +533,10 @@ class Dadger(RegisterFile):
         :type nome_curva: str | None
         :param estagio: estagio para o qual valerá a curva.
         :type estagio: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`LU` | list[:class:`LU`] | :class:`pd.DataFrame` | None
         """
@@ -589,6 +613,10 @@ class Dadger(RegisterFile):
         :type estagio_inicial: int | None
         :param estagio_final: estágio final da restrição elétrica
         :type estagio_final: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RE` | list[:class:`RE`] | :class:`pd.DataFrame` | None
         """
@@ -619,6 +647,10 @@ class Dadger(RegisterFile):
         :param estagio: Estágio sobre o qual valerão os limites da
             restrição elétricas
         :type estagio: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`LU` | list[:class:`LU`] | :class:`pd.DataFrame` | None
 
@@ -716,6 +748,10 @@ class Dadger(RegisterFile):
         :param coeficiente: valor do coeficiente para a usina
             na restrição
         :type coeficiente: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`FU` | list[:class:`FU`] | :class:`pd.DataFrame` | None
         """
@@ -751,6 +787,10 @@ class Dadger(RegisterFile):
         :param coeficiente: valor do coeficiente para a usina
             na restrição
         :type coeficiente: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`FT` | list[:class:`FT`] | :class:`pd.DataFrame` | None
         """
@@ -789,6 +829,10 @@ class Dadger(RegisterFile):
         :param coeficiente: valor do coeficiente para a interligação
             na restrição
         :type coeficiente: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`FI` | list[:class:`FI`] | :class:`pd.DataFrame` | None
         """
@@ -819,6 +863,10 @@ class Dadger(RegisterFile):
         :type uhe: int | None
         :param duracao: duração, em horas, da viagem da água
         :type duracao: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`VI` | list[:class:`VI`] | :class:`pd.DataFrame` | None
         """
@@ -840,6 +888,10 @@ class Dadger(RegisterFile):
         :param tipo: Mnemônico do tipo de relatório especificado
             no registro
         :type tipo: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`IR` | list[:class:`IR`] | :class:`pd.DataFrame` | None
         """
@@ -858,6 +910,10 @@ class Dadger(RegisterFile):
         :param restricao: Mnemônico da restrição retirada (CRISTA ou
             DESVIO)
         :type restricao: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RT` | list[:class:`RT`] | :class:`pd.DataFrame` | None
         """
@@ -881,6 +937,10 @@ class Dadger(RegisterFile):
         :type tipo: str | None
         :param caminho: caminho para o arquivo com a FCF
         :type caminho: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`FC` | list[:class:`FC`] | :class:`pd.DataFrame` | None
         """
@@ -917,6 +977,10 @@ class Dadger(RegisterFile):
         :type ree: int | None
         :param numero_semanas: Número de semanas do mês anterior
         :type numero_semanas: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`ES` | list[:class:`ES`] | :class:`pd.DataFrame` | None
         """
@@ -936,6 +1000,10 @@ class Dadger(RegisterFile):
 
         :param uhe: Código da UHE
         :type uhe: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`QI` | list[:class:`QI`] | :class:`pd.DataFrame` | None
         """
@@ -953,6 +1021,10 @@ class Dadger(RegisterFile):
 
         :param codigo: Código da UHE associada ao registro
         :type codigo: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`TI` | list[:class:`TI`] | :class:`pd.DataFrame` | None
         """
@@ -1007,6 +1079,10 @@ class Dadger(RegisterFile):
         :param limite_superior_janela_volume: limite superior
             da janela
         :type limite_superior_janela_volume: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`FP` | list[:class:`FP`] | :class:`pd.DataFrame` | None
         """
@@ -1036,6 +1112,10 @@ class Dadger(RegisterFile):
 
         :param ree: Código do REE
         :type ree: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RQ` | list[:class:`RQ`] | :class:`pd.DataFrame` | None
         """
@@ -1053,6 +1133,10 @@ class Dadger(RegisterFile):
 
         :param codigo: Código do posto da UHE associada
         :type codigo: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`VE` | list[:class:`VE`] | :class:`pd.DataFrame` | None
         """
@@ -1079,6 +1163,10 @@ class Dadger(RegisterFile):
         :type estagio_inicial: int | None
         :param estagio_final: estágio final da restrição de volume
         :type estagio_final: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`HV` | list[:class:`HV`] | :class:`pd.DataFrame` | None
         """
@@ -1109,6 +1197,10 @@ class Dadger(RegisterFile):
         :param estagio: Estágio sobre o qual valerão os limites da
             restrição de volume
         :type estagio: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`LV` | list[:class:`LV`] | :class:`pd.DataFrame` | None
 
@@ -1205,6 +1297,10 @@ class Dadger(RegisterFile):
         :type coeficiente: float | None
         :param tipo: o mnemônico de tipo da restrição
         :type tipo: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`CV` | list[:class:`CV`] | :class:`pd.DataFrame` | None
         """
@@ -1238,6 +1334,10 @@ class Dadger(RegisterFile):
         :type estagio_inicial: int | None
         :param estagio_final: estágio final da restrição de vazão
         :type estagio_final: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`HQ` | list[:class:`HQ`] | :class:`pd.DataFrame` | None
         """
@@ -1268,6 +1368,10 @@ class Dadger(RegisterFile):
         :param estagio: Estágio sobre o qual valerão os limites da
             restrição de vazão
         :type estagio: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`LQ` | list[:class:`LQ`] | :class:`pd.DataFrame` | None
 
@@ -1368,6 +1472,10 @@ class Dadger(RegisterFile):
         :type coeficiente: float | None
         :param tipo: o mnemônico de tipo da restrição
         :type tipo: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`CQ` | list[:class:`CQ`] | :class:`pd.DataFrame` | None
         """
@@ -1421,6 +1529,10 @@ class Dadger(RegisterFile):
         :param arquivo_produtibilidades: nome do arquivo com as
             produtibilidades das usinas
         :type arquivo_produtibilidades: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`HE` | list[:class:`HE`] | :class:`pd.DataFrame` | None
         """
@@ -1456,6 +1568,10 @@ class Dadger(RegisterFile):
         :type ree: int | None
         :param coeficiente: valor do coeficiente para a energia
         :type coeficiente: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`CM` | list[:class:`CM`] | :class:`pd.DataFrame` | None
         """
@@ -1529,6 +1645,10 @@ class Dadger(RegisterFile):
         :type tipo: int | None
         :param penalidade: valor da penalidade
         :type penalidade: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`PE` | list[:class:`PE`] | :class:`pd.DataFrame` | None
         """
@@ -1627,6 +1747,10 @@ class Dadger(RegisterFile):
         :type codigo_newave: int | None
         :param codigo_decomp: código da usina no DECOMP
         :type codigo_decomp: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`CX` | list[:class:`CX`] | :class:`pd.DataFrame` | None
         """

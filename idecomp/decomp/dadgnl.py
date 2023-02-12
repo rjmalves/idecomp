@@ -2,6 +2,7 @@ from cfinterface.files.registerfile import RegisterFile
 from cfinterface.components.register import Register
 from idecomp.decomp.modelos.dadgnl import TG, GS, NL, GL
 from typing import Type, List, Optional, TypeVar, Union
+import pandas as pd  # type: ignore
 
 
 class DadGNL(RegisterFile):
@@ -9,12 +10,11 @@ class DadGNL(RegisterFile):
     Armazena os dados de entrada gerais do DECOMP.
 
     Esta classe lida com as informações de entrada fornecidas ao
-    DECOMP no `dadger.rvx`. Possui métodos para acessar individualmente
+    DECOMP no `dadgnl.rvx`. Possui métodos para acessar individualmente
     cada registro, editá-lo e também cria alguns novos registros.
 
     Atualmente, são suportados os registros:
-    `TE`, `SB`, `UH`, `CT`, `DP`, `TX`, `GP`, `NI`, `DT`, `RE`, `LU`,
-    `VI`, `IR`, `FC`, `TI`, `HV`, `LV`, `HQ`, `LQ` `HE`, `EV` e `FJ`.
+    `TG`, `GS`, `NL` e `GL`
 
     É possível ler as informações existentes em arquivos a partir do
     método `le_arquivo()` e escreve um novo arquivo a partir do método
@@ -127,7 +127,8 @@ class DadGNL(RegisterFile):
         subsistema: Optional[int] = None,
         nome: Optional[str] = None,
         estagio: Optional[int] = None,
-    ) -> Optional[Union[TG, List[TG]]]:
+        df: bool = False,
+    ) -> Optional[Union[TG, List[TG], pd.DataFrame]]:
         """
         Obtém um registro que define uma usina termelétrica existente
         no estudo descrito pelo :class:`DadGNL`.
@@ -143,20 +144,30 @@ class DadGNL(RegisterFile):
         :param estagio: Índice do estágio para o qual foi cadastrado
             o despacho da UTE
         :type estagio: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`TG` | list[:class:`TG`] | None
+        :rtype: :class:`TG` | list[:class:`TG`] | :class:`pd.DataFrame` | None
         """
-        return self.__obtem_registros_com_filtros(
-            TG,
-            codigo=codigo,
-            subsistema=subsistema,
-            nome=nome,
-            estagio=estagio,
-        )
+        if df:
+            return self._as_df(TG)
+        else:
+            return self.__obtem_registros_com_filtros(
+                TG,
+                codigo=codigo,
+                subsistema=subsistema,
+                nome=nome,
+                estagio=estagio,
+            )
 
     def gs(
-        self, mes: Optional[int] = None, semanas: Optional[int] = None
-    ) -> Optional[Union[GS, List[GS]]]:
+        self,
+        mes: Optional[int] = None,
+        semanas: Optional[int] = None,
+        df: bool = False,
+    ) -> Optional[Union[GS, List[GS], pd.DataFrame]]:
         """
         Obtém um registro que define o número de semanas em cada
         mês de estudo no :class:`DadGNL`.
@@ -165,22 +176,29 @@ class DadGNL(RegisterFile):
         :type mes: int | None
         :param semanas: número de semanas do mês
         :type semanas: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
 
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`GS` | list[:class:`GS`] | None
+        :rtype: :class:`GS` | list[:class:`GS`] | :class:`pd.DataFrame` | None
         """
-        return self.__obtem_registros_com_filtros(
-            GS,
-            mes=mes,
-            semanas=semanas,
-        )
+        if df:
+            return self._as_df(GS)
+        else:
+            return self.__obtem_registros_com_filtros(
+                GS,
+                mes=mes,
+                semanas=semanas,
+            )
 
     def nl(
         self,
         codigo: Optional[int] = None,
         subsistema: Optional[int] = None,
         lag: Optional[int] = None,
-    ) -> Optional[Union[NL, List[NL]]]:
+        df: bool = False,
+    ) -> Optional[Union[NL, List[NL], pd.DataFrame]]:
         """
         Obtém um registro que define o número de lags para o despacho
         de uma UTE.
@@ -191,16 +209,22 @@ class DadGNL(RegisterFile):
         :type subsistema: int | None
         :param lag: número de lags da UTE
         :type lag: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
 
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`NL` | list[:class:`NL`] | None
+        :rtype: :class:`NL` | list[:class:`NL`] | :class:`pd.DataFrame` | None
         """
-        return self.__obtem_registros_com_filtros(
-            NL,
-            codigo=codigo,
-            subsistema=subsistema,
-            lag=lag,
-        )
+        if df:
+            return self._as_df(NL)
+        else:
+            return self.__obtem_registros_com_filtros(
+                NL,
+                codigo=codigo,
+                subsistema=subsistema,
+                lag=lag,
+            )
 
     def gl(
         self,
@@ -208,7 +232,8 @@ class DadGNL(RegisterFile):
         subsistema: Optional[int] = None,
         estagio: Optional[int] = None,
         data_inicio: Optional[str] = None,
-    ) -> Optional[Union[GL, List[GL]]]:
+        df: bool = False,
+    ) -> Optional[Union[GL, List[GL], pd.DataFrame]]:
         """
         Obtém um registro que define o despacho por patamar
         e a duração dos patamares para uma UTE GNL.
@@ -223,14 +248,20 @@ class DadGNL(RegisterFile):
         :param data_inicio: data de início do estágio
             do despacho da UTE
         :type data_inicio: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
 
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`GL` | list[:class:`GL`] | None
+        :rtype: :class:`GL` | list[:class:`GL`] | :class:`pd.DataFrame` | None
         """
-        return self.__obtem_registros_com_filtros(
-            GL,
-            codigo=codigo,
-            subsistema=subsistema,
-            estagio=estagio,
-            data_inicio=data_inicio,
-        )
+        if df:
+            return self._as_df(GL)
+        else:
+            return self.__obtem_registros_com_filtros(
+                GL,
+                codigo=codigo,
+                subsistema=subsistema,
+                estagio=estagio,
+                data_inicio=data_inicio,
+            )
