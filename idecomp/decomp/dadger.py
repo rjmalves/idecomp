@@ -602,7 +602,7 @@ class Dadger(RegisterFile):
                 estagio_final=estagio_final,
             )
 
-    def lu(
+    def lu(  # noqa
         self,
         codigo: Optional[int] = None,
         estagio: Optional[int] = None,
@@ -1092,7 +1092,7 @@ class Dadger(RegisterFile):
                 estagio_final=estagio_final,
             )
 
-    def lv(
+    def lv(  # noqa
         self,
         codigo: Optional[int] = None,
         estagio: Optional[int] = None,
@@ -1251,7 +1251,7 @@ class Dadger(RegisterFile):
                 estagio_final=estagio_final,
             )
 
-    def lq(
+    def lq(  # noqa
         self,
         codigo: Optional[int] = None,
         estagio: Optional[int] = None,
