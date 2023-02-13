@@ -15,8 +15,8 @@ def test_atributos_encontrados_dec_eco_discr():
         assert rel.tabela.at[0, "periodo"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 40.0
-        assert np.isnan(rel.tabela.at[0, "numeroPatamares"])
-        assert np.isnan(rel.tabela.at[0, "numeroAberturas"])
+        assert np.isnan(rel.tabela.at[0, "numero_patamares"])
+        assert np.isnan(rel.tabela.at[0, "numero_aberturas"])
 
 
 def test_eq_dec_eco_discr():

@@ -12,16 +12,16 @@ def test_atributos_encontrados_dec_cortes_evap():
         rel = DecCortesEvap.le_arquivo("")
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "periodo"] == 1
-        assert rel.tabela.at[0, "indiceUsina"] == 1
-        assert rel.tabela.at[0, "nomeUsina"] == "CAMARGOS"
+        assert rel.tabela.at[0, "indice_usina"] == 1
+        assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
         assert rel.tabela.at[0, "submercado"] == 1
         assert rel.tabela.at[0, "ree"] == 10
-        assert rel.tabela.at[0, "derivadaCotaArea"] == 3.3046855042
-        assert rel.tabela.at[0, "derivadaVolumeCota"] == 0.0364387763
-        assert rel.tabela.at[0, "volumeReferenciaHm3"] == 151.58
-        assert rel.tabela.at[0, "evaporacaoReferenciaHm3"] == 0.0
-        assert rel.tabela.at[0, "coeficienteVolume"] == 0.0
-        assert rel.tabela.at[0, "rhsVolume"] == 0.0
+        assert rel.tabela.at[0, "derivada_cota_area"] == 3.3046855042
+        assert rel.tabela.at[0, "derivada_volume_cota"] == 0.0364387763
+        assert rel.tabela.at[0, "volume_referencia_hm3"] == 151.58
+        assert rel.tabela.at[0, "evaporacao_referencia_hm3"] == 0.0
+        assert rel.tabela.at[0, "coeficiente_volume"] == 0.0
+        assert rel.tabela.at[0, "rhs_volume"] == 0.0
 
 
 def test_eq_dec_cortes_evap():

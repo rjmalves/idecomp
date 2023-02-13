@@ -16,20 +16,20 @@ def test_atributos_encontrados_dec_oper_gnl():
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 40.0
-        assert rel.tabela.at[0, "indiceUsina"] == 86
-        assert rel.tabela.at[0, "nomeUsina"] == "SANTA CRUZ"
-        assert rel.tabela.at[0, "indiceSubmercado"] == 1
-        assert rel.tabela.at[0, "nomeSubmercado"] == "SE"
+        assert rel.tabela.at[0, "indice_usina"] == 86
+        assert rel.tabela.at[0, "nome_usina"] == "SANTA CRUZ"
+        assert rel.tabela.at[0, "indice_submercado"] == 1
+        assert rel.tabela.at[0, "nome_submercado"] == "SE"
         assert rel.tabela.at[0, "lag"] == 2
-        assert rel.tabela.at[0, "custoIncremental"] == 116.57
-        assert rel.tabela.at[0, "beneficioGNL"] == 542.74
-        assert rel.tabela.at[0, "geracaoMinimaMW"] == 0.00
-        assert rel.tabela.at[0, "geracaoComandadaMW"] == 350.00
-        assert rel.tabela.at[0, "geracaoSinalizadaMW"] == 220.20
-        assert rel.tabela.at[0, "geracaoMW"] == 350.0
-        assert rel.tabela.at[0, "geracaoMaximaMW"] == 350.0
-        assert rel.tabela.at[0, "fatorManutencao"] == 1.0
-        assert rel.tabela.at[0, "custoGeracao"] == 1631.98
+        assert rel.tabela.at[0, "custo_incremental"] == 116.57
+        assert rel.tabela.at[0, "beneficio_gnl"] == 542.74
+        assert rel.tabela.at[0, "geracao_minima_MW"] == 0.00
+        assert rel.tabela.at[0, "geracao_comandada_MW"] == 350.00
+        assert rel.tabela.at[0, "geracao_sinalizada_MW"] == 220.20
+        assert rel.tabela.at[0, "geracao_MW"] == 350.0
+        assert rel.tabela.at[0, "geracao_maxima_MW"] == 350.0
+        assert rel.tabela.at[0, "fator_manutencao"] == 1.0
+        assert rel.tabela.at[0, "custo_geracao"] == 1631.98
 
 
 def test_eq_dec_oper_gnl():

@@ -25,16 +25,16 @@ class DecCortesEvap(ArquivoCSV):
         A tabela de dados que está contida no arquivo.
 
         - periodo (`int`)
-        - indiceUsina (`int`)
-        - nomeUsina (`str`)
+        - indice_usina (`int`)
+        - nome_usina (`str`)
         - submercado (`int`)
         - ree (`int`)
-        - derivadaCotaArea (`float`)
-        - derivadaVolumeCota (`float`)
-        - volumeReferenciaHm3 (`float`)
-        - evaporacaoReferenciaHm3 (`float`)
-        - coeficienteVolume (`float`)
-        - rhsVolume (`float`)
+        - derivada_cota_area (`float`)
+        - derivada_volume_cota (`float`)
+        - volume_referencia_hm3 (`float`)
+        - evaporacao_referencia_hm3 (`float`)
+        - coeficiente_volume (`float`)
+        - rhs_volume (`float`)
 
         :return: A tabela como um dataframe
         :rtype: pd.DataFrame | None

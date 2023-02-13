@@ -25,15 +25,15 @@ class DecAvlEvap(ArquivoCSV):
         A tabela de dados que está contida no arquivo.
 
         - periodo (`int`)
-        - indiceUsina (`int`)
-        - nomeUsina (`str`)
+        - indice_usina (`int`)
+        - nome_usina (`str`)
         - submercado (`int`)
         - ree (`int`)
-        - volumeArmazenadoHm3 (`float`)
-        - evaporacaoCalculadaHm3 (`float`)
-        - evaporacaoModeloHm3 (`float`)
-        - desvioAbsolutoHm3 (`float`)
-        - desvioPercentual (`float`)
+        - volume_armazenado_hm3 (`float`)
+        - evaporacao_calculada_hm3 (`float`)
+        - evaporacao_modelo_hm3 (`float`)
+        - desvio_absoluto_hm3 (`float`)
+        - desvio_percentual (`float`)
 
         :return: A tabela como um dataframe
         :rtype: pd.DataFrame | None

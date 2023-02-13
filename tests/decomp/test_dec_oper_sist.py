@@ -16,26 +16,26 @@ def test_atributos_encontrados_dec_oper_sist():
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 40.00
-        assert rel.tabela.at[0, "indiceSubmercado"] == 1
-        assert rel.tabela.at[0, "nomeSubmercado"] == "SE"
-        assert rel.tabela.at[0, "demandaMW"] == 48383.0
-        assert rel.tabela.at[0, "geracaoPequenasUsinasMW"] == 3374.0
-        assert rel.tabela.at[0, "geracaoTermicaMW"] == 6509.80
-        assert rel.tabela.at[0, "geracaoTermicaAntecipadaMW"] == 548.00
-        assert rel.tabela.at[0, "geracaoHidroeletricaMW"] == 33567.62
-        assert rel.tabela.at[0, "geracaoEolicaMW"] == 0.00
-        assert rel.tabela.at[0, "energiaBombeamentoMW"] == 13.58
-        assert rel.tabela.at[0, "energiaImportadaMW"] == 0.00
-        assert rel.tabela.at[0, "energiaExportadaMW"] == 0.00
-        assert rel.tabela.at[0, "intercambioLiquidoMW"] == 7576.16
-        assert rel.tabela.at[0, "itaipu50MW"] == 1900.00
-        assert rel.tabela.at[0, "itaipu60MW"] == 5009.89
-        assert rel.tabela.at[0, "deficitMW"] == 0.00
-        assert rel.tabela.at[0, "enaMWmes"] == 12608.1
-        assert rel.tabela.at[0, "earmInicialMWmes"] == 47877.48
-        assert rel.tabela.at[0, "earmInicialPercentual"] == 23.43
-        assert rel.tabela.at[0, "earmFinalMWmes"] == 52743.55
-        assert rel.tabela.at[0, "earmFinalPercentual"] == 25.81
+        assert rel.tabela.at[0, "indice_submercado"] == 1
+        assert rel.tabela.at[0, "nome_submercado"] == "SE"
+        assert rel.tabela.at[0, "demanda_MW"] == 48383.0
+        assert rel.tabela.at[0, "geracao_pequenas_usinas_MW"] == 3374.0
+        assert rel.tabela.at[0, "geracao_termica_MW"] == 6509.80
+        assert rel.tabela.at[0, "geracao_termica_antecipada_MW"] == 548.00
+        assert rel.tabela.at[0, "geracao_hidroeletrica_MW"] == 33567.62
+        assert rel.tabela.at[0, "geracao_eolica_MW"] == 0.00
+        assert rel.tabela.at[0, "energia_bombeamento_MW"] == 13.58
+        assert rel.tabela.at[0, "energia_importada_MW"] == 0.00
+        assert rel.tabela.at[0, "energia_exportada_MW"] == 0.00
+        assert rel.tabela.at[0, "intercambio_liquido_MW"] == 7576.16
+        assert rel.tabela.at[0, "itaipu_50MW"] == 1900.00
+        assert rel.tabela.at[0, "itaipu_60MW"] == 5009.89
+        assert rel.tabela.at[0, "deficit_MW"] == 0.00
+        assert rel.tabela.at[0, "ena_MWmes"] == 12608.1
+        assert rel.tabela.at[0, "earm_inicial_MWmes"] == 47877.48
+        assert rel.tabela.at[0, "earm_inicial_percentual"] == 23.43
+        assert rel.tabela.at[0, "earm_final_MWmes"] == 52743.55
+        assert rel.tabela.at[0, "earm_final_percentual"] == 25.81
         assert rel.tabela.at[0, "cmo"] == 956.18
 
 

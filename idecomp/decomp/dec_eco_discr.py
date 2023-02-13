@@ -28,8 +28,8 @@ class DecEcoDiscr(ArquivoCSV):
         - periodo (`int`)
         - patamar (`int`)
         - duracao (`float`)
-        - numeroPatamares (`int`)
-        - numeroAberturas (`int`)
+        - numero_patamares (`int`)
+        - numero_aberturas (`int`)
 
         :return: A tabela como um dataframe
         :rtype: pd.DataFrame | None

@@ -25,13 +25,13 @@ class DecEcoCotajus(ArquivoCSV):
         """
         A tabela de dados que está contida no arquivo.
 
-        - indiceUsina (`int`)
-        - nomeUsina (`str`)
-        - indiceCurvaJusante (`int`)
-        - alturaReferenciaUsinaJusante (`float`)
-        - indicePolinomio (`int`)
-        - vazaoMinima (`float`)
-        - vazaoMaxima (`float`)
+        - indice_usina (`int`)
+        - nome_usina (`str`)
+        - indice_curva_jusante (`int`)
+        - altura_referencia_usina_jusante (`float`)
+        - indice_polinomio (`int`)
+        - vazao_minima (`float`)
+        - vazao_maxima (`float`)
         - a0 (`float`)
         - a1 (`float`)
         - a2 (`float`)

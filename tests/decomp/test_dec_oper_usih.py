@@ -17,32 +17,32 @@ def test_atributos_encontrados_dec_oper_usih():
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 40.00
-        assert rel.tabela.at[0, "indiceUsina"] == 1
-        assert rel.tabela.at[0, "nomeUsina"] == "CAMARGOS"
-        assert rel.tabela.at[0, "nomeSubmercado"] == "SE"
-        assert rel.tabela.at[0, "volumeUtilMaximoHm3"] == 672.00
-        assert rel.tabela.at[0, "volumeUtilInicialHm3"] == 31.58
-        assert rel.tabela.at[0, "volumeUtilInicialPercentual"] == 4.70
-        assert rel.tabela.at[0, "volumeUtilFinalHm3"] == 1.17
-        assert rel.tabela.at[0, "volumeUtilFinalPercentual"] == 0.17
-        assert rel.tabela.at[0, "geracaoMW"] == 22.12
-        assert rel.tabela.at[0, "potenciaInstaladaMW"] == 46.00
-        assert rel.tabela.at[0, "potenciaDisponivelMW"] == 46.00
-        assert np.isnan(rel.tabela.at[0, "vazaoNaturalM3S"])
-        assert np.isnan(rel.tabela.at[0, "vazaoNaturalMLT"])
-        assert np.isnan(rel.tabela.at[0, "vazaoIncrementalM3S"])
-        assert np.isnan(rel.tabela.at[0, "vazaoMontanteM3S"])
-        assert np.isnan(rel.tabela.at[0, "vazaoMontanteTVM3S"])
-        assert np.isnan(rel.tabela.at[0, "vazaoAfluenteM3S"])
-        assert rel.tabela.at[0, "vazaoDefluenteM3S"] == 196.61
-        assert rel.tabela.at[0, "vazaoTurbinadaM3S"] == 196.61
-        assert rel.tabela.at[0, "vazaoVertidaM3S"] == 0.0
-        assert rel.tabela.at[0, "vazaoDesviadaM3S"] == 0.0
-        assert rel.tabela.at[0, "vazaoRecebidaBombeamentoM3S"] == 0.0
-        assert rel.tabela.at[0, "vazaoRetiradaBombeamentoM3S"] == 0.0
-        assert rel.tabela.at[0, "vazaoRetiradaM3S"] == 0.20
-        assert rel.tabela.at[0, "vazaoRetornoM3S"] == 0.0
-        assert rel.tabela.at[0, "vazaoEvaporadaM3S"] == 0.0
+        assert rel.tabela.at[0, "indice_usina"] == 1
+        assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
+        assert rel.tabela.at[0, "nome_submercado"] == "SE"
+        assert rel.tabela.at[0, "volume_util_maximo_hm3"] == 672.00
+        assert rel.tabela.at[0, "volume_util_inicial_hm3"] == 31.58
+        assert rel.tabela.at[0, "volume_util_inicial_percentual"] == 4.70
+        assert rel.tabela.at[0, "volume_util_final_hm3"] == 1.17
+        assert rel.tabela.at[0, "volume_util_final_percentual"] == 0.17
+        assert rel.tabela.at[0, "geracao_MW"] == 22.12
+        assert rel.tabela.at[0, "potencia_instalada_MW"] == 46.00
+        assert rel.tabela.at[0, "potencia_disponivel_MW"] == 46.00
+        assert np.isnan(rel.tabela.at[0, "vazao_natural_m3s"])
+        assert np.isnan(rel.tabela.at[0, "vazao_natural_mlt"])
+        assert np.isnan(rel.tabela.at[0, "vazao_incremental_m3s"])
+        assert np.isnan(rel.tabela.at[0, "vazao_montante_m3s"])
+        assert np.isnan(rel.tabela.at[0, "vazao_montante_tv_m3s"])
+        assert np.isnan(rel.tabela.at[0, "vazao_afluente_m3s"])
+        assert rel.tabela.at[0, "vazao_defluente_m3s"] == 196.61
+        assert rel.tabela.at[0, "vazao_turbinada_m3s"] == 196.61
+        assert rel.tabela.at[0, "vazao_vertida_m3s"] == 0.0
+        assert rel.tabela.at[0, "vazao_desviada_m3s"] == 0.0
+        assert rel.tabela.at[0, "vazao_recebida_bombeamento_m3s"] == 0.0
+        assert rel.tabela.at[0, "vazao_retirada_bombeamento_m3s"] == 0.0
+        assert rel.tabela.at[0, "vazao_retirada_m3s"] == 0.20
+        assert rel.tabela.at[0, "vazao_retorno_m3s"] == 0.0
+        assert rel.tabela.at[0, "vazao_evaporada_m3s"] == 0.0
 
 
 def test_eq_dec_oper_usih():

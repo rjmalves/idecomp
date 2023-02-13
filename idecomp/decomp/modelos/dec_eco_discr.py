@@ -27,7 +27,7 @@ class TabelaEcoDiscr(TabelaCSV):
         "periodo",
         "patamar",
         "duracao",
-        "numeroPatamares",
-        "numeroAberturas",
+        "numero_patamares",
+        "numero_aberturas",
     ]
     END_PATTERN = ""
