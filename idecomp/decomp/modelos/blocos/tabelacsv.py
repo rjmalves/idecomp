@@ -8,7 +8,7 @@ import pandas as pd  # type: ignore
 class TabelaCSV(Block):
     """
     Bloco para ler uma tabela com separadores CSV fornecidos
-    a partir de um modelo de linha, para arquivos de saída do decomp.
+    a partir de um modelo de linha, para arquivos de saída do DECOMP.
     """
 
     BEGIN_PATTERN = "-----;------;"

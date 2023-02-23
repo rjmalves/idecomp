@@ -14,6 +14,7 @@ class TabelaOperUsih(TabelaCSV):
     """
 
     BEGIN_PATTERN = "-----;------;------;-----;--------;"
+
     LINE_MODEL = Line(
         [
             IntegerField(size=5),

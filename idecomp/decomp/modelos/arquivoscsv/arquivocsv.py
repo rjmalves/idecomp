@@ -10,7 +10,7 @@ from typing import List, Type, TypeVar, Optional
 class ArquivoCSV(BlockFile):
     """
     Modelo de arquivo baseado em blocos específico para o formato
-    dos arquivos de saída .CSV do DESSEM. Espera conter
+    dos arquivos de saída .CSV do DECOMP. Espera conter
     a implementação de dois blocos específicos:
 
     - Versão do modelo
