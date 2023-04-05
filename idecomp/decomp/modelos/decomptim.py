@@ -45,7 +45,7 @@ class BlocoTemposEtapas(Block):
         return timedelta(hours=data[0], minutes=data[1], seconds=data[2])
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
 
             df = pd.DataFrame(
@@ -79,7 +79,7 @@ class BlocoTemposEtapas(Block):
         tempo_impressao = timedelta(seconds=0.0)
         tempo_total = timedelta(seconds=0.0)
         while True:
-            linha = arq.readline()
+            linha = file.readline()
             if len(linha) == 0:
                 self.data = converte_tabela_em_df()
                 break

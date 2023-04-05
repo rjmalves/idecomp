@@ -45,7 +45,7 @@ class BlocoInviabilidadesIteracoes(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
             df["Iteração"] = iteracoes
@@ -59,7 +59,7 @@ class BlocoInviabilidadesIteracoes(Block):
 
         # Salta linhas de cabeçalho
         for _ in range(4):
-            arq.readline()
+            file.readline()
         iteracoes: List[int] = []
         fwds_bwds: List[int] = []
         estagios: List[int] = []
@@ -69,7 +69,7 @@ class BlocoInviabilidadesIteracoes(Block):
         unidades: List[str] = []
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if len(linha.strip()) < 5:
                 self.data = converte_tabela_em_df()
                 break
@@ -120,7 +120,7 @@ class BlocoInviabilidadesSimFinal(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
             df["Estágio"] = estagios
@@ -132,7 +132,7 @@ class BlocoInviabilidadesSimFinal(Block):
 
         # Salta linhas de cabeçalho
         for _ in range(4):
-            arq.readline()
+            file.readline()
 
         estagios: List[int] = []
         cenarios: List[int] = []
@@ -141,7 +141,7 @@ class BlocoInviabilidadesSimFinal(Block):
         unidades: List[str] = []
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if len(linha.strip()) < 5:
                 self.data = converte_tabela_em_df()
                 break
