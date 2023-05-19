@@ -8,7 +8,7 @@ Para mais detalhes sobre o uso de ambientes virtuais, recomenda-se a leitura do 
 
 Antes de prosseguir, é necessário verificar se está instalada a última versão do ``pip``, o gerenciador de pacotes de Python. Isso pode ser feito com, por exemplo::
 
-    $ python -m pip install ---upgrade pip
+    $ python -m pip install --upgrade pip
 
 Para maiores informações, é recomendado visitar a documentação oficial do `pip <https://pip.pypa.io/en/stable/installing/>`_.
 
