@@ -20,7 +20,7 @@ Seja um sistema de arquivos no qual, dentro de um diretório cujo caminho é::
 E neste diretório exista um arquivo ``dadger.rvX``, então o conteúdo deste pode ser lido 
 através do código::
 
-    >>> from inewave.decomp.dadger import Dadger
+    >>> from idecomp.decomp.dadger import Dadger
     >>> dadger = Dadger.le_arquivo("/home/usuario/estudo/dcp_AAAA_MM_rvX/", "dadger.rvX")
 
 .. currentmodule:: idecomp.decomp.dadger
@@ -73,7 +73,7 @@ Seja um sistema de arquivos no qual, dentro de um diretório cujo caminho é::
 E neste diretório exista um arquivo ``relato.rvX``, então o conteúdo deste pode ser lido 
 através do código::
 
-    >>> from inewave.decomp.relato import Relato
+    >>> from idecomp.decomp.relato import Relato
     >>> rel = Relato.le_arquivo("/home/usuario/estudo/dcp_AAAA_MM_rvX/", "relato.rvX")
 
 .. currentmodule:: idecomp.decomp.relato
