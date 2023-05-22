@@ -9,7 +9,7 @@ from tests.mocks.arquivos.dec_oper_interc import MockDecOperInterc
 def test_atributos_encontrados_dec_oper_interc():
     m: MagicMock = mock_open(read_data="".join(MockDecOperInterc))
     with patch("builtins.open", m):
-        rel = DecOperInterc.le_arquivo("")
+        rel = DecOperInterc.read("./tests/mocks/arquivos/dec_oper_interc.py")
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "periodo"] == 1
         assert rel.tabela.at[0, "no"] == 1
@@ -29,15 +29,15 @@ def test_atributos_encontrados_dec_oper_interc():
 def test_eq_dec_oper_interc():
     m: MagicMock = mock_open(read_data="".join(MockDecOperInterc))
     with patch("builtins.open", m):
-        rel1 = DecOperInterc.le_arquivo("")
-        rel2 = DecOperInterc.le_arquivo("")
+        rel1 = DecOperInterc.read("./tests/mocks/arquivos/dec_oper_interc.py")
+        rel2 = DecOperInterc.read("./tests/mocks/arquivos/dec_oper_interc.py")
         assert rel1 == rel2
 
 
 def test_neq_dec_oper_interc():
     m: MagicMock = mock_open(read_data="".join(MockDecOperInterc))
     with patch("builtins.open", m):
-        rel1 = DecOperInterc.le_arquivo("")
-        rel2 = DecOperInterc.le_arquivo("")
+        rel1 = DecOperInterc.read("./tests/mocks/arquivos/dec_oper_interc.py")
+        rel2 = DecOperInterc.read("./tests/mocks/arquivos/dec_oper_interc.py")
         rel1.tabela.iloc[0, 0] = -1
         assert rel1 != rel2

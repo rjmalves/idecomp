@@ -9,7 +9,9 @@ from unittest.mock import MagicMock, patch
 def test_bloco_inviabilidades_iteracao():
     m: MagicMock = mock_open(read_data="".join(MockInviabUnic))
     with patch("builtins.open", m):
-        inv = InviabUnic.le_arquivo("").inviabilidades_iteracoes
+        inv = InviabUnic.read(
+            "./tests/mocks/arquivos/inviab_unic.py"
+        ).inviabilidades_iteracoes
         assert inv.iloc[0, 0] == 1
         assert inv.iloc[0, 4] == "IRRIGACAO, USINA BARRA GRANDE"
         assert inv.iloc[0, 5] == 0.6

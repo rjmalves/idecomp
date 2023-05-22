@@ -12,4 +12,4 @@ nb2plots
 numpydoc
 black
 cfinterface>=1.1.1
-pyflakes==2.4.0
+pyflakes

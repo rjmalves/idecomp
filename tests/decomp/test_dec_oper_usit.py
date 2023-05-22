@@ -9,7 +9,7 @@ from tests.mocks.arquivos.dec_oper_usit import MockDecOperUsit
 def test_atributos_encontrados_dec_oper_usit():
     m: MagicMock = mock_open(read_data="".join(MockDecOperUsit))
     with patch("builtins.open", m):
-        rel = DecOperUsit.le_arquivo("")
+        rel = DecOperUsit.read("./tests/mocks/arquivos/dec_oper_usit.py")
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "periodo"] == 1
         assert rel.tabela.at[0, "no"] == 1
@@ -31,15 +31,15 @@ def test_atributos_encontrados_dec_oper_usit():
 def test_eq_dec_oper_usit():
     m: MagicMock = mock_open(read_data="".join(MockDecOperUsit))
     with patch("builtins.open", m):
-        rel1 = DecOperUsit.le_arquivo("")
-        rel2 = DecOperUsit.le_arquivo("")
+        rel1 = DecOperUsit.read("./tests/mocks/arquivos/dec_oper_usit.py")
+        rel2 = DecOperUsit.read("./tests/mocks/arquivos/dec_oper_usit.py")
         assert rel1 == rel2
 
 
 def test_neq_dec_oper_usit():
     m: MagicMock = mock_open(read_data="".join(MockDecOperUsit))
     with patch("builtins.open", m):
-        rel1 = DecOperUsit.le_arquivo("")
-        rel2 = DecOperUsit.le_arquivo("")
+        rel1 = DecOperUsit.read("./tests/mocks/arquivos/dec_oper_usit.py")
+        rel2 = DecOperUsit.read("./tests/mocks/arquivos/dec_oper_usit.py")
         rel1.tabela.iloc[0, 0] = -1
         assert rel1 != rel2

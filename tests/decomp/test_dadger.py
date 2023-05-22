@@ -154,7 +154,6 @@ from tests.mocks.arquivos.dadger import (
 
 
 def test_registro_te_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockTE))
     r = TE()
     with patch("builtins.open", m):
@@ -173,7 +172,6 @@ def test_registro_te_dadger():
 
 
 def test_registro_sb_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockSB))
     r = SB()
     with patch("builtins.open", m):
@@ -190,7 +188,6 @@ def test_registro_sb_dadger():
 
 
 def test_registro_uh_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockUH))
     r = UH()
     with patch("builtins.open", m):
@@ -216,7 +213,6 @@ def test_registro_uh_dadger():
 
 
 def test_registro_ct_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockCT))
     r = CT()
     with patch("builtins.open", m):
@@ -262,7 +258,6 @@ def test_registro_ct_dadger():
 
 
 def test_registro_ue_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockUE))
     r = UE()
     with patch("builtins.open", m):
@@ -290,7 +285,6 @@ def test_registro_ue_dadger():
 
 
 def test_registro_dp_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockDP))
     r = DP()
     with patch("builtins.open", m):
@@ -316,7 +310,6 @@ def test_registro_dp_dadger():
 
 
 def test_registro_pq_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockPQ))
     r = PQ()
     with patch("builtins.open", m):
@@ -339,7 +332,6 @@ def test_registro_pq_dadger():
 
 
 def test_registro_cd_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockCD))
     r = CD()
     with patch("builtins.open", m):
@@ -379,7 +371,6 @@ def test_registro_cd_dadger():
 
 
 def test_registro_ri_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockRI))
     r = RI()
     with patch("builtins.open", m):
@@ -409,7 +400,6 @@ def test_registro_ri_dadger():
 
 
 def test_registro_ia_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockIA))
     r = IA()
     with patch("builtins.open", m):
@@ -420,7 +410,6 @@ def test_registro_ia_dadger():
 
 
 def test_registro_tx_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockTX))
     r = TX()
     with patch("builtins.open", m):
@@ -434,7 +423,6 @@ def test_registro_tx_dadger():
 
 
 def test_registro_gp_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockGP))
     r = GP()
     with patch("builtins.open", m):
@@ -448,7 +436,6 @@ def test_registro_gp_dadger():
 
 
 def test_registro_ni_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockNI))
     r = NI()
     with patch("builtins.open", m):
@@ -465,7 +452,6 @@ def test_registro_ni_dadger():
 
 
 def test_registro_dt_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockDT))
     r = DT()
     with patch("builtins.open", m):
@@ -485,7 +471,6 @@ def test_registro_dt_dadger():
 
 
 def test_registro_mp_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockMP))
     r = MP()
     with patch("builtins.open", m):
@@ -512,7 +497,6 @@ def test_registro_mp_dadger():
 
 
 def test_registro_mt_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockMT))
     r = MT()
     with patch("builtins.open", m):
@@ -539,7 +523,6 @@ def test_registro_mt_dadger():
 
 
 def test_registro_fd_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockFD))
     r = FD()
     with patch("builtins.open", m):
@@ -566,7 +549,6 @@ def test_registro_fd_dadger():
 
 
 def test_registro_ve_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockVE))
     r = VE()
     with patch("builtins.open", m):
@@ -607,7 +589,6 @@ def test_registro_ve_dadger():
 
 
 def test_registro_re_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockRE))
     r = RE()
     with patch("builtins.open", m):
@@ -627,7 +608,6 @@ def test_registro_re_dadger():
 
 
 def test_registro_lu_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockLU))
     r = LU()
     with patch("builtins.open", m):
@@ -650,7 +630,6 @@ def test_registro_lu_dadger():
 
 
 def test_registro_fu_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockFU))
     r = FU()
     with patch("builtins.open", m):
@@ -666,7 +645,6 @@ def test_registro_fu_dadger():
 
 
 def test_registro_fi_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockFI))
     r = FI()
     with patch("builtins.open", m):
@@ -681,7 +659,6 @@ def test_registro_fi_dadger():
 
 
 def test_registro_ft_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockFT))
     r = FT()
     with patch("builtins.open", m):
@@ -697,7 +674,6 @@ def test_registro_ft_dadger():
 
 
 def test_registro_vi_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockVI))
     r = VI()
     with patch("builtins.open", m):
@@ -735,7 +711,6 @@ def test_registro_vi_dadger():
 
 
 def test_registro_acjusmed_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACJUSMED))
     r = ACJUSMED()
     with patch("builtins.open", m):
@@ -767,7 +742,6 @@ def test_registro_acjusmed_dadger():
 
 
 def test_registro_accotvol_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACCOTVOL))
     r = ACCOTVOL()
     with patch("builtins.open", m):
@@ -803,7 +777,6 @@ def test_registro_accotvol_dadger():
 
 
 def test_registro_acvolmin_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACVOLMIN))
     r = ACVOLMIN()
     with patch("builtins.open", m):
@@ -829,7 +802,6 @@ def test_registro_acvolmin_dadger():
 
 
 def test_registro_accofeva_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACCOFEVA))
     r = ACCOFEVA()
     with patch("builtins.open", m):
@@ -858,7 +830,6 @@ def test_registro_accofeva_dadger():
 
 
 def test_registro_acnumpos_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACNUMPOS))
     r = ACNUMPOS()
     with patch("builtins.open", m):
@@ -884,7 +855,6 @@ def test_registro_acnumpos_dadger():
 
 
 def test_registro_acvsvert_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACVSVERT))
     r = ACVSVERT()
     with patch("builtins.open", m):
@@ -910,7 +880,6 @@ def test_registro_acvsvert_dadger():
 
 
 def test_registro_acvmdesv_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACVMDESV))
     r = ACVMDESV()
     with patch("builtins.open", m):
@@ -936,7 +905,6 @@ def test_registro_acvmdesv_dadger():
 
 
 def test_registro_acnumjus_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACNUMJUS))
     r = ACNUMJUS()
     with patch("builtins.open", m):
@@ -962,7 +930,6 @@ def test_registro_acnumjus_dadger():
 
 
 def test_registro_acdesvio_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACDESVIO))
     r = ACDESVIO()
     with patch("builtins.open", m):
@@ -991,7 +958,6 @@ def test_registro_acdesvio_dadger():
 
 
 def test_registro_acjusena_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACJUSENA))
     r = ACJUSENA()
     with patch("builtins.open", m):
@@ -1017,7 +983,6 @@ def test_registro_acjusena_dadger():
 
 
 def test_registro_acvazmin_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACVAZMIN))
     r = ACVAZMIN()
     with patch("builtins.open", m):
@@ -1043,7 +1008,6 @@ def test_registro_acvazmin_dadger():
 
 
 def test_registro_acnposnw_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACNPOSNW))
     r = ACNPOSNW()
     with patch("builtins.open", m):
@@ -1069,7 +1033,6 @@ def test_registro_acnposnw_dadger():
 
 
 def test_registro_acvertju_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACVERTJU))
     r = ACVERTJU()
     with patch("builtins.open", m):
@@ -1095,7 +1058,6 @@ def test_registro_acvertju_dadger():
 
 
 def test_registro_acnumcon_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACNUMCON))
     r = ACNUMCON()
     with patch("builtins.open", m):
@@ -1121,7 +1083,6 @@ def test_registro_acnumcon_dadger():
 
 
 def test_registro_acnummaq_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACNUMMAQ))
     r = ACNUMMAQ()
     with patch("builtins.open", m):
@@ -1150,7 +1111,6 @@ def test_registro_acnummaq_dadger():
 
 
 def test_registro_acpotefe_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockACPOTEFE))
     r = ACPOTEFE()
     with patch("builtins.open", m):
@@ -1179,7 +1139,6 @@ def test_registro_acpotefe_dadger():
 
 
 def test_registro_fp_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockFP))
     r = FP()
     with patch("builtins.open", m):
@@ -1219,7 +1178,6 @@ def test_registro_fp_dadger():
 
 
 def test_registro_ir_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockIR))
     r = IR()
     with patch("builtins.open", m):
@@ -1232,7 +1190,6 @@ def test_registro_ir_dadger():
 
 
 def test_registro_ci_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockCI))
     r = CI()
     with patch("builtins.open", m):
@@ -1242,7 +1199,6 @@ def test_registro_ci_dadger():
 
 
 def test_registro_fc_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockFC))
     r = FC()
     with patch("builtins.open", m):
@@ -1255,7 +1211,6 @@ def test_registro_fc_dadger():
 
 
 def test_registro_ea_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockEA))
     r = EA()
     with patch("builtins.open", m):
@@ -1296,7 +1251,6 @@ def test_registro_ea_dadger():
 
 
 def test_registro_es_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockES))
     r = ES()
     with patch("builtins.open", m):
@@ -1329,7 +1283,6 @@ def test_registro_es_dadger():
 
 
 def test_registro_qi_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockQI))
     r = QI()
     with patch("builtins.open", m):
@@ -1345,7 +1298,6 @@ def test_registro_qi_dadger():
 
 
 def test_registro_ti_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockTI))
     r = TI()
     with patch("builtins.open", m):
@@ -1369,7 +1321,6 @@ def test_registro_ti_dadger():
 
 
 def test_registro_rq_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockRQ))
     r = RQ()
     with patch("builtins.open", m):
@@ -1385,7 +1336,6 @@ def test_registro_rq_dadger():
 
 
 def test_registro_ez_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockEZ))
     r = EZ()
     with patch("builtins.open", m):
@@ -1401,7 +1351,6 @@ def test_registro_ez_dadger():
 
 
 def test_registro_hv_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockHV))
     r = HV()
     with patch("builtins.open", m):
@@ -1420,7 +1369,6 @@ def test_registro_hv_dadger():
 
 
 def test_registro_lv_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockLV))
     r = LV()
     with patch("builtins.open", m):
@@ -1442,7 +1390,6 @@ def test_registro_lv_dadger():
 
 
 def test_registro_cv_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockCV))
     r = CV()
     with patch("builtins.open", m):
@@ -1467,7 +1414,6 @@ def test_registro_cv_dadger():
 
 
 def test_registro_hq_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockHQ))
     r = HQ()
     with patch("builtins.open", m):
@@ -1486,7 +1432,6 @@ def test_registro_hq_dadger():
 
 
 def test_registro_lq_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockLQ))
     r = LQ()
     with patch("builtins.open", m):
@@ -1508,7 +1453,6 @@ def test_registro_lq_dadger():
 
 
 def test_registro_cq_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockCQ))
     r = CQ()
     with patch("builtins.open", m):
@@ -1533,7 +1477,6 @@ def test_registro_cq_dadger():
 
 
 def test_registro_ar_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockAR))
     r = AR()
     with patch("builtins.open", m):
@@ -1552,7 +1495,6 @@ def test_registro_ar_dadger():
 
 
 def test_registro_ev_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockEV))
     r = EV()
     with patch("builtins.open", m):
@@ -1568,7 +1510,6 @@ def test_registro_ev_dadger():
 
 
 def test_registro_he_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockHE))
     r = HE()
     with patch("builtins.open", m):
@@ -1605,7 +1546,6 @@ def test_registro_he_dadger():
 
 
 def test_registro_cm_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockCM))
     r = CM()
     with patch("builtins.open", m):
@@ -1624,7 +1564,6 @@ def test_registro_cm_dadger():
 
 
 def test_registro_fj_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockFJ))
     r = FJ()
     with patch("builtins.open", m):
@@ -1637,7 +1576,6 @@ def test_registro_fj_dadger():
 
 
 def test_registro_pd_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockPD))
     r = PD()
     with patch("builtins.open", m):
@@ -1650,7 +1588,6 @@ def test_registro_pd_dadger():
 
 
 def test_registro_pu_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockPU))
     r = PU()
     with patch("builtins.open", m):
@@ -1663,7 +1600,6 @@ def test_registro_pu_dadger():
 
 
 def test_registro_rc_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockRC))
     r = RC()
     with patch("builtins.open", m):
@@ -1676,7 +1612,6 @@ def test_registro_rc_dadger():
 
 
 def test_registro_pe_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockPE))
     r = PE()
     with patch("builtins.open", m):
@@ -1695,7 +1630,6 @@ def test_registro_pe_dadger():
 
 
 def test_registro_ts_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockTS))
     r = TS()
     with patch("builtins.open", m):
@@ -1717,7 +1651,6 @@ def test_registro_ts_dadger():
 
 
 def test_registro_pv_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockPV))
     r = PV()
     with patch("builtins.open", m):
@@ -1752,7 +1685,6 @@ def test_registro_pv_dadger():
 
 
 def test_registro_cx_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockCX))
     r = CX()
     with patch("builtins.open", m):
@@ -1768,7 +1700,6 @@ def test_registro_cx_dadger():
 
 
 def test_registro_fa_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockFA))
     r = FA()
     with patch("builtins.open", m):
@@ -1781,7 +1712,6 @@ def test_registro_fa_dadger():
 
 
 def test_registro_vt_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockVT))
     r = VT()
     with patch("builtins.open", m):
@@ -1794,7 +1724,6 @@ def test_registro_vt_dadger():
 
 
 def test_registro_cs_dadger():
-
     m: MagicMock = mock_open(read_data="".join(MockCS))
     r = CS()
     with patch("builtins.open", m):
@@ -1809,7 +1738,7 @@ def test_registro_cs_dadger():
 def test_campos_nao_encontrados_dadger():
     m: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m):
-        d = Dadger.le_arquivo("", "")
+        d = Dadger.read(".")
     assert d.te is None
     assert d.sb(0) is None
     assert d.uh(0) is None
@@ -1841,7 +1770,7 @@ def test_campos_nao_encontrados_dadger():
 def test_campos_encontrados_dadger():
     m: MagicMock = mock_open(read_data="".join(MockDadger))
     with patch("builtins.open", m):
-        d = Dadger.le_arquivo("", "")
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
     assert d.te is not None
     assert d.sb(1) is not None
     assert d.uh(1) is not None
@@ -1873,7 +1802,7 @@ def test_campos_encontrados_dadger():
 def test_cria_lu_dadger():
     m: MagicMock = mock_open(read_data="".join(MockDadger))
     with patch("builtins.open", m):
-        d = Dadger.le_arquivo("", "")
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
         lu = d.lu(1, 2)
         assert lu is not None
         assert lu.limites_inferiores == d.lu(1, 1).limites_inferiores
@@ -1887,7 +1816,7 @@ def test_cria_lu_dadger():
 def test_cria_lv_dadger():
     m: MagicMock = mock_open(read_data="".join(MockDadger))
     with patch("builtins.open", m):
-        d = Dadger.le_arquivo("", "")
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
         lv = d.lv(3, 2)
         assert lv is not None
         assert lv.limite_inferior == d.lv(3, 1).limite_inferior
@@ -1901,7 +1830,7 @@ def test_cria_lv_dadger():
 def test_cria_lq_dadger():
     m: MagicMock = mock_open(read_data="".join(MockDadger))
     with patch("builtins.open", m):
-        d = Dadger.le_arquivo("", "")
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
         lq = d.lq(5, 2)
         assert lq is not None
         assert lq.limites_inferiores == d.lq(5, 1).limites_inferiores
@@ -1915,16 +1844,16 @@ def test_cria_lq_dadger():
 def test_eq_dadger():
     m: MagicMock = mock_open(read_data="".join(MockDadger))
     with patch("builtins.open", m):
-        d1 = Dadger.le_arquivo("")
-        d2 = Dadger.le_arquivo("")
+        d1 = Dadger.read("./tests/mocks/arquivos/dadger.py")
+        d2 = Dadger.read("./tests/mocks/arquivos/dadger.py")
         assert d1 == d2
 
 
 def test_neq_dadger():
     m: MagicMock = mock_open(read_data="".join(MockDadger))
     with patch("builtins.open", m):
-        d1 = Dadger.le_arquivo("")
-        d2 = Dadger.le_arquivo("")
+        d1 = Dadger.read("./tests/mocks/arquivos/dadger.py")
+        d2 = Dadger.read("./tests/mocks/arquivos/dadger.py")
         d2.te.titulo = "Teste"
         assert d1 != d2
 
@@ -1932,10 +1861,10 @@ def test_neq_dadger():
 def test_leitura_escrita_dadger():
     m_leitura: MagicMock = mock_open(read_data="".join(MockDadger))
     with patch("builtins.open", m_leitura):
-        d1 = Dadger.le_arquivo("")
+        d1 = Dadger.read("./tests/mocks/arquivos/dadger.py")
     m_escrita: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m_escrita):
-        d1.escreve_arquivo("", "")
+        d1.write("./tests/mocks/arquivos/dadger.py")
         # Recupera o que foi escrito
         chamadas = m_escrita.mock_calls
         linhas_escritas = [
@@ -1943,5 +1872,5 @@ def test_leitura_escrita_dadger():
         ]
     m_releitura: MagicMock = mock_open(read_data="".join(linhas_escritas))
     with patch("builtins.open", m_releitura):
-        d2 = Dadger.le_arquivo("")
+        d2 = Dadger.read("./tests/mocks/arquivos/dadger.py")
         assert d1 == d2
