@@ -28,29 +28,29 @@ def test_bloco_tempos_etapas():
 def test_atributos_encontrados_decomptim():
     m: MagicMock = mock_open(read_data="".join(MockDecompTim))
     with patch("builtins.open", m):
-        dt = DecompTim.le_arquivo("")
+        dt = DecompTim.read("./tests/mocks/arquivos/decomptim.py")
         assert dt.tempos_etapas is not None
 
 
 def test_atributos_nao_encontrados_decomptim():
     m: MagicMock = mock_open(read_data="".join(""))
     with patch("builtins.open", m):
-        dt = DecompTim.le_arquivo("")
+        dt = DecompTim.read("./tests/mocks/arquivos/decomptim.py")
         assert dt.tempos_etapas is None
 
 
 def test_eq_decomptim():
     m: MagicMock = mock_open(read_data="".join(MockDecompTim))
     with patch("builtins.open", m):
-        dt1 = DecompTim.le_arquivo("")
-        dt2 = DecompTim.le_arquivo("")
+        dt1 = DecompTim.read("./tests/mocks/arquivos/decomptim.py")
+        dt2 = DecompTim.read("./tests/mocks/arquivos/decomptim.py")
         assert dt1 == dt2
 
 
 def test_neq_decomptim():
     m: MagicMock = mock_open(read_data="".join(MockDecompTim))
     with patch("builtins.open", m):
-        dt1 = DecompTim.le_arquivo("")
-        dt2 = DecompTim.le_arquivo("")
+        dt1 = DecompTim.read("./tests/mocks/arquivos/decomptim.py")
+        dt2 = DecompTim.read("./tests/mocks/arquivos/decomptim.py")
         dt1.tempos_etapas.iloc[0, 0] = "Leitura de Algo"
         assert dt1 != dt2

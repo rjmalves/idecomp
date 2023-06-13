@@ -34,7 +34,7 @@ class BlocoCortesFCF(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             if ree:
                 colunas = ["corte", "RHS", "REE", "coef_earm"] + [
@@ -64,7 +64,7 @@ class BlocoCortesFCF(Block):
             df = df.astype(tipos)
             return df
 
-        linha_inicial = arq.readline()
+        linha_inicial = file.readline()
         ree = "REE" in linha_inicial
         uhe = "Usi" in linha_inicial
         gnl = "Pat" in linha_inicial
@@ -73,12 +73,12 @@ class BlocoCortesFCF(Block):
 
         # Salta 2 linhas
         for _ in range(2):
-            arq.readline()
+            file.readline()
 
         # Lê a primeira linha da tabelapara descobrir o número de termos
-        pos = arq.tell()
-        primeira_linha = arq.readline()
-        arq.seek(pos)
+        pos = file.tell()
+        primeira_linha = file.readline()
+        file.seek(pos)
         num_elementos = (
             len([e for e in primeira_linha.split(" ") if len(e) > 0]) - 4
         )
@@ -120,7 +120,7 @@ class BlocoCortesFCF(Block):
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if len(linha) < 5:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()

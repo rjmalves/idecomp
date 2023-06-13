@@ -521,7 +521,7 @@ def test_bloco_dias_excluidos_semanas():
 def test_atributos_encontrados_relato():
     m: MagicMock = mock_open(read_data="".join(MockRelato))
     with patch("builtins.open", m):
-        rel = Relato.le_arquivo("")
+        rel = Relato.read("./tests/mocks/arquivos/relato.py")
         assert rel.rees_subsistemas is not None
         assert rel.uhes_rees_subsistemas is not None
         assert rel.convergencia is not None
@@ -549,7 +549,7 @@ def test_atributos_encontrados_relato():
 def test_atributos_nao_encontrados_relato():
     m: MagicMock = mock_open(read_data="".join(""))
     with patch("builtins.open", m):
-        rel = Relato.le_arquivo("")
+        rel = Relato.read("./tests/mocks/arquivos/relato.py")
         assert rel.rees_subsistemas is None
         assert rel.uhes_rees_subsistemas is None
         assert rel.convergencia is None
@@ -576,15 +576,15 @@ def test_atributos_nao_encontrados_relato():
 def test_eq_relato():
     m: MagicMock = mock_open(read_data="".join(MockRelato))
     with patch("builtins.open", m):
-        rel1 = Relato.le_arquivo("")
-        rel2 = Relato.le_arquivo("")
+        rel1 = Relato.read("./tests/mocks/arquivos/relato.py")
+        rel2 = Relato.read("./tests/mocks/arquivos/relato.py")
         assert rel1 == rel2
 
 
 def test_neq_relato():
     m: MagicMock = mock_open(read_data="".join(MockRelato))
     with patch("builtins.open", m):
-        rel1 = Relato.le_arquivo("")
-        rel2 = Relato.le_arquivo("")
+        rel1 = Relato.read("./tests/mocks/arquivos/relato.py")
+        rel2 = Relato.read("./tests/mocks/arquivos/relato.py")
         rel1.convergencia.iloc[0, 0] = 0
         assert rel1 != rel2

@@ -109,7 +109,7 @@ def test_bloco_relatorio_operacao_relgnl():
 def test_atributos_encontrados_relgnl():
     m: MagicMock = mock_open(read_data="".join(MockRelGNL))
     with patch("builtins.open", m):
-        rel = RelGNL.le_arquivo("")
+        rel = RelGNL.read("./tests/mocks/arquivos/relgnl.py")
         assert rel.usinas_termicas is not None
         assert rel.comandos_usinas_registros_tg is not None
         assert rel.comandos_usinas_restricoes_eletricas is not None
@@ -119,25 +119,8 @@ def test_atributos_encontrados_relgnl():
 def test_atributos_nao_encontrados_relgnl():
     m: MagicMock = mock_open(read_data="".join(""))
     with patch("builtins.open", m):
-        rel = RelGNL.le_arquivo("")
+        rel = RelGNL.read("./tests/mocks/arquivos/relgnl.py")
         assert rel.usinas_termicas is None
         assert rel.comandos_usinas_registros_tg is None
         assert rel.comandos_usinas_restricoes_eletricas is None
         assert rel.relatorio_operacao_termica is None
-
-
-# def test_eq_relgnl():
-#     m: MagicMock = mock_open(read_data="".join(MockRelGNL))
-#     with patch("builtins.open", m):
-#         rel1 = RelGNL.le_arquivo("")
-#         rel2 = RelGNL.le_arquivo("")
-#         assert rel1 == rel2
-
-
-# def test_neq_relgnl():
-#     m: MagicMock = mock_open(read_data="".join(MockRelGNL))
-#     with patch("builtins.open", m):
-#         rel1 = RelGNL.le_arquivo("")
-#         rel2 = RelGNL.le_arquivo("")
-#         rel1.relatorio_operacao_termica.iloc[0, 0] = 0
-#         assert rel1 != rel2

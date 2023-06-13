@@ -58,7 +58,7 @@ class BlocoREEsSubsistemas(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
@@ -79,7 +79,7 @@ class BlocoREEsSubsistemas(Block):
         nomes_newave: List[str] = []
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X----X-----" in linha:
                 if not comecou:
                     comecou = True
@@ -137,7 +137,7 @@ class BlocoUHEsREEsSubsistemas(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
@@ -162,7 +162,7 @@ class BlocoUHEsREEsSubsistemas(Block):
         nomes_newave: List[str] = []
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X----X-----" in linha:
                 if not comecou:
                     comecou = True
@@ -223,7 +223,7 @@ class BlocoConvergenciaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             colunas = [
                 "Iteração",
@@ -257,13 +257,13 @@ class BlocoConvergenciaRelato(Block):
 
         # Salta 9 linhas linha
         for _ in range(9):
-            arq.readline()
+            file.readline()
 
         tabela = np.zeros((999, 11))
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if len(linha) < 5:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -337,7 +337,7 @@ class BlocoRelatorioOperacaoRelato(Block):
                 ]
             )
 
-    def __read_bloco_operacao_uhe(self, arq: IO):
+    def __read_bloco_operacao_uhe(self, file: IO):
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [
                 "Volume Ini (% V.U)",
@@ -386,7 +386,7 @@ class BlocoRelatorioOperacaoRelato(Block):
 
         # Salta 7 linhas
         for _ in range(7):
-            arq.readline()
+            file.readline()
 
         # Variáveis auxiliares
         numeros: List[int] = []
@@ -399,7 +399,7 @@ class BlocoRelatorioOperacaoRelato(Block):
         tabela: np.ndarray = np.zeros((MAX_UHES, 15))
         i = 0
         while True:
-            linha: str = arq.readline()
+            linha: str = file.readline()
             # Verifica se acabou
             if self.ends(linha):
                 tabela = tabela[:i, :]
@@ -416,7 +416,7 @@ class BlocoRelatorioOperacaoRelato(Block):
             tabela[i, :] = dados[3:]
             i += 1
 
-    def __read_bloco_operacao_geral(self, arq: IO):
+    def __read_bloco_operacao_geral(self, file: IO):
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
@@ -446,30 +446,30 @@ class BlocoRelatorioOperacaoRelato(Block):
         linha_custo_exp = Line([FloatField(14, 54, 2, format="E")])
         linha_custo_subsis = Line([LiteralField(2, 44), FloatField(14, 54, 2)])
 
-        custo_futuro: list = linha_custo.read(arq.readline())
-        arq.readline()
-        arq.readline()
-        custo_estagio: list = linha_custo.read(arq.readline())
-        arq.readline()
-        arq.readline()
-        custo_gt: list = linha_custo.read(arq.readline())
-        arq.readline()
-        arq.readline()
-        arq.readline()
-        arq.readline()
-        custo_desvio: list = linha_custo.read(arq.readline())
-        custo_vert_reservatorio: list = linha_custo.read(arq.readline())
-        custo_vert_fio: list = linha_custo.read(arq.readline())
+        custo_futuro: list = linha_custo.read(file.readline())
+        file.readline()
+        file.readline()
+        custo_estagio: list = linha_custo.read(file.readline())
+        file.readline()
+        file.readline()
+        custo_gt: list = linha_custo.read(file.readline())
+        file.readline()
+        file.readline()
+        file.readline()
+        file.readline()
+        custo_desvio: list = linha_custo.read(file.readline())
+        custo_vert_reservatorio: list = linha_custo.read(file.readline())
+        custo_vert_fio: list = linha_custo.read(file.readline())
         custo_turbinamento_reservatorio: list = linha_custo.read(
-            arq.readline()
+            file.readline()
         )
-        custo_turbinamento_fio: list = linha_custo.read(arq.readline())
-        custo_intercambio: list = linha_custo_exp.read(arq.readline())
-        arq.readline()
+        custo_turbinamento_fio: list = linha_custo.read(file.readline())
+        custo_intercambio: list = linha_custo_exp.read(file.readline())
+        file.readline()
 
         cmos: Dict[str, float] = {}
         while True:
-            linha = arq.readline()
+            linha = file.readline()
             if len(linha.strip()) < 4:
                 self.data = ["GERAL", converte_tabela_para_df()]
                 break
@@ -477,7 +477,7 @@ class BlocoRelatorioOperacaoRelato(Block):
             cmos[dados_linha[0]] = dados_linha[1]
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         str_bloco_operacao_uhe = "# Aproveitamento(s) com evaporacao "
         str_bloco_operacao_geral = "Valor  esperado  do  custo  futuro:"
         # str_bloco_restricoes_rhe = (
@@ -486,20 +486,20 @@ class BlocoRelatorioOperacaoRelato(Block):
 
         # Salta duas linhas e extrai a semana
         for _ in range(2):
-            arq.readline()
-        self.dados_cenario = self.__scenario_line.read(arq.readline())
+            file.readline()
+        self.dados_cenario = self.__scenario_line.read(file.readline())
 
         # Salta duas linhas e extrai o tipo do bloco
-        arq.readline()
-        linha_tipo_bloco = arq.readline()
+        file.readline()
+        linha_tipo_bloco = file.readline()
         bloco_operacao_uhe = str_bloco_operacao_uhe in linha_tipo_bloco
         bloco_operacao_geral = False
         # bloco_restricoes_rhe = str_bloco_restricoes_rhe in linha_tipo_bloco
 
         if not bloco_operacao_uhe:
-            pos = arq.tell()
-            linha_tipo_bloco = arq.readline()
-            arq.seek(pos)
+            pos = file.tell()
+            linha_tipo_bloco = file.readline()
+            file.seek(pos)
             bloco_operacao_geral = str_bloco_operacao_geral in linha_tipo_bloco
 
         # TODO - não ignorar bloco RHE, ler
@@ -508,9 +508,9 @@ class BlocoRelatorioOperacaoRelato(Block):
             return
 
         if bloco_operacao_uhe:
-            self.__read_bloco_operacao_uhe(arq)
+            self.__read_bloco_operacao_uhe(file)
         elif bloco_operacao_geral:
-            self.__read_bloco_operacao_geral(arq)
+            self.__read_bloco_operacao_geral(file)
 
 
 class BlocoRelatorioOperacaoUTERelato(Block):
@@ -551,7 +551,7 @@ class BlocoRelatorioOperacaoUTERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [f"Patamar {i}" for i in range(1, n_pats + 1)] + ["Custo"]
             df = pd.DataFrame(tabela, columns=cols)
@@ -580,13 +580,13 @@ class BlocoRelatorioOperacaoUTERelato(Block):
         str_fim_bloco = "      T o t a l  Termica"
         # Salta duas linhas e extrai a semana
         for _ in range(2):
-            arq.readline()
-        dados = self.__scenario_line.read(arq.readline())
+            file.readline()
+        dados = self.__scenario_line.read(file.readline())
 
         # Salta duas linhas e extrai o número de patamares
         for _ in range(2):
-            arq.readline()
-        n_pats = len([s for s in arq.readline().split() if "Ene_pat_" in s])
+            file.readline()
+        n_pats = len([s for s in file.readline().split() if "Ene_pat_" in s])
 
         estagio = dados[0]
         cenario = dados[1]
@@ -596,12 +596,12 @@ class BlocoRelatorioOperacaoUTERelato(Block):
         tabela = np.zeros((MAX_UTES, n_pats + 1))
         i = 0
         while True:
-            posicao_ultima_linha = arq.tell()
-            linha: str = arq.readline()
+            posicao_ultima_linha = file.tell()
+            linha: str = file.readline()
             # Verifica se acabou
             if self.ends(linha):
                 tabela = tabela[:i, :]
-                arq.seek(posicao_ultima_linha)
+                file.seek(posicao_ultima_linha)
                 self.data = converte_tabela_para_df()
                 break
             # Verifica se começou um bloco de usinas
@@ -628,7 +628,7 @@ class BlocoBalancoEnergeticoRelato(Block):
     """
 
     BEGIN_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
-    END_PATTERN = "RELATORIO\s+DA\s+OPERACAO"  # noqa
+    END_PATTERN = r"RELATORIO\s+DA\s+OPERACAO"  # noqa
 
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
@@ -690,7 +690,7 @@ class BlocoBalancoEnergeticoRelato(Block):
         ), [c for c in colunas if c != "Interligacao"]
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_para_df() -> pd.DataFrame:
             tamanho_maior_linha = max([len(lin) for lin in linhas])
             tabela = np.zeros((len(linhas), tamanho_maior_linha))
@@ -742,31 +742,31 @@ class BlocoBalancoEnergeticoRelato(Block):
         earms_finais_abs = []
         earms_finais_per = []
         # Salta duas linhas e extrai a semana
-        arq.readline()
-        arq.readline()
-        dados = self.__linha_cenario.read(arq.readline())
+        file.readline()
+        file.readline()
+        dados = self.__linha_cenario.read(file.readline())
         estagio = dados[0]
         cenario = dados[1]
         probabilidade = dados[2]
         linhas: List[List[float]] = []
         colunas_balanco: List[str] = []
         while True:
-            pos = arq.tell()
-            linha = arq.readline()
+            pos = file.tell()
+            linha = file.readline()
             # Verifica se acabou
             if self.ends(linha):
-                arq.seek(pos)
+                file.seek(pos)
                 self.data = converte_tabela_para_df()
                 break
             # Senão, procura a linha que identifica o subsistema
             if str_subsis in linha:
                 subsis = self.__linha_subsistema.read(linha)[0]
-                dados_ear_ena_abs = self.__linha_ear_ena.read(arq.readline())
-                dados_ear_ena_per = self.__linha_ear_ena.read(arq.readline())
+                dados_ear_ena_abs = self.__linha_ear_ena.read(file.readline())
+                dados_ear_ena_per = self.__linha_ear_ena.read(file.readline())
                 # Ignora uma linha
-                arq.readline()
+                file.readline()
                 self.__linha_balanco, colunas = self.__define_linha_balanco(
-                    arq.readline()
+                    file.readline()
                 )
                 if len(colunas_balanco) < len(colunas):
                     colunas_balanco = colunas
@@ -828,7 +828,7 @@ class BlocoCMORelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
@@ -847,10 +847,10 @@ class BlocoCMORelato(Block):
             return df
 
         # Salta duas linhas
-        arq.readline()
-        arq.readline()
+        file.readline()
+        file.readline()
         num_estagios = (
-            len([e for e in arq.readline().strip().split(" ") if len(e) > 2])
+            len([e for e in file.readline().strip().split(" ") if len(e) > 2])
             - 1
         )
         num_estagios
@@ -863,11 +863,11 @@ class BlocoCMORelato(Block):
         patamares_distintos: list = []
         tabela = np.zeros((MAX_SUBSISTEMAS * MAX_PATAMARES, num_estagios))
         # Salta outra linha
-        arq.readline()
+        file.readline()
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -912,7 +912,7 @@ class BlocoCustoOperacaoValorEsperadoRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
@@ -922,10 +922,10 @@ class BlocoCustoOperacaoValorEsperadoRelato(Block):
             return df
 
         # Salta duas linhas
-        arq.readline()
-        arq.readline()
+        file.readline()
+        file.readline()
         num_estagios = len(
-            [e for e in arq.readline().strip().split(" ") if len(e) > 2]
+            [e for e in file.readline().strip().split(" ") if len(e) > 2]
         )
         campo_parcela: List[Field] = [LiteralField(6, 4)]
         campos_custos: List[Field] = [
@@ -935,9 +935,9 @@ class BlocoCustoOperacaoValorEsperadoRelato(Block):
         parcelas: list = []
         tabela = np.zeros((2, num_estagios))
         # Salta outra linha
-        arq.readline()
+        file.readline()
         for i in range(2):
-            linha = arq.readline()
+            linha = file.readline()
             dados = self.__linha.read(linha)
             parcelas.append(dados[0])
             tabela[i, :] = dados[1:]
@@ -968,7 +968,7 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
@@ -978,10 +978,10 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
             return df
 
         # Salta duas linhas
-        arq.readline()
-        arq.readline()
+        file.readline()
+        file.readline()
         num_estagios = (
-            len([e for e in arq.readline().strip().split(" ") if len(e) > 2])
+            len([e for e in file.readline().strip().split(" ") if len(e) > 2])
             - 1
         )
         campo_subsis: List[Field] = [LiteralField(6, 4)]
@@ -992,11 +992,11 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
         subsistemas: list = []
         tabela = np.zeros((MAX_SUBSISTEMAS * MAX_PATAMARES, num_estagios))
         # Salta outra linha
-        arq.readline()
+        file.readline()
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1032,7 +1032,7 @@ class BlocoVolumeUtilReservatorioRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["Inicial"] + [
@@ -1045,10 +1045,10 @@ class BlocoVolumeUtilReservatorioRelato(Block):
             return df
 
         for _ in range(3):
-            arq.readline()
+            file.readline()
 
         num_estagios = (
-            len([e for e in arq.readline().strip().split(" ") if len(e) > 2])
+            len([e for e in file.readline().strip().split(" ") if len(e) > 2])
             - 1
         )
         campo_usi: List[Field] = [
@@ -1064,11 +1064,11 @@ class BlocoVolumeUtilReservatorioRelato(Block):
         usinas: List[str] = []
         tabela = np.zeros((MAX_UHES, num_estagios + 1))
         # Salta outra linha
-        arq.readline()
+        file.readline()
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1124,7 +1124,7 @@ class BlocoDadosTermicasRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
                 "GT Min Pat. 1",
@@ -1147,7 +1147,7 @@ class BlocoDadosTermicasRelato(Block):
 
         # Salta as linhas de cabeçalho
         for _ in range(5):
-            arq.readline()
+            file.readline()
 
         numeros: List[int] = []
         usinas: List[str] = []
@@ -1162,7 +1162,7 @@ class BlocoDadosTermicasRelato(Block):
         subsis_atual = ""
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X---X----------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1207,7 +1207,7 @@ class BlocoDisponibilidadesTermicasRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
@@ -1219,10 +1219,10 @@ class BlocoDisponibilidadesTermicasRelato(Block):
 
         # Salta 4 linhas
         for _ in range(2):
-            arq.readline()
+            file.readline()
 
         num_estagios = (
-            len([e for e in arq.readline().strip().split(" ") if len(e) > 2])
+            len([e for e in file.readline().strip().split(" ") if len(e) > 2])
             - 2
         )
         campo_usi: List[Field] = [
@@ -1237,11 +1237,11 @@ class BlocoDisponibilidadesTermicasRelato(Block):
         usinas: List[str] = []
         tabela = np.zeros((MAX_UTES, num_estagios))
         # Salta outra linha
-        arq.readline()
+        file.readline()
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1293,7 +1293,7 @@ class BlocoDadosMercadoRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
                 "Patamar 1",
@@ -1311,7 +1311,7 @@ class BlocoDadosMercadoRelato(Block):
 
         # Salta as linhas de cabeçalho
         for _ in range(5):
-            arq.readline()
+            file.readline()
 
         estagios: List[int] = []
         subsistemas: List[str] = []
@@ -1322,7 +1322,7 @@ class BlocoDadosMercadoRelato(Block):
         estagio_atual = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X---------X------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1362,17 +1362,17 @@ class BlocoENAAcoplamentoREERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def le_tabela(linha: str) -> np.ndarray:
             indice_ree = int(linha.split("REE: ")[1].split("-")[0].strip())
             ree = linha.split("REE: ")[1].split("/")[0].split("-")[1].strip()
             subsis = linha.split("SUBSISTEMA: ")[1].split("-")[1].strip()
             # Salta uma linha para identificar o número de estágios
-            arq.readline()
-            linha = arq.readline()
+            file.readline()
+            linha = file.readline()
             estagios = [s for s in linha.split(" ") if len(s) > 2]
             num_estagios = len(estagios) - 1
-            arq.readline()
+            file.readline()
             campo_cenario: List[Field] = [IntegerField(3, 4)]
             campos_enas: List[Field] = [
                 FloatField(8, 8 + 9 * i, 1) for i in range(num_estagios)
@@ -1382,7 +1382,7 @@ class BlocoENAAcoplamentoREERelato(Block):
             tab = np.zeros((MAX_CENARIOS, num_estagios + 1))
             i = 0
             while True:
-                linha = arq.readline()
+                linha = file.readline()
                 if len(linha) < 4:
                     tab = tab[:i, :]
                     break
@@ -1416,11 +1416,11 @@ class BlocoENAAcoplamentoREERelato(Block):
         tabela = None
         while True:
             # Confere se a leitura não acabou
-            ultima_linha = arq.tell()
-            linha = arq.readline()
+            ultima_linha = file.tell()
+            linha = file.readline()
             if self.ends(linha):
                 self.data = converte_tabela_em_df()
-                arq.seek(ultima_linha)
+                file.seek(ultima_linha)
                 return linha
             if "REE: " in linha:
                 tab = le_tabela(linha)
@@ -1454,7 +1454,7 @@ class BlocoEnergiaArmazenadaREERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["Inicial"] + [
@@ -1468,10 +1468,10 @@ class BlocoEnergiaArmazenadaREERelato(Block):
 
         # Salta 2 linhas
         for _ in range(2):
-            arq.readline()
+            file.readline()
 
         num_estagios = (
-            len([e for e in arq.readline().strip().split(" ") if len(e) > 2])
+            len([e for e in file.readline().strip().split(" ") if len(e) > 2])
             - 3
         )
 
@@ -1490,11 +1490,11 @@ class BlocoEnergiaArmazenadaREERelato(Block):
         subsistemas: List[int] = []
         tabela = np.zeros((MAX_REES, num_estagios + 1))
         # Salta outra linha
-        arq.readline()
+        file.readline()
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X------------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1532,7 +1532,7 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["Inicial"] + [
@@ -1545,10 +1545,10 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Block):
 
         # Salta 2 linhas
         for _ in range(2):
-            arq.readline()
+            file.readline()
 
         num_estagios = (
-            len([e for e in arq.readline().strip().split(" ") if len(e) > 2])
+            len([e for e in file.readline().strip().split(" ") if len(e) > 2])
             - 2
         )
 
@@ -1565,11 +1565,11 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Block):
         numeros: List[int] = []
         tabela = np.zeros((MAX_REES, num_estagios + 1))
         # Salta outra linha
-        arq.readline()
+        file.readline()
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X------------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1619,7 +1619,7 @@ class BlocoENAPreEstudoMensalREERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 12)]
@@ -1630,14 +1630,14 @@ class BlocoENAPreEstudoMensalREERelato(Block):
 
         # Salta 5 linhas
         for _ in range(5):
-            arq.readline()
+            file.readline()
 
         rees: List[str] = []
         tabela = np.zeros((MAX_REES, len(MESES_DF)))
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X--------------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1687,7 +1687,7 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 12)]
@@ -1698,14 +1698,14 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
 
         # Salta 5 linhas
         for _ in range(5):
-            arq.readline()
+            file.readline()
 
         subsistemas: List[str] = []
         tabela = np.zeros((MAX_SUBSISTEMAS, len(MESES_DF)))
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X--------------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1756,7 +1756,7 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 6)]
@@ -1771,14 +1771,14 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
 
         # Salta 5 linhas
         for _ in range(5):
-            arq.readline()
+            file.readline()
 
         rees: List[str] = []
         tabela = np.zeros((MAX_REES, 6))
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X--------------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1828,7 +1828,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 6)]
@@ -1843,14 +1843,14 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
 
         # Salta 5 linhas
         for _ in range(5):
-            arq.readline()
+            file.readline()
 
         subsistemas: List[str] = []
         tabela = np.zeros((MAX_SUBSISTEMAS, 6))
         i = 0
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X--------------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -1893,8 +1893,8 @@ class BlocoDiasExcluidosSemanas(Block):
             return self.data == bloco.data
 
     # Override
-    def read(self, arq: IO):
-        arq.readline()
-        dias_semana_inicial = self.__line.read(arq.readline())[0]
-        dias_semana_final = self.__line.read(arq.readline())[0]
+    def read(self, file: IO, *args, **kwargs):
+        file.readline()
+        dias_semana_inicial = self.__line.read(file.readline())[0]
+        dias_semana_final = self.__line.read(file.readline())[0]
         self.data = [dias_semana_inicial, dias_semana_final]

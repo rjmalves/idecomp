@@ -3,7 +3,11 @@ from idecomp.decomp.modelos.postos import RegistroPostos
 import pandas as pd  # type: ignore
 
 
-from typing import TypeVar, List, Optional
+from typing import TypeVar, List, Optional, Union, IO
+
+# Para compatibilidade - até versão 1.0.0
+from os.path import join
+import warnings
 
 
 class Postos(RegisterFile):
@@ -25,11 +29,25 @@ class Postos(RegisterFile):
 
     @classmethod
     def le_arquivo(cls, diretorio: str, nome_arquivo="postos.dat") -> "Postos":
-        return cls.read(diretorio, nome_arquivo)
+        msg = (
+            "O método le_arquivo(diretorio, nome_arquivo) será descontinuado"
+            + " na versão 1.0.0 - use o método read(caminho_arquivo)"
+        )
+        warnings.warn(msg, category=FutureWarning)
+        return cls.read(join(diretorio, nome_arquivo))
 
     def escreve_arquivo(self, diretorio: str, nome_arquivo="postos.dat"):
+        msg = (
+            "O método escreve_arquivo(diretorio, nome_arquivo) será"
+            + " descontinuado na versão 1.0.0 -"
+            + " use o método write(caminho_arquivo)"
+        )
+        warnings.warn(msg, category=FutureWarning)
+        self.write(join(diretorio, nome_arquivo))
+
+    def write(self, to: Union[str, IO], *args, **kwargs):
         self.__atualiza_registros()
-        self.write(diretorio, nome_arquivo)
+        super().write(to, *args, **kwargs)
 
     def __monta_df_de_registros(self) -> Optional[pd.DataFrame]:
         registros: List[RegistroPostos] = [

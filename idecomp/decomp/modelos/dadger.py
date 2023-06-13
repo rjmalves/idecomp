@@ -3677,7 +3677,7 @@ class ACNUMPOS(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -3747,7 +3747,7 @@ class ACNUMJUS(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -3819,7 +3819,7 @@ class ACDESVIO(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -3897,7 +3897,7 @@ class ACVOLMIN(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -3967,7 +3967,7 @@ class ACVOLMAX(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4039,7 +4039,7 @@ class ACCOTVOL(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4119,7 +4119,7 @@ class ACCOTARE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4198,7 +4198,7 @@ class ACPROESP(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4269,7 +4269,7 @@ class ACPERHID(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4341,7 +4341,7 @@ class ACNCHAVE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4422,7 +4422,7 @@ class ACCOTVAZ(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4510,7 +4510,7 @@ class ACCOFEVA(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4589,7 +4589,7 @@ class ACNUMCON(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4661,7 +4661,7 @@ class ACNUMMAQ(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4741,7 +4741,7 @@ class ACPOTEFE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4821,7 +4821,7 @@ class ACALTEFE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4885,7 +4885,7 @@ class ACVAZEFE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4964,7 +4964,7 @@ class ACJUSMED(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5035,7 +5035,7 @@ class ACVERTJU(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5105,7 +5105,7 @@ class ACVAZMIN(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5175,7 +5175,7 @@ class ACTIPERH(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5247,7 +5247,7 @@ class ACJUSENA(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5318,7 +5318,7 @@ class ACVSVERT(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5389,7 +5389,7 @@ class ACVMDESV(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5460,7 +5460,7 @@ class ACNPOSNW(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "") -> bool:
+    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore

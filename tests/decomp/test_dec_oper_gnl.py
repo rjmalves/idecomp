@@ -9,7 +9,7 @@ from tests.mocks.arquivos.dec_oper_gnl import MockDecOperGnl
 def test_atributos_encontrados_dec_oper_gnl():
     m: MagicMock = mock_open(read_data="".join(MockDecOperGnl))
     with patch("builtins.open", m):
-        rel = DecOperGnl.le_arquivo("")
+        rel = DecOperGnl.read("./tests/mocks/arquivos/dec_oper_gnl.py")
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "periodo"] == 1
         assert rel.tabela.at[0, "no"] == 1
@@ -35,15 +35,15 @@ def test_atributos_encontrados_dec_oper_gnl():
 def test_eq_dec_oper_gnl():
     m: MagicMock = mock_open(read_data="".join(MockDecOperGnl))
     with patch("builtins.open", m):
-        rel1 = DecOperGnl.le_arquivo("")
-        rel2 = DecOperGnl.le_arquivo("")
+        rel1 = DecOperGnl.read("./tests/mocks/arquivos/dec_oper_gnl.py")
+        rel2 = DecOperGnl.read("./tests/mocks/arquivos/dec_oper_gnl.py")
         assert rel1 == rel2
 
 
 def test_neq_dec_oper_gnl():
     m: MagicMock = mock_open(read_data="".join(MockDecOperGnl))
     with patch("builtins.open", m):
-        rel1 = DecOperGnl.le_arquivo("")
-        rel2 = DecOperGnl.le_arquivo("")
+        rel1 = DecOperGnl.read("./tests/mocks/arquivos/dec_oper_gnl.py")
+        rel2 = DecOperGnl.read("./tests/mocks/arquivos/dec_oper_gnl.py")
         rel1.tabela.iloc[0, 0] = -1
         assert rel1 != rel2

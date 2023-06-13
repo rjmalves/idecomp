@@ -9,7 +9,7 @@ from tests.mocks.arquivos.dec_eco_cotajus import MockDecEcoCotajus
 def test_atributos_encontrados_dec_eco_cotajus():
     m: MagicMock = mock_open(read_data="".join(MockDecEcoCotajus))
     with patch("builtins.open", m):
-        rel = DecEcoCotajus.le_arquivo("")
+        rel = DecEcoCotajus.read("./tests/mocks/arquivos/dec_eco_cotajus.py")
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "indice_usina"] == 1
         assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
@@ -28,15 +28,15 @@ def test_atributos_encontrados_dec_eco_cotajus():
 def test_eq_dec_eco_cotajus():
     m: MagicMock = mock_open(read_data="".join(MockDecEcoCotajus))
     with patch("builtins.open", m):
-        rel1 = DecEcoCotajus.le_arquivo("")
-        rel2 = DecEcoCotajus.le_arquivo("")
+        rel1 = DecEcoCotajus.read("./tests/mocks/arquivos/dec_eco_cotajus.py")
+        rel2 = DecEcoCotajus.read("./tests/mocks/arquivos/dec_eco_cotajus.py")
         assert rel1 == rel2
 
 
 def test_neq_dec_eco_cotajus():
     m: MagicMock = mock_open(read_data="".join(MockDecEcoCotajus))
     with patch("builtins.open", m):
-        rel1 = DecEcoCotajus.le_arquivo("")
-        rel2 = DecEcoCotajus.le_arquivo("")
+        rel1 = DecEcoCotajus.read("./tests/mocks/arquivos/dec_eco_cotajus.py")
+        rel2 = DecEcoCotajus.read("./tests/mocks/arquivos/dec_eco_cotajus.py")
         rel1.tabela.iloc[0, 0] = -1
         assert rel1 != rel2

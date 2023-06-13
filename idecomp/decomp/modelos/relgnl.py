@@ -57,7 +57,7 @@ class BlocoDadosUsinasRelGNL(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
                 "GT Min Pat. 1",
@@ -80,7 +80,7 @@ class BlocoDadosUsinasRelGNL(Block):
 
         # Salta as linhas de cabeçalho
         for _ in range(5):
-            arq.readline()
+            file.readline()
 
         numeros: List[int] = []
         usinas: List[str] = []
@@ -95,7 +95,7 @@ class BlocoDadosUsinasRelGNL(Block):
         subsis_atual = ""
         while True:
             # Confere se a leitura não acabou
-            linha = arq.readline()
+            linha = file.readline()
             if "X---X----------X" in linha:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -140,7 +140,7 @@ class BlocoComandosUsinasAjustesTGRelGNL(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             colunas = ["Pat 1", "Pat 2", "Pat 3"]
             df = pd.DataFrame(tabela, columns=colunas)
@@ -154,13 +154,13 @@ class BlocoComandosUsinasAjustesTGRelGNL(Block):
             ]
             return df
 
-        arq.readline()
-        arq.readline()
+        file.readline()
+        file.readline()
         num_estagios = len(
-            [e for e in arq.readline().strip().split(" ") if len(e) > 2]
+            [e for e in file.readline().strip().split(" ") if len(e) > 2]
         )
-        arq.readline()
-        arq.readline()
+        file.readline()
+        file.readline()
         campo_usi: List[Field] = [
             IntegerField(3, 3),
             LiteralField(11, 8),
@@ -180,7 +180,7 @@ class BlocoComandosUsinasAjustesTGRelGNL(Block):
         tabela = np.zeros((MAX_UTES * MAX_ESTAGIOS, num_estagios))
         i = 0
         while True:
-            linha: str = arq.readline()
+            linha: str = file.readline()
             if len(linha) < 3:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -219,7 +219,7 @@ class BlocoComandosUsinasAjustesRERelGNL(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             colunas = ["Pat 1", "Pat 2", "Pat 3"]
             df = pd.DataFrame(tabela, columns=colunas)
@@ -234,13 +234,13 @@ class BlocoComandosUsinasAjustesRERelGNL(Block):
             return df
 
         # Salta duas linhas
-        arq.readline()
-        arq.readline()
+        file.readline()
+        file.readline()
         num_estagios = len(
-            [e for e in arq.readline().strip().split(" ") if len(e) > 2]
+            [e for e in file.readline().strip().split(" ") if len(e) > 2]
         )
-        arq.readline()
-        arq.readline()
+        file.readline()
+        file.readline()
         campo_usi: List[Field] = [
             IntegerField(3, 3),
             LiteralField(11, 8),
@@ -260,7 +260,7 @@ class BlocoComandosUsinasAjustesRERelGNL(Block):
         tabela = np.zeros((MAX_UTES * MAX_ESTAGIOS, num_estagios))
         i = 0
         while True:
-            linha: str = arq.readline()
+            linha: str = file.readline()
             if len(linha) < 3:
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
@@ -321,7 +321,7 @@ class BlocoRelatorioOperacaoRelGNL(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, arq: IO):
+    def read(self, file: IO, *args, **kwargs):
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [
@@ -367,9 +367,9 @@ class BlocoRelatorioOperacaoRelGNL(Block):
         inicio_semanas: List[str] = []
 
         # Salta duas linhas e extrai o estágio / cenário
-        arq.readline()
-        arq.readline()
-        dados = self.__linha_cenario.read(arq.readline())
+        file.readline()
+        file.readline()
+        dados = self.__linha_cenario.read(file.readline())
         periodo: int = dados[0]
         cenario: int = dados[1]
         probabilidade: float = dados[2]
@@ -378,11 +378,11 @@ class BlocoRelatorioOperacaoRelGNL(Block):
         i = 0
         achou_tabela = False
         while True:
-            ultima_linha = arq.tell()
-            linha = arq.readline()
+            ultima_linha = file.tell()
+            linha = file.readline()
             # Verifica se acabou
             if self.ends(linha) or len(linha) == 0:
-                arq.seek(ultima_linha)
+                file.seek(ultima_linha)
                 tabela = tabela[:i, :]
                 self.data = converte_tabela_para_df()
                 break
@@ -391,7 +391,7 @@ class BlocoRelatorioOperacaoRelGNL(Block):
                 achou_tabela = True
                 # Salta 4 linhas
                 for _ in range(4):
-                    arq.readline()
+                    file.readline()
             elif len(linha) < 5:
                 achou_tabela = False
             # Se está lendo um subsistema e achou a linha de valores médios

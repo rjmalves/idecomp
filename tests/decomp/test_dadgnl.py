@@ -15,7 +15,6 @@ from tests.mocks.arquivos.dadgnl import (
 
 
 def test_registro_tg_dadgnl():
-
     m: MagicMock = mock_open(read_data="".join(MockTG))
     r = TG()
     with patch("builtins.open", m):
@@ -61,7 +60,6 @@ def test_registro_tg_dadgnl():
 
 
 def test_registro_gs_dadgnl():
-
     m: MagicMock = mock_open(read_data="".join(MockGS))
     r = GS()
     with patch("builtins.open", m):
@@ -81,7 +79,6 @@ def test_registro_gs_dadgnl():
 
 
 def test_registro_nl_dadgnl():
-
     m: MagicMock = mock_open(read_data="".join(MockNL))
     r = NL()
     with patch("builtins.open", m):
@@ -101,7 +98,6 @@ def test_registro_nl_dadgnl():
 
 
 def test_registro_gl_dadgnl():
-
     m: MagicMock = mock_open(read_data="".join(MockGL))
     r = GL()
     with patch("builtins.open", m):
@@ -132,7 +128,7 @@ def test_registro_gl_dadgnl():
 def test_campos_nao_encontrados_dadgnl():
     m: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m):
-        d = DadGNL.le_arquivo("", "")
+        d = DadGNL.read("./tests/mocks/arquivos/dadgnl.py")
     assert d.tg(0, 0) is None
     assert d.gs(0) is None
     assert d.nl(0) is None
@@ -142,7 +138,7 @@ def test_campos_nao_encontrados_dadgnl():
 def test_campos_encontrados_dadgnl():
     m: MagicMock = mock_open(read_data="".join(MockDadGNL))
     with patch("builtins.open", m):
-        d = DadGNL.le_arquivo("", "")
+        d = DadGNL.read("./tests/mocks/arquivos/dadgnl.py")
     assert d.tg(86, 1) is not None
     assert d.gs(1) is not None
     assert d.nl(86) is not None
@@ -152,16 +148,16 @@ def test_campos_encontrados_dadgnl():
 def test_eq_dadgnl():
     m: MagicMock = mock_open(read_data="".join(MockDadGNL))
     with patch("builtins.open", m):
-        d1 = DadGNL.le_arquivo("")
-        d2 = DadGNL.le_arquivo("")
+        d1 = DadGNL.read("./tests/mocks/arquivos/dadgnl.py")
+        d2 = DadGNL.read("./tests/mocks/arquivos/dadgnl.py")
         assert d1 == d2
 
 
 def test_neq_dadgnl():
     m: MagicMock = mock_open(read_data="".join(MockDadGNL))
     with patch("builtins.open", m):
-        d1 = DadGNL.le_arquivo("")
-        d2 = DadGNL.le_arquivo("")
+        d1 = DadGNL.read("./tests/mocks/arquivos/dadgnl.py")
+        d2 = DadGNL.read("./tests/mocks/arquivos/dadgnl.py")
         d2.gs(1).semanas = 0
         assert d1 != d2
 
@@ -169,10 +165,10 @@ def test_neq_dadgnl():
 def test_leitura_escrita_dadgnl():
     m_leitura: MagicMock = mock_open(read_data="".join(MockDadGNL))
     with patch("builtins.open", m_leitura):
-        d1 = DadGNL.le_arquivo("")
+        d1 = DadGNL.read("./tests/mocks/arquivos/dadgnl.py")
     m_escrita: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m_escrita):
-        d1.escreve_arquivo("", "")
+        d1.write("./tests/mocks/arquivos/dadgnl.py")
         # Recupera o que foi escrito
         chamadas = m_escrita.mock_calls
         linhas_escritas = [
@@ -180,5 +176,5 @@ def test_leitura_escrita_dadgnl():
         ]
     m_releitura: MagicMock = mock_open(read_data="".join(linhas_escritas))
     with patch("builtins.open", m_releitura):
-        d2 = DadGNL.le_arquivo("")
+        d2 = DadGNL.read("./tests/mocks/arquivos/dadgnl.py")
         assert d1 == d2

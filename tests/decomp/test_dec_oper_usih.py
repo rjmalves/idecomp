@@ -10,7 +10,7 @@ from tests.mocks.arquivos.dec_oper_usih import MockDecOperUsih
 def test_atributos_encontrados_dec_oper_usih():
     m: MagicMock = mock_open(read_data="".join(MockDecOperUsih))
     with patch("builtins.open", m):
-        rel = DecOperUsih.le_arquivo("")
+        rel = DecOperUsih.read("./tests/mocks/arquivos/dec_oper_usih.py")
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "periodo"] == 1
         assert rel.tabela.at[0, "no"] == 1
@@ -48,15 +48,15 @@ def test_atributos_encontrados_dec_oper_usih():
 def test_eq_dec_oper_usih():
     m: MagicMock = mock_open(read_data="".join(MockDecOperUsih))
     with patch("builtins.open", m):
-        rel1 = DecOperUsih.le_arquivo("")
-        rel2 = DecOperUsih.le_arquivo("")
+        rel1 = DecOperUsih.read("./tests/mocks/arquivos/dec_oper_usih.py")
+        rel2 = DecOperUsih.read("./tests/mocks/arquivos/dec_oper_usih.py")
         assert rel1 == rel2
 
 
 def test_neq_dec_oper_usih():
     m: MagicMock = mock_open(read_data="".join(MockDecOperUsih))
     with patch("builtins.open", m):
-        rel1 = DecOperUsih.le_arquivo("")
-        rel2 = DecOperUsih.le_arquivo("")
+        rel1 = DecOperUsih.read("./tests/mocks/arquivos/dec_oper_usih.py")
+        rel2 = DecOperUsih.read("./tests/mocks/arquivos/dec_oper_usih.py")
         rel1.tabela.iloc[0, 0] = -1
         assert rel1 != rel2
