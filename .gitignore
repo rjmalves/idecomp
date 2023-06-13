@@ -132,3 +132,8 @@ test.py
 
 # vscode
 .vscode/
+
+# Deck de teste
+deck_teste/**
+teste.py
+teste.txt
