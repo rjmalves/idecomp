@@ -10,10 +10,10 @@ import warnings
 
 class Arquivos(SectionFile):
     """
-    Armazena os dados de entrada do NEWAVE referentes ao arquivo
-    `arquivos.dat`.
+    Armazena os dados de entrada do DECOMP referentes ao arquivo
+    geralmente denominado `rvX`, que contém os arquivos.
 
-    Esta classe lida com informações de entrada do NEWAVE e
+    Esta classe lida com informações de entrada do DECOMP e
     que deve se referir aos nomes dos demais arquivos de entrada
     utilizados para o caso em questão.
 

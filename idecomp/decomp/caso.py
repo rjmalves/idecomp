@@ -10,10 +10,10 @@ import warnings
 
 class Caso(SectionFile):
     """
-    Armazena os dados de entrada do NEWAVE referentes ao nome do arquivo
+    Armazena os dados de entrada do DECOMP referentes ao nome do arquivo
     que define os arquivos do caso.
 
-    Esta classe lida com informações de entrada fornecidas ao NEWAVE e
+    Esta classe lida com informações de entrada fornecidas ao DECOMP e
     que podem ser modificadas através do arquivo `caso.dat`.
 
     """
