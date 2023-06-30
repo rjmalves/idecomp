@@ -44,6 +44,7 @@ Arquivos
    arquivos/hidr
    arquivos/vazoes
    arquivos/postos
+   arquivos/custos
    arquivos/relato
    arquivos/sumario
    arquivos/fcfnw
