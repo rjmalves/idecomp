@@ -1,4 +1,4 @@
-from idecomp.decomp.modelos.vazoes import RegistroVazoesPostos
+from idecomp.decomp.modelos.vazoes import SecaoVazoesPostos
 from idecomp.decomp.vazoes import Vazoes
 
 from os.path import join
@@ -6,27 +6,24 @@ from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
 
-ARQ_TEST = "./tests/mocks/arquivos/vazoes.dat"
+ARQ_TEST = "./tests/mocks/arquivos/vazoes.rv0"
 
 
-def test_registro_vazoesposto_vazoes():
-    r = RegistroVazoesPostos()
+def test_secao_vazoes_postos():
+    r = SecaoVazoesPostos()
     with open(join(ARQ_TEST), "rb") as fp:
         r.read(fp, storage="BINARY")
 
-    assert len(r.data) == 320
+    assert r.numero_postos == 320
 
 
 def test_atributos_encontrados_vazoes():
     h = Vazoes.read(ARQ_TEST)
-    assert h.vazoes is not None
-
-
-def test_atributos_nao_encontrados_vazoes():
-    m: MagicMock = mock_open(read_data="")
-    with patch("builtins.open", m):
-        ad = Vazoes.read(ARQ_TEST)
-        assert ad.vazoes is None
+    assert h.probabilidades is not None
+    assert h.previsoes is not None
+    assert h.previsoes_com_postos_artificiais is not None
+    assert h.cenarios_gerados is not None
+    assert h.cenarios_calculados_com_postos_artificiais is not None
 
 
 def test_eq_vazoes():
@@ -38,11 +35,10 @@ def test_eq_vazoes():
 def test_neq_vazoes():
     h1 = Vazoes.read(ARQ_TEST)
     h2 = Vazoes.read(ARQ_TEST)
-    h2.vazoes.iloc[0, 0] = -1
-    m: MagicMock = mock_open(read_data="")
-    with patch("builtins.open", m):
-        h2.write(ARQ_TEST)
-        assert h1 != h2
+    df = h2.probabilidades
+    df["probabilidade"] = -1.0
+    h2.probabilidades = df
+    assert h1 != h2
 
 
 def test_leitura_escrita_vazoes():
@@ -59,35 +55,3 @@ def test_leitura_escrita_vazoes():
     with patch("builtins.open", m_releitura):
         h2 = Vazoes.read(ARQ_TEST)
         assert h1 == h2
-
-
-def test_leitura_escrita_editando_vazoes():
-    h1 = Vazoes.read(ARQ_TEST)
-    vaz = h1.vazoes
-    num_vazoes_original = vaz.shape[0]
-    h1.vazoes.loc[vaz.shape[0]] = 0
-    m_escrita: MagicMock = mock_open(read_data="")
-    # Testa aumentando a quantidade de vazões
-    with patch("builtins.open", m_escrita):
-        h1.write(ARQ_TEST)
-        # Recupera o que foi escrito
-        chamadas = m_escrita.mock_calls
-        linhas_escritas = [
-            chamadas[i].args[0] for i in range(1, len(chamadas) - 1)
-        ]
-        assert len(linhas_escritas) == num_vazoes_original
-    # Testa reduzindo a quantidade de vazões
-    num_vazoes_reduzidas = 10
-    h1.vazoes.drop(
-        index=list(range(num_vazoes_reduzidas, num_vazoes_original + 1)),
-        inplace=True,
-    )
-    m_escrita: MagicMock = mock_open(read_data="")
-    with patch("builtins.open", m_escrita):
-        h1.write(ARQ_TEST)
-        # Recupera o que foi escrito
-        chamadas = m_escrita.mock_calls
-        linhas_escritas = [
-            chamadas[i].args[0] for i in range(1, len(chamadas) - 1)
-        ]
-        assert len(linhas_escritas) == num_vazoes_reduzidas
