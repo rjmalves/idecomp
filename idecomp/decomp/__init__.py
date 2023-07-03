@@ -15,6 +15,7 @@ from .dec_oper_sist import DecOperSist  # noqa
 from .dec_oper_usie import DecOperUsie  # noqa
 from .dec_oper_usih import DecOperUsih  # noqa
 from .dec_oper_usit import DecOperUsit  # noqa
+from .custos import Custos  # noqa
 from .decomptim import DecompTim  # noqa
 from .fcfnw import Fcfnw  # noqa
 from .hidr import Hidr  # noqa
