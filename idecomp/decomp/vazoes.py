@@ -33,8 +33,8 @@ class Vazoes(SectionFile):
         self.__df_cenarios_mensais_calculados_com_postos_artificiais: Optional[
             pd.DataFrame
         ] = None
-        # self.__df_obsevacoes_mensais: Optional[pd.DataFrame] = None
-        # self.__df_obsevacoes_semanais: Optional[pd.DataFrame] = None
+        self.__df_observacoes_mensais: Optional[pd.DataFrame] = None
+        self.__df_observacoes_semanais: Optional[pd.DataFrame] = None
 
     @classmethod
     def le_arquivo(cls, diretorio: str, nome_arquivo="vazoes.rv0") -> "Vazoes":
@@ -101,9 +101,12 @@ class Vazoes(SectionFile):
     @probabilidades.setter
     def probabilidades(self, df: pd.DataFrame):
         dados = self.__obtem_secao_vazoes()
-        # TODO: adicionar sanity check do shape do dataframe, para
-        # não desalinhar o arquivo
         if dados is not None:
+            n_probs = len(dados.probabilidades_nos)
+            if df.shape[0] != n_probs:
+                raise ValueError(
+                    f"São esperados {n_probs} valores de probabilidades."
+                )
             dados.probabilidades_nos = df["probabilidade"].tolist()
             self.__df_probabilidades = None
 
@@ -139,10 +142,13 @@ class Vazoes(SectionFile):
     @previsoes.setter
     def previsoes(self, df: pd.DataFrame):
         dados = self.__obtem_secao_vazoes()
-        # TODO: adicionar sanity check do shape do dataframe, para
-        # não desalinhar o arquivo
         if dados is not None:
             n_postos = dados.numero_postos
+            n_prevs = len(dados.previsoes)
+            if df.shape[0] != n_prevs:
+                raise ValueError(
+                    f"São esperados {n_prevs} valores de previsões."
+                )
             cols_postos = [str(p) for p in range(1, n_postos + 1)]
             dados.previsoes = df[cols_postos].to_numpy().flatten().tolist()
             self.__df_previsoes_semanais = None
@@ -182,10 +188,13 @@ class Vazoes(SectionFile):
     @previsoes_com_postos_artificiais.setter
     def previsoes_com_postos_artificiais(self, df: pd.DataFrame):
         dados = self.__obtem_secao_vazoes()
-        # TODO: adicionar sanity check do shape do dataframe, para
-        # não desalinhar o arquivo
         if dados is not None:
             n_postos = dados.numero_postos
+            n_prevs = len(dados.previsoes_com_postos_artificiais)
+            if df.shape[0] != n_prevs:
+                raise ValueError(
+                    f"São esperados {n_prevs} valores de previsões."
+                )
             cols_postos = [str(p) for p in range(1, n_postos + 1)]
             dados.previsoes_com_postos_artificiais = (
                 df[cols_postos].to_numpy().flatten().tolist()
@@ -239,10 +248,13 @@ class Vazoes(SectionFile):
     @cenarios_gerados.setter
     def cenarios_gerados(self, df: pd.DataFrame):
         dados = self.__obtem_secao_vazoes()
-        # TODO: adicionar sanity check do shape do dataframe, para
-        # não desalinhar o arquivo
         if dados is not None:
             n_postos = dados.numero_postos
+            n_cens = len(dados.cenarios_gerados)
+            if df.shape[0] != n_cens:
+                raise ValueError(
+                    f"São esperados {n_cens} valores de cenários."
+                )
             cols_postos = [str(p) for p in range(1, n_postos + 1)]
             dados.cenarios_gerados = (
                 df[cols_postos].to_numpy().flatten().tolist()
@@ -302,12 +314,105 @@ class Vazoes(SectionFile):
     @cenarios_calculados_com_postos_artificiais.setter
     def cenarios_calculados_com_postos_artificiais(self, df: pd.DataFrame):
         dados = self.__obtem_secao_vazoes()
-        # TODO: adicionar sanity check do shape do dataframe, para
-        # não desalinhar o arquivo
         if dados is not None:
             n_postos = dados.numero_postos
+            n_cens = len(dados.cenarios_calculados_com_postos_artificiais)
+            if df.shape[0] != n_cens:
+                raise ValueError(
+                    f"São esperados {n_cens} valores de cenários."
+                )
             cols_postos = [str(p) for p in range(1, n_postos + 1)]
             dados.cenarios_calculados_com_postos_artificiais = (
                 df[cols_postos].to_numpy().flatten().tolist()
             )
             self.__df_cenarios_mensais_calculados_com_postos_artificiais = None
+
+    @property
+    def observacoes_semanais(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela com as observações semanais de cada nó da árvore de
+        cenários, por posto.
+
+        - semana (`int`)
+        - 1 (`int`)
+        ...
+        - N (`int`) : número de postos
+
+        :return: A tabela com as observações semanais por estágio e posto
+        :rtype: pd.DataFrame | None
+        """
+        if self.__df_observacoes_semanais is None:
+            dados = self.__obtem_secao_vazoes()
+            if dados is not None:
+                obs = dados.observacoes_semanais
+                n_postos = dados.numero_postos
+                numero_semanas = dados.numero_semanas_observadas
+                cols_postos = [str(p) for p in range(1, n_postos + 1)]
+                df = pd.DataFrame(
+                    np.array(obs).reshape((-1, n_postos)),
+                    columns=cols_postos,
+                )
+                df["semana"] = list(range(1, numero_semanas + 1))
+                self.__df_observacoes_semanais = df[["semana"] + cols_postos]
+        return self.__df_observacoes_semanais
+
+    @observacoes_semanais.setter
+    def observacoes_semanais(self, df: pd.DataFrame):
+        dados = self.__obtem_secao_vazoes()
+        if dados is not None:
+            n_postos = dados.numero_postos
+            n_obs = len(dados.observacoes_semanais)
+            if df.shape[0] != n_obs:
+                raise ValueError(
+                    f"São esperados {n_obs} valores de observações."
+                )
+            cols_postos = [str(p) for p in range(1, n_postos + 1)]
+            dados.observacoes_semanais = (
+                df[cols_postos].to_numpy().flatten().tolist()
+            )
+            self.__df_observacoes_semanais = None
+
+    @property
+    def observacoes_mensais(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela com as observações mensais de cada nó da árvore de
+        cenários, por posto.
+
+        - mes (`int`)
+        - 1 (`int`)
+        ...
+        - N (`int`) : número de postos
+
+        :return: A tabela com as observações mensais por estágio e posto
+        :rtype: pd.DataFrame | None
+        """
+        if self.__df_observacoes_mensais is None:
+            dados = self.__obtem_secao_vazoes()
+            if dados is not None:
+                obs = dados.observacoes_mensais
+                n_postos = dados.numero_postos
+                numero_meses = dados.numero_meses_observados
+                cols_postos = [str(p) for p in range(1, n_postos + 1)]
+                df = pd.DataFrame(
+                    np.array(obs).reshape((-1, n_postos)),
+                    columns=cols_postos,
+                )
+                df["mes"] = list(range(1, numero_meses + 1))
+                self.__df_observacoes_mensais = df[["mes"] + cols_postos]
+        return self.__df_observacoes_mensais
+
+    @observacoes_mensais.setter
+    def observacoes_mensais(self, df: pd.DataFrame):
+        dados = self.__obtem_secao_vazoes()
+        if dados is not None:
+            n_postos = dados.numero_postos
+            n_obs = len(dados.observacoes_mensais)
+            if df.shape[0] != n_obs:
+                raise ValueError(
+                    f"São esperados {n_obs} valores de observações."
+                )
+            cols_postos = [str(p) for p in range(1, n_postos + 1)]
+            dados.observacoes_mensais = (
+                df[cols_postos].to_numpy().flatten().tolist()
+            )
+            self.__df_observacoes_mensais = None
