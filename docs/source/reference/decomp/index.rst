@@ -47,6 +47,7 @@ Arquivos
    arquivos/custos
    arquivos/relato
    arquivos/sumario
+   arquivos/vazoes
    arquivos/fcfnw
    arquivos/decomptim
    arquivos/relgnl

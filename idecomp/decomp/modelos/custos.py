@@ -108,8 +108,8 @@ class BlocoRelatorioCustos(Block):
         estagio: int = self.dados_cenario[0]
         cenario: int = self.dados_cenario[1]
 
-        # Salta 3 linhas
-        for _ in range(3):
+        # Salta 2 linhas
+        for _ in range(2):
             file.readline()
 
         # Variáveis auxiliares
