@@ -11,5 +11,5 @@ plotly
 nb2plots
 numpydoc
 black
-cfinterface>=1.4.0
+cfinterface>=1.4.1
 pyflakes
