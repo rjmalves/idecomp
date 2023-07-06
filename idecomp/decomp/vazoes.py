@@ -118,7 +118,7 @@ class Vazoes(SectionFile):
 
         - estágio (`int`)
         - 1 (`int`)
-        ...
+        - ...
         - N (`int`) : número de postos
 
         :return: A tabela com as previsões por estágio e posto
@@ -162,7 +162,7 @@ class Vazoes(SectionFile):
 
         - estágio (`int`)
         - 1 (`int`)
-        ...
+        - ...
         - N (`int`) : número de postos
 
         :return: A tabela com as previsões por estágio e posto
@@ -210,7 +210,7 @@ class Vazoes(SectionFile):
         - estágio (`int`)
         - cenario (`int`)
         - 1 (`int`)
-        ...
+        - ...
         - N (`int`) : número de postos
 
         :return: A tabela com os cenários por estágio e posto
@@ -273,7 +273,7 @@ class Vazoes(SectionFile):
         - estágio (`int`)
         - cenario (`int`)
         - 1 (`int`)
-        ...
+        - ...
         - N (`int`) : número de postos
 
         :return: A tabela com os cenários por estágio e posto
@@ -335,7 +335,7 @@ class Vazoes(SectionFile):
 
         - semana (`int`)
         - 1 (`int`)
-        ...
+        - ...
         - N (`int`) : número de postos
 
         :return: A tabela com as observações semanais por estágio e posto
@@ -380,7 +380,7 @@ class Vazoes(SectionFile):
 
         - mes (`int`)
         - 1 (`int`)
-        ...
+        - ...
         - N (`int`) : número de postos
 
         :return: A tabela com as observações mensais por estágio e posto
