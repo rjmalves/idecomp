@@ -685,7 +685,21 @@ CT  317   4   IRANDUBA   1    0.00 0.00    964.71 0.00 0.00    964.71 0.00 0.00 
 CT  318   4   FLORES LT1 1    0.00 0.00    978.60 0.00 0.00    978.60 0.00 0.00    978.60
 CT  319   4   FLORES LT2 1    0.00 0.00    994.21 0.00 0.00    994.21 0.00 0.00    994.21
 &----------------------------------------------------------------------------------------------
-
+&       BLOCO 9   GERACAO EM PEQUENAS USINAS *** GERACAO EXTERNA ***
+&       (REGISTRO PQ)
+&----------------------------------------------------------------------
+&                       PAT1|PAT2|PAT3|
+&   NOME....   S  EST   VALOR
+&   xxxxxxxxxxxX   xx   XXXXXxxxxxXXXXX
+&PQ
+PQ  SUDESTE    1    1    3374 3374 3374
+PQ  SUDESTE    1    6    3502 3502 3502
+PQ  SUL        2    1    2065 2065 2065
+PQ  SUL        2    6    1690 1690 1690
+PQ  NORDESTE   3    1    5662 5662 5662
+PQ  NORDESTE   3    6    4839 4839 4839
+PQ  NORTE      4    1     567  567  567
+PQ  NORTE      4    6     437  437  437
 & ----------------------------------------------------------------------------
 &   DADOS PARA O PROGRAMA CONFIGURADOR DO ARQUIVO DE CENARIOS DE VAZOES:
 &   -  IDENTIFICADOR "& VAZOES" NO INICIO DO REGISTROS;

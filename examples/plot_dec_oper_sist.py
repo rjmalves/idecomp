@@ -1,17 +1,16 @@
 """
-========================================
-dec_oper_sist.csv
-========================================
+=============================================
+Processamento de dados do dec_oper_sist.csv
+=============================================
 """
 
 # %%
 # O primeiro passo para realizar o processamento do arquivo, assim como os
-# demais arquivos .csv, é a leitura. A função de leitura recebe dois argumentos,
-# sendo que o segundo é opcional. Tendo lido o arquivo, é possível recuperar
+# demais arquivos .csv, é a leitura. Tendo lido o arquivo, é possível recuperar
 # a versão em que o modelo foi executado.
 from idecomp.decomp import DecOperSist
 
-arq = DecOperSist.le_arquivo(".")
+arq = DecOperSist.read("./decomp/dec_oper_sist.csv")
 print(arq.versao)
 
 
