@@ -145,7 +145,8 @@ class Vazoes(SectionFile):
         if dados is not None:
             n_postos = dados.numero_postos
             n_prevs = len(dados.previsoes)
-            if df.shape[0] != n_prevs:
+            cols_dados = [c for c in df.columns if c not in ["estagio"]]
+            if df[cols_dados].size != n_prevs:
                 raise ValueError(
                     f"São esperados {n_prevs} valores de previsões."
                 )
@@ -191,7 +192,8 @@ class Vazoes(SectionFile):
         if dados is not None:
             n_postos = dados.numero_postos
             n_prevs = len(dados.previsoes_com_postos_artificiais)
-            if df.shape[0] != n_prevs:
+            cols_dados = [c for c in df.columns if c not in ["estagio"]]
+            if df[cols_dados].size != n_prevs:
                 raise ValueError(
                     f"São esperados {n_prevs} valores de previsões."
                 )
@@ -251,7 +253,10 @@ class Vazoes(SectionFile):
         if dados is not None:
             n_postos = dados.numero_postos
             n_cens = len(dados.cenarios_gerados)
-            if df.shape[0] != n_cens:
+            cols_dados = [
+                c for c in df.columns if c not in ["estagio", "cenario"]
+            ]
+            if df[cols_dados].size != n_cens:
                 raise ValueError(
                     f"São esperados {n_cens} valores de cenários."
                 )
@@ -317,7 +322,10 @@ class Vazoes(SectionFile):
         if dados is not None:
             n_postos = dados.numero_postos
             n_cens = len(dados.cenarios_calculados_com_postos_artificiais)
-            if df.shape[0] != n_cens:
+            cols_dados = [
+                c for c in df.columns if c not in ["estagio", "cenario"]
+            ]
+            if df[cols_dados].size != n_cens:
                 raise ValueError(
                     f"São esperados {n_cens} valores de cenários."
                 )
@@ -362,7 +370,8 @@ class Vazoes(SectionFile):
         if dados is not None:
             n_postos = dados.numero_postos
             n_obs = len(dados.observacoes_semanais)
-            if df.shape[0] != n_obs:
+            cols_dados = [c for c in df.columns if c not in ["semana"]]
+            if df[cols_dados].size != n_obs:
                 raise ValueError(
                     f"São esperados {n_obs} valores de observações."
                 )
@@ -407,7 +416,8 @@ class Vazoes(SectionFile):
         if dados is not None:
             n_postos = dados.numero_postos
             n_obs = len(dados.observacoes_mensais)
-            if df.shape[0] != n_obs:
+            cols_dados = [c for c in df.columns if c not in ["mes"]]
+            if df[cols_dados].size != n_obs:
                 raise ValueError(
                     f"São esperados {n_obs} valores de observações."
                 )
