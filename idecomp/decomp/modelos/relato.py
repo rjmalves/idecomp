@@ -789,7 +789,7 @@ class BlocoBalancoEnergeticoRelato(Block):
                     else dados[0].strip(str_pat)
                 )
                 indice_subsis = dados.index(
-                    [d for d in dados if type(d) == str][1]
+                    [d for d in dados if type(d) is str][1]
                 )
                 dados_antes_interligacao: List[float] = [
                     d for d in dados[1:indice_subsis] if d is not None
