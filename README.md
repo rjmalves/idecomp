@@ -3,27 +3,32 @@
 [![tests](https://github.com/rjmalves/idecomp/actions/workflows/main.yml/badge.svg)](https://github.com/rjmalves/idecomp/actions/workflows/main.yml)  
 [![codecov](https://codecov.io/gh/rjmalves/idecomp/branch/main/graph/badge.svg?token=ZSJBGO81JP)](https://codecov.io/gh/rjmalves/idecomp)
 
-O *idecomp* é um pacote Python para manipulação dos arquivos
+O `idecomp` é um pacote Python para manipulação dos arquivos
 de entrada e saída do programa [DECOMP](http://www.cepel.br/pt_br/produtos/decomp-modelo-de-planejamento-da-operacao-de-sistemas-hidrotermicos-interligados-de-curto-prazo.htm). O DECOMP é desenvolvido pelo [CEPEL](http://www.cepel.br/) e utilizado para os estudos de planejamento e operação do Sistema Interligado Nacional (SIN).
 
-O idecomp oferece:
+O inewave oferece:
 
 - Meios para leitura dos arquivos de entrada e saída do DECOMP
-- Armazenamento e processamento de dados otimizados com o uso de [numpy](https://numpy.org/)
-- Dados estruturados em modelos com o uso do paradigma de orientação a objetos (OOP)
-- Utilidades de escritas dos arquivos de entrada do DECOMP para elaboração automatizada de estudos
 
-Com *idecomp* é possível ler os arquivos de texto, característicos do DECOMP, e salvar as informações
-para poupar processamento futuro e reduzir o tempo de execução.
+- Facilidades para estudo e análise dos dados utilizando DataFrames do pandas
+
+- Dados estruturados em modelos com o uso do paradigma de orientação a objetos (OOP)
+
 
 ## Instalação
 
-O idecomp é compatível com versões de Python >= 3.8.
+O inewave é compatível com versões de Python >= 3.8.
 
-Em posse de uma instalação local de Python, é recomendado que se use um ambiente virtual para instalação de módulos de terceiros, sendo que o idecomp não é uma exceção. Para mais detalhes sobre o uso de ambientes virtuais, recomenda-se a leitura do recurso oficial de Python para ambientes virtuais: [venv](https://docs.python.org/3/library/venv.html).
+É possível instalar a versão distribuída oficialmente com pip:
 
 ```
-python -m pip install idecomp
+python -m pip install inewave
+```
+
+É possível realizar a instalação da versão de desenvolvimento fazendo o uso do Git.
+
+```
+pip install git+https://github.com/rjmalves/idecomp
 ```
 
 ## Documentação
