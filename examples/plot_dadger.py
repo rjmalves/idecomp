@@ -1,19 +1,18 @@
 """
 ========================================
-dadger.rv0
+Visualização de dados no dadger.rv0
 ========================================
 """
 
-#%%
+# %%
 # O primeiro passo para realizar o processamento do arquivo, assim como os
-# demais arquivos de saída, é a leitura. A função de leitura recebe dois argumentos,
-# sendo que o segundo é opcional.
+# demais arquivos de saída, é a leitura.
 from idecomp.decomp import Dadger
 
-arq = Dadger.le_arquivo(".", nome_arquivo="dadger.rv0")
+arq = Dadger.read("./decomp/dadger.rv0")
 
 
-#%%
+# %%
 # O dadger, sendo um arquivo que se organiza por meio da declaração de registros, não
 # possui, atualmente, uma interface que seja tabular. Desta forma, os métodos existentes
 # retornam nenhum, um ou uma lista de objetos do registro específico solicitado.
@@ -21,7 +20,7 @@ termicas_semana1 = arq.ct(estagio=1)
 print(len(termicas_semana1))
 
 
-#%%
+# %%
 # Mesmo sem uma interface explícita para dados tabulares, os registros foram construídos
 # com o uso de propriedades que devem facilitar o pós-processamento pelo usuário. Por exemplo,
 # para gerar um gráfico comparativo de GT em relação ao CVU:
