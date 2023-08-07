@@ -62,11 +62,11 @@ class BlocoREEsSubsistemas(Block):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
-                    "Numero REE": numeros,
-                    "Nome REE": nomes,
-                    "Numero Subsistema": numeros_subsistema,
-                    "Nome Subsistema": nomes_subsistema,
-                    "Nome NEWAVE": nomes_newave,
+                    "codigo_ree": numeros,
+                    "nome_ree": nomes,
+                    "codigo_submercado": numeros_subsistema,
+                    "nome_submercado": nomes_subsistema,
+                    "nome_submercado_newave": nomes_newave,
                 },
             )
             return df
@@ -141,13 +141,13 @@ class BlocoUHEsREEsSubsistemas(Block):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
-                    "Numero UHE": numeros,
-                    "Nome UHE": nomes,
-                    "Numero REE": numeros_rees,
-                    "Nome REE": nomes_rees,
-                    "Numero Subsistema": numeros_subsistema,
-                    "Nome Subsistema": nomes_subsistema,
-                    "Nome NEWAVE": nomes_newave,
+                    "codigo_usina": numeros,
+                    "nome_usina": nomes,
+                    "codigo_ree": numeros_rees,
+                    "nome_ree": nomes_rees,
+                    "codigo_submercado": numeros_subsistema,
+                    "nome_submercado": nomes_subsistema,
+                    "nome_submercado_newave": nomes_newave,
                 },
             )
             return df
@@ -226,30 +226,30 @@ class BlocoConvergenciaRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             colunas = [
-                "Iteração",
-                "Zinf",
-                "Zsup",
-                "Gap (%)",
-                "Tempo (s)",
-                "Tot. Def. Demanda (MWmed)",
-                "Tot. Def. Niv. Seg. (MWmes)",
-                "Num. Inviab",
-                "Tot. Inviab (MWmed)",
-                "Tot. Inviab (m3/s)",
-                "Tot. Inviab (Hm3)",
+                "iteracao",
+                "zinf",
+                "zsup",
+                "gap_percentual",
+                "tempo",
+                "deficit_demanda_MWmed",
+                "deficit_nivel_seguranca_MWmes",
+                "numero_inviabilidades",
+                "inviabilidades_MWmed",
+                "inviabilidades_m3s",
+                "inviabilidades_hm3",
             ]
             tipos = {
-                "Iteração": np.int64,
-                "Zinf": np.float64,
-                "Zsup": np.float64,
-                "Gap (%)": np.float64,
-                "Tempo (s)": np.int64,
-                "Tot. Def. Demanda (MWmed)": np.float64,
-                "Tot. Def. Niv. Seg. (MWmes)": np.float64,
-                "Num. Inviab": np.int64,
-                "Tot. Inviab (MWmed)": np.float64,
-                "Tot. Inviab (m3/s)": np.float64,
-                "Tot. Inviab (Hm3)": np.float64,
+                "iteracao": np.int64,
+                "zinf": np.float64,
+                "zsup": np.float64,
+                "gap_percentual": np.float64,
+                "tempo": np.int64,
+                "deficit_demanda_MWmed": np.float64,
+                "deficit_nivel_seguranca_MWmes": np.float64,
+                "numero_inviabilidades": np.int64,
+                "inviabilidades_MWmed": np.float64,
+                "inviabilidades_m3s": np.float64,
+                "inviabilidades_hm3": np.float64,
             }
             df = pd.DataFrame(tabela, columns=colunas)
             df = df.astype(tipos)
@@ -340,43 +340,43 @@ class BlocoRelatorioOperacaoRelato(Block):
     def __read_bloco_operacao_uhe(self, file: IO):
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [
-                "Volume Ini (% V.U)",
-                "Volume Fin (% V.U)",
-                "Volume Esp. (% V.U)",
-                "Qnat (m3/s)",
-                "Qnat (% MLT)",
-                "Qafl (m3/s)",
-                "Qdef (m3/s)",
-                "Geração Pat 1",
-                "Geração Pat 2",
-                "Geração Pat 3",
-                "Geração Média",
-                "Vertimento Turbinável",
-                "Vertimento Não-Turbinável",
-                "Ponta",
+                "volume_inicial_percentual",
+                "volume_final_percentual",
+                "volume_espera_percentual",
+                "vazao_natural_m3s",
+                "vazao_natural_mlt",
+                "vazao_afluente_m3s",
+                "vazao_defluente_m3s",
+                "geracao_patamar_1",
+                "geracao_patamar_2",
+                "geracao_patamar_3",
+                "geracao_media",
+                "vertimento_turbinavel",
+                "vertimento_nao_turbinavel",
+                "geracao_ponta",
                 "FPCGC",
             ]
             df = pd.DataFrame(tabela, columns=cols)
             cols_adic = [
-                "Estágio",
-                "Cenário",
-                "Probabilidade",
-                "Código",
-                "Usina",
-                "Evaporação",
-                "Tempo de Viagem",
-                "Cota Abaixo da Crista do Vert",
-                "Def. Mínima = 0",
+                "estagio",
+                "cenario",
+                "probabilidade",
+                "codigo_usina",
+                "nome_usina",
+                "considera_evaporacao",
+                "considera_tempo_viagem",
+                "considera_soleira_vertedouro",
+                "considera_defluencia_minima_0",
             ]
-            df["Estágio"] = [estagio] * len(numeros)
-            df["Cenário"] = [cenario] * len(numeros)
-            df["Probabilidade"] = [probabilidade] * len(numeros)
-            df["Código"] = numeros
-            df["Usina"] = usinas
-            df["Evaporação"] = evaporacao
-            df["Tempo de Viagem"] = tv_afluencia
-            df["Cota Abaixo da Crista do Vert"] = cota_abaixo_crista
-            df["Def. Mínima = 0"] = def_minima_zero
+            df["estagio"] = [estagio] * len(numeros)
+            df["cenario"] = [cenario] * len(numeros)
+            df["probabilidade"] = [probabilidade] * len(numeros)
+            df["codigo_usina"] = numeros
+            df["nome_usina"] = usinas
+            df["considera_evaporacao"] = evaporacao
+            df["considera_tempo_viagem"] = tv_afluencia
+            df["considera_soleira_vertedouro"] = cota_abaixo_crista
+            df["considera_defluencia_minima_0"] = def_minima_zero
             df = df[cols_adic + cols]
             return df
 
@@ -420,22 +420,22 @@ class BlocoRelatorioOperacaoRelato(Block):
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
-                    "Estágio": estagio,
-                    "Cenário": cenario,
-                    "Probabilidade": probabilidade,
-                    "Custo Futuro": custo_futuro,
-                    "Custo Total no Estágio": custo_estagio,
-                    "Geração Térmica": custo_gt,
-                    "Violação Desvio": custo_desvio,
-                    "Penalidade de Vertimento em Reservatórios": custo_vert_reservatorio,
-                    "Penalidade de Vertimento em Fio": custo_vert_fio,
-                    "Violação de Turbinamento em Reservatórios": custo_turbinamento_reservatorio,
-                    "Violação de Turbinamento em Fio": custo_turbinamento_fio,
-                    "Penalidade de Intercâmbio": custo_intercambio,
+                    "estagio": estagio,
+                    "cenario": cenario,
+                    "probabilidade": probabilidade,
+                    "custo_futuro": custo_futuro,
+                    "custo_presente": custo_estagio,
+                    "geracao_termica": custo_gt,
+                    "violacao_desvio": custo_desvio,
+                    "penalidade_vertimento_reservatorio": custo_vert_reservatorio,
+                    "penalidade_vertimento_fio": custo_vert_fio,
+                    "violacao_turbinamento_reservatorio": custo_turbinamento_reservatorio,
+                    "violacao_turbinamento_fio": custo_turbinamento_fio,
+                    "penalidade_intercambio": custo_intercambio,
                 }
             )
             for subsis, cmo in cmos.items():
-                df[f"CMO {subsis}"] = cmo
+                df[f"cmo_{subsis}"] = cmo
             return df
 
         estagio: int = self.dados_cenario[0]
@@ -553,21 +553,23 @@ class BlocoRelatorioOperacaoUTERelato(Block):
     # Override
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_para_df() -> pd.DataFrame:
-            cols = [f"Patamar {i}" for i in range(1, n_pats + 1)] + ["Custo"]
+            cols = [f"geracao_patamar{i}" for i in range(1, n_pats + 1)] + [
+                "custo"
+            ]
             df = pd.DataFrame(tabela, columns=cols)
             cols_adic = [
-                "Estágio",
-                "Cenário",
-                "Probabilidade",
-                "Subsistema",
-                "Usina",
+                "estagio",
+                "cenario",
+                "probabilidade",
+                "nome_submercado",
+                "nome_usina",
                 "FPCGC",
             ]
-            df["Estágio"] = [estagio] * len(subsistemas)
-            df["Cenário"] = [cenario] * len(subsistemas)
-            df["Probabilidade"] = [probabilidade] * len(subsistemas)
-            df["Subsistema"] = subsistemas
-            df["Usina"] = nomes_usinas
+            df["estagio"] = [estagio] * len(subsistemas)
+            df["cenario"] = [cenario] * len(subsistemas)
+            df["probabilidade"] = [probabilidade] * len(subsistemas)
+            df["nome_submercado"] = subsistemas
+            df["nome_usina"] = nomes_usinas
             df["FPCGC"] = fpcgcs
             df = df[cols_adic + cols]
             return df
@@ -697,32 +699,49 @@ class BlocoBalancoEnergeticoRelato(Block):
             for i, lin in enumerate(linhas):
                 tabela[i, : len(lin)] = lin
             df = pd.DataFrame(tabela)
-            df.columns = colunas_balanco
-            df["Estágio"] = estagios
-            df["Cenário"] = cenarios
-            df["Probabilidade"] = probabilidades
-            df["Subsistema"] = subsistemas
-            df["Patamar"] = patamares
-            df["Earm Inicial Absoluto"] = earms_iniciais_abs
-            df["Earm Inicial Percentual"] = earms_iniciais_per
-            df["ENA Absoluta"] = ena_abs
-            df["ENA Percentual"] = ena_per
-            df["Earm Final Absoluto"] = earms_finais_abs
-            df["Earm Final Percentual"] = earms_finais_per
-            cols_adic = [
-                "Estágio",
-                "Cenário",
-                "Probabilidade",
-                "Subsistema",
-                "Patamar",
-                "Earm Inicial Absoluto",
-                "Earm Inicial Percentual",
-                "ENA Absoluta",
-                "ENA Percentual",
-                "Earm Final Absoluto",
-                "Earm Final Percentual",
+            mapa_colunas_balanco = {
+                "Mercado": "mercado",
+                "Bacia": "bacia",
+                "Cbomba": "consumo_bombeamento",
+                "Ghid": "geracao_hidraulica",
+                "Gter": "geracao_termica",
+                "GterAT": "geracao_termica_antecipada",
+                "Geol": "geracao_eolica",
+                "Deficit": "deficit",
+                "Venda": "venda",
+                "Compra": "compra",
+                "Itaipu50": "geracao_itaipu_50hz",
+                "Itaipu60": "geracao_itaipu_60hz",
+            }
+            colunas_balanco_mapeadas = [
+                mapa_colunas_balanco.get(c, c) for c in colunas_balanco
             ]
-            df = df[cols_adic + colunas_balanco]
+            df.columns = colunas_balanco_mapeadas
+            df["estagio"] = estagios
+            df["cenario"] = cenarios
+            df["probabilidade"] = probabilidades
+            df["nome_submercado"] = subsistemas
+            df["patamar"] = patamares
+            df["energia_armazenada_inicial_MWmed"] = earms_iniciais_abs
+            df["energia_armazenada_inicial_percentual"] = earms_iniciais_per
+            df["energia_natural_afluente_MWmed"] = ena_abs
+            df["energia_natural_afluente_percentual"] = ena_per
+            df["energia_armazenada_final_MWmed"] = earms_finais_abs
+            df["energia_armazenada_final_percentual"] = earms_finais_per
+            cols_adic = [
+                "estagio",
+                "cenario",
+                "probabilidade",
+                "nome_submercado",
+                "patamar",
+                "energia_armazenada_inicial_MWmed",
+                "energia_armazenada_inicial_percentual",
+                "energia_natural_afluente_MWmed",
+                "energia_natural_afluente_percentual",
+                "energia_armazenada_final_MWmed",
+                "energia_armazenada_final_percentual",
+            ]
+            df = df[cols_adic + colunas_balanco_mapeadas]
             return df
 
         # Variáveis auxiliares
@@ -831,8 +850,8 @@ class BlocoCMORelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
-            patamares = (patamares_distintos + ["Médio"]) * len(
+            cols = [f"estagio_{s}" for s in range(1, num_estagios + 1)]
+            patamares = (patamares_distintos + ["medio"]) * len(
                 subsistemas_distintos
             )
             subsistemas = [
@@ -841,9 +860,9 @@ class BlocoCMORelato(Block):
             ]
             subsistemas = [p for s in subsistemas for p in s]
             df.columns = cols
-            df["Subsistema"] = subsistemas
-            df["Patamar"] = patamares
-            df = df[["Subsistema", "Patamar"] + cols]
+            df["nome_submercado"] = subsistemas
+            df["patamar"] = patamares
+            df = df[["nome_submercado", "patamar"] + cols]
             return df
 
         # Salta duas linhas
@@ -915,10 +934,10 @@ class BlocoCustoOperacaoValorEsperadoRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
+            cols = [f"estagio_{s}" for s in range(1, num_estagios + 1)]
             df.columns = cols
-            df["Parcela"] = parcelas
-            df = df[["Parcela"] + cols]
+            df["parcela"] = parcelas
+            df = df[["parcela"] + cols]
             return df
 
         # Salta duas linhas
@@ -971,10 +990,10 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
+            cols = [f"estagio_{s}" for s in range(1, num_estagios + 1)]
             df.columns = cols
-            df["Subsistema"] = subsistemas
-            df = df[["Subsistema"] + cols]
+            df["nome_submercado"] = subsistemas
+            df = df[["nome_submercado"] + cols]
             return df
 
         # Salta duas linhas
@@ -1035,8 +1054,8 @@ class BlocoVolumeUtilReservatorioRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Inicial"] + [
-                f"Estágio {s}" for s in range(1, num_estagios + 1)
+            cols = ["inicial"] + [
+                f"estagio_{s}" for s in range(1, num_estagios + 1)
             ]
             df.columns = cols
             df["Usina"] = usinas
@@ -1127,22 +1146,25 @@ class BlocoDadosTermicasRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
-                "GT Min Pat. 1",
-                "GT Max Pat. 1",
-                "Custo Pat. 1",
-                "GT Min Pat. 2",
-                "GT Max Pat. 2",
-                "Custo Pat. 2",
-                "GT Min Pat. 3",
-                "GT Max Pat. 3",
-                "Custo Pat. 3",
+                "geracao_minima_patamar_1",
+                "geracao_maxima_patamar_1",
+                "custo_patamar_1",
+                "geracao_minima_patamar_2",
+                "geracao_maxima_patamar_2",
+                "custo_patamar_2",
+                "geracao_minima_patamar_3",
+                "geracao_maxima_patamar_3",
+                "custo_patamar_3",
             ]
             df = pd.DataFrame(tabela, columns=cols)
-            df["Código"] = numeros
-            df["Usina"] = usinas
-            df["Subsistema"] = subsistemas
-            df["Estágio"] = estagios
-            df = df[["Código", "Usina", "Subsistema", "Estágio"] + cols]
+            df["codigo_usina"] = numeros
+            df["nome_usina"] = usinas
+            df["nome_submercado"] = subsistemas
+            df["estagio"] = estagios
+            df = df[
+                ["codigo_usina", "nome_usina", "nome_submercado", "estagio"]
+                + cols
+            ]
             return df
 
         # Salta as linhas de cabeçalho
@@ -1210,11 +1232,11 @@ class BlocoDisponibilidadesTermicasRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = [f"Estágio {s}" for s in range(1, num_estagios + 1)]
+            cols = [f"estagio_{s}" for s in range(1, num_estagios + 1)]
             df.columns = cols
-            df["Usina"] = usinas
-            df["Número"] = numeros
-            df = df[["Número", "Usina"] + cols]
+            df["nome_usina"] = usinas
+            df["codigo_usina"] = numeros
+            df = df[["codigo_usina", "nome_usina"] + cols]
             return df
 
         # Salta 4 linhas
@@ -1296,17 +1318,17 @@ class BlocoDadosMercadoRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
-                "Patamar 1",
-                "Mercado 1",
-                "Patamar 2",
-                "Mercado 2",
-                "Patamar 3",
-                "Mercado 3",
+                "patamar_1",
+                "mercado_1",
+                "patamar_2",
+                "mercado_2",
+                "patamar_3",
+                "mercado_3",
             ]
             df = pd.DataFrame(tabela, columns=cols)
-            df["Estágio"] = estagios
-            df["Subsistema"] = subsistemas
-            df = df[["Estágio", "Subsistema"] + cols]
+            df["estagio"] = estagios
+            df["nome_submercado"] = subsistemas
+            df = df[["estagio", "nome_submercado"] + cols]
             return df
 
         # Salta as linhas de cabeçalho
@@ -1399,15 +1421,15 @@ class BlocoENAAcoplamentoREERelato(Block):
                 n_semanas = tabela.shape[1] - 1
             else:
                 raise TypeError("Erro na leitura das ENAs para acoplamento")
-            cols = ["Cenário"] + [
-                f"Estágio {s}" for s in range(1, n_semanas + 1)
+            cols = ["cenario"] + [
+                f"estagio_{s}" for s in range(1, n_semanas + 1)
             ]
             df.columns = cols
-            df["Índice"] = indices_rees
-            df["REE"] = rees
-            df["Subsistema"] = subsistemas
-            df = df[["Índice", "REE", "Subsistema"] + cols]
-            df = df.astype({"Cenário": np.int64})
+            df["codigo_ree"] = indices_rees
+            df["nome_ree"] = rees
+            df["nome_submercado"] = subsistemas
+            df = df[["codigo_ree", "nome_ree", "nome_submercado"] + cols]
+            df = df.astype({"cenario": np.int64})
             return df
 
         indices_rees: List[int] = []
@@ -1457,13 +1479,13 @@ class BlocoEnergiaArmazenadaREERelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Inicial"] + [
-                f"Estágio {s}" for s in range(1, num_estagios + 1)
+            cols = ["inicial"] + [
+                f"estagio_{s}" for s in range(1, num_estagios + 1)
             ]
             df.columns = cols
-            df["Subsistema"] = subsistemas
-            df["REE"] = rees
-            df = df[["Subsistema", "REE"] + cols]
+            df["nome_submercado"] = subsistemas
+            df["nome_ree"] = rees
+            df = df[["nome_submercado", "nome_ree"] + cols]
             return df
 
         # Salta 2 linhas
@@ -1535,12 +1557,12 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Inicial"] + [
-                f"Estágio {s}" for s in range(1, num_estagios + 1)
+            cols = ["inicial"] + [
+                f"estagio_{s}" for s in range(1, num_estagios + 1)
             ]
             df.columns = cols
-            df["Subsistema"] = subsistemas
-            df = df[["Subsistema"] + cols]
+            df["nome_submercado"] = subsistemas
+            df = df[["nome_submercado"] + cols]
             return df
 
         # Salta 2 linhas
@@ -1622,10 +1644,12 @@ class BlocoENAPreEstudoMensalREERelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 12)]
+            cols = ["energia_armazenada_maxima"] + [
+                f"estagio_pre_{s}" for s in range(1, 12)
+            ]
             df.columns = cols
-            df["REE"] = rees
-            df = df[["REE"] + cols]
+            df["nome_ree"] = rees
+            df = df[["nome_ree"] + cols]
             return df
 
         # Salta 5 linhas
@@ -1690,10 +1714,12 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 12)]
+            cols = ["energia_armazenada_maxima"] + [
+                f"estagio_pre_{s}" for s in range(1, 12)
+            ]
             df.columns = cols
-            df["Subsistema"] = subsistemas
-            df = df[["Subsistema"] + cols]
+            df["nome_submercado"] = subsistemas
+            df = df[["nome_submercado"] + cols]
             return df
 
         # Salta 5 linhas
@@ -1759,10 +1785,12 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 6)]
+            cols = ["energia_armazenada_maxima"] + [
+                f"estagio_pre_{s}" for s in range(1, 6)
+            ]
             df.columns = cols
-            df["REE"] = rees
-            df = df[["REE"] + cols]
+            df["nome_ree"] = rees
+            df = df[["nome_ree"] + cols]
             # Remove as colunas preenchidas com 0
             for c in cols:
                 if df[c].max() == 0:
@@ -1831,10 +1859,12 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
-            cols = ["Earmax"] + [f"Estágio Pré {s}" for s in range(1, 6)]
+            cols = ["energia_armazenada_maxima"] + [
+                f"estagio_pre_{s}" for s in range(1, 6)
+            ]
             df.columns = cols
-            df["Subsistema"] = subsistemas
-            df = df[["Subsistema"] + cols]
+            df["nome_submercado"] = subsistemas
+            df = df[["nome_submercado"] + cols]
             # Remove as colunas preenchidas com 0
             for c in cols:
                 if df[c].max() == 0:

@@ -38,7 +38,7 @@ class DecOperUsih(ArquivoCSV):
         - cenario (`int`)
         - patamar (`int`)
         - duracao (`float`)
-        - indice_usina (`float`)
+        - codigo_usina (`float`)
         - nome_usina (`str`)
         - nome_submercado (`str`)
         - volume_util_maximo_hm3 (`float`)

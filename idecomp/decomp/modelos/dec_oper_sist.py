@@ -51,7 +51,7 @@ class TabelaOperSist(TabelaCSV):
         "cenario",
         "patamar",
         "duracao",
-        "indice_submercado",
+        "codigo_submercado",
         "nome_submercado",
         "demanda_MW",
         "geracao_pequenas_usinas_MW",

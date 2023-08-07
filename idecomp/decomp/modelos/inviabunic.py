@@ -48,13 +48,13 @@ class BlocoInviabilidadesIteracoes(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
-            df["Iteração"] = iteracoes
-            df["FWD/BWD"] = fwds_bwds
-            df["Estágio"] = estagios
-            df["Cenário"] = cenarios
-            df["Restrição"] = restricoes
-            df["Violação"] = violacoes
-            df["Unidade"] = unidades
+            df["iteracao"] = iteracoes
+            df["etapa"] = fwds_bwds
+            df["estagio"] = estagios
+            df["cenario"] = cenarios
+            df["restricao"] = restricoes
+            df["violacao"] = violacoes
+            df["unidade"] = unidades
             return df
 
         # Salta linhas de cabeçalho
@@ -123,11 +123,11 @@ class BlocoInviabilidadesSimFinal(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
-            df["Estágio"] = estagios
-            df["Cenário"] = cenarios
-            df["Restrição"] = restricoes
-            df["Violação"] = violacoes
-            df["Unidade"] = unidades
+            df["estagio"] = estagios
+            df["cenario"] = cenarios
+            df["restricao"] = restricoes
+            df["violacao"] = violacoes
+            df["unidade"] = unidades
             return df
 
         # Salta linhas de cabeçalho

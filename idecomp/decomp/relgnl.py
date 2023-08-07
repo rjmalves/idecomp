@@ -106,19 +106,19 @@ class RelGNL(BlockFile):
         """
         Tabela de informações das usinas térmicas GNL.
 
-        - Código (`int`)
-        - Usina (`str`)
-        - Subsistema (`str`)
-        - Estágio (`int`)
-        - GT Min Pat. 1 (`float`)
-        - GT Max Pat. 1 (`float`)
-        - Custo Pat. 1 (`float`)
-        - GT Min Pat. 2 (`float`)
-        - GT Max Pat. 2 (`float`)
-        - Custo Pat. 2 (`float`)
-        - GT Min Pat. 3 (`float`)
-        - GT Max Pat. 3 (`float`)
-        - Custo Pat. 3 (`float`)
+        - codigo_usina (`int`)
+        - nome_usina (`str`)
+        - nome_submercado (`str`)
+        - estagio (`int`)
+        - geracao_minima_patamar_1 (`float`)
+        - geracao_maxima_patamar_1 (`float`)
+        - custo_patamar_1 (`float`)
+        - geracao_minima_patamar_2 (`float`)
+        - geracao_maxima_patamar_2 (`float`)
+        - custo_patamar_2 (`float`)
+        - geracao_minima_patamar_3 (`float`)
+        - geracao_maxima_patamar_3 (`float`)
+        - custo_patamar_3 (`float`)
 
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
@@ -134,14 +134,14 @@ class RelGNL(BlockFile):
         Tabela de comandos das usinas térmicas GNL com ajustes
         devido aos registros TG.
 
-        - Código (`int`)
-        - Usina (`str`)
-        - Lag (`int`)
-        - Subsistema (`str`)
-        - Semana (`int`)
-        - Pat 1 (`float`)
-        - Pat 2 (`float`)
-        - Pat 3 (`float`)
+        - codigo_usina (`int`)
+        - nome_usina (`str`)
+        - lag (`int`)
+        - nome_submercado (`str`)
+        - semana (`int`)
+        - patamar_1 (`float`)
+        - patamar_2 (`float`)
+        - patamar_3 (`float`)
 
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
@@ -157,14 +157,14 @@ class RelGNL(BlockFile):
         Tabela de comandos das usinas térmicas GNL com ajustes
         devido a restrições elétricas especiais.
 
-        - Código (`int`)
-        - Usina (`str`)
-        - Lag (`int`)
-        - Subsistema (`str`)
-        - Semana (`int`)
-        - Pat 1 (`float`)
-        - Pat 2 (`float`)
-        - Pat 3 (`float`)
+        - codigo_usina (`int`)
+        - nome_usina (`str`)
+        - lag (`int`)
+        - nome_submercado (`str`)
+        - semana (`int`)
+        - patamar_1 (`float`)
+        - patamar_2 (`float`)
+        - patamar_3 (`float`)
 
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
@@ -180,14 +180,21 @@ class RelGNL(BlockFile):
         Tabela com o relatório do despacho sinalizado para as usinas
         térmicas GNL.
 
-        - Período (`int`)
-        - Cenário (`int`)
-        - Probabilidade (`float`)
-        - Subsistema (`str`)
-        - Usina (`str`)
-        - Lag (`int`)
-        - Estágio (`int`)
-        - Início Semana (`str`)
+        - periodo (`int`)
+        - cenario (`int`)
+        - probabilidade (`float`)
+        - nome_submercado (`str`)
+        - nome_usina (`str`)
+        - lag (`int`)
+        - semana (`int`)
+        - data_inicio_semana (`str`)
+        - geracao_patamar_1 (`float`)
+        - duracao_patamar_1 (`float`)
+        - geracao_patamar_2 (`float`)
+        - duracao_patamar_2 (`float`)
+        - geracao_patamar_3 (`float`)
+        - duracao_patamar_3 (`float`)
+        - custo (`float`)
 
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None

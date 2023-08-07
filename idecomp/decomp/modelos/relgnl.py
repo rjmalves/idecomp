@@ -60,22 +60,25 @@ class BlocoDadosUsinasRelGNL(Block):
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
-                "GT Min Pat. 1",
-                "GT Max Pat. 1",
-                "Custo Pat. 1",
-                "GT Min Pat. 2",
-                "GT Max Pat. 2",
-                "Custo Pat. 2",
-                "GT Min Pat. 3",
-                "GT Max Pat. 3",
-                "Custo Pat. 3",
+                "geracao_minima_patamar_1",
+                "geracao_maxima_patamar_1",
+                "custo_patamar_1",
+                "geracao_minima_patamar_2",
+                "geracao_maxima_patamar_2",
+                "custo_patamar_2",
+                "geracao_minima_patamar_3",
+                "geracao_maxima_patamar_3",
+                "custo_patamar_3",
             ]
             df = pd.DataFrame(tabela, columns=cols)
-            df["Código"] = numeros
-            df["Usina"] = usinas
-            df["Subsistema"] = subsistemas
-            df["Estágio"] = estagios
-            df = df[["Código", "Usina", "Subsistema", "Estágio"] + cols]
+            df["codigo_usina"] = numeros
+            df["nome_usina"] = usinas
+            df["nome_submercado"] = subsistemas
+            df["estagio"] = estagios
+            df = df[
+                ["codigo_usina", "nome_usina", "nome_submercado", "estagio"]
+                + cols
+            ]
             return df
 
         # Salta as linhas de cabeçalho
@@ -142,15 +145,22 @@ class BlocoComandosUsinasAjustesTGRelGNL(Block):
     # Override
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
-            colunas = ["Pat 1", "Pat 2", "Pat 3"]
+            colunas = ["patamar_1", "patamar_2", "patamar_3"]
             df = pd.DataFrame(tabela, columns=colunas)
-            df["Código"] = numeros
-            df["Usina"] = usinas
-            df["Lag"] = lags
-            df["Subsistema"] = subsistemas
-            df["Semana"] = semanas
+            df["codigo_usina"] = numeros
+            df["nome_usina"] = usinas
+            df["lag"] = lags
+            df["nome_submercado"] = subsistemas
+            df["semana"] = semanas
             df = df[
-                ["Código", "Usina", "Lag", "Subsistema", "Semana"] + colunas
+                [
+                    "codigo_usina",
+                    "nome_usina",
+                    "lag",
+                    "nome_submercado",
+                    "semana",
+                ]
+                + colunas
             ]
             return df
 
@@ -221,15 +231,22 @@ class BlocoComandosUsinasAjustesRERelGNL(Block):
     # Override
     def read(self, file: IO, *args, **kwargs):
         def converte_tabela_em_df() -> pd.DataFrame:
-            colunas = ["Pat 1", "Pat 2", "Pat 3"]
+            colunas = ["patamar_1", "patamar_2", "patamar_3"]
             df = pd.DataFrame(tabela, columns=colunas)
-            df["Código"] = numeros
-            df["Usina"] = usinas
-            df["Lag"] = lags
-            df["Subsistema"] = subsistemas
-            df["Período"] = semanas
+            df["codigo_usina"] = numeros
+            df["nome_usina"] = usinas
+            df["lag"] = lags
+            df["nome_submercado"] = subsistemas
+            df["estagio"] = semanas
             df = df[
-                ["Código", "Usina", "Lag", "Subsistema", "Período"] + colunas
+                [
+                    "codigo_usina",
+                    "nome_usina",
+                    "lag",
+                    "nome_submercado",
+                    "estagio",
+                ]
+                + colunas
             ]
             return df
 
@@ -325,33 +342,33 @@ class BlocoRelatorioOperacaoRelGNL(Block):
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [
-                "Despacho Pat. 1",
-                "Duração Pat. 1",
-                "Despacho Pat. 2",
-                "Duração Pat. 2",
-                "Despacho Pat. 3",
-                "Duração Pat. 3",
-                "Custo",
+                "geracao_patamar_1",
+                "duracao_patamar_1",
+                "geracao_patamar_2",
+                "duracao_patamar_2",
+                "geracao_patamar_3",
+                "duracao_patamar_3",
+                "custo",
             ]
             df.columns = cols
-            df["Período"] = periodo
-            df["Cenário"] = cenario
-            df["Probabilidade"] = probabilidade
-            df["Subsistema"] = subsistemas
-            df["Usina"] = usinas
-            df["Lag"] = lags
-            df["Estágio"] = estagios
-            df["Início Semana"] = inicio_semanas
+            df["estagio"] = periodo
+            df["cenario"] = cenario
+            df["probabilidade"] = probabilidade
+            df["nome_submercado"] = subsistemas
+            df["nome_usina"] = usinas
+            df["lag"] = lags
+            df["semana"] = estagios
+            df["data_inicio_semana"] = inicio_semanas
             df = df[
                 [
-                    "Período",
-                    "Cenário",
-                    "Probabilidade",
-                    "Subsistema",
-                    "Usina",
-                    "Lag",
-                    "Estágio",
-                    "Início Semana",
+                    "estagio",
+                    "cenario",
+                    "probabilidade",
+                    "nome_submercado",
+                    "nome_usina",
+                    "lag",
+                    "semana",
+                    "data_inicio_semana",
                 ]
                 + cols
             ]

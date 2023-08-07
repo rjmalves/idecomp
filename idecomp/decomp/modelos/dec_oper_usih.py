@@ -57,7 +57,7 @@ class TabelaOperUsih(TabelaCSV):
         "cenario",
         "patamar",
         "duracao",
-        "indice_usina",
+        "codigo_usina",
         "nome_usina",
         "nome_submercado",
         "volume_util_maximo_hm3",

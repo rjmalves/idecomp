@@ -116,7 +116,7 @@ class Vazoes(SectionFile):
         Obtém a tabela com as vazões previstas de cada nó da árvore de
         cenários, para a etapa determinística da execução, por posto.
 
-        - estágio (`int`)
+        - estagio (`int`)
         - 1 (`int`)
         - ...
         - N (`int`) : número de postos
@@ -161,7 +161,7 @@ class Vazoes(SectionFile):
         cenários, para a etapa determinística da execução, por posto.
         Considera também os postos artificiais (usados para acoplamento).
 
-        - estágio (`int`)
+        - estagio (`int`)
         - 1 (`int`)
         - ...
         - N (`int`) : número de postos
@@ -209,7 +209,7 @@ class Vazoes(SectionFile):
         Obtém a tabela com as cenários gerados de cada nó da árvore de
         cenários, para a etapa estocástica da execução, por posto.
 
-        - estágio (`int`)
+        - estagio (`int`)
         - cenario (`int`)
         - 1 (`int`)
         - ...
@@ -275,7 +275,7 @@ class Vazoes(SectionFile):
         cenários, para a etapa estocástica da execução, por posto.
         Considera também os postos artificiais (usados para acoplamento).
 
-        - estágio (`int`)
+        - estagio (`int`)
         - cenario (`int`)
         - 1 (`int`)
         - ...

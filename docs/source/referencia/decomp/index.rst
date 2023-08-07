@@ -29,5 +29,4 @@ DECOMP
    arquivos/postos
    arquivos/relato
    arquivos/relgnl
-   arquivos/sumario
    arquivos/vazoes

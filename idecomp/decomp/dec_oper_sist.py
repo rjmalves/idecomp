@@ -38,7 +38,7 @@ class DecOperSist(ArquivoCSV):
         - cenario (`int`)
         - patamar (`int`)
         - duracao (`float`)
-        - indice_submercado (`int`)
+        - codigo_submercado (`int`)
         - nome_submercado (`str`)
         - demanda_MW (`float`)
         - geracao_pequenas_usinas_MW (`float`)

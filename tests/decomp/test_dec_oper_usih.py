@@ -17,7 +17,7 @@ def test_atributos_encontrados_dec_oper_usih():
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 40.00
-        assert rel.tabela.at[0, "indice_usina"] == 1
+        assert rel.tabela.at[0, "codigo_usina"] == 1
         assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
         assert rel.tabela.at[0, "nome_submercado"] == "SE"
         assert rel.tabela.at[0, "volume_util_maximo_hm3"] == 672.00
