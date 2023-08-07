@@ -84,8 +84,8 @@ from idecomp.decomp.modelos.dadger import (
 )
 
 import pandas as pd  # type: ignore
-from cfinterface.files.registerfile import RegisterFile
 from cfinterface.components.register import Register
+from cfinterface.files.registerfile import RegisterFile
 from typing import Type, List, Optional, TypeVar, Any, Union
 
 # Para compatibilidade - até versão 1.0.0
@@ -107,7 +107,7 @@ class Dadger(RegisterFile):
 
     """
 
-    T = TypeVar("T")
+    T = TypeVar("T", bound=Register)
 
     AC = Union[
         ACNUMPOS,
@@ -235,90 +235,14 @@ class Dadger(RegisterFile):
         warnings.warn(msg, category=FutureWarning)
         self.write(join(diretorio, nome_arquivo))
 
-    def __registros_por_tipo(self, registro: Type[T]) -> List[T]:
-        """
-        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
-        :param bloco: Um tipo de bloco para ser lido
-        :type bloco: T
-        :param indice: O índice do bloco a ser acessado, dentre os do tipo
-        :type indice: int
-        """
-        return [b for b in self.data.of_type(registro)]
-
-    def __obtem_registro(self, tipo: Type[T]) -> Optional[T]:
-        """ """
-        r = self.__obtem_registros(tipo)
-        return r[0] if len(r) > 0 else None
-
-    def __obtem_registros(self, tipo: Type[T]) -> List[T]:
-        return self.__registros_por_tipo(tipo)
-
-    def __obtem_registros_com_filtros(
-        self, tipo_registro: Type[T], **kwargs
-    ) -> Optional[Union[T, List[T]]]:
-        def __atende(r) -> bool:
-            condicoes: List[bool] = []
-            for k, v in kwargs.items():
-                if v is not None:
-                    condicoes.append(getattr(r, k) == v)
-            return all(condicoes)
-
-        regs_filtro = [
-            r for r in self.__obtem_registros(tipo_registro) if __atende(r)
-        ]
-        if len(regs_filtro) == 0:
-            return None
-        elif len(regs_filtro) == 1:
-            return regs_filtro[0]
+    def __registros_ou_df(
+        self, t: Type[T], **kwargs
+    ) -> Optional[Union[T, List[T], pd.DataFrame]]:
+        if kwargs.get("df"):
+            return self._as_df(t)
         else:
-            return regs_filtro
-
-    def cria_registro(self, anterior: Register, registro: Register):
-        """
-        Adiciona um registro ao arquivo após um outro registro previamente
-        existente.
-
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        self.data.add_after(anterior, registro)
-
-    def deleta_registro(self, registro: Register):
-        """
-        Remove um registro existente no arquivo.
-
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        self.data.remove(registro)
-
-    def lista_registros(self, tipo: Type[T]) -> List[T]:
-        """
-        Lista todos os registros presentes no arquivo que tenham o tipo `T`.
-
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        return [r for r in self.data.of_type(tipo)]
-
-    def append_registro(self, registro: Register):
-        """
-        Adiciona um registro ao arquivo na última posição.
-
-
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        self.data.append(registro)
-
-    def preppend_registro(self, registro: Register):
-        """
-        Adiciona um registro ao arquivo na primeira posição.
-
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        self.data.preppend(registro)
+            kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
+            return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
     @property
     def te(self) -> Optional[TE]:
@@ -329,7 +253,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`TE` | None.
         """
-        return self.__obtem_registro(TE)
+        r = self.data.get_registers_of_type(TE)
+        if isinstance(r, TE):
+            return r
+        else:
+            return None
 
     def sb(
         self,
@@ -348,12 +276,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`SB` | list[:class:`SB`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(SB)
-        else:
-            return self.__obtem_registros_com_filtros(
-                SB, codigo=codigo, nome=nome
-            )
+        return self.__registros_ou_df(SB, codigo=codigo, nome=nome, df=df)
 
     def uh(
         self,
@@ -382,16 +305,14 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`UH` | list[:class:`UH`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(UH)
-        else:
-            return self.__obtem_registros_com_filtros(
-                UH,
-                codigo=codigo,
-                ree=ree,
-                volume_inicial=volume_inicial,
-                evaporacao=evaporacao,
-            )
+        return self.__registros_ou_df(
+            UH,
+            codigo=codigo,
+            ree=ree,
+            volume_inicial=volume_inicial,
+            evaporacao=evaporacao,
+            df=df,
+        )
 
     def ct(
         self,
@@ -418,16 +339,14 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`CT` | list[:class:`CT`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(CT)
-        else:
-            return self.__obtem_registros_com_filtros(
-                CT,
-                codigo=codigo,
-                estagio=estagio,
-                subsistema=subsistema,
-                nome=nome,
-            )
+        return self.__registros_ou_df(
+            CT,
+            codigo=codigo,
+            estagio=estagio,
+            subsistema=subsistema,
+            nome=nome,
+            df=df,
+        )
 
     def dp(
         self,
@@ -456,15 +375,13 @@ class Dadger(RegisterFile):
         :rtype: :class:`DP` | list[:class:`DP`] |
             :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(DP)
-        else:
-            return self.__obtem_registros_com_filtros(
-                DP,
-                estagio=estagio,
-                subsistema=subsistema,
-                num_patamares=num_patamares,
-            )
+        return self.__registros_ou_df(
+            DP,
+            estagio=estagio,
+            subsistema=subsistema,
+            num_patamares=num_patamares,
+            df=df,
+        )
 
     def pq(
         self,
@@ -491,15 +408,9 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`PQ` | list[:class:`PQ`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(PQ)
-        else:
-            return self.__obtem_registros_com_filtros(
-                PQ,
-                nome=nome,
-                estagio=estagio,
-                subsistema=subsistema,
-            )
+        return self.__registros_ou_df(
+            PQ, nome=nome, estagio=estagio, subsistema=subsistema, df=df
+        )
 
     def ac(
         self,
@@ -523,12 +434,9 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: `AC` | list[`AC`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(modificacao)
-        else:
-            return self.__obtem_registros_com_filtros(
-                modificacao, **{"uhe": uhe, **kwargs}
-            )
+        return self.__registros_ou_df(
+            modificacao, **{"uhe": uhe, **kwargs, "df": df}
+        )
 
     def cd(
         self,
@@ -557,16 +465,14 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`LU` | list[:class:`LU`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(CD)
-        else:
-            return self.__obtem_registros_com_filtros(
-                CD,
-                numero_curva=numero_curva,
-                subsistema=subsistema,
-                nome_curva=nome_curva,
-                estagio=estagio,
-            )
+        return self.__registros_ou_df(
+            CD,
+            numero_curva=numero_curva,
+            subsistema=subsistema,
+            nome_curva=nome_curva,
+            estagio=estagio,
+            df=df,
+        )
 
     @property
     def tx(self) -> Optional[TX]:
@@ -577,7 +483,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`TX` | None.
         """
-        return self.__obtem_registro(TX)
+        r = self.data.get_registers_of_type(TX)
+        if isinstance(r, TX):
+            return r
+        else:
+            return None
 
     @property
     def gp(self) -> Optional[GP]:
@@ -588,7 +498,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`GP` | None.
         """
-        return self.__obtem_registro(GP)
+        r = self.data.get_registers_of_type(GP)
+        if isinstance(r, GP):
+            return r
+        else:
+            return None
 
     @property
     def ni(self) -> Optional[NI]:
@@ -599,7 +513,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`NI` | None.
         """
-        return self.__obtem_registro(NI)
+        r = self.data.get_registers_of_type(NI)
+        if isinstance(r, NI):
+            return r
+        else:
+            return None
 
     @property
     def dt(self) -> Optional[DT]:
@@ -610,7 +528,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`DT` | None.
         """
-        return self.__obtem_registro(DT)
+        r = self.data.get_registers_of_type(DT)
+        if isinstance(r, DT):
+            return r
+        else:
+            return None
 
     def re(
         self,
@@ -637,15 +559,13 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RE` | list[:class:`RE`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(RE)
-        else:
-            return self.__obtem_registros_com_filtros(
-                RE,
-                codigo=codigo,
-                estagio_inicial=estagio_inicial,
-                estagio_final=estagio_final,
-            )
+        return self.__registros_ou_df(
+            RE,
+            codigo=codigo,
+            estagio_inicial=estagio_inicial,
+            estagio_final=estagio_final,
+            df=df,
+        )
 
     def lu(  # noqa
         self,
@@ -711,7 +631,7 @@ class Dadger(RegisterFile):
             ultimo_registro = None
             if ei is not None and estagio <= ef:  # type: ignore
                 for e in range(ei, estagio + 1):  # type: ignore
-                    registro_estagio = self.__obtem_registros_com_filtros(
+                    registro_estagio = self.data.get_registers_of_type(
                         LU, codigo=codigo, estagio=e
                     )
                     if registro_estagio is not None:
@@ -735,7 +655,7 @@ class Dadger(RegisterFile):
         if df:
             return self._as_df(LU)
         else:
-            lu = self.__obtem_registros_com_filtros(
+            lu = self.data.get_registers_of_type(
                 LU, codigo=codigo, estagio=estagio
             )
             if isinstance(lu, list):
@@ -772,16 +692,14 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`FU` | list[:class:`FU`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(FU)
-        else:
-            return self.__obtem_registros_com_filtros(
-                FU,
-                restricao=restricao,
-                uhe=uhe,
-                estagio=estagio,
-                coeficiente=coeficiente,
-            )
+        return self.__registros_ou_df(
+            FU,
+            restricao=restricao,
+            uhe=uhe,
+            estagio=estagio,
+            coeficiente=coeficiente,
+            df=df,
+        )
 
     def ft(
         self,
@@ -811,16 +729,14 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`FT` | list[:class:`FT`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(FT)
-        else:
-            return self.__obtem_registros_com_filtros(
-                FT,
-                restricao=restricao,
-                ute=ute,
-                estagio=estagio,
-                coeficiente=coeficiente,
-            )
+        return self.__registros_ou_df(
+            FT,
+            restricao=restricao,
+            ute=ute,
+            estagio=estagio,
+            coeficiente=coeficiente,
+            df=df,
+        )
 
     def fi(
         self,
@@ -853,17 +769,15 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`FI` | list[:class:`FI`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(FI)
-        else:
-            return self.__obtem_registros_com_filtros(
-                FI,
-                restricao=restricao,
-                estagio=estagio,
-                de=de,
-                para=para,
-                coeficiente=coeficiente,
-            )
+        return self.__registros_ou_df(
+            FI,
+            restricao=restricao,
+            estagio=estagio,
+            de=de,
+            para=para,
+            coeficiente=coeficiente,
+            df=df,
+        )
 
     def vi(
         self,
@@ -887,12 +801,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`VI` | list[:class:`VI`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(VI)
-        else:
-            return self.__obtem_registros_com_filtros(
-                VI, uhe=uhe, duracao=duracao
-            )
+        return self.__registros_ou_df(VI, uhe=uhe, duracao=duracao, df=df)
 
     def ir(
         self, tipo: Optional[str] = None, df: bool = False
@@ -912,10 +821,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`IR` | list[:class:`IR`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(IR)
-        else:
-            return self.__obtem_registros_com_filtros(IR, tipo=tipo)
+        return self.__registros_ou_df(IR, tipo=tipo, df=df)
 
     def rt(
         self, restricao: Optional[str] = None, df: bool = False
@@ -934,10 +840,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RT` | list[:class:`RT`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(RT)
-        else:
-            return self.__obtem_registros_com_filtros(RT, restricao=restricao)
+        return self.__registros_ou_df(RT, restricao=restricao, df=df)
 
     def fc(
         self,
@@ -961,24 +864,24 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`FC` | list[:class:`FC`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(FC)
-        else:
-            return self.__obtem_registros_com_filtros(
-                FC, tipo=tipo, caminho=caminho
-            )
+        return self.__registros_ou_df(FC, tipo=tipo, caminho=caminho, df=df)
 
-    def ea(self, ree: Optional[int] = None) -> Optional[Union[EA, List[EA]]]:
+    def ea(
+        self, ree: Optional[int] = None, df: bool = False
+    ) -> Optional[Union[EA, List[EA], pd.DataFrame]]:
         """
         Obtém um registro que especifica a ENA dos meses anteriores
         ao estudo.
 
         :param ree: Código do REE
         :type ree: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`EA` | list[:class:`EA`] | None
+        :rtype: :class:`EA` | list[:class:`EA`] | :class:`pd.DataFrame` | None
         """
-        return self.__obtem_registros_com_filtros(EA, ree=ree)
+        return self.data.get_registers_of_type(EA, ree=ree, df=df)
 
     def es(
         self,
@@ -1001,12 +904,9 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`ES` | list[:class:`ES`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(ES)
-        else:
-            return self.__obtem_registros_com_filtros(
-                ES, ree=ree, numero_semanas=numero_semanas
-            )
+        return self.__registros_ou_df(
+            ES, ree=ree, numero_semanas=numero_semanas, df=df
+        )
 
     def qi(
         self, uhe: Optional[int] = None, df: bool = False
@@ -1024,10 +924,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`QI` | list[:class:`QI`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(QI)
-        else:
-            return self.__obtem_registros_com_filtros(QI, uhe=uhe)
+        return self.__registros_ou_df(QI, uhe=uhe, df=df)
 
     def ti(
         self, codigo: Optional[int] = None, df: bool = False
@@ -1045,10 +942,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`TI` | list[:class:`TI`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(TI)
-        else:
-            return self.__obtem_registros_com_filtros(TI, codigo=codigo)
+        return self.__registros_ou_df(TI, codigo=codigo, df=df)
 
     def fp(
         self,
@@ -1103,22 +997,20 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`FP` | list[:class:`FP`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(FP)
-        else:
-            return self.__obtem_registros_com_filtros(
-                FP,
-                codigo=codigo,
-                estagio=estagio,
-                tipo_entrada_janela_turbinamento=tipo_entrada_janela_turbinamento,
-                numero_pontos_turbinamento=numero_pontos_turbinamento,
-                limite_inferior_janela_turbinamento=limite_inferior_janela_turbinamento,
-                limite_superior_janela_turbinamento=limite_superior_janela_turbinamento,
-                tipo_entrada_janela_volume=tipo_entrada_janela_volume,
-                numero_pontos_volume=numero_pontos_volume,
-                limite_inferior_janela_volume=limite_inferior_janela_volume,
-                limite_superior_janela_volume=limite_superior_janela_volume,
-            )
+        return self.__registros_ou_df(
+            FP,
+            codigo=codigo,
+            estagio=estagio,
+            tipo_entrada_janela_turbinamento=tipo_entrada_janela_turbinamento,
+            numero_pontos_turbinamento=numero_pontos_turbinamento,
+            limite_inferior_janela_turbinamento=limite_inferior_janela_turbinamento,
+            limite_superior_janela_turbinamento=limite_superior_janela_turbinamento,
+            tipo_entrada_janela_volume=tipo_entrada_janela_volume,
+            numero_pontos_volume=numero_pontos_volume,
+            limite_inferior_janela_volume=limite_inferior_janela_volume,
+            limite_superior_janela_volume=limite_superior_janela_volume,
+            df=df,
+        )
 
     def rq(
         self, ree: Optional[int] = None, df: bool = False
@@ -1136,10 +1028,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RQ` | list[:class:`RQ`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(RQ)
-        else:
-            return self.__obtem_registros_com_filtros(RQ, ree=ree)
+        return self.__registros_ou_df(RQ, ree=ree, df=df)
 
     def ve(
         self, codigo: Optional[int] = None, df: bool = False
@@ -1157,10 +1046,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`VE` | list[:class:`VE`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(VE)
-        else:
-            return self.__obtem_registros_com_filtros(VE, codigo=codigo)
+        return self.__registros_ou_df(VE, codigo=codigo, df=df)
 
     def hv(
         self,
@@ -1187,15 +1073,13 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`HV` | list[:class:`HV`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(HV)
-        else:
-            return self.__obtem_registros_com_filtros(
-                HV,
-                codigo=codigo,
-                estagio_inicial=estagio_inicial,
-                estagio_final=estagio_final,
-            )
+        return self.__registros_ou_df(
+            HV,
+            codigo=codigo,
+            estagio_inicial=estagio_inicial,
+            estagio_final=estagio_final,
+            df=df,
+        )
 
     def lv(  # noqa
         self,
@@ -1261,7 +1145,7 @@ class Dadger(RegisterFile):
             ultimo_registro = None
             if ei is not None and estagio <= ef:  # type: ignore
                 for e in range(ei, estagio + 1):  # type: ignore
-                    registro_estagio = self.__obtem_registros_com_filtros(
+                    registro_estagio = self.data.get_registers_of_type(
                         LV, codigo=codigo, estagio=e
                     )
                     if registro_estagio is not None:
@@ -1281,7 +1165,7 @@ class Dadger(RegisterFile):
         if df:
             return self._as_df(LV)
         else:
-            lv = self.__obtem_registros_com_filtros(
+            lv = self.data.get_registers_of_type(
                 LV, codigo=codigo, estagio=estagio
             )
             if isinstance(lv, list):
@@ -1321,17 +1205,15 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`CV` | list[:class:`CV`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(CV)
-        else:
-            return self.__obtem_registros_com_filtros(
-                CV,
-                restricao=restricao,
-                uhe=uhe,
-                estagio=estagio,
-                coeficiente=coeficiente,
-                tipo=tipo,
-            )
+        return self.__registros_ou_df(
+            CV,
+            restricao=restricao,
+            uhe=uhe,
+            estagio=estagio,
+            coeficiente=coeficiente,
+            tipo=tipo,
+            df=df,
+        )
 
     def hq(
         self,
@@ -1358,15 +1240,13 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`HQ` | list[:class:`HQ`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(HQ)
-        else:
-            return self.__obtem_registros_com_filtros(
-                HQ,
-                codigo=codigo,
-                estagio_inicial=estagio_inicial,
-                estagio_final=estagio_final,
-            )
+        return self.__registros_ou_df(
+            HQ,
+            codigo=codigo,
+            estagio_inicial=estagio_inicial,
+            estagio_final=estagio_final,
+            df=df,
+        )
 
     def lq(  # noqa
         self,
@@ -1432,7 +1312,7 @@ class Dadger(RegisterFile):
             ultimo_registro = None
             if ei is not None and estagio <= ef:  # type: ignore
                 for e in range(ei, estagio + 1):  # type: ignore
-                    registro_estagio = self.__obtem_registros_com_filtros(
+                    registro_estagio = self.data.get_registers_of_type(
                         LQ, codigo=codigo, estagio=e
                     )
                     if registro_estagio is not None:
@@ -1456,7 +1336,7 @@ class Dadger(RegisterFile):
         if df:
             return self._as_df(LQ)
         else:
-            lq = self.__obtem_registros_com_filtros(
+            lq = self.data.get_registers_of_type(
                 LQ, codigo=codigo, estagio=estagio
             )
             if isinstance(lq, list):
@@ -1496,17 +1376,15 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`CQ` | list[:class:`CQ`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(CQ)
-        else:
-            return self.__obtem_registros_com_filtros(
-                CQ,
-                restricao=restricao,
-                uhe=uhe,
-                estagio=estagio,
-                coeficiente=coeficiente,
-                tipo=tipo,
-            )
+        return self.__registros_ou_df(
+            CQ,
+            restricao=restricao,
+            uhe=uhe,
+            estagio=estagio,
+            coeficiente=coeficiente,
+            tipo=tipo,
+            df=df,
+        )
 
     def he(
         self,
@@ -1553,20 +1431,18 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`HE` | list[:class:`HE`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(HE)
-        else:
-            return self.__obtem_registros_com_filtros(
-                HE,
-                codigo=codigo,
-                estagio=estagio,
-                tipo_limite=tipo_limite,
-                forma_calculo_produtibilidades=forma_calculo_produtibilidades,
-                tipo_valores_produtibilidades=tipo_valores_produtibilidades,
-                tipo_penalidade=tipo_penalidade,
-                penalidade=penalidade,
-                arquivo_produtibilidades=arquivo_produtibilidades,
-            )
+        return self.__registros_ou_df(
+            HE,
+            codigo=codigo,
+            estagio=estagio,
+            tipo_limite=tipo_limite,
+            forma_calculo_produtibilidades=forma_calculo_produtibilidades,
+            tipo_valores_produtibilidades=tipo_valores_produtibilidades,
+            tipo_penalidade=tipo_penalidade,
+            penalidade=penalidade,
+            arquivo_produtibilidades=arquivo_produtibilidades,
+            df=df,
+        )
 
     def cm(
         self,
@@ -1592,15 +1468,9 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se houverem.
         :rtype: :class:`CM` | list[:class:`CM`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(CM)
-        else:
-            return self.__obtem_registros_com_filtros(
-                CM,
-                codigo=codigo,
-                ree=ree,
-                coeficiente=coeficiente,
-            )
+        return self.__registros_ou_df(
+            CM, codigo=codigo, ree=ree, coeficiente=coeficiente, df=df
+        )
 
     @property
     def ev(self) -> Optional[EV]:
@@ -1611,7 +1481,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`EV` | None.
         """
-        return self.__obtem_registro(EV)
+        r = self.data.get_registers_of_type(EV)
+        if isinstance(r, EV):
+            return r
+        else:
+            return None
 
     @property
     def fj(self) -> Optional[FJ]:
@@ -1622,7 +1496,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`FJ` | None.
         """
-        return self.__obtem_registro(FJ)
+        r = self.data.get_registers_of_type(FJ)
+        if isinstance(r, FJ):
+            return r
+        else:
+            return None
 
     @property
     def pu(self) -> Optional[PU]:
@@ -1632,7 +1510,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`PU` | None.
         """
-        return self.__obtem_registro(PU)
+        r = self.data.get_registers_of_type(PU)
+        if isinstance(r, PU):
+            return r
+        else:
+            return None
 
     @property
     def rc(self) -> Optional[RC]:
@@ -1643,7 +1525,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`RC` | None.
         """
-        return self.__obtem_registro(RC)
+        r = self.data.get_registers_of_type(RC)
+        if isinstance(r, RC):
+            return r
+        else:
+            return None
 
     def pe(
         self,
@@ -1669,12 +1555,9 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`PE` | list[:class:`PE`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(PE)
-        else:
-            return self.__obtem_registros_com_filtros(
-                PE, subsistema=subsistema, tipo=tipo, penalidade=penalidade
-            )
+        return self.__registros_ou_df(
+            PE, subsistema=subsistema, tipo=tipo, penalidade=penalidade, df=df
+        )
 
     def ts(
         self,
@@ -1699,7 +1582,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`TS` | list[:class:`TS`] | None
         """
-        return self.__obtem_registros_com_filtros(
+        return self.data.get_registers_of_type(
             TS,
             tolerancia_primaria=tolerancia_primaria,
             tolerancia_secundaria=tolerancia_secundaria,
@@ -1741,7 +1624,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`PV` | list[:class:`PV`] | None
         """
-        return self.__obtem_registros_com_filtros(
+        return self.data.get_registers_of_type(
             PV,
             penalidade_variaveis_folga=penalidade_variaveis_folga,
             tolerancia_viabilidade_restricoes=tolerancia_viabilidade_restricoes,
@@ -1771,14 +1654,9 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`CX` | list[:class:`CX`] | :class:`pd.DataFrame` | None
         """
-        if df:
-            return self._as_df(CX)
-        else:
-            return self.__obtem_registros_com_filtros(
-                CX,
-                codigo_newave=codigo_newave,
-                codigo_decomp=codigo_decomp,
-            )
+        return self.__registros_ou_df(
+            CX, codigo_newave=codigo_newave, codigo_decomp=codigo_decomp, df=df
+        )
 
     @property
     def fa(self) -> Optional[FA]:
@@ -1788,7 +1666,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`FA` | None.
         """
-        return self.__obtem_registro(FA)
+        r = self.data.get_registers_of_type(FA)
+        if isinstance(r, FA):
+            return r
+        else:
+            return None
 
     @property
     def vt(self) -> Optional[VT]:
@@ -1799,7 +1681,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`VT` | None.
         """
-        return self.__obtem_registro(VT)
+        r = self.data.get_registers_of_type(VT)
+        if isinstance(r, VT):
+            return r
+        else:
+            return None
 
     @property
     def cs(self) -> Optional[CS]:
@@ -1810,7 +1696,11 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`CS` | None.
         """
-        return self.__obtem_registro(CS)
+        r = self.data.get_registers_of_type(CS)
+        if isinstance(r, CS):
+            return r
+        else:
+            return None
 
     def pd(
         self, algoritmo: Optional[str] = None
@@ -1823,4 +1713,4 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`PD` | list[:class:`PD`] | None
         """
-        return self.__obtem_registros_com_filtros(PD, algoritmo=algoritmo)
+        return self.data.get_registers_of_type(PD, algoritmo=algoritmo)

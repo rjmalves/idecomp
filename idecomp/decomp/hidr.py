@@ -27,11 +27,11 @@ class Hidr(RegisterFile):
         super().write(to, *args, **kwargs)
 
     def __monta_df_de_registros(self) -> Optional[pd.DataFrame]:
-        registros: List[RegistroUHEHidr] = [
-            r for r in self.data.of_type(RegistroUHEHidr)
-        ]
-        if len(registros) == 0:
+        registros = self.data.get_registers_of_type(RegistroUHEHidr)
+        if registros is None:
             return None
+        elif isinstance(registros, RegistroUHEHidr):
+            registros = [registros]
         df = pd.DataFrame(
             columns=[
                 "nome_usina",

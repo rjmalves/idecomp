@@ -28,7 +28,7 @@ from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
 
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
-from typing import Type, List, TypeVar, Optional
+from typing import Union, List, TypeVar, Optional
 import pandas as pd  # type: ignore
 
 # Para compatibilidade - até versão 1.0.0
@@ -47,7 +47,7 @@ class Relato(BlockFile):
 
     """
 
-    T = TypeVar("T")
+    T = TypeVar("T", bound=Block)
 
     BLOCKS = [
         BlocoREEsSubsistemas,
@@ -98,63 +98,14 @@ class Relato(BlockFile):
         warnings.warn(msg, category=FutureWarning)
         self.write(join(diretorio, nome_arquivo))
 
-    def __bloco_por_tipo(self, bloco: Type[T], indice: int) -> Optional[T]:
-        """
-        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
-        :param bloco: Um tipo de bloco para ser lido
-        :type bloco: T
-        :param indice: O índice do bloco a ser acessado, dentre os do tipo
-        :type indice: int
-        :return: O gerador de blocos, se houver
-        :rtype: Optional[Generator[T], None, None]
-        """
-        try:
-            return next(
-                b
-                for i, b in enumerate(self.data.of_type(bloco))
-                if i == indice
-            )
-        except StopIteration:
-            return None
-
-    def __concatena_blocos(self, bloco: Type[T]) -> Optional[pd.DataFrame]:
-        """
-        Adiciona uma coluna com o estágio de cada bloco, assumindo
-        a mesma ordem das séries de energia.
-        :param bloco: O tipo de bloco
-        :type bloco: Type[T]
-        :return: O DataFrame com os estágios
-        :rtype: pd.DataFrame
-        """
-        df = None
-        for i, b in enumerate(self.data.of_type(bloco)):
-            if not isinstance(b, Block):
-                continue
-            df_estagio = b.data
-            if df is None:
-                df = df_estagio
-            else:
-                df = pd.concat([df, df_estagio], ignore_index=True)
-        if df is not None:
-            return df
-        return None
-
-    def __concatena_blocos_por_tipo(
-        self, blocos, indice_data: int
+    def __concatena_blocos(
+        self, blocos: Union[T, List[T]], indice_data=None
     ) -> Optional[pd.DataFrame]:
-        """
-        Adiciona uma coluna com o estágio de cada bloco, assumindo
-        a mesma ordem das séries de energia.
-        :param blocos: Os blocos a serem concatenados
-        :type bloco: List[Type[T]]
-        :return: O DataFrame com os estágios
-        :rtype: pd.DataFrame
-        """
         df = None
+        if not isinstance(blocos, list):
+            blocos = [blocos]
         for b in blocos:
-            if not isinstance(b, Block):
-                continue
-            df_estagio = b.data[indice_data]
+            df_estagio = b.data if indice_data is None else b.data[indice_data]
             if df is None:
                 df = df_estagio
             else:
@@ -178,8 +129,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None.
         """
-        b = self.__bloco_por_tipo(BlocoREEsSubsistemas, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoREEsSubsistemas)
+        if isinstance(b, BlocoREEsSubsistemas):
             return b.data
         return None
 
@@ -200,8 +151,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None.
         """
-        b = self.__bloco_por_tipo(BlocoUHEsREEsSubsistemas, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoUHEsREEsSubsistemas)
+        if isinstance(b, BlocoUHEsREEsSubsistemas):
             return b.data
         return None
 
@@ -226,8 +177,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None.
         """
-        b = self.__bloco_por_tipo(BlocoConvergenciaRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoConvergenciaRelato)
+        if isinstance(b, BlocoConvergenciaRelato):
             return b.data
         return None
 
@@ -261,8 +212,8 @@ class Relato(BlockFile):
             for b in self.data.of_type(BlocoRelatorioOperacaoRelato):
                 if b.data[0] == "GERAL":
                     blocos_custos.append(b)
-            self.__relatorios_operacao_custos = (
-                self.__concatena_blocos_por_tipo(blocos_custos, 1)
+            self.__relatorios_operacao_custos = self.__concatena_blocos(
+                blocos_custos, 1
             )
         return self.__relatorios_operacao_custos
 
@@ -305,7 +256,7 @@ class Relato(BlockFile):
             for b in self.data.of_type(BlocoRelatorioOperacaoRelato):
                 if b.data[0] == "UHE":
                     blocos_uhe.append(b)
-            self.__relatorios_operacao_uhe = self.__concatena_blocos_por_tipo(
+            self.__relatorios_operacao_uhe = self.__concatena_blocos(
                 blocos_uhe, 1
             )
         return self.__relatorios_operacao_uhe
@@ -331,9 +282,13 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__relatorios_operacao_ute is None:
-            self.__relatorios_operacao_ute = self.__concatena_blocos(
+            blocos = self.data.get_blocks_of_type(
                 BlocoRelatorioOperacaoUTERelato
             )
+            if blocos is not None:
+                self.__relatorios_operacao_ute = self.__concatena_blocos(
+                    blocos
+                )
         return self.__relatorios_operacao_ute
 
     @property
@@ -370,9 +325,9 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__balanco_energetico is None:
-            self.__balanco_energetico = self.__concatena_blocos(
-                BlocoBalancoEnergeticoRelato
-            )
+            blocos = self.data.get_blocks_of_type(BlocoBalancoEnergeticoRelato)
+            if blocos is not None:
+                self.__balanco_energetico = self.__concatena_blocos(blocos)
         return self.__balanco_energetico
 
     @property
@@ -390,8 +345,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoCMORelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoCMORelato)
+        if isinstance(b, BlocoCMORelato):
             return b.data
         return None
 
@@ -409,8 +364,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoGeracaoTermicaSubsistemaRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoGeracaoTermicaSubsistemaRelato)
+        if isinstance(b, BlocoGeracaoTermicaSubsistemaRelato):
             return b.data
         return None
 
@@ -428,8 +383,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoCustoOperacaoValorEsperadoRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoCustoOperacaoValorEsperadoRelato)
+        if isinstance(b, BlocoCustoOperacaoValorEsperadoRelato):
             return b.data
         return None
 
@@ -450,8 +405,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaREERelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoEnergiaArmazenadaREERelato)
+        if isinstance(b, BlocoEnergiaArmazenadaREERelato):
             return b.data
         return None
 
@@ -471,8 +426,10 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoEnergiaArmazenadaSubsistemaRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(
+            BlocoEnergiaArmazenadaSubsistemaRelato
+        )
+        if isinstance(b, BlocoEnergiaArmazenadaSubsistemaRelato):
             return b.data
         return None
 
@@ -493,8 +450,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoVolumeUtilReservatorioRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoVolumeUtilReservatorioRelato)
+        if isinstance(b, BlocoVolumeUtilReservatorioRelato):
             return b.data
         return None
 
@@ -521,8 +478,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoDadosTermicasRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoDadosTermicasRelato)
+        if isinstance(b, BlocoDadosTermicasRelato):
             return b.data
         return None
 
@@ -542,8 +499,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoDisponibilidadesTermicasRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoDisponibilidadesTermicasRelato)
+        if isinstance(b, BlocoDisponibilidadesTermicasRelato):
             return b.data
         return None
 
@@ -564,8 +521,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoDadosMercadoRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoDadosMercadoRelato)
+        if isinstance(b, BlocoDadosMercadoRelato):
             return b.data
         return None
 
@@ -586,8 +543,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoENAAcoplamentoREERelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoENAAcoplamentoREERelato)
+        if isinstance(b, BlocoENAAcoplamentoREERelato):
             return b.data
         return None
 
@@ -606,8 +563,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoENAPreEstudoMensalREERelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoENAPreEstudoMensalREERelato)
+        if isinstance(b, BlocoENAPreEstudoMensalREERelato):
             df: pd.DataFrame = b.data.copy()
             df.drop(columns=["energia_armazenada_maxima"], inplace=True)
             return df
@@ -628,8 +585,10 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoENAPreEstudoMensalSubsistemaRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(
+            BlocoENAPreEstudoMensalSubsistemaRelato
+        )
+        if isinstance(b, BlocoENAPreEstudoMensalSubsistemaRelato):
             df: pd.DataFrame = b.data.copy()
             df.drop(columns=["energia_armazenada_maxima"], inplace=True)
             return df
@@ -650,8 +609,8 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalREERelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoENAPreEstudoSemanalREERelato)
+        if isinstance(b, BlocoENAPreEstudoSemanalREERelato):
             df: pd.DataFrame = b.data.copy()
             df.drop(columns=["energia_armazenada_maxima"], inplace=True)
             return df
@@ -672,8 +631,10 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalSubsistemaRelato, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(
+            BlocoENAPreEstudoSemanalSubsistemaRelato
+        )
+        if isinstance(b, BlocoENAPreEstudoSemanalSubsistemaRelato):
             df: pd.DataFrame = b.data.copy()
             df.drop(columns=["energia_armazenada_maxima"], inplace=True)
             return df
@@ -691,9 +652,16 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoENAPreEstudoSemanalSubsistemaRelato, 0)
-        if b is not None:
-            return b.data[["nome_submercado", "energia_armazenada_maxima"]]
+        b = self.data.get_blocks_of_type(
+            BlocoENAPreEstudoSemanalSubsistemaRelato
+        )
+        if isinstance(b, BlocoENAPreEstudoSemanalSubsistemaRelato):
+            df: pd.DataFrame = b.data.copy()
+            df.drop(
+                columns=["nome_submercado", "energia_armazenada_maxima"],
+                inplace=True,
+            )
+            return df
         return None
 
     @property
@@ -704,8 +672,8 @@ class Relato(BlockFile):
         :return: O número de dias
         :rtype: int | None
         """
-        b = self.__bloco_por_tipo(BlocoDiasExcluidosSemanas, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoDiasExcluidosSemanas)
+        if isinstance(b, BlocoDiasExcluidosSemanas):
             return b.data[0]
         return None
 
@@ -717,7 +685,7 @@ class Relato(BlockFile):
         :return: O número de dias
         :rtype: int | None
         """
-        b = self.__bloco_por_tipo(BlocoDiasExcluidosSemanas, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoDiasExcluidosSemanas)
+        if isinstance(b, BlocoDiasExcluidosSemanas):
             return b.data[1]
         return None
