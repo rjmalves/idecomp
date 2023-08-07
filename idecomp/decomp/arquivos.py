@@ -1,7 +1,7 @@
 from idecomp.decomp.modelos.arquivos import BlocoNomesArquivos
 
 from cfinterface.files.sectionfile import SectionFile
-from typing import Type, TypeVar, Optional, List
+from typing import TypeVar, Optional, List
 
 # Para compatibilidade - até versão 1.0.0
 from os.path import join
@@ -43,34 +43,20 @@ class Arquivos(SectionFile):
         warnings.warn(msg, category=FutureWarning)
         self.write(join(diretorio, nome_arquivo))
 
-    def __bloco_por_tipo(self, bloco: Type[T], indice: int) -> Optional[T]:
-        """
-        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
-
-        :param bloco: Um tipo de bloco para ser lido
-        :type bloco: T
-        :param indice: O índice do bloco a ser acessado, dentre os do tipo
-        :type indice: int
-        :return: O gerador de blocos, se houver
-        :rtype: Optional[Generator[T], None, None]
-        """
-        try:
-            return next(
-                b
-                for i, b in enumerate(self.data.of_type(bloco))
-                if i == indice
-            )
-        except StopIteration:
-            return None
-
-    def __le_nome_por_indice(self, indice: int) -> str:
-        b = self.__bloco_por_tipo(BlocoNomesArquivos, 0)
-        return b.data.iloc[indice, 0] if b is not None else ""
+    def __le_nome_por_indice(self, indice: int) -> Optional[str]:
+        b = self.data.get_sections_of_type(BlocoNomesArquivos)
+        if isinstance(b, BlocoNomesArquivos):
+            if indice in b.data.index:
+                dado = b.data.iloc[indice, 0]
+                if isinstance(dado, str):
+                    return dado
+        return None
 
     def __atualiza_nome_por_indice(self, indice: int, nome: str):
-        b = self.__bloco_por_tipo(BlocoNomesArquivos, 0)
-        if b is not None:
-            b.data.iloc[indice, 0] = nome
+        b = self.data.get_sections_of_type(BlocoNomesArquivos)
+        if isinstance(b, BlocoNomesArquivos):
+            if indice in b.data.index:
+                b.data.iloc[indice, 0] = nome
 
     @property
     def arquivos(self) -> List[str]:
@@ -80,11 +66,13 @@ class Arquivos(SectionFile):
         :return: Os arquivos na mesma ordem em que são declarados
         :rtype: List[str]
         """
-        b = self.__bloco_por_tipo(BlocoNomesArquivos, 0)
-        return [] if b is None else b.data.iloc[:, 0].tolist()
+        b = self.data.get_sections_of_type(BlocoNomesArquivos)
+        return (
+            [] if not isinstance(b, BlocoNomesArquivos) else b.data.iloc[:, 0]
+        )
 
     @property
-    def dadger(self) -> str:
+    def dadger(self) -> Optional[str]:
         """
         Nome do arquivo de dados gerais utilizado pelo DECOMP.
         """
@@ -95,7 +83,7 @@ class Arquivos(SectionFile):
         self.__atualiza_nome_por_indice(0, arq)
 
     @property
-    def vazoes(self) -> str:
+    def vazoes(self) -> Optional[str]:
         """
         Nome do arquivo de vazões incrementais afluentes.
         """
@@ -106,7 +94,7 @@ class Arquivos(SectionFile):
         self.__atualiza_nome_por_indice(1, arq)
 
     @property
-    def hidr(self) -> str:
+    def hidr(self) -> Optional[str]:
         """
         Nome do arquivo de cadastro dos dados das hidrelétricas.
         """
@@ -117,7 +105,7 @@ class Arquivos(SectionFile):
         self.__atualiza_nome_por_indice(2, arq)
 
     @property
-    def mlt(self) -> str:
+    def mlt(self) -> Optional[str]:
         """
         Nome do arquivo com as médias mensais de longo termo (MLT).
         """
@@ -128,7 +116,7 @@ class Arquivos(SectionFile):
         self.__atualiza_nome_por_indice(3, arq)
 
     @property
-    def perdas(self) -> str:
+    def perdas(self) -> Optional[str]:
         """
         Nome do arquivo com as perdas no sistema.
         """
@@ -139,7 +127,7 @@ class Arquivos(SectionFile):
         self.__atualiza_nome_por_indice(4, arq)
 
     @property
-    def dadgnl(self) -> str:
+    def dadgnl(self) -> Optional[str]:
         """
         Nome do arquivo com os dados das usinas térmicas GNL.
         """
@@ -150,7 +138,7 @@ class Arquivos(SectionFile):
         self.__atualiza_nome_por_indice(5, arq)
 
     @property
-    def caminho(self) -> str:
+    def caminho(self) -> Optional[str]:
         """
         Caminho para os executáveis do DECOMP.
         """

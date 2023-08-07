@@ -84,6 +84,7 @@ from idecomp.decomp.modelos.dadger import (
 )
 
 import pandas as pd  # type: ignore
+from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 from typing import Type, List, Optional, TypeVar, Any, Union
 
@@ -106,7 +107,7 @@ class Dadger(RegisterFile):
 
     """
 
-    T = TypeVar("T")
+    T = TypeVar("T", bound=Register)
 
     AC = Union[
         ACNUMPOS,
@@ -1495,8 +1496,8 @@ class Dadger(RegisterFile):
         :return: Um registro, se existir.
         :rtype: :class:`FJ` | None.
         """
-        r = self.data.get_registers_of_type(TE)
-        if isinstance(r, TE):
+        r = self.data.get_registers_of_type(FJ)
+        if isinstance(r, FJ):
             return r
         else:
             return None

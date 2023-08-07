@@ -2,7 +2,7 @@ from idecomp.decomp.modelos.inviabunic import BlocoInviabilidadesIteracoes
 from idecomp.decomp.modelos.inviabunic import BlocoInviabilidadesSimFinal
 
 from cfinterface.files.blockfile import BlockFile
-from typing import Type, TypeVar, Optional
+from typing import TypeVar, Optional
 import pandas as pd  # type: ignore
 
 # Para compatibilidade - até versão 1.0.0
@@ -40,26 +40,6 @@ class InviabUnic(BlockFile):
         warnings.warn(msg, category=FutureWarning)
         return cls.read(join(diretorio, nome_arquivo))
 
-    def __bloco_por_tipo(self, bloco: Type[T], indice: int) -> Optional[T]:
-        """
-        Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
-
-        :param bloco: Um tipo de bloco para ser lido
-        :type bloco: T
-        :param indice: O índice do bloco a ser acessado, dentre os do tipo
-        :type indice: int
-        :return: O gerador de blocos, se houver
-        :rtype: Optional[Generator[T], None, None]
-        """
-        try:
-            return next(
-                b
-                for i, b in enumerate(self.data.of_type(bloco))
-                if i == indice
-            )
-        except StopIteration:
-            return None
-
     @property
     def inviabilidades_iteracoes(self) -> Optional[pd.DataFrame]:
         """
@@ -77,8 +57,8 @@ class InviabUnic(BlockFile):
         :return: Tabela das inviabilidades
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoInviabilidadesIteracoes, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoInviabilidadesIteracoes)
+        if isinstance(b, BlocoInviabilidadesIteracoes):
             return b.data
         return None
 
@@ -97,7 +77,7 @@ class InviabUnic(BlockFile):
         :return: Tabela das inviabilidades
         :rtype: pd.DataFrame | None
         """
-        b = self.__bloco_por_tipo(BlocoInviabilidadesSimFinal, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(BlocoInviabilidadesSimFinal)
+        if isinstance(b, BlocoInviabilidadesSimFinal):
             return b.data
         return None

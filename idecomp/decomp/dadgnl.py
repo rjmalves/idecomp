@@ -1,3 +1,4 @@
+from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 from idecomp.decomp.modelos.dadgnl import TG, GS, NL, GL
 from typing import Type, List, Optional, TypeVar, Union
@@ -25,7 +26,7 @@ class DadGNL(RegisterFile):
 
     """
 
-    T = TypeVar("T")
+    T = TypeVar("T", bound=Register)
 
     REGISTERS = [TG, GS, NL, GL]
 
