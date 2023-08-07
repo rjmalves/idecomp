@@ -49,7 +49,7 @@ class Custos(BlockFile):
         warnings.warn(msg, category=FutureWarning)
         self.write(join(diretorio, nome_arquivo))
 
-    def __concatena_blocos_por_tipo(
+    def __concatena_blocos(
         self, blocos, indice_data: int
     ) -> Optional[pd.DataFrame]:
         """
@@ -91,8 +91,8 @@ class Custos(BlockFile):
             blocos_custos: List[BlocoRelatorioCustos] = []
             for b in self.data.of_type(BlocoRelatorioCustos):
                 blocos_custos.append(b)
-            self.__relatorios_variaveis_duais = (
-                self.__concatena_blocos_por_tipo(blocos_custos, 0)
+            self.__relatorios_variaveis_duais = self.__concatena_blocos(
+                blocos_custos, 0
             )
         return self.__relatorios_variaveis_duais
 
@@ -114,7 +114,5 @@ class Custos(BlockFile):
             blocos_custos: List[BlocoRelatorioCustos] = []
             for b in self.data.of_type(BlocoRelatorioCustos):
                 blocos_custos.append(b)
-            self.__relatorios_fcf = self.__concatena_blocos_por_tipo(
-                blocos_custos, 1
-            )
+            self.__relatorios_fcf = self.__concatena_blocos(blocos_custos, 1)
         return self.__relatorios_fcf

@@ -4,7 +4,7 @@ import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
 
 
-from typing import TypeVar, List, Optional
+from typing import TypeVar, Optional
 
 # Para compatibilidade - até versão 1.0.0
 from os.path import join
@@ -55,13 +55,8 @@ class Vazoes(SectionFile):
         self.write(join(diretorio, nome_arquivo))
 
     def __obtem_secao_vazoes(self) -> Optional[SecaoVazoesPostos]:
-        secoes: List[SecaoVazoesPostos] = [
-            r for r in self.data.of_type(SecaoVazoesPostos)
-        ]
-        if len(secoes) == 0:
-            return None
-        else:
-            return secoes[0]
+        s = self.data.get_sections_of_type(SecaoVazoesPostos)
+        return s if not isinstance(s, list) else None
 
     @property
     def probabilidades(self) -> Optional[pd.DataFrame]:

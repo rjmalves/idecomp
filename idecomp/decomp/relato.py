@@ -28,7 +28,7 @@ from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
 
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
-from typing import Type, List, TypeVar, Optional
+from typing import Union, List, TypeVar, Optional
 import pandas as pd  # type: ignore
 
 # Para compatibilidade - até versão 1.0.0
@@ -47,7 +47,7 @@ class Relato(BlockFile):
 
     """
 
-    T = TypeVar("T")
+    T = TypeVar("T", bound=Block)
 
     BLOCKS = [
         BlocoREEsSubsistemas,
@@ -98,44 +98,14 @@ class Relato(BlockFile):
         warnings.warn(msg, category=FutureWarning)
         self.write(join(diretorio, nome_arquivo))
 
-    def __concatena_blocos(self, bloco: Type[T]) -> Optional[pd.DataFrame]:
-        """
-        Adiciona uma coluna com o estágio de cada bloco, assumindo
-        a mesma ordem das séries de energia.
-        :param bloco: O tipo de bloco
-        :type bloco: Type[T]
-        :return: O DataFrame com os estágios
-        :rtype: pd.DataFrame
-        """
-        df = None
-        for i, b in enumerate(self.data.of_type(bloco)):
-            if not isinstance(b, Block):
-                continue
-            df_estagio = b.data
-            if df is None:
-                df = df_estagio
-            else:
-                df = pd.concat([df, df_estagio], ignore_index=True)
-        if df is not None:
-            return df
-        return None
-
-    def __concatena_blocos_por_tipo(
-        self, blocos, indice_data: int
+    def __concatena_blocos(
+        self, blocos: Union[T, List[T]], indice_data=None
     ) -> Optional[pd.DataFrame]:
-        """
-        Adiciona uma coluna com o estágio de cada bloco, assumindo
-        a mesma ordem das séries de energia.
-        :param blocos: Os blocos a serem concatenados
-        :type bloco: List[Type[T]]
-        :return: O DataFrame com os estágios
-        :rtype: pd.DataFrame
-        """
         df = None
+        if not isinstance(blocos, list):
+            blocos = [blocos]
         for b in blocos:
-            if not isinstance(b, Block):
-                continue
-            df_estagio = b.data[indice_data]
+            df_estagio = b.data if indice_data is None else b.data[indice_data]
             if df is None:
                 df = df_estagio
             else:
@@ -242,8 +212,8 @@ class Relato(BlockFile):
             for b in self.data.of_type(BlocoRelatorioOperacaoRelato):
                 if b.data[0] == "GERAL":
                     blocos_custos.append(b)
-            self.__relatorios_operacao_custos = (
-                self.__concatena_blocos_por_tipo(blocos_custos, 1)
+            self.__relatorios_operacao_custos = self.__concatena_blocos(
+                blocos_custos, 1
             )
         return self.__relatorios_operacao_custos
 
@@ -286,7 +256,7 @@ class Relato(BlockFile):
             for b in self.data.of_type(BlocoRelatorioOperacaoRelato):
                 if b.data[0] == "UHE":
                     blocos_uhe.append(b)
-            self.__relatorios_operacao_uhe = self.__concatena_blocos_por_tipo(
+            self.__relatorios_operacao_uhe = self.__concatena_blocos(
                 blocos_uhe, 1
             )
         return self.__relatorios_operacao_uhe
@@ -312,9 +282,13 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__relatorios_operacao_ute is None:
-            self.__relatorios_operacao_ute = self.__concatena_blocos(
+            blocos = self.data.get_blocks_of_type(
                 BlocoRelatorioOperacaoUTERelato
             )
+            if blocos is not None:
+                self.__relatorios_operacao_ute = self.__concatena_blocos(
+                    blocos
+                )
         return self.__relatorios_operacao_ute
 
     @property
@@ -351,9 +325,9 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__balanco_energetico is None:
-            self.__balanco_energetico = self.__concatena_blocos(
-                BlocoBalancoEnergeticoRelato
-            )
+            blocos = self.data.get_blocks_of_type(BlocoBalancoEnergeticoRelato)
+            if blocos is not None:
+                self.__balanco_energetico = self.__concatena_blocos(blocos)
         return self.__balanco_energetico
 
     @property
