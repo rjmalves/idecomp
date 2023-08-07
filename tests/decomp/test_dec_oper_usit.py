@@ -16,9 +16,9 @@ def test_atributos_encontrados_dec_oper_usit():
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 40.00
-        assert rel.tabela.at[0, "indice_usina"] == 86
+        assert rel.tabela.at[0, "codigo_usina"] == 86
         assert rel.tabela.at[0, "nome_usina"] == "SANTA CRUZ"
-        assert rel.tabela.at[0, "indice_submercado"] == 1
+        assert rel.tabela.at[0, "codigo_submercado"] == 1
         assert rel.tabela.at[0, "nome_submercado"] == "SE"
         assert rel.tabela.at[0, "custo_incremental"] == 116.57
         assert rel.tabela.at[0, "geracao_minima_MW"] == 0.0

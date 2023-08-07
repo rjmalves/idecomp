@@ -32,7 +32,7 @@ class TabelaEcoCotajus(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "indice_usina",
+        "codigo_usina",
         "nome_usina",
         "indice_curva_jusante",
         "altura_referencia_usina_jusante",

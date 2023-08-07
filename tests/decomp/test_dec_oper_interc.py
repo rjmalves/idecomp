@@ -15,9 +15,9 @@ def test_atributos_encontrados_dec_oper_interc():
         assert rel.tabela.at[0, "no"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
-        assert rel.tabela.at[0, "indice_submercado_de"] == 4
+        assert rel.tabela.at[0, "codigo_submercado_de"] == 4
         assert rel.tabela.at[0, "nome_submercado_de"] == "N"
-        assert rel.tabela.at[0, "indice_submercado_para"] == 11
+        assert rel.tabela.at[0, "codigo_submercado_para"] == 11
         assert rel.tabela.at[0, "nome_submercado_para"] == "FC"
         assert rel.tabela.at[0, "intercambio_origem_MW"] == 5343.64
         assert rel.tabela.at[0, "intercambio_destino_MW"] == 5343.64

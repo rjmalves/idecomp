@@ -12,10 +12,10 @@ def test_atributos_encontrados_dec_cortes_evap():
         rel = DecCortesEvap.read("./tests/mocks/arquivos/dec_cortes_evap.py")
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "periodo"] == 1
-        assert rel.tabela.at[0, "indice_usina"] == 1
+        assert rel.tabela.at[0, "codigo_usina"] == 1
         assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
-        assert rel.tabela.at[0, "submercado"] == 1
-        assert rel.tabela.at[0, "ree"] == 10
+        assert rel.tabela.at[0, "codigo_submercado"] == 1
+        assert rel.tabela.at[0, "codigo_ree"] == 10
         assert rel.tabela.at[0, "derivada_cota_area"] == 3.3046855042
         assert rel.tabela.at[0, "derivada_volume_cota"] == 0.0364387763
         assert rel.tabela.at[0, "volume_referencia_hm3"] == 151.58

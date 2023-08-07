@@ -12,10 +12,10 @@ def test_atributos_encontrados_dec_avl_evap():
         rel = DecAvlEvap.read("./tests/mocks/arquivos/dec_avl_evap.py")
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "periodo"] == 1
-        assert rel.tabela.at[0, "indice_usina"] == 1
+        assert rel.tabela.at[0, "codigo_usina"] == 1
         assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
-        assert rel.tabela.at[0, "submercado"] == 1
-        assert rel.tabela.at[0, "ree"] == 10
+        assert rel.tabela.at[0, "codigo_submercado"] == 1
+        assert rel.tabela.at[0, "codigo_ree"] == 10
         assert rel.tabela.at[0, "volume_armazenado_hm3"] == 120.0
         assert rel.tabela.at[0, "evaporacao_calculada_hm3"] == 0.0
         assert rel.tabela.at[0, "evaporacao_modelo_hm3"] == 0.0

@@ -11,7 +11,7 @@ def test_atributos_encontrados_dec_eco_cotajus():
     with patch("builtins.open", m):
         rel = DecEcoCotajus.read("./tests/mocks/arquivos/dec_eco_cotajus.py")
         assert rel.versao == "31.14"
-        assert rel.tabela.at[0, "indice_usina"] == 1
+        assert rel.tabela.at[0, "codigo_usina"] == 1
         assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
         assert rel.tabela.at[0, "indice_curva_jusante"] == 1
         assert rel.tabela.at[0, "altura_referencia_usina_jusante"] == 885.64

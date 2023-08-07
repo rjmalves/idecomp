@@ -34,10 +34,10 @@ class DecCortesEvap(ArquivoCSV):
         A tabela de dados que está contida no arquivo.
 
         - periodo (`int`)
-        - indice_usina (`int`)
+        - codigo_usina (`int`)
         - nome_usina (`str`)
-        - submercado (`int`)
-        - ree (`int`)
+        - codigo_submercado (`int`)
+        - codigo_ree (`int`)
         - derivada_cota_area (`float`)
         - derivada_volume_cota (`float`)
         - volume_referencia_hm3 (`float`)

@@ -34,10 +34,10 @@ class DecAvlEvap(ArquivoCSV):
         A tabela de dados que está contida no arquivo.
 
         - periodo (`int`)
-        - indice_usina (`int`)
+        - codigo_usina (`int`)
         - nome_usina (`str`)
-        - submercado (`int`)
-        - ree (`int`)
+        - codigo_submercado (`int`)
+        - codigo_ree (`int`)
         - volume_armazenado_hm3 (`float`)
         - evaporacao_calculada_hm3 (`float`)
         - evaporacao_modelo_hm3 (`float`)

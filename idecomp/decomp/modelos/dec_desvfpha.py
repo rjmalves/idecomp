@@ -42,7 +42,7 @@ class TabelaDesvFpha(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "indice_usina",
+        "codigo_usina",
         "periodo",
         "no",
         "patamar",
