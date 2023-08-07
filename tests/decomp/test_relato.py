@@ -203,28 +203,28 @@ def test_bloco_balanco_energetico():
 
     assert b.data.shape[0] == 16
     assert b.data.shape[1] == 22
-    assert b.data.loc[0, "Estágio"] == 1
-    assert b.data.loc[0, "Cenário"] == 1
-    assert b.data.loc[0, "Probabilidade"] == 1
-    assert b.data.loc[0, "Patamar"] == "1"
-    assert b.data.loc[0, "Earm Inicial Absoluto"] == 41766.0
-    assert b.data.loc[0, "Earm Inicial Percentual"] == 20.4
-    assert b.data.loc[0, "ENA Absoluta"] == 36314.0
-    assert b.data.loc[0, "ENA Percentual"] == 17.8
-    assert b.data.loc[0, "Earm Final Absoluto"] == 42365.0
-    assert b.data.loc[0, "Earm Final Percentual"] == 20.7
-    assert b.data.loc[0, "Subsistema"] == "SE"
-    assert b.data.loc[0, "Mercado"] == 45078.0
-    assert b.data.loc[0, "Bacia"] == 3374.0
-    assert b.data.loc[0, "Cbomba"] == 0.0
-    assert b.data.loc[0, "Ghid"] == 34768.3
-    assert b.data.loc[0, "Gter"] == 4576.3
-    assert b.data.loc[0, "GterAT"] == 554.0
-    assert b.data.loc[0, "Deficit"] == 0.0
-    assert b.data.loc[0, "Compra"] == 0.0
-    assert b.data.loc[0, "Venda"] == 0.0
-    assert b.data.loc[0, "Itaipu50"] == 5529.8
-    assert b.data.loc[0, "Itaipu60"] == 4800.9
+    assert b.data.loc[0, "estagio"] == 1
+    assert b.data.loc[0, "cenario"] == 1
+    assert b.data.loc[0, "probabilidade"] == 1
+    assert b.data.loc[0, "patamar"] == "1"
+    assert b.data.loc[0, "energia_armazenada_inicial_MWmed"] == 41766.0
+    assert b.data.loc[0, "energia_armazenada_inicial_percentual"] == 20.4
+    assert b.data.loc[0, "energia_natural_afluente_MWmed"] == 36314.0
+    assert b.data.loc[0, "energia_natural_afluente_percentual"] == 17.8
+    assert b.data.loc[0, "energia_armazenada_final_MWmed"] == 42365.0
+    assert b.data.loc[0, "energia_armazenada_final_percentual"] == 20.7
+    assert b.data.loc[0, "nome_submercado"] == "SE"
+    assert b.data.loc[0, "mercado"] == 45078.0
+    assert b.data.loc[0, "bacia"] == 3374.0
+    assert b.data.loc[0, "consumo_bombeamento"] == 0.0
+    assert b.data.loc[0, "geracao_hidraulica"] == 34768.3
+    assert b.data.loc[0, "geracao_termica"] == 4576.3
+    assert b.data.loc[0, "geracao_termica_antecipada"] == 554.0
+    assert b.data.loc[0, "deficit"] == 0.0
+    assert b.data.loc[0, "compra"] == 0.0
+    assert b.data.loc[0, "venda"] == 0.0
+    assert b.data.loc[0, "geracao_itaipu_50hz"] == 5529.8
+    assert b.data.loc[0, "geracao_itaipu_60hz"] == 4800.9
 
 
 def test_bloco_cmo():
@@ -245,7 +245,7 @@ def test_bloco_cmo():
     assert b.data.iloc[0, 6] == 287.67
 
 
-def test_bloco_geracao_termica_subsistema():
+def test_bloco_geracao_termica_submercado():
     m: MagicMock = mock_open(read_data="".join(MockGeracaoTermicaSubsistema))
     b = BlocoGeracaoTermicaSubsistemaRelato()
     with patch("builtins.open", m):
@@ -400,7 +400,7 @@ def test_bloco_energia_armazenada_ree():
     assert b.data.iloc[0, 7] == 21.8
 
 
-def test_bloco_energia_armazenada_subsistema():
+def test_bloco_energia_armazenada_submercado():
     m: MagicMock = mock_open(
         read_data="".join(MockEnergiaArmazenadaSubsistema)
     )
@@ -444,7 +444,7 @@ def test_bloco_ena_pre_estudo_mensal_ree():
     assert b.data.iloc[0, 12] == 5209.3
 
 
-def test_bloco_ena_pre_estudo_mensal_subsistema():
+def test_bloco_ena_pre_estudo_mensal_submercado():
     m: MagicMock = mock_open(
         read_data="".join(MockENAPreEstudoMensalSubsistema)
     )
@@ -488,7 +488,7 @@ def test_bloco_ena_pre_estudo_semanal_ree():
     assert b.data.iloc[0, 6] == 10000.0
 
 
-def test_bloco_ena_pre_estudo_semanal_subsistema():
+def test_bloco_ena_pre_estudo_semanal_submercado():
     m: MagicMock = mock_open(
         read_data="".join(MockENAPreEstudoSemanalSubsistema)
     )
@@ -522,24 +522,24 @@ def test_atributos_encontrados_relato():
     m: MagicMock = mock_open(read_data="".join(MockRelato))
     with patch("builtins.open", m):
         rel = Relato.read("./tests/mocks/arquivos/relato.py")
-        assert rel.rees_subsistemas is not None
-        assert rel.uhes_rees_subsistemas is not None
+        assert rel.rees_submercados is not None
+        assert rel.uhes_rees_submercados is not None
         assert rel.convergencia is not None
         assert rel.relatorio_operacao_custos is not None
         assert rel.relatorio_operacao_uhe is not None
         assert rel.relatorio_operacao_ute is not None
         assert rel.balanco_energetico is not None
-        assert rel.cmo_medio_subsistema is not None
-        assert rel.geracao_termica_subsistema is not None
+        assert rel.cmo_medio_submercado is not None
+        assert rel.geracao_termica_submercado is not None
         assert rel.volume_util_reservatorios is not None
         assert rel.dados_termicas is not None
         assert rel.disponibilidades_termicas is not None
         assert rel.dados_mercado is not None
         assert rel.ena_acoplamento_ree is not None
         assert rel.energia_armazenada_ree is not None
-        assert rel.energia_armazenada_subsistema is not None
+        assert rel.energia_armazenada_submercado is not None
         assert rel.ena_pre_estudo_mensal_ree is not None
-        assert rel.ena_pre_estudo_mensal_subsistema is not None
+        assert rel.ena_pre_estudo_mensal_submercado is not None
         assert rel.ena_pre_estudo_semanal_ree is not None
         assert rel.ena_pre_estudo_semanal_ree is not None
         assert rel.dias_excluidos_semana_inicial is not None
@@ -550,23 +550,23 @@ def test_atributos_nao_encontrados_relato():
     m: MagicMock = mock_open(read_data="".join(""))
     with patch("builtins.open", m):
         rel = Relato.read("./tests/mocks/arquivos/relato.py")
-        assert rel.rees_subsistemas is None
-        assert rel.uhes_rees_subsistemas is None
+        assert rel.rees_submercados is None
+        assert rel.uhes_rees_submercados is None
         assert rel.convergencia is None
         assert rel.relatorio_operacao_custos is None
         assert rel.relatorio_operacao_uhe is None
         assert rel.balanco_energetico is None
-        assert rel.cmo_medio_subsistema is None
-        assert rel.geracao_termica_subsistema is None
+        assert rel.cmo_medio_submercado is None
+        assert rel.geracao_termica_submercado is None
         assert rel.volume_util_reservatorios is None
         assert rel.dados_termicas is None
         assert rel.disponibilidades_termicas is None
         assert rel.dados_mercado is None
         assert rel.ena_acoplamento_ree is None
         assert rel.energia_armazenada_ree is None
-        assert rel.energia_armazenada_subsistema is None
+        assert rel.energia_armazenada_submercado is None
         assert rel.ena_pre_estudo_mensal_ree is None
-        assert rel.ena_pre_estudo_mensal_subsistema is None
+        assert rel.ena_pre_estudo_mensal_submercado is None
         assert rel.ena_pre_estudo_semanal_ree is None
         assert rel.ena_pre_estudo_semanal_ree is None
         assert rel.dias_excluidos_semana_inicial is None

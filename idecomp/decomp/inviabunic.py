@@ -66,13 +66,13 @@ class InviabUnic(BlockFile):
         Tabela das inviabilidades visitadas pelo modelo durante
         as iterações. As colunas são:
 
-        - Iteração (`int`): iteração de ocorrência da inviabilidade
-        - FWD/BWD (`int`): momento de ocorrência da inviabilidade (0/1)
-        - Estágio (`int`): estágio da ocorrência da inviabilidade
-        - Cenário (`int`): cenário da ocorrência da inviabilidade
-        - Restrição (`str`): mensagem da restrição como no arquivo
-        - Violação (`float`): quantidade de violação da restrição
-        - Unidade (`str`): unidade de medição da restrição violada
+        - iteracao (`int`): iteração de ocorrência da inviabilidade
+        - etapa (`int`): momento de ocorrência da inviabilidade (0 fwd / 1 bkd)
+        - estagio (`int`): estágio da ocorrência da inviabilidade
+        - cenario (`int`): cenário da ocorrência da inviabilidade
+        - restricao (`str`): mensagem da restrição como no arquivo
+        - violacao (`float`): quantidade de violação da restrição
+        - unidade (`str`): unidade de medição da restrição violada
 
         :return: Tabela das inviabilidades
         :rtype: pd.DataFrame | None
@@ -88,11 +88,11 @@ class InviabUnic(BlockFile):
         Tabela das inviabilidades visitadas pelo modelo durante
         a simulação final. As colunas são:
 
-        - Estágio (`int`): estágio da ocorrência da inviabilidade
-        - Cenário (`int`): cenário da ocorrência da inviabilidade
-        - Restrição (`str`): mensagem da restrição como impressa
-        - Violação (`float`): quantidade de violação da restrição
-        - Unidade (`str`): unidade de medição da restrição violada
+        - estagio (`int`): estágio da ocorrência da inviabilidade
+        - cenario (`int`): cenário da ocorrência da inviabilidade
+        - restricao (`str`): mensagem da restrição como impressa
+        - violacao (`float`): quantidade de violação da restrição
+        - unidade (`str`): unidade de medição da restrição violada
 
         :return: Tabela das inviabilidades
         :rtype: pd.DataFrame | None

@@ -67,8 +67,8 @@ class DecompTim(BlockFile):
         Obtém a tabela dos tempos de execução do DECOMP existente no
         :class:`DecompTim`
 
-        - Etapa (`str`)
-        - Tempo (`timedelta`)
+        - etapa (`str`)
+        - tempo (`timedelta`)
 
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None.

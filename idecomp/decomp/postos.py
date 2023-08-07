@@ -57,17 +57,17 @@ class Postos(RegisterFile):
             return None
         df = pd.DataFrame(
             data={
-                "Nome": [r.data[0] for r in registros],
-                "Ano Inicial Historico": [r.data[1] for r in registros],
-                "Ano Final Historico": [r.data[2] for r in registros],
+                "nome": [r.data[0] for r in registros],
+                "ano_inicio_historico": [r.data[1] for r in registros],
+                "ano_fim_historico": [r.data[2] for r in registros],
             }
         )
 
         df = df.astype(
             {
-                "Nome": str,
-                "Ano Inicial Historico": int,
-                "Ano Final Historico": int,
+                "nome": str,
+                "ano_inicio_historico": int,
+                "ano_fim_historico": int,
             }
         )
         return df
@@ -92,9 +92,9 @@ class Postos(RegisterFile):
         Obtém a tabela com os dados dos postos existentes no arquivo
         binário.
 
-        - Nome (`str`)
-        - Ano Inicial Histórico (`int`)
-        - Ano Final Histórico (`int`)
+        - nome (`str`)
+        - ano_inicio_historico (`int`)
+        - ano_fim_historico (`int`)
 
         :return: A tabela com os postos
         :rtype: pd.DataFrame

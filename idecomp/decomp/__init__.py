@@ -23,5 +23,4 @@ from .inviabunic import InviabUnic  # noqa
 from .postos import Postos  # noqa
 from .relato import Relato  # noqa
 from .relgnl import RelGNL  # noqa
-from .sumario import Sumario  # noqa
 from .vazoes import Vazoes  # noqa
