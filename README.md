@@ -6,7 +6,7 @@
 O `idecomp` é um pacote Python para manipulação dos arquivos
 de entrada e saída do programa [DECOMP](http://www.cepel.br/pt_br/produtos/decomp-modelo-de-planejamento-da-operacao-de-sistemas-hidrotermicos-interligados-de-curto-prazo.htm). O DECOMP é desenvolvido pelo [CEPEL](http://www.cepel.br/) e utilizado para os estudos de planejamento e operação do Sistema Interligado Nacional (SIN).
 
-O inewave oferece:
+O idecomp oferece:
 
 - Meios para leitura dos arquivos de entrada e saída do DECOMP
 
@@ -17,12 +17,12 @@ O inewave oferece:
 
 ## Instalação
 
-O inewave é compatível com versões de Python >= 3.8.
+O idecomp é compatível com versões de Python >= 3.8.
 
 É possível instalar a versão distribuída oficialmente com pip:
 
 ```
-python -m pip install inewave
+python -m pip install idecomp
 ```
 
 É possível realizar a instalação da versão de desenvolvimento fazendo o uso do Git.
