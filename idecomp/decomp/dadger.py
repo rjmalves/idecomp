@@ -235,11 +235,29 @@ class Dadger(RegisterFile):
         warnings.warn(msg, category=FutureWarning)
         self.write(join(diretorio, nome_arquivo))
 
+    def __expande_colunas_df(self, df: pd.DataFrame) -> pd.DataFrame:
+        colunas_com_listas = df.applymap(
+            lambda linha: isinstance(linha, list)
+        ).all()
+        nomes_colunas = [
+            c for c in colunas_com_listas[colunas_com_listas].index
+        ]
+        for c in nomes_colunas:
+            num_elementos = len(df.at[0, c])
+            particoes_coluna = [
+                f"{c}_{i}" for i in range(1, num_elementos + 1)
+            ]
+            df[particoes_coluna] = df.apply(
+                lambda linha: linha[c], axis=1, result_type="expand"
+            )
+            df.drop(columns=[c], inplace=True)
+        return df
+
     def __registros_ou_df(
         self, t: Type[T], **kwargs
     ) -> Optional[Union[T, List[T], pd.DataFrame]]:
         if kwargs.get("df"):
-            return self._as_df(t)
+            return self.__expande_colunas_df(self._as_df(t))
         else:
             kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
@@ -469,7 +487,7 @@ class Dadger(RegisterFile):
 
     def ac(
         self,
-        uhe: int,
+        codigo_usina: int,
         modificacao: Any,
         df: bool = False,
         **kwargs,
@@ -478,8 +496,8 @@ class Dadger(RegisterFile):
         Obtém um registro que define modificações nos parâmetros
         das UHE em um :class:`Dadger`.
 
-        :param uhe: código da UHE modificada
-        :type uhe: int
+        :param codigo_usina: código da UHE modificada
+        :type codigo_usina: int
         :param modificacao: classe da modificação realizada
         :type modificacao: subtipos do tipo `AC`
         :param df: ignorar os filtros e retornar
@@ -490,7 +508,7 @@ class Dadger(RegisterFile):
         :rtype: `AC` | list[`AC`] | :class:`pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            modificacao, **{"uhe": uhe, **kwargs, "df": df}
+            modificacao, **{"codigo_usina": codigo_usina, **kwargs, "df": df}
         )
 
     def cd(
@@ -698,19 +716,15 @@ class Dadger(RegisterFile):
                 novo_registro.codigo_restricao = (
                     ultimo_registro.codigo_restricao
                 )
-                novo_registro.limites_inferiores = (
-                    ultimo_registro.limites_inferiores
-                )
-                novo_registro.limites_superiores = (
-                    ultimo_registro.limites_superiores
-                )
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior
+                novo_registro.limite_superior = ultimo_registro.limite_superior
                 novo_registro.estagio = estagio
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro
             return None
 
         if df:
-            return self._as_df(LU)
+            return self.__expande_colunas_df(self._as_df(LU))
         else:
             lu = self.data.get_registers_of_type(
                 LU, codigo_restricao=codigo_restricao, estagio=estagio
@@ -1224,7 +1238,7 @@ class Dadger(RegisterFile):
             return None
 
         if df:
-            return self._as_df(LV)
+            return self.__expande_colunas_df(self._as_df(LV))
         else:
             lv = self.data.get_registers_of_type(
                 LV, codigo_restricao=codigo_restricao, estagio=estagio
@@ -1383,19 +1397,15 @@ class Dadger(RegisterFile):
                     data=[None] * len(ultimo_registro.data),
                 )
                 novo_registro.codigo_restricao = codigo_restricao
-                novo_registro.limites_superiores = (
-                    ultimo_registro.limites_superiores
-                )
-                novo_registro.limites_inferiores = (
-                    ultimo_registro.limites_inferiores
-                )
+                novo_registro.limite_superior = ultimo_registro.limite_superior
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior
                 novo_registro.estagio = estagio
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro
             return None
 
         if df:
-            return self._as_df(LQ)
+            return self.__expande_colunas_df(self._as_df(LQ))
         else:
             lq = self.data.get_registers_of_type(
                 LQ, codigo_restricao=codigo_restricao, estagio=estagio

@@ -51,19 +51,37 @@ class DadGNL(RegisterFile):
         warnings.warn(msg, category=FutureWarning)
         self.write(join(diretorio, nome_arquivo))
 
+    def __expande_colunas_df(self, df: pd.DataFrame) -> pd.DataFrame:
+        colunas_com_listas = df.applymap(
+            lambda linha: isinstance(linha, list)
+        ).all()
+        nomes_colunas = [
+            c for c in colunas_com_listas[colunas_com_listas].index
+        ]
+        for c in nomes_colunas:
+            num_elementos = len(df.at[0, c])
+            particoes_coluna = [
+                f"{c}_{i}" for i in range(1, num_elementos + 1)
+            ]
+            df[particoes_coluna] = df.apply(
+                lambda linha: linha[c], axis=1, result_type="expand"
+            )
+            df.drop(columns=[c], inplace=True)
+        return df
+
     def __registros_ou_df(
         self, t: Type[T], **kwargs
     ) -> Optional[Union[T, List[T], pd.DataFrame]]:
         if kwargs.get("df"):
-            return self._as_df(t)
+            return self.__expande_colunas_df(self._as_df(t))
         else:
             kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
     def tg(
         self,
-        codigo: Optional[int] = None,
-        subsistema: Optional[int] = None,
+        codigo_usina: Optional[int] = None,
+        codigo_submercado: Optional[int] = None,
         nome: Optional[str] = None,
         estagio: Optional[int] = None,
         df: bool = False,
@@ -72,12 +90,12 @@ class DadGNL(RegisterFile):
         Obtém um registro que define uma usina termelétrica existente
         no estudo descrito pelo :class:`DadGNL`.
 
-        :param codigo: código que especifica o registro
+        :param codigo_usina: código que especifica o registro
             da UTE
-        :type codigo: int | None
-        :param subsistema: código que especifica o subsistema
+        :type codigo_usina: int | None
+        :param codigo_submercado: código que especifica o submercado
             da UTE
-        :type subsistema: int | None
+        :type codigo_submercado: int | None
         :param nome: nome da UTE
         :type nome: str | None
         :param estagio: Índice do estágio para o qual foi cadastrado
@@ -92,8 +110,8 @@ class DadGNL(RegisterFile):
         """
         return self.__registros_ou_df(
             TG,
-            codigo=codigo,
-            subsistema=subsistema,
+            codigo_usina=codigo_usina,
+            codigo_submercado=codigo_submercado,
             nome=nome,
             estagio=estagio,
             df=df,
@@ -124,8 +142,8 @@ class DadGNL(RegisterFile):
 
     def nl(
         self,
-        codigo: Optional[int] = None,
-        subsistema: Optional[int] = None,
+        codigo_usina: Optional[int] = None,
+        codigo_submercado: Optional[int] = None,
         lag: Optional[int] = None,
         df: bool = False,
     ) -> Optional[Union[NL, List[NL], pd.DataFrame]]:
@@ -133,10 +151,10 @@ class DadGNL(RegisterFile):
         Obtém um registro que define o número de lags para o despacho
         de uma UTE.
 
-        :param codigo: código da UTE
-        :type codigo: int | None
-        :param subsistema: subsistema da UTE
-        :type subsistema: int | None
+        :param codigo_usina: código da UTE
+        :type codigo_usina: int | None
+        :param codigo_submercado: código do submercado da UTE
+        :type codigo_submercado: int | None
         :param lag: número de lags da UTE
         :type lag: int | None
         :param df: ignorar os filtros e retornar
@@ -147,13 +165,17 @@ class DadGNL(RegisterFile):
         :rtype: :class:`NL` | list[:class:`NL`] | :class:`pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            NL, codigo=codigo, subsistema=subsistema, lag=lag, df=df
+            NL,
+            codigo_usina=codigo_usina,
+            codigo_submercado=codigo_submercado,
+            lag=lag,
+            df=df,
         )
 
     def gl(
         self,
-        codigo: Optional[int] = None,
-        subsistema: Optional[int] = None,
+        codigo_usina: Optional[int] = None,
+        codigo_submercado: Optional[int] = None,
         estagio: Optional[int] = None,
         data_inicio: Optional[str] = None,
         df: bool = False,
@@ -162,11 +184,11 @@ class DadGNL(RegisterFile):
         Obtém um registro que define o despacho por patamar
         e a duração dos patamares para uma UTE GNL.
 
-        :param codigo: código que especifica o registro
+        :param codigo_usina: código que especifica o registro
             da UTE
-        :type codigo: int | None
-        :param subsistema: subsistema da UTE
-        :type subsistema: int | None
+        :type codigo_usina: int | None
+        :param codigo_submercado: código do submercado da UTE
+        :type codigo_submercado: int | None
         :param estagio: estágio do despacho da UTE
         :type estagio: int | None
         :param data_inicio: data de início do estágio
@@ -181,8 +203,8 @@ class DadGNL(RegisterFile):
         """
         return self.__registros_ou_df(
             GL,
-            codigo=codigo,
-            subsistema=subsistema,
+            codigo_usina=codigo_usina,
+            codigo_submercado=codigo_submercado,
             estagio=estagio,
             data_inicio=data_inicio,
             df=df,

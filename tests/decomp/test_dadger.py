@@ -179,12 +179,12 @@ def test_registro_sb_dadger():
             r.read(fp)
 
     assert r.data == [1, "SE"]
-    assert r.codigo == 1
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.nome == "SE"
-    r.nome = "AB"
-    assert r.nome == "AB"
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.nome_submercado == "SE"
+    r.nome_submercado = "AB"
+    assert r.nome_submercado == "AB"
 
 
 def test_registro_uh_dadger():
@@ -195,12 +195,12 @@ def test_registro_uh_dadger():
             r.read(fp)
 
     assert r.data == [1, 10, 25.29, None, 1, None, None, None, None, ""]
-    assert r.codigo == 1
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.ree == 10
-    r.ree = 0
-    assert r.ree == 0
+    assert r.codigo_usina == 1
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.codigo_ree == 10
+    r.codigo_ree = 0
+    assert r.codigo_ree == 0
     assert r.evaporacao == 1
     r.evaporacao = 0
     assert r.evaporacao == 0
@@ -234,27 +234,27 @@ def test_registro_ct_dadger():
         1350.0,
         20.12,
     ]
-    assert r.codigo == 13
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.subsistema == 1
-    r.subsistema = 0
-    assert r.subsistema == 0
-    assert r.nome == "ANGRA 2"
-    r.nome = "A"
-    assert r.nome == "A"
+    assert r.codigo_usina == 13
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.nome_usina == "ANGRA 2"
+    r.nome_usina = "A"
+    assert r.nome_usina == "A"
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.inflexibilidades == [1350.0, 1350.0, 1350.0]
-    r.inflexibilidades = [999.0]
-    assert r.inflexibilidades == [999.0]
-    assert r.cvus == [20.12, 20.12, 20.12]
-    r.cvus = [999.0, 999.0, 999.0]
-    assert r.cvus == [999.0, 999.0, 999.0]
-    assert r.disponibilidades == [1350.0, 1350.0, 1350.0]
-    r.disponibilidades = [999.0, 999.0, 999.0, 999.0]
-    assert r.disponibilidades == [999.0, 999.0, 999.0, 999.0]
+    assert r.inflexibilidade == [1350.0, 1350.0, 1350.0]
+    r.inflexibilidade = [999.0]
+    assert r.inflexibilidade == [999.0]
+    assert r.cvu == [20.12, 20.12, 20.12]
+    r.cvu = [999.0, 999.0, 999.0]
+    assert r.cvu == [999.0, 999.0, 999.0]
+    assert r.disponibilidade == [1350.0, 1350.0, 1350.0]
+    r.disponibilidade = [999.0, 999.0, 999.0, 999.0]
+    assert r.disponibilidade == [999.0, 999.0, 999.0, 999.0]
 
 
 def test_registro_ue_dadger():
@@ -274,11 +274,11 @@ def test_registro_ue_dadger():
         160.0,
         0.2,
     ]
-    assert r.codigo == 1
-    assert r.subsistema == 1
-    assert r.nome == "Sta Cecilia"
-    assert r.uhe_montante == 181
-    assert r.uhe_jusante == 125
+    assert r.codigo_usina == 1
+    assert r.codigo_submercado == 1
+    assert r.nome_usina == "Sta Cecilia"
+    assert r.codigo_usina_montante == 181
+    assert r.codigo_usina_jusante == 125
     assert r.vazao_minima_bombeavel == 0.0
     assert r.vazao_maxima_bombeavel == 160.0
     assert r.taxa_consumo == 0.2
@@ -295,18 +295,18 @@ def test_registro_dp_dadger():
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.subsistema == 1
-    r.subsistema = 0
-    assert r.subsistema == 0
-    assert r.num_patamares == 3
-    r.num_patamares = 0
-    assert r.num_patamares == 0
-    assert r.cargas == [45078.0, 41680.0, 33894.0]
-    r.cargas = [0]
-    assert r.cargas == [0]
-    assert r.duracoes == [32.0, 41.0, 95.0]
-    r.duracoes = [0, 0, 0, 0]
-    assert r.duracoes == [0, 0, 0, 0]
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.numero_patamares == 3
+    r.numero_patamares = 0
+    assert r.numero_patamares == 0
+    assert r.carga == [45078.0, 41680.0, 33894.0]
+    r.carga = [0]
+    assert r.carga == [0]
+    assert r.duracao == [32.0, 41.0, 95.0]
+    r.duracao = [0, 0, 0, 0]
+    assert r.duracao == [0, 0, 0, 0]
 
 
 def test_registro_pq_dadger():
@@ -323,12 +323,12 @@ def test_registro_pq_dadger():
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.subsistema == 1
-    r.subsistema = 0
-    assert r.subsistema == 0
-    assert r.geracoes == [2527.0, 2553.0, 2503.0]
-    r.geracoes = [0]
-    assert r.geracoes == [0]
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.geracao == [2527.0, 2553.0, 2503.0]
+    r.geracao = [0]
+    assert r.geracao == [0]
 
 
 def test_registro_cd_dadger():
@@ -350,24 +350,24 @@ def test_registro_cd_dadger():
         100,
         5249.34,
     ]
-    assert r.numero_curva == 1
-    r.numero_curva = 0
-    assert r.numero_curva == 0
-    assert r.subsistema == 1
-    r.subsistema = 0
-    assert r.subsistema == 0
+    assert r.codigo_curva == 1
+    r.codigo_curva = 0
+    assert r.codigo_curva == 0
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
     assert r.nome_curva == "1PDEF"
     r.nome_curva = "ABCD"
     assert r.nome_curva == "ABCD"
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.limites_superiores == [100, 100, 100]
-    r.limites_superiores = [0]
-    assert r.limites_superiores == [0]
-    assert r.custos == [5249.34, 5249.34, 5249.34]
-    r.custos = [0, 0, 0, 0]
-    assert r.custos == [0, 0, 0, 0]
+    assert r.limite_superior == [100, 100, 100]
+    r.limite_superior = [0]
+    assert r.limite_superior == [0]
+    assert r.custo == [5249.34, 5249.34, 5249.34]
+    r.custo = [0, 0, 0, 0]
+    assert r.custo == [0, 0, 0, 0]
 
 
 def test_registro_ri_dadger():
@@ -571,10 +571,10 @@ def test_registro_ve_dadger():
         None,
         None,
     ]
-    assert r.codigo == 24
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.volumes == [
+    assert r.codigo_usina == 24
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.volume == [
         95.41,
         97.01,
         97.01,
@@ -582,8 +582,8 @@ def test_registro_ve_dadger():
         97.83,
         99.18,
     ]
-    r.volumes = [0]
-    assert r.volumes == [
+    r.volume = [0]
+    assert r.volume == [
         0,
     ]
 
@@ -596,9 +596,9 @@ def test_registro_re_dadger():
             r.read(fp)
 
     assert r.data == [5, 1, 6]
-    assert r.codigo == 5
-    r.codigo = 0
-    assert r.codigo == 0
+    assert r.codigo_restricao == 5
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
     assert r.estagio_inicial == 1
     r.estagio_inicial = 0
     assert r.estagio_inicial == 0
@@ -615,18 +615,18 @@ def test_registro_lu_dadger():
             r.read(fp)
 
     assert r.data == [21, 1, 50, 212, 50, 212, 50, 212]
-    assert r.codigo == 21
-    r.codigo = 0
-    assert r.codigo == 0
+    assert r.codigo_restricao == 21
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.limites_inferiores == [50, 50, 50]
-    r.limites_inferiores = [0, 0]
-    assert r.limites_inferiores == [0, 0, None]
-    assert r.limites_superiores == [212, 212, 212]
-    r.limites_superiores = [0, 0, 0, 0]
-    assert r.limites_superiores == [0, 0, 0, 0]
+    assert r.limite_inferior == [50, 50, 50]
+    r.limite_inferior = [0, 0]
+    assert r.limite_inferior == [0, 0, None]
+    assert r.limite_superior == [212, 212, 212]
+    r.limite_superior = [0, 0, 0, 0]
+    assert r.limite_superior == [0, 0, 0, 0]
 
 
 def test_registro_fu_dadger():
@@ -637,9 +637,9 @@ def test_registro_fu_dadger():
             r.read(fp)
 
     assert r.data == [43, 1, 47, 1, None]
-    assert r.restricao == 43
+    assert r.codigo_restricao == 43
     assert r.estagio == 1
-    assert r.uhe == 47
+    assert r.codigo_usina == 47
     assert r.coeficiente == 1
     assert r.frequencia == None
 
@@ -652,9 +652,10 @@ def test_registro_fi_dadger():
             r.read(fp)
 
     assert r.data == [417, 1, "NE", "SE", 1]
-    assert r.restricao == 417
+    assert r.codigo_restricao == 417
     assert r.estagio == 1
-    assert r.de == "NE"
+    assert r.codigo_submercado_de == "NE"
+    assert r.codigo_submercado_para == "SE"
     assert r.coeficiente == 1
 
 
@@ -666,10 +667,10 @@ def test_registro_ft_dadger():
             r.read(fp)
 
     assert r.data == [449, 1, 310, 4, 1]
-    assert r.restricao == 449
+    assert r.codigo_restricao == 449
     assert r.estagio == 1
-    assert r.ute == 310
-    assert r.subsistema == 4
+    assert r.codigo_usina == 310
+    assert r.codigo_submercado == 4
     assert r.coeficiente == 1
 
 
@@ -693,21 +694,21 @@ def test_registro_vi_dadger():
         None,
         None,
     ]
-    assert r.uhe == 156
-    r.uhe = 0
-    assert r.uhe == 0
+    assert r.codigo_usina == 156
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
     assert r.duracao == 360
     r.duracao = 0
     assert r.duracao == 0
-    assert r.vazoes == [
+    assert r.vazao == [
         296,
         296,
         293,
         328,
         455,
     ]
-    r.vazoes = [0]
-    assert r.vazoes == [0]
+    r.vazao = [0]
+    assert r.vazao == [0]
 
 
 def test_registro_acjusmed_dadger():
@@ -724,9 +725,9 @@ def test_registro_acjusmed_dadger():
         1,
         2020,
     ]
-    assert r.uhe == 285
-    r.uhe = 20
-    assert r.uhe == 20
+    assert r.codigo_usina == 285
+    r.codigo_usina = 20
+    assert r.codigo_usina == 20
     assert r.cota == 73.47
     r.cota = 55.0
     assert r.cota == 55.0
@@ -756,9 +757,9 @@ def test_registro_accotvol_dadger():
         1,
         2020,
     ]
-    assert r.uhe == 285
-    r.uhe = 10
-    assert r.uhe == 10
+    assert r.codigo_usina == 285
+    r.codigo_usina = 10
+    assert r.codigo_usina == 10
     assert r.ordem == 1
     r.ordem = 2
     assert r.ordem == 2
@@ -784,9 +785,9 @@ def test_registro_acvolmin_dadger():
             r.read(fp)
 
     assert r.data == [34, 15563, "", None, None]
-    assert r.uhe == 34
-    r.uhe = 40
-    assert r.uhe == 40
+    assert r.codigo_usina == 34
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
     assert r.volume == 15563
     r.volume = 50.5
     assert r.volume == 50.5
@@ -809,9 +810,9 @@ def test_registro_accofeva_dadger():
             r.read(fp)
 
     assert r.data == [95, 10, 0, "", None, None]
-    assert r.uhe == 95
-    r.uhe = 40
-    assert r.uhe == 40
+    assert r.codigo_usina == 95
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
     assert r.mes_coeficiente == 10
     r.mes_coeficiente = 5
     assert r.mes_coeficiente == 5
@@ -837,12 +838,12 @@ def test_registro_acnumpos_dadger():
             r.read(fp)
 
     assert r.data == [119, 300, "", None, None]
-    assert r.uhe == 119
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.posto == 300
-    r.posto = 50
-    assert r.posto == 50
+    assert r.codigo_usina == 119
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.codigo_posto == 300
+    r.codigo_posto = 50
+    assert r.codigo_posto == 50
     assert r.mes == ""
     r.mes = "DEZ"
     assert r.mes == "DEZ"
@@ -862,9 +863,9 @@ def test_registro_acvsvert_dadger():
             r.read(fp)
 
     assert r.data == [117, 144.14, "", None, None]
-    assert r.uhe == 117
-    r.uhe = 40
-    assert r.uhe == 40
+    assert r.codigo_usina == 117
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
     assert r.volume == 144.14
     r.volume = 50
     assert r.volume == 50
@@ -887,9 +888,9 @@ def test_registro_acvmdesv_dadger():
             r.read(fp)
 
     assert r.data == [124, 102.0, "", None, None]
-    assert r.uhe == 124
-    r.uhe = 40
-    assert r.uhe == 40
+    assert r.codigo_usina == 124
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
     assert r.volume == 102
     r.volume = 50
     assert r.volume == 50
@@ -912,12 +913,12 @@ def test_registro_acnumjus_dadger():
             r.read(fp)
 
     assert r.data == [117, 108.0, "", None, None]
-    assert r.uhe == 117
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.jusante == 108.0
-    r.jusante = 50
-    assert r.jusante == 50
+    assert r.codigo_usina == 117
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.codigo_usina_jusante == 108.0
+    r.codigo_usina_jusante = 50
+    assert r.codigo_usina_jusante == 50
     assert r.mes == ""
     r.mes = "DEZ"
     assert r.mes == "DEZ"
@@ -937,12 +938,12 @@ def test_registro_acdesvio_dadger():
             r.read(fp)
 
     assert r.data == [118, 119, 100.0, "", None, None]
-    assert r.uhe == 118
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.jusante == 119
-    r.jusante = 50
-    assert r.jusante == 50
+    assert r.codigo_usina == 118
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.codigo_usina_jusante == 119
+    r.codigo_usina_jusante = 50
+    assert r.codigo_usina_jusante == 50
     assert r.limite_vazao == 100.0
     r.limite_vazao = 50.0
     assert r.limite_vazao == 50.0
@@ -965,12 +966,12 @@ def test_registro_acjusena_dadger():
             r.read(fp)
 
     assert r.data == [172, 176, "", None, None]
-    assert r.uhe == 172
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.aproveitamento == 176
-    r.aproveitamento = 50
-    assert r.aproveitamento == 50
+    assert r.codigo_usina == 172
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.codigo_usina_jusante == 176
+    r.codigo_usina_jusante = 50
+    assert r.codigo_usina_jusante == 50
     assert r.mes == ""
     r.mes = "DEZ"
     assert r.mes == "DEZ"
@@ -990,9 +991,9 @@ def test_registro_acvazmin_dadger():
             r.read(fp)
 
     assert r.data == [4, 0, "", None, None]
-    assert r.uhe == 4
-    r.uhe = 40
-    assert r.uhe == 40
+    assert r.codigo_usina == 4
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
     assert r.vazao == 0
     r.vazao = 50
     assert r.vazao == 50
@@ -1015,12 +1016,12 @@ def test_registro_acnposnw_dadger():
             r.read(fp)
 
     assert r.data == [43, 43, "", None, None]
-    assert r.uhe == 43
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.posto == 43
-    r.posto = 50
-    assert r.posto == 50
+    assert r.codigo_usina == 43
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.codigo_posto == 43
+    r.codigo_posto = 50
+    assert r.codigo_posto == 50
     assert r.mes == ""
     r.mes = "DEZ"
     assert r.mes == "DEZ"
@@ -1040,12 +1041,12 @@ def test_registro_acvertju_dadger():
             r.read(fp)
 
     assert r.data == [103, 1, "", None, None]
-    assert r.uhe == 103
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.influi == 1
-    r.influi = 0
-    assert r.influi == 0
+    assert r.codigo_usina == 103
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.considera_influencia == 1
+    r.considera_influencia = 0
+    assert r.considera_influencia == 0
     assert r.mes == ""
     r.mes = "DEZ"
     assert r.mes == "DEZ"
@@ -1065,12 +1066,12 @@ def test_registro_acnumcon_dadger():
             r.read(fp)
 
     assert r.data == [275, 2, "JAN", 1, None]
-    assert r.uhe == 275
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.conjunto == 2
-    r.conjunto = 0
-    assert r.conjunto == 0
+    assert r.codigo_usina == 275
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.numero_conjuntos == 2
+    r.numero_conjuntos = 0
+    assert r.numero_conjuntos == 0
     assert r.mes == "JAN"
     r.mes = "DEZ"
     assert r.mes == "DEZ"
@@ -1090,15 +1091,15 @@ def test_registro_acnummaq_dadger():
             r.read(fp)
 
     assert r.data == [275, 1, 2, "JAN", 1, None]
-    assert r.uhe == 275
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.conjunto == 1
-    r.conjunto = 0
-    assert r.conjunto == 0
-    assert r.maquinas == 2
-    r.maquinas = 0
-    assert r.maquinas == 0
+    assert r.codigo_usina == 275
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.indice_conjunto == 1
+    r.indice_conjunto = 0
+    assert r.indice_conjunto == 0
+    assert r.numero_maquinas == 2
+    r.numero_maquinas = 0
+    assert r.numero_maquinas == 0
     assert r.mes == "JAN"
     r.mes = "DEZ"
     assert r.mes == "DEZ"
@@ -1118,12 +1119,12 @@ def test_registro_acpotefe_dadger():
             r.read(fp)
 
     assert r.data == [275, 1, 22.5, "JAN", 1, None]
-    assert r.uhe == 275
-    r.uhe = 40
-    assert r.uhe == 40
-    assert r.conjunto == 1
-    r.conjunto = 0
-    assert r.conjunto == 0
+    assert r.codigo_usina == 275
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.indice_conjunto == 1
+    r.indice_conjunto = 0
+    assert r.indice_conjunto == 0
     assert r.potencia == 22.5
     r.potencia = 0
     assert r.potencia == 0
@@ -1145,9 +1146,9 @@ def test_registro_fp_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [999, 1, 0, 5, 0, 100, 0, 5, 20, 20, None, None, 0]
-    assert r.codigo == 999
-    r.codigo = 0
-    assert r.codigo == 0
+    assert r.codigo_usina == 999
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
@@ -1230,9 +1231,9 @@ def test_registro_ea_dadger():
         10150.71,
         3773.21,
     ]
-    assert r.ree == 1
-    r.ree = 2
-    assert r.ree == 2
+    assert r.codigo_ree == 1
+    r.codigo_ree = 2
+    assert r.codigo_ree == 2
     assert r.ena == [
         1917.35,
         1405.37,
@@ -1265,12 +1266,12 @@ def test_registro_es_dadger():
         1622.15,
         2694.79,
     ]
-    assert r.ree == 1
-    r.ree = 2
-    assert r.ree == 2
-    assert r.numero_semanas == 5
-    r.numero_semanas = 4
-    assert r.numero_semanas == 4
+    assert r.codigo_ree == 1
+    r.codigo_ree = 2
+    assert r.codigo_ree == 2
+    assert r.numero_semanas_mes_anterior == 5
+    r.numero_semanas_mes_anterior = 4
+    assert r.numero_semanas_mes_anterior == 4
     assert r.ena == [
         1917.35,
         1405.37,
@@ -1289,12 +1290,12 @@ def test_registro_qi_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [156, 136, 168, 174, 152, 128]
-    assert r.uhe == 156
-    r.uhe = 2
-    assert r.uhe == 2
-    assert r.vazoes == [136, 168, 174, 152, 128]
-    r.vazoes = [1, 2, 3]
-    assert r.vazoes == [1, 2, 3]
+    assert r.codigo_usina == 156
+    r.codigo_usina = 2
+    assert r.codigo_usina == 2
+    assert r.vazao == [136, 168, 174, 152, 128]
+    r.vazao = [1, 2, 3]
+    assert r.vazao == [1, 2, 3]
 
 
 def test_registro_ti_dadger():
@@ -1314,10 +1315,10 @@ def test_registro_ti_dadger():
         None,
         None,
     ]
-    assert r.codigo == 107
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.taxas == [-24.6, -24.6, -24.6, -24.6, -24.6, -24.6]
+    assert r.codigo_usina == 107
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.taxa == [-24.6, -24.6, -24.6, -24.6, -24.6, -24.6]
 
 
 def test_registro_rq_dadger():
@@ -1327,12 +1328,12 @@ def test_registro_rq_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [1, 100, 100, 100, 100, 100, 0, None, None]
-    assert r.ree == 1
-    r.ree = 0
-    assert r.ree == 0
-    assert r.vazoes == [100, 100, 100, 100, 100, 0]
-    r.vazoes = [100, 100, 100]
-    assert r.vazoes == [100, 100, 100]
+    assert r.codigo_ree == 1
+    r.codigo_ree = 0
+    assert r.codigo_ree == 0
+    assert r.vazao == [100, 100, 100, 100, 100, 0]
+    r.vazao = [100, 100, 100]
+    assert r.vazao == [100, 100, 100]
 
 
 def test_registro_ez_dadger():
@@ -1342,9 +1343,9 @@ def test_registro_ez_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [251, 55.0]
-    assert r.uhe == 251
-    r.uhe = 200
-    assert r.uhe == 200
+    assert r.codigo_usina == 251
+    r.codigo_usina = 200
+    assert r.codigo_usina == 200
     assert r.volume == 55.0
     r.volume = 100.0
     assert r.volume == 100.0
@@ -1357,9 +1358,9 @@ def test_registro_hv_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [3, 1, 6]
-    assert r.codigo == 3
-    r.codigo = 0
-    assert r.codigo == 0
+    assert r.codigo_restricao == 3
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
     assert r.estagio_inicial == 1
     r.estagio_inicial = 0
     assert r.estagio_inicial == 0
@@ -1375,9 +1376,9 @@ def test_registro_lv_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [101, 1, 3898.2, 38982.0]
-    assert r.codigo == 101
-    r.codigo = 0
-    assert r.codigo == 0
+    assert r.codigo_restricao == 101
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
@@ -1396,15 +1397,15 @@ def test_registro_cv_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [117, 1, 43, -1.5866762, "VARM"]
-    assert r.restricao == 117
-    r.restricao = 0
-    assert r.restricao == 0
+    assert r.codigo_restricao == 117
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.uhe == 43
-    r.uhe = 10
-    assert r.uhe == 10
+    assert r.codigo_usina == 43
+    r.codigo_usina = 10
+    assert r.codigo_usina == 10
     assert r.coeficiente == -1.5866762
     r.coeficiente = 1
     assert r.coeficiente == 1
@@ -1420,9 +1421,9 @@ def test_registro_hq_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [5, 1, 6]
-    assert r.codigo == 5
-    r.codigo = 0
-    assert r.codigo == 0
+    assert r.codigo_restricao == 5
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
     assert r.estagio_inicial == 1
     r.estagio_inicial = 0
     assert r.estagio_inicial == 0
@@ -1438,18 +1439,18 @@ def test_registro_lq_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [10, 1, 300, 9999, 300, 9999, 300, 9999]
-    assert r.codigo == 10
-    r.codigo = 0
-    assert r.codigo == 0
+    assert r.codigo_restricao == 10
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.limites_inferiores == [300, 300, 300]
-    r.limites_inferiores = [0]
-    assert r.limites_inferiores == [0, None, None]
-    assert r.limites_superiores == [9999, 9999, 9999]
-    r.limites_superiores = [0, 0, 0, 0]
-    assert r.limites_superiores == [0, 0, 0, 0]
+    assert r.limite_inferior == [300, 300, 300]
+    r.limite_inferior = [0]
+    assert r.limite_inferior == [0, None, None]
+    assert r.limite_superior == [9999, 9999, 9999]
+    r.limite_superior = [0, 0, 0, 0]
+    assert r.limite_superior == [0, 0, 0, 0]
 
 
 def test_registro_cq_dadger():
@@ -1459,15 +1460,15 @@ def test_registro_cq_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [11, 1, 27, 1, "QDEF"]
-    assert r.restricao == 11
-    r.restricao = 5
-    assert r.restricao == 5
+    assert r.codigo_restricao == 11
+    r.codigo_restricao = 5
+    assert r.codigo_restricao == 5
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.uhe == 27
-    r.uhe = 10
-    assert r.uhe == 10
+    assert r.codigo_usina == 27
+    r.codigo_usina = 10
+    assert r.codigo_usina == 10
     assert r.coeficiente == 1
     r.coeficiente = -1
     assert r.coeficiente == -1
@@ -1516,9 +1517,9 @@ def test_registro_he_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [1, 2, 60.0, 1, 1710.0, 1, 0, 0, "prodrhe.dat"]
-    assert r.codigo == 1
-    r.codigo = 0
-    assert r.codigo == 0
+    assert r.codigo_restricao == 1
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
     assert r.tipo_limite == 2
     r.tipo_limite = 0
     assert r.tipo_limite == 0
@@ -1528,9 +1529,9 @@ def test_registro_he_dadger():
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.penalidade == 1710
-    r.penalidade = 0
-    assert r.penalidade == 0
+    assert r.valor_penalidade == 1710
+    r.valor_penalidade = 0
+    assert r.valor_penalidade == 0
     assert r.forma_calculo_produtibilidades == 1
     r.forma_calculo_produtibilidades = 0
     assert r.forma_calculo_produtibilidades == 0
@@ -1552,12 +1553,12 @@ def test_registro_cm_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [1, 1, 1.0]
-    assert r.codigo == 1
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.ree == 1
-    r.ree = 0
-    assert r.ree == 0
+    assert r.codigo_restricao == 1
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.codigo_ree == 1
+    r.codigo_ree = 0
+    assert r.codigo_ree == 0
     assert r.coeficiente == 1.0
     r.coeficiente = 0
     assert r.coeficiente == 0
@@ -1618,9 +1619,9 @@ def test_registro_pe_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [1, 0, 10000.00]
-    assert r.subsistema == 1
-    r.subsistema = 2
-    assert r.subsistema == 2
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 2
+    assert r.codigo_submercado == 2
     assert r.tipo == 0
     r.tipo = 1
     assert r.tipo == 1
@@ -1797,6 +1798,7 @@ def test_campos_encontrados_dadger():
     assert d.lq(254, 1) is not None
     assert d.he(1, 1) is not None
     assert d.cm(1) is not None
+    assert len(d.lq(df=True).columns) == 8
 
 
 def test_cria_lu_dadger():
@@ -1805,12 +1807,12 @@ def test_cria_lu_dadger():
         d = Dadger.read("./tests/mocks/arquivos/dadger.py")
         lu = d.lu(1, 2)
         assert lu is not None
-        assert lu.limites_inferiores == d.lu(1, 1).limites_inferiores
-        lu.limites_inferiores = [0.0]
-        assert lu.limites_inferiores != d.lu(1, 1).limites_inferiores
-        assert lu.limites_superiores == d.lu(1, 1).limites_superiores
-        lu.limites_superiores = [0.0]
-        assert lu.limites_superiores != d.lu(1, 1).limites_superiores
+        assert lu.limite_inferior == d.lu(1, 1).limite_inferior
+        lu.limite_inferior = [0.0]
+        assert lu.limite_inferior != d.lu(1, 1).limite_inferior
+        assert lu.limite_superior == d.lu(1, 1).limite_superior
+        lu.limite_superior = [0.0]
+        assert lu.limite_superior != d.lu(1, 1).limite_superior
 
 
 def test_cria_lv_dadger():
@@ -1833,12 +1835,12 @@ def test_cria_lq_dadger():
         d = Dadger.read("./tests/mocks/arquivos/dadger.py")
         lq = d.lq(5, 2)
         assert lq is not None
-        assert lq.limites_inferiores == d.lq(5, 1).limites_inferiores
-        lq.limites_inferiores = [0.0]
-        assert lq.limites_inferiores != d.lq(5, 1).limites_inferiores
-        assert lq.limites_superiores == d.lq(5, 1).limites_superiores
-        lq.limites_superiores = [0.0]
-        assert lq.limites_superiores != d.lq(5, 1).limites_superiores
+        assert lq.limite_inferior == d.lq(5, 1).limite_inferior
+        lq.limite_inferior = [0.0]
+        assert lq.limite_inferior != d.lq(5, 1).limite_inferior
+        assert lq.limite_superior == d.lq(5, 1).limite_superior
+        lq.limite_superior = [0.0]
+        assert lq.limite_superior != d.lq(5, 1).limite_superior
 
 
 def test_eq_dadger():

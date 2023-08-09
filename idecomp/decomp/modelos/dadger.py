@@ -335,45 +335,45 @@ class CT(Register):
         self.data[3] = estagio
 
     @property
-    def inflexibilidades(self) -> Optional[List[float]]:
+    def inflexibilidade(self) -> Optional[List[float]]:
         """
-        As inflexibilidades da UTE por patamar.
+        A inflexibilidade da UTE por patamar.
 
-        :return: As inflexibilidades.
+        :return: A inflexibilidade.
         :rtype: list[float] | None
         """
         return [v for v in self.data[4::3] if v is not None]
 
-    @inflexibilidades.setter
-    def inflexibilidades(self, inflex: List[float]):
+    @inflexibilidade.setter
+    def inflexibilidade(self, inflex: List[float]):
         self.__atualiza_dados_lista(inflex, 4, 3)
 
     @property
-    def disponibilidades(self) -> Optional[List[float]]:
+    def disponibilidade(self) -> Optional[List[float]]:
         """
-        As disponibilidades da UTE por patamar.
+        A disponibilidade da UTE por patamar.
 
-        :return: As disponibilidades.
+        :return: A disponibilidade.
         :rtype: list[float] | None
         """
         return [v for v in self.data[5::3] if v is not None]
 
-    @disponibilidades.setter
-    def disponibilidades(self, disp: List[float]):
+    @disponibilidade.setter
+    def disponibilidade(self, disp: List[float]):
         self.__atualiza_dados_lista(disp, 5, 3)
 
     @property
-    def cvus(self) -> Optional[List[float]]:
+    def cvu(self) -> Optional[List[float]]:
         """
-        Os CVUs da UTE por patamar.
+        O CVU da UTE por patamar.
 
-        :return: Os CVUs.
+        :return: O CVU.
         :rtype: list[float] | None
         """
         return [v for v in self.data[6::3] if v is not None]
 
-    @cvus.setter
-    def cvus(self, cvu: List[float]):
+    @cvu.setter
+    def cvu(self, cvu: List[float]):
         self.__atualiza_dados_lista(cvu, 6, 3)
 
 
@@ -592,31 +592,31 @@ class DP(Register):
         self.data[2] = n
 
     @property
-    def cargas(self) -> Optional[List[float]]:
+    def carga(self) -> Optional[List[float]]:
         """
-        As cargas em Mwmed pata cada patamar de carga
+        A carga em Mwmed pata cada patamar de carga
 
-        :return: As cargas.
+        :return: A carga.
         :rtype: list[float] | None
         """
         return [v for v in self.data[3::2] if v is not None]
 
-    @cargas.setter
-    def cargas(self, c: List[float]):
+    @carga.setter
+    def carga(self, c: List[float]):
         self.__atualiza_dados_lista(c, 3, 2)
 
     @property
-    def duracoes(self) -> Optional[List[float]]:
+    def duracao(self) -> Optional[List[float]]:
         """
-        As durações de cada patamar de carga em horas
+        A duração de cada patamar de carga em horas
 
-        :return: As durações em horas.
+        :return: A duração em horas.
         :rtype: list[float] | None
         """
         return [v for v in self.data[4::2] if v is not None]
 
-    @duracoes.setter
-    def duracoes(self, d: List[float]):
+    @duracao.setter
+    def duracao(self, d: List[float]):
         self.__atualiza_dados_lista(d, 4, 2)
 
 
@@ -698,17 +698,17 @@ class PQ(Register):
         self.data[2] = e
 
     @property
-    def geracoes(self) -> Optional[List[float]]:
+    def geracao(self) -> Optional[List[float]]:
         """
-        As gerações em Mwmed para cada patamar de carga.
+        A geração em Mwmed para cada patamar de carga.
 
-        :return: As gerações.
+        :return: A geração.
         :rtype: list[float] | None
         """
         return [v for v in self.data[3:6] if v is not None]
 
-    @geracoes.setter
-    def geracoes(self, c: List[float]):
+    @geracao.setter
+    def geracao(self, c: List[float]):
         self.__atualiza_dados_lista(c, 3, 1)
 
 
@@ -808,31 +808,31 @@ class CD(Register):
         self.data[3] = e
 
     @property
-    def limites_superiores(self) -> Optional[List[float]]:
+    def limite_superior(self) -> Optional[List[float]]:
         """
-        Os limites superiores para consideração dos custos.
+        O limite superior para consideração dos custos.
 
         :return: Os limites.
         :rtype: list[float] | None
         """
         return [v for v in self.data[4::2] if v is not None]
 
-    @limites_superiores.setter
-    def limites_superiores(self, lim: List[float]):
+    @limite_superior.setter
+    def limite_superior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 4, 2)
 
     @property
-    def custos(self) -> Optional[List[float]]:
+    def custo(self) -> Optional[List[float]]:
         """
-        Os custos de déficit.
+        O custo de déficit.
 
-        :return: Os custos.
+        :return: O custo.
         :rtype: list[float] | None
         """
         return [v for v in self.data[5::2] if v is not None]
 
-    @custos.setter
-    def custos(self, cus: List[float]):
+    @custo.setter
+    def custo(self, cus: List[float]):
         self.__atualiza_dados_lista(cus, 5, 2)
 
 
@@ -1194,17 +1194,17 @@ class VE(Register):
         self.data[0] = c
 
     @property
-    def volumes(self) -> Optional[List[float]]:
+    def volume(self) -> Optional[List[float]]:
         """
-        Os volumes de espera por estagio.
+        O volume de espera por estagio.
 
-        :return: Os volumes.
+        :return: O volume.
         :rtype: list[float] | None
         """
         return [v for v in self.data[1:] if v is not None]
 
-    @volumes.setter
-    def volumes(self, cus: List[float]):
+    @volume.setter
+    def volume(self, cus: List[float]):
         self.__atualiza_dados_lista(cus, 1, 1)
 
 
@@ -1333,31 +1333,31 @@ class LU(Register):
         self.data[1] = e
 
     @property
-    def limites_inferiores(self) -> Optional[List[float]]:
+    def limite_inferior(self) -> Optional[List[float]]:
         """
-        Os limites inferiores por patamar para a restrição elétrica
+        O limite inferior por patamar para a restrição elétrica
 
-        :return: Os limites
+        :return: O limite
         :rtype: list[float] | None
         """
         return self.data[2::2]
 
-    @limites_inferiores.setter
-    def limites_inferiores(self, lim: List[float]):
+    @limite_inferior.setter
+    def limite_inferior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 2, 2)
 
     @property
-    def limites_superiores(self) -> Optional[List[float]]:
+    def limite_superior(self) -> Optional[List[float]]:
         """
-        Os limites superiores por patamar para a restrição elétrica
+        O limite superior por patamar para a restrição elétrica
 
-        :return: Os limites
+        :return: O limite
         :rtype: list[float] | None
         """
         return self.data[3::2]
 
-    @limites_superiores.setter
-    def limites_superiores(self, lim: List[float]):
+    @limite_superior.setter
+    def limite_superior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 3, 2)
 
 
@@ -1683,7 +1683,7 @@ class VI(Register):
         self.data[1] = d
 
     @property
-    def vazoes(self) -> Optional[List[float]]:
+    def vazao(self) -> Optional[List[float]]:
         """
         As vazões defluentes das semanas passadas para a usina
         do código informado. A posição da vazão na lista indica
@@ -1694,8 +1694,8 @@ class VI(Register):
         """
         return [v for v in self.data[2::] if v is not None]
 
-    @vazoes.setter
-    def vazoes(self, v: List[float]):
+    @vazao.setter
+    def vazao(self, v: List[float]):
         self.__atualiza_dados_lista(v, 2, 1)
 
 
@@ -2023,7 +2023,7 @@ class QI(Register):
         self.data[0] = c
 
     @property
-    def vazoes(self) -> Optional[List[float]]:
+    def vazao(self) -> Optional[List[float]]:
         """
         As vazões incrementais para cálculo da ENA.
 
@@ -2032,8 +2032,8 @@ class QI(Register):
         """
         return [v for v in self.data[1::] if v is not None]
 
-    @vazoes.setter
-    def vazoes(self, c: List[float]):
+    @vazao.setter
+    def vazao(self, c: List[float]):
         self.__atualiza_dados_lista(c, 1, 1)
         self.data[1:] = c
 
@@ -2117,7 +2117,7 @@ class TI(Register):
         self.data[0] = c
 
     @property
-    def taxas(self) -> Optional[List[float]]:
+    def taxa(self) -> Optional[List[float]]:
         """
         As taxas de irrigação por estágio do estudo. A
         posição da taxa na lista indica a qual estágio
@@ -2128,8 +2128,8 @@ class TI(Register):
         """
         return [v for v in self.data[1::] if v is not None]
 
-    @taxas.setter
-    def taxas(self, tx: List[float]):
+    @taxa.setter
+    def taxa(self, tx: List[float]):
         self.__atualiza_dados_lista(tx, 1, 1)
 
 
@@ -2360,18 +2360,18 @@ class RQ(Register):
         self.data[0] = r
 
     @property
-    def vazoes(self) -> Optional[List[float]]:
+    def vazao(self) -> Optional[List[float]]:
         """
         As vazões defluentes mínimas (percentuais)
         para o REE, por estágio [e1, e2, e3, ...].
 
-        :return: As vazoes.
+        :return: A vazão.
         :rtype: list[float] | None
         """
         return [v for v in self.data[1:] if v is not None]
 
-    @vazoes.setter
-    def vazoes(self, v: List[float]):
+    @vazao.setter
+    def vazao(self, v: List[float]):
         self.__atualiza_dados_lista(v, 1, 1)
         self.data[1:] = v
 
@@ -2759,31 +2759,31 @@ class LQ(Register):
         self.data[1] = e
 
     @property
-    def limites_inferiores(self) -> Optional[List[float]]:
+    def limite_inferior(self) -> Optional[List[float]]:
         """
-        Os limites inferiores por patamar para a vazão.
+        O limite inferior por patamar para a vazão.
 
         :return: Os limites.
         :rtype: list[float] | None
         """
         return self.data[2::2]
 
-    @limites_inferiores.setter
-    def limites_inferiores(self, lim: List[float]):
+    @limite_inferior.setter
+    def limite_inferior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 2, 2)
 
     @property
-    def limites_superiores(self) -> Optional[List[float]]:
+    def limite_superior(self) -> Optional[List[float]]:
         """
-        Os limites superiores por patamar para a vazão.
+        O limite superior por patamar para a vazão.
 
         :return: Os limites.
         :rtype: list[float] | None
         """
         return self.data[3::2]
 
-    @limites_superiores.setter
-    def limites_superiores(self, lim: List[float]):
+    @limite_superior.setter
+    def limite_superior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 3, 2)
 
 
@@ -3760,6 +3760,11 @@ class ACNUMJUS(Register):
 
     @property
     def codigo_usina(self) -> Optional[int]:
+        """
+        O número da UHE conforme registro UH.
+
+        :return: O número da UHE como `int`.
+        """
         return self.data[0]
 
     @codigo_usina.setter
@@ -3768,6 +3773,11 @@ class ACNUMJUS(Register):
 
     @property
     def codigo_usina_jusante(self) -> Optional[int]:
+        """
+        O número da UHE de jusante conforme registro UH.
+
+        :return: O número da UHE como `int`.
+        """
         return self.data[1]
 
     @codigo_usina_jusante.setter
@@ -3776,6 +3786,11 @@ class ACNUMJUS(Register):
 
     @property
     def mes(self) -> Optional[str]:
+        """
+        O mês de validade da alteração de cadastro.
+
+        :return: O mês como `str`.
+        """
         return self.data[-3]
 
     @mes.setter
@@ -3784,6 +3799,11 @@ class ACNUMJUS(Register):
 
     @property
     def semana(self) -> Optional[int]:
+        """
+        A semana de validade da alteração de cadastro.
+
+        :return: A semana como `int`
+        """
         return self.data[-2]
 
     @semana.setter
@@ -3792,6 +3812,11 @@ class ACNUMJUS(Register):
 
     @property
     def ano(self) -> Optional[int]:
+        """
+        O ano de validade da alteração de cadastro.
+
+        :return: O ano como `int`
+        """
         return self.data[-1]
 
     @ano.setter
