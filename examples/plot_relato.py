@@ -27,5 +27,10 @@ print(df.columns)
 import plotly.express as px
 
 # sphinx_gallery_thumbnail_number = 1
-fig = px.line(df, x="Estágio", y="Earm Final Percentual", color="Subsistema")
+fig = px.line(
+    df,
+    x="estagio",
+    y="energia_armazenada_final_percentual",
+    color="nome_submercado",
+)
 fig

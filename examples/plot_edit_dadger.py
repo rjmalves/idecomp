@@ -3,12 +3,6 @@
 Edição do dadger.rv0
 ========================================
 
-.. warning::
-
-    Este exemplo lida com propriedades do registro `PQ` do arquivo :ref:`dadger.rvX <dadger>`. Uma delas
-    é a `PQ.subsistema`, que viola o padrão de nomenclatura para entidades que é recomendado nas diretrizes
-    do módulo idecomp e, portanto, pode sofrer alterações em versões futuras para `PQ.submercado`.
-
 """
 
 # %%
@@ -37,7 +31,7 @@ print(df_pq)
 # objetos que modelam cada registro, e isto é feito ao não forçar o argumento opcional
 # `df=True`. Assim como para outros registros, é possível filtrar arbitrariamente pelos
 # registros que são desejados passando as propriedades destes como argumentos opcionais
-print(arq.pq(subsistema=1))
+print(arq.pq(codigo_submercado=1))
 
 
 # %%
@@ -45,9 +39,9 @@ print(arq.pq(subsistema=1))
 # os filtros adequados e alterar os valores das suas propriedades. Por exemplo, como só
 # existe um registro `PQ` por submercado e estágio, os valores das suas gerações podem ser
 # modificados diretamente:
-reg_pq = arq.pq(subsistema=1, estagio=1)
-reg_pq.geracoes = [10.0, 10.0, 10.0]
-print(arq.pq(subsistema=1, estagio=1).geracoes)
+reg_pq = arq.pq(codigo_submercado=1, estagio=1)
+reg_pq.geracao = [10.0, 10.0, 10.0]
+print(arq.pq(codigo_submercado=1, estagio=1).geracao)
 
 # %%
 # Caso seja desejado refazer completamente o bloco dos registros PQ, também é permitido
@@ -84,7 +78,7 @@ df = pd.DataFrame(
             "NORTE",
             "NORTE",
         ],
-        "subsistema": [1, 1, 2, 2, 3, 3, 4, 4],
+        "submercado": [1, 1, 2, 2, 3, 3, 4, 4],
         "geracao_pat1": [10.0, 10.0, 20.0, 20.0, 30.0, 30.0, 40.0, 40.0],
         "geracao_pat2": [11.0, 11.0, 21.0, 21.0, 31.0, 31.0, 41.0, 41.0],
         "geracao_pat3": [12.0, 12.0, 22.0, 22.0, 32.0, 32.0, 42.0, 42.0],
@@ -95,8 +89,8 @@ for _, linha in df.iterrows():
     r = PQ()
     r.estagio = linha["estagio"]
     r.nome = linha["nome"]
-    r.subsistema = linha["subsistema"]
-    r.geracoes = linha[
+    r.codigo_submercado = linha["submercado"]
+    r.geracao = linha[
         ["geracao_pat1", "geracao_pat2", "geracao_pat3"]
     ].tolist()
     arq.data.add_after(registro_base, r)

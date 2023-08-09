@@ -34,7 +34,7 @@ class TE(Register):
 
 class SB(Register):
     """
-    Registro que contém o cadastro dos subsistemas.
+    Registro que contém o cadastro dos submercados.
     """
 
     IDENTIFIER = "SB  "
@@ -42,31 +42,31 @@ class SB(Register):
     LINE = Line([IntegerField(2, 4), LiteralField(2, 9)])
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O código de cadastro do subsistema.
+        O código de cadastro do submercado.
 
         :return: O código.
         :rtype: int | None]
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, cod: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, cod: int):
         self.data[0] = cod
 
     @property
-    def nome(self) -> Optional[str]:
+    def nome_submercado(self) -> Optional[str]:
         """
-        O nome de cadastro do subsistema.
+        O nome de cadastro do submercado.
 
         :return: O nome.
         :rtype: str | None
         """
         return self.data[1]
 
-    @nome.setter
-    def nome(self, n: str):
+    @nome_submercado.setter
+    def nome_submercado(self, n: str):
         self.data[1] = n
 
 
@@ -94,7 +94,7 @@ class UH(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código de cadastro da UHE.
 
@@ -103,12 +103,12 @@ class UH(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, cod: int):
+    @codigo_usina.setter
+    def codigo_usina(self, cod: int):
         self.data[0] = cod
 
     @property
-    def ree(self) -> Optional[int]:
+    def codigo_ree(self) -> Optional[int]:
         """
         O REE de cadastro da UHE.
 
@@ -117,8 +117,8 @@ class UH(Register):
         """
         return self.data[1]
 
-    @ree.setter
-    def ree(self, n: int):
+    @codigo_ree.setter
+    def codigo_ree(self, n: int):
         self.data[1] = n
 
     @property
@@ -279,7 +279,7 @@ class CT(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código de cadastro da UTE.
 
@@ -288,26 +288,26 @@ class CT(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, codigo: int):
+    @codigo_usina.setter
+    def codigo_usina(self, codigo: int):
         self.data[0] = codigo
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O subsistema de cadastro da UTE.
+        O submercado de cadastro da UTE.
 
-        :return: O subsistema.
+        :return: O submercado.
         :rtype: int | None
         """
         return self.data[1]
 
-    @subsistema.setter
-    def subsistema(self, subsistema: int):
-        self.data[1] = subsistema
+    @codigo_submercado.setter
+    def codigo_submercado(self, submercado: int):
+        self.data[1] = submercado
 
     @property
-    def nome(self) -> Optional[str]:
+    def nome_usina(self) -> Optional[str]:
         """
         O nome de cadastro da UTE.
 
@@ -316,8 +316,8 @@ class CT(Register):
         """
         return self.data[2]
 
-    @nome.setter
-    def nome(self, nome: str):
+    @nome_usina.setter
+    def nome_usina(self, nome: str):
         self.data[2] = nome
 
     @property
@@ -335,45 +335,45 @@ class CT(Register):
         self.data[3] = estagio
 
     @property
-    def inflexibilidades(self) -> Optional[List[float]]:
+    def inflexibilidade(self) -> Optional[List[float]]:
         """
-        As inflexibilidades da UTE por patamar.
+        A inflexibilidade da UTE por patamar.
 
-        :return: As inflexibilidades.
+        :return: A inflexibilidade.
         :rtype: list[float] | None
         """
         return [v for v in self.data[4::3] if v is not None]
 
-    @inflexibilidades.setter
-    def inflexibilidades(self, inflex: List[float]):
+    @inflexibilidade.setter
+    def inflexibilidade(self, inflex: List[float]):
         self.__atualiza_dados_lista(inflex, 4, 3)
 
     @property
-    def disponibilidades(self) -> Optional[List[float]]:
+    def disponibilidade(self) -> Optional[List[float]]:
         """
-        As disponibilidades da UTE por patamar.
+        A disponibilidade da UTE por patamar.
 
-        :return: As disponibilidades.
+        :return: A disponibilidade.
         :rtype: list[float] | None
         """
         return [v for v in self.data[5::3] if v is not None]
 
-    @disponibilidades.setter
-    def disponibilidades(self, disp: List[float]):
+    @disponibilidade.setter
+    def disponibilidade(self, disp: List[float]):
         self.__atualiza_dados_lista(disp, 5, 3)
 
     @property
-    def cvus(self) -> Optional[List[float]]:
+    def cvu(self) -> Optional[List[float]]:
         """
-        Os CVUs da UTE por patamar.
+        O CVU da UTE por patamar.
 
-        :return: Os CVUs.
+        :return: O CVU.
         :rtype: list[float] | None
         """
         return [v for v in self.data[6::3] if v is not None]
 
-    @cvus.setter
-    def cvus(self, cvu: List[float]):
+    @cvu.setter
+    def cvu(self, cvu: List[float]):
         self.__atualiza_dados_lista(cvu, 6, 3)
 
 
@@ -399,7 +399,7 @@ class UE(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código de cadastro da UE.
 
@@ -408,26 +408,26 @@ class UE(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, cod: int):
+    @codigo_usina.setter
+    def codigo_usina(self, cod: int):
         self.data[0] = cod
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O subsistema de cadastro da UE, conforme registro SB.
+        O submercado de cadastro da UE, conforme registro SB.
 
-        :return: O subsistema.
+        :return: O submercado.
         :rtype: int | None
         """
         return self.data[1]
 
-    @subsistema.setter
-    def subsistema(self, n: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, n: int):
         self.data[1] = n
 
     @property
-    def nome(self) -> Optional[str]:
+    def nome_usina(self) -> Optional[str]:
         """
         O nome da estação de bombeamento.
 
@@ -436,12 +436,12 @@ class UE(Register):
         """
         return self.data[2]
 
-    @nome.setter
-    def nome(self, v: str):
+    @nome_usina.setter
+    def nome_usina(self, v: str):
         self.data[2] = v
 
     @property
-    def uhe_montante(self) -> Optional[int]:
+    def codigo_usina_montante(self) -> Optional[int]:
         """
         O código da UHE a montante, conforme registro UH.
 
@@ -450,12 +450,12 @@ class UE(Register):
         """
         return self.data[3]
 
-    @uhe_montante.setter
-    def uhe_montante(self, v: int):
+    @codigo_usina_montante.setter
+    def codigo_usina_montante(self, v: int):
         self.data[3] = v
 
     @property
-    def uhe_jusante(self) -> Optional[int]:
+    def codigo_usina_jusante(self) -> Optional[int]:
         """
         O código da UHE a jusante, conforme registro UH.
 
@@ -464,8 +464,8 @@ class UE(Register):
         """
         return self.data[4]
 
-    @uhe_jusante.setter
-    def uhe_jusante(self, e: int):
+    @codigo_usina_jusante.setter
+    def codigo_usina_jusante(self, e: int):
         self.data[4] = e
 
     @property
@@ -564,21 +564,21 @@ class DP(Register):
         self.data[0] = e
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O subsistema associado às durações especificadas.
+        O submercado associado às durações especificadas.
 
-        :return: O subsistema.
+        :return: O submercado.
         :rtype: int | None
         """
         return self.data[1]
 
-    @subsistema.setter
-    def subsistema(self, sub: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, sub: int):
         self.data[1] = sub
 
     @property
-    def num_patamares(self) -> Optional[int]:
+    def numero_patamares(self) -> Optional[int]:
         """
         O número de patamares.
 
@@ -587,36 +587,36 @@ class DP(Register):
         """
         return self.data[2]
 
-    @num_patamares.setter
-    def num_patamares(self, n: int):
+    @numero_patamares.setter
+    def numero_patamares(self, n: int):
         self.data[2] = n
 
     @property
-    def cargas(self) -> Optional[List[float]]:
+    def carga(self) -> Optional[List[float]]:
         """
-        As cargas em Mwmed pata cada patamar de carga
+        A carga em Mwmed pata cada patamar de carga
 
-        :return: As cargas.
+        :return: A carga.
         :rtype: list[float] | None
         """
         return [v for v in self.data[3::2] if v is not None]
 
-    @cargas.setter
-    def cargas(self, c: List[float]):
+    @carga.setter
+    def carga(self, c: List[float]):
         self.__atualiza_dados_lista(c, 3, 2)
 
     @property
-    def duracoes(self) -> Optional[List[float]]:
+    def duracao(self) -> Optional[List[float]]:
         """
-        As durações de cada patamar de carga em horas
+        A duração de cada patamar de carga em horas
 
-        :return: As durações em horas.
+        :return: A duração em horas.
         :rtype: list[float] | None
         """
         return [v for v in self.data[4::2] if v is not None]
 
-    @duracoes.setter
-    def duracoes(self, d: List[float]):
+    @duracao.setter
+    def duracao(self, d: List[float]):
         self.__atualiza_dados_lista(d, 4, 2)
 
 
@@ -670,17 +670,17 @@ class PQ(Register):
         self.data[0] = nome
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O subsistema associado à geração.
+        O submercado associado à geração.
 
-        :return: O subsistema.
+        :return: O submercado.
         :rtype: int | None
         """
         return self.data[1]
 
-    @subsistema.setter
-    def subsistema(self, sub: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, sub: int):
         self.data[1] = sub
 
     @property
@@ -698,17 +698,17 @@ class PQ(Register):
         self.data[2] = e
 
     @property
-    def geracoes(self) -> Optional[List[float]]:
+    def geracao(self) -> Optional[List[float]]:
         """
-        As gerações em Mwmed para cada patamar de carga.
+        A geração em Mwmed para cada patamar de carga.
 
-        :return: As gerações.
+        :return: A geração.
         :rtype: list[float] | None
         """
         return [v for v in self.data[3:6] if v is not None]
 
-    @geracoes.setter
-    def geracoes(self, c: List[float]):
+    @geracao.setter
+    def geracao(self, c: List[float]):
         self.__atualiza_dados_lista(c, 3, 1)
 
 
@@ -752,37 +752,37 @@ class CD(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def numero_curva(self) -> Optional[int]:
+    def codigo_curva(self) -> Optional[int]:
         """
-        O número da curva de déficit.
+        O código da curva de déficit.
 
-        :return: O índice da curva.
+        :return: O código da curva.
         :rtype: int | None
         """
         return self.data[0]
 
-    @numero_curva.setter
-    def numero_curva(self, n: int):
+    @codigo_curva.setter
+    def codigo_curva(self, n: int):
         self.data[0] = n
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O índice do subsistema associado.
+        O código do submercado associado.
 
-        :return: O subsistema.
+        :return: O submercado.
         :rtype: int | None
         """
         return self.data[1]
 
-    @subsistema.setter
-    def subsistema(self, s: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, s: int):
         self.data[1] = s
 
     @property
     def nome_curva(self) -> Optional[str]:
         """
-        O nome da curva de défitict
+        O nome da curva de déficit
 
         :return: O nome.
         :rtype: str | None
@@ -808,31 +808,31 @@ class CD(Register):
         self.data[3] = e
 
     @property
-    def limites_superiores(self) -> Optional[List[float]]:
+    def limite_superior(self) -> Optional[List[float]]:
         """
-        Os limites superiores para consideração dos custos.
+        O limite superior para consideração dos custos.
 
         :return: Os limites.
         :rtype: list[float] | None
         """
         return [v for v in self.data[4::2] if v is not None]
 
-    @limites_superiores.setter
-    def limites_superiores(self, lim: List[float]):
+    @limite_superior.setter
+    def limite_superior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 4, 2)
 
     @property
-    def custos(self) -> Optional[List[float]]:
+    def custo(self) -> Optional[List[float]]:
         """
-        Os custos de déficit.
+        O custo de déficit.
 
-        :return: Os custos.
+        :return: O custo.
         :rtype: list[float] | None
         """
         return [v for v in self.data[5::2] if v is not None]
 
-    @custos.setter
-    def custos(self, cus: List[float]):
+    @custo.setter
+    def custo(self, cus: List[float]):
         self.__atualiza_dados_lista(cus, 5, 2)
 
 
@@ -1108,7 +1108,7 @@ class MT(Register):
 
 class FD(Register):
     """
-    Registro que contém as manutenções programadas das UTEs.
+    Registro que contém os fatores de disponibilidade das UHEs.
 
     *OBS: Suporta apenas 12 estágios no momento*
     """
@@ -1180,31 +1180,31 @@ class VE(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
-        O código do posto associado ao volume.
+        O código da usina associada ao volume.
 
         :return: O código.
         :rtype: int | None
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[0] = c
 
     @property
-    def volumes(self) -> Optional[List[float]]:
+    def volume(self) -> Optional[List[float]]:
         """
-        Os volumes de espera por estagio.
+        O volume de espera por estagio.
 
-        :return: Os volumes.
+        :return: O volume.
         :rtype: list[float] | None
         """
         return [v for v in self.data[1:] if v is not None]
 
-    @volumes.setter
-    def volumes(self, cus: List[float]):
+    @volume.setter
+    def volume(self, cus: List[float]):
         self.__atualiza_dados_lista(cus, 1, 1)
 
 
@@ -1224,7 +1224,7 @@ class RE(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código de cadastro para a restrição
 
@@ -1233,8 +1233,8 @@ class RE(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -1304,7 +1304,7 @@ class LU(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código da restrição RE associada aos limites
 
@@ -1313,8 +1313,8 @@ class LU(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -1333,31 +1333,31 @@ class LU(Register):
         self.data[1] = e
 
     @property
-    def limites_inferiores(self) -> Optional[List[float]]:
+    def limite_inferior(self) -> Optional[List[float]]:
         """
-        Os limites inferiores por patamar para a restrição elétrica
+        O limite inferior por patamar para a restrição elétrica
 
-        :return: Os limites
+        :return: O limite
         :rtype: list[float] | None
         """
         return self.data[2::2]
 
-    @limites_inferiores.setter
-    def limites_inferiores(self, lim: List[float]):
+    @limite_inferior.setter
+    def limite_inferior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 2, 2)
 
     @property
-    def limites_superiores(self) -> Optional[List[float]]:
+    def limite_superior(self) -> Optional[List[float]]:
         """
-        Os limites superiores por patamar para a restrição elétrica
+        O limite superior por patamar para a restrição elétrica
 
-        :return: Os limites
+        :return: O limite
         :rtype: list[float] | None
         """
         return self.data[3::2]
 
-    @limites_superiores.setter
-    def limites_superiores(self, lim: List[float]):
+    @limite_superior.setter
+    def limite_superior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 3, 2)
 
 
@@ -1380,7 +1380,7 @@ class FU(Register):
     )
 
     @property
-    def restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código da restrição elétrica, segundo registro RE.
 
@@ -1388,8 +1388,8 @@ class FU(Register):
         """
         return self.data[0]
 
-    @restricao.setter
-    def restricao(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -1406,7 +1406,7 @@ class FU(Register):
         self.data[1] = c
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O número da UHE conforme registro UH.
 
@@ -1414,8 +1414,8 @@ class FU(Register):
         """
         return self.data[2]
 
-    @uhe.setter
-    def uhe(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[2] = c
 
     @property
@@ -1465,7 +1465,7 @@ class FT(Register):
     )
 
     @property
-    def restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código da restrição elétrica, segundo registro RE.
 
@@ -1473,8 +1473,8 @@ class FT(Register):
         """
         return self.data[0]
 
-    @restricao.setter
-    def restricao(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -1491,7 +1491,7 @@ class FT(Register):
         self.data[1] = c
 
     @property
-    def ute(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O número da UTE conforme registro CT.
 
@@ -1499,21 +1499,21 @@ class FT(Register):
         """
         return self.data[2]
 
-    @ute.setter
-    def ute(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[2] = c
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O número do subsistema conforme registros CT ou TG.
+        O código do submercado conforme registros CT ou TG.
 
-        :return: O número do subsistema como `int`.
+        :return: O código do submercado como `int`.
         """
         return self.data[3]
 
-    @subsistema.setter
-    def subsistema(self, s: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, s: int):
         self.data[3] = s
 
     @property
@@ -1549,7 +1549,7 @@ class FI(Register):
     )
 
     @property
-    def restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código da restrição elétrica, segundo registro RE.
 
@@ -1557,8 +1557,8 @@ class FI(Register):
         """
         return self.data[0]
 
-    @restricao.setter
-    def restricao(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -1575,29 +1575,29 @@ class FI(Register):
         self.data[1] = c
 
     @property
-    def de(self) -> Optional[str]:
+    def codigo_submercado_de(self) -> Optional[str]:
         """
-        O subsistema "DE" conforme registros SB.
+        O submercado de origem conforme registros SB.
 
-        :return: O subsistema como `str`.
+        :return: O submercado como `str`.
         """
         return self.data[2]
 
-    @de.setter
-    def de(self, s: str):
+    @codigo_submercado_de.setter
+    def codigo_submercado_de(self, s: str):
         self.data[2] = s
 
     @property
-    def para(self) -> Optional[str]:
+    def codigo_submercado_para(self) -> Optional[str]:
         """
-        O subsistema "PARA" conforme registros SB.
+        O submercado de destino conforme registros SB.
 
-        :return: O  subsistema como `str`.
+        :return: O  submercado como `str`.
         """
         return self.data[3]
 
-    @para.setter
-    def para(self, s: str):
+    @codigo_submercado_para.setter
+    def codigo_submercado_para(self, s: str):
         self.data[3] = s
 
     @property
@@ -1653,7 +1653,7 @@ class VI(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código da UHE a partir do qual é contabilizado
         o tempo de viagem.
@@ -1663,8 +1663,8 @@ class VI(Register):
         """
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -1683,7 +1683,7 @@ class VI(Register):
         self.data[1] = d
 
     @property
-    def vazoes(self) -> Optional[List[float]]:
+    def vazao(self) -> Optional[List[float]]:
         """
         As vazões defluentes das semanas passadas para a usina
         do código informado. A posição da vazão na lista indica
@@ -1694,8 +1694,8 @@ class VI(Register):
         """
         return [v for v in self.data[2::] if v is not None]
 
-    @vazoes.setter
-    def vazoes(self, v: List[float]):
+    @vazao.setter
+    def vazao(self, v: List[float]):
         self.__atualiza_dados_lista(v, 2, 1)
 
 
@@ -1868,17 +1868,17 @@ class EA(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def ree(self) -> Optional[int]:
+    def codigo_ree(self) -> Optional[int]:
         """
-        O índice do REE
+        O código do REE
 
-        :return: O índice.
+        :return: O código.
         :rtype: int | None
         """
         return self.data[0]
 
-    @ree.setter
-    def ree(self, c: int):
+    @codigo_ree.setter
+    def codigo_ree(self, c: int):
         self.data[0] = c
 
     @property
@@ -1932,21 +1932,21 @@ class ES(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def ree(self) -> Optional[int]:
+    def codigo_ree(self) -> Optional[int]:
         """
-        O índice do REE
+        O código do REE
 
-        :return: O índice.
+        :return: O código.
         :rtype: int | None
         """
         return self.data[0]
 
-    @ree.setter
-    def ree(self, c: int):
+    @codigo_ree.setter
+    def codigo_ree(self, c: int):
         self.data[0] = c
 
     @property
-    def numero_semanas(self) -> Optional[int]:
+    def numero_semanas_mes_anterior(self) -> Optional[int]:
         """
         O número de semanas do mês anterior
 
@@ -1955,8 +1955,8 @@ class ES(Register):
         """
         return self.data[1]
 
-    @numero_semanas.setter
-    def numero_semanas(self, c: int):
+    @numero_semanas_mes_anterior.setter
+    def numero_semanas_mes_anterior(self, c: int):
         self.data[1] = c
 
     @property
@@ -2009,7 +2009,7 @@ class QI(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O índice da UHE
 
@@ -2018,22 +2018,22 @@ class QI(Register):
         """
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[0] = c
 
     @property
-    def vazoes(self) -> Optional[List[float]]:
+    def vazao(self) -> Optional[List[float]]:
         """
-        As vazões incrementais cálculo da ENA.
+        As vazões incrementais para cálculo da ENA.
 
-        :return: As incrementais para cálculo do tempo de viagem.
+        :return: As incrementais para cálculo da ENA.
         :rtype: list[float] | None
         """
         return [v for v in self.data[1::] if v is not None]
 
-    @vazoes.setter
-    def vazoes(self, c: List[float]):
+    @vazao.setter
+    def vazao(self, c: List[float]):
         self.__atualiza_dados_lista(c, 1, 1)
         self.data[1:] = c
 
@@ -2104,7 +2104,7 @@ class TI(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código da UHE associada às taxas de irrigação
 
@@ -2112,12 +2112,12 @@ class TI(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[0] = c
 
     @property
-    def taxas(self) -> Optional[List[float]]:
+    def taxa(self) -> Optional[List[float]]:
         """
         As taxas de irrigação por estágio do estudo. A
         posição da taxa na lista indica a qual estágio
@@ -2128,8 +2128,8 @@ class TI(Register):
         """
         return [v for v in self.data[1::] if v is not None]
 
-    @taxas.setter
-    def taxas(self, tx: List[float]):
+    @taxa.setter
+    def taxa(self, tx: List[float]):
         self.__atualiza_dados_lista(tx, 1, 1)
 
 
@@ -2160,7 +2160,7 @@ class FP(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código da UHE associada à restrição FP.
 
@@ -2169,8 +2169,8 @@ class FP(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[0] = c
 
     @property
@@ -2346,7 +2346,7 @@ class RQ(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def ree(self) -> Optional[int]:
+    def codigo_ree(self) -> Optional[int]:
         """
         O código do REE associado às vazões mínimas.
 
@@ -2355,23 +2355,23 @@ class RQ(Register):
         """
         return self.data[0]
 
-    @ree.setter
-    def ree(self, r: int):
+    @codigo_ree.setter
+    def codigo_ree(self, r: int):
         self.data[0] = r
 
     @property
-    def vazoes(self) -> Optional[List[float]]:
+    def vazao(self) -> Optional[List[float]]:
         """
         As vazões defluentes mínimas (percentuais)
         para o REE, por estágio [e1, e2, e3, ...].
 
-        :return: As vazoes.
+        :return: A vazão.
         :rtype: list[float] | None
         """
         return [v for v in self.data[1:] if v is not None]
 
-    @vazoes.setter
-    def vazoes(self, v: List[float]):
+    @vazao.setter
+    def vazao(self, v: List[float]):
         self.__atualiza_dados_lista(v, 1, 1)
         self.data[1:] = v
 
@@ -2392,7 +2392,7 @@ class EZ(Register):
     )
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         Código da UHE associada, conforme registro UH.
 
@@ -2401,8 +2401,8 @@ class EZ(Register):
         """
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -2436,17 +2436,17 @@ class HV(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
-        O código da UHE associada à restrição HV.
+        O código da restrição HV.
 
         :return: O código.
         :rtype: int | None
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -2496,7 +2496,7 @@ class LV(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código da restrição HV associada aos limites
 
@@ -2505,8 +2505,8 @@ class LV(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -2571,7 +2571,7 @@ class CV(Register):
     )
 
     @property
-    def restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código da restrição de volume, segundo registro HV.
 
@@ -2579,8 +2579,8 @@ class CV(Register):
         """
         return self.data[0]
 
-    @restricao.setter
-    def restricao(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -2597,7 +2597,7 @@ class CV(Register):
         self.data[1] = c
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O número da UHE ou estação de bombeamento conforme registros UH ou UE.
 
@@ -2605,8 +2605,8 @@ class CV(Register):
         """
         return self.data[2]
 
-    @uhe.setter
-    def uhe(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[2] = c
 
     @property
@@ -2652,17 +2652,17 @@ class HQ(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
-        O código da UHE associada à restrição HQ.
+        O código da restrição HQ.
 
         :return: O código.
         :rtype: int | None
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -2731,7 +2731,7 @@ class LQ(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código da restrição HQ associada aos limites
 
@@ -2740,8 +2740,8 @@ class LQ(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -2759,31 +2759,31 @@ class LQ(Register):
         self.data[1] = e
 
     @property
-    def limites_inferiores(self) -> Optional[List[float]]:
+    def limite_inferior(self) -> Optional[List[float]]:
         """
-        Os limites inferiores por patamar para a vazão.
+        O limite inferior por patamar para a vazão.
 
         :return: Os limites.
         :rtype: list[float] | None
         """
         return self.data[2::2]
 
-    @limites_inferiores.setter
-    def limites_inferiores(self, lim: List[float]):
+    @limite_inferior.setter
+    def limite_inferior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 2, 2)
 
     @property
-    def limites_superiores(self) -> Optional[List[float]]:
+    def limite_superior(self) -> Optional[List[float]]:
         """
-        Os limites superiores por patamar para a vazão.
+        O limite superior por patamar para a vazão.
 
         :return: Os limites.
         :rtype: list[float] | None
         """
         return self.data[3::2]
 
-    @limites_superiores.setter
-    def limites_superiores(self, lim: List[float]):
+    @limite_superior.setter
+    def limite_superior(self, lim: List[float]):
         self.__atualiza_dados_lista(lim, 3, 2)
 
 
@@ -2806,7 +2806,7 @@ class CQ(Register):
     )
 
     @property
-    def restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código da restrição de vazão, segundo registro HQ.
 
@@ -2814,8 +2814,8 @@ class CQ(Register):
         """
         return self.data[0]
 
-    @restricao.setter
-    def restricao(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -2832,7 +2832,7 @@ class CQ(Register):
         self.data[1] = c
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O número da UHE conforme registro UH.
 
@@ -2840,8 +2840,8 @@ class CQ(Register):
         """
         return self.data[2]
 
-    @uhe.setter
-    def uhe(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[2] = c
 
     @property
@@ -3020,7 +3020,7 @@ class HE(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_restricao(self) -> Optional[int]:
         """
         O código de cadastro da restrição HE
 
@@ -3029,8 +3029,8 @@ class HE(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
@@ -3078,7 +3078,7 @@ class HE(Register):
         self.data[3] = e
 
     @property
-    def penalidade(self) -> Optional[float]:
+    def valor_penalidade(self) -> Optional[float]:
         """
         O valor da penalidade para a violação da restrição.
 
@@ -3087,8 +3087,8 @@ class HE(Register):
         """
         return self.data[4]
 
-    @penalidade.setter
-    def penalidade(self, p: float):
+    @valor_penalidade.setter
+    def valor_penalidade(self, p: float):
         self.data[4] = p
 
     @property
@@ -3164,7 +3164,7 @@ class CM(Register):
     )
 
     @property
-    def codigo(self) -> int:
+    def codigo_restricao(self) -> int:
         """
         O código de cadastro da restrição CM
 
@@ -3173,12 +3173,12 @@ class CM(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int):
         self.data[0] = c
 
     @property
-    def ree(self) -> int:
+    def codigo_ree(self) -> int:
         """
         O REE do coeficiente
 
@@ -3187,8 +3187,8 @@ class CM(Register):
         """
         return self.data[1]
 
-    @ree.setter
-    def ree(self, e: int):
+    @codigo_ree.setter
+    def codigo_ree(self, e: int):
         self.data[1] = e
 
     @property
@@ -3309,17 +3309,17 @@ class PE(Register):
     )
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O índice do subsistema considerado
+        O código do submercado considerado
 
-        :return: O índice do subsistema.
+        :return: O código do submercado.
         :rtype: int | None
         """
         return self.data[0]
 
-    @subsistema.setter
-    def subsistema(self, m: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, m: int):
         self.data[0] = m
 
     @property
@@ -3689,19 +3689,19 @@ class ACNUMPOS(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def posto(self) -> Optional[int]:
+    def codigo_posto(self) -> Optional[int]:
         return self.data[1]
 
-    @posto.setter
-    def posto(self, u: int):
+    @codigo_posto.setter
+    def codigo_posto(self, u: int):
         self.data[1] = u
 
     @property
@@ -3759,23 +3759,38 @@ class ACNUMJUS(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
+        """
+        O número da UHE conforme registro UH.
+
+        :return: O número da UHE como `int`.
+        """
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def jusante(self) -> Optional[int]:
+    def codigo_usina_jusante(self) -> Optional[int]:
+        """
+        O número da UHE de jusante conforme registro UH.
+
+        :return: O número da UHE como `int`.
+        """
         return self.data[1]
 
-    @jusante.setter
-    def jusante(self, u: int):
+    @codigo_usina_jusante.setter
+    def codigo_usina_jusante(self, u: int):
         self.data[1] = u
 
     @property
     def mes(self) -> Optional[str]:
+        """
+        O mês de validade da alteração de cadastro.
+
+        :return: O mês como `str`.
+        """
         return self.data[-3]
 
     @mes.setter
@@ -3784,6 +3799,11 @@ class ACNUMJUS(Register):
 
     @property
     def semana(self) -> Optional[int]:
+        """
+        A semana de validade da alteração de cadastro.
+
+        :return: A semana como `int`
+        """
         return self.data[-2]
 
     @semana.setter
@@ -3792,6 +3812,11 @@ class ACNUMJUS(Register):
 
     @property
     def ano(self) -> Optional[int]:
+        """
+        O ano de validade da alteração de cadastro.
+
+        :return: O ano como `int`
+        """
         return self.data[-1]
 
     @ano.setter
@@ -3831,19 +3856,19 @@ class ACDESVIO(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def jusante(self) -> Optional[int]:
+    def codigo_usina_jusante(self) -> Optional[int]:
         return self.data[1]
 
-    @jusante.setter
-    def jusante(self, u: int):
+    @codigo_usina_jusante.setter
+    def codigo_usina_jusante(self, u: int):
         self.data[1] = u
 
     @property
@@ -3909,11 +3934,11 @@ class ACVOLMIN(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -3979,11 +4004,11 @@ class ACVOLMAX(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -4051,11 +4076,11 @@ class ACCOTVOL(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -4131,11 +4156,11 @@ class ACCOTARE(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -4210,11 +4235,11 @@ class ACPROESP(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -4281,11 +4306,11 @@ class ACPERHID(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -4353,11 +4378,11 @@ class ACNCHAVE(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -4434,19 +4459,19 @@ class ACCOTVAZ(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def polimonio(self) -> Optional[int]:
+    def indice_polimonio(self) -> Optional[int]:
         return self.data[1]
 
-    @polimonio.setter
-    def polimonio(self, u: int):
+    @indice_polimonio.setter
+    def indice_polimonio(self, u: int):
         self.data[1] = u
 
     @property
@@ -4522,11 +4547,11 @@ class ACCOFEVA(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -4601,19 +4626,19 @@ class ACNUMCON(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def conjunto(self) -> Optional[int]:
+    def numero_conjuntos(self) -> Optional[int]:
         return self.data[1]
 
-    @conjunto.setter
-    def conjunto(self, u: int):
+    @numero_conjuntos.setter
+    def numero_conjuntos(self, u: int):
         self.data[1] = u
 
     @property
@@ -4673,27 +4698,27 @@ class ACNUMMAQ(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def conjunto(self) -> Optional[int]:
+    def indice_conjunto(self) -> Optional[int]:
         return self.data[1]
 
-    @conjunto.setter
-    def conjunto(self, u: int):
+    @indice_conjunto.setter
+    def indice_conjunto(self, u: int):
         self.data[1] = u
 
     @property
-    def maquinas(self) -> Optional[int]:
+    def numero_maquinas(self) -> Optional[int]:
         return self.data[2]
 
-    @maquinas.setter
-    def maquinas(self, u: int):
+    @numero_maquinas.setter
+    def numero_maquinas(self, u: int):
         self.data[2] = u
 
     @property
@@ -4753,19 +4778,19 @@ class ACPOTEFE(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def conjunto(self) -> Optional[int]:
+    def indice_conjunto(self) -> Optional[int]:
         return self.data[1]
 
-    @conjunto.setter
-    def conjunto(self, u: int):
+    @indice_conjunto.setter
+    def indice_conjunto(self, u: int):
         self.data[1] = u
 
     @property
@@ -4833,11 +4858,11 @@ class ACALTEFE(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -4897,19 +4922,19 @@ class ACVAZEFE(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def conjunto(self) -> Optional[int]:
+    def indice_conjunto(self) -> Optional[int]:
         return self.data[1]
 
-    @conjunto.setter
-    def conjunto(self, u: int):
+    @indice_conjunto.setter
+    def indice_conjunto(self, u: int):
         self.data[1] = u
 
     @property
@@ -4976,11 +5001,11 @@ class ACJUSMED(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -5047,19 +5072,19 @@ class ACVERTJU(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def influi(self) -> Optional[int]:
+    def considera_influencia(self) -> Optional[int]:
         return self.data[1]
 
-    @influi.setter
-    def influi(self, u: int):
+    @considera_influencia.setter
+    def considera_influencia(self, u: int):
         self.data[1] = u
 
     @property
@@ -5117,11 +5142,11 @@ class ACVAZMIN(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -5187,11 +5212,11 @@ class ACTIPERH(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -5259,19 +5284,19 @@ class ACJUSENA(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def aproveitamento(self) -> Optional[int]:
+    def codigo_usina_jusante(self) -> Optional[int]:
         return self.data[1]
 
-    @aproveitamento.setter
-    def aproveitamento(self, u: int):
+    @codigo_usina_jusante.setter
+    def codigo_usina_jusante(self, u: int):
         self.data[1] = u
 
     @property
@@ -5330,11 +5355,11 @@ class ACVSVERT(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -5401,11 +5426,11 @@ class ACVMDESV(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
@@ -5472,19 +5497,19 @@ class ACNPOSNW(Register):
         return True
 
     @property
-    def uhe(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         return self.data[0]
 
-    @uhe.setter
-    def uhe(self, u: int):
+    @codigo_usina.setter
+    def codigo_usina(self, u: int):
         self.data[0] = u
 
     @property
-    def posto(self) -> Optional[int]:
+    def codigo_posto(self) -> Optional[int]:
         return self.data[1]
 
-    @posto.setter
-    def posto(self, u: int):
+    @codigo_posto.setter
+    def codigo_posto(self, u: int):
         self.data[1] = u
 
     @property

@@ -48,7 +48,7 @@ class TG(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código de cadastro da UTE.
 
@@ -57,21 +57,21 @@ class TG(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[0] = c
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O subsistema de cadastro da UTE.
+        O código do submercado de cadastro da UTE.
 
-        :return: O subsistema como um `int`.
+        :return: O código do submercado como um `int`.
         """
         return self.data[1]
 
-    @subsistema.setter
-    def subsistema(self, c: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, c: int):
         self.data[1] = c
 
     @property
@@ -103,35 +103,35 @@ class TG(Register):
         self.data[3] = estagio
 
     @property
-    def inflexibilidades(self) -> List[float]:
+    def inflexibilidade(self) -> List[float]:
         """
-        As inflexibilidades da UTE por patamar.
+        A inflexibilidade da UTE por patamar.
 
-        :return: As inflexibilidades.
+        :return: A inflexibilidade.
         :rtype: Optional[list[float]]
         """
         return [v for v in self.data[4::3] if v is not None]
 
-    @inflexibilidades.setter
-    def inflexibilidades(self, inflex: List[float]):
+    @inflexibilidade.setter
+    def inflexibilidade(self, inflex: List[float]):
         self.__atualiza_dados_lista(inflex, 4, 3)
 
     @property
-    def disponibilidades(self) -> List[float]:
+    def disponibilidade(self) -> List[float]:
         """
-        As disponibilidades da UTE por patamar.
+        A disponibilidade da UTE por patamar.
 
-        :return: As disponibilidades.
+        :return: A disponibilidade.
         :rtype: Optional[list[float]]
         """
         return [v for v in self.data[5::3] if v is not None]
 
-    @disponibilidades.setter
-    def disponibilidades(self, disp: List[float]):
+    @disponibilidade.setter
+    def disponibilidade(self, disp: List[float]):
         self.__atualiza_dados_lista(disp, 5, 3)
 
     @property
-    def cvus(self) -> List[float]:
+    def cvu(self) -> List[float]:
         """
         Os CVUs da UTE por patamar.
 
@@ -140,8 +140,8 @@ class TG(Register):
         """
         return [v for v in self.data[6::3] if v is not None]
 
-    @cvus.setter
-    def cvus(self, cvu: List[float]):
+    @cvu.setter
+    def cvu(self, cvu: List[float]):
         self.__atualiza_dados_lista(cvu, 6, 3)
 
 
@@ -206,7 +206,7 @@ class NL(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código da UTE associada ao registro NL
 
@@ -215,22 +215,22 @@ class NL(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[0] = c
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O índice do subsistema de despacho da UTE
+        O código do submercado de despacho da UTE
 
-        :return: O subsistema.
+        :return: O código do submercado.
         :rtype: Optional[int]
         """
         return self.data[1]
 
-    @subsistema.setter
-    def subsistema(self, s: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, s: int):
         self.data[1] = s
 
     @property
@@ -271,7 +271,7 @@ class GL(Register):
     )
 
     @property
-    def codigo(self) -> Optional[int]:
+    def codigo_usina(self) -> Optional[int]:
         """
         O código da UTE despachada no registro GL
 
@@ -280,22 +280,22 @@ class GL(Register):
         """
         return self.data[0]
 
-    @codigo.setter
-    def codigo(self, c: int):
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
         self.data[0] = c
 
     @property
-    def subsistema(self) -> Optional[int]:
+    def codigo_submercado(self) -> Optional[int]:
         """
-        O índice do subsistema de despacho da UTE
+        O código do submercado de despacho da UTE
 
-        :return: O subsistema.
+        :return: O código do submercado.
         :rtype: Optional[int]
         """
         return self.data[1]
 
-    @subsistema.setter
-    def subsistema(self, e: int):
+    @codigo_submercado.setter
+    def codigo_submercado(self, e: int):
         self.data[1] = e
 
     @property
@@ -313,19 +313,19 @@ class GL(Register):
         self.data[2] = e
 
     @property
-    def geracoes(self) -> List[float]:
+    def geracao(self) -> List[float]:
         """
         Os valores de geração por patamar para o despacho
         da UTE
 
-        :return: As geracoes como `list[float]`
+        :return: As gerações como `list[float]`
         """
         return [v for v in self.data[3:8:2] if v is not None]
 
-    @geracoes.setter
-    def geracoes(self, gers: List[float]):
+    @geracao.setter
+    def geracao(self, gers: List[float]):
         novos = len(gers)
-        atuais = len(self.geracoes)
+        atuais = len(self.geracao)
         if novos != atuais:
             raise ValueError(
                 "Número de gerações incompatível. De"
@@ -334,19 +334,19 @@ class GL(Register):
         self.data[3:9:2] = gers
 
     @property
-    def duracoes(self) -> List[float]:
+    def duracao(self) -> List[float]:
         """
-        Os valores de geração por patamar para o despacho
+        As durações de cada patamar para o despacho
         da UTE
 
         :return: As durações como `list[float]`
         """
         return [v for v in self.data[4:9:2] if v is not None]
 
-    @duracoes.setter
-    def duracoes(self, durs: List[float]):
+    @duracao.setter
+    def duracao(self, durs: List[float]):
         novos = len(durs)
-        atuais = len(self.duracoes)
+        atuais = len(self.duracao)
         if novos != atuais:
             raise ValueError(
                 "Número de durações incompatível. De"

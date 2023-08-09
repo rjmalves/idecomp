@@ -36,27 +36,27 @@ def test_registro_tg_dadgnl():
         350.0,
         204.96,
     ]
-    assert r.codigo == 86
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.subsistema == 1
-    r.subsistema = 0
-    assert r.subsistema == 0
+    assert r.codigo_usina == 86
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
     assert r.nome == "SANTA CRUZ"
     r.nome = "A"
     assert r.nome == "A"
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.inflexibilidades == [0.0, 0.0, 0.0]
-    r.inflexibilidades = [999.0]
-    assert r.inflexibilidades == [999.0]
-    assert r.cvus == [204.96, 204.96, 204.96]
-    r.cvus = [999.0, 999.0, 999.0]
-    assert r.cvus == [999.0, 999.0, 999.0]
-    assert r.disponibilidades == [350.0, 350.0, 350.0]
-    r.disponibilidades = [0.0, 0.0, 0.0]
-    assert r.disponibilidades == [0.0, 0.0, 0.0]
+    assert r.inflexibilidade == [0.0, 0.0, 0.0]
+    r.inflexibilidade = [999.0]
+    assert r.inflexibilidade == [999.0]
+    assert r.cvu == [204.96, 204.96, 204.96]
+    r.cvu = [999.0, 999.0, 999.0]
+    assert r.cvu == [999.0, 999.0, 999.0]
+    assert r.disponibilidade == [350.0, 350.0, 350.0]
+    r.disponibilidade = [0.0, 0.0, 0.0]
+    assert r.disponibilidade == [0.0, 0.0, 0.0]
 
 
 def test_registro_gs_dadgnl():
@@ -86,12 +86,12 @@ def test_registro_nl_dadgnl():
             r.read(fp)
 
     assert r.data == [86, 1, 2]
-    assert r.codigo == 86
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.subsistema == 1
-    r.subsistema = 0
-    assert r.subsistema == 0
+    assert r.codigo_usina == 86
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
     assert r.lag == 2
     r.lag = 0
     assert r.lag == 0
@@ -105,21 +105,21 @@ def test_registro_gl_dadgnl():
             r.read(fp)
 
     assert r.data == [86, 1, 1, 0.0, 48, 0.0, 32, 0.0, 88, "29052021"]
-    assert r.codigo == 86
-    r.codigo = 0
-    assert r.codigo == 0
-    assert r.subsistema == 1
-    r.subsistema = 0
-    assert r.subsistema == 0
+    assert r.codigo_usina == 86
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.geracoes == [0.0, 0.0, 0.0]
-    r.geracoes = [1.0, 1.0, 1.0]
-    assert r.geracoes == [1.0, 1.0, 1.0]
-    assert r.duracoes == [48, 32, 88]
-    r.duracoes = [0, 0, 0]
-    assert r.duracoes == [0, 0, 0]
+    assert r.geracao == [0.0, 0.0, 0.0]
+    r.geracao = [1.0, 1.0, 1.0]
+    assert r.geracao == [1.0, 1.0, 1.0]
+    assert r.duracao == [48, 32, 88]
+    r.duracao = [0, 0, 0]
+    assert r.duracao == [0, 0, 0]
     assert r.data_inicio == "29052021"
     r.data_inicio = ""
     assert r.data_inicio == ""
@@ -143,6 +143,7 @@ def test_campos_encontrados_dadgnl():
     assert d.gs(1) is not None
     assert d.nl(86) is not None
     assert d.gl(86, 1) is not None
+    assert len(d.gl(df=True).columns) == 10
 
 
 def test_eq_dadgnl():

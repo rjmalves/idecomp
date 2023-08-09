@@ -27,9 +27,9 @@ print(len(termicas_semana1))
 import plotly.express as px
 import pandas as pd
 
-gtmin_pat1 = [t.inflexibilidades[0] for t in termicas_semana1]
-gtmax_pat1 = [t.disponibilidades[0] for t in termicas_semana1]
-cvus_pat1 = [t.cvus[0] for t in termicas_semana1]
+gtmin_pat1 = [t.inflexibilidade[0] for t in termicas_semana1]
+gtmax_pat1 = [t.disponibilidade[0] for t in termicas_semana1]
+cvus_pat1 = [t.cvu[0] for t in termicas_semana1]
 df = pd.DataFrame(data={"cvu": cvus_pat1, "gt": gtmax_pat1})
 df.sort_values("cvu", inplace=True)
 df["gt"] = df["gt"].cumsum()
