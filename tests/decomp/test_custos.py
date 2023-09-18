@@ -32,7 +32,6 @@ def test_atributos_encontrados_custos():
         rel = Custos.read("./tests/mocks/arquivos/custos.py")
         assert rel.relatorio_variaveis_duais is not None
         assert rel.relatorio_fcf is not None
-        print(rel.relatorio_fcf)
 
 
 def test_atributos_nao_encontrados_relato():

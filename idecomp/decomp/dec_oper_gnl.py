@@ -1,5 +1,5 @@
 from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.dec_oper_gnl import TabelaOperGnl
+from idecomp.decomp.modelos.dec_oper_gnl import TabelaOperGnl, TabelaOperGnlv31
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from typing import Optional
@@ -17,6 +17,10 @@ class DecOperGnl(ArquivoCSV):
     """
 
     BLOCKS = [VersaoModelo, TabelaOperGnl]
+    VERSIONS = {
+        "31.0.2": [VersaoModelo, TabelaOperGnlv31],
+        "31.1.2": [VersaoModelo, TabelaOperGnl],
+    }
 
     @classmethod
     def le_arquivo(

@@ -1,5 +1,5 @@
 from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.dec_oper_ree import TabelaOperRee
+from idecomp.decomp.modelos.dec_oper_ree import TabelaOperRee, TabelaOperReev31
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from typing import Optional
@@ -16,6 +16,10 @@ class DecOperRee(ArquivoCSV):
     """
 
     BLOCKS = [VersaoModelo, TabelaOperRee]
+    VERSIONS = {
+        "31.0.2": [VersaoModelo, TabelaOperReev31],
+        "31.1.2": [VersaoModelo, TabelaOperRee],
+    }
 
     @classmethod
     def le_arquivo(
