@@ -657,11 +657,7 @@ class Relato(BlockFile):
         )
         if isinstance(b, BlocoENAPreEstudoSemanalSubsistemaRelato):
             df: pd.DataFrame = b.data.copy()
-            df.drop(
-                columns=["nome_submercado", "energia_armazenada_maxima"],
-                inplace=True,
-            )
-            return df
+            return df[["nome_submercado", "energia_armazenada_maxima"]]
         return None
 
     @property

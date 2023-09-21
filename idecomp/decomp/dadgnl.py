@@ -52,7 +52,7 @@ class DadGNL(RegisterFile):
         self.write(join(diretorio, nome_arquivo))
 
     def __expande_colunas_df(self, df: pd.DataFrame) -> pd.DataFrame:
-        colunas_com_listas = df.applymap(
+        colunas_com_listas = df.map(
             lambda linha: isinstance(linha, list)
         ).all()
         nomes_colunas = [
