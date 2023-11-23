@@ -112,42 +112,27 @@ class SecaoVazoesPostos(Section):
     def __le_quinto_registro(self, file: IO):
         for _ in range(self.numero_semanas_completas):
             dados_cenarios = np.frombuffer(
-                file.read(
-                    SecaoVazoesPostos.TAMANHO_REGISTRO
-                    * self.__numero_blocos_cenarios()
-                    * 4
-                ),
+                file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
                 dtype=np.int32,
-                count=SecaoVazoesPostos.TAMANHO_REGISTRO
-                * self.__numero_blocos_cenarios(),
+                count=SecaoVazoesPostos.TAMANHO_REGISTRO,
             )
             self.data["previsoes"] += list(dados_cenarios)
 
     def __le_sexto_registro(self, file: IO):
         for _ in range(self.numero_cenarios_estocasticos):
             dados_cenarios = np.frombuffer(
-                file.read(
-                    SecaoVazoesPostos.TAMANHO_REGISTRO
-                    * self.__numero_blocos_cenarios()
-                    * 4
-                ),
+                file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
                 dtype=np.int32,
-                count=SecaoVazoesPostos.TAMANHO_REGISTRO
-                * self.__numero_blocos_cenarios(),
+                count=SecaoVazoesPostos.TAMANHO_REGISTRO,
             )
             self.data["cenarios_gerados"] += list(dados_cenarios)
 
     def __le_setimo_registro(self, file: IO):
         for _ in range(self.numero_semanas_completas):
             dados_cenarios = np.frombuffer(
-                file.read(
-                    SecaoVazoesPostos.TAMANHO_REGISTRO
-                    * self.__numero_blocos_cenarios()
-                    * 4
-                ),
+                file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
                 dtype=np.int32,
-                count=SecaoVazoesPostos.TAMANHO_REGISTRO
-                * self.__numero_blocos_cenarios(),
+                count=SecaoVazoesPostos.TAMANHO_REGISTRO,
             )
             self.data["previsoes_com_postos_artificiais"] += list(
                 dados_cenarios
@@ -156,14 +141,9 @@ class SecaoVazoesPostos(Section):
     def __le_oitavo_registro(self, file: IO):
         for _ in range(self.numero_cenarios_estocasticos):
             dados_cenarios = np.frombuffer(
-                file.read(
-                    SecaoVazoesPostos.TAMANHO_REGISTRO
-                    * self.__numero_blocos_cenarios()
-                    * 4
-                ),
+                file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
                 dtype=np.int32,
-                count=SecaoVazoesPostos.TAMANHO_REGISTRO
-                * self.__numero_blocos_cenarios(),
+                count=SecaoVazoesPostos.TAMANHO_REGISTRO,
             )
             self.data["cenarios_calculados_com_postos_artificiais"] += list(
                 dados_cenarios
@@ -172,28 +152,18 @@ class SecaoVazoesPostos(Section):
     def __le_nono_registro(self, file: IO):
         for _ in range(self.numero_meses_observados):
             dados_cenarios = np.frombuffer(
-                file.read(
-                    SecaoVazoesPostos.TAMANHO_REGISTRO
-                    * self.__numero_blocos_cenarios()
-                    * 4
-                ),
+                file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
                 dtype=np.int32,
-                count=SecaoVazoesPostos.TAMANHO_REGISTRO
-                * self.__numero_blocos_cenarios(),
+                count=SecaoVazoesPostos.TAMANHO_REGISTRO,
             )
             self.data["observacoes_mensais"] += list(dados_cenarios)
 
     def __le_decimo_registro(self, file: IO):
         for _ in range(self.numero_semanas_observadas):
             dados_cenarios = np.frombuffer(
-                file.read(
-                    SecaoVazoesPostos.TAMANHO_REGISTRO
-                    * self.__numero_blocos_cenarios()
-                    * 4
-                ),
+                file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
                 dtype=np.int32,
-                count=SecaoVazoesPostos.TAMANHO_REGISTRO
-                * self.__numero_blocos_cenarios(),
+                count=SecaoVazoesPostos.TAMANHO_REGISTRO,
             )
             self.data["observacoes_semanais"] += list(dados_cenarios)
 
