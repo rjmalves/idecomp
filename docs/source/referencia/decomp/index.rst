@@ -26,6 +26,7 @@ DECOMP
    arquivos/fcfnw
    arquivos/hidr
    arquivos/inviabunic
+   arquivos/polinjus
    arquivos/postos
    arquivos/relato
    arquivos/relgnl
