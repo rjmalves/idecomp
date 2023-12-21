@@ -9,7 +9,7 @@ from os.path import join
 import warnings
 
 
-class DadGNL(RegisterFile):
+class Dadgnl(RegisterFile):
     """
     Armazena os dados de entrada gerais do DECOMP.
 
@@ -34,7 +34,7 @@ class DadGNL(RegisterFile):
         super().__init__(data)
 
     @classmethod
-    def le_arquivo(cls, diretorio: str, nome_arquivo="dadgnl.rv0") -> "DadGNL":
+    def le_arquivo(cls, diretorio: str, nome_arquivo="dadgnl.rv0") -> "Dadgnl":
         msg = (
             "O método le_arquivo(diretorio, nome_arquivo) será descontinuado"
             + " na versão 1.0.0 - use o método read(caminho_arquivo)"
@@ -52,7 +52,7 @@ class DadGNL(RegisterFile):
         self.write(join(diretorio, nome_arquivo))
 
     def __expande_colunas_df(self, df: pd.DataFrame) -> pd.DataFrame:
-        colunas_com_listas = df.applymap(
+        colunas_com_listas = df.map(
             lambda linha: isinstance(linha, list)
         ).all()
         nomes_colunas = [
@@ -88,7 +88,7 @@ class DadGNL(RegisterFile):
     ) -> Optional[Union[TG, List[TG], pd.DataFrame]]:
         """
         Obtém um registro que define uma usina termelétrica existente
-        no estudo descrito pelo :class:`DadGNL`.
+        no estudo descrito pelo :class:`Dadgnl`.
 
         :param codigo_usina: código que especifica o registro
             da UTE
@@ -125,7 +125,7 @@ class DadGNL(RegisterFile):
     ) -> Optional[Union[GS, List[GS], pd.DataFrame]]:
         """
         Obtém um registro que define o número de semanas em cada
-        mês de estudo no :class:`DadGNL`.
+        mês de estudo no :class:`Dadgnl`.
 
         :param mes: índice do mês no estudo
         :type mes: int | None

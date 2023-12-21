@@ -9,7 +9,7 @@ from os.path import join
 import warnings
 
 
-class DecompTim(BlockFile):
+class Decomptim(BlockFile):
     """
     Armazena os dados de saída do DECOMP referentes ao
     tempo de execução das etapas do programa.
@@ -31,7 +31,7 @@ class DecompTim(BlockFile):
     @classmethod
     def le_arquivo(
         cls, diretorio: str, nome_arquivo="decomp.tim"
-    ) -> "DecompTim":
+    ) -> "Decomptim":
         msg = (
             "O método le_arquivo(diretorio, nome_arquivo) será descontinuado"
             + " na versão 1.0.0 - use o método read(caminho_arquivo)"
@@ -43,7 +43,7 @@ class DecompTim(BlockFile):
     def tempos_etapas(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela dos tempos de execução do DECOMP existente no
-        :class:`DecompTim`
+        :class:`Decomptim`
 
         - etapa (`str`)
         - tempo (`timedelta`)

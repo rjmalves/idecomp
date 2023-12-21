@@ -13,7 +13,7 @@ import pandas as pd  # type: ignore
 from typing import IO, List
 
 
-class BlocoDadosUsinasRelGNL(Block):
+class BlocoDadosUsinasRelgnl(Block):
     """
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
@@ -43,9 +43,9 @@ class BlocoDadosUsinasRelGNL(Block):
         )
 
     def __eq__(self, o: object) -> bool:
-        if not isinstance(o, BlocoDadosUsinasRelGNL):
+        if not isinstance(o, BlocoDadosUsinasRelgnl):
             return False
-        bloco: BlocoDadosUsinasRelGNL = o
+        bloco: BlocoDadosUsinasRelgnl = o
         if not all(
             [
                 isinstance(self.data, pd.DataFrame),
@@ -119,7 +119,7 @@ class BlocoDadosUsinasRelGNL(Block):
             i += 1
 
 
-class BlocoComandosUsinasAjustesTGRelGNL(Block):
+class BlocoComandosUsinasAjustesTGRelgnl(Block):
     """
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
@@ -129,9 +129,9 @@ class BlocoComandosUsinasAjustesTGRelGNL(Block):
     END_PATTERN = ""
 
     def __eq__(self, o: object) -> bool:
-        if not isinstance(o, BlocoComandosUsinasAjustesTGRelGNL):
+        if not isinstance(o, BlocoComandosUsinasAjustesTGRelgnl):
             return False
-        bloco: BlocoComandosUsinasAjustesTGRelGNL = o
+        bloco: BlocoComandosUsinasAjustesTGRelgnl = o
         if not all(
             [
                 isinstance(self.data, pd.DataFrame),
@@ -205,7 +205,7 @@ class BlocoComandosUsinasAjustesTGRelGNL(Block):
             i += 1
 
 
-class BlocoComandosUsinasAjustesRERelGNL(Block):
+class BlocoComandosUsinasAjustesRERelgnl(Block):
     """
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
@@ -215,9 +215,9 @@ class BlocoComandosUsinasAjustesRERelGNL(Block):
     END_PATTERN = ""
 
     def __eq__(self, o: object) -> bool:
-        if not isinstance(o, BlocoComandosUsinasAjustesRERelGNL):
+        if not isinstance(o, BlocoComandosUsinasAjustesRERelgnl):
             return False
-        bloco: BlocoComandosUsinasAjustesRERelGNL = o
+        bloco: BlocoComandosUsinasAjustesRERelgnl = o
         if not all(
             [
                 isinstance(self.data, pd.DataFrame),
@@ -292,7 +292,7 @@ class BlocoComandosUsinasAjustesRERelGNL(Block):
             i += 1
 
 
-class BlocoRelatorioOperacaoRelGNL(Block):
+class BlocoRelatorioOperacaoRelgnl(Block):
     """
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
@@ -324,9 +324,9 @@ class BlocoRelatorioOperacaoRelGNL(Block):
         )
 
     def __eq__(self, o: object) -> bool:
-        if not isinstance(o, BlocoRelatorioOperacaoRelGNL):
+        if not isinstance(o, BlocoRelatorioOperacaoRelgnl):
             return False
-        bloco: BlocoRelatorioOperacaoRelGNL = o
+        bloco: BlocoRelatorioOperacaoRelgnl = o
         if not all(
             [
                 isinstance(self.data, pd.DataFrame),

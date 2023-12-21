@@ -3,7 +3,7 @@
 from .arquivos import Arquivos  # noqa
 from .caso import Caso  # noqa
 from .dadger import Dadger  # noqa
-from .dadgnl import DadGNL  # noqa
+from .dadgnl import Dadgnl  # noqa
 from .dec_avl_evap import DecAvlEvap  # noqa
 from .dec_cortes_evap import DecCortesEvap  # noqa
 from .dec_eco_cotajus import DecEcoCotajus  # noqa
@@ -16,11 +16,11 @@ from .dec_oper_usie import DecOperUsie  # noqa
 from .dec_oper_usih import DecOperUsih  # noqa
 from .dec_oper_usit import DecOperUsit  # noqa
 from .custos import Custos  # noqa
-from .decomptim import DecompTim  # noqa
+from .decomptim import Decomptim  # noqa
 from .fcfnw import Fcfnw  # noqa
 from .hidr import Hidr  # noqa
 from .inviabunic import InviabUnic  # noqa
 from .postos import Postos  # noqa
 from .relato import Relato  # noqa
-from .relgnl import RelGNL  # noqa
+from .relgnl import Relgnl  # noqa
 from .vazoes import Vazoes  # noqa
