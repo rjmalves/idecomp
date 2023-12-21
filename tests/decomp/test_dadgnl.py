@@ -35,6 +35,12 @@ def test_registro_tg_dadgnl():
         0.0,
         350.0,
         204.96,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
     ]
     assert r.codigo_usina == 86
     r.codigo_usina = 0
