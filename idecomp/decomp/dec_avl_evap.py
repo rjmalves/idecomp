@@ -5,10 +5,6 @@ from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from typing import Optional
 import pandas as pd  # type: ignore
 
-# Para compatibilidade - até versão 1.0.0
-from os.path import join
-import warnings
-
 
 class DecAvlEvap(ArquivoCSV):
     """
@@ -16,17 +12,6 @@ class DecAvlEvap(ArquivoCSV):
     """
 
     BLOCKS = [VersaoModelo, TabelaAvlEvap]
-
-    @classmethod
-    def le_arquivo(
-        cls, diretorio: str, arquivo: str = "dec_avl_evap.csv"
-    ) -> "DecAvlEvap":
-        msg = (
-            "O método le_arquivo(diretorio, nome_arquivo) será descontinuado"
-            + " na versão 1.0.0 - use o método read(caminho_arquivo)"
-        )
-        warnings.warn(msg, category=FutureWarning)
-        return cls.read(join(diretorio, arquivo))
 
     @property
     def tabela(self) -> Optional[pd.DataFrame]:

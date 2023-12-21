@@ -619,7 +619,7 @@ class BlocoRelatorioOperacaoUTERelato(Block):
                 subsistemas.append(dados[0])
                 nomes_usinas.append(dados[1])
                 fpcgcs.append(dados[2])
-                tabela[i, :] = dados[3 : (3 + n_pats + 1)]
+                tabela[i, :] = dados[3: (3 + n_pats + 1)]
                 i += 1
 
 
