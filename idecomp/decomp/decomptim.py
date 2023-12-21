@@ -5,7 +5,7 @@ from typing import TypeVar, Optional
 import pandas as pd  # type: ignore
 
 
-class DecompTim(BlockFile):
+class Decomptim(BlockFile):
     """
     Armazena os dados de saída do DECOMP referentes ao
     tempo de execução das etapas do programa.
@@ -28,7 +28,7 @@ class DecompTim(BlockFile):
     def tempos_etapas(self) -> Optional[pd.DataFrame]:
         """
         Obtém a tabela dos tempos de execução do DECOMP existente no
-        :class:`DecompTim`
+        :class:`Decomptim`
 
         - etapa (`str`)
         - tempo (`timedelta`)

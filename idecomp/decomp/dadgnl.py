@@ -5,7 +5,7 @@ from typing import Type, List, Optional, TypeVar, Union
 import pandas as pd  # type: ignore
 
 
-class DadGNL(RegisterFile):
+class Dadgnl(RegisterFile):
     """
     Armazena os dados de entrada gerais do DECOMP.
 
@@ -63,7 +63,7 @@ class DadGNL(RegisterFile):
     ) -> Optional[Union[TG, List[TG], pd.DataFrame]]:
         """
         Obtém um registro que define uma usina termelétrica existente
-        no estudo descrito pelo :class:`DadGNL`.
+        no estudo descrito pelo :class:`Dadgnl`.
 
         :param codigo_usina: código que especifica o registro
             da UTE
@@ -100,7 +100,7 @@ class DadGNL(RegisterFile):
     ) -> Optional[Union[GS, List[GS], pd.DataFrame]]:
         """
         Obtém um registro que define o número de semanas em cada
-        mês de estudo no :class:`DadGNL`.
+        mês de estudo no :class:`Dadgnl`.
 
         :param mes: índice do mês no estudo
         :type mes: int | None

@@ -1,14 +1,14 @@
-from idecomp.decomp.modelos.relgnl import BlocoDadosUsinasRelGNL
-from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesTGRelGNL
-from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesRERelGNL
-from idecomp.decomp.modelos.relgnl import BlocoRelatorioOperacaoRelGNL
+from idecomp.decomp.modelos.relgnl import BlocoDadosUsinasRelgnl
+from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesTGRelgnl
+from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesRERelgnl
+from idecomp.decomp.modelos.relgnl import BlocoRelatorioOperacaoRelgnl
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
 from typing import Type, List, TypeVar, Optional
 import pandas as pd  # type: ignore
 
 
-class RelGNL(BlockFile):
+class Relgnl(BlockFile):
     """
     Armazena os dados de saída do DECOMP referentes às térmicas de
     despacho antecipado (GNL).
@@ -22,10 +22,10 @@ class RelGNL(BlockFile):
     T = TypeVar("T")
 
     BLOCKS = [
-        BlocoDadosUsinasRelGNL,
-        BlocoComandosUsinasAjustesTGRelGNL,
-        BlocoComandosUsinasAjustesRERelGNL,
-        BlocoRelatorioOperacaoRelGNL,
+        BlocoDadosUsinasRelgnl,
+        BlocoComandosUsinasAjustesTGRelgnl,
+        BlocoComandosUsinasAjustesRERelgnl,
+        BlocoRelatorioOperacaoRelgnl,
     ]
 
     def __init__(self, data=...) -> None:
@@ -82,8 +82,8 @@ class RelGNL(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.data.get_blocks_of_type(BlocoDadosUsinasRelGNL)
-        if isinstance(b, BlocoDadosUsinasRelGNL):
+        b = self.data.get_blocks_of_type(BlocoDadosUsinasRelgnl)
+        if isinstance(b, BlocoDadosUsinasRelgnl):
             return b.data
         return None
 
@@ -105,8 +105,8 @@ class RelGNL(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.data.get_blocks_of_type(BlocoComandosUsinasAjustesTGRelGNL)
-        if isinstance(b, BlocoComandosUsinasAjustesTGRelGNL):
+        b = self.data.get_blocks_of_type(BlocoComandosUsinasAjustesTGRelgnl)
+        if isinstance(b, BlocoComandosUsinasAjustesTGRelgnl):
             return b.data
         return None
 
@@ -128,8 +128,8 @@ class RelGNL(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.data.get_blocks_of_type(BlocoComandosUsinasAjustesRERelGNL)
-        if isinstance(b, BlocoComandosUsinasAjustesRERelGNL):
+        b = self.data.get_blocks_of_type(BlocoComandosUsinasAjustesRERelgnl)
+        if isinstance(b, BlocoComandosUsinasAjustesRERelgnl):
             return b.data
         return None
 
@@ -161,6 +161,6 @@ class RelGNL(BlockFile):
 
         if self.__relatorio_operacao_gnl is None:
             self.__relatorio_operacao_gnl = self.__concatena_blocos(
-                BlocoRelatorioOperacaoRelGNL
+                BlocoRelatorioOperacaoRelgnl
             )
         return self.__relatorio_operacao_gnl

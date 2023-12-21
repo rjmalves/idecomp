@@ -1,12 +1,12 @@
 # Rotinas de testes associadas ao arquivo relgnl.rvx do DECOMP
 from idecomp.decomp.modelos.relgnl import (
-    BlocoDadosUsinasRelGNL,
-    BlocoComandosUsinasAjustesTGRelGNL,
-    BlocoComandosUsinasAjustesRERelGNL,
-    BlocoRelatorioOperacaoRelGNL,
+    BlocoDadosUsinasRelgnl,
+    BlocoComandosUsinasAjustesTGRelgnl,
+    BlocoComandosUsinasAjustesRERelgnl,
+    BlocoRelatorioOperacaoRelgnl,
 )
 
-from idecomp.decomp.relgnl import RelGNL
+from idecomp.decomp.relgnl import Relgnl
 
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
@@ -22,7 +22,7 @@ from tests.mocks.arquivos.relgnl import (
 
 def test_bloco_dados_termicas_relgnl():
     m: MagicMock = mock_open(read_data="".join(MockDadosTermicasGNL))
-    b = BlocoDadosUsinasRelGNL()
+    b = BlocoDadosUsinasRelgnl()
     with patch("builtins.open", m):
         with open("", "") as fp:
             b.read(fp)
@@ -46,7 +46,7 @@ def test_bloco_dados_termicas_relgnl():
 
 def test_bloco_possiveis_ajustes_relgnl():
     m: MagicMock = mock_open(read_data="".join(MockPossiveisAjustesRelGNL))
-    b = BlocoComandosUsinasAjustesTGRelGNL()
+    b = BlocoComandosUsinasAjustesTGRelgnl()
     with patch("builtins.open", m):
         with open("", "") as fp:
             b.read(fp)
@@ -64,7 +64,7 @@ def test_bloco_possiveis_ajustes_relgnl():
 
 def test_bloco_possiveis_ajustes_re_relgnl():
     m: MagicMock = mock_open(read_data="".join(MockPossiveisAjustesRERelGNL))
-    b = BlocoComandosUsinasAjustesRERelGNL()
+    b = BlocoComandosUsinasAjustesRERelgnl()
     with patch("builtins.open", m):
         with open("", "") as fp:
             b.read(fp)
@@ -82,7 +82,7 @@ def test_bloco_possiveis_ajustes_re_relgnl():
 
 def test_bloco_relatorio_operacao_relgnl():
     m: MagicMock = mock_open(read_data="".join(MockRelatorioOperacao))
-    b = BlocoRelatorioOperacaoRelGNL()
+    b = BlocoRelatorioOperacaoRelgnl()
     with patch("builtins.open", m):
         with open("", "") as fp:
             b.read(fp)
@@ -109,7 +109,7 @@ def test_bloco_relatorio_operacao_relgnl():
 def test_atributos_encontrados_relgnl():
     m: MagicMock = mock_open(read_data="".join(MockRelGNL))
     with patch("builtins.open", m):
-        rel = RelGNL.read("./tests/mocks/arquivos/relgnl.py")
+        rel = Relgnl.read("./tests/mocks/arquivos/relgnl.py")
         assert rel.usinas_termicas is not None
         assert rel.comandos_usinas_registros_tg is not None
         assert rel.comandos_usinas_restricoes_eletricas is not None
@@ -119,7 +119,7 @@ def test_atributos_encontrados_relgnl():
 def test_atributos_nao_encontrados_relgnl():
     m: MagicMock = mock_open(read_data="".join(""))
     with patch("builtins.open", m):
-        rel = RelGNL.read("./tests/mocks/arquivos/relgnl.py")
+        rel = Relgnl.read("./tests/mocks/arquivos/relgnl.py")
         assert rel.usinas_termicas is None
         assert rel.comandos_usinas_registros_tg is None
         assert rel.comandos_usinas_restricoes_eletricas is None

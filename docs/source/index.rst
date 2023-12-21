@@ -28,5 +28,6 @@ Interface de Programação para o DECOMP
    :maxdepth: 2
 
    referencia/decomp/index.rst
+   referencia/libs/index.rst
 
 :ref:`genindex`

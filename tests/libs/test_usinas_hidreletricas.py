@@ -1,5 +1,5 @@
-from idecomp.decomp.polinjus import Polinjus
-from idecomp.decomp.polinjus import (
+from idecomp.libs.usinas_hidreletricas import UsinasHidreletricas
+from idecomp.libs.modelos.usinas_hidreletricas import (
     HidreletricaCurvaJusante,
     HidreletricaCurvaJusantePolinomioPorPartes,
     HidreletricaCurvaJusantePolinomioPorPartesSegmento,
@@ -7,7 +7,6 @@ from idecomp.decomp.polinjus import (
     HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
 )
 import pandas as pd  # type: ignore
-from datetime import datetime
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
@@ -26,7 +25,7 @@ ARQ_TESTE = "./tests/__init__.py"
 def test_atributos_encontrados_polinjus():
     m: MagicMock = mock_open(read_data="".join(MockPolinjus))
     with patch("builtins.open", m):
-        polinjus = Polinjus.read(ARQ_TESTE)
+        polinjus = UsinasHidreletricas.read(ARQ_TESTE)
         assert polinjus.hidreletrica_curvajusante() is not None
         assert polinjus.hidreletrica_curvajusante_polinomio() is not None
         assert (
@@ -45,7 +44,7 @@ def test_atributos_encontrados_polinjus():
 def test_df_polinjus_hidreletrica_curvajusante():
     m: MagicMock = mock_open(read_data="".join(MockPolinjus))
     with patch("builtins.open", m):
-        polinjus = Polinjus.read(ARQ_TESTE)
+        polinjus = UsinasHidreletricas.read(ARQ_TESTE)
         df_curvajusante = polinjus.hidreletrica_curvajusante(df=True)
         assert df_curvajusante.at[2, "codigo_usina"] == 1
         assert df_curvajusante.at[2, "indice_familia"] == 3
@@ -74,7 +73,7 @@ def test_registro_polinjus_hidreletrica_curvajusante():
 def test_df_polinjus_hidreletrica_curvajusante_polinomio():
     m: MagicMock = mock_open(read_data="".join(MockPolinjus))
     with patch("builtins.open", m):
-        polinjus = Polinjus.read(ARQ_TESTE)
+        polinjus = UsinasHidreletricas.read(ARQ_TESTE)
         df_curvajusante_polinomio = (
             polinjus.hidreletrica_curvajusante_polinomio(df=True)
         )
@@ -107,7 +106,7 @@ def test_registro_polinjus_hidreletrica_curvajusante_polinomio():
 def test_df_polinjus_hidreletrica_curvajusante_polinomio_segmento():
     m: MagicMock = mock_open(read_data="".join(MockPolinjus))
     with patch("builtins.open", m):
-        polinjus = Polinjus.read(ARQ_TESTE)
+        polinjus = UsinasHidreletricas.read(ARQ_TESTE)
         df_curvajusante_polinomio_segmento = (
             polinjus.hidreletrica_curvajusante_polinomio_segmento(df=True)
         )
@@ -206,7 +205,7 @@ def test_registro_polinjus_hidreletrica_curvajusante_polinomio_segmento():
 def test_df_polinjus_hidreletrica_curvajusante_afogamentoexplicito_usina():
     m: MagicMock = mock_open(read_data="".join(MockPolinjus))
     with patch("builtins.open", m):
-        polinjus = Polinjus.read(ARQ_TESTE)
+        polinjus = UsinasHidreletricas.read(ARQ_TESTE)
         df_curvajusante_afogamentoexplicito_usina = (
             polinjus.hidreletrica_curvajusante_afogamentoexplicito_usina(
                 df=True
@@ -262,16 +261,16 @@ def test_registro_polinjus_hidreletrica_curvajusante_afogamentoexplicito_padrao(
 def test_eq_polinjus():
     m: MagicMock = mock_open(read_data="".join(MockPolinjus))
     with patch("builtins.open", m):
-        log1 = Polinjus.read(ARQ_TESTE)
-        log2 = Polinjus.read(ARQ_TESTE)
+        log1 = UsinasHidreletricas.read(ARQ_TESTE)
+        log2 = UsinasHidreletricas.read(ARQ_TESTE)
         assert log1 == log2
 
 
 def test_neq_polinjus():
     m: MagicMock = mock_open(read_data="".join(MockPolinjus))
     with patch("builtins.open", m):
-        log1 = Polinjus.read(ARQ_TESTE)
-        log2 = Polinjus.read(ARQ_TESTE)
+        log1 = UsinasHidreletricas.read(ARQ_TESTE)
+        log2 = UsinasHidreletricas.read(ARQ_TESTE)
         log1.hidreletrica_curvajusante_polinomio_segmento()[
             0
         ].codigo_usina = -1
