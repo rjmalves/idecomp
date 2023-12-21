@@ -91,10 +91,6 @@ from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 from typing import Type, List, Optional, TypeVar, Any, Union
 
-# Para compatibilidade - até versão 1.0.0
-from os.path import join
-import warnings
-
 
 class Dadger(RegisterFile):
     """
@@ -104,9 +100,6 @@ class Dadger(RegisterFile):
     DECOMP no `dadger.rvx`. Possui métodos para acessar individualmente
     cada registro, editá-lo e também cria alguns novos registros.
 
-    É possível ler as informações existentes em arquivos a partir do
-    método `le_arquivo()` e escreve um novo arquivo a partir do método
-    `escreve_arquivo()`.
 
     """
 
@@ -222,24 +215,6 @@ class Dadger(RegisterFile):
 
     def __init__(self, data=...) -> None:
         super().__init__(data)
-
-    @classmethod
-    def le_arquivo(cls, diretorio: str, nome_arquivo="dadger.rv0") -> "Dadger":
-        msg = (
-            "O método le_arquivo(diretorio, nome_arquivo) será descontinuado"
-            + " na versão 1.0.0 - use o método read(caminho_arquivo)"
-        )
-        warnings.warn(msg, category=FutureWarning)
-        return cls.read(join(diretorio, nome_arquivo))
-
-    def escreve_arquivo(self, diretorio: str, nome_arquivo="dadger.rv0"):
-        msg = (
-            "O método escreve_arquivo(diretorio, nome_arquivo) será"
-            + " descontinuado na versão 1.0.0 -"
-            + " use o método write(caminho_arquivo)"
-        )
-        warnings.warn(msg, category=FutureWarning)
-        self.write(join(diretorio, nome_arquivo))
 
     def __expande_colunas_df(self, df: pandas.DataFrame) -> pandas.DataFrame:
         colunas_com_listas = df.applymap(
