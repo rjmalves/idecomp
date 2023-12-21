@@ -2,7 +2,7 @@ from typing import Type, TypeVar, Optional, List, Union
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 import pandas as pd  # type: ignore
-from idecomp.decomp.modelos.polinjus import (
+from idecomp.libs.modelos.usinas_hidreletricas import (
     HidreletricaCurvaJusante,
     HidreletricaCurvaJusantePolinomioPorPartes,
     HidreletricaCurvaJusantePolinomioPorPartesSegmento,
@@ -10,113 +10,31 @@ from idecomp.decomp.modelos.polinjus import (
     HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
 )
 
-# Para compatibilidade - até versão 1.0.0
-from os.path import join
-import warnings
 
+class UsinasHidreletricas(RegisterFile):
+    """
+    Armazena os dados de entrada do DECOMP referentes aos dados
+    das usinas hidrelétricas do problema.
+    """
 
-class Polinjus(RegisterFile):
-    """ """
-
-    T = TypeVar("T")
+    T = TypeVar("T", bound=Register)
 
     REGISTERS = [
-        HidreletricaCurvaJusantePolinomioPorPartesSegmento,
-        HidreletricaCurvaJusantePolinomioPorPartes,
         HidreletricaCurvaJusanteAfogamentoExplicitoUsina,
         HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
+        HidreletricaCurvaJusantePolinomioPorPartesSegmento,
+        HidreletricaCurvaJusantePolinomioPorPartes,
         HidreletricaCurvaJusante,
     ]
 
-    @classmethod
-    def le_arquivo(
-        cls, diretorio: str, nome_arquivo="polinjus.csv"
-    ) -> "Polinjus":
-        msg = (
-            "O método le_arquivo(diretorio, nome_arquivo) será descontinuado"
-            + " na versão 1.0.0 - use o método read(caminho_arquivo)"
-        )
-        warnings.warn(msg, category=FutureWarning)
-        return cls.read(join(diretorio, nome_arquivo))
-
-    def escreve_arquivo(self, diretorio: str, nome_arquivo="polinjus.csv"):
-        msg = (
-            "O método escreve_arquivo(diretorio, nome_arquivo) será"
-            + " descontinuado na versão 1.0.0 -"
-            + " use o método write(caminho_arquivo)"
-        )
-        warnings.warn(msg, category=FutureWarning)
-        self.write(join(diretorio, nome_arquivo))
-
-    def __registros_por_tipo(self, registro: Type[T]) -> List[T]:
-        """
-        Obtém os registro de um tipo, se houver algum no arquivo.
-
-        :param registro: Um tipo de registro para ser lido
-        :type registro: T
-        :param indice: O índice do bloco a ser acessado, dentre os do tipo
-        :type indice: int
-
-        """
-        return [b for b in self.data.of_type(registro)]
-
-    def __obtem_registros(self, tipo: Type[T]) -> List[T]:
-        return self.__registros_por_tipo(tipo)
-
-    def __obtem_registros_com_filtros(
-        self, tipo_registro: Type[T], **kwargs
-    ) -> Optional[Union[T, List[T]]]:
-        def __atende(r) -> bool:
-            condicoes: List[bool] = []
-            for k, v in kwargs.items():
-                if v is not None:
-                    condicoes.append(getattr(r, k) == v)
-            return all(condicoes)
-
-        regs_filtro = [
-            r for r in self.__obtem_registros(tipo_registro) if __atende(r)
-        ]
-        if len(regs_filtro) == 0:
-            return None
-        elif len(regs_filtro) == 1:
-            return regs_filtro[0]
+    def __registros_ou_df(
+        self, t: Type[T], **kwargs
+    ) -> Optional[Union[T, List[T], pd.DataFrame]]:
+        if kwargs.get("df"):
+            return self._as_df(t)
         else:
-            return regs_filtro
-
-    def cria_registro(self, anterior: Register, registro: Register):
-        """
-        Adiciona um registro ao arquivo após um outro registro previamente
-        existente.
-
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        self.data.add_after(anterior, registro)
-
-    def deleta_registro(self, registro: Register):
-        """
-        Remove um registro existente no arquivo.
-
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        self.data.remove(registro)
-
-    def append_registro(self, registro: Register):
-        """
-        Adiciona um registro ao arquivo na última posição.
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        self.data.append(registro)
-
-    def preppend_registro(self, registro: Register):
-        """
-        Adiciona um registro ao arquivo na primeira posição.
-        Este método existe para retrocompatibilidade e deve ser substituído
-        quando for suportado na classe :class:`RegisterFile`.
-        """
-        self.data.preppend(registro)
+            kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
+            return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
     def hidreletrica_curvajusante(
         self,
@@ -151,15 +69,13 @@ class Polinjus(RegisterFile):
         :rtype: `HidreletricaCurvaJusante` |
             List[`HidreletricaCurvaJusante`] | `None` | `DataFrame`
         """
-        if df:
-            return self._as_df(HidreletricaCurvaJusante)
-        else:
-            return self.__obtem_registros_com_filtros(
-                HidreletricaCurvaJusante,
-                codigo_usina=codigo_usina,
-                indice_familia=indice_familia,
-                nivel_montante_referencia=nivel_montante_referencia,
-            )
+        return self.__registros_ou_df(
+            HidreletricaCurvaJusante,
+            codigo_usina=codigo_usina,
+            indice_familia=indice_familia,
+            nivel_montante_referencia=nivel_montante_referencia,
+            df=df,
+        )
 
     def hidreletrica_curvajusante_polinomio(
         self,
@@ -193,15 +109,13 @@ class Polinjus(RegisterFile):
         :rtype: `HidreletricaCurvaJusantePolinomioPorPartes` |
             List[`HidreletricaCurvaJusantePolinomioPorPartes`] | `None` | `DataFrame`
         """
-        if df:
-            return self._as_df(HidreletricaCurvaJusantePolinomioPorPartes)
-        else:
-            return self.__obtem_registros_com_filtros(
-                HidreletricaCurvaJusantePolinomioPorPartes,
-                codigo_usina=codigo_usina,
-                indice_familia=indice_familia,
-                numero_polinomios=numero_polinomios,
-            )
+        return self.__registros_ou_df(
+            HidreletricaCurvaJusantePolinomioPorPartes,
+            codigo_usina=codigo_usina,
+            indice_familia=indice_familia,
+            numero_polinomios=numero_polinomios,
+            df=df,
+        )
 
     def hidreletrica_curvajusante_polinomio_segmento(
         self,
@@ -259,24 +173,20 @@ class Polinjus(RegisterFile):
             list[:class:`HidreletricaCurvaJusantePolinomioPorPartesSegmento`] |
             None
         """
-        if df:
-            return self._as_df(
-                HidreletricaCurvaJusantePolinomioPorPartesSegmento
-            )
-        else:
-            return self.__obtem_registros_com_filtros(
-                HidreletricaCurvaJusantePolinomioPorPartesSegmento,
-                codigo_usina=codigo_usina,
-                indice_familia=indice_familia,
-                indice_polinomio=indice_polinomio,
-                limite_inferior_vazao_jusante=limite_inferior_vazao_jusante,
-                limite_superior_vazao_jusante=limite_superior_vazao_jusante,
-                coeficiente_a0=coeficiente_a0,
-                coeficiente_a1=coeficiente_a1,
-                coeficiente_a2=coeficiente_a2,
-                coeficiente_a3=coeficiente_a3,
-                coeficiente_a4=coeficiente_a4,
-            )
+        return self.__registros_ou_df(
+            HidreletricaCurvaJusantePolinomioPorPartesSegmento,
+            codigo_usina=codigo_usina,
+            indice_familia=indice_familia,
+            indice_polinomio=indice_polinomio,
+            limite_inferior_vazao_jusante=limite_inferior_vazao_jusante,
+            limite_superior_vazao_jusante=limite_superior_vazao_jusante,
+            coeficiente_a0=coeficiente_a0,
+            coeficiente_a1=coeficiente_a1,
+            coeficiente_a2=coeficiente_a2,
+            coeficiente_a3=coeficiente_a3,
+            coeficiente_a4=coeficiente_a4,
+            df=df,
+        )
 
     def hidreletrica_curvajusante_afogamentoexplicito_usina(
         self,
@@ -305,24 +215,20 @@ class Polinjus(RegisterFile):
         :rtype: `HidreletricaCurvaJusante` |
             List[`HidreletricaCurvaJusante`] | `None` | `DataFrame`
         """
-        if df:
-            return self._as_df(
-                HidreletricaCurvaJusanteAfogamentoExplicitoUsina
-            )
-        else:
-            return self.__obtem_registros_com_filtros(
-                HidreletricaCurvaJusanteAfogamentoExplicitoUsina,
-                codigo_usina=codigo_usina,
-                considera_afogamento=considera_afogamento,
-            )
+        return self.__registros_ou_df(
+            HidreletricaCurvaJusanteAfogamentoExplicitoUsina,
+            codigo_usina=codigo_usina,
+            considera_afogamento=considera_afogamento,
+            df=df,
+        )
 
     def hidreletrica_curvajusante_afogamentoexplicito_padrao(
-        self,
-        considera_afogamento: Optional[str] = None,
+        self, considera_afogamento: Optional[str] = None, df: bool = False
     ) -> Optional[
         Union[
             HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
             List[HidreletricaCurvaJusanteAfogamentoExplicitoPadrao],
+            pd.DataFrame,
         ]
     ]:
         """
@@ -332,7 +238,8 @@ class Polinjus(RegisterFile):
         :param considera_afogamento: habilitação do afogamento
         :type considera_afogamento: str | None
         """
-        return self.__obtem_registros_com_filtros(
+        return self.__registros_ou_df(
             HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
             considera_afogamento=considera_afogamento,
+            df=df,
         )
