@@ -239,6 +239,12 @@ def test_registro_ct_dadger():
         1350.0,
         1350.0,
         20.12,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
     ]
     assert r.codigo_usina == 13
     r.codigo_usina = 0
@@ -297,7 +303,21 @@ def test_registro_dp_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [1, 1, 3, 45078.0, 32.0, 41680.0, 41.0, 33894.0, 95.0]
+    assert r.data == [
+        1,
+        1,
+        3,
+        45078.0,
+        32.0,
+        41680.0,
+        41.0,
+        33894.0,
+        95.0,
+        None,
+        None,
+        None,
+        None,
+    ]
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
@@ -322,7 +342,7 @@ def test_registro_pq_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == ["SECO_PCH", 1, 1, 2527, 2553, 2503]
+    assert r.data == ["SECO_PCH", 1, 1, 2527, 2553, 2503, None, None]
     assert r.nome == "SECO_PCH"
     r.nome = "TESTE"
     assert r.nome == "TESTE"
@@ -355,6 +375,10 @@ def test_registro_cd_dadger():
         5249.34,
         100,
         5249.34,
+        None,
+        None,
+        None,
+        None,
     ]
     assert r.codigo_curva == 1
     r.codigo_curva = 0
@@ -402,6 +426,16 @@ def test_registro_ri_dadger():
         3474,
         7000,
         1574,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
     ]
 
 
@@ -412,7 +446,22 @@ def test_registro_ia_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [1, "NE", "FC", None, 4200, 5500, 4200, 5500, 4200, 5500]
+    assert r.data == [
+        1,
+        "NE",
+        "FC",
+        None,
+        4200,
+        5500,
+        4200,
+        5500,
+        4200,
+        5500,
+        None,
+        None,
+        None,
+        None,
+    ]
 
 
 def test_registro_tx_dadger():
@@ -620,19 +669,19 @@ def test_registro_lu_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [21, 1, 50, 212, 50, 212, 50, 212]
+    assert r.data == [21, 1, 50, 212, 50, 212, 50, 212, None, None, None, None]
     assert r.codigo_restricao == 21
     r.codigo_restricao = 0
     assert r.codigo_restricao == 0
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.limite_inferior == [50, 50, 50]
+    assert r.limite_inferior == [50, 50, 50, None, None]
     r.limite_inferior = [0, 0]
-    assert r.limite_inferior == [0, 0, None]
-    assert r.limite_superior == [212, 212, 212]
+    assert r.limite_inferior == [0, 0, None, None, None]
+    assert r.limite_superior == [212, 212, 212, None, None]
     r.limite_superior = [0, 0, 0, 0]
-    assert r.limite_superior == [0, 0, 0, 0]
+    assert r.limite_superior == [0, 0, 0, 0, None]
 
 
 def test_registro_fu_dadger():
@@ -1444,19 +1493,32 @@ def test_registro_lq_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [10, 1, 300, 9999, 300, 9999, 300, 9999]
+    assert r.data == [
+        10,
+        1,
+        300,
+        9999,
+        300,
+        9999,
+        300,
+        9999,
+        None,
+        None,
+        None,
+        None,
+    ]
     assert r.codigo_restricao == 10
     r.codigo_restricao = 0
     assert r.codigo_restricao == 0
     assert r.estagio == 1
     r.estagio = 0
     assert r.estagio == 0
-    assert r.limite_inferior == [300, 300, 300]
+    assert r.limite_inferior == [300, 300, 300, None, None]
     r.limite_inferior = [0]
-    assert r.limite_inferior == [0, None, None]
-    assert r.limite_superior == [9999, 9999, 9999]
+    assert r.limite_inferior == [0, None, None, None, None]
+    assert r.limite_superior == [9999, 9999, 9999, None, None]
     r.limite_superior = [0, 0, 0, 0]
-    assert r.limite_superior == [0, 0, 0, 0]
+    assert r.limite_superior == [0, 0, 0, 0, None]
 
 
 def test_registro_cq_dadger():
@@ -1876,7 +1938,7 @@ def test_campos_encontrados_dadger():
     assert d.lq(254, 1) is not None
     assert d.he(1, 1) is not None
     assert d.cm(1) is not None
-    assert len(d.lq(df=True).columns) == 8
+    assert len(d.lq(df=True).columns) == 12
 
 
 def test_cria_lu_dadger():

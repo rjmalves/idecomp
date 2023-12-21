@@ -240,7 +240,6 @@ class CT(Register):
     Registro que contém o cadastro das usinas termelétricas com
     os seus custos e capacidades.
 
-    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "CT  "
@@ -260,6 +259,12 @@ class CT(Register):
             FloatField(5, 69, 2),
             FloatField(5, 74, 2),
             FloatField(10, 79, 2),
+            FloatField(5, 89, 2),
+            FloatField(5, 94, 2),
+            FloatField(10, 99, 2),
+            FloatField(5, 109, 2),
+            FloatField(5, 114, 2),
+            FloatField(10, 119, 2),
         ]
     )
 
@@ -515,7 +520,6 @@ class DP(Register):
     """
     Registro que contém o cadastro das durações dos patamares.
 
-    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "DP  "
@@ -531,6 +535,10 @@ class DP(Register):
             FloatField(10, 49, 1),
             FloatField(10, 59, 1),
             FloatField(10, 69, 1),
+            FloatField(10, 79, 1),
+            FloatField(10, 89, 1),
+            FloatField(10, 99, 1),
+            FloatField(10, 109, 1),
         ]
     )
 
@@ -624,7 +632,6 @@ class PQ(Register):
     """
     Registro que contém o cadastro da geração por pequenas usinas.
 
-    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "PQ  "
@@ -637,6 +644,8 @@ class PQ(Register):
             FloatField(5, 24, 0),
             FloatField(5, 29, 0),
             FloatField(5, 34, 0),
+            FloatField(5, 39, 0),
+            FloatField(5, 44, 0),
         ]
     )
 
@@ -705,7 +714,7 @@ class PQ(Register):
         :return: A geração.
         :rtype: list[float] | None
         """
-        return [v for v in self.data[3:6] if v is not None]
+        return [v for v in self.data[3:8] if v is not None]
 
     @geracao.setter
     def geracao(self, c: List[float]):
@@ -716,7 +725,6 @@ class CD(Register):
     """
     Registro que contém o cadastro dos custos de déficit.
 
-    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "CD  "
@@ -733,6 +741,10 @@ class CD(Register):
             FloatField(10, 49, 2),
             FloatField(5, 59, 1),
             FloatField(10, 64, 2),
+            FloatField(5, 74, 1),
+            FloatField(10, 79, 2),
+            FloatField(5, 89, 1),
+            FloatField(10, 94, 2),
         ]
     )
 
@@ -840,7 +852,6 @@ class RI(Register):
     """
     Registro que contém as restrições de Itaipu.
 
-    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "RI  "
@@ -865,6 +876,16 @@ class RI(Register):
             FloatField(7, 100, 1),
             FloatField(7, 107, 1),
             FloatField(7, 114, 1),
+            FloatField(7, 121, 1),
+            FloatField(7, 128, 1),
+            FloatField(7, 135, 1),
+            FloatField(7, 142, 1),
+            FloatField(7, 149, 1),
+            FloatField(7, 156, 1),
+            FloatField(7, 163, 1),
+            FloatField(7, 170, 1),
+            FloatField(7, 177, 1),
+            FloatField(7, 184, 1),
         ]
     )
 
@@ -873,7 +894,6 @@ class IA(Register):
     """
     Registro que contém os limites de intercâmbio entre os subsistemas.
 
-    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "IA  "
@@ -890,6 +910,10 @@ class IA(Register):
             FloatField(10, 49, 0),
             FloatField(10, 59, 0),
             FloatField(10, 69, 0),
+            FloatField(10, 79, 0),
+            FloatField(10, 89, 0),
+            FloatField(10, 99, 0),
+            FloatField(10, 109, 0),
         ]
     )
 
@@ -1270,7 +1294,6 @@ class LU(Register):
     """
     Registro que contém os cadastros de limites das restrições elétricas.
 
-    *OBS: Suporta apenas 3 patamares no momento*
     """
 
     IDENTIFIER = "LU  "
@@ -1285,6 +1308,10 @@ class LU(Register):
             FloatField(10, 44, 1),
             FloatField(10, 54, 1),
             FloatField(10, 64, 1),
+            FloatField(10, 74, 1),
+            FloatField(10, 84, 1),
+            FloatField(10, 94, 1),
+            FloatField(10, 104, 1),
         ]
     )
 
@@ -2511,7 +2538,7 @@ class LV(Register):
 
     @property
     def estagio(self) -> Optional[int]:
-        """
+        """'
         O estágio de consideração dos limites.
 
         :return: O estágio.
@@ -2712,6 +2739,10 @@ class LQ(Register):
             FloatField(10, 44, 2),
             FloatField(10, 54, 2),
             FloatField(10, 64, 2),
+            FloatField(10, 74, 1),
+            FloatField(10, 84, 1),
+            FloatField(10, 94, 1),
+            FloatField(10, 104, 1),
         ]
     )
 

@@ -29,6 +29,12 @@ class TG(Register):
             FloatField(5, 69, 1),
             FloatField(5, 74, 1),
             FloatField(10, 79, 2),
+            FloatField(5, 89, 1),
+            FloatField(5, 94, 1),
+            FloatField(10, 99, 2),
+            FloatField(5, 109, 1),
+            FloatField(5, 114, 1),
+            FloatField(10, 119, 2),
         ]
     )
 
