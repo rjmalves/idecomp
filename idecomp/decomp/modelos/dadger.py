@@ -5535,3 +5535,252 @@ class ACNPOSNW(Register):
     @ano.setter
     def ano(self, m: int):
         self.data[-1] = m
+
+
+class VL(Register):
+    """
+    Registro que define uma usina que sofre influência de vazão lateral
+    na cota de jusante.
+    """
+
+    IDENTIFIER = "VL  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(4, 4),
+            FloatField(15, 10, 2),
+            FloatField(
+                size=15, starting_position=26, decimal_digits=9, format="E"
+            ),
+            FloatField(
+                size=15, starting_position=42, decimal_digits=9, format="E"
+            ),
+            FloatField(
+                size=15, starting_position=58, decimal_digits=9, format="E"
+            ),
+            FloatField(
+                size=15, starting_position=74, decimal_digits=9, format="E"
+            ),
+            FloatField(
+                size=15, starting_position=90, decimal_digits=9, format="E"
+            ),
+        ]
+    )
+
+    @property
+    def codigo_usina_influenciada(self) -> Optional[int]:
+        """
+        O código da UHE influenciada.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_usina_influenciada.setter
+    def codigo_usina_influenciada(self, c: int):
+        self.data[0] = c
+
+    @property
+    def fator_impacto_defluencia(self) -> Optional[float]:
+        """
+        O fator de impacto referente a defluência da usina influenciada.
+
+        :return: O fator da defluência
+        :rtype: float | None
+        """
+        return self.data[1]
+
+    @fator_impacto_defluencia.setter
+    def fator_impacto_defluencia(self, c: float):
+        self.data[1] = c
+
+    @property
+    def coeficiente_a0(self) -> Optional[float]:
+        """
+        O coeficiente de grau 0 do polinômio de jusante.
+
+        :return: O coeficiente de grau 0 do polinômio
+        :rtype: float | None
+        """
+        return self.data[2]
+
+    @coeficiente_a0.setter
+    def coeficiente_a0(self, c: float):
+        self.data[2] = c
+
+    @property
+    def coeficiente_a1(self) -> Optional[float]:
+        """
+        O coeficiente de grau 1 do polinômio de jusante.
+
+        :return: O coeficiente de grau 1 do polinômio
+        :rtype: float | None
+        """
+        return self.data[3]
+
+    @coeficiente_a1.setter
+    def coeficiente_a1(self, c: float):
+        self.data[3] = c
+
+    @property
+    def coeficiente_a2(self) -> Optional[float]:
+        """
+        O coeficiente de grau 2 do polinômio de jusante.
+
+        :return: O coeficiente de grau 2 do polinômio
+        :rtype: float | None
+        """
+        return self.data[4]
+
+    @coeficiente_a2.setter
+    def coeficiente_a2(self, c: float):
+        self.data[4] = c
+
+    @property
+    def coeficiente_a3(self) -> Optional[float]:
+        """
+        O coeficiente de grau 3 do polinômio de jusante.
+
+        :return: O coeficiente de grau 3 do polinômio
+        :rtype: float | None
+        """
+        return self.data[5]
+
+    @coeficiente_a3.setter
+    def coeficiente_a3(self, c: float):
+        self.data[5] = c
+
+    @property
+    def coeficiente_a4(self) -> Optional[float]:
+        """
+        O coeficiente de grau 4 do polinômio de jusante.
+
+        :return: O coeficiente de grau 4 do polinômio
+        :rtype: float | None
+        """
+        return self.data[6]
+
+    @coeficiente_a4.setter
+    def coeficiente_a4(self, c: float):
+        self.data[6] = c
+
+
+class VU(Register):
+    """
+    Registro que define uma usina que tem influência sobre a vazão de
+    jusante da primeira.
+    """
+
+    IDENTIFIER = "VU  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(4, 4),
+            IntegerField(4, 10),
+            FloatField(15, 16, 2),
+        ]
+    )
+
+    @property
+    def codigo_usina_influenciada(self) -> Optional[int]:
+        """
+        O código da UHE influenciada.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_usina_influenciada.setter
+    def codigo_usina_influenciada(self, c: int):
+        self.data[0] = c
+
+    @property
+    def codigo_usina_influenciadora(self) -> Optional[int]:
+        """
+        O código da UHE cuja vazão defluente influencia
+        lateralmente.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @codigo_usina_influenciadora.setter
+    def codigo_usina_influenciadora(self, c: int):
+        self.data[1] = c
+
+    @property
+    def fator_impacto_defluencia(self) -> Optional[float]:
+        """
+        O fator de impacto referente a defluência da usina influenciadora.
+
+        :return: O fator da defluência
+        :rtype: float | None
+        """
+        return self.data[2]
+
+    @fator_impacto_defluencia.setter
+    def fator_impacto_defluencia(self, c: float):
+        self.data[2] = c
+
+
+class VA(Register):
+    """
+    Registro que define um posto de vazão que tem influência sobre a vazão de
+    jusante da primeira.
+    """
+
+    IDENTIFIER = "VA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(4, 4),
+            IntegerField(4, 10),
+            FloatField(15, 16, 2),
+        ]
+    )
+
+    @property
+    def codigo_usina_influenciada(self) -> Optional[int]:
+        """
+        O código da UHE influenciada.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_usina_influenciada.setter
+    def codigo_usina_influenciada(self, c: int):
+        self.data[0] = c
+
+    @property
+    def codigo_posto_influenciador(self) -> Optional[int]:
+        """
+        O código do posto cuja vazão incremental influencia
+        lateralmente.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @codigo_posto_influenciador.setter
+    def codigo_posto_influenciador(self, c: int):
+        self.data[1] = c
+
+    @property
+    def fator_impacto_incremental(self) -> Optional[float]:
+        """
+        O fator de impacto referente a incremental do posto influenciador.
+
+        :return: O fator da vazão incremental
+        :rtype: float | None
+        """
+        return self.data[2]
+
+    @fator_impacto_incremental.setter
+    def fator_impacto_incremental(self, c: float):
+        self.data[2] = c

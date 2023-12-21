@@ -70,6 +70,9 @@ from idecomp.decomp.modelos.dadger import (
     HE,
     CM,
     FJ,
+    VL,
+    VA,
+    VU,
 )
 
 from idecomp.decomp.dadger import Dadger
@@ -149,6 +152,9 @@ from tests.mocks.arquivos.dadger import (
     MockHE,
     MockCM,
     MockFJ,
+    MockVL,
+    MockVU,
+    MockVA,
     MockDadger,
 )
 
@@ -1736,6 +1742,75 @@ def test_registro_cs_dadger():
     assert r.consistencia == 0
 
 
+def test_registro_vl_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockVL))
+    r = VL()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [288, 1, None, None, None, None, None]
+    assert r.codigo_usina_influenciada == 288
+    r.codigo_usina_influenciada = 0
+    assert r.codigo_usina_influenciada == 0
+    assert r.fator_impacto_defluencia == 1
+    r.fator_impacto_defluencia = 0
+    assert r.fator_impacto_defluencia == 0
+    assert r.coeficiente_a0 is None
+    r.coeficiente_a0 = 0
+    assert r.coeficiente_a0 == 0
+    assert r.coeficiente_a1 is None
+    r.coeficiente_a1 = 0
+    assert r.coeficiente_a1 == 0
+    assert r.coeficiente_a2 is None
+    r.coeficiente_a2 = 0
+    assert r.coeficiente_a2 == 0
+    assert r.coeficiente_a3 is None
+    r.coeficiente_a3 = 0
+    assert r.coeficiente_a3 == 0
+    assert r.coeficiente_a4 is None
+    r.coeficiente_a4 = 0
+    assert r.coeficiente_a4 == 0
+
+
+def test_registro_vu_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockVU))
+    r = VU()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [288, 314, 1]
+    assert r.codigo_usina_influenciada == 288
+    r.codigo_usina_influenciada = 0
+    assert r.codigo_usina_influenciada == 0
+    assert r.codigo_usina_influenciadora == 314
+    r.codigo_usina_influenciadora = 0
+    assert r.codigo_usina_influenciadora == 0
+    assert r.fator_impacto_defluencia == 1
+    r.fator_impacto_defluencia = 0
+    assert r.fator_impacto_defluencia == 0
+
+
+def test_registro_va_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockVA))
+    r = VA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [288, 288, 0.07]
+    assert r.codigo_usina_influenciada == 288
+    r.codigo_usina_influenciada = 0
+    assert r.codigo_usina_influenciada == 0
+    assert r.codigo_posto_influenciador == 288
+    r.codigo_posto_influenciador = 0
+    assert r.codigo_posto_influenciador == 0
+    assert r.fator_impacto_incremental == 0.07
+    r.fator_impacto_incremental = 0
+    assert r.fator_impacto_incremental == 0
+
+
 def test_campos_nao_encontrados_dadger():
     m: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m):
@@ -1766,6 +1841,9 @@ def test_campos_nao_encontrados_dadger():
     assert d.lq(0, 0) is None
     assert d.he(0, 0) is None
     assert d.cm(0) is None
+    assert d.vl() is None
+    assert d.va() is None
+    assert d.vu() is None
 
 
 def test_campos_encontrados_dadger():

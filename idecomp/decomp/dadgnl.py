@@ -4,10 +4,6 @@ from idecomp.decomp.modelos.dadgnl import TG, GS, NL, GL
 from typing import Type, List, Optional, TypeVar, Union
 import pandas as pd  # type: ignore
 
-# Para compatibilidade - até versão 1.0.0
-from os.path import join
-import warnings
-
 
 class Dadgnl(RegisterFile):
     """
@@ -20,9 +16,6 @@ class Dadgnl(RegisterFile):
     Atualmente, são suportados os registros:
     `TG`, `GS`, `NL` e `GL`
 
-    É possível ler as informações existentes em arquivos a partir do
-    método `le_arquivo()` e escreve um novo arquivo a partir do método
-    `escreve_arquivo()`.
 
     """
 
@@ -32,24 +25,6 @@ class Dadgnl(RegisterFile):
 
     def __init__(self, data=...) -> None:
         super().__init__(data)
-
-    @classmethod
-    def le_arquivo(cls, diretorio: str, nome_arquivo="dadgnl.rv0") -> "Dadgnl":
-        msg = (
-            "O método le_arquivo(diretorio, nome_arquivo) será descontinuado"
-            + " na versão 1.0.0 - use o método read(caminho_arquivo)"
-        )
-        warnings.warn(msg, category=FutureWarning)
-        return cls.read(join(diretorio, nome_arquivo))
-
-    def escreve_arquivo(self, diretorio: str, nome_arquivo="dadgnl.rv0"):
-        msg = (
-            "O método escreve_arquivo(diretorio, nome_arquivo) será"
-            + " descontinuado na versão 1.0.0 -"
-            + " use o método write(caminho_arquivo)"
-        )
-        warnings.warn(msg, category=FutureWarning)
-        self.write(join(diretorio, nome_arquivo))
 
     def __expande_colunas_df(self, df: pd.DataFrame) -> pd.DataFrame:
         colunas_com_listas = df.map(
