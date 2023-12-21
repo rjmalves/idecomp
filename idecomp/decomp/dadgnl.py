@@ -27,7 +27,7 @@ class Dadgnl(RegisterFile):
         super().__init__(data)
 
     def __expande_colunas_df(self, df: pd.DataFrame) -> pd.DataFrame:
-        colunas_com_listas = df.map(
+        colunas_com_listas = df.applymap(
             lambda linha: isinstance(linha, list)
         ).all()
         nomes_colunas = [
