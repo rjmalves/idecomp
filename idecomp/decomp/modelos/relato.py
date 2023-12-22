@@ -619,7 +619,7 @@ class BlocoRelatorioOperacaoUTERelato(Block):
                 subsistemas.append(dados[0])
                 nomes_usinas.append(dados[1])
                 fpcgcs.append(dados[2])
-                tabela[i, :] = dados[3: (3 + n_pats + 1)]
+                tabela[i, :] = dados[3 : (3 + n_pats + 1)]
                 i += 1
 
 
@@ -1058,9 +1058,9 @@ class BlocoVolumeUtilReservatorioRelato(Block):
                 f"estagio_{s}" for s in range(1, num_estagios + 1)
             ]
             df.columns = cols
-            df["Usina"] = usinas
-            df["Número"] = numeros
-            df = df[["Número", "Usina"] + cols]
+            df["nome_usina"] = usinas
+            df["codigo_usina"] = numeros
+            df = df[["codigo_usina", "nome_usina"] + cols]
             return df
 
         for _ in range(3):

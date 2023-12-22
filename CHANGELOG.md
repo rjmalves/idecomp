@@ -1,3 +1,7 @@
+# v1.0.1
+
+- Fix nas colunas o DataFrame de Volume Útil de Reservatórios do arquivo Relato
+
 
 # v1.0.0
 
