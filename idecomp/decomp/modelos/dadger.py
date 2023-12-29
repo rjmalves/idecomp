@@ -1074,7 +1074,6 @@ class MP(Register):
     """
     Registro que contém as manutenções programadas das UHEs.
 
-    *OBS: Suporta apenas 12 estágios no momento*
     """
 
     IDENTIFIER = "MP  "
@@ -1096,15 +1095,82 @@ class MP(Register):
             FloatField(5, 59, 3),
             FloatField(5, 64, 3),
             FloatField(5, 69, 3),
+            FloatField(5, 74, 3),
+            FloatField(5, 79, 3),
+            FloatField(5, 84, 3),
+            FloatField(5, 89, 3),
+            FloatField(5, 94, 3),
+            FloatField(5, 99, 3),
+            FloatField(5, 104, 3),
+            FloatField(5, 109, 3),
+            FloatField(5, 114, 3),
+            FloatField(5, 119, 3),
+            FloatField(5, 124, 3),
         ]
     )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
+    @property
+    def codigo_usina(self) -> Optional[int]:
+        """
+        O código da UHE associada às manutenções programadas.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
+        self.data[0] = c
+
+    @property
+    def frequencia(self) -> Optional[int]:
+        """
+        A frequência quando se trata da UHE Itaipu.
+
+        :return: A frequência como `int`.
+        """
+        return self.data[1]
+
+    @frequencia.setter
+    def frequencia(self, c: int):
+        self.data[1] = c
+
+    @property
+    def manutencao(self) -> Optional[List[float]]:
+        """
+        Os fatores de manutenção programada por estágio do
+        estudo. A posição na lista indica a qual estágio
+        ele está associada [e1, e2, e3, ...].
+
+        :return: As manutenções.
+        :type: list[float] | None
+        """
+        return [v for v in self.data[2::] if v is not None]
+
+    @manutencao.setter
+    def manutencao(self, m: List[float]):
+        self.__atualiza_dados_lista(m, 2, 1)
 
 
 class MT(Register):
     """
     Registro que contém as manutenções programadas das UTEs.
 
-    *OBS: Suporta apenas 12 estágios no momento*
     """
 
     IDENTIFIER = "MT  "
@@ -1126,15 +1192,82 @@ class MT(Register):
             FloatField(5, 64, 3),
             FloatField(5, 69, 3),
             FloatField(5, 74, 3),
+            FloatField(5, 79, 3),
+            FloatField(5, 84, 3),
+            FloatField(5, 89, 3),
+            FloatField(5, 94, 3),
+            FloatField(5, 99, 3),
+            FloatField(5, 104, 3),
+            FloatField(5, 109, 3),
+            FloatField(5, 114, 3),
+            FloatField(5, 119, 3),
+            FloatField(5, 124, 3),
+            FloatField(5, 129, 3),
         ]
     )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
+    @property
+    def codigo_usina(self) -> Optional[int]:
+        """
+        O código da UTE associada às manutenções programadas.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
+        self.data[0] = c
+
+    @property
+    def codigo_submercado(self) -> Optional[int]:
+        """
+        O código do submercado ao qual a UTE pertence.
+
+        :return: O código como `int`.
+        """
+        return self.data[1]
+
+    @codigo_submercado.setter
+    def codigo_submercado(self, c: int):
+        self.data[1] = c
+
+    @property
+    def manutencao(self) -> Optional[List[float]]:
+        """
+        Os fatores de manutenção programada por estágio do
+        estudo. A posição na lista indica a qual estágio
+        ele está associada [e1, e2, e3, ...].
+
+        :return: As manutenções.
+        :type: list[float] | None
+        """
+        return [v for v in self.data[2::] if v is not None]
+
+    @manutencao.setter
+    def manutencao(self, m: List[float]):
+        self.__atualiza_dados_lista(m, 2, 1)
 
 
 class FD(Register):
     """
     Registro que contém os fatores de disponibilidade das UHEs.
 
-    *OBS: Suporta apenas 12 estágios no momento*
     """
 
     IDENTIFIER = "FD  "
@@ -1156,15 +1289,82 @@ class FD(Register):
             FloatField(5, 59, 3),
             FloatField(5, 64, 3),
             FloatField(5, 69, 3),
+            FloatField(5, 74, 3),
+            FloatField(5, 79, 3),
+            FloatField(5, 84, 3),
+            FloatField(5, 89, 3),
+            FloatField(5, 94, 3),
+            FloatField(5, 99, 3),
+            FloatField(5, 104, 3),
+            FloatField(5, 109, 3),
+            FloatField(5, 114, 3),
+            FloatField(5, 119, 3),
+            FloatField(5, 124, 3),
         ]
     )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list,
+        indice_inicial: int,
+        espacamento: int,
+    ):
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
+    @property
+    def codigo_usina(self) -> Optional[int]:
+        """
+        O código da UHE associada aos fatores de disponibilidade.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @codigo_usina.setter
+    def codigo_usina(self, c: int):
+        self.data[0] = c
+
+    @property
+    def frequencia(self) -> Optional[int]:
+        """
+        A frequência quando se trata da UHE Itaipu.
+
+        :return: A frequência como `int`.
+        """
+        return self.data[1]
+
+    @frequencia.setter
+    def frequencia(self, c: int):
+        self.data[1] = c
+
+    @property
+    def fator(self) -> Optional[List[float]]:
+        """
+        Os fatores de disponibilidade por estágio do
+        estudo. A posição na lista indica a qual estágio
+        ele está associada [e1, e2, e3, ...].
+
+        :return: Os fatores.
+        :type: list[float] | None
+        """
+        return [v for v in self.data[2::] if v is not None]
+
+    @fator.setter
+    def fator(self, m: List[float]):
+        self.__atualiza_dados_lista(m, 2, 1)
 
 
 class VE(Register):
     """
     Registro que contém os volumes de espera das UHEs.
 
-    *OBS: Suporta apenas 12 estágios no momento*
     """
 
     IDENTIFIER = "VE  "
@@ -1185,6 +1385,17 @@ class VE(Register):
             FloatField(5, 59, 2),
             FloatField(5, 64, 2),
             FloatField(5, 69, 2),
+            FloatField(5, 74, 2),
+            FloatField(5, 79, 2),
+            FloatField(5, 84, 2),
+            FloatField(5, 89, 2),
+            FloatField(5, 94, 2),
+            FloatField(5, 99, 2),
+            FloatField(5, 104, 2),
+            FloatField(5, 109, 2),
+            FloatField(5, 114, 2),
+            FloatField(5, 119, 2),
+            FloatField(5, 124, 2),
         ]
     )
 
@@ -2112,6 +2323,22 @@ class TI(Register):
             FloatField(5, 34, 2),
             FloatField(5, 39, 2),
             FloatField(5, 44, 2),
+            FloatField(5, 49, 2),
+            FloatField(5, 54, 2),
+            FloatField(5, 59, 2),
+            FloatField(5, 64, 2),
+            FloatField(5, 69, 2),
+            FloatField(5, 74, 2),
+            FloatField(5, 79, 2),
+            FloatField(5, 84, 2),
+            FloatField(5, 89, 2),
+            FloatField(5, 94, 2),
+            FloatField(5, 99, 2),
+            FloatField(5, 104, 2),
+            FloatField(5, 109, 2),
+            FloatField(5, 114, 2),
+            FloatField(5, 119, 2),
+            FloatField(5, 124, 2),
         ]
     )
 
