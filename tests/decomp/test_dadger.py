@@ -548,7 +548,34 @@ def test_registro_mp_dadger():
         None,
         None,
         None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
     ]
+    assert r.codigo_usina == 119
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.frequencia is None
+    r.frequencia = 50
+    assert r.frequencia == 50
+    assert r.manutencao == [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+    ]
+    r.manutencao = [1.0, 1.0]
+    assert r.manutencao == [1.0, 1.0]
 
 
 def test_registro_mt_dadger():
@@ -574,7 +601,35 @@ def test_registro_mt_dadger():
         None,
         None,
         None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
     ]
+
+    assert r.codigo_usina == 4
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 2
+    assert r.codigo_submercado == 2
+    assert r.manutencao == [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+    ]
+    r.manutencao = [1.0, 1.0]
+    assert r.manutencao == [1.0, 1.0]
 
 
 def test_registro_fd_dadger():
@@ -600,7 +655,34 @@ def test_registro_fd_dadger():
         None,
         None,
         None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
     ]
+    assert r.codigo_usina == 66
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.frequencia == 50
+    r.frequencia = 60
+    assert r.frequencia == 60
+    assert r.fator == [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        0.947,
+    ]
+    r.fator = [1.0, 1.0]
+    assert r.fator == [1.0, 1.0]
 
 
 def test_registro_ve_dadger():
@@ -618,6 +700,17 @@ def test_registro_ve_dadger():
         97.01,
         97.83,
         99.18,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
         None,
         None,
         None,
@@ -1369,11 +1462,29 @@ def test_registro_ti_dadger():
         -24.6,
         None,
         None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
     ]
     assert r.codigo_usina == 107
     r.codigo_usina = 0
     assert r.codigo_usina == 0
     assert r.taxa == [-24.6, -24.6, -24.6, -24.6, -24.6, -24.6]
+    r.taxa = [5.0]
+    assert r.taxa == [5.0]
 
 
 def test_registro_rq_dadger():
@@ -1930,6 +2041,9 @@ def test_campos_encontrados_dadger():
     assert d.rt("CRISTA") is not None
     assert d.fc("NEWV21") is not None
     assert d.ti(1) is not None
+    assert d.mp(119) is not None
+    assert d.mt(149, 2) is not None
+    assert d.fd(66, 50) is not None
     assert d.fp(999, 1) is not None
     assert d.ve(1) is not None
     assert d.hv(101) is not None

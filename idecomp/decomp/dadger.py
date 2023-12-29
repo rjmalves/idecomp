@@ -1000,6 +1000,84 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(TI, codigo_usina=codigo_usina, df=df)
 
+    def mp(
+        self,
+        codigo_usina: Optional[int] = None,
+        frequencia: Optional[int] = None,
+        df: bool = False,
+    ) -> Optional[Union[MP, List[MP], pandas.DataFrame]]:
+        """
+        Obtém um registro que especifica as manutenções programadas
+        por UHE existente no estudo especificado no :class:`Dadger`
+
+        :param codigo_usina: Código da UHE associada ao registro
+        :type codigo_usina: int | None
+        :param frequencia: Frequência da UHE, quando for Itaipu
+        :type frequencia: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`MP` | list[:class:`MP`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            MP, codigo_usina=codigo_usina, frequencia=frequencia, df=df
+        )
+
+    def mt(
+        self,
+        codigo_usina: Optional[int] = None,
+        codigo_submercado: Optional[int] = None,
+        df: bool = False,
+    ) -> Optional[Union[MT, List[MT], pandas.DataFrame]]:
+        """
+        Obtém um registro que especifica as manutenções programadas
+        por UTE existente no estudo especificado no :class:`Dadger`
+
+        :param codigo_usina: Código da UTE associada ao registro
+        :type codigo_usina: int | None
+        :param codigo_submercado: Código do submercado da UTE
+        :type codigo_submercado: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`MT` | list[:class:`MT`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            MT,
+            codigo_usina=codigo_usina,
+            codigo_submercado=codigo_submercado,
+            df=df,
+        )
+
+    def fd(
+        self,
+        codigo_usina: Optional[int] = None,
+        frequencia: Optional[int] = None,
+        df: bool = False,
+    ) -> Optional[Union[FD, List[FD], pandas.DataFrame]]:
+        """
+        Obtém um registro que especifica os fatores de disponibilidade
+        por UHE existente no estudo especificado no :class:`Dadger`
+
+        :param codigo_usina: Código da UHE associada ao registro
+        :type codigo_usina: int | None
+        :param frequencia: Frequência da UHE, quando for Itaipu
+        :type frequencia: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`FD` | list[:class:`FD`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            FD, codigo_usina=codigo_usina, frequencia=frequencia, df=df
+        )
+
     def fp(
         self,
         codigo_usina: Optional[int] = None,
