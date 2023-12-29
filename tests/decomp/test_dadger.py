@@ -2041,6 +2041,9 @@ def test_campos_encontrados_dadger():
     assert d.rt("CRISTA") is not None
     assert d.fc("NEWV21") is not None
     assert d.ti(1) is not None
+    assert d.mp(119) is not None
+    assert d.mt(149, 2) is not None
+    assert d.fd(66, 50) is not None
     assert d.fp(999, 1) is not None
     assert d.ve(1) is not None
     assert d.hv(101) is not None
