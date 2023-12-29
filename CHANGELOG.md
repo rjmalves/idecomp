@@ -1,3 +1,10 @@
+# v1.1.0
+
+- Atualizada a modelagem dos registros do dadger sensíveis ao número de estágios para o máximo suportado pelo modelo (TI, VE).
+- Atualizada a modelagem com propriedades para registros do dadger de manutenção e disponibilidade (MP, MT, FD).
+- Atualizada na classe `Dadger` as propriedades para acesso aos registros atualizados (MP, MT, FD).
+
+
 # v1.0.1
 
 - Fix nas colunas o DataFrame de Volume Útil de Reservatórios do arquivo Relato
