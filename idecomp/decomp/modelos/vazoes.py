@@ -283,7 +283,8 @@ class SecaoVazoesPostos(Section):
 
     @property
     def numero_postos(self) -> int:
-        return self.data["dados_gerais"][2 + self.numero_estagios]
+        valor_arquivo = self.data["dados_gerais"][2 + self.numero_estagios]
+        return 320 if valor_arquivo == 0 else valor_arquivo
 
     @property
     def codigos_uhes(self) -> List[int]:
