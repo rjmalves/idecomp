@@ -16,6 +16,7 @@ DECOMP
    arquivos/dec_cortes_evap
    arquivos/dec_eco_cotajus
    arquivos/dec_eco_discr
+   arquivos/dec_fcf_cortes
    arquivos/dec_oper_gnl
    arquivos/dec_oper_interc
    arquivos/dec_oper_ree
