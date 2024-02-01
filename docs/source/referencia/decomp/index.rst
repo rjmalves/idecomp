@@ -14,6 +14,7 @@ DECOMP
    arquivos/decomptim
    arquivos/dec_avl_evap
    arquivos/dec_cortes_evap
+   arquivos/dec_desvfpha
    arquivos/dec_eco_cotajus
    arquivos/dec_eco_discr
    arquivos/dec_fcf_cortes
@@ -27,6 +28,7 @@ DECOMP
    arquivos/fcfnw
    arquivos/hidr
    arquivos/inviabunic
+   arquivos/oper_desvio_fpha
    arquivos/postos
    arquivos/relato
    arquivos/relgnl

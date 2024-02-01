@@ -1,5 +1,8 @@
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.blocos.tabelacsv import TabelaCSV
+from idecomp.decomp.modelos.blocos.versaomodelo import (
+    VersaoModelo,
+    VersaoModeloLibs,
+)
+from idecomp.decomp.modelos.blocos.tabelacsv import TabelaCSV, TabelaCSVLibs
 
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
@@ -53,9 +56,12 @@ class ArquivoCSV(BlockFile):
         :return: A versão do modelo
         :rtype: str | None
         """
-        b = self._bloco_por_tipo(VersaoModelo, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(VersaoModelo)
+        b_libs = self.data.get_blocks_of_type(VersaoModeloLibs)
+        if isinstance(b, VersaoModelo):
             return b.data
+        elif isinstance(b_libs, VersaoModeloLibs):
+            return b_libs.data
         return None
 
     def _tabela(self) -> Optional[pd.DataFrame]:
@@ -65,7 +71,10 @@ class ArquivoCSV(BlockFile):
         :return: A tabela como um dataframe
         :rtype: pd.DataFrame | None
         """
-        b = self._bloco_por_tipo(TabelaCSV, 0)
-        if b is not None:
+        b = self.data.get_blocks_of_type(TabelaCSV)
+        b_libs = self.data.get_blocks_of_type(TabelaCSVLibs)
+        if isinstance(b, TabelaCSV):
             return b.data
+        elif isinstance(b_libs, TabelaCSVLibs):
+            return b_libs.data
         return None
