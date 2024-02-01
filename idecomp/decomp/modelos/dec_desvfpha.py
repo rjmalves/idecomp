@@ -10,7 +10,7 @@ from idecomp.decomp.modelos.blocos.tabelacsv import TabelaCSV
 
 class TabelaDesvFpha(TabelaCSV):
     """
-    Bloco com a operação por submercados.
+    Bloco com os desvios da função de produção hidráulica.
     """
 
     BEGIN_PATTERN = "-----;-----;------;-----;--------------;----------;"
