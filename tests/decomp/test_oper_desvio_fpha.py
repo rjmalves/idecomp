@@ -39,6 +39,14 @@ def test_atributos_encontrados_oper_desvio_fpha():
         assert rel.tabela.at[0, "desvio_percentual_pl_fpha"] == 0
 
 
+def test_atributos_nao_encontrados_oper_media_fpha():
+    m: MagicMock = mock_open(read_data="".join(""))
+    with patch("builtins.open", m):
+        d = OperDesvioFpha.read("./tests/mocks/arquivos/oper_desvio_fpha.py")
+        assert d.tabela is None
+        assert d.versao is None
+
+
 def test_eq_oper_desvio_fpha():
     m: MagicMock = mock_open(read_data="".join(MockOperDesvioFpha))
     with patch("builtins.open", m):
