@@ -7,6 +7,7 @@ DECOMP
    :maxdepth: 2
 
    arquivos/arquivos
+   arquivos/avl_cortesfpha_dec
    arquivos/caso
    arquivos/custos
    arquivos/dadger
