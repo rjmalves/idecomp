@@ -19,7 +19,7 @@ class AvlCortesFpha(ArquivoCSV):
         A tabela de dados que está contida no arquivo.
 
         - codigo_usina (`int`)
-        - periodo (`int`)
+        - estagio (`int`)
         - nome_usina (`str`)
         - segmento_fpha (`int`)
         - fator_correcao (`float`)

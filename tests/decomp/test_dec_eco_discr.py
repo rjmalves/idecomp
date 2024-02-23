@@ -12,7 +12,7 @@ def test_atributos_encontrados_dec_eco_discr():
     with patch("builtins.open", m):
         rel = DecEcoDiscr.read("./tests/mocks/arquivos/dec_eco_discr.py")
         assert rel.versao == "31.14"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 40.0
         assert np.isnan(rel.tabela.at[0, "numero_patamares"])

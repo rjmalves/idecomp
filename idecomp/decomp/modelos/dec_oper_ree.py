@@ -32,7 +32,7 @@ class TabelaOperReev31(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "cenario",
         "codigo_ree",
         "nome_ree",
@@ -73,7 +73,7 @@ class TabelaOperRee(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "no",
         "cenario",
         "codigo_ree",

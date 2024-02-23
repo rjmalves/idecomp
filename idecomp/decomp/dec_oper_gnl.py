@@ -23,7 +23,7 @@ class DecOperGnl(ArquivoCSV):
         """
         A tabela de dados que está contida no arquivo.
 
-        - periodo (`int`)
+        - estagio (`int`)
         - no (`int`)
         - cenario (`int`)
         - patamar (`int`)

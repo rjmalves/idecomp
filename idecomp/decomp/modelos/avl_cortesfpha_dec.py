@@ -31,7 +31,7 @@ class TabelaCortesFpha(TabelaCSV):
     )
     COLUMN_NAMES = [
         "codigo_usina",
-        "periodo",
+        "estagio",
         "nome_usina",
         "segmento_fpha",
         "fator_correcao",

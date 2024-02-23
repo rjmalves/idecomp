@@ -19,7 +19,7 @@ class DecEcoDiscr(ArquivoCSV):
         """
         A tabela de dados que está contida no arquivo.
 
-        - periodo (`int`)
+        - estagio (`int`)
         - patamar (`int`)
         - duracao (`float`)
         - numero_patamares (`int`)

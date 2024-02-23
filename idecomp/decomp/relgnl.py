@@ -139,7 +139,7 @@ class Relgnl(BlockFile):
         Tabela com o relatório do despacho sinalizado para as usinas
         térmicas GNL.
 
-        - periodo (`int`)
+        - estagio (`int`)
         - cenario (`int`)
         - probabilidade (`float`)
         - nome_submercado (`str`)

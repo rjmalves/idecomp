@@ -14,7 +14,7 @@ def test_atributos_encontrados_dec_oper_interc():
     with patch("builtins.open", m):
         rel = DecOperInterc.read("./tests/mocks/arquivos/dec_oper_interc.py")
         assert rel.versao == "31.14"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "no"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
@@ -53,7 +53,7 @@ def test_atributos_encontrados_dec_oper_interc_v31():
         rel = DecOperInterc.read("./tests/mocks/arquivos/dec_oper_interc.py")
         assert rel.versao == "31.0.2"
         print(rel.tabela)
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "codigo_submercado_de"] == 4

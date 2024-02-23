@@ -50,7 +50,7 @@ class TabelaOperUsihv31(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "cenario",
         "patamar",
         "duracao",
@@ -127,7 +127,7 @@ class TabelaOperUsih(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "no",
         "cenario",
         "patamar",

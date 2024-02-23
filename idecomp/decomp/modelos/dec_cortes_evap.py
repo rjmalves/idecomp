@@ -31,7 +31,7 @@ class TabelaCortesEvap(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "codigo_usina",
         "nome_usina",
         "codigo_submercado",

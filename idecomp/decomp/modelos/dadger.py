@@ -3141,17 +3141,17 @@ class AR(Register):
     )
 
     @property
-    def periodo(self) -> Optional[int]:
+    def estagio(self) -> Optional[int]:
         """
-        O período inicial de aplicação do CVaR.
+        O estágio inicial de aplicação do CVaR.
 
-        :return: O índice do período inicial.
+        :return: O índice do estágio inicial.
         :rtype: int | None
         """
         return self.data[0]
 
-    @periodo.setter
-    def periodo(self, p: int):
+    @estagio.setter
+    def estagio(self, p: int):
         self.data[0] = p
 
     @property

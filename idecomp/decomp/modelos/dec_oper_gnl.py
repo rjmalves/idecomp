@@ -38,7 +38,7 @@ class TabelaOperGnlv31(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "cenario",
         "patamar",
         "duracao",
@@ -91,7 +91,7 @@ class TabelaOperGnl(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "no",
         "cenario",
         "patamar",

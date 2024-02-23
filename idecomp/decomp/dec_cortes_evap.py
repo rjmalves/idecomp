@@ -18,7 +18,7 @@ class DecCortesEvap(ArquivoCSV):
         """
         A tabela de dados que está contida no arquivo.
 
-        - periodo (`int`)
+        - estagio (`int`)
         - codigo_usina (`int`)
         - nome_usina (`str`)
         - codigo_submercado (`int`)

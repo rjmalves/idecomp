@@ -18,7 +18,7 @@ class OperDesvioFpha(ArquivoCSV):
         """
         A tabela de dados que está contida no arquivo.
 
-        - periodo (`int`)
+        - estagio (`int`)
         - cenario (`int`)
         - patamar (`int`)
         - codigo_usina (`int`)

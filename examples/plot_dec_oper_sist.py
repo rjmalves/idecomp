@@ -27,10 +27,10 @@ print(df.columns)
 # específico do arquivo ou da idecomp.
 import plotly.express as px
 
-estagio_mensal = df["periodo"].max()
+estagio_mensal = df["estagio"].max()
 # sphinx_gallery_thumbnail_number = 1
 fig = px.box(
-    df.loc[df["periodo"] == estagio_mensal],
+    df.loc[df["estagio"] == estagio_mensal],
     x="nome_submercado",
     y="geracao_termica_MW",
 )
