@@ -11,7 +11,7 @@ def test_atributos_encontrados_dec_avl_evap():
     with patch("builtins.open", m):
         rel = DecAvlEvap.read("./tests/mocks/arquivos/dec_avl_evap.py")
         assert rel.versao == "31.14"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "codigo_usina"] == 1
         assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
         assert rel.tabela.at[0, "codigo_submercado"] == 1

@@ -24,7 +24,7 @@ class TabelaEcoDiscr(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "patamar",
         "duracao",
         "numero_patamares",

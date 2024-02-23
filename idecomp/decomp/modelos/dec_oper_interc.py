@@ -32,7 +32,7 @@ class TabelaOperIntercv31(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "cenario",
         "patamar",
         "codigo_submercado_de",
@@ -73,7 +73,7 @@ class TabelaOperInterc(TabelaCSV):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "no",
         "cenario",
         "patamar",

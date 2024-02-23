@@ -15,7 +15,7 @@ def test_atributos_encontrados_avl_cortesfpha_dec():
         assert rel.versao == "31.23"
 
         assert rel.tabela.at[0, "codigo_usina"] == 1
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
         assert rel.tabela.at[0, "segmento_fpha"] == 1
         assert rel.tabela.at[0, "fator_correcao"] == 0.991429

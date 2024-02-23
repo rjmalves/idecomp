@@ -1663,9 +1663,9 @@ def test_registro_ar_dadger():
         with open("", "") as fp:
             r.read(fp)
     assert r.data == [1, None, None]
-    assert r.periodo == 1
-    r.periodo = 2
-    assert r.periodo == 2
+    assert r.estagio == 1
+    r.estagio = 2
+    assert r.estagio == 2
     assert r.alfa is None
     r.alfa = 50
     assert r.alfa == 50

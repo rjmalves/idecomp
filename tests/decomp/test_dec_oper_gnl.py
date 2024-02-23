@@ -11,7 +11,7 @@ def test_atributos_encontrados_dec_oper_gnl():
     with patch("builtins.open", m):
         rel = DecOperGnl.read("./tests/mocks/arquivos/dec_oper_gnl.py")
         assert rel.versao == "31.14"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "no"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
@@ -55,7 +55,7 @@ def test_atributos_encontrados_dec_oper_gnl_v31():
         DecOperGnl.set_version("31.0.2")
         rel = DecOperGnl.read("./tests/mocks/arquivos/dec_oper_gnl.py")
         assert rel.versao == "31.0.2"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 36.0

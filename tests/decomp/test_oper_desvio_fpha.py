@@ -12,7 +12,7 @@ def test_atributos_encontrados_oper_desvio_fpha():
     with patch("builtins.open", m):
         rel = OperDesvioFpha.read("./tests/mocks/arquivos/oper_desvio_fpha.py")
         assert rel.versao == "31.23"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "codigo_usina"] == 1

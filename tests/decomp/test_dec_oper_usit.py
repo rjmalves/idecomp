@@ -14,7 +14,7 @@ def test_atributos_encontrados_dec_oper_usit():
     with patch("builtins.open", m):
         rel = DecOperUsit.read("./tests/mocks/arquivos/dec_oper_usit.py")
         assert rel.versao == "31.14"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "no"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
@@ -54,7 +54,7 @@ def test_atributos_encontrados_dec_oper_usit_v31():
         DecOperUsit.set_version("31.0.2")
         rel = DecOperUsit.read("./tests/mocks/arquivos/dec_oper_usit.py")
         assert rel.versao == "31.0.2"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "patamar"] == 1
         assert rel.tabela.at[0, "duracao"] == 36.0

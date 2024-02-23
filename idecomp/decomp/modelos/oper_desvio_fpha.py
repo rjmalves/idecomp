@@ -45,7 +45,7 @@ class TabelaOperDesvioFpha(TabelaCSVLibs):
         delimiter=";",
     )
     COLUMN_NAMES = [
-        "periodo",
+        "estagio",
         "cenario",
         "patamar",
         "codigo_usina",

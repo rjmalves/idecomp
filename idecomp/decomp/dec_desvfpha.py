@@ -19,7 +19,7 @@ class DecDesvFpha(ArquivoCSV):
         A tabela de dados que está contida no arquivo.
 
         - codigo_usina (`int`)
-        - periodo (`int`)
+        - estagio (`int`)
         - no (`int`)
         - patamar (`int`)
         - nome_usina (`str`)

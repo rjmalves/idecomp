@@ -11,7 +11,7 @@ def test_atributos_encontrados_dec_oper_ree():
     with patch("builtins.open", m):
         rel = DecOperRee.read("./tests/mocks/arquivos/dec_oper_ree.py")
         assert rel.versao == "31.14"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "no"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "codigo_ree"] == 1
@@ -48,7 +48,7 @@ def test_atributos_encontrados_dec_oper_ree_v31():
         DecOperRee.set_version("31.0.2")
         rel = DecOperRee.read("./tests/mocks/arquivos/dec_oper_ree.py")
         assert rel.versao == "31.0.2"
-        assert rel.tabela.at[0, "periodo"] == 1
+        assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1
         assert rel.tabela.at[0, "codigo_ree"] == 1
         assert rel.tabela.at[0, "nome_ree"] == "SUDESTE"
