@@ -18,7 +18,7 @@ class BlocoRelatorioCustos(Block):
 
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
-        self.__scenario_line = Line([IntegerField(2, 44), IntegerField(3, 55)])
+        self.__scenario_line = Line([IntegerField(2, 44), IntegerField(4, 54)])
         self.__dual_variables_line = Line(
             [
                 LiteralField(14, 4),
