@@ -304,7 +304,7 @@ class BlocoRelatorioOperacaoRelgnl(Block):
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
         self.__linha_cenario = Line(
-            [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
+            [IntegerField(2, 34), IntegerField(4, 47), FloatField(8, 67, 6)]
         )
         self.__linha_operacao = Line(
             [

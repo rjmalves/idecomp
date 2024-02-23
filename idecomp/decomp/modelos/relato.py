@@ -293,7 +293,7 @@ class BlocoRelatorioOperacaoRelato(Block):
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
         self.__scenario_line = Line(
-            [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
+            [IntegerField(2, 34), IntegerField(4, 47), FloatField(8, 67, 6)]
         )
         self.__line = Line(
             [
@@ -522,7 +522,7 @@ class BlocoRelatorioOperacaoUTERelato(Block):
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
         self.__scenario_line = Line(
-            [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
+            [IntegerField(2, 34), IntegerField(4, 47), FloatField(8, 67, 6)]
         )
         self.__line = Line(
             [
@@ -635,7 +635,7 @@ class BlocoBalancoEnergeticoRelato(Block):
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
         self.__linha_cenario = Line(
-            [IntegerField(2, 34), IntegerField(3, 48), FloatField(8, 67, 6)]
+            [IntegerField(2, 34), IntegerField(4, 47), FloatField(8, 67, 6)]
         )
         self.__linha_subsistema = Line([LiteralField(3, 16)])
         self.__linha_ear_ena = Line(
