@@ -73,6 +73,7 @@ from idecomp.decomp.modelos.dadger import (
     VL,
     VA,
     VU,
+    DA,
 )
 
 from idecomp.decomp.dadger import Dadger
@@ -155,6 +156,7 @@ from tests.mocks.arquivos.dadger import (
     MockVL,
     MockVU,
     MockVA,
+    MockDA,
     MockDadger,
 )
 
@@ -1984,6 +1986,34 @@ def test_registro_va_dadger():
     assert r.fator_impacto_incremental == 0
 
 
+def test_registro_da_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDA))
+    r = DA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [97, 98, 1, 17, 100, 20000]
+    assert r.codigo_usina_retirada == 97
+    r.codigo_usina_retirada = 0
+    assert r.codigo_usina_retirada == 0
+    assert r.codigo_usina_retorno == 98
+    r.codigo_usina_retorno = 0
+    assert r.codigo_usina_retorno == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.vazao_desviada == 17
+    r.vazao_desviada = 0
+    assert r.vazao_desviada == 0
+    assert r.retorno_percentual == 100
+    r.retorno_percentual = 0
+    assert r.retorno_percentual == 0
+    assert r.custo == 20000
+    r.custo = 0
+    assert r.custo == 0
+
+
 def test_campos_nao_encontrados_dadger():
     m: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m):
@@ -2017,6 +2047,7 @@ def test_campos_nao_encontrados_dadger():
     assert d.vl() is None
     assert d.va() is None
     assert d.vu() is None
+    assert d.da() is None
 
 
 def test_campos_encontrados_dadger():

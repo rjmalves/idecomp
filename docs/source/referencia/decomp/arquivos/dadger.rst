@@ -192,6 +192,18 @@ de operação:
 .. autoclass:: CS
    :members:
 
+.. autoclass:: VL
+   :members:
+
+.. autoclass:: VA
+   :members:
+
+.. autoclass:: VU
+   :members:
+
+.. autoclass:: DA
+   :members:
+
 .. autoclass:: ACNUMPOS
    :members:
 

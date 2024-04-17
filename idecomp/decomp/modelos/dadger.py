@@ -2387,6 +2387,110 @@ class TI(Register):
         self.__atualiza_dados_lista(tx, 1, 1)
 
 
+class DA(Register):
+    """
+    Registro que contém as retiradas de água para outros usos
+    (desvios de água) por UHE.
+    """
+
+    IDENTIFIER = "DA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(3, 9),
+            IntegerField(2, 13),
+            FloatField(6, 16, 2),
+            FloatField(4, 24, 1),
+            FloatField(10, 34, 2),
+        ]
+    )
+
+    @property
+    def codigo_usina_retirada(self) -> Optional[int]:
+        """
+        O código da UHE a montante da qual será feita a retirada.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_usina_retirada.setter
+    def codigo_usina_retirada(self, c: int):
+        self.data[0] = c
+
+    @property
+    def codigo_usina_retorno(self) -> Optional[int]:
+        """
+        O código da UHE a montante da qual se derá o retorno.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @codigo_usina_retorno.setter
+    def codigo_usina_retorno(self, c: int):
+        self.data[1] = c
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O estágio associado à restrição DA.
+
+        :return: O estágio
+        :rtype: int | None
+        """
+        return self.data[2]
+
+    @estagio.setter
+    def estagio(self, c: int):
+        self.data[2] = c
+
+    @property
+    def vazao_desviada(self) -> Optional[float]:
+        """
+        A vazão a ser desviada em m³/s.
+
+        :return: A vazão
+        :rtype: float | None
+        """
+        return self.data[3]
+
+    @vazao_desviada.setter
+    def vazao_desviada(self, c: float):
+        self.data[3] = c
+
+    @property
+    def retorno_percentual(self) -> Optional[float]:
+        """
+        O retorno em percentual da vazão desviada.
+
+        :return: O retorno percentual
+        :rtype: float | None
+        """
+        return self.data[4]
+
+    @retorno_percentual.setter
+    def retorno_percentual(self, c: float):
+        self.data[4] = c
+
+    @property
+    def custo(self) -> Optional[float]:
+        """
+        O custo de não antedimento do desvio em $/hm³.
+
+        :return: O custo
+        :rtype: float | None
+        """
+        return self.data[5]
+
+    @custo.setter
+    def custo(self, c: float):
+        self.data[5] = c
+
+
 class FP(Register):
     """
     Registro que contém os cadastros de restrições de alteração na
