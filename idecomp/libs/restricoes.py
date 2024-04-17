@@ -480,7 +480,8 @@ class Restricoes(RegisterFile):
         :type limite_superior: float | None
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RegistroRestricaoEletricaLimitesFormulaDataPatamar` |
-            list[:class:`RegistroRestricaoEletricaLimitesFormulaDataPatamar`] | `pd.DataFrame` | None
+            list[:class:`RegistroRestricaoEletricaLimitesFormulaDataPatamar`] |
+            `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
             RegistroRestricaoEletricaLimitesFormulaDataPatamar,
@@ -576,7 +577,8 @@ class Restricoes(RegisterFile):
         :type limite_superior: float | None
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar` |
-            list[:class:`RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar`] | `pd.DataFrame` | None
+            list[:class:`RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar`] |
+            `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
             RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar,
@@ -1000,7 +1002,8 @@ class Restricoes(RegisterFile):
         :type custo_violacao: float | None
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`RegistroRestricaoEletricaTratamentoViolacaoPeriodo` |
-            list[:class:`RegistroRestricaoEletricaTratamentoViolacaoPeriodo`] | `pd.DataFrame` | None
+            list[:class:`RegistroRestricaoEletricaTratamentoViolacaoPeriodo`] |
+            `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
             RegistroRestricaoEletricaTratamentoViolacaoPeriodo,
