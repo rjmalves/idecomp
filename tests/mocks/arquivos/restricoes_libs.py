@@ -1,26 +1,47 @@
-MockREHorizPer = "RE-HORIZ-PER;    701;      1;      6\n"
-MockREHorizData = "RE-HORIZ-DATA;    701;      2021/01/01;      2022/02/01\n"
-MockRE = "RE;702;re(405) + contante_aditiva\n"
-MockREPerPat = (
+MockReHorizPer = "RE-HORIZ-PER;    701;      1;      6\n"
+MockReHorizData = "RE-HORIZ-DATA;    701;      2021/01/01;      2022/02/01\n"
+MockRe = "RE;702;re(405) + contante_aditiva\n"
+MockRePerPat = (
     "RE-PER-PAT;702;      1;     NA;      ; re(405) + contante_aditiva \n"
 )
-MockREDataPat = "RE-DATA-PAT;702;2021/01/01;;; re(405) + contante_aditiva \n"
-MockRELimFormPerPat = "RE-LIM-FOR-PER-PAT;    701;      1;     6 ;     1;               ;        4100       \n"
-MockRELimFormDataPat = (
+MockReDataPat = "RE-DATA-PAT;702;2021/01/01;;; re(405) + contante_aditiva \n"
+MockReLimFormPerPat = "RE-LIM-FOR-PER-PAT;    701;      1;     6 ;     1;               ;        4100       \n"
+MockReLimFormDataPat = (
     "RE-LIM-FOR-PER-PAT;    701;2021/01/01; ;     1; ;4100       \n"
 )
 MockAliasElet = "ALIAS-ELET ;  1 ; constante_aditiva\n"
 MockAliasEletValPerPat = (
     "ALIAS-ELET-VAL-PER-PAT;       1 ;    1 ;      ; 1; 1000\n"
 )
-MockRERegraAtiva = (
+MockReRegraAtiva = (
     "RE-REGRA-ATIVA; 62; 53000 < demanda_sin & demanda_sin <= 63000\n"
 )
-MockREHabilita = "RE-HABILITA; 703; 61\n"
-MockRETratViol = "RE-TRAT-VIOL;     701;hard        ;            1.0"
-MockRETratViolPer = (
+MockReHabilita = "RE-HABILITA; 703; 61\n"
+MockReTratViol = "RE-TRAT-VIOL;     701;hard        ;            1.0"
+MockReTratViolPer = (
     "RE-TRAT-VIOL-PER;  701;      1;      6;        hard;        1000.0"
 )
+
+MockRestricaoEletricaHorizontePeriodo = (
+    "RESTRICAO-ELETRICA-HORIZONTE-PERIODO;    701;      1;      6\n"
+)
+MockRestricaoEletricaHorizonteData = "RESTRICAO-ELETRICA-HORIZONTE-DATA;    701;      2021/01/01;      2022/02/01\n"
+MockRestricaoEletricaFormula = (
+    "RESTRICAO-ELETRICA-FORMULA;702;re(405) + contante_aditiva\n"
+)
+MockRestricaoEletricaFormulaPeriodoPatamar = "RESTRICAO-ELETRICA-FORMULA-PERIODO-PATAMAR;702;      1;     NA;      ; re(405) + contante_aditiva \n"
+MockRestricaoEletricaFormulaDataPatamar = "RESTRICAO-ELETRICA-FORMULA-DATA-PATAMART;702;2021/01/01;;; re(405) + contante_aditiva \n"
+MockRestricaoEletricaLimitesFormulaPeriodoPatamar = "RESTRICAO-ELETRICA-LIMITES-FORMULA-PERIODO-PATAMAR;    701;      1;     6 ;     1;               ;        4100       \n"
+MockRestricaoEletricaLimitesFormulaDataPatamar = "RESTRICAO-ELETRICA-LIMITES-FORMULA-DATA-PATAMAR;    701;2021/01/01; ;     1; ;4100       \n"
+MockAliasEletrico = "ALIAS-ELETRICO;  1 ; constante_aditiva\n"
+MockAliasEletricoValorPeriodoPatamar = (
+    "ALIAS-ELETRICO-VALOR-PERIODO-PATAMAR;       1 ;    1 ;      ; 1; 1000\n"
+)
+MockRestricaoEletricaRegraAtivacao = "RESTRICAO-ELETRICA-REGRA-ATIVACAO; 62; 53000 < demanda_sin & demanda_sin <= 63000\n"
+MockRestricaoEletricaHabilita = "RESTRICAO-ELETRICA-HABILITA; 703; 61\n"
+MockRestricaoEletricaTratamentoViolacao = "RESTRICAO-ELETRICA-TRATAMENTO-VIOLACAO;     701;hard        ;            1.0"
+MockRestricaoEletricaTratamentoViolacaoPeriodo = "RESTRICAO-ELETRICA-TRATAMENTO-VIOLACAO-PERIODO;  701;      1;      6;        hard;        1000.0"
+
 
 MockRestricaoEletrica = [
     "&**************************************************\n",
@@ -35,8 +56,8 @@ MockRestricaoEletrica = [
     "ALIAS-ELET ;  3 ; constante_limite\n",
     "&                                   ; CodAlias;perIni;perFin;Pat;Valor(MW)\n",
     "ALIAS-ELET-VAL-PER-PAT;       1 ;    1 ;      ; NA; 1000\n",
-    "ALIAS-ELET-VAL-PER-PAT;       2 ;    2 ;    NA;   ;   10\n",
-    "ALIAS-ELET-VAL-PER-PAT;       3 ;    1 ;      ; 1 ; 1061\n",
+    "ALIAS-ELETRICO-VALOR-PERIODO-PATAMAR;       2 ;    2 ;    NA;   ;   10\n",
+    "ALIAS-ELETRICO-VALOR-PERIODO-PATAMAR;       3 ;    1 ;      ; 1 ; 1061\n",
     "ALIAS-ELET-VAL-PER-PAT;       3 ;    1 ;      ; 2 ; 1065\n",
     "ALIAS-ELET-VAL-PER-PAT;       3 ;    1 ;      ; 3 ; 1048\n",
     "ALIAS-ELET-VAL-PER-PAT;       3 ;    6 ;      ; 1 ;  914\n",
@@ -66,8 +87,8 @@ MockRestricaoEletrica = [
     "&                                   ;CodRe  ;PerIni ;PerFin ;\n",
     "&                                   ;       ;       ;       ;\n",
     "&***********************************;IIIIIII;IIIIIII;IIIIIII;\n",
-    "RE-HORIZ-PER;    701;      1;      6\n",
-    "RE-HORIZ-PER;    702;      1;      6\n",
+    "RESTRICAO-ELETRICA-HORIZONTE-PERIODO;    701;      1;      6\n",
+    "RESTRICAO-ELETRICA-HORIZONTE-PERIODO;    702;      1;      6\n",
     "RE-HORIZ-PER;    703;      1;      6\n",
     "RE-HORIZ-PER;    704;      1;      6\n",
     "RE-HORIZ-PER;    705;      1;      6\n",
@@ -112,8 +133,8 @@ MockRestricaoEletrica = [
     "&**************************************************\n",
     "& Descrição colunas:\n",
     "&************************************************** \n",
-    "RE-REGRA-ATIVA; 61; 59000 > demanda_sin | demanda_sin > 76000\n",
-    "RE-REGRA-ATIVA; 62; 53000 < demanda_sin & demanda_sin <= 63000\n",
+    "RESTRICAO-ELETRICA-REGRA-ATIVACAO; 61; 59000 > demanda_sin | demanda_sin > 76000\n",
+    "RESTRICAO-ELETRICA-REGRA-ATIVACAO; 62; 53000 < demanda_sin & demanda_sin <= 63000\n",
     "RE-REGRA-ATIVA; 63; constante_teste < demanda_sin\n",
     "RE-REGRA-ATIVA; 64; 78000 < demanda_sin\n",
     "RE-REGRA-ATIVA; 65; peq_SUL_PCH_S <= constante_teste\n",
@@ -125,8 +146,8 @@ MockRestricaoEletrica = [
     "RE-HABILITA; 703; 61\n",
     "RE-HABILITA; 704; 62\n",
     "RE-HABILITA; 705; 63\n",
-    "RE-HABILITA; 706; 63\n",
-    "RE-HABILITA; 707; 64\n",
+    "RESTRICAO-ELETRICA-HABILITA; 706; 63\n",
+    "RESTRICAO-ELETRICA-HABILITA; 707; 64\n",
     "&\n",
     "\n",
     "\n",

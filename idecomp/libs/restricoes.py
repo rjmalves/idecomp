@@ -4,19 +4,34 @@ import pandas as pd  # type: ignore
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 from idecomp.libs.modelos.restricoes import (
-    RegistroRE,
-    RegistroREHorizPer,
-    RegistroREHorizData,
-    RegistroREPerPat,
-    RegistroREDataPat,
-    RegistroRELimFormPerPat,
-    RegistroRELimFormDataPat,
+    RegistroRe,
+    RegistroReHorizPer,
+    RegistroReHorizData,
+    RegistroRePerPat,
+    RegistroReDataPat,
+    RegistroReLimFormPerPat,
+    RegistroReLimFormDataPat,
+    RegistroReRegraAtiva,
+    RegistroReHabilita,
+    RegistroReTratViol,
+    RegistroReTratViolPer,
     RegistroAliasElet,
     RegistroAliasEletValPerPat,
-    RegistroRERegraAtiva,
-    RegistroREHabilita,
-    RegistroRETratViol,
-    RegistroRETratViolPer,
+)
+from idecomp.libs.modelos.restricoes import (
+    RegistroRestricaoEletricaFormula,
+    RegistroRestricaoEletricaFormulaDataPatamar,
+    RegistroRestricaoEletricaFormulaPeriodoPatamar,
+    RegistroRestricaoEletricaHabilita,
+    RegistroRestricaoEletricaHorizonteData,
+    RegistroRestricaoEletricaHorizontePeriodo,
+    RegistroRestricaoEletricaLimitesFormulaDataPatamar,
+    RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar,
+    RegistroRestricaoEletricaRegraAtivacao,
+    RegistroRestricaoEletricaTratamentoViolacao,
+    RegistroRestricaoEletricaTratamentoViolacaoPeriodo,
+    RegistroAliasEletrico,
+    RegistroAliasEletricoValorPeriodoPatamar,
 )
 
 
@@ -29,19 +44,32 @@ class Restricoes(RegisterFile):
     T = TypeVar("T", bound=Register)
 
     REGISTERS = [
-        RegistroREHorizPer,
-        RegistroREHorizData,
-        RegistroREPerPat,
-        RegistroREDataPat,
-        RegistroRELimFormPerPat,
-        RegistroRELimFormDataPat,
+        RegistroRestricaoEletricaHorizontePeriodo,
+        RegistroRestricaoEletricaHorizonteData,
+        RegistroRestricaoEletricaFormulaPeriodoPatamar,
+        RegistroRestricaoEletricaFormulaDataPatamar,
+        RegistroRestricaoEletricaFormula,
+        RegistroRestricaoEletricaHabilita,
+        RegistroRestricaoEletricaLimitesFormulaDataPatamar,
+        RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar,
+        RegistroRestricaoEletricaRegraAtivacao,
+        RegistroRestricaoEletricaTratamentoViolacaoPeriodo,
+        RegistroRestricaoEletricaTratamentoViolacao,
+        RegistroAliasEletricoValorPeriodoPatamar,
+        RegistroAliasEletrico,
+        RegistroReHorizPer,
+        RegistroReHorizData,
+        RegistroRePerPat,
+        RegistroReDataPat,
+        RegistroReLimFormPerPat,
+        RegistroReLimFormDataPat,
         RegistroAliasEletValPerPat,
         RegistroAliasElet,
-        RegistroRERegraAtiva,
-        RegistroREHabilita,
-        RegistroRETratViolPer,
-        RegistroRETratViol,
-        RegistroRE,
+        RegistroReRegraAtiva,
+        RegistroReHabilita,
+        RegistroReTratViolPer,
+        RegistroReTratViol,
+        RegistroRe,
     ]
 
     def __registros_ou_df(
@@ -53,58 +81,163 @@ class Restricoes(RegisterFile):
             kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
-    def re(
+    def restricao_eletrica_formula(
         self,
         codigo_restricao: Optional[int] = None,
         formula: Optional[str] = None,
         df: bool = False,
-    ) -> Optional[Union[RegistroRE, List[RegistroRE], pd.DataFrame]]:
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaFormula,
+            List[RegistroRestricaoEletricaFormula],
+            pd.DataFrame,
+        ]
+    ]:
         """
-        Obtém um registro que cadastra uma restrição elétrica (RE).
+        Obtém um registro que cadastra uma restrição elétrica (RE),
+        definido através do nome completo do card.
 
         :param codigo_restricao: código que especifica a restrição
         :type codigo_restricao: int | None
         :param formula: equação da restrição
         :type formula: str | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroRE` |
-            list[:class:`RegistroRE`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroRestricaoEletricaFormula` |
+            list[:class:`RegistroRestricaoEletricaFormula`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroRE,
+            RegistroRestricaoEletricaFormula,
             codigo_restricao=codigo_restricao,
             formula=formula,
+            df=df,
+        )
+
+    def re(
+        self,
+        codigo_restricao: Optional[int] = None,
+        formula: Optional[str] = None,
+        df: bool = False,
+    ) -> Optional[Union[RegistroRe, List[RegistroRe], pd.DataFrame]]:
+        """
+        Obtém um registro que cadastra uma restrição elétrica (RE),
+        definido através do nome alternativo (apelido) do card.
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param formula: equação da restrição
+        :type formula: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRe` |
+            list[:class:`RegistroRe`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRe,
+            codigo_restricao=codigo_restricao,
+            formula=formula,
+            df=df,
+        )
+
+    def restricao_eletrica_horizonte_periodo(
+        self,
+        codigo_restricao: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaHorizontePeriodo,
+            List[RegistroRestricaoEletricaHorizontePeriodo],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que cadastra o horizonte de validade de uma
+        restrição elétrica com intervalo de estágios,
+        definido através do nome completo do card.
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param estagio_inicio: estágio inicial de validade da restrição
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade da restrição
+        :type estagio_fim: int | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaHorizontePeriodo` |
+            list[:class:`RegistroRestricaoEletricaHorizontePeriodo`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaHorizontePeriodo,
+            codigo_restricao=codigo_restricao,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
             df=df,
         )
 
     def re_horiz_per(
         self,
         codigo_restricao: Optional[int] = None,
-        periodo_inicio: Optional[int] = None,
-        periodo_fim: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
         df: bool = False,
     ) -> Optional[
-        Union[RegistroREHorizPer, List[RegistroREHorizPer], pd.DataFrame]
+        Union[RegistroReHorizPer, List[RegistroReHorizPer], pd.DataFrame]
     ]:
         """
         Obtém um registro que cadastra o horizonte de validade de uma
-        restrição elétrica com intervalo de data.
+        restrição elétrica com intervalo de estágios,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_restricao: código que especifica a restrição
         :type codigo_restricao: int | None
-        :param periodo_inicio: período inicial de validade da restrição
-        :type periodo_inicio: int | None
-        :param periodo_fim: período final de validade da restrição
-        :type periodo_fim: int | None
+        :param estagio_inicio: estágio inicial de validade da restrição
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade da restrição
+        :type estagio_fim: int | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroREHorizPer` |
-            list[:class:`RegistroREHorizPer`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroReHorizPer` |
+            list[:class:`RegistroReHorizPer`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroREHorizPer,
+            RegistroReHorizPer,
             codigo_restricao=codigo_restricao,
-            periodo_inicio=periodo_inicio,
-            periodo_fim=periodo_fim,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
+            df=df,
+        )
+
+    def restricao_eletrica_horizonte_data(
+        self,
+        codigo_restricao: Optional[int] = None,
+        data_inicio: Optional[datetime] = None,
+        data_fim: Optional[datetime] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaHorizonteData,
+            List[RegistroRestricaoEletricaHorizonteData],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que cadastra o horizonte de validade de uma
+        restrição elétrica com intervalo de data,
+        definido através do nome completo do card.
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param data_inicio: data inicial de validade da restrição
+        :type data_inicio: datetime | None
+        :param data_fim: data final de validade da restrição
+        :type data_fim: datetime | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaHorizonteData` |
+            list[:class:`RegistroRestricaoEletricaHorizonteData`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaHorizonteData,
+            codigo_restricao=codigo_restricao,
+            data_inicio=data_inicio,
+            data_fim=data_fim,
             df=df,
         )
 
@@ -115,11 +248,12 @@ class Restricoes(RegisterFile):
         data_fim: Optional[datetime] = None,
         df: bool = False,
     ) -> Optional[
-        Union[RegistroREHorizData, List[RegistroREHorizData], pd.DataFrame]
+        Union[RegistroReHorizData, List[RegistroReHorizData], pd.DataFrame]
     ]:
         """
         Obtém um registro que cadastra o horizonte de validade de uma
-        restrição elétrica com intervalo de data.
+        restrição elétrica com intervalo de data,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_restricao: código que especifica a restrição
         :type codigo_restricao: int | None
@@ -128,52 +262,143 @@ class Restricoes(RegisterFile):
         :param data_fim: data final de validade da restrição
         :type data_fim: datetime | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroREHorizData` |
-            list[:class:`RegistroREHorizData`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroReHorizData` |
+            list[:class:`RegistroReHorizData`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroREHorizData,
+            RegistroReHorizData,
             codigo_restricao=codigo_restricao,
             data_inicio=data_inicio,
             data_fim=data_fim,
             df=df,
         )
 
-    def re_per_pat(
+    def restricao_eletrica_formula_periodo_patamar(
         self,
         codigo_restricao: Optional[int] = None,
-        periodo_inicio: Optional[int] = None,
-        periodo_fim: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
         patamar: Optional[int] = None,
         formula: Optional[str] = None,
         df: bool = False,
     ) -> Optional[
-        Union[RegistroREPerPat, List[RegistroREPerPat], pd.DataFrame]
+        Union[
+            RegistroRestricaoEletricaFormulaPeriodoPatamar,
+            List[RegistroRestricaoEletricaFormulaPeriodoPatamar],
+            pd.DataFrame,
+        ]
     ]:
         """
         Obtém um registro que cadastra uma restrição elétrica (RE)
-        que varia ao longo do tempo, informada por intervalo de período.
+        que varia ao longo do tempo, informada por intervalo de estágios,
+        definido através do nome completo do card.
 
 
         :param codigo_restricao: código que especifica a restrição
         :type codigo_restricao: int | None
-        :param periodo_inicio: período inicial de validade da restrição
-        :type periodo_inicio: int | None
-        :param periodo_fim: período final de validade da restrição
-        :type periodo_fim: int | None
+        :param estagio_inicio: estágio inicial de validade da restrição
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade da restrição
+        :type estagio_fim: int | None
         :param patamar: patamar de carga de validade da restrição
         :type patamar: int | None
         :param formula: equação da restrição
         :type formula: str | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroREPerPat` |
-            list[:class:`RegistroREPerPat`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroRestricaoEletricaFormulaPeriodoPatamar` |
+            list[:class:`RegistroRestricaoEletricaFormulaPeriodoPatamar`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroREPerPat,
+            RegistroRestricaoEletricaFormulaPeriodoPatamar,
             codigo_restricao=codigo_restricao,
-            periodo_inicio=periodo_inicio,
-            periodo_fim=periodo_fim,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
+            patamar=patamar,
+            formula=formula,
+            df=df,
+        )
+
+    def re_per_pat(
+        self,
+        codigo_restricao: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
+        patamar: Optional[int] = None,
+        formula: Optional[str] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[RegistroRePerPat, List[RegistroRePerPat], pd.DataFrame]
+    ]:
+        """
+        Obtém um registro que cadastra uma restrição elétrica (RE)
+        que varia ao longo do tempo, informada por intervalo de estágios,
+        definido através do nome alternativo (apelido) do card.
+
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param estagio_inicio: estágio inicial de validade da restrição
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade da restrição
+        :type estagio_fim: int | None
+        :param patamar: patamar de carga de validade da restrição
+        :type patamar: int | None
+        :param formula: equação da restrição
+        :type formula: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRePerPat` |
+            list[:class:`RegistroRePerPat`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRePerPat,
+            codigo_restricao=codigo_restricao,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
+            patamar=patamar,
+            formula=formula,
+            df=df,
+        )
+
+    def restricao_eletrica_formula_data_patamar(
+        self,
+        codigo_restricao: Optional[int] = None,
+        data_inicio: Optional[datetime] = None,
+        data_fim: Optional[datetime] = None,
+        patamar: Optional[int] = None,
+        formula: Optional[str] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaFormulaDataPatamar,
+            List[RegistroRestricaoEletricaFormulaDataPatamar],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que cadastra uma restrição elétrica (RE)
+        que varia ao longo do tempo, informada por intervalo de data,
+        definido através do nome completo do card.
+
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param data_inicio: data inicial de validade da restrição
+        :type data_inicio: datetime | None
+        :param data_fim: data final de validade da restrição
+        :type data_fim: datetime | None
+        :param patamar: patamar de carga de validade da restrição
+        :type patamar: int | None
+        :param formula: equação da restrição
+        :type formula: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaFormulaDataPatamar` |
+            list[:class:`RegistroRestricaoEletricaFormulaDataPatamar`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaFormulaDataPatamar,
+            codigo_restricao=codigo_restricao,
+            data_inicio=data_inicio,
+            data_fim=data_fim,
             patamar=patamar,
             formula=formula,
             df=df,
@@ -188,11 +413,12 @@ class Restricoes(RegisterFile):
         formula: Optional[str] = None,
         df: bool = False,
     ) -> Optional[
-        Union[RegistroREDataPat, List[RegistroREDataPat], pd.DataFrame]
+        Union[RegistroReDataPat, List[RegistroReDataPat], pd.DataFrame]
     ]:
         """
         Obtém um registro que cadastra uma restrição elétrica (RE)
-        que varia ao longo do tempo, informada por intervalo de data.
+        que varia ao longo do tempo, informada por intervalo de data,
+        definido através do nome alternativo (apelido) do card.
 
 
         :param codigo_restricao: código que especifica a restrição
@@ -206,11 +432,11 @@ class Restricoes(RegisterFile):
         :param formula: equação da restrição
         :type formula: str | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroREDataPat` |
-            list[:class:`RegistroREDataPat`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroReDataPat` |
+            list[:class:`RegistroReDataPat`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroREDataPat,
+            RegistroReDataPat,
             codigo_restricao=codigo_restricao,
             data_inicio=data_inicio,
             data_fim=data_fim,
@@ -219,7 +445,7 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
-    def re_lim_form_data_pat(
+    def restricao_eletrica_limites_formula_data_patamar(
         self,
         codigo_restricao: Optional[int] = None,
         data_inicio: Optional[datetime] = None,
@@ -230,14 +456,15 @@ class Restricoes(RegisterFile):
         df: bool = False,
     ) -> Optional[
         Union[
-            RegistroRELimFormDataPat,
-            List[RegistroRELimFormDataPat],
+            RegistroRestricaoEletricaLimitesFormulaDataPatamar,
+            List[RegistroRestricaoEletricaLimitesFormulaDataPatamar],
             pd.DataFrame,
         ]
     ]:
         """
         Obtém um registro que cadastra os limites por horizonte, definido
-        por intervalo de data, e por patamar para uma restrição elétrica.
+        por intervalo de data, e por patamar para uma restrição elétrica,
+        definido através do nome completo do card.
 
         :param codigo_restricao: código que especifica a restrição
         :type codigo_restricao: int | None
@@ -252,11 +479,11 @@ class Restricoes(RegisterFile):
         :param limite_superior: limite superior da restrição
         :type limite_superior: float | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroRELimFormDataPat` |
-            list[:class:`RegistroRELimFormDataPat`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroRestricaoEletricaLimitesFormulaDataPatamar` |
+            list[:class:`RegistroRestricaoEletricaLimitesFormulaDataPatamar`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroRELimFormDataPat,
+            RegistroRestricaoEletricaLimitesFormulaDataPatamar,
             codigo_restricao=codigo_restricao,
             data_inicio=data_inicio,
             data_fim=data_fim,
@@ -266,32 +493,33 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
-    def re_lim_form_per_pat(
+    def re_lim_form_data_pat(
         self,
         codigo_restricao: Optional[int] = None,
-        periodo_inicio: Optional[int] = None,
-        periodo_fim: Optional[int] = None,
+        data_inicio: Optional[datetime] = None,
+        data_fim: Optional[datetime] = None,
         patamar: Optional[int] = None,
         limite_inferior: Optional[float] = None,
         limite_superior: Optional[float] = None,
         df: bool = False,
     ) -> Optional[
         Union[
-            RegistroRELimFormPerPat,
-            List[RegistroRELimFormPerPat],
+            RegistroReLimFormDataPat,
+            List[RegistroReLimFormDataPat],
             pd.DataFrame,
         ]
     ]:
         """
         Obtém um registro que cadastra os limites por horizonte, definido
-        por intervalo de período, e por patamar para uma restrição elétrica.
+        por intervalo de data, e por patamar para uma restrição elétrica,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_restricao: código que especifica a restrição
         :type codigo_restricao: int | None
-        :param periodo_inicio: periodo inicial de validade dos limites
-        :type periodo_inicio: int | None
-        :param periodo_fim: periodo final de validade dos limites
-        :type periodo_fim: int | None
+        :param data_inicio: data inicial de validade dos limites
+        :type data_inicio: datetime | None
+        :param data_fim: data final de validade dos limites
+        :type data_fim: datetime | None
         :param patamar: patamar de validade dos limites
         :type patamar: int | None
         :param limite_inferior: limite inferior da restrição
@@ -299,17 +527,140 @@ class Restricoes(RegisterFile):
         :param limite_superior: limite superior da restrição
         :type limite_superior: float | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroRELimFormPerPat` |
-            list[:class:`RegistroRELimFormPerPat`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroReLimFormDataPat` |
+            list[:class:`RegistroReLimFormDataPat`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroRELimFormPerPat,
+            RegistroReLimFormDataPat,
             codigo_restricao=codigo_restricao,
-            periodo_inicio=periodo_inicio,
-            periodo_fim=periodo_fim,
+            data_inicio=data_inicio,
+            data_fim=data_fim,
             patamar=patamar,
             limite_inferior=limite_inferior,
             limite_superior=limite_superior,
+            df=df,
+        )
+
+    def restricao_eletrica_limite_formula_periodo_patamar(
+        self,
+        codigo_restricao: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
+        patamar: Optional[int] = None,
+        limite_inferior: Optional[float] = None,
+        limite_superior: Optional[float] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar,
+            List[RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que cadastra os limites por horizonte, definido
+        por intervalo de estágios, e por patamar para uma restrição elétrica,
+        definido através do nome completo do card.
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param estagio_inicio: estágio inicial de validade dos limites
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade dos limites
+        :type estagio_fim: int | None
+        :param patamar: patamar de validade dos limites
+        :type patamar: int | None
+        :param limite_inferior: limite inferior da restrição
+        :type limite_inferior: float | None
+        :param limite_superior: limite superior da restrição
+        :type limite_superior: float | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar` |
+            list[:class:`RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar,
+            codigo_restricao=codigo_restricao,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
+            patamar=patamar,
+            limite_inferior=limite_inferior,
+            limite_superior=limite_superior,
+            df=df,
+        )
+
+    def re_lim_form_per_pat(
+        self,
+        codigo_restricao: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
+        patamar: Optional[int] = None,
+        limite_inferior: Optional[float] = None,
+        limite_superior: Optional[float] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroReLimFormPerPat,
+            List[RegistroReLimFormPerPat],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que cadastra os limites por horizonte, definido
+        por intervalo de estágios, e por patamar para uma restrição elétrica,
+        definido através do nome alternativo (apelido) do card.
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param estagio_inicio: estágio inicial de validade dos limites
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade dos limites
+        :type estagio_fim: int | None
+        :param patamar: patamar de validade dos limites
+        :type patamar: int | None
+        :param limite_inferior: limite inferior da restrição
+        :type limite_inferior: float | None
+        :param limite_superior: limite superior da restrição
+        :type limite_superior: float | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroReLimFormPerPat` |
+            list[:class:`RegistroReLimFormPerPat`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroReLimFormPerPat,
+            codigo_restricao=codigo_restricao,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
+            patamar=patamar,
+            limite_inferior=limite_inferior,
+            limite_superior=limite_superior,
+            df=df,
+        )
+
+    def alias_eletrico(
+        self,
+        codigo_alias: Optional[int] = None,
+        identificador_alias: Optional[str] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[RegistroAliasEletrico, List[RegistroAliasEletrico], pd.DataFrame]
+    ]:
+        """
+        Obtém um registro que cadastra um alias elétrico,
+        definido através do nome completo do card.
+
+        :param codigo_alias: código que especifica o alias
+        :type codigo_alias: int | None
+        :param identificador_alias: o nome identificador do alias
+        :type identificador_alias: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroAliasEletrico` |
+            list[:class:`RegistroAliasEletrico`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroAliasEletrico,
+            codigo_alias=codigo_alias,
+            identificador_alias=identificador_alias,
             df=df,
         )
 
@@ -322,7 +673,8 @@ class Restricoes(RegisterFile):
         Union[RegistroAliasElet, List[RegistroAliasElet], pd.DataFrame]
     ]:
         """
-        Obtém um registro que cadastra um alias elétrico.
+        Obtém um registro que cadastra um alias elétrico,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_alias: código que especifica o alias
         :type codigo_alias: int | None
@@ -339,11 +691,55 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    def alias_eletrico_valor_periodo_patamar(
+        self,
+        codigo_alias: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
+        patamar: Optional[int] = None,
+        valor: Optional[float] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroAliasEletricoValorPeriodoPatamar,
+            List[RegistroAliasEletricoValorPeriodoPatamar],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que contém os valores assumidos pelo
+        alias para cada período e patamar,
+        definido através do nome completo do card.
+
+        :param codigo_alias: código que especifica o alias
+        :type codigo_alias: int | None
+        :param estagio_inicio: estágio inicial de validade do dado
+        :type estagio_inicio: datetime | None
+        :param estagio_fim: estágio final de validade do dado
+        :type estagio_fim: datetime | None
+        :param patamar: patamar de validade do dado
+        :type patamar: int | None
+        :param valor: valor do dado
+        :type valor: float | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroAliasEletricoValorPeriodoPatamar` |
+            list[:class:`RegistroAliasEletricoValorPeriodoPatamar`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroAliasEletricoValorPeriodoPatamar,
+            codigo_alias=codigo_alias,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
+            patamar=patamar,
+            valor=valor,
+            df=df,
+        )
+
     def alias_elet_val_per_pat(
         self,
         codigo_alias: Optional[int] = None,
-        periodo_inicio: Optional[int] = None,
-        periodo_fim: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
         patamar: Optional[int] = None,
         valor: Optional[float] = None,
         df: bool = False,
@@ -356,14 +752,15 @@ class Restricoes(RegisterFile):
     ]:
         """
         Obtém um registro que contém os valores assumidos pelo
-        alias para cada período e patamar.
+        alias para cada período e patamar,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_alias: código que especifica o alias
         :type codigo_alias: int | None
-        :param periodo_inicio: periodo inicial de validade do dado
-        :type periodo_inicio: datetime | None
-        :param periodo_fim: periodo final de validade do dado
-        :type periodo_fim: datetime | None
+        :param estagio_inicio: estágio inicial de validade do dado
+        :type estagio_inicio: datetime | None
+        :param estagio_fim: estágio final de validade do dado
+        :type estagio_fim: datetime | None
         :param patamar: patamar de validade do dado
         :type patamar: int | None
         :param valor: valor do dado
@@ -375,10 +772,42 @@ class Restricoes(RegisterFile):
         return self.__registros_ou_df(
             RegistroAliasEletValPerPat,
             codigo_alias=codigo_alias,
-            periodo_inicio=periodo_inicio,
-            periodo_fim=periodo_fim,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
             patamar=patamar,
             valor=valor,
+            df=df,
+        )
+
+    def restricao_eletrica_regra_ativacao(
+        self,
+        codigo_regra_ativacao: Optional[int] = None,
+        regra_ativacao: Optional[str] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaRegraAtivacao,
+            List[RegistroRestricaoEletricaRegraAtivacao],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que define uma regra para ativação e
+        desativação de restrições elétricas,
+        definido através do nome completo do card.
+
+        :param codigo_regra_ativacao: código que especifica a regra de ativação
+        :type codigo_regra_ativacao: int | None
+        :param regra_ativacao: texto que define a regra condicional para ativação
+        :type regra_ativacao: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaRegraAtivacao` |
+            list[:class:`RegistroRestricaoEletricaRegraAtivacao`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaRegraAtivacao,
+            codigo_regra_ativacao=codigo_regra_ativacao,
+            regra_ativacao=regra_ativacao,
             df=df,
         )
 
@@ -388,24 +817,57 @@ class Restricoes(RegisterFile):
         regra_ativacao: Optional[str] = None,
         df: bool = False,
     ) -> Optional[
-        Union[RegistroRERegraAtiva, List[RegistroRERegraAtiva], pd.DataFrame]
+        Union[RegistroReRegraAtiva, List[RegistroReRegraAtiva], pd.DataFrame]
     ]:
         """
         Obtém um registro que define uma regra para ativação e
-        desativação de restrições elétricas.
+        desativação de restrições elétricas,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_regra_ativacao: código que especifica a regra de ativação
         :type codigo_regra_ativacao: int | None
         :param regra_ativacao: texto que define a regra condicional para ativação
         :type regra_ativacao: str | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroRERegraAtiva` |
-            list[:class:`RegistroRERegraAtiva`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroReRegraAtiva` |
+            list[:class:`RegistroReRegraAtiva`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroRERegraAtiva,
+            RegistroReRegraAtiva,
             codigo_regra_ativacao=codigo_regra_ativacao,
             regra_ativacao=regra_ativacao,
+            df=df,
+        )
+
+    def restricao_eletrica_habilita(
+        self,
+        codigo_restricao: Optional[int] = None,
+        codigo_regra_ativacao: Optional[int] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaHabilita,
+            List[RegistroRestricaoEletricaHabilita],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que contém a associação entre uma regra
+        de ativação e uma restrição elétrica,
+        definido através do nome completo do card.
+
+        :param codigo_restricao: código que especifica a restrição elétrica
+        :type codigo_restricao: int | None
+        :param codigo_regra_ativacao: código que especifica a regra de ativação
+        :type codigo_regra_ativacao: int | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaHabilita` |
+            list[:class:`RegistroRestricaoEletricaHabilita`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaHabilita,
+            codigo_restricao=codigo_restricao,
+            codigo_regra_ativacao=codigo_regra_ativacao,
             df=df,
         )
 
@@ -415,24 +877,61 @@ class Restricoes(RegisterFile):
         codigo_regra_ativacao: Optional[int] = None,
         df: bool = False,
     ) -> Optional[
-        Union[RegistroREHabilita, List[RegistroREHabilita], pd.DataFrame]
+        Union[RegistroReHabilita, List[RegistroReHabilita], pd.DataFrame]
     ]:
         """
         Obtém um registro que contém a associação entre uma regra
-        de ativação e uma restrição elétrica.
+        de ativação e uma restrição elétrica,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_restricao: código que especifica a restrição elétrica
         :type codigo_restricao: int | None
         :param codigo_regra_ativacao: código que especifica a regra de ativação
         :type codigo_regra_ativacao: int | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroREHabilita` |
-            list[:class:`RegistroREHabilita`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroReHabilita` |
+            list[:class:`RegistroReHabilita`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroREHabilita,
+            RegistroReHabilita,
             codigo_restricao=codigo_restricao,
             codigo_regra_ativacao=codigo_regra_ativacao,
+            df=df,
+        )
+
+    def restricao_eletrica_tratamento_violacao(
+        self,
+        codigo_restricao: Optional[int] = None,
+        tipo_violacao: Optional[str] = None,
+        custo_violacao: Optional[float] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaTratamentoViolacao,
+            List[RegistroRestricaoEletricaTratamentoViolacao],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que contém definição do tipo de violação e o
+        valor do custo de violação de uma restrição elétrica,
+        definido através do nome completo do card.
+
+        :param codigo_restricao: código que especifica a restrição elétrica
+        :type codigo_restricao: int | None
+        :param tipo_violacao: define o tipo de violação da restrição elétrica
+        :type tipo_violacao: str | None
+        :param custo_violacao: define o custo de violação da restrição elétrica
+        :type custo_violacao: float | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaTratamentoViolacao` |
+            list[:class:`RegistroRestricaoEletricaTratamentoViolacao`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaTratamentoViolacao,
+            codigo_restricao=codigo_restricao,
+            tipo_violacao=tipo_violacao,
+            custo_violacao=custo_violacao,
             df=df,
         )
 
@@ -443,11 +942,12 @@ class Restricoes(RegisterFile):
         custo_violacao: Optional[float] = None,
         df: bool = False,
     ) -> Optional[
-        Union[RegistroRETratViol, List[RegistroRETratViol], pd.DataFrame]
+        Union[RegistroReTratViol, List[RegistroReTratViol], pd.DataFrame]
     ]:
         """
         Obtém um registro que contém definição do tipo de violação e o
-        valor do custo de violação de uma restrição elétrica.
+        valor do custo de violação de uma restrição elétrica,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_restricao: código que especifica a restrição elétrica
         :type codigo_restricao: int | None
@@ -456,12 +956,57 @@ class Restricoes(RegisterFile):
         :param custo_violacao: define o custo de violação da restrição elétrica
         :type custo_violacao: float | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroRETratViol` |
-            list[:class:`RegistroRETratViol`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroReTratViol` |
+            list[:class:`RegistroReTratViol`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroRETratViol,
+            RegistroReTratViol,
             codigo_restricao=codigo_restricao,
+            tipo_violacao=tipo_violacao,
+            custo_violacao=custo_violacao,
+            df=df,
+        )
+
+    def restricao_eletrica_tratamento_violacao_periodo(
+        self,
+        codigo_restricao: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
+        tipo_violacao: Optional[str] = None,
+        custo_violacao: Optional[float] = None,
+        df: bool = False,
+    ) -> Optional[
+        Union[
+            RegistroRestricaoEletricaTratamentoViolacaoPeriodo,
+            List[RegistroRestricaoEletricaTratamentoViolacaoPeriodo],
+            pd.DataFrame,
+        ]
+    ]:
+        """
+        Obtém um registro que contém definição do tipo de violação e o
+        valor do custo de violação de uma restrição elétrica definida para um
+        intervalo de estágios,
+        definido através do nome completo do card.
+
+        :param codigo_restricao: código que especifica a restrição elétrica
+        :type codigo_restricao: int | None
+        :param estagio_inicio: estágio inicial de validade do dado
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade do dado
+        :type estagio_fim: int | None
+        :param tipo_violacao: define o tipo de violação da restrição elétrica
+        :type tipo_violacao: str | None
+        :param custo_violacao: define o custo de violação da restrição elétrica
+        :type custo_violacao: float | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaTratamentoViolacaoPeriodo` |
+            list[:class:`RegistroRestricaoEletricaTratamentoViolacaoPeriodo`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaTratamentoViolacaoPeriodo,
+            codigo_restricao=codigo_restricao,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
             tipo_violacao=tipo_violacao,
             custo_violacao=custo_violacao,
             df=df,
@@ -470,38 +1015,39 @@ class Restricoes(RegisterFile):
     def re_trat_viol_per(
         self,
         codigo_restricao: Optional[int] = None,
-        periodo_inicio: Optional[int] = None,
-        periodo_fim: Optional[int] = None,
+        estagio_inicio: Optional[int] = None,
+        estagio_fim: Optional[int] = None,
         tipo_violacao: Optional[str] = None,
         custo_violacao: Optional[float] = None,
         df: bool = False,
     ) -> Optional[
-        Union[RegistroRETratViolPer, List[RegistroRETratViolPer], pd.DataFrame]
+        Union[RegistroReTratViolPer, List[RegistroReTratViolPer], pd.DataFrame]
     ]:
         """
         Obtém um registro que contém definição do tipo de violação e o
         valor do custo de violação de uma restrição elétrica definida para um
-        intervalo de período.
+        intervalo de estágios,
+        definido através do nome alternativo (apelido) do card.
 
         :param codigo_restricao: código que especifica a restrição elétrica
         :type codigo_restricao: int | None
-        :param periodo_inicio: periodo inicial de validade do dado
-        :type periodo_inicio: int | None
-        :param periodo_fim: periodo final de validade do dado
-        :type periodo_fim: int | None
+        :param estagio_inicio: estágio inicial de validade do dado
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade do dado
+        :type estagio_fim: int | None
         :param tipo_violacao: define o tipo de violação da restrição elétrica
         :type tipo_violacao: str | None
         :param custo_violacao: define o custo de violação da restrição elétrica
         :type custo_violacao: float | None
         :return: Um ou mais registros, se existirem.
-        :rtype: :class:`RegistroRETratViolPer` |
-            list[:class:`RegistroRETratViolPer`] | `pd.DataFrame` | None
+        :rtype: :class:`RegistroReTratViolPer` |
+            list[:class:`RegistroReTratViolPer`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroRETratViol,
+            RegistroReTratViol,
             codigo_restricao=codigo_restricao,
-            periodo_inicio=periodo_inicio,
-            periodo_fim=periodo_fim,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
             tipo_violacao=tipo_violacao,
             custo_violacao=custo_violacao,
             df=df,
