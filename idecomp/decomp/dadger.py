@@ -84,6 +84,7 @@ from idecomp.decomp.modelos.dadger import (
     VL,
     VA,
     VU,
+    DA,
 )
 
 import pandas  # type: ignore
@@ -211,6 +212,7 @@ class Dadger(RegisterFile):
         VL,
         VA,
         VU,
+        DA,
     ]
 
     def __init__(self, data=...) -> None:
@@ -999,6 +1001,35 @@ class Dadger(RegisterFile):
         :rtype: :class:`TI` | list[:class:`TI`] | :class:`pandas.DataFrame` | None
         """
         return self.__registros_ou_df(TI, codigo_usina=codigo_usina, df=df)
+
+    def da(
+        self,
+        codigo_usina_retirada: Optional[int] = None,
+        codigo_usina_retorno: Optional[int] = None,
+        df: bool = False,
+    ) -> Optional[Union[DA, List[DA], pandas.DataFrame]]:
+        """
+        Obtém um registro que especifica as retiradas de água para
+        outros usos (desvios de água) por usina (UHE) existente no
+        estudo especificado no :class:`Dadger`
+
+        :param codigo_usina_retirada: Código da UHE a montante da qual será feita a retirada
+        :type codigo_usina_retirada: int | None
+        :param codigo_usina_retorno: Código da UHE a montante da qual se derá o retorno.
+        :type codigo_usina_retorno: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`DA` | list[:class:`DA`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            DA,
+            codigo_usina_retirada=codigo_usina_retirada,
+            codigo_usina_retorno=codigo_usina_retorno,
+            df=df,
+        )
 
     def mp(
         self,
