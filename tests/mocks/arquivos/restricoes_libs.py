@@ -1,10 +1,10 @@
 MockReHorizPer = "RE-HORIZ-PER;    701;      1;      6\n"
 MockReHorizData = "RE-HORIZ-DATA;    701;      2021/01/01;      2022/02/01\n"
-MockRe = "RE;702;re(405) + contante_aditiva\n"
+MockRe = "RE;702;re(405) + constante_aditiva\n"
 MockRePerPat = (
-    "RE-PER-PAT;702;      1;     NA;      ; re(405) + contante_aditiva \n"
+    "RE-PER-PAT;702;      1;     NA;      ; re(405) + constante_aditiva \n"
 )
-MockReDataPat = "RE-DATA-PAT;702;2021/01/01;;; re(405) + contante_aditiva \n"
+MockReDataPat = "RE-DATA-PAT;702;2021/01/01;;; re(405) + constante_aditiva \n"
 MockReLimFormPerPat = "RE-LIM-FOR-PER-PAT;    701;      1;     6 ;     1;               ;        4100       \n"
 MockReLimFormDataPat = (
     "RE-LIM-FOR-PER-PAT;    701;2021/01/01; ;     1; ;4100       \n"
@@ -27,10 +27,10 @@ MockRestricaoEletricaHorizontePeriodo = (
 )
 MockRestricaoEletricaHorizonteData = "RESTRICAO-ELETRICA-HORIZONTE-DATA;    701;      2021/01/01;      2022/02/01\n"
 MockRestricaoEletricaFormula = (
-    "RESTRICAO-ELETRICA-FORMULA;702;re(405) + contante_aditiva\n"
+    "RESTRICAO-ELETRICA-FORMULA;702;re(405) + constante_aditiva\n"
 )
-MockRestricaoEletricaFormulaPeriodoPatamar = "RESTRICAO-ELETRICA-FORMULA-PERIODO-PATAMAR;702;      1;     NA;      ; re(405) + contante_aditiva \n"
-MockRestricaoEletricaFormulaDataPatamar = "RESTRICAO-ELETRICA-FORMULA-DATA-PATAMART;702;2021/01/01;;; re(405) + contante_aditiva \n"
+MockRestricaoEletricaFormulaPeriodoPatamar = "RESTRICAO-ELETRICA-FORMULA-PERIODO-PATAMAR;702;      1;     NA;      ; re(405) + constante_aditiva \n"
+MockRestricaoEletricaFormulaDataPatamar = "RESTRICAO-ELETRICA-FORMULA-DATA-PATAMART;702;2021/01/01;;; re(405) + constante_aditiva \n"
 MockRestricaoEletricaLimitesFormulaPeriodoPatamar = "RESTRICAO-ELETRICA-LIMITES-FORMULA-PERIODO-PATAMAR;    701;      1;     6 ;     1;               ;        4100       \n"
 MockRestricaoEletricaLimitesFormulaDataPatamar = "RESTRICAO-ELETRICA-LIMITES-FORMULA-DATA-PATAMAR;    701;2021/01/01; ;     1; ;4100       \n"
 MockAliasEletrico = "ALIAS-ELETRICO;  1 ; constante_aditiva\n"
@@ -70,7 +70,7 @@ MockRestricaoEletrica = [
     "&-                                         ;       ;       ;       ;      ;\n",
     "&SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS;IIIIIII;IIIIIII;IIIIIII;IIIIII;SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS\n",
     "RE-PER-PAT;     701;      1;       ;    NA; re(405) \n",
-    "RE-PER-PAT;     702;      1;     NA;      ; re(405) + contante_aditiva \n",
+    "RE-PER-PAT;     702;      1;     NA;      ; re(405) + constante_aditiva \n",
     "RE-PER-PAT;     703;      1;       ;    NA; re(405) * constante_multiplicativa\n",
     "RE-PER-PAT;     704;      1;       ;      ; re(405) + 0.31*ger_conjh(66,1)\n",
     "RE-PER-PAT;     705;      1;       ;      ; re(405) + 0.46*ger_conjh(66,1)\n",

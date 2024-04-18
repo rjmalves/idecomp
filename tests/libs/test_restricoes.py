@@ -154,11 +154,11 @@ def test_registro_re():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [702, "re(405) + contante_aditiva"]
+    assert r.data == [702, "re(405) + constante_aditiva"]
     assert r.codigo_restricao == 702
     r.codigo_restricao = 0
     assert r.codigo_restricao == 0
-    assert r.formula == "re(405) + contante_aditiva"
+    assert r.formula == "re(405) + constante_aditiva"
     r.formula = "teste"
     assert r.formula == "teste"
 
@@ -170,11 +170,11 @@ def test_registro_restricao_eletrica_formula():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [702, "re(405) + contante_aditiva"]
+    assert r.data == [702, "re(405) + constante_aditiva"]
     assert r.codigo_restricao == 702
     r.codigo_restricao = 0
     assert r.codigo_restricao == 0
-    assert r.formula == "re(405) + contante_aditiva"
+    assert r.formula == "re(405) + constante_aditiva"
     r.formula = "teste"
     assert r.formula == "teste"
 
@@ -186,7 +186,7 @@ def test_registro_re_per_pat():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [702, 1, None, None, "re(405) + contante_aditiva"]
+    assert r.data == [702, 1, None, None, "re(405) + constante_aditiva"]
     assert r.codigo_restricao == 702
     r.codigo_restricao = 0
     assert r.codigo_restricao == 0
@@ -199,7 +199,7 @@ def test_registro_re_per_pat():
     assert r.patamar is None
     r.patamar = 0
     assert r.patamar == 0
-    assert r.formula == "re(405) + contante_aditiva"
+    assert r.formula == "re(405) + constante_aditiva"
     r.formula = "teste"
     assert r.formula == "teste"
 
@@ -213,7 +213,7 @@ def test_registro_restricao_eletrica_formula_periodo_patamar():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [702, 1, None, None, "re(405) + contante_aditiva"]
+    assert r.data == [702, 1, None, None, "re(405) + constante_aditiva"]
     assert r.codigo_restricao == 702
     r.codigo_restricao = 0
     assert r.codigo_restricao == 0
@@ -226,7 +226,7 @@ def test_registro_restricao_eletrica_formula_periodo_patamar():
     assert r.patamar is None
     r.patamar = 0
     assert r.patamar == 0
-    assert r.formula == "re(405) + contante_aditiva"
+    assert r.formula == "re(405) + constante_aditiva"
     r.formula = "teste"
     assert r.formula == "teste"
 
@@ -243,7 +243,7 @@ def test_registro_re_data_pat():
         datetime(2021, 1, 1),
         None,
         None,
-        "re(405) + contante_aditiva",
+        "re(405) + constante_aditiva",
     ]
     assert r.codigo_restricao == 702
     r.codigo_restricao = 0
@@ -257,7 +257,7 @@ def test_registro_re_data_pat():
     assert r.patamar is None
     r.patamar = 0
     assert r.patamar == 0
-    assert r.formula == "re(405) + contante_aditiva"
+    assert r.formula == "re(405) + constante_aditiva"
     r.formula = "teste"
     assert r.formula == "teste"
 
@@ -276,7 +276,7 @@ def test_registro_restricao_eletrica_formula_data_patamar():
         datetime(2021, 1, 1),
         None,
         None,
-        "re(405) + contante_aditiva",
+        "re(405) + constante_aditiva",
     ]
     assert r.codigo_restricao == 702
     r.codigo_restricao = 0
@@ -290,7 +290,7 @@ def test_registro_restricao_eletrica_formula_data_patamar():
     assert r.patamar is None
     r.patamar = 0
     assert r.patamar == 0
-    assert r.formula == "re(405) + contante_aditiva"
+    assert r.formula == "re(405) + constante_aditiva"
     r.formula = "teste"
     assert r.formula == "teste"
 
