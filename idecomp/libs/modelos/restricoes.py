@@ -6,6 +6,7 @@ from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
 from cfinterface.components.datetimefield import DatetimeField
 from datetime import datetime
+from idecomp.config import FORMATO_CAMPOS_DATA_LIBS
 
 
 class RegistroRestricaoEletricaHorizontePeriodo(Register):
@@ -81,8 +82,8 @@ class RegistroRestricaoEletricaHorizonteData(Register):
     LINE = Line(
         [
             IntegerField(size=20),
-            DatetimeField(format="%Y/%m/%d"),
-            DatetimeField(format="%Y/%m/%d"),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
         ],
         delimiter=";",
     )
@@ -278,8 +279,8 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
     LINE = Line(
         [
             IntegerField(size=20),
-            DatetimeField(format="%Y/%m/%d"),
-            DatetimeField(format="%Y/%m/%d"),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
             IntegerField(size=20),
             LiteralField(size=200),
         ],
@@ -475,8 +476,8 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
     LINE = Line(
         [
             IntegerField(size=20),
-            DatetimeField(format="%Y/%m/%d"),
-            DatetimeField(format="%Y/%m/%d"),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
             IntegerField(size=20),
             FloatField(size=20),
             FloatField(size=20),
@@ -1023,8 +1024,8 @@ class RegistroReHorizData(Register):
     LINE = Line(
         [
             IntegerField(size=20),
-            DatetimeField(format="%Y/%m/%d"),
-            DatetimeField(format="%Y/%m/%d"),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
         ],
         delimiter=";",
     )
@@ -1220,8 +1221,8 @@ class RegistroReDataPat(Register):
     LINE = Line(
         [
             IntegerField(size=20),
-            DatetimeField(format="%Y/%m/%d"),
-            DatetimeField(format="%Y/%m/%d"),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
             IntegerField(size=20),
             LiteralField(size=200),
         ],
@@ -1417,8 +1418,8 @@ class RegistroReLimFormDataPat(Register):
     LINE = Line(
         [
             IntegerField(size=20),
-            DatetimeField(format="%Y/%m/%d"),
-            DatetimeField(format="%Y/%m/%d"),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
+            DatetimeField(format=FORMATO_CAMPOS_DATA_LIBS),
             IntegerField(size=20),
             FloatField(size=20),
             FloatField(size=20),
