@@ -8,6 +8,8 @@ class SecaoVazoesPostos(Section):
     Registro com os dados associados às vazões dos postos.
     """
 
+    __slots__ = []
+
     TAMANHO_REGISTRO = 320
 
     def __init__(self, previous=None, next=None, data=None) -> None:

@@ -13,6 +13,8 @@ class TabelaOperSistv31(TabelaCSV):
     Bloco com a operação por submercados.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;------;-----;--------;----;"
     LINE_MODEL = Line(
         [
@@ -76,6 +78,8 @@ class TabelaOperSist(TabelaCSV):
     """
     Bloco com a operação por submercados.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = "-----;------;------;-----;--------;"
     LINE_MODEL = Line(

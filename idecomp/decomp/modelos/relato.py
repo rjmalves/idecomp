@@ -28,6 +28,8 @@ class BlocoREEsSubsistemas(Block):
     Subsistemas do DECOMP no relato.rvX.
     """
 
+    __slots__ = ["__line"]
+
     BEGIN_PATTERN = "Relatorio dos dados da configuracao dos Reservatorios"
     END_PATTERN = ""
 
@@ -102,6 +104,8 @@ class BlocoUHEsREEsSubsistemas(Block):
     Bloco com as informações de relação entre os REEs e os
     Subsistemas do DECOMP no relato.rvX.
     """
+
+    __slots__ = ["__line"]
 
     BEGIN_PATTERN = (
         "Relatorio dos dados de Configuracao das Usinas Hidroeletricas"
@@ -186,6 +190,8 @@ class BlocoConvergenciaRelato(Block):
     """
     Bloco com as informações de convergência do DECOMP no relato.rvX.
     """
+
+    __slots__ = ["__line"]
 
     BEGIN_PATTERN = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
     END_PATTERN = ""
@@ -285,7 +291,11 @@ class BlocoConvergenciaRelato(Block):
 
 
 class BlocoRelatorioOperacaoRelato(Block):
-    """ """
+    """
+    Bloco com as informações do relatório da operação do DECOMP no relato.rvX.
+    """
+
+    __slots__ = ["__line", "__scenario_line", "dados_cenario"]
 
     BEGIN_PATTERN = r"RELATORIO  DA  OPERACAO "
     END_PATTERN = "X----X-"
@@ -514,7 +524,12 @@ class BlocoRelatorioOperacaoRelato(Block):
 
 
 class BlocoRelatorioOperacaoUTERelato(Block):
-    """ """
+    """
+    Bloco com as informações do relatório da operação por usina térmica 
+    do DECOMP no relato.rvX.
+    """
+
+    __slots__ = ["__line", "__scenario_line"]
 
     BEGIN_PATTERN = r"RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
     END_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
@@ -628,6 +643,8 @@ class BlocoBalancoEnergeticoRelato(Block):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
+    __slots__ = ["__linha_cenario", "__linha_subsistema", "__linha_ear_ena", "__linha_balanco"]
 
     BEGIN_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
     END_PATTERN = r"RELATORIO\s+DA\s+OPERACAO"  # noqa
@@ -829,6 +846,8 @@ class BlocoCMORelato(Block):
     Bloco com as informações do CMO por estágio e por subsistema.
     """
 
+    __slots__ = ["__linha"]
+
     BEGIN_PATTERN = "   CUSTO MARGINAL DE OPERACAO"
     END_PATTERN = ""
 
@@ -913,6 +932,8 @@ class BlocoCustoOperacaoValorEsperadoRelato(Block):
     presente e futuro por estágio.
     """
 
+    __slots__ = ["__linha"]
+
     BEGIN_PATTERN = r"CUSTO DE OPERACAO E VALOR ESPERADO DO C\.FUTURO"
     END_PATTERN = ""
 
@@ -968,6 +989,8 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
+    __slots__ = ["__linha"]
 
     BEGIN_PATTERN = r"GERACAO TERMICA NOS SUSBSISTEMAS \(MWmed\)"
     END_PATTERN = ""
@@ -1032,6 +1055,8 @@ class BlocoVolumeUtilReservatorioRelato(Block):
     Bloco com as informações de energia armazenada
     em percentual por REE.
     """
+
+    __slots__ = ["__linha"]
 
     BEGIN_PATTERN = " VOLUME UTIL DOS RESERVATORIOS"
     END_PATTERN = ""
@@ -1104,6 +1129,8 @@ class BlocoDadosTermicasRelato(Block):
     """
     Bloco com as informações de cadastro das térmicas existentes no estudo.
     """
+
+    __slots__ = ["__line"]
 
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Usinas  Termicas"
     END_PATTERN = ""
@@ -1211,6 +1238,8 @@ class BlocoDisponibilidadesTermicasRelato(Block):
     das térmicas existentes no estudo.
     """
 
+    __slots__ = ["__linha"]
+
     BEGIN_PATTERN = r"Disponibilidade das Usinas Termicas \(\%\)"
     END_PATTERN = ""
 
@@ -1281,6 +1310,8 @@ class BlocoDadosMercadoRelato(Block):
     Bloco com as informações de mercado de energia por patamar
     e por subsistema existente no :class:`Relato`.
     """
+
+    __slots__ = ["__line"]
 
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Mercado"
     END_PATTERN = ""
@@ -1365,6 +1396,8 @@ class BlocoENAAcoplamentoREERelato(Block):
     Bloco com as informações de energia natural afluente para
     acoplamento com o longo prazo por REE.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = r"Afluente para Acoplamento c\/ Longo Prazo por REE"
     END_PATTERN = r"Afluente para Acoplamento c\/ Longo Prazo por Subsistema"
@@ -1458,6 +1491,8 @@ class BlocoEnergiaArmazenadaREERelato(Block):
     em percentual por REE.
     """
 
+    __slots__ = ["__linha"]
+
     BEGIN_PATTERN = r"ENERGIA ARMAZENADA NOS REEs \(\%"
     END_PATTERN = ""
 
@@ -1536,6 +1571,8 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Block):
     em percentual por REE.
     """
 
+    __slots__ = ["__linha"]
+
     BEGIN_PATTERN = r"ENERGIA ARMAZENADA NOS SUBSISTEMAS \(\%"
     END_PATTERN = ""
 
@@ -1610,6 +1647,8 @@ class BlocoENAPreEstudoMensalREERelato(Block):
     por REE.
     """
 
+    __slots__ = ["__line"]
+
     BEGIN_PATTERN = r"ENERGIA NATURAL AFLUENTE POR REE \(MESES"
     END_PATTERN = ""
 
@@ -1681,6 +1720,8 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
     por Subsistema.
     """
 
+    __slots__ = ["__line"]
+
     BEGIN_PATTERN = r"ENERGIA NATURAL AFLUENTE POR SUBSISTEMA \(MESES"
     END_PATTERN = ""
 
@@ -1750,6 +1791,8 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
     Bloco com as informações da ENA pré estudo semanal do caso
     por REE.
     """
+
+    __slots__ = ["__line"]
 
     BEGIN_PATTERN = r"DADOS DE ENERGIA NATURAL AFLUENTE POR REE \(SEMANAS"
     END_PATTERN = ""
@@ -1826,6 +1869,8 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
     por Subsistema.
     """
 
+    __slots__ = ["__line"]
+
     BEGIN_PATTERN = r"NATURAL AFLUENTE POR SUBSISTEMA\(SEMANAS"
     END_PATTERN = ""
 
@@ -1899,6 +1944,8 @@ class BlocoDiasExcluidosSemanas(Block):
     Bloco com as informações de dias excluídos das semanas
     inicial e final do estudo.
     """
+
+    __slots__ = ["__line"]
 
     BEGIN_PATTERN = " Mes inicial do periodo de estudos"
     END_PATTERN = ""

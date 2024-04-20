@@ -12,6 +12,8 @@ class TabelaEcoDiscr(TabelaCSV):
     Bloco com a discretização temporal dos estágios e patamares.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;-----;--------;"
     LINE_MODEL = Line(
         [

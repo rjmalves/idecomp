@@ -13,6 +13,8 @@ class TabelaOperGnlv31(TabelaCSV):
     Bloco com a operação das usinas térmicas de despacho antecipado.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;------;-----;--------;-----;"
     LINE_MODEL = Line(
         [
@@ -64,6 +66,8 @@ class TabelaOperGnl(TabelaCSV):
     """
     Bloco com a operação das usinas térmicas de despacho antecipado.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = "-----;------;------;-----;--------;"
     LINE_MODEL = Line(

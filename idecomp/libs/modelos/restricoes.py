@@ -16,6 +16,8 @@ class RegistroRestricaoEletricaHorizontePeriodo(Register):
     definido através do nome completo do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RESTRICAO-ELETRICA-HORIZONTE-PERIODO"
     IDENTIFIER_DIGITS = 36
     LINE = Line(
@@ -77,6 +79,8 @@ class RegistroRestricaoEletricaHorizonteData(Register):
     definido através do nome completo do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RESTRICAO-ELETRICA-HORIZONTE-DATA"
     IDENTIFIER_DIGITS = 33
     LINE = Line(
@@ -137,6 +141,8 @@ class RegistroRestricaoEletricaFormula(Register):
     definido através do nome completo do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RESTRICAO-ELETRICA-FORMULA"
     IDENTIFIER_DIGITS = 26
     LINE = Line(
@@ -182,6 +188,8 @@ class RegistroRestricaoEletricaFormulaPeriodoPatamar(Register):
     que varia ao longo do tempo, informada por intervalo de estágios,
     definido através do nome completo do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RESTRICAO-ELETRICA-FORMULA-PERIODO-PATAMAR"
     IDENTIFIER_DIGITS = 42
@@ -274,6 +282,8 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
     definido através do nome completo do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RESTRICAO-ELETRICA-FORMULA-DATA-PATAMAR"
     IDENTIFIER_DIGITS = 39
     LINE = Line(
@@ -364,6 +374,8 @@ class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
     RE por período e patamar,
     definido através do nome completo do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RESTRICAO-ELETRICA-LIMITES-FORMULA-PERIODO-PATAMAR"
     IDENTIFIER_DIGITS = 50
@@ -471,6 +483,8 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
     definido através do nome completo do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RESTRICAO-ELETRICA-LIMITES-FORMULA-DATA-PATAMAR"
     IDENTIFIER_DIGITS = 47
     LINE = Line(
@@ -576,6 +590,8 @@ class RegistroAliasEletrico(Register):
     definido através do nome completo do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "ALIAS-ELETRICO"
     IDENTIFIER_DIGITS = 14
     LINE = Line(
@@ -621,6 +637,8 @@ class RegistroAliasEletricoValorPeriodoPatamar(Register):
     para cada período e patamar,
     definido através do nome completo do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "ALIAS-ELETRICO-VALOR-PERIODO-PATAMAR"
     IDENTIFIER_DIGITS = 36
@@ -713,6 +731,8 @@ class RegistroRestricaoEletricaRegraAtivacao(Register):
     definido através do nome completo do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RESTRICAO-ELETRICA-REGRA-ATIVACAO"
     IDENTIFIER_DIGITS = 33
     LINE = Line(
@@ -759,6 +779,8 @@ class RegistroRestricaoEletricaHabilita(Register):
     definido através do nome completo do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RESTRICAO-ELETRICA-HABILITA"
     IDENTIFIER_DIGITS = 27
     LINE = Line(
@@ -804,6 +826,8 @@ class RegistroRestricaoEletricaTratamentoViolacao(Register):
     do custo de violação de uma restrição elétrica,
     definido através do nome completo do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RESTRICAO-ELETRICA-TRATAMENTO-VIOLACAO"
     IDENTIFIER_DIGITS = 38
@@ -866,6 +890,8 @@ class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(Register):
     um intervalo de estágios,
     definido através do nome completo do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RESTRICAO-ELETRICA-TRATAMENTO-VIOLACAO-PERIODO"
     IDENTIFIER_DIGITS = 46
@@ -958,6 +984,8 @@ class RegistroReHorizPer(Register):
     definido através do nome alternativo (apelido) do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RE-HORIZ-PER"
     IDENTIFIER_DIGITS = 12
     LINE = Line(
@@ -1019,6 +1047,8 @@ class RegistroReHorizData(Register):
     definido através do nome alternativo (apelido) do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RE-HORIZ-DATA"
     IDENTIFIER_DIGITS = 13
     LINE = Line(
@@ -1079,6 +1109,8 @@ class RegistroRe(Register):
     definido através do nome alternativo (apelido) do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RE"
     IDENTIFIER_DIGITS = 2
     LINE = Line(
@@ -1124,6 +1156,8 @@ class RegistroRePerPat(Register):
     que varia ao longo do tempo, informada por intervalo de estágios,
     definido através do nome alternativo (apelido) do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RE-PER-PAT"
     IDENTIFIER_DIGITS = 10
@@ -1216,6 +1250,8 @@ class RegistroReDataPat(Register):
     definido através do nome alternativo (apelido) do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RE-DATA-PAT"
     IDENTIFIER_DIGITS = 11
     LINE = Line(
@@ -1306,6 +1342,8 @@ class RegistroReLimFormPerPat(Register):
     RE por período e patamar,
     definido através do nome alternativo (apelido) do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RE-LIM-FORM-PER-PAT"
     IDENTIFIER_DIGITS = 19
@@ -1413,6 +1451,8 @@ class RegistroReLimFormDataPat(Register):
     definido através do nome alternativo (apelido) do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RE-LIM-FORM-DATA-PAT"
     IDENTIFIER_DIGITS = 20
     LINE = Line(
@@ -1518,6 +1558,8 @@ class RegistroAliasElet(Register):
     definido através do nome alternativo (apelido) do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "ALIAS-ELET"
     IDENTIFIER_DIGITS = 10
     LINE = Line(
@@ -1563,6 +1605,8 @@ class RegistroAliasEletValPerPat(Register):
     para cada período e patamar,
     definido através do nome alternativo (apelido) do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "ALIAS-ELET-VAL-PER-PAT"
     IDENTIFIER_DIGITS = 22
@@ -1655,6 +1699,8 @@ class RegistroReRegraAtiva(Register):
     definido através do nome alternativo (apelido) do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RE-REGRA-ATIVA"
     IDENTIFIER_DIGITS = 14
     LINE = Line(
@@ -1701,6 +1747,8 @@ class RegistroReHabilita(Register):
     definido através do nome alternativo (apelido) do card.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RE-HABILITA"
     IDENTIFIER_DIGITS = 11
     LINE = Line(
@@ -1746,6 +1794,8 @@ class RegistroReTratViol(Register):
     do custo de violação de uma restrição elétrica,
     definido através do nome alternativo (apelido) do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RE-TRAT-VIOL"
     IDENTIFIER_DIGITS = 12
@@ -1808,6 +1858,8 @@ class RegistroReTratViolPer(Register):
     um intervalo de estágios,
     definido através do nome alternativo (apelido) do card.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RE-TRAT-VIOL-PER"
     IDENTIFIER_DIGITS = 16

@@ -13,6 +13,8 @@ class TabelaOperDesvioFpha(TabelaCSVLibs):
     Bloco com os desvios da função de produção hidráulica.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "&IIIIIII;IIIIIII;IIIIII;IIIIIII;SSSSSSSSSSSSSSSSSSSS"
     LINE_MODEL = Line(
         [

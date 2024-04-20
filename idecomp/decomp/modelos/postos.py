@@ -10,6 +10,8 @@ class RegistroPostos(Register):
     Registro com os dados associados às informações dos postos.
     """
 
+    __slots__ = []
+
     POSTOS = 320
 
     LINE = Line(

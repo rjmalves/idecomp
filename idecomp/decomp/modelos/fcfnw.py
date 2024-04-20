@@ -16,6 +16,8 @@ class BlocoCortesFCF(Block):
     no acoplamento.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "Restricao     RHS"
     END_PATTERN = ""
 

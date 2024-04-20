@@ -11,6 +11,8 @@ class VersaoModelo(Block):
     título do arquivo.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = r"CEPEL: DECOMP"
     END_PATTERN = ""
 
@@ -33,6 +35,8 @@ class VersaoModeloLibs(Block):
     Bloco para ler a versão utilizada do modelo a partir da linha de
     título do arquivo.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = r"Nome do Modelo: DECOMP Versão:"
     END_PATTERN = ""

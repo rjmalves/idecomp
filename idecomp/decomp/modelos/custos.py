@@ -13,6 +13,13 @@ from typing import IO, List
 class BlocoRelatorioCustos(Block):
     """ """
 
+    __slots__ = [
+        "__scenario_line",
+        "__dual_variables_line",
+        "__fcf_line",
+        "dados_cenario",
+    ]
+
     BEGIN_PATTERN = r" RELATORIO DAS VARIAVEIS DUAIS NO ESTAGIO"
     END_PATTERN = "X----X-"
 

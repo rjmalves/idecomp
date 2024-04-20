@@ -13,6 +13,8 @@ class TabelaOperUsihv31(TabelaCSV):
     Bloco com a operação por usina hidroelétrica.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;------;-----;--------;-----;--------------;"
 
     LINE_MODEL = Line(
@@ -87,6 +89,8 @@ class TabelaOperUsih(TabelaCSV):
     """
     Bloco com a operação por usina hidroelétrica.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = "-----;------;------;-----;--------;"
 

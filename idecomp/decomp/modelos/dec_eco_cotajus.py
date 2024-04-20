@@ -13,6 +13,8 @@ class TabelaEcoCotajus(TabelaCSV):
     Bloco com o eco dos polinômios por partes das curvas de jusante.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;--------------;---------;------------;"
     LINE_MODEL = Line(
         [

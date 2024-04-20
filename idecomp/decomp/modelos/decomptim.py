@@ -13,6 +13,8 @@ class BlocoTemposEtapas(Block):
     decomp.tim.
     """
 
+    __slots__ = ["__line"]
+
     BEGIN_PATTERN = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
     END_PATTERN = ""
 
