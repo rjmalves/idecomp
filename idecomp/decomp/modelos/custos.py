@@ -18,6 +18,7 @@ class BlocoRelatorioCustos(Block):
         "__dual_variables_line",
         "__fcf_line",
         "dados_cenario",
+        "data",
     ]
 
     BEGIN_PATTERN = r" RELATORIO DAS VARIAVEIS DUAIS NO ESTAGIO"
