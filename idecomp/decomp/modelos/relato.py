@@ -525,7 +525,7 @@ class BlocoRelatorioOperacaoRelato(Block):
 
 class BlocoRelatorioOperacaoUTERelato(Block):
     """
-    Bloco com as informações do relatório da operação por usina térmica 
+    Bloco com as informações do relatório da operação por usina térmica
     do DECOMP no relato.rvX.
     """
 
@@ -644,7 +644,12 @@ class BlocoBalancoEnergeticoRelato(Block):
     utilizados na execução do caso.
     """
 
-    __slots__ = ["__linha_cenario", "__linha_subsistema", "__linha_ear_ena", "__linha_balanco"]
+    __slots__ = [
+        "__linha_cenario",
+        "__linha_subsistema",
+        "__linha_ear_ena",
+        "__linha_balanco",
+    ]
 
     BEGIN_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
     END_PATTERN = r"RELATORIO\s+DA\s+OPERACAO"  # noqa
