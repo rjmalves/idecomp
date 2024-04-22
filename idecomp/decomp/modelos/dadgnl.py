@@ -12,6 +12,8 @@ class TG(Register):
     Registro que contém o cadastro das térmicas a GNL
     """
 
+    __slots__ = []
+
     IDENTIFIER = "TG  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -157,6 +159,8 @@ class GS(Register):
     no estudo.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "GS  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -200,6 +204,8 @@ class NL(Register):
     Registro que contém o número de lags para o despacho de cada térmica
     de despacho antecipado em cada subsistema.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "NL  "
     IDENTIFIER_DIGITS = 4
@@ -258,6 +264,8 @@ class GL(Register):
     """
     Registro que contém os cadastros de restrições elétricas.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "GL  "
     IDENTIFIER_DIGITS = 4

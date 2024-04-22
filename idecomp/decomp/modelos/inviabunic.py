@@ -13,6 +13,8 @@ class BlocoInviabilidadesIteracoes(Block):
     pelo DECOMP durante o processo iterativo.
     """
 
+    __slots__ = ["__linha"]
+
     BEGIN_PATTERN = "RELATORIO DE VIOLACOES DAS RESTRICOES"
     END_PATTERN = ""
 
@@ -89,6 +91,8 @@ class BlocoInviabilidadesSimFinal(Block):
     Bloco com as informações das inviabilidades visitadas
     pelo DECOMP durante a simulação final.
     """
+
+    __slots__ = ["__linha"]
 
     BEGIN_PATTERN = "SIMULACAO FINAL:"
     END_PATTERN = ""

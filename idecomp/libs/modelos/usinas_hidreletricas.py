@@ -10,6 +10,8 @@ from typing import Optional
 class HidreletricaCurvaJusante(Register):
     """ """
 
+    __slots__ = []
+
     IDENTIFIER = "HIDRELETRICA-CURVAJUSANTE"
     IDENTIFIER_DIGITS = 26
     LINE = Line(
@@ -68,6 +70,8 @@ class HidreletricaCurvaJusante(Register):
 class HidreletricaCurvaJusantePolinomioPorPartes(Register):
     """ """
 
+    __slots__ = []
+
     IDENTIFIER = "HIDRELETRICA-CURVAJUSANTE-POLINOMIOPORPARTES"
     IDENTIFIER_DIGITS = 45
     LINE = Line(
@@ -124,6 +128,8 @@ class HidreletricaCurvaJusantePolinomioPorPartes(Register):
 
 class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
     """ """
+
+    __slots__ = []
 
     IDENTIFIER = "HIDRELETRICA-CURVAJUSANTE-POLINOMIOPORPARTES-SEGMENTO"
     IDENTIFIER_DIGITS = 54
@@ -289,6 +295,8 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
 class HidreletricaCurvaJusanteAfogamentoExplicitoUsina(Register):
     """ """
 
+    __slots__ = []
+
     IDENTIFIER = "HIDRELETRICA-CURVAJUSANTE-AFOGAMENTO-EXPLICITO-USINA"
     IDENTIFIER_DIGITS = 53
     LINE = Line(
@@ -330,6 +338,8 @@ class HidreletricaCurvaJusanteAfogamentoExplicitoUsina(Register):
 
 class HidreletricaCurvaJusanteAfogamentoExplicitoPadrao(Register):
     """ """
+
+    __slots__ = []
 
     IDENTIFIER = "HIDRELETRICA-CURVAJUSANTE-AFOGAMENTO-EXPLICITO-PADRAO"
     IDENTIFIER_DIGITS = 54

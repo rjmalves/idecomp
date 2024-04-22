@@ -13,6 +13,8 @@ class TabelaDesvFpha(TabelaCSV):
     Bloco com os desvios da função de produção hidráulica.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;-----;------;-----;--------------;----------;"
     LINE_MODEL = Line(
         [

@@ -13,6 +13,8 @@ class TabelaFcfCortes(TabelaCSV):
     Bloco com as informações dos cortes da FCF gerada para determinado nó.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;--------;------;"
     LINE_MODEL = Line(
         [

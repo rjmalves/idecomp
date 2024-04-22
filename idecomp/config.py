@@ -48,3 +48,4 @@ MESES_ABREV = [
     "NOV",
     "DEZ",
 ]
+FORMATO_CAMPOS_DATA_LIBS = ["%Y/%m/%d %H:%M", "%Y/%m/%d", "%Y/%m"]

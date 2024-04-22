@@ -13,6 +13,8 @@ class TabelaOperUsiev31(TabelaCSV):
     Bloco com a operação por estação elevatória.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;------;-----;--------;-----;"
     LINE_MODEL = Line(
         [
@@ -56,6 +58,8 @@ class TabelaOperUsie(TabelaCSV):
     """
     Bloco com a operação por estação elevatória.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = "-----;------;------;-----;--------;"
     LINE_MODEL = Line(

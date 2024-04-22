@@ -13,6 +13,8 @@ class TabelaOperUsitv31(TabelaCSV):
     Bloco com a operação por usina termoelétrica.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;------;-----;--------;-----;"
     LINE_MODEL = Line(
         [
@@ -56,6 +58,8 @@ class TabelaOperUsit(TabelaCSV):
     """
     Bloco com a operação por usina termoelétrica.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = "-----;------;------;-----;--------;"
     LINE_MODEL = Line(

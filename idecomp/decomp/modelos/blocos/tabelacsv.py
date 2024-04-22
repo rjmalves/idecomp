@@ -11,6 +11,8 @@ class TabelaCSV(Block):
     a partir de um modelo de linha, para arquivos de saída do DECOMP.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;------;"
     LINE_MODEL = Line([])
     COLUMN_NAMES: List[str] = []
@@ -65,6 +67,8 @@ class TabelaCSVLibs(Block):
     Bloco para ler uma tabela com separadores CSV fornecidos
     a partir de um modelo de linha, para arquivos de saída do DECOMP.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = "&IIIIIII;IIIIIII;"
     LINE_MODEL = Line([])

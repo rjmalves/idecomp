@@ -19,6 +19,8 @@ class BlocoDadosUsinasRelgnl(Block):
     utilizados na execução do caso.
     """
 
+    __slots__ = ["__line"]
+
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Usinas  Termicas GNL"
     END_PATTERN = ""
 
@@ -125,6 +127,8 @@ class BlocoComandosUsinasAjustesTGRelgnl(Block):
     utilizados na execução do caso.
     """
 
+    __slots__ = ["__linha"]
+
     BEGIN_PATTERN = "usinas GNL com possiveis ajustes devido a registros TG"
     END_PATTERN = ""
 
@@ -210,6 +214,8 @@ class BlocoComandosUsinasAjustesRERelgnl(Block):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
+    __slots__ = ["__linha"]
 
     BEGIN_PATTERN = "ajustes devido a Restricoes Eletricas Especiais"
     END_PATTERN = ""
@@ -297,6 +303,8 @@ class BlocoRelatorioOperacaoRelgnl(Block):
     Bloco com as informações de eco dos dados gerais
     utilizados na execução do caso.
     """
+
+    __slots__ = ["__linha_cenario", "__linha_operacao"]
 
     BEGIN_PATTERN = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
     END_PATTERN = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"

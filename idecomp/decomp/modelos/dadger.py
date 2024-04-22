@@ -13,6 +13,8 @@ class TE(Register):
     Registro que contém a usina modificada.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "TE  "
     IDENTIFIER_DIGITS = 4
     LINE = Line([LiteralField(75, 4)])
@@ -36,6 +38,8 @@ class SB(Register):
     """
     Registro que contém o cadastro dos submercados.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "SB  "
     IDENTIFIER_DIGITS = 4
@@ -75,6 +79,8 @@ class UH(Register):
     Registro que contém o cadastro das UHEs, com os seus volumes
     iniciais no estudo.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "UH  "
     IDENTIFIER_DIGITS = 4
@@ -242,6 +248,8 @@ class CT(Register):
 
     """
 
+    __slots__ = []
+
     IDENTIFIER = "CT  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -388,6 +396,8 @@ class UE(Register):
     (usinas elevatórias).
     """
 
+    __slots__ = []
+
     IDENTIFIER = "UE  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -522,6 +532,8 @@ class DP(Register):
 
     """
 
+    __slots__ = []
+
     IDENTIFIER = "DP  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -634,6 +646,8 @@ class PQ(Register):
 
     """
 
+    __slots__ = []
+
     IDENTIFIER = "PQ  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -726,6 +740,8 @@ class CD(Register):
     Registro que contém o cadastro dos custos de déficit.
 
     """
+
+    __slots__ = []
 
     IDENTIFIER = "CD  "
     IDENTIFIER_DIGITS = 4
@@ -854,6 +870,8 @@ class RI(Register):
 
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RI  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -896,6 +914,8 @@ class IA(Register):
 
     """
 
+    __slots__ = []
+
     IDENTIFIER = "IA  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -922,6 +942,8 @@ class TX(Register):
     """
     Registro que contém a taxa de desconto anual do modelo.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "TX  "
     IDENTIFIER_DIGITS = 4
@@ -951,6 +973,8 @@ class GP(Register):
     Registro que contém o gap de tolerância para convergência.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "GP  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -978,6 +1002,8 @@ class NI(Register):
     """
     Registro que contém o número máximo de iterações do modelo.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "NI  "
     IDENTIFIER_DIGITS = 4
@@ -1016,6 +1042,8 @@ class DT(Register):
     """
     Registro que contém a data de referência do estudo.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "DT  "
     IDENTIFIER_DIGITS = 4
@@ -1075,6 +1103,8 @@ class MP(Register):
     Registro que contém as manutenções programadas das UHEs.
 
     """
+
+    __slots__ = []
 
     IDENTIFIER = "MP  "
     IDENTIFIER_DIGITS = 4
@@ -1173,6 +1203,8 @@ class MT(Register):
 
     """
 
+    __slots__ = []
+
     IDENTIFIER = "MT  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -1269,6 +1301,8 @@ class FD(Register):
     Registro que contém os fatores de disponibilidade das UHEs.
 
     """
+
+    __slots__ = []
 
     IDENTIFIER = "FD  "
     IDENTIFIER_DIGITS = 4
@@ -1367,6 +1401,8 @@ class VE(Register):
 
     """
 
+    __slots__ = []
+
     IDENTIFIER = "VE  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -1448,6 +1484,8 @@ class RE(Register):
     Registro que contém os cadastros de restrições elétricas.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RE  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -1506,6 +1544,8 @@ class LU(Register):
     Registro que contém os cadastros de limites das restrições elétricas.
 
     """
+
+    __slots__ = []
 
     IDENTIFIER = "LU  "
     IDENTIFIER_DIGITS = 4
@@ -1605,6 +1645,8 @@ class FU(Register):
     nas restrições elétricas.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "FU  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -1690,6 +1732,8 @@ class FT(Register):
     nas restrições elétricas.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "FT  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -1774,6 +1818,8 @@ class FI(Register):
     entre os subsistemas associados à restrição elétrica.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "FI  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -1856,6 +1902,8 @@ class VI(Register):
     """
     Registro que contém os tempos de viagem da água entre usinas.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "VI  "
     IDENTIFIER_DIGITS = 4
@@ -1943,6 +1991,8 @@ class IR(Register):
     geração de relatórios de saída.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "IR  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -1975,6 +2025,8 @@ class CI(Register):
     Registro que define contratos de importação de energia.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "CI  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -2001,6 +2053,8 @@ class CE(Register):
     """
     Registro que define contratos de exportação de energia.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "CE  "
     IDENTIFIER_DIGITS = 4
@@ -2029,6 +2083,8 @@ class FC(Register):
     Registro que contém informações para acessar a FCF fornecida
     pelo NEWAVE.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "FC  "
     IDENTIFIER_DIGITS = 4
@@ -2070,6 +2126,8 @@ class EA(Register):
     """
     Registro que a ENA dos meses que antecedem o estudo.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "EA  "
     IDENTIFIER_DIGITS = 4
@@ -2139,6 +2197,8 @@ class ES(Register):
     """
     Registro que define a ENA das semanas que antecedem o estudo.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "ES  "
     IDENTIFIER_DIGITS = 4
@@ -2218,6 +2278,8 @@ class QI(Register):
     Registro que define o tempo de viagem para o cálculo da ENA.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "QI  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -2281,6 +2343,8 @@ class RT(Register):
     Registro utilizado para retirada de restrições de soleira de
     vertedouro e de canais de desvio.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RT  "
     IDENTIFIER_DIGITS = 4
@@ -2393,6 +2457,8 @@ class DA(Register):
     (desvios de água) por UHE.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "DA  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -2496,6 +2562,8 @@ class FP(Register):
     Registro que contém os cadastros de restrições de alteração na
     função de produção das usinas.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "FP  "
     IDENTIFIER_DIGITS = 4
@@ -2672,6 +2740,8 @@ class RQ(Register):
     mínima histórica para cada REE.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "RQ  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -2740,6 +2810,8 @@ class EZ(Register):
     volume útil para acoplamento.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "EZ  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -2782,6 +2854,8 @@ class HV(Register):
     """
     Registro que contém os cadastros de restrições de volume armazenado.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "HV  "
     IDENTIFIER_DIGITS = 4
@@ -2841,6 +2915,8 @@ class LV(Register):
     Registro que contém os cadastros dos limites das
     restrições de volume armazenado.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "LV  "
     IDENTIFIER_DIGITS = 4
@@ -2915,6 +2991,8 @@ class CV(Register):
     Registro que contém os coeficientes das usinas hidráulicas
     nas restrições de volume armazenado.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "CV  "
     IDENTIFIER_DIGITS = 4
@@ -2999,6 +3077,8 @@ class HQ(Register):
     Registro que contém os cadastros de restrições de vazões.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "HQ  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3057,6 +3137,8 @@ class LQ(Register):
     Registro que contém os cadastros dos limites das
     restrições de vazão.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "LQ  "
     IDENTIFIER_DIGITS = 4
@@ -3155,6 +3237,8 @@ class CQ(Register):
     nas restrições de vazão.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "CQ  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3238,6 +3322,8 @@ class AR(Register):
     Registro que contém as configurações de aversão a risco.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "AR  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3293,6 +3379,8 @@ class EV(Register):
     da evaporação.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "EV  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3336,6 +3424,8 @@ class FJ(Register):
     Registro que contém o arquivo de polinômios de jusante.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "FJ  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3364,6 +3454,8 @@ class HE(Register):
     Registro que contém o cadastro de uma restrição de energia
     armazenada.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "HE  "
     IDENTIFIER_DIGITS = 4
@@ -3519,6 +3611,8 @@ class CM(Register):
     Registro que contém os coeficientes de uma restrição RHE.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "CM  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3574,6 +3668,8 @@ class PD(Register):
     resolução do PL.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "PD  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3603,6 +3699,8 @@ class PU(Register):
     via PL único.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "PU  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3630,6 +3728,8 @@ class RC(Register):
     """
     Registro que inclui restrições do tipo escada.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "RC  "
     IDENTIFIER_DIGITS = 4
@@ -3659,6 +3759,8 @@ class PE(Register):
     Registro que altera as penalidades de vertimento,
     intercâmbio e desvios.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "PE  "
     IDENTIFIER_DIGITS = 4
@@ -3717,6 +3819,8 @@ class TS(Register):
     """
     Registro que altera as tolerâncias do solver.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "TS  "
     IDENTIFIER_DIGITS = 4
@@ -3793,6 +3897,8 @@ class PV(Register):
     Registro que altera as penalidades das variáveis de folga
     do problema e as tolerâncias para a viabilidade das restrições.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "PV  "
     IDENTIFIER_DIGITS = 4
@@ -3899,6 +4005,8 @@ class CX(Register):
     complexos no NEWAVE com o DECOMP.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "CX  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3942,6 +4050,8 @@ class FA(Register):
     Registro que indica o nome do arquivo índice CSV.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "FA  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -3969,6 +4079,8 @@ class VT(Register):
     """
     Registro que indica o nome do arquivo com cenários de vento.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "VT  "
     IDENTIFIER_DIGITS = 4
@@ -3998,6 +4110,8 @@ class CS(Register):
     Registro que habilita a consistência de dados.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "CS  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -4025,6 +4139,8 @@ class ACNUMPOS(Register):
     """
     Registro AC específico para alteração no número do posto.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMPOS"
     IDENTIFIER_DIGITS = 15
@@ -4095,6 +4211,8 @@ class ACNUMJUS(Register):
     """
     Registro AC específico para alteração na usina de jusante.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMJUS"
     IDENTIFIER_DIGITS = 15
@@ -4192,6 +4310,8 @@ class ACDESVIO(Register):
     para canal de desvio e limite da vazão no canal.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  DESVIO"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -4271,6 +4391,8 @@ class ACVOLMIN(Register):
     Registro AC específico para alteração de volume mínimo.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  VOLMIN"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -4340,6 +4462,8 @@ class ACVOLMAX(Register):
     """
     Registro AC específico para alteração de volume máximo.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VOLMAX"
     IDENTIFIER_DIGITS = 15
@@ -4411,6 +4535,8 @@ class ACCOTVOL(Register):
     Registro AC específico para alteração de um coeficiente do
     polinômio cota-volume.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTVOL"
     IDENTIFIER_DIGITS = 15
@@ -4492,6 +4618,8 @@ class ACCOTARE(Register):
     polinômio cota-área.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTARE"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -4572,6 +4700,8 @@ class ACPROESP(Register):
     hidráulicas em função da queda bruta (%,m,k).
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  PROESP"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -4643,6 +4773,8 @@ class ACPERHID(Register):
     hidráulicas em função da queda bruta (%,m,k).
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  PERHID"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -4713,6 +4845,8 @@ class ACNCHAVE(Register):
     Registro AC específico para alteração do número da curva-chave
     (cota-vazão) e nível de jusante da faixa associada (m).
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NCHAVE"
     IDENTIFIER_DIGITS = 15
@@ -4793,6 +4927,8 @@ class ACCOTVAZ(Register):
     Registro AC específico para alteração de um coeficiente do
     polinômio cota-vazão.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTVAZ"
     IDENTIFIER_DIGITS = 15
@@ -4883,6 +5019,8 @@ class ACCOFEVA(Register):
     mensal para cada mês.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  COFEVA"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -4963,6 +5101,8 @@ class ACNUMCON(Register):
     de máquinas.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMCON"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5033,6 +5173,8 @@ class ACNUMMAQ(Register):
     Registro AC específico para alteração do número de máquinas
     em cada conjunto de máquinas.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMMAQ"
     IDENTIFIER_DIGITS = 15
@@ -5114,6 +5256,8 @@ class ACPOTEFE(Register):
     por unidade geradora em um conjunto de máquinas.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  POTEFE"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5194,6 +5338,8 @@ class ACALTEFE(Register):
     de queda para um conjunto de máquinas.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  ALTEFE"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5257,6 +5403,8 @@ class ACVAZEFE(Register):
     Registro AC específico para alteração da vazão efetiva
     para um conjunto de máquinas.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VAZEFE"
     IDENTIFIER_DIGITS = 15
@@ -5338,6 +5486,8 @@ class ACJUSMED(Register):
     de fuga em metros.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  JUSMED"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5409,6 +5559,8 @@ class ACVERTJU(Register):
     no canal de fuga.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  VERTJU"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5479,6 +5631,8 @@ class ACVAZMIN(Register):
     Registro AC específico para alteração da vazão mínima.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  VAZMIN"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5548,6 +5702,8 @@ class ACTIPERH(Register):
     """
     Registro AC específico para alteração do tipo de perdas hidráulicas.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  TIPERH"
     IDENTIFIER_DIGITS = 15
@@ -5621,6 +5777,8 @@ class ACJUSENA(Register):
     armazenada e afluente.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  JUSENA"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5691,6 +5849,8 @@ class ACVSVERT(Register):
     Registro AC específico para alteração do volume mínimo para operação
     do vertedor.
     """
+
+    __slots__ = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VSVERT"
     IDENTIFIER_DIGITS = 15
@@ -5763,6 +5923,8 @@ class ACVMDESV(Register):
     do canal de desvio.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  VMDESV"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5834,6 +5996,8 @@ class ACNPOSNW(Register):
     com o NEWAVE.
     """
 
+    __slots__ = []
+
     IDENTIFIER = r"AC  ([\d ]{1,3})  NPOSNW"
     IDENTIFIER_DIGITS = 15
     LINE = Line(
@@ -5904,6 +6068,8 @@ class VL(Register):
     Registro que define uma usina que sofre influência de vazão lateral
     na cota de jusante.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "VL  "
     IDENTIFIER_DIGITS = 4
@@ -6034,6 +6200,8 @@ class VU(Register):
     jusante da primeira.
     """
 
+    __slots__ = []
+
     IDENTIFIER = "VU  "
     IDENTIFIER_DIGITS = 4
     LINE = Line(
@@ -6093,6 +6261,8 @@ class VA(Register):
     Registro que define um posto de vazão que tem influência sobre a vazão de
     jusante da primeira.
     """
+
+    __slots__ = []
 
     IDENTIFIER = "VA  "
     IDENTIFIER_DIGITS = 4

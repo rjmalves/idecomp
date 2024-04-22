@@ -13,6 +13,8 @@ class TabelaCortesFpha(TabelaCSV):
     Bloco com as informações dos cortes da função de produção hidráulica.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;-----;--------------;"
     LINE_MODEL = Line(
         [

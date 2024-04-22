@@ -13,6 +13,8 @@ class TabelaOperReev31(TabelaCSV):
     Bloco com a operação por REE.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;------;-----;--------------;----;"
     LINE_MODEL = Line(
         [
@@ -52,6 +54,8 @@ class TabelaOperRee(TabelaCSV):
     """
     Bloco com a operação por REE.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = "-----;------;------;-----;"
     LINE_MODEL = Line(

@@ -13,6 +13,8 @@ class TabelaOperIntercv31(TabelaCSV):
     Bloco com a operação das usinas térmicas de despacho antecipado.
     """
 
+    __slots__ = []
+
     BEGIN_PATTERN = "-----;------;-----;---------;----------------;"
     LINE_MODEL = Line(
         [
@@ -52,6 +54,8 @@ class TabelaOperInterc(TabelaCSV):
     """
     Bloco com a operação das usinas térmicas de despacho antecipado.
     """
+
+    __slots__ = []
 
     BEGIN_PATTERN = "-----;------;------;-----;---------;"
     LINE_MODEL = Line(
