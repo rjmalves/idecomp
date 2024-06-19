@@ -211,6 +211,13 @@ class SecaoVazoesPostos(Section):
         file.write(np.array(self.data["dados_caso"], dtype=np.int32).tobytes())
 
     def __escreve_quarto_registro(self, file: IO):
+        num_entradas = len(self.data["dados_cenarios"])
+        num_valores = (
+            self.__numero_blocos_cenarios()
+            * SecaoVazoesPostos.TAMANHO_REGISTRO
+        )
+        if num_entradas < num_valores:
+            self.data["dados_cenarios"] += [0] * (num_valores - num_entradas)
         file.write(
             np.array(self.data["dados_cenarios"], dtype=np.float32).tobytes()
         )
@@ -275,22 +282,42 @@ class SecaoVazoesPostos(Section):
     def numero_uhes(self) -> int:
         return self.data["dados_gerais"][0]
 
+    @numero_uhes.setter
+    def numero_uhes(self, n: int):
+        self.data["dados_gerais"][0] = n
+
     @property
     def numero_estagios(self) -> int:
         return self.data["dados_gerais"][1]
 
+    @numero_estagios.setter
+    def numero_estagios(self, n: int):
+        self.data["dados_gerais"][1] = n
+
     @property
     def numero_aberturas_estagios(self) -> List[int]:
         return self.data["dados_gerais"][2 : 2 + self.numero_estagios]
+
+    @numero_aberturas_estagios.setter
+    def numero_aberturas_estagios(self, n: List[int]):
+        self.data["dados_gerais"][2 : 2 + self.numero_estagios] = n
 
     @property
     def numero_postos(self) -> int:
         valor_arquivo = self.data["dados_gerais"][2 + self.numero_estagios]
         return 320 if valor_arquivo == 0 else valor_arquivo
 
+    @numero_postos.setter
+    def numero_postos(self, n: int):
+        self.data["dados_gerais"][2 + self.numero_estagios] = n
+
     @property
     def codigos_uhes(self) -> List[int]:
         return self.data["codigos_uhes"][: self.numero_uhes]
+
+    @codigos_uhes.setter
+    def codigos_uhes(self, n: List[int]):
+        self.data["codigos_uhes"][: self.numero_uhes] = n
 
     @property
     def numero_semanas_completas(self) -> int:
@@ -330,12 +357,7 @@ class SecaoVazoesPostos(Section):
 
     @probabilidades_nos.setter
     def probabilidades_nos(self, probs: List[float]):
-        self.data["dados_cenarios"] = (
-            probs
-            + self.data["dados_cenarios"][
-                sum(self.numero_aberturas_estagios) :
-            ]
-        )
+        self.data["dados_cenarios"] = probs
 
     @property
     def previsoes(self) -> List[int]:
