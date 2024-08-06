@@ -1,6 +1,8 @@
 from cfinterface.components.section import Section
 from typing import IO
 import numpy as np  # type: ignore
+import pandas as pd
+from datetime import datetime
 
 
 class SecaoDadosMapcut(Section):
@@ -16,14 +18,15 @@ class SecaoDadosMapcut(Section):
     def __init__(self, previous=None, next=None, data=None) -> None:
         super().__init__(previous, next, data)
         self.data = {
-            "dados_gerais": [],  # 1
-            "dados_caso": [],  # 2
-            "dados_uhes": [],  # 3
-            "dados_uhes_topologia": [],  # 4
-            "dados_arvore": [],  # 5
-            "dados_estagios": [],  # 6
-            "dados_tempo_viagem": [],  # 7 e 8
-            "dados_gnl": [],  # 9 e 10
+            "dados_gerais": [],  # registro 1
+            "dados_caso": [],  # registro 2
+            "dados_uhes": [],  # registro 3
+            "dados_uhes_topologia": [],  # registro 4
+            "dados_arvore": [],  # registro 5
+            "dados_estagios": [],  # registro 6
+            "dados_tempo_viagem": [],  # registros 7 e 8
+            "dados_gnl": [],  # registros 9
+            "dados_custos": [],  # registros 10
         }
         self.__contador_registro = 1
 
@@ -115,7 +118,7 @@ class SecaoDadosMapcut(Section):
         tamanho = self.numero_cenarios
         dados = np.frombuffer(
             file.read(tamanho * 4),
-            dtype=np.float32,
+            dtype=np.int32,
             count=tamanho,
         )
         self.__contador_registro = self.__contador_registro + 1
@@ -234,7 +237,7 @@ class SecaoDadosMapcut(Section):
             count=tamanho,
         )
         self.__contador_registro = self.__contador_registro + 1
-        self.data["dados_gnl"] += list(dados)
+        self.data["dados_custos"] += list(dados)
 
     def __le_nono_decimo_registros(self, file: IO):
         for _ in range(self.numero_estagios):
@@ -262,8 +265,36 @@ class SecaoDadosMapcut(Section):
         return self.data["dados_gerais"][4]
 
     @property
+    def registro_ultimo_corte_no(self) -> pd.DataFrame:
+        lista_estagios = []
+        estagio = 1
+        for no in range(1, self.numero_cenarios + 1):
+            if no in self.indice_primeiro_no_estagio:
+                index = self.indice_primeiro_no_estagio.index(no)
+                estagio = self.indice_primeiro_no_estagio[index]
+            lista_estagios = lista_estagios + [estagio]
+
+        df_registro_ultimo_corte_no = pd.DataFrame(
+            data={
+                "no": list(range(1, self.numero_cenarios + 1)),
+                "estagio": lista_estagios,
+                "indice_ultimo_corte": self.data["dados_gerais"][
+                    -self.numero_cenarios :
+                ],
+            }
+        )
+        return df_registro_ultimo_corte_no
+
+    @property
     def tamanho_corte(self) -> int:
         return self.data["dados_caso"][0]
+
+    @property
+    def data_inicio(self) -> datetime:
+        dia = self.data["dados_caso"][1]
+        mes = self.data["dados_caso"][2]
+        ano = self.data["dados_caso"][3]
+        return datetime(year=ano, month=mes, day=dia)
 
     @property
     def codigos_uhes(self) -> list:
@@ -315,9 +346,123 @@ class SecaoDadosMapcut(Section):
         ]
 
     @property
-    def dados_tempo_viagem(self) -> list:
-        return self.data["dados_tempo_viagem"]
+    def dados_tempo_viagem(self) -> pd.DataFrame:
+        offset = 0
+        lags_tempo_vigem = []
+        coef_amortecimento = []
+        df_tempo_viagem = pd.DataFrame()
+
+        for u in range(self.numero_uhes_tempo_viagem):
+            # Pega informações do registro de dados de tempo de viagem
+            usina = self.data["dados_tempo_viagem"][offset]
+            lags_usina = self.lag_tempo_viagem_por_uhe[
+                u * (self.numero_estagios) : (u + 1) * self.numero_estagios
+            ]
+            horas_tempo_viagem = self.data["dados_tempo_viagem"][offset + 1]
+
+            idx_lag = offset + 2
+            idx_coef = offset + 3
+
+            # offset
+            offset = 2 * (sum(lags_usina) + self.numero_estagios) + 2
+
+            lags_tempo_vigem += [
+                self.data["dados_tempo_viagem"][i]
+                for i in list(range(idx_lag, idx_lag + offset - 2, 2))
+            ]
+            coef_amortecimento += [
+                self.data["dados_tempo_viagem"][i]
+                for i in list(range(idx_coef, idx_coef + offset - 2, 2))
+            ]
+            dados_tempo_viagem = {
+                "codigo_usina": np.repeat(usina, len(lags_tempo_vigem)),
+                "numero_horas": np.repeat(
+                    horas_tempo_viagem, len(lags_tempo_vigem)
+                ),
+                "estagio": np.repeat(
+                    list(range(1, self.numero_estagios + 1)),
+                    int(len(lags_tempo_vigem) / self.numero_estagios),
+                ),
+                "indice_lag": lags_tempo_vigem,
+                "coeficiente_amortecimento": coef_amortecimento,
+            }
+            df_tempo_viagem = pd.concat(
+                [df_tempo_viagem, pd.DataFrame(dados_tempo_viagem)]
+            )
+        return df_tempo_viagem.reset_index(drop=True)
 
     @property
-    def dados_gnl(self) -> list:
-        return self.data["dados_gnl"]
+    def codigos_uhes_tempo_viagem(self) -> list:
+        return self.dados_tempo_viagem["codigo_usina"].unique().tolist()
+
+    @property
+    def codigos_submercados_gnl(self) -> list:
+        codigos_submercados = (
+            self.dados_gnl["codigo_submercado"].unique().tolist()
+        )
+        return codigos_submercados
+
+    @property
+    def dados_gnl(self) -> pd.DataFrame:
+        offset = 0
+        df_dados_gnl = pd.DataFrame()
+        for est in range(self.numero_estagios):
+            numero_utes_gnl = int(self.data["dados_gnl"][offset])
+            codigos_submercados = self.data["dados_gnl"][
+                (offset + 1) : (offset + numero_utes_gnl + 1)
+            ]
+            lags_meses = self.data["dados_gnl"][
+                (offset + numero_utes_gnl + 1) : (
+                    offset + numero_utes_gnl + 1 + numero_utes_gnl
+                )
+            ]
+            numero_patamares = self.data["dados_gnl"][
+                (offset + 2 * numero_utes_gnl + 1) : (
+                    offset + 3 * numero_utes_gnl + 1
+                )
+            ]
+            offset = offset + int(
+                1 + 4 * numero_utes_gnl + sum(numero_patamares)
+            )
+
+            dados = {
+                "estagio": np.repeat(est + 1, len(codigos_submercados)),
+                "numero_utes_gnl": np.repeat(
+                    numero_utes_gnl, len(codigos_submercados)
+                ),
+                "codigo_submercado": codigos_submercados,
+                "indice_lag": lags_meses,
+                "numero_patamares": numero_patamares,
+            }
+
+            df_dados_gnl = pd.concat([df_dados_gnl, pd.DataFrame(dados)])
+
+        return df_dados_gnl.reset_index(drop=True)
+
+    @property
+    def dados_custos(self) -> pd.DataFrame:
+        offset = 0
+        df_custos = pd.DataFrame()
+        for est in range(self.numero_estagios):
+            dados_custos = {
+                "estagio": [est + 1],
+                "taxa_desconto": [self.data["dados_custos"][offset]],
+                "parcela_custo_geracao_termica_minima": [
+                    self.data["dados_custos"][offset + 1]
+                ],
+                "parcela_custo_contrato_importacao_minimo": [
+                    self.data["dados_custos"][offset + 2]
+                ],
+                "parcela_custo_contrato_exportacao_minimo": [
+                    self.data["dados_custos"][offset + 3]
+                ],
+                "geracao_termica_minima_sinalizada_gnl": [
+                    self.data["dados_custos"][offset + 4]
+                ],
+                "geracao_termica_minima_gerada_gnl": [
+                    self.data["dados_custos"][offset + 5]
+                ],
+            }
+            offset = offset + 6
+            df_custos = pd.concat([df_custos, pd.DataFrame(dados_custos)])
+        return df_custos.reset_index(drop=True)

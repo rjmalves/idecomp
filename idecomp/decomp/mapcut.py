@@ -2,6 +2,7 @@ from cfinterface.files.sectionfile import SectionFile
 from idecomp.decomp.modelos.mapcut import SecaoDadosMapcut
 import pandas as pd  # type: ignore
 from typing import List
+from datetime import datetime
 
 
 from typing import TypeVar, Optional
@@ -91,6 +92,25 @@ class Mapcut(SectionFile):
         return None
 
     @property
+    def registro_ultimo_corte_no(self) -> Optional[pd.DataFrame]:
+        """
+        Retorna os dados dos índices do último registro
+        de cortes para cada estágio, para leitura do
+        arquivo `cortdeco`.
+
+        - no (`int`)
+        - estagio (`int`)
+        - indice_ultimo_corte (`int`)
+
+        :return: Os dados dos índices dos cortes em uma tabela.
+        :rtype: pd.DataFrame
+        """
+        dados = self.__obtem_dados()
+        if dados is not None:
+            return dados.registro_ultimo_corte_no
+        return None
+
+    @property
     def tamanho_corte(self) -> Optional[int]:
         """
         O tamanho do corte (tamanho do registro no
@@ -102,6 +122,19 @@ class Mapcut(SectionFile):
         dados = self.__obtem_dados()
         if dados is not None:
             return dados.tamanho_corte
+        return None
+
+    @property
+    def data_inicio(self) -> Optional[datetime]:
+        """
+        A data de início do estudo.
+
+        :return: A data
+        :rtype: datetime | None
+        """
+        dados = self.__obtem_dados()
+        if dados is not None:
+            return dados.data_inicio
         return None
 
     @property
@@ -223,7 +256,32 @@ class Mapcut(SectionFile):
             return dados.patamares_por_estagio
         return None
 
-    # TODO
+    @property
+    def lag_tempo_viagem_por_uhe(self) -> Optional[list]:
+        """
+        O lag (em estágios) de uma usina para cada período.
+
+        :return: O lag por usina e estágio
+        :rtype: list | None
+        """
+        dados = self.__obtem_dados()
+        if dados is not None:
+            return dados.lag_tempo_viagem_por_uhe
+        return None
+
+    @property
+    def codigos_uhes_tempo_viagem(self) -> Optional[List[int]]:
+        """
+        Os códigos das usinas hidráulicas com tempo de viagem.
+
+        :return: Os códigos das usinas com tempo de viagem
+        :rtype: list | None
+        """
+        dados = self.__obtem_dados()
+        if dados is not None:
+            return dados.codigos_uhes_tempo_viagem
+        return None
+
     @property
     def dados_tempo_viagem(self) -> Optional[pd.DataFrame]:
         """
@@ -238,15 +296,61 @@ class Mapcut(SectionFile):
         :return: A tabela com os dados de tempo de viagem
         :rtype: pd.DataFrame | None
         """
+        dados = self.__obtem_dados()
+        if dados is not None:
+            return dados.dados_tempo_viagem
         return None
 
-    # TODO
+    @property
+    def codigos_submercados_gnl(self) -> Optional[List[int]]:
+        """
+        Os códigos das usinas térmicas com despacho
+         antecipado (GNL).
+
+        :return: Os códigos das usinas
+        :rtype: list | None
+        """
+        dados = self.__obtem_dados()
+        if dados is not None:
+            return dados.codigos_submercados_gnl
+        return None
+
     @property
     def dados_gnl(self) -> Optional[pd.DataFrame]:
         """
-        Obtém a tabela com os dados de geração gnl.
+        Obtém a tabela com os dados de usinas GNL.
 
-        :return: A tabela com os dados de geração gnl
+        - estagio (`int`)
+        - numero_utes_gnl (`int`)
+        - codigo_submercado (`int`)
+        - indice_lag (`int`)
+        - numero_patamares (`int`)
+
+        :return: A tabela com os dados de usinas GNL
         :rtype: pd.DataFrame | None
         """
+        dados = self.__obtem_dados()
+        if dados is not None:
+            return dados.dados_gnl
+        return None
+
+    @property
+    def dados_custos(self) -> Optional[pd.DataFrame]:
+        """
+        Obtém a tabela com os dados de custos.
+
+        - estagio (`int`)
+        - taxa_desconto (`float`)
+        - parcela_custo_geracao_termica_minima (`float`)
+        - parcela_custo_contrato_importacao_minimo (`float`)
+        - parcela_custo_contrato_exportacao_minimo (`float`)
+        - geracao_termica_minima_sinalizada_gnl (`float`)
+        - geracao_termica_minima_gerada_gnl (`float`)
+
+        :return: A tabela com os dados de custos
+        :rtype: pd.DataFrame | None
+        """
+        dados = self.__obtem_dados()
+        if dados is not None:
+            return dados.dados_custos
         return None
