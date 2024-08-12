@@ -1,12 +1,14 @@
 from idecomp.decomp.mapcut import Mapcut
 from idecomp.decomp.cortdeco import Cortdeco
 import pandas as pd
+import numpy as np
 
 dir = "deck_teste/teste-leitura-cortes/"
 
 mapcut = Mapcut.read(dir + "mapcut.rv2")
 tamanho_registro = mapcut.tamanho_corte
 estagio = 1
+registro_ultimo_corte_no = mapcut.registro_ultimo_corte_no
 indice_ultimo_corte = mapcut.registro_ultimo_corte_no.loc[
     mapcut.registro_ultimo_corte_no["estagio"] == estagio,
     "indice_ultimo_corte",
@@ -18,16 +20,21 @@ codigos_uhes = mapcut.codigos_uhes
 codigos_uhes_tviagem = mapcut.codigos_uhes_tempo_viagem
 codigos_submercados = mapcut.codigos_submercados_gnl
 lag_maximo_tviagem = mapcut.maximo_lag_tempo_viagem
+# print(registro_ultimo_corte_no)
+# print(numero_total_cortes)
+# print(numero_estagios)
 
-print(tamanho_registro)
-print(indice_ultimo_corte)
-print(lag_maximo_tviagem)
-print(numero_total_cortes)
+# incremento_offset = registro_ultimo_corte_no.loc[
+#     registro_ultimo_corte_no["estagio"]
+#     != max(registro_ultimo_corte_no["estagio"])
+# ].shape[0]
+# print(incremento_offset)
 
+# print("LEITURA 1")
 cortdeco = Cortdeco.read(
     dir + "cortdeco.rv2",
     tamanho_registro,
-    indice_ultimo_corte,
+    registro_ultimo_corte_no,
     numero_total_cortes,
     numero_patamares,
     numero_estagios,
@@ -36,51 +43,44 @@ cortdeco = Cortdeco.read(
     codigos_submercados,
     lag_maximo_tviagem,
 )
-
+print(cortdeco)
 print(cortdeco.cortes)
+df1 = cortdeco.cortes
+# print(cortdeco.cortes.loc[0, :])
+# print(cortdeco.cortes.loc[0, "rhs"])
+print("=--------- altera DF")
+cortdeco.cortes.loc[0, "rhs"] = 100
+# print(cortdeco.cortes.loc[0, "rhs"])
+# print(cortdeco.cortes.loc[0, :])
+print(cortdeco.cortes)
+print("=--------- escrita")
+cortdeco.write("cortdeco_teste.rv2", registro_ultimo_corte_no)
 
-# print(mapcut.dados_gnl)
-# # # print(mapcut.codigos_submercados_gnl)
+offset = 53952 + 4
+tamanho = 10
 
-gnl_cols = [col for col in cortdeco.cortes.columns if "sbm" in col]
-# print(cortdeco[gnl_cols])
+with open("cortdeco_teste.rv2", "rb") as f:
+    f.seek(offset)
+    aaa = np.frombuffer(f.read(tamanho * 8), dtype=np.float64, count=tamanho)
+    print(aaa)
 
+# print("=--------- leitura 2")
+# cortdeco2 = Cortdeco.read(
+#     "cortdeco_teste.rv2",
+#     tamanho_registro,
+#     registro_ultimo_corte_no,
+#     numero_total_cortes,
+#     numero_patamares,
+#     numero_estagios,
+#     codigos_uhes,
+#     codigos_uhes_tviagem,
+#     codigos_submercados,
+#     lag_maximo_tviagem,
+# )
+# print(cortdeco2.cortes)
 
-qdefp_cols = [col for col in cortdeco.cortes.columns if "sbm" in col]
-print(len(qdefp_cols))
-df = cortdeco.cortes
-df_melted = pd.melt(df, id_vars=["indice_corte"], value_vars=qdefp_cols)
-print(df_melted)
-df_melted["variable"].str.split("sbm", expand=True)
-df_melted["codigo_submercado"] = (
-    df_melted["variable"]
-    .str.split("sbm", expand=True)[1]
-    .str.split("_", expand=True)[0]
-)
-df_melted["lag"] = (
-    df_melted["variable"]
-    .str.split("pat", expand=True)[1]
-    .str.split("_", expand=True)[0]
-)
+# df1 = cortdeco.cortes
+# df2 = cortdeco2.cortes
+# print("compara df", df1.equals(df2))
 
-print(df_melted.head(25))
-print(df_melted)
-df_melted["codigo_usina"] = df_melted["variable"].str.split("_", expand=True)[
-    0
-]
-df_melted["lag"] = df_melted["variable"].str.split("lag", expand=True)[1]
-df_melted = df_melted.drop(["variable"], axis=1)
-df_melted.rename(
-    columns={
-        "value": "valor",
-    },
-    inplace=True,
-)
-df_melted = df_melted[["indice_corte", "codigo_usina", "lag", "valor"]]
-# print(df_melted["variable"].str.split("uhe", expand=True)[1])
-
-# print(cortdeco.coeficientes_varm)
-# print(cortdeco.coeficientes_qdefp)
-print(cortdeco.coeficientes_volume_armazenado.dtypes)
-print(cortdeco.coeficientes_defluencia_tempo_viagem.dtypes)
-print(cortdeco.coeficientes_geracao_gnl.dtypes)
+# # # print(cortdeco == cortdeco2)

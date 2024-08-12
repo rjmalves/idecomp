@@ -16,12 +16,16 @@ class Cortdeco(SectionFile):
     SECTIONS = [SecaoDadosCortdeco]
     STORAGE = "BINARY"
 
+    def __obtem_secao_cortdeco(self) -> Optional[SecaoDadosCortdeco]:
+        s = self.data.get_sections_of_type(SecaoDadosCortdeco)
+        return s.data if not isinstance(s, list) else None
+
     @classmethod
     def read(
         cls,
         content: Union[str, bytes],
         tamanho_registro: int = 0,
-        indice_ultimo_corte: int = 0,
+        registro_ultimo_corte_no: pd.DataFrame = pd.DataFrame(),
         numero_total_cortes: int = 0,
         numero_patamares_carga: int = 3,
         numero_estagios: int = 0,
@@ -35,7 +39,7 @@ class Cortdeco(SectionFile):
         return super().read(
             content,
             tamanho_registro=tamanho_registro,
-            indice_ultimo_corte=indice_ultimo_corte,
+            registro_ultimo_corte_no=registro_ultimo_corte_no,
             numero_total_cortes=numero_total_cortes,
             numero_patamares_carga=numero_patamares_carga,
             numero_estagios=numero_estagios,
@@ -47,6 +51,20 @@ class Cortdeco(SectionFile):
             **kwargs
         )
 
+    def write(
+        self,
+        content: Union[str, bytes],
+        df_registro_ultimo_corte_no: pd.DataFrame = pd.DataFrame(),
+        *args,
+        **kwargs
+    ) -> "Cortdeco":
+        return super().write(
+            content,
+            df_registro_ultimo_corte_no=df_registro_ultimo_corte_no,
+            *args,
+            **kwargs
+        )
+
     @property
     def cortes(self) -> Optional[pd.DataFrame]:
         """
@@ -54,6 +72,8 @@ class Cortdeco(SectionFile):
         durante o cálculo da política.
 
         - indice_corte (`int`)
+        - no (`int`)
+        - estagio (`int`)
         - pi_varm_uhe1 (`float`)
         - ...
         - pi_varm_uheU (`float`)
@@ -65,23 +85,22 @@ class Cortdeco(SectionFile):
         - pi_gnl_sbmS_patP_lagL (`float`)
 
         R é o número de REEs.
-
         U é o número de UHEs.
-
         S é o número de submercados.
-
         P é o número de patamares de carga.
-
         L é o lag máximo.
 
         :return: Os coeficientes dos cortes em uma tabela.
         :rtype: pd.DataFrame | None
         """
-        dados = [r for r in self.data.of_type(SecaoDadosCortdeco)]
-        if len(dados) == 1:
-            return dados[0].data
-        else:
-            return None
+
+        return self.__obtem_secao_cortdeco()["cortes"]
+
+    @cortes.setter
+    def cortes(self, df: pd.DataFrame):
+        dados = self.__obtem_secao_cortdeco()
+        if dados is not None:
+            dados["cortes"] = df
 
     @property
     def coeficientes_volume_armazenado(self) -> Optional[pd.DataFrame]:
@@ -90,6 +109,8 @@ class Cortdeco(SectionFile):
         durante o cálculo da política para os eixos de volume armazenado.
 
         - indice_corte (`int`)
+        - no (`int`)
+        - estagio (`int`)
         - codigo_usina (`int`)
         - valor (`float`)
 
@@ -101,7 +122,9 @@ class Cortdeco(SectionFile):
         def __cria_data_frame(df_cortes: pd.DataFrame) -> pd.DataFrame:
             varm_cols = [col for col in df_cortes.columns if "varm" in col]
             df_melted = pd.melt(
-                df_cortes, id_vars=["indice_corte"], value_vars=varm_cols
+                df_cortes,
+                id_vars=["indice_corte", "no", "estagio"],
+                value_vars=varm_cols,
             )
             df_melted["codigo_usina"] = (
                 df_melted["variable"]
@@ -115,12 +138,20 @@ class Cortdeco(SectionFile):
                 },
                 inplace=True,
             )
-            df_melted = df_melted[["indice_corte", "codigo_usina", "valor"]]
+            df_melted = df_melted[
+                [
+                    "indice_corte",
+                    "no",
+                    "estagio",
+                    "codigo_usina",
+                    "valor",
+                ]
+            ]
             return df_melted
 
-        dados = [r for r in self.data.of_type(SecaoDadosCortdeco)]
-        if len(dados) == 1:
-            return __cria_data_frame(dados[0].data)
+        df = self.__obtem_secao_cortdeco()["cortes"]
+        if df is not None:
+            return __cria_data_frame(df)
         else:
             return None
 
@@ -132,6 +163,8 @@ class Cortdeco(SectionFile):
         por tempo de viagem.
 
         - indice_corte (`int`)
+        - no (`int`)
+        - estagio (`int`)
         - codigo_usina (`int`)
         - lag (`int`)
         - valor (`float`)
@@ -144,7 +177,9 @@ class Cortdeco(SectionFile):
         def __cria_data_frame(df_cortes: pd.DataFrame) -> pd.DataFrame:
             qdefp_cols = [col for col in df_cortes.columns if "qdefp" in col]
             df_melted = pd.melt(
-                df_cortes, id_vars=["indice_corte"], value_vars=qdefp_cols
+                df_cortes,
+                id_vars=["indice_corte", "no", "estagio"],
+                value_vars=qdefp_cols,
             )
             df_melted["variable"] = df_melted["variable"].str.split(
                 "uhe", expand=True
@@ -167,13 +202,20 @@ class Cortdeco(SectionFile):
                 inplace=True,
             )
             df_melted = df_melted[
-                ["indice_corte", "codigo_usina", "lag", "valor"]
+                [
+                    "indice_corte",
+                    "codigo_usina",
+                    "no",
+                    "estagio",
+                    "lag",
+                    "valor",
+                ]
             ]
             return df_melted
 
-        dados = [r for r in self.data.of_type(SecaoDadosCortdeco)]
-        if len(dados) == 1:
-            return __cria_data_frame(dados[0].data)
+        df = self.__obtem_secao_cortdeco()["cortes"]
+        if df is not None:
+            return __cria_data_frame(df)
         else:
             return None
 
@@ -185,6 +227,8 @@ class Cortdeco(SectionFile):
         futura para usinas com antecipacao de despacho (GNL).
 
         - indice_corte (`int`)
+        - no (`int`)
+        - estagio (`int`)
         - codigo_usina (`int`)
         - lag (`int`)
         - valor (`float`)
@@ -197,7 +241,9 @@ class Cortdeco(SectionFile):
         def __cria_data_frame(df_cortes: pd.DataFrame) -> pd.DataFrame:
             gnl_cols = [col for col in df_cortes.columns if "sbm" in col]
             df_melted = pd.melt(
-                df_cortes, id_vars=["indice_corte"], value_vars=gnl_cols
+                df_cortes,
+                id_vars=["indice_corte", "no", "estagio"],
+                value_vars=gnl_cols,
             )
             df_melted["variable"].str.split("sbm", expand=True)
             df_melted["codigo_submercado"] = (
@@ -218,12 +264,19 @@ class Cortdeco(SectionFile):
                 inplace=True,
             )
             df_melted = df_melted[
-                ["indice_corte", "codigo_submercado", "lag", "valor"]
+                [
+                    "indice_corte",
+                    "no",
+                    "estagio",
+                    "codigo_submercado",
+                    "lag",
+                    "valor",
+                ]
             ]
             return df_melted
 
-        dados = [r for r in self.data.of_type(SecaoDadosCortdeco)]
-        if len(dados) == 1:
-            return __cria_data_frame(dados[0].data)
+        df = self.__obtem_secao_cortdeco()["cortes"]
+        if df is not None:
+            return __cria_data_frame(df)
         else:
             return None

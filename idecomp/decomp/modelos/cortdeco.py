@@ -1,5 +1,5 @@
 from cfinterface.components.section import Section
-from typing import IO, List
+from typing import IO, List, Union
 import numpy as np  # type: ignore
 import pandas as pd
 
@@ -19,13 +19,22 @@ class SecaoDadosCortdeco(Section):
         "__numero_coeficientes_gnl",
         "__tamanho_registro",
         "__numero_total_cortes",
+        "__numero_cortes_por_estagio",
         "__codigos_uhes",
         "__codigos_uhes_tempo_viagem",
         "__numero_patamares_carga",
         "__numero_estagios",
         "__codigos_submercados",
         "__lag_maximo_tempo_viagem",
+        "__registro_ultimo_corte_no",
     ]
+
+    def __init__(self, previous=None, next=None, data=None) -> None:
+        super().__init__(previous, next, data)
+        self.data = {
+            "registros": [],
+            "cortes": [],
+        }
 
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, SecaoDadosCortdeco):
@@ -33,18 +42,16 @@ class SecaoDadosCortdeco(Section):
         bloco: SecaoDadosCortdeco = o
         if not all(
             [
-                isinstance(self.data, pd.DataFrame),
-                isinstance(o.data, pd.DataFrame),
+                isinstance(self.data, dict),
+                isinstance(o.data, dict),
             ]
         ):
             return False
         else:
-            return self.data.equals(bloco.data)
+            return self.data == bloco.data
 
-    def __inicializa_variaveis(self):
-        self.__tabela_int = np.zeros(
-            (self.__numero_total_cortes, 1), dtype=np.int32
-        )
+    def __inicializa_variaveis(self, numero_total_cortes):
+        self.__tabela_int = np.zeros((numero_total_cortes, 2), dtype=np.int32)
         self.__numero_coeficientes_rhs = 1
         self.__numero_coeficientes_varm = int(len(self.__codigos_uhes))
         self.__numero_coeficientes_tviagem = int(
@@ -63,7 +70,7 @@ class SecaoDadosCortdeco(Section):
             + self.__numero_coeficientes_gnl
         )
         self.__tabela_float = np.zeros(
-            (self.__numero_total_cortes, self.__numero_coeficientes),
+            (numero_total_cortes, self.__numero_coeficientes),
             dtype=np.float64,
         )
 
@@ -100,9 +107,9 @@ class SecaoDadosCortdeco(Section):
         self.__tabela_int[indice, 0] = indice
         return indice_proximo_corte
 
-    def __converte_array_em_dataframe(self):
+    def __converte_array_em_dataframe(self, no: int, estagio: int):
         df_int = pd.DataFrame(
-            self.__tabela_int,
+            self.__tabela_int[:, 0],
             columns=[
                 "indice_corte",
             ],
@@ -111,7 +118,8 @@ class SecaoDadosCortdeco(Section):
         # Depois, inverte a indexação
         df_int["indice_corte"] += 1
         df_int["indice_corte"] = df_int["indice_corte"].to_numpy()[::-1]
-
+        df_int["no"] = no
+        df_int["estagio"] = estagio
         cols_varm = [f"pi_varm_uhe{i}" for i in self.__codigos_uhes]
         cols_tviagem = [
             f"pi_qdefp_uhe{i}_lag{j}"
@@ -130,13 +138,162 @@ class SecaoDadosCortdeco(Section):
         )
 
         df = pd.concat([df_int, df_float], axis=1)
-        return df.sort_values(by="indice_corte").reset_index(drop=True)
+        return df.sort_values(
+            by=["estagio", "no", "indice_corte"]
+        ).reset_index(drop=True)
+
+    def __le_arquivo(
+        self,
+        file: IO,
+    ):
+        df_cortes_completo = pd.DataFrame()
+        # TODO - refazer logica armazenando data como um dicionario
+        # separando cortes e registros
+        # Realiza leitura para cada no que constroi corte
+        for _, row in self.__registro_ultimo_corte_no.iterrows():
+            # Identifica indice do ultimo corte do no
+            estagio = row["estagio"]
+            no = row["no"]
+            indice_ultimo_corte = row["indice_ultimo_corte"]
+            print("no", no)
+            print("indice_ultimo_corte", indice_ultimo_corte)
+            # Caso seja o ultimo estagio que constroi corte (penultimo estagio do caso),
+            # faz um shift no indice do ultimo corte para englobar o ultimo corte impresso
+            # pelo Cepel
+            if estagio == (self.__numero_estagios - 1):
+                incremento_offset = self.__registro_ultimo_corte_no.loc[
+                    self.__registro_ultimo_corte_no["estagio"]
+                    != max(self.__registro_ultimo_corte_no["estagio"])
+                ].shape[0]
+                indice_ultimo_corte = indice_ultimo_corte + incremento_offset
+
+            if indice_ultimo_corte == 0:
+                self.data["cortes"] = df_cortes_completo.reset_index(drop=True)
+                self.data["registros"] = self.__tabela_int
+                return
+
+            numero_total_cortes = self.__numero_cortes_por_estagio.loc[
+                self.__numero_cortes_por_estagio["estagio"] == estagio,
+                "numero_total_cortes",
+            ].iloc[0]
+
+            # Inicializa variaveis para a leitura dos cortes do no
+            self.__inicializa_variaveis(numero_total_cortes)
+            indice_proximo_corte = self.__le_registro(
+                file, (indice_ultimo_corte - 1) * self.__tamanho_registro, 0
+            )
+            cortes_lidos = 1
+            while (indice_proximo_corte != 0) and (
+                cortes_lidos < numero_total_cortes
+            ):
+                indice_proximo_corte = self.__le_registro(
+                    file,
+                    self.__tamanho_registro * (indice_proximo_corte - 1),
+                    cortes_lidos,
+                )
+                cortes_lidos += 1
+            df_cortes_no = self.__converte_array_em_dataframe(no, estagio)
+            # Concatena com informacoes dos cortes do no/estagio
+            df_cortes_completo = pd.concat([df_cortes_completo, df_cortes_no])
+
+    def __identifica_numero_cortes_estagio(self) -> pd.DataFrame:
+        # Adiciona um corte a mais para o ultimo estagio,
+        # devido metodologia de impressão adotada pelo Cepel
+        df = self.__registro_ultimo_corte_no.loc[
+            self.__registro_ultimo_corte_no["estagio"]
+            != max(self.__registro_ultimo_corte_no["estagio"])
+        ][["estagio"]]
+        df["numero_total_cortes"] = self.__numero_total_cortes
+        df.loc[df["estagio"] == df["estagio"].max(), "numero_total_cortes"] = (
+            self.__numero_total_cortes + 1
+        )
+        return df
+
+    def __identifica_indices_registros(
+        self, df_registro_ultimo_corte_no: pd.DataFrame
+    ) -> pd.DataFrame:
+        # TODO - refazer logica armazenando data como um dicionario
+        # separando cortes e registros
+        # Copia e ordena df dos cortes
+        df_cortes = self.data["cortes"].copy()
+        df_cortes.sort_values(
+            by=["indice_corte", "no"], inplace=True, ascending=[False, True]
+        )
+        df_cortes["indice_registro"] = 0
+        df_cortes["indice_proximo_registro"] = 0
+        # Calcula offset dos registros de acordo com o numero de nos (o ultimo
+        # estagio nao constroi cortes)
+        incremento_offset = df_registro_ultimo_corte_no.loc[
+            df_registro_ultimo_corte_no["estagio"]
+            != max(df_registro_ultimo_corte_no["estagio"])
+        ].shape[0]
+
+        df_nos = df_registro_ultimo_corte_no.loc[
+            df_registro_ultimo_corte_no["indice_ultimo_corte"] != 0
+        ]
+        for _, row in df_nos.iterrows():
+            indice_registro = row["indice_ultimo_corte"]
+            if row["estagio"] == max(df_nos["estagio"]):
+                indice_registro = indice_registro + incremento_offset
+            df_filtro = df_cortes.loc[(df_cortes["no"] == row["no"])]
+            for _, row_cortes in df_filtro.iterrows():
+                indice_corte = row_cortes["indice_corte"]
+                df_cortes.loc[
+                    (df_cortes["no"] == row["no"])
+                    & (df_cortes["indice_corte"] == indice_corte),
+                    "indice_registro",
+                ] = indice_registro
+                df_cortes.loc[
+                    (df_cortes["no"] == row["no"])
+                    & (df_cortes["indice_corte"] == indice_corte),
+                    "indice_proximo_registro",
+                ] = max(0, indice_registro - incremento_offset)
+                indice_registro = max(0, indice_registro - incremento_offset)
+        return df_cortes
+
+    def __atualiza_registros(
+        self, file: Union[str, IO], df_registro_ultimo_corte_no: pd.DataFrame
+    ):
+        df_cortes = self.__identifica_indices_registros(
+            df_registro_ultimo_corte_no
+        )
+
+        print("df_corte", df_cortes)
+
+        for _, row in df_cortes.iterrows():
+
+            if (row["estagio"] == 1) & (row["indice_corte"] == 1):
+                print("rhs", row["rhs"], row.to_numpy()[3])
+
+            # Vai para a posicao do registro
+            # print("registro", row["indice_registro"])
+            print(
+                "seek",
+                int(row["indice_registro"] - 1) * self.__tamanho_registro,
+            )
+            file.seek(
+                int(row["indice_registro"] - 1) * self.__tamanho_registro
+            )
+            # Escreve primeiro campo (inteiro)
+            file.write(
+                np.array(
+                    row["indice_proximo_registro"], dtype=np.int32
+                ).tobytes()
+            )
+            # file.write(np.array(10, dtype=np.int32).tobytes())
+            # Escreve campos relativos aos coeficientes (float)
+            # print("estagio", row["estagio"])
+            # print("indice_corte", row["indice_corte"])
+
+            file.write(
+                np.array(row.to_numpy()[3:-2], dtype=np.float64).tobytes()
+            )
 
     def read(
         self,
         file: IO,
         tamanho_registro: int,
-        indice_ultimo_corte: int,
+        registro_ultimo_corte_no: pd.DataFrame,
         numero_total_cortes: int,
         numero_patamares_carga: int,
         numero_estagios: int,
@@ -156,20 +313,23 @@ class SecaoDadosCortdeco(Section):
         self.__codigos_uhes_tempo_viagem = codigos_uhes_tempo_viagem
         self.__codigos_submercados = codigos_submercados
         self.__lag_maximo_tempo_viagem = lag_maximo_tempo_viagem
-        # Realiza leitura
-        self.__inicializa_variaveis()
-        indice_proximo_corte = self.__le_registro(
-            file, (indice_ultimo_corte - 1) * self.__tamanho_registro, 0
+        self.__registro_ultimo_corte_no = registro_ultimo_corte_no
+        self.__numero_cortes_por_estagio = (
+            self.__identifica_numero_cortes_estagio()
         )
-        cortes_lidos = 1
-        while (indice_proximo_corte != 0) and (
-            cortes_lidos < numero_total_cortes
-        ):
-            indice_proximo_corte = self.__le_registro(
-                file,
-                tamanho_registro * (indice_proximo_corte - 1),
-                cortes_lidos,
-            )
-            cortes_lidos += 1
-        df_cortes_completo = self.__converte_array_em_dataframe()
-        self.data = df_cortes_completo
+
+        self.__le_arquivo(file)
+        # self.data["cortes"] = self.__le_arquivo(file)
+        # TODO - refazer logica armazenando data como um dicionario
+        # separando cortes e registros
+        # self.data["registros"] = self.__tabela_int
+
+    def write(
+        self,
+        file: Union[str, IO],
+        *args,
+        **kwargs,
+    ):
+        print("file", file)
+        df_registro_ultimo_corte_no = kwargs["df_registro_ultimo_corte_no"]
+        self.__atualiza_registros(file, df_registro_ultimo_corte_no)

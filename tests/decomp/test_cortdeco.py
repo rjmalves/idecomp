@@ -174,15 +174,23 @@ UHES_CORTE = [
     314,
     315,
 ]
+
 UHES_TVIAGEM_CORTE = [156, 162]
 SUBMERCADOS_CORTE = [1, 3]
+REGISTRO_ULTIMO_CORTE_NO = pd.DataFrame(
+    data={
+        "no": [1, 2, 3, 4],
+        "estagio": [1, 2, 3, 4],
+        "indice_ultimo_corte": [63, 62, 61, 0],
+    }
+)
 
 
 def test_atributos_encontrados_cortdeco():
     h = Cortdeco.read(
         ARQ_TESTE,
         tamanho_registro=TAMANHO_CORTE,
-        indice_ultimo_corte=63,
+        registro_ultimo_corte_no=REGISTRO_ULTIMO_CORTE_NO,
         numero_total_cortes=21,
         numero_patamares=3,
         numero_estagios=4,
@@ -198,7 +206,7 @@ def test_eq_cortes():
     h1 = Cortdeco.read(
         ARQ_TESTE,
         tamanho_registro=TAMANHO_CORTE,
-        indice_ultimo_corte=63,
+        registro_ultimo_corte_no=REGISTRO_ULTIMO_CORTE_NO,
         numero_total_cortes=21,
         numero_patamares=3,
         numero_estagios=4,
@@ -210,7 +218,7 @@ def test_eq_cortes():
     h2 = Cortdeco.read(
         ARQ_TESTE,
         tamanho_registro=TAMANHO_CORTE,
-        indice_ultimo_corte=63,
+        registro_ultimo_corte_no=REGISTRO_ULTIMO_CORTE_NO,
         numero_total_cortes=21,
         numero_patamares=3,
         numero_estagios=4,
@@ -227,7 +235,7 @@ def test_atributos_cortes():
     h = Cortdeco.read(
         ARQ_TESTE,
         tamanho_registro=TAMANHO_CORTE,
-        indice_ultimo_corte=63,
+        registro_ultimo_corte_no=REGISTRO_ULTIMO_CORTE_NO,
         numero_total_cortes=21,
         numero_patamares=3,
         numero_estagios=4,
@@ -236,7 +244,10 @@ def test_atributos_cortes():
         codigos_submercados=SUBMERCADOS_CORTE,
         lag_maximo_tempo_viagem=3,
     )
+    # TODO - usar np.allclose
     assert h.cortes.at[0, "indice_corte"] == 1
+    assert h.cortes.at[0, "no"] == 1
+    assert h.cortes.at[0, "estagio"] == 1
     assert h.cortes.at[0, "rhs"] == 392918510283.4334717
     assert h.cortes.at[0, "pi_varm_uhe1"] == -108.13001990261628
     assert h.cortes.at[0, "pi_qdefp_uhe156_lag0"] == -1679.1694642265875
@@ -247,7 +258,7 @@ def test_atributos_coeficientes():
     h = Cortdeco.read(
         ARQ_TESTE,
         tamanho_registro=TAMANHO_CORTE,
-        indice_ultimo_corte=63,
+        registro_ultimo_corte_no=REGISTRO_ULTIMO_CORTE_NO,
         numero_total_cortes=21,
         numero_patamares=3,
         numero_estagios=4,
@@ -257,6 +268,8 @@ def test_atributos_coeficientes():
         lag_maximo_tempo_viagem=3,
     )
     assert h.coeficientes_volume_armazenado.at[0, "indice_corte"] == 1
+    assert h.coeficientes_volume_armazenado.at[0, "no"] == 1
+    assert h.coeficientes_volume_armazenado.at[0, "estagio"] == 1
     assert h.coeficientes_volume_armazenado.at[0, "codigo_usina"] == 1
     assert (
         h.coeficientes_volume_armazenado.at[0, "valor"] == -108.13001990261628
