@@ -16,7 +16,7 @@ class Cortdeco(SectionFile):
     SECTIONS = [SecaoDadosCortdeco]
     STORAGE = "BINARY"
 
-    def __obtem_secao_cortdeco(self) -> Optional[SecaoDadosCortdeco]:
+    def __obtem_secao_cortdeco(self) -> Optional[pd.DataFrame]:
         s = self.data.get_sections_of_type(SecaoDadosCortdeco)
         return s.data if not isinstance(s, list) else None
 
@@ -36,7 +36,7 @@ class Cortdeco(SectionFile):
         *args,
         **kwargs
     ) -> "Cortdeco":
-        return super().read(
+        a = super().read(
             content,
             tamanho_registro=tamanho_registro,
             registro_ultimo_corte_no=registro_ultimo_corte_no,
@@ -50,6 +50,7 @@ class Cortdeco(SectionFile):
             *args,
             **kwargs
         )
+        return a
 
     def write(
         self,
@@ -57,8 +58,8 @@ class Cortdeco(SectionFile):
         df_registro_ultimo_corte_no: pd.DataFrame = pd.DataFrame(),
         *args,
         **kwargs
-    ) -> "Cortdeco":
-        return super().write(
+    ):
+        super().write(
             content,
             df_registro_ultimo_corte_no=df_registro_ultimo_corte_no,
             *args,
@@ -94,13 +95,13 @@ class Cortdeco(SectionFile):
         :rtype: pd.DataFrame | None
         """
 
-        return self.__obtem_secao_cortdeco()["cortes"]
+        return self.__obtem_secao_cortdeco()
 
     @cortes.setter
     def cortes(self, df: pd.DataFrame):
         dados = self.__obtem_secao_cortdeco()
         if dados is not None:
-            dados["cortes"] = df
+            dados = df
 
     @property
     def coeficientes_volume_armazenado(self) -> Optional[pd.DataFrame]:
@@ -149,7 +150,7 @@ class Cortdeco(SectionFile):
             ]
             return df_melted
 
-        df = self.__obtem_secao_cortdeco()["cortes"]
+        df = self.__obtem_secao_cortdeco()
         if df is not None:
             return __cria_data_frame(df)
         else:
@@ -213,7 +214,7 @@ class Cortdeco(SectionFile):
             ]
             return df_melted
 
-        df = self.__obtem_secao_cortdeco()["cortes"]
+        df = self.__obtem_secao_cortdeco()
         if df is not None:
             return __cria_data_frame(df)
         else:
@@ -275,7 +276,7 @@ class Cortdeco(SectionFile):
             ]
             return df_melted
 
-        df = self.__obtem_secao_cortdeco()["cortes"]
+        df = self.__obtem_secao_cortdeco()
         if df is not None:
             return __cria_data_frame(df)
         else:
