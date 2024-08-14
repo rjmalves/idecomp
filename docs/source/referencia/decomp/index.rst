@@ -9,6 +9,7 @@ DECOMP
    arquivos/arquivos
    arquivos/avl_cortesfpha_dec
    arquivos/caso
+   arquivos/cortdeco
    arquivos/custos
    arquivos/dadger
    arquivos/dadgnl
@@ -29,6 +30,7 @@ DECOMP
    arquivos/fcfnw
    arquivos/hidr
    arquivos/inviabunic
+   arquivos/mapcut
    arquivos/oper_desvio_fpha
    arquivos/postos
    arquivos/relato

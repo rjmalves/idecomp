@@ -320,4 +320,4 @@ class SecaoDadosCortdeco(Section):
         **kwargs,
     ):
         df_registro_ultimo_corte_no = kwargs["df_registro_ultimo_corte_no"]
-        self.__atualiza_registros(file, df_registro_ultimo_corte_no)  #
+        self.__atualiza_registros(file, df_registro_ultimo_corte_no)

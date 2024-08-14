@@ -70,7 +70,8 @@ class Cortdeco(SectionFile):
     def cortes(self) -> Optional[pd.DataFrame]:
         """
         Retorna o conjunto dos cortes de Benders construídos
-        durante o cálculo da política.
+        durante o cálculo da política
+        (leitura e escrita).
 
         - indice_corte (`int`)
         - no (`int`)
@@ -107,7 +108,8 @@ class Cortdeco(SectionFile):
     def coeficientes_volume_armazenado(self) -> Optional[pd.DataFrame]:
         """
         Retorna o conjunto dos coeficientes dos cortes de Benders construídos
-        durante o cálculo da política para os eixos de volume armazenado.
+        durante o cálculo da política para os eixos de volume armazenado
+        (apenas leitura).
 
         - indice_corte (`int`)
         - no (`int`)
@@ -161,7 +163,7 @@ class Cortdeco(SectionFile):
         """
         Retorna o conjunto dos coeficientes dos cortes de Benders construídos
         durante o cálculo da política para os eixos de vazão defluente passada
-        por tempo de viagem.
+        por tempo de viagem (apenas leitura).
 
         - indice_corte (`int`)
         - no (`int`)
@@ -225,7 +227,7 @@ class Cortdeco(SectionFile):
         """
         Retorna o conjunto dos coeficientes dos cortes de Benders construídos
         durante o cálculo da política para os eixos de geração térmica
-        futura para usinas com antecipacao de despacho (GNL).
+        futura para usinas com antecipacao de despacho (GNL) (apenas leitura).
 
         - indice_corte (`int`)
         - no (`int`)
