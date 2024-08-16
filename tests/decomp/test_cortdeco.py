@@ -334,7 +334,9 @@ def test_leitura_escrita_cortdeco():
     )
     m_escrita: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m_escrita):
-        h1.write(ARQ_TESTE, REGISTRO_ULTIMO_CORTE_NO)
+        h1.write(
+            ARQ_TESTE, df_registro_ultimo_corte_no=REGISTRO_ULTIMO_CORTE_NO
+        )
         # Recupera o que foi escrito
         chamadas = m_escrita.mock_calls
         linhas_escritas = [

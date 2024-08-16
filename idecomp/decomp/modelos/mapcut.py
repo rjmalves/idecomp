@@ -1,7 +1,7 @@
 from cfinterface.components.section import Section
-from typing import IO
+from typing import IO, List
 import numpy as np  # type: ignore
-import pandas as pd
+import pandas as pd  # type: ignore
 from datetime import datetime
 
 
@@ -266,7 +266,7 @@ class SecaoDadosMapcut(Section):
 
     @property
     def registro_ultimo_corte_no(self) -> pd.DataFrame:
-        lista_estagios = []
+        lista_estagios: List[int] = []
         estagio = 1
         for no in range(1, self.numero_cenarios + 1):
             if no in self.indice_primeiro_no_estagio:

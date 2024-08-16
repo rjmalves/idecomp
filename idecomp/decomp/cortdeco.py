@@ -2,7 +2,7 @@ from cfinterface.files.sectionfile import SectionFile
 from idecomp.decomp.modelos.cortdeco import SecaoDadosCortdeco
 
 import pandas as pd  # type: ignore
-from typing import TypeVar, Optional, Union, List
+from typing import TypeVar, Optional, Union, List, IO
 
 
 class Cortdeco(SectionFile):
@@ -18,7 +18,7 @@ class Cortdeco(SectionFile):
 
     def __obtem_secao_cortdeco(self) -> Optional[pd.DataFrame]:
         s = self.data.get_sections_of_type(SecaoDadosCortdeco)
-        return s.data if not isinstance(s, list) else None
+        return s.data if not isinstance(s, list) and s is not None else None
 
     @classmethod
     def read(
@@ -54,13 +54,13 @@ class Cortdeco(SectionFile):
 
     def write(
         self,
-        content: Union[str, bytes],
+        to: Union[str, IO],
         df_registro_ultimo_corte_no: pd.DataFrame = pd.DataFrame(),
         *args,
         **kwargs
     ):
         super().write(
-            content,
+            to,
             df_registro_ultimo_corte_no=df_registro_ultimo_corte_no,
             *args,
             **kwargs

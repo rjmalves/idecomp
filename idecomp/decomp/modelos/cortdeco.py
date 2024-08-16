@@ -1,7 +1,7 @@
 from cfinterface.components.section import Section
 from typing import IO, List, Union
 import numpy as np  # type: ignore
-import pandas as pd
+import pandas as pd  # type: ignore
 
 
 class SecaoDadosCortdeco(Section):
@@ -254,7 +254,7 @@ class SecaoDadosCortdeco(Section):
         return df_cortes.sort_values(by=["indice_registro"])
 
     def __atualiza_registros(
-        self, file: Union[str, IO], df_registro_ultimo_corte_no: pd.DataFrame
+        self, file: IO, df_registro_ultimo_corte_no: pd.DataFrame
     ):
         df_cortes = self.__identifica_indices_registros(
             df_registro_ultimo_corte_no
@@ -315,7 +315,7 @@ class SecaoDadosCortdeco(Section):
 
     def write(
         self,
-        file: Union[str, IO],
+        file: IO,
         *args,
         **kwargs,
     ):
