@@ -1,5 +1,5 @@
 from cfinterface.components.section import Section
-from typing import IO, List, Union
+from typing import IO, List
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
 
