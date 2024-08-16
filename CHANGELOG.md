@@ -1,8 +1,9 @@
 # v1.5.0
 
 - Dependência da cfinterface atualizada para v1.7.1.
-- Suporte à leitura do arquivo de saída `mapcut.rvX`.
-- Suporte à leitura e escrita do arquivo de saída `cortdeco.rvX`.
+- Suporte à leitura do arquivo de saída `mapcut.rvX` [#35](https://github.com/rjmalves/idecomp/issues/35).
+- Suporte à leitura e escrita do arquivo de saída `cortdeco.rvX`[#35](https://github.com/rjmalves/idecomp/issues/35).
+- Simplifica a estrutura de armazenamento dos dados do arquivo `vazoes.rvX` permitindo alterações no número de cenários [#33](https://github.com/rjmalves/idecomp/issues/33).
 
 # v1.4.0
 
