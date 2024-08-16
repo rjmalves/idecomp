@@ -4,7 +4,7 @@ import pandas as pd  # type: ignore
 import numpy as np  # type: ignore
 
 
-from typing import TypeVar, Optional
+from typing import TypeVar, Optional, List
 
 
 class Vazoes(SectionFile):
@@ -35,6 +35,26 @@ class Vazoes(SectionFile):
     def __obtem_secao_vazoes(self) -> Optional[SecaoVazoesPostos]:
         s = self.data.get_sections_of_type(SecaoVazoesPostos)
         return s if not isinstance(s, list) else None
+
+    @property
+    def numero_aberturas_estagios(self) -> Optional[List[int]]:
+        """
+        Obtém a lista com o número de aberturas por estágio da árvore.
+
+        :return: A lista das aberturas por estágio
+        :rtype: List[int] | None
+        """
+        dados = self.__obtem_secao_vazoes()
+        if dados is not None:
+            return dados.numero_aberturas_estagios
+        else:
+            return None
+
+    @numero_aberturas_estagios.setter
+    def numero_aberturas_estagios(self, a: List[int]):
+        dados = self.__obtem_secao_vazoes()
+        if dados is not None:
+            dados.numero_aberturas_estagios = a
 
     @property
     def probabilidades(self) -> Optional[pd.DataFrame]:
@@ -75,11 +95,6 @@ class Vazoes(SectionFile):
     def probabilidades(self, df: pd.DataFrame):
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
-            n_probs = len(dados.probabilidades_nos)
-            if df.shape[0] != n_probs:
-                raise ValueError(
-                    f"São esperados {n_probs} valores de probabilidades."
-                )
             dados.probabilidades_nos = df["probabilidade"].tolist()
             self.__df_probabilidades = None
 
@@ -225,14 +240,6 @@ class Vazoes(SectionFile):
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
-            n_cens = len(dados.cenarios_gerados)
-            cols_dados = [
-                c for c in df.columns if c not in ["estagio", "cenario"]
-            ]
-            if df[cols_dados].size != n_cens:
-                raise ValueError(
-                    f"São esperados {n_cens} valores de cenários."
-                )
             cols_postos = [str(p) for p in range(1, n_postos + 1)]
             dados.cenarios_gerados = (
                 df[cols_postos].to_numpy().flatten().tolist()
@@ -294,14 +301,6 @@ class Vazoes(SectionFile):
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
-            n_cens = len(dados.cenarios_calculados_com_postos_artificiais)
-            cols_dados = [
-                c for c in df.columns if c not in ["estagio", "cenario"]
-            ]
-            if df[cols_dados].size != n_cens:
-                raise ValueError(
-                    f"São esperados {n_cens} valores de cenários."
-                )
             cols_postos = [str(p) for p in range(1, n_postos + 1)]
             dados.cenarios_calculados_com_postos_artificiais = (
                 df[cols_postos].to_numpy().flatten().tolist()
