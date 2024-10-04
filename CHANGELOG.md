@@ -1,3 +1,9 @@
+# v1.6.0
+
+- Suporte à leitura do arquivo de saída `avl_turb_max.csv`.
+- Suporte à leitura dos arquivos de saída `oper_disp_usih.csv`, `oper_disp_usih_ree.csv` e`oper_disp_subm.csv`.
+
+
 # v1.5.0
 
 - Dependência da cfinterface atualizada para v1.7.1.
