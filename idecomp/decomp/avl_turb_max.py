@@ -4,7 +4,6 @@ import pandas as pd  # type: ignore
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from idecomp.decomp.modelos.avl_turb_max import TabelaAvlTurbMax
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
 
 
 class AvlTurbMax(ArquivoCSV):

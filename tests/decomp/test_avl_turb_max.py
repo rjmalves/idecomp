@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from idecomp.decomp.avl_turb_max import AvlTurbMax
 from tests.mocks.arquivos.avl_turb_max import MockAvlTurbMax
 from tests.mocks.mock_open import mock_open
-import numpy as np
+import numpy as np  # type: ignore
 
 
 def test_atributos_encontrados_avl_turb_max():
