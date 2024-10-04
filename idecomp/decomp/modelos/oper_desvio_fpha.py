@@ -22,7 +22,7 @@ class TabelaOperDesvioFpha(TabelaCSVLibs):
             IntegerField(size=7),
             IntegerField(size=6),
             IntegerField(size=7),
-            LiteralField(size=204),
+            LiteralField(size=20),
             FloatField(size=15, decimal_digits=2),
             FloatField(size=15, decimal_digits=2),
             FloatField(size=15, decimal_digits=2),
