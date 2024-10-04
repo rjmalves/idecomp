@@ -24,16 +24,16 @@ class AvlTurbMax(ArquivoCSV):
         - nome_usina (`str`)
         - volume_util_inicial_hm3 (`float`)
         - volume_util_final_hm3 (`float`)
-        - vazao_turbinada (`float`)
-        - vazao_turbinada_maxima_pl (`float`)
-        - engolimento_maximo_priori (`float`)
-        - engolimento_maximo_posteriori (`float`)
-        - vazao_turbinada_maxima_gerador (`float`)
+        - vazao_turbinada_m3s (`float`)
+        - vazao_turbinada_maxima_pl_m3s (`float`)
+        - engolimento_maximo_priori_m3s (`float`)
+        - engolimento_maximo_posteriori_m3s (`float`)
+        - vazao_turbinada_maxima_gerador_m3s (`float`)
         - altura_queda (`float`)
         - altura_efetiva (`float`)
         - altura_montante (`float`)
         - altura_jusante (`float`)
-        - violacao_turbinamento (`float`)
+        - violacao_turbinamento_m3s (`float`)
 
         :return: A tabela como um dataframe
         :rtype: pd.DataFrame | None
