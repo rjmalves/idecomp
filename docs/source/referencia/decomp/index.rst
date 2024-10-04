@@ -8,6 +8,7 @@ DECOMP
 
    arquivos/arquivos
    arquivos/avl_cortesfpha_dec
+   arquivos/avl_turb_max
    arquivos/caso
    arquivos/cortdeco
    arquivos/custos
