@@ -33,6 +33,9 @@ DECOMP
    arquivos/inviabunic
    arquivos/mapcut
    arquivos/oper_desvio_fpha
+   arquivos/oper_disp_usih
+   arquivos/oper_disp_usih_ree
+   arquivos/oper_disp_usih_subm
    arquivos/postos
    arquivos/relato
    arquivos/relgnl

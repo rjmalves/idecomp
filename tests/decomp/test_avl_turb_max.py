@@ -17,16 +17,16 @@ def test_atributos_encontrados_avl_turb_max():
         assert rel.tabela.at[0, "nome_usina"] == "CAMARGOS"
         assert rel.tabela.at[0, "volume_util_inicial_hm3"] == 782.05
         assert rel.tabela.at[0, "volume_util_final_hm3"] == 792.00
-        assert rel.tabela.at[0, "vazao_turbinada"] == 41.94
-        assert rel.tabela.at[0, "vazao_turbinada_maxima_pl"] == 217.53
-        assert rel.tabela.at[0, "engolimento_maximo_priori"] == 217.53
-        assert rel.tabela.at[0, "engolimento_maximo_posteriori"] == 218.26
-        assert rel.tabela.at[0, "vazao_turbinada_maxima_gerador"] == 244.72
+        assert rel.tabela.at[0, "vazao_turbinada_m3s"] == 41.94
+        assert rel.tabela.at[0, "vazao_turbinada_maxima_pl_m3s"] == 217.53
+        assert rel.tabela.at[0, "engolimento_maximo_priori_m3s"] == 217.53
+        assert rel.tabela.at[0, "engolimento_maximo_posteriori_m3s"] == 218.26
+        assert rel.tabela.at[0, "vazao_turbinada_maxima_gerador_m3s"] == 244.72
         assert rel.tabela.at[0, "altura_queda"] == 27.15
         assert rel.tabela.at[0, "altura_efetiva"] == 24.60
         assert rel.tabela.at[0, "altura_montante"] == 912.94
         assert rel.tabela.at[0, "altura_jusante"] == 885.70
-        assert np.isnan(rel.tabela.at[0, "violacao_turbinamento"])
+        assert np.isnan(rel.tabela.at[0, "violacao_turbinamento_m3s"])
 
 
 def test_eq_avl_turb_max():
