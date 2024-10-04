@@ -12,7 +12,7 @@ class AvlTurbMax(ArquivoCSV):
     Arquivo com avaliação do turbinamento máximo das usinas hidrelétricas do DECOMP.
     """
 
-    BLOCKS = [VersaoModelo, TabelaAvlTurbMax]
+    BLOCKS = [TabelaAvlTurbMax]
 
     @property
     def tabela(self) -> Optional[pd.DataFrame]:
