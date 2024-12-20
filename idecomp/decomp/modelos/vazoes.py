@@ -1,6 +1,7 @@
-from cfinterface.components.section import Section
-from typing import List, IO
+from typing import IO, List
+
 import numpy as np  # type: ignore
+from cfinterface.components.section import Section
 
 
 class SecaoVazoesPostos(Section):
@@ -31,12 +32,10 @@ class SecaoVazoesPostos(Section):
         if not isinstance(o, SecaoVazoesPostos):
             return False
         bloco: SecaoVazoesPostos = o
-        if not all(
-            [
-                isinstance(self.data, dict),
-                isinstance(o.data, dict),
-            ]
-        ):
+        if not all([
+            isinstance(self.data, dict),
+            isinstance(o.data, dict),
+        ]):
             return False
         else:
             return self.data == bloco.data
@@ -213,8 +212,7 @@ class SecaoVazoesPostos(Section):
     def __escreve_quarto_registro(self, file: IO):
         num_entradas = len(self.data["dados_cenarios"])
         num_valores = (
-            self.__numero_blocos_cenarios()
-            * SecaoVazoesPostos.TAMANHO_REGISTRO
+            self.__numero_blocos_cenarios() * SecaoVazoesPostos.TAMANHO_REGISTRO
         )
         if num_entradas < num_valores:
             self.data["dados_cenarios"] += [0] * (num_valores - num_entradas)
@@ -247,9 +245,7 @@ class SecaoVazoesPostos(Section):
 
     def __escreve_nono_registro(self, file: IO):
         file.write(
-            np.array(
-                self.data["observacoes_mensais"], dtype=np.int32
-            ).tobytes()
+            np.array(self.data["observacoes_mensais"], dtype=np.int32).tobytes()
         )
 
     def __escreve_decimo_registro(self, file: IO):
@@ -341,9 +337,7 @@ class SecaoVazoesPostos(Section):
 
     @property
     def numero_cenarios_estocasticos(self) -> int:
-        return (
-            sum(self.numero_aberturas_estagios) - self.numero_semanas_completas
-        )
+        return np.prod(self.numero_aberturas_estagios)
 
     @property
     def versao_modelo(self) -> int:
