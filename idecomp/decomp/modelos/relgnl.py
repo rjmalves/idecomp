@@ -102,7 +102,7 @@ class BlocoDadosUsinasRelgnl(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X---X----------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -196,7 +196,7 @@ class BlocoComandosUsinasAjustesTGRelgnl(Block):
         while True:
             linha: str = file.readline()
             if len(linha) < 3:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             dados = self.__linha.read(linha)
@@ -285,7 +285,7 @@ class BlocoComandosUsinasAjustesRERelgnl(Block):
         while True:
             linha: str = file.readline()
             if len(linha) < 3:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             dados = self.__linha.read(linha)
@@ -408,7 +408,7 @@ class BlocoRelatorioOperacaoRelgnl(Block):
             # Verifica se acabou
             if self.ends(linha) or len(linha) == 0:
                 file.seek(ultima_linha)
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_para_df()
                 break
             # Senão, procura a linha que identifica o subsistema

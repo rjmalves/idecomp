@@ -337,7 +337,7 @@ class SecaoVazoesPostos(Section):
 
     @property
     def numero_cenarios_estocasticos(self) -> int:
-        return np.prod(self.numero_aberturas_estagios)
+        return int(np.prod(self.numero_aberturas_estagios))
 
     @property
     def versao_modelo(self) -> int:

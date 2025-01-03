@@ -124,7 +124,7 @@ class BlocoCortesFCF(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if len(linha) < 5:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
 
