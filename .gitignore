@@ -139,3 +139,6 @@ test.py
 deck_teste/**
 teste.py
 teste.txt
+
+# UV
+uv.lock
