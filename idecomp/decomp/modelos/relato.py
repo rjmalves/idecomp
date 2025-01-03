@@ -271,7 +271,7 @@ class BlocoConvergenciaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if len(linha) < 5:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             if "----" in linha:
@@ -617,7 +617,7 @@ class BlocoRelatorioOperacaoUTERelato(Block):
             linha: str = file.readline()
             # Verifica se acabou
             if self.ends(linha):
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 file.seek(posicao_ultima_linha)
                 self.data = converte_tabela_para_df()
                 break
@@ -912,7 +912,7 @@ class BlocoCMORelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1045,7 +1045,7 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1119,7 +1119,7 @@ class BlocoVolumeUtilReservatorioRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1218,7 +1218,7 @@ class BlocoDadosTermicasRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X---X----------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1299,7 +1299,7 @@ class BlocoDisponibilidadesTermicasRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1382,7 +1382,7 @@ class BlocoDadosMercadoRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X---------X------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1444,7 +1444,7 @@ class BlocoENAAcoplamentoREERelato(Block):
             while True:
                 linha = file.readline()
                 if len(linha) < 4:
-                    tab = tab[:i, :]
+                    tab = tab[:i, :]  # type: ignore
                     break
                 tab[i, :] = linha_tabela.read(linha)
                 indices_rees.append(indice_ree)
@@ -1558,7 +1558,7 @@ class BlocoEnergiaArmazenadaREERelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1635,7 +1635,7 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1707,7 +1707,7 @@ class BlocoENAPreEstudoMensalREERelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X--------------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1779,7 +1779,7 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X--------------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1856,7 +1856,7 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X--------------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1932,7 +1932,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X--------------X" in linha:
-                tabela = tabela[:i, :]
+                tabela = tabela[:i, :]  # type: ignore
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha

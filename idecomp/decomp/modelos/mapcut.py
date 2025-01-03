@@ -70,7 +70,7 @@ class SecaoDadosMapcut(Section):
             count=tamanho_primeiro_bloco,
         )
         ncen = list(dados_primeiro_bloco)[-1]
-        tamanho_segundo_bloco = ncen
+        tamanho_segundo_bloco = int(ncen)
         dados_segundo_bloco = np.frombuffer(
             file.read(tamanho_segundo_bloco * 4),
             dtype=np.int32,
@@ -134,13 +134,13 @@ class SecaoDadosMapcut(Section):
         )
         nper = list(dados_primeiro_bloco)[1]
         nutv = list(dados_primeiro_bloco)[-2]
-        tamanho_segundo_bloco = 2 * nper
+        tamanho_segundo_bloco = int(2 * nper)
         dados_segundo_bloco = np.frombuffer(
             file.read(tamanho_segundo_bloco * 4),
             dtype=np.int32,
             count=tamanho_segundo_bloco,
         )
-        tamanho_terceiro_bloco = nutv * nper
+        tamanho_terceiro_bloco = int(nutv * nper)
         dados_terceiro_bloco = np.frombuffer(
             file.read(tamanho_terceiro_bloco * 4),
             dtype=np.int32,
@@ -208,13 +208,13 @@ class SecaoDadosMapcut(Section):
             count=tamanho_primeiro_bloco,
         )
         ngnl = list(dados_primeiro_bloco)[0]
-        tamanho_segundo_bloco = 3 * ngnl
+        tamanho_segundo_bloco = int(3 * ngnl)
         dados_segundo_bloco = np.frombuffer(
             file.read(tamanho_segundo_bloco * 4),
             dtype=np.int32,
             count=tamanho_segundo_bloco,
         )
-        tamanho_terceiro_bloco = len(self.patamares_por_estagio) * ngnl
+        tamanho_terceiro_bloco = int(len(self.patamares_por_estagio) * ngnl)
         dados_terceiro_bloco = np.frombuffer(
             file.read(tamanho_terceiro_bloco * 8),
             dtype=np.float64,

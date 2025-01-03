@@ -1,10 +1,10 @@
-from cfinterface.files.sectionfile import SectionFile
-from idecomp.decomp.modelos.vazoes import SecaoVazoesPostos
-import pandas as pd  # type: ignore
+from typing import List, Optional, TypeVar
+
 import numpy as np  # type: ignore
+import pandas as pd  # type: ignore
+from cfinterface.files.sectionfile import SectionFile
 
-
-from typing import TypeVar, Optional, List
+from idecomp.decomp.modelos.vazoes import SecaoVazoesPostos
 
 
 class Vazoes(SectionFile):
@@ -75,16 +75,19 @@ class Vazoes(SectionFile):
             if dados is not None:
                 probs = dados.probabilidades_nos
                 numero_estagios = dados.numero_estagios
+                numero_semanas = dados.numero_semanas_completas
+                cenarios = [1] * dados.numero_semanas_completas
+                for num_aberturas in dados.numero_aberturas_estagios[
+                    numero_semanas:
+                ]:
+                    cenarios += list(range(1, num_aberturas + 1))
                 df = pd.DataFrame(
                     data={
                         "estagio": list(range(1, numero_estagios))
                         + [numero_estagios]
                         * dados.numero_cenarios_estocasticos,
                         "no": list(range(1, len(probs) + 1)),
-                        "cenario": [1] * dados.numero_semanas_completas
-                        + list(
-                            range(1, dados.numero_cenarios_estocasticos + 1)
-                        ),
+                        "cenario": cenarios,
                         "probabilidade": probs,
                     }
                 )
@@ -225,9 +228,7 @@ class Vazoes(SectionFile):
                 cenarios = []
                 for _, e in enumerate(estagios_estocasticos):
                     estagios += [e] * aberturas_por_estagio[e - 1]
-                    cenarios += list(
-                        range(1, aberturas_por_estagio[e - 1] + 1)
-                    )
+                    cenarios += list(range(1, aberturas_por_estagio[e - 1] + 1))
                 df["estagio"] = estagios
                 df["cenario"] = cenarios
                 self.__df_cenarios_mensais_gerados = df[
@@ -264,10 +265,7 @@ class Vazoes(SectionFile):
         :return: A tabela com os cenários por estágio e posto
         :rtype: pd.DataFrame | None
         """
-        if (
-            self.__df_cenarios_mensais_calculados_com_postos_artificiais
-            is None
-        ):
+        if self.__df_cenarios_mensais_calculados_com_postos_artificiais is None:
             dados = self.__obtem_secao_vazoes()
             if dados is not None:
                 cens = dados.cenarios_calculados_com_postos_artificiais
@@ -286,14 +284,12 @@ class Vazoes(SectionFile):
                 cenarios = []
                 for _, e in enumerate(estagios_estocasticos):
                     estagios += [e] * aberturas_por_estagio[e - 1]
-                    cenarios += list(
-                        range(1, aberturas_por_estagio[e - 1] + 1)
-                    )
+                    cenarios += list(range(1, aberturas_por_estagio[e - 1] + 1))
                 df["estagio"] = estagios
                 df["cenario"] = cenarios
-                self.__df_cenarios_mensais_calculados_com_postos_artificiais = df[
-                    ["estagio", "cenario"] + cols_postos
-                ]
+                self.__df_cenarios_mensais_calculados_com_postos_artificiais = (
+                    df[["estagio", "cenario"] + cols_postos]
+                )
         return self.__df_cenarios_mensais_calculados_com_postos_artificiais
 
     @cenarios_calculados_com_postos_artificiais.setter
