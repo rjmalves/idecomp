@@ -1,96 +1,97 @@
-from idecomp.decomp.modelos.dadger import (
-    TE,
-    SB,
-    UH,
-    CT,
-    UE,
-    DP,
-    PQ,
-    CD,
-    FP,
-    RI,
-    IA,
-    TX,
-    GP,
-    NI,
-    DT,
-    MP,
-    MT,
-    FD,
-    VE,
-    RE,
-    LU,
-    FU,
-    FT,
-    FI,
-    VI,
-    IR,
-    CI,
-    CE,
-    FC,
-    EA,
-    ES,
-    QI,
-    TI,
-    RQ,
-    EZ,
-    RT,
-    HV,
-    LV,
-    CV,
-    HQ,
-    LQ,
-    CQ,
-    AR,
-    EV,
-    FJ,
-    HE,
-    CM,
-    PD,
-    PU,
-    RC,
-    PE,
-    TS,
-    PV,
-    CX,
-    FA,
-    VT,
-    CS,
-    ACNUMPOS,
-    ACNUMJUS,
-    ACDESVIO,
-    ACVOLMIN,
-    ACVOLMAX,
-    ACCOTVOL,
-    ACCOTARE,
-    ACPROESP,
-    ACPERHID,
-    ACNCHAVE,
-    ACCOTVAZ,
-    ACCOFEVA,
-    ACNUMCON,
-    ACNUMMAQ,
-    ACPOTEFE,
-    ACALTEFE,
-    ACVAZEFE,
-    ACJUSMED,
-    ACVERTJU,
-    ACVAZMIN,
-    ACTIPERH,
-    ACJUSENA,
-    ACVSVERT,
-    ACVMDESV,
-    ACNPOSNW,
-    VL,
-    VA,
-    VU,
-    DA,
-)
+from typing import Any, List, Optional, Type, TypeVar, Union
 
 import pandas  # type: ignore
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
-from typing import Type, List, Optional, TypeVar, Any, Union
+
+from idecomp.decomp.modelos.dadger import (
+    ACALTEFE,
+    ACCOFEVA,
+    ACCOTARE,
+    ACCOTVAZ,
+    ACCOTVOL,
+    ACDESVIO,
+    ACJUSENA,
+    ACJUSMED,
+    ACNCHAVE,
+    ACNPOSNW,
+    ACNUMCON,
+    ACNUMJUS,
+    ACNUMMAQ,
+    ACNUMPOS,
+    ACPERHID,
+    ACPOTEFE,
+    ACPROESP,
+    ACTIPERH,
+    ACVAZEFE,
+    ACVAZMIN,
+    ACVERTJU,
+    ACVMDESV,
+    ACVOLMAX,
+    ACVOLMIN,
+    ACVSVERT,
+    AR,
+    CD,
+    CE,
+    CI,
+    CM,
+    CQ,
+    CS,
+    CT,
+    CV,
+    CX,
+    DA,
+    DP,
+    DT,
+    EA,
+    ES,
+    EV,
+    EZ,
+    FA,
+    FC,
+    FD,
+    FI,
+    FJ,
+    FP,
+    FT,
+    FU,
+    GP,
+    HE,
+    HQ,
+    HV,
+    IA,
+    IR,
+    LQ,
+    LU,
+    LV,
+    MP,
+    MT,
+    NI,
+    PD,
+    PE,
+    PQ,
+    PU,
+    PV,
+    QI,
+    RC,
+    RE,
+    RI,
+    RQ,
+    RT,
+    SB,
+    TE,
+    TI,
+    TS,
+    TX,
+    UE,
+    UH,
+    VA,
+    VE,
+    VI,
+    VL,
+    VT,
+    VU,
+)
 
 
 class Dadger(RegisterFile):
@@ -227,9 +228,7 @@ class Dadger(RegisterFile):
         ]
         for c in nomes_colunas:
             num_elementos = len(df.at[0, c])
-            particoes_coluna = [
-                f"{c}_{i}" for i in range(1, num_elementos + 1)
-            ]
+            particoes_coluna = [f"{c}_{i}" for i in range(1, num_elementos + 1)]
             df[particoes_coluna] = df.apply(
                 lambda linha: linha[c], axis=1, result_type="expand"
             )
@@ -465,6 +464,39 @@ class Dadger(RegisterFile):
             nome=nome,
             estagio=estagio,
             codigo_submercado=codigo_submercado,
+            df=df,
+        )
+
+    def ia(
+        self,
+        estagio: Optional[int] = None,
+        nome_submercado_de: Optional[str] = None,
+        nome_submercado_para: Optional[str] = None,
+        df: bool = False,
+    ) -> Optional[Union[IA, List[IA], pandas.DataFrame]]:
+        """
+        Obtém um registro que define os limites de intercâmbio
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param estagio: estágio sobre o qual serão
+            definidas as gerações
+        :type estagio: int | None
+        :param nome_submercado_de: submercado de origem
+        :type nome_submercado_de: int | None
+        :param nome_submercado_para: submercado de destino
+        :type nome_submercado_para: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`IA` | list[:class:`IA`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            IA,
+            estagio=estagio,
+            nome_submercado_de=nome_submercado_de,
+            nome_submercado_para=nome_submercado_para,
             df=df,
         )
 
@@ -937,9 +969,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`EA` | list[:class:`EA`] | :class:`pandas.DataFrame` | None
         """
-        return self.data.get_registers_of_type(
-            EA, codigo_ree=codigo_ree, df=df
-        )
+        return self.data.get_registers_of_type(EA, codigo_ree=codigo_ree, df=df)
 
     def es(
         self,
