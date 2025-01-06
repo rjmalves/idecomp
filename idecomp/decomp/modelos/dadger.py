@@ -1,10 +1,10 @@
-from cfinterface.components.register import Register
-from cfinterface.components.line import Line
-from cfinterface.components.integerfield import IntegerField
-from cfinterface.components.literalfield import LiteralField
-from cfinterface.components.floatfield import FloatField
+from typing import IO, List, Optional
 
-from typing import Optional, List, IO
+from cfinterface.components.floatfield import FloatField
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.line import Line
+from cfinterface.components.literalfield import LiteralField
+from cfinterface.components.register import Register
 from numpy import abs  # type: ignore
 
 
@@ -84,20 +84,18 @@ class UH(Register):
 
     IDENTIFIER = "UH  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 25, 2),
-            IntegerField(1, 39),
-            IntegerField(2, 44),
-            FloatField(10, 49, 2),
-            FloatField(10, 59, 2),
-            IntegerField(1, 69),
-            LiteralField(2, 71),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        FloatField(10, 14, 2),
+        FloatField(10, 25, 2),
+        IntegerField(1, 39),
+        IntegerField(2, 44),
+        FloatField(10, 49, 2),
+        FloatField(10, 59, 2),
+        IntegerField(1, 69),
+        LiteralField(2, 71),
+    ])
 
     @property
     def codigo_usina(self) -> Optional[int]:
@@ -252,29 +250,27 @@ class CT(Register):
 
     IDENTIFIER = "CT  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            LiteralField(10, 14),
-            IntegerField(2, 24),
-            FloatField(5, 29, 2),
-            FloatField(5, 34, 2),
-            FloatField(10, 39, 2),
-            FloatField(5, 49, 2),
-            FloatField(5, 54, 2),
-            FloatField(10, 59, 2),
-            FloatField(5, 69, 2),
-            FloatField(5, 74, 2),
-            FloatField(10, 79, 2),
-            FloatField(5, 89, 2),
-            FloatField(5, 94, 2),
-            FloatField(10, 99, 2),
-            FloatField(5, 109, 2),
-            FloatField(5, 114, 2),
-            FloatField(10, 119, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        LiteralField(10, 14),
+        IntegerField(2, 24),
+        FloatField(5, 29, 2),
+        FloatField(5, 34, 2),
+        FloatField(10, 39, 2),
+        FloatField(5, 49, 2),
+        FloatField(5, 54, 2),
+        FloatField(10, 59, 2),
+        FloatField(5, 69, 2),
+        FloatField(5, 74, 2),
+        FloatField(10, 79, 2),
+        FloatField(5, 89, 2),
+        FloatField(5, 94, 2),
+        FloatField(10, 99, 2),
+        FloatField(5, 109, 2),
+        FloatField(5, 114, 2),
+        FloatField(10, 119, 2),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -400,18 +396,16 @@ class UE(Register):
 
     IDENTIFIER = "UE  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            LiteralField(12, 14),
-            IntegerField(3, 29),
-            IntegerField(3, 34),
-            FloatField(10, 39, 1),
-            FloatField(10, 49, 1),
-            FloatField(10, 59, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        LiteralField(12, 14),
+        IntegerField(3, 29),
+        IntegerField(3, 34),
+        FloatField(10, 39, 1),
+        FloatField(10, 49, 1),
+        FloatField(10, 59, 2),
+    ])
 
     @property
     def codigo_usina(self) -> Optional[int]:
@@ -536,23 +530,21 @@ class DP(Register):
 
     IDENTIFIER = "DP  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(2, 4),
-            IntegerField(2, 9),
-            IntegerField(1, 14),
-            FloatField(10, 19, 1),
-            FloatField(10, 29, 1),
-            FloatField(10, 39, 1),
-            FloatField(10, 49, 1),
-            FloatField(10, 59, 1),
-            FloatField(10, 69, 1),
-            FloatField(10, 79, 1),
-            FloatField(10, 89, 1),
-            FloatField(10, 99, 1),
-            FloatField(10, 109, 1),
-        ]
-    )
+    LINE = Line([
+        IntegerField(2, 4),
+        IntegerField(2, 9),
+        IntegerField(1, 14),
+        FloatField(10, 19, 1),
+        FloatField(10, 29, 1),
+        FloatField(10, 39, 1),
+        FloatField(10, 49, 1),
+        FloatField(10, 59, 1),
+        FloatField(10, 69, 1),
+        FloatField(10, 79, 1),
+        FloatField(10, 89, 1),
+        FloatField(10, 99, 1),
+        FloatField(10, 109, 1),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -650,18 +642,16 @@ class PQ(Register):
 
     IDENTIFIER = "PQ  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(10, 4),
-            IntegerField(2, 14),
-            IntegerField(2, 19),
-            FloatField(5, 24, 0),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
-            FloatField(5, 39, 0),
-            FloatField(5, 44, 0),
-        ]
-    )
+    LINE = Line([
+        LiteralField(10, 4),
+        IntegerField(2, 14),
+        IntegerField(2, 19),
+        FloatField(5, 24, 0),
+        FloatField(5, 29, 0),
+        FloatField(5, 34, 0),
+        FloatField(5, 39, 0),
+        FloatField(5, 44, 0),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -745,24 +735,22 @@ class CD(Register):
 
     IDENTIFIER = "CD  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(2, 4),
-            IntegerField(2, 9),
-            LiteralField(10, 14),
-            IntegerField(2, 24),
-            FloatField(5, 29, 1),
-            FloatField(10, 34, 2),
-            FloatField(5, 44, 1),
-            FloatField(10, 49, 2),
-            FloatField(5, 59, 1),
-            FloatField(10, 64, 2),
-            FloatField(5, 74, 1),
-            FloatField(10, 79, 2),
-            FloatField(5, 89, 1),
-            FloatField(10, 94, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(2, 4),
+        IntegerField(2, 9),
+        LiteralField(10, 14),
+        IntegerField(2, 24),
+        FloatField(5, 29, 1),
+        FloatField(10, 34, 2),
+        FloatField(5, 44, 1),
+        FloatField(10, 49, 2),
+        FloatField(5, 59, 1),
+        FloatField(10, 64, 2),
+        FloatField(5, 74, 1),
+        FloatField(10, 79, 2),
+        FloatField(5, 89, 1),
+        FloatField(10, 94, 2),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -874,38 +862,36 @@ class RI(Register):
 
     IDENTIFIER = "RI  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(3, 8),
-            IntegerField(3, 12),
-            FloatField(7, 16, 1),
-            FloatField(7, 23, 1),
-            FloatField(7, 30, 1),
-            FloatField(7, 37, 1),
-            FloatField(7, 44, 1),
-            FloatField(7, 51, 1),
-            FloatField(7, 58, 1),
-            FloatField(7, 65, 1),
-            FloatField(7, 72, 1),
-            FloatField(7, 79, 1),
-            FloatField(7, 86, 1),
-            FloatField(7, 93, 1),
-            FloatField(7, 100, 1),
-            FloatField(7, 107, 1),
-            FloatField(7, 114, 1),
-            FloatField(7, 121, 1),
-            FloatField(7, 128, 1),
-            FloatField(7, 135, 1),
-            FloatField(7, 142, 1),
-            FloatField(7, 149, 1),
-            FloatField(7, 156, 1),
-            FloatField(7, 163, 1),
-            FloatField(7, 170, 1),
-            FloatField(7, 177, 1),
-            FloatField(7, 184, 1),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(3, 8),
+        IntegerField(3, 12),
+        FloatField(7, 16, 1),
+        FloatField(7, 23, 1),
+        FloatField(7, 30, 1),
+        FloatField(7, 37, 1),
+        FloatField(7, 44, 1),
+        FloatField(7, 51, 1),
+        FloatField(7, 58, 1),
+        FloatField(7, 65, 1),
+        FloatField(7, 72, 1),
+        FloatField(7, 79, 1),
+        FloatField(7, 86, 1),
+        FloatField(7, 93, 1),
+        FloatField(7, 100, 1),
+        FloatField(7, 107, 1),
+        FloatField(7, 114, 1),
+        FloatField(7, 121, 1),
+        FloatField(7, 128, 1),
+        FloatField(7, 135, 1),
+        FloatField(7, 142, 1),
+        FloatField(7, 149, 1),
+        FloatField(7, 156, 1),
+        FloatField(7, 163, 1),
+        FloatField(7, 170, 1),
+        FloatField(7, 177, 1),
+        FloatField(7, 184, 1),
+    ])
 
 
 class IA(Register):
@@ -918,24 +904,64 @@ class IA(Register):
 
     IDENTIFIER = "IA  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(2, 4),
-            LiteralField(2, 9),
-            LiteralField(2, 14),
-            IntegerField(1, 17),
-            FloatField(10, 19, 0),
-            FloatField(10, 29, 0),
-            FloatField(10, 39, 0),
-            FloatField(10, 49, 0),
-            FloatField(10, 59, 0),
-            FloatField(10, 69, 0),
-            FloatField(10, 79, 0),
-            FloatField(10, 89, 0),
-            FloatField(10, 99, 0),
-            FloatField(10, 109, 0),
-        ]
-    )
+    LINE = Line([
+        IntegerField(2, 4),
+        LiteralField(2, 9),
+        LiteralField(2, 14),
+        IntegerField(1, 17),
+        FloatField(10, 19, 0),
+        FloatField(10, 29, 0),
+        FloatField(10, 39, 0),
+        FloatField(10, 49, 0),
+        FloatField(10, 59, 0),
+        FloatField(10, 69, 0),
+        FloatField(10, 79, 0),
+        FloatField(10, 89, 0),
+        FloatField(10, 99, 0),
+        FloatField(10, 109, 0),
+    ])
+
+    @property
+    def estagio(self) -> Optional[int]:
+        """
+        O índice do estágio.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @estagio.setter
+    def estagio(self, t: int):
+        self.data[0] = t
+
+    @property
+    def nome_submercado_de(self) -> Optional[str]:
+        """
+        O nome do submercado de origem.
+
+        :return: O submercado.
+        :rtype: str | None
+        """
+        return self.data[1]
+
+    @nome_submercado_de.setter
+    def nome_submercado_de(self, t: str):
+        self.data[1] = t
+
+    @property
+    def nome_submercado_para(self) -> Optional[str]:
+        """
+        O nome do submercado de destino.
+
+        :return: O submercado.
+        :rtype: str | None
+        """
+        return self.data[2]
+
+    @nome_submercado_para.setter
+    def nome_submercado_para(self, t: str):
+        self.data[2] = t
 
 
 class TX(Register):
@@ -947,11 +973,9 @@ class TX(Register):
 
     IDENTIFIER = "TX  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            FloatField(5, 4, 0),
-        ]
-    )
+    LINE = Line([
+        FloatField(5, 4, 0),
+    ])
 
     @property
     def taxa(self) -> Optional[float]:
@@ -977,11 +1001,9 @@ class GP(Register):
 
     IDENTIFIER = "GP  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            FloatField(10, 4, 6),
-        ]
-    )
+    LINE = Line([
+        FloatField(10, 4, 6),
+    ])
 
     @property
     def gap(self) -> Optional[float]:
@@ -1047,13 +1069,11 @@ class DT(Register):
 
     IDENTIFIER = "DT  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(2, 4),
-            IntegerField(2, 9),
-            IntegerField(4, 14),
-        ]
-    )
+    LINE = Line([
+        IntegerField(2, 4),
+        IntegerField(2, 9),
+        IntegerField(4, 14),
+    ])
 
     @property
     def dia(self) -> Optional[int]:
@@ -1108,36 +1128,34 @@ class MP(Register):
 
     IDENTIFIER = "MP  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 7),
-            FloatField(5, 9, 3),
-            FloatField(5, 14, 3),
-            FloatField(5, 19, 3),
-            FloatField(5, 24, 3),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
-            FloatField(5, 39, 3),
-            FloatField(5, 44, 3),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
-            FloatField(5, 59, 3),
-            FloatField(5, 64, 3),
-            FloatField(5, 69, 3),
-            FloatField(5, 74, 3),
-            FloatField(5, 79, 3),
-            FloatField(5, 84, 3),
-            FloatField(5, 89, 3),
-            FloatField(5, 94, 3),
-            FloatField(5, 99, 3),
-            FloatField(5, 104, 3),
-            FloatField(5, 109, 3),
-            FloatField(5, 114, 3),
-            FloatField(5, 119, 3),
-            FloatField(5, 124, 3),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 7),
+        FloatField(5, 9, 3),
+        FloatField(5, 14, 3),
+        FloatField(5, 19, 3),
+        FloatField(5, 24, 3),
+        FloatField(5, 29, 3),
+        FloatField(5, 34, 3),
+        FloatField(5, 39, 3),
+        FloatField(5, 44, 3),
+        FloatField(5, 49, 3),
+        FloatField(5, 54, 3),
+        FloatField(5, 59, 3),
+        FloatField(5, 64, 3),
+        FloatField(5, 69, 3),
+        FloatField(5, 74, 3),
+        FloatField(5, 79, 3),
+        FloatField(5, 84, 3),
+        FloatField(5, 89, 3),
+        FloatField(5, 94, 3),
+        FloatField(5, 99, 3),
+        FloatField(5, 104, 3),
+        FloatField(5, 109, 3),
+        FloatField(5, 114, 3),
+        FloatField(5, 119, 3),
+        FloatField(5, 124, 3),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -1207,36 +1225,34 @@ class MT(Register):
 
     IDENTIFIER = "MT  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(5, 14, 3),
-            FloatField(5, 19, 3),
-            FloatField(5, 24, 3),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
-            FloatField(5, 39, 3),
-            FloatField(5, 44, 3),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
-            FloatField(5, 59, 3),
-            FloatField(5, 64, 3),
-            FloatField(5, 69, 3),
-            FloatField(5, 74, 3),
-            FloatField(5, 79, 3),
-            FloatField(5, 84, 3),
-            FloatField(5, 89, 3),
-            FloatField(5, 94, 3),
-            FloatField(5, 99, 3),
-            FloatField(5, 104, 3),
-            FloatField(5, 109, 3),
-            FloatField(5, 114, 3),
-            FloatField(5, 119, 3),
-            FloatField(5, 124, 3),
-            FloatField(5, 129, 3),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        FloatField(5, 14, 3),
+        FloatField(5, 19, 3),
+        FloatField(5, 24, 3),
+        FloatField(5, 29, 3),
+        FloatField(5, 34, 3),
+        FloatField(5, 39, 3),
+        FloatField(5, 44, 3),
+        FloatField(5, 49, 3),
+        FloatField(5, 54, 3),
+        FloatField(5, 59, 3),
+        FloatField(5, 64, 3),
+        FloatField(5, 69, 3),
+        FloatField(5, 74, 3),
+        FloatField(5, 79, 3),
+        FloatField(5, 84, 3),
+        FloatField(5, 89, 3),
+        FloatField(5, 94, 3),
+        FloatField(5, 99, 3),
+        FloatField(5, 104, 3),
+        FloatField(5, 109, 3),
+        FloatField(5, 114, 3),
+        FloatField(5, 119, 3),
+        FloatField(5, 124, 3),
+        FloatField(5, 129, 3),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -1306,36 +1322,34 @@ class FD(Register):
 
     IDENTIFIER = "FD  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 7),
-            FloatField(5, 9, 3),
-            FloatField(5, 14, 3),
-            FloatField(5, 19, 3),
-            FloatField(5, 24, 3),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
-            FloatField(5, 39, 3),
-            FloatField(5, 44, 3),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
-            FloatField(5, 59, 3),
-            FloatField(5, 64, 3),
-            FloatField(5, 69, 3),
-            FloatField(5, 74, 3),
-            FloatField(5, 79, 3),
-            FloatField(5, 84, 3),
-            FloatField(5, 89, 3),
-            FloatField(5, 94, 3),
-            FloatField(5, 99, 3),
-            FloatField(5, 104, 3),
-            FloatField(5, 109, 3),
-            FloatField(5, 114, 3),
-            FloatField(5, 119, 3),
-            FloatField(5, 124, 3),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 7),
+        FloatField(5, 9, 3),
+        FloatField(5, 14, 3),
+        FloatField(5, 19, 3),
+        FloatField(5, 24, 3),
+        FloatField(5, 29, 3),
+        FloatField(5, 34, 3),
+        FloatField(5, 39, 3),
+        FloatField(5, 44, 3),
+        FloatField(5, 49, 3),
+        FloatField(5, 54, 3),
+        FloatField(5, 59, 3),
+        FloatField(5, 64, 3),
+        FloatField(5, 69, 3),
+        FloatField(5, 74, 3),
+        FloatField(5, 79, 3),
+        FloatField(5, 84, 3),
+        FloatField(5, 89, 3),
+        FloatField(5, 94, 3),
+        FloatField(5, 99, 3),
+        FloatField(5, 104, 3),
+        FloatField(5, 109, 3),
+        FloatField(5, 114, 3),
+        FloatField(5, 119, 3),
+        FloatField(5, 124, 3),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -1405,35 +1419,33 @@ class VE(Register):
 
     IDENTIFIER = "VE  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(5, 9, 2),
-            FloatField(5, 14, 2),
-            FloatField(5, 19, 2),
-            FloatField(5, 24, 2),
-            FloatField(5, 29, 2),
-            FloatField(5, 34, 2),
-            FloatField(5, 39, 2),
-            FloatField(5, 44, 2),
-            FloatField(5, 49, 2),
-            FloatField(5, 54, 2),
-            FloatField(5, 59, 2),
-            FloatField(5, 64, 2),
-            FloatField(5, 69, 2),
-            FloatField(5, 74, 2),
-            FloatField(5, 79, 2),
-            FloatField(5, 84, 2),
-            FloatField(5, 89, 2),
-            FloatField(5, 94, 2),
-            FloatField(5, 99, 2),
-            FloatField(5, 104, 2),
-            FloatField(5, 109, 2),
-            FloatField(5, 114, 2),
-            FloatField(5, 119, 2),
-            FloatField(5, 124, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(5, 9, 2),
+        FloatField(5, 14, 2),
+        FloatField(5, 19, 2),
+        FloatField(5, 24, 2),
+        FloatField(5, 29, 2),
+        FloatField(5, 34, 2),
+        FloatField(5, 39, 2),
+        FloatField(5, 44, 2),
+        FloatField(5, 49, 2),
+        FloatField(5, 54, 2),
+        FloatField(5, 59, 2),
+        FloatField(5, 64, 2),
+        FloatField(5, 69, 2),
+        FloatField(5, 74, 2),
+        FloatField(5, 79, 2),
+        FloatField(5, 84, 2),
+        FloatField(5, 89, 2),
+        FloatField(5, 94, 2),
+        FloatField(5, 99, 2),
+        FloatField(5, 104, 2),
+        FloatField(5, 109, 2),
+        FloatField(5, 114, 2),
+        FloatField(5, 119, 2),
+        FloatField(5, 124, 2),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -1488,13 +1500,11 @@ class RE(Register):
 
     IDENTIFIER = "RE  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(2, 14),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        IntegerField(2, 14),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -1549,22 +1559,20 @@ class LU(Register):
 
     IDENTIFIER = "LU  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 1),
-            FloatField(10, 24, 1),
-            FloatField(10, 34, 1),
-            FloatField(10, 44, 1),
-            FloatField(10, 54, 1),
-            FloatField(10, 64, 1),
-            FloatField(10, 74, 1),
-            FloatField(10, 84, 1),
-            FloatField(10, 94, 1),
-            FloatField(10, 104, 1),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        FloatField(10, 14, 1),
+        FloatField(10, 24, 1),
+        FloatField(10, 34, 1),
+        FloatField(10, 44, 1),
+        FloatField(10, 54, 1),
+        FloatField(10, 64, 1),
+        FloatField(10, 74, 1),
+        FloatField(10, 84, 1),
+        FloatField(10, 94, 1),
+        FloatField(10, 104, 1),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -1649,15 +1657,13 @@ class FU(Register):
 
     IDENTIFIER = "FU  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            FloatField(10, 19, 7),
-            IntegerField(2, 30),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        IntegerField(3, 14),
+        FloatField(10, 19, 7),
+        IntegerField(2, 30),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -1736,15 +1742,13 @@ class FT(Register):
 
     IDENTIFIER = "FT  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            IntegerField(2, 19),
-            FloatField(10, 24, 7),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        IntegerField(3, 14),
+        IntegerField(2, 19),
+        FloatField(10, 24, 7),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -1822,15 +1826,13 @@ class FI(Register):
 
     IDENTIFIER = "FI  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            LiteralField(2, 14),
-            LiteralField(2, 19),
-            FloatField(10, 24, 7),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        LiteralField(2, 14),
+        LiteralField(2, 19),
+        FloatField(10, 24, 7),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -1907,21 +1909,19 @@ class VI(Register):
 
     IDENTIFIER = "VI  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(3, 9),
-            FloatField(5, 14, 0),
-            FloatField(5, 19, 0),
-            FloatField(5, 24, 0),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
-            FloatField(5, 39, 0),
-            FloatField(5, 44, 0),
-            FloatField(5, 49, 0),
-            FloatField(5, 54, 0),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(3, 9),
+        FloatField(5, 14, 0),
+        FloatField(5, 19, 0),
+        FloatField(5, 24, 0),
+        FloatField(5, 29, 0),
+        FloatField(5, 34, 0),
+        FloatField(5, 39, 0),
+        FloatField(5, 44, 0),
+        FloatField(5, 49, 0),
+        FloatField(5, 54, 0),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -1995,14 +1995,12 @@ class IR(Register):
 
     IDENTIFIER = "IR  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(7, 4),
-            IntegerField(2, 14),
-            IntegerField(2, 19),
-            IntegerField(5, 24),
-        ]
-    )
+    LINE = Line([
+        LiteralField(7, 4),
+        IntegerField(2, 14),
+        IntegerField(2, 19),
+        IntegerField(5, 24),
+    ])
 
     @property
     def tipo(self) -> Optional[str]:
@@ -2029,24 +2027,22 @@ class CI(Register):
 
     IDENTIFIER = "CI  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 8),
-            LiteralField(10, 11),
-            IntegerField(2, 24),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
-            FloatField(10, 39, 2),
-            FloatField(5, 49, 0),
-            FloatField(5, 54, 0),
-            FloatField(10, 59, 2),
-            FloatField(5, 69, 0),
-            FloatField(5, 74, 0),
-            FloatField(10, 79, 2),
-            FloatField(5, 89, 3),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 8),
+        LiteralField(10, 11),
+        IntegerField(2, 24),
+        FloatField(5, 29, 0),
+        FloatField(5, 34, 0),
+        FloatField(10, 39, 2),
+        FloatField(5, 49, 0),
+        FloatField(5, 54, 0),
+        FloatField(10, 59, 2),
+        FloatField(5, 69, 0),
+        FloatField(5, 74, 0),
+        FloatField(10, 79, 2),
+        FloatField(5, 89, 3),
+    ])
 
 
 class CE(Register):
@@ -2058,24 +2054,22 @@ class CE(Register):
 
     IDENTIFIER = "CE  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 8),
-            LiteralField(10, 11),
-            IntegerField(2, 24),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
-            FloatField(10, 39, 2),
-            FloatField(5, 49, 0),
-            FloatField(5, 54, 0),
-            FloatField(10, 59, 2),
-            FloatField(5, 69, 0),
-            FloatField(5, 74, 0),
-            FloatField(10, 79, 2),
-            FloatField(5, 89, 3),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 8),
+        LiteralField(10, 11),
+        IntegerField(2, 24),
+        FloatField(5, 29, 0),
+        FloatField(5, 34, 0),
+        FloatField(10, 39, 2),
+        FloatField(5, 49, 0),
+        FloatField(5, 54, 0),
+        FloatField(10, 59, 2),
+        FloatField(5, 69, 0),
+        FloatField(5, 74, 0),
+        FloatField(10, 79, 2),
+        FloatField(5, 89, 3),
+    ])
 
 
 class FC(Register):
@@ -2088,12 +2082,10 @@ class FC(Register):
 
     IDENTIFIER = "FC  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(6, 4),
-            LiteralField(200, 14),
-        ]
-    )
+    LINE = Line([
+        LiteralField(6, 4),
+        LiteralField(200, 14),
+    ])
 
     @property
     def tipo(self) -> Optional[str]:
@@ -2131,22 +2123,20 @@ class EA(Register):
 
     IDENTIFIER = "EA  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(2, 4),
-            FloatField(10, 11, 2),
-            FloatField(10, 21, 2),
-            FloatField(10, 31, 2),
-            FloatField(10, 41, 2),
-            FloatField(10, 51, 2),
-            FloatField(10, 61, 2),
-            FloatField(10, 71, 2),
-            FloatField(10, 81, 2),
-            FloatField(10, 91, 2),
-            FloatField(10, 101, 2),
-            FloatField(10, 111, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(2, 4),
+        FloatField(10, 11, 2),
+        FloatField(10, 21, 2),
+        FloatField(10, 31, 2),
+        FloatField(10, 41, 2),
+        FloatField(10, 51, 2),
+        FloatField(10, 61, 2),
+        FloatField(10, 71, 2),
+        FloatField(10, 81, 2),
+        FloatField(10, 91, 2),
+        FloatField(10, 101, 2),
+        FloatField(10, 111, 2),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -2202,17 +2192,15 @@ class ES(Register):
 
     IDENTIFIER = "ES  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(2, 4),
-            IntegerField(1, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 24, 2),
-            FloatField(10, 34, 2),
-            FloatField(10, 44, 2),
-            FloatField(10, 54, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(2, 4),
+        IntegerField(1, 9),
+        FloatField(10, 14, 2),
+        FloatField(10, 24, 2),
+        FloatField(10, 34, 2),
+        FloatField(10, 44, 2),
+        FloatField(10, 54, 2),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -2282,16 +2270,14 @@ class QI(Register):
 
     IDENTIFIER = "QI  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(5, 9, 1),
-            FloatField(5, 14, 1),
-            FloatField(5, 19, 1),
-            FloatField(5, 24, 1),
-            FloatField(5, 29, 1),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(5, 9, 1),
+        FloatField(5, 14, 1),
+        FloatField(5, 19, 1),
+        FloatField(5, 24, 1),
+        FloatField(5, 29, 1),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -2348,11 +2334,9 @@ class RT(Register):
 
     IDENTIFIER = "RT  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(6, 4),
-        ]
-    )
+    LINE = Line([
+        LiteralField(6, 4),
+    ])
 
     @property
     def restricao(self) -> Optional[str]:
@@ -2376,35 +2360,33 @@ class TI(Register):
 
     IDENTIFIER = "TI  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(5, 9, 2),
-            FloatField(5, 14, 2),
-            FloatField(5, 19, 2),
-            FloatField(5, 24, 2),
-            FloatField(5, 29, 2),
-            FloatField(5, 34, 2),
-            FloatField(5, 39, 2),
-            FloatField(5, 44, 2),
-            FloatField(5, 49, 2),
-            FloatField(5, 54, 2),
-            FloatField(5, 59, 2),
-            FloatField(5, 64, 2),
-            FloatField(5, 69, 2),
-            FloatField(5, 74, 2),
-            FloatField(5, 79, 2),
-            FloatField(5, 84, 2),
-            FloatField(5, 89, 2),
-            FloatField(5, 94, 2),
-            FloatField(5, 99, 2),
-            FloatField(5, 104, 2),
-            FloatField(5, 109, 2),
-            FloatField(5, 114, 2),
-            FloatField(5, 119, 2),
-            FloatField(5, 124, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(5, 9, 2),
+        FloatField(5, 14, 2),
+        FloatField(5, 19, 2),
+        FloatField(5, 24, 2),
+        FloatField(5, 29, 2),
+        FloatField(5, 34, 2),
+        FloatField(5, 39, 2),
+        FloatField(5, 44, 2),
+        FloatField(5, 49, 2),
+        FloatField(5, 54, 2),
+        FloatField(5, 59, 2),
+        FloatField(5, 64, 2),
+        FloatField(5, 69, 2),
+        FloatField(5, 74, 2),
+        FloatField(5, 79, 2),
+        FloatField(5, 84, 2),
+        FloatField(5, 89, 2),
+        FloatField(5, 94, 2),
+        FloatField(5, 99, 2),
+        FloatField(5, 104, 2),
+        FloatField(5, 109, 2),
+        FloatField(5, 114, 2),
+        FloatField(5, 119, 2),
+        FloatField(5, 124, 2),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -2461,16 +2443,14 @@ class DA(Register):
 
     IDENTIFIER = "DA  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(3, 9),
-            IntegerField(2, 13),
-            FloatField(6, 16, 2),
-            FloatField(4, 24, 1),
-            FloatField(10, 34, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(3, 9),
+        IntegerField(2, 13),
+        FloatField(6, 16, 2),
+        FloatField(4, 24, 1),
+        FloatField(10, 34, 2),
+    ])
 
     @property
     def codigo_usina_retirada(self) -> Optional[int]:
@@ -2567,23 +2547,21 @@ class FP(Register):
 
     IDENTIFIER = "FP  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(3, 9),
-            IntegerField(1, 14),
-            IntegerField(4, 16),
-            FloatField(5, 21, 0),
-            FloatField(5, 27, 0),
-            IntegerField(1, 34),
-            IntegerField(4, 36),
-            FloatField(5, 41, 0),
-            FloatField(5, 47, 0),
-            FloatField(5, 54, 0),
-            FloatField(5, 60, 0),
-            FloatField(5, 66, 0),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(3, 9),
+        IntegerField(1, 14),
+        IntegerField(4, 16),
+        FloatField(5, 21, 0),
+        FloatField(5, 27, 0),
+        IntegerField(1, 34),
+        IntegerField(4, 36),
+        FloatField(5, 41, 0),
+        FloatField(5, 47, 0),
+        FloatField(5, 54, 0),
+        FloatField(5, 60, 0),
+        FloatField(5, 66, 0),
+    ])
 
     @property
     def codigo_usina(self) -> Optional[int]:
@@ -2744,19 +2722,17 @@ class RQ(Register):
 
     IDENTIFIER = "RQ  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(2, 4),
-            FloatField(5, 9, 2),
-            FloatField(5, 14, 2),
-            FloatField(5, 19, 2),
-            FloatField(5, 24, 2),
-            FloatField(5, 29, 2),
-            FloatField(5, 34, 2),
-            FloatField(5, 39, 2),
-            FloatField(5, 44, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(2, 4),
+        FloatField(5, 9, 2),
+        FloatField(5, 14, 2),
+        FloatField(5, 19, 2),
+        FloatField(5, 24, 2),
+        FloatField(5, 29, 2),
+        FloatField(5, 34, 2),
+        FloatField(5, 39, 2),
+        FloatField(5, 44, 2),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -2814,12 +2790,10 @@ class EZ(Register):
 
     IDENTIFIER = "EZ  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(5, 9, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(5, 9, 2),
+    ])
 
     @property
     def codigo_usina(self) -> Optional[int]:
@@ -2859,13 +2833,11 @@ class HV(Register):
 
     IDENTIFIER = "HV  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(2, 14),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        IntegerField(2, 14),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -2920,14 +2892,12 @@ class LV(Register):
 
     IDENTIFIER = "LV  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 24, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        FloatField(10, 14, 2),
+        FloatField(10, 24, 2),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -2996,15 +2966,13 @@ class CV(Register):
 
     IDENTIFIER = "CV  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            FloatField(10, 19, 7),
-            LiteralField(4, 34),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        IntegerField(3, 14),
+        FloatField(10, 19, 7),
+        LiteralField(4, 34),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -3081,13 +3049,11 @@ class HQ(Register):
 
     IDENTIFIER = "HQ  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(2, 14),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        IntegerField(2, 14),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -3142,22 +3108,20 @@ class LQ(Register):
 
     IDENTIFIER = "LQ  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 24, 2),
-            FloatField(10, 34, 2),
-            FloatField(10, 44, 2),
-            FloatField(10, 54, 2),
-            FloatField(10, 64, 2),
-            FloatField(10, 74, 1),
-            FloatField(10, 84, 1),
-            FloatField(10, 94, 1),
-            FloatField(10, 104, 1),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        FloatField(10, 14, 2),
+        FloatField(10, 24, 2),
+        FloatField(10, 34, 2),
+        FloatField(10, 44, 2),
+        FloatField(10, 54, 2),
+        FloatField(10, 64, 2),
+        FloatField(10, 74, 1),
+        FloatField(10, 84, 1),
+        FloatField(10, 94, 1),
+        FloatField(10, 104, 1),
+    ])
 
     def __atualiza_dados_lista(
         self,
@@ -3241,15 +3205,13 @@ class CQ(Register):
 
     IDENTIFIER = "CQ  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            FloatField(10, 19, 7),
-            LiteralField(4, 34),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(2, 9),
+        IntegerField(3, 14),
+        FloatField(10, 19, 7),
+        LiteralField(4, 34),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -3326,9 +3288,11 @@ class AR(Register):
 
     IDENTIFIER = "AR  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [IntegerField(3, 5), FloatField(5, 11, 0), FloatField(5, 17, 0)]
-    )
+    LINE = Line([
+        IntegerField(3, 5),
+        FloatField(5, 11, 0),
+        FloatField(5, 17, 0),
+    ])
 
     @property
     def estagio(self) -> Optional[int]:
@@ -3383,12 +3347,10 @@ class EV(Register):
 
     IDENTIFIER = "EV  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(1, 4),
-            LiteralField(3, 9),
-        ]
-    )
+    LINE = Line([
+        IntegerField(1, 4),
+        LiteralField(3, 9),
+    ])
 
     @property
     def modelo(self) -> Optional[int]:
@@ -3428,11 +3390,9 @@ class FJ(Register):
 
     IDENTIFIER = "FJ  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(12, 4),
-        ]
-    )
+    LINE = Line([
+        LiteralField(12, 4),
+    ])
 
     @property
     def arquivo(self) -> str:
@@ -3459,19 +3419,17 @@ class HE(Register):
 
     IDENTIFIER = "HE  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(1, 9),
-            FloatField(10, 14, 2),
-            IntegerField(2, 25),
-            FloatField(10, 28, 2),
-            IntegerField(1, 39),
-            IntegerField(1, 41),
-            IntegerField(1, 43),
-            LiteralField(12, 45),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(1, 9),
+        FloatField(10, 14, 2),
+        IntegerField(2, 25),
+        FloatField(10, 28, 2),
+        IntegerField(1, 39),
+        IntegerField(1, 41),
+        IntegerField(1, 43),
+        LiteralField(12, 45),
+    ])
 
     @property
     def codigo_restricao(self) -> Optional[int]:
@@ -3615,9 +3573,7 @@ class CM(Register):
 
     IDENTIFIER = "CM  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [IntegerField(3, 4), IntegerField(3, 9), FloatField(10, 14, 2)]
-    )
+    LINE = Line([IntegerField(3, 4), IntegerField(3, 9), FloatField(10, 14, 2)])
 
     @property
     def codigo_restricao(self) -> int:
@@ -3672,11 +3628,9 @@ class PD(Register):
 
     IDENTIFIER = "PD  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(6, 4),
-        ]
-    )
+    LINE = Line([
+        LiteralField(6, 4),
+    ])
 
     @property
     def algoritmo(self) -> Optional[str]:
@@ -3703,11 +3657,9 @@ class PU(Register):
 
     IDENTIFIER = "PU  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(1, 4),
-        ]
-    )
+    LINE = Line([
+        IntegerField(1, 4),
+    ])
 
     @property
     def pl(self) -> Optional[int]:
@@ -3733,11 +3685,9 @@ class RC(Register):
 
     IDENTIFIER = "RC  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(6, 4),
-        ]
-    )
+    LINE = Line([
+        LiteralField(6, 4),
+    ])
 
     @property
     def mnemonico(self) -> Optional[str]:
@@ -3764,13 +3714,11 @@ class PE(Register):
 
     IDENTIFIER = "PE  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(2, 4),
-            IntegerField(1, 7),
-            FloatField(10, 9, 6),
-        ]
-    )
+    LINE = Line([
+        IntegerField(2, 4),
+        IntegerField(1, 7),
+        FloatField(10, 9, 6),
+    ])
 
     @property
     def codigo_submercado(self) -> Optional[int]:
@@ -3824,14 +3772,12 @@ class TS(Register):
 
     IDENTIFIER = "TS  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            FloatField(17, 4, 15),
-            FloatField(17, 22, 15),
-            IntegerField(1, 42),
-            FloatField(17, 22, 15),
-        ]
-    )
+    LINE = Line([
+        FloatField(17, 4, 15),
+        FloatField(17, 22, 15),
+        IntegerField(1, 42),
+        FloatField(17, 22, 15),
+    ])
 
     @property
     def tolerancia_primaria(self) -> Optional[float]:
@@ -3902,16 +3848,14 @@ class PV(Register):
 
     IDENTIFIER = "PV  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            FloatField(20, 5, 5),
-            FloatField(20, 28, 5),
-            IntegerField(3, 51),
-            FloatField(3, 57, 1),
-            FloatField(20, 63, 5),
-            FloatField(20, 86, 5),
-        ]
-    )
+    LINE = Line([
+        FloatField(20, 5, 5),
+        FloatField(20, 28, 5),
+        IntegerField(3, 51),
+        FloatField(3, 57, 1),
+        FloatField(20, 63, 5),
+        FloatField(20, 86, 5),
+    ])
 
     @property
     def penalidade_variaveis_folga(self) -> Optional[float]:
@@ -4009,12 +3953,10 @@ class CX(Register):
 
     IDENTIFIER = "CX  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(4, 4),
-            IntegerField(4, 9),
-        ]
-    )
+    LINE = Line([
+        IntegerField(4, 4),
+        IntegerField(4, 9),
+    ])
 
     @property
     def codigo_newave(self) -> Optional[int]:
@@ -4054,11 +3996,9 @@ class FA(Register):
 
     IDENTIFIER = "FA  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(50, 4),
-        ]
-    )
+    LINE = Line([
+        LiteralField(50, 4),
+    ])
 
     @property
     def arquivo(self) -> Optional[str]:
@@ -4084,11 +4024,9 @@ class VT(Register):
 
     IDENTIFIER = "VT  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            LiteralField(50, 4),
-        ]
-    )
+    LINE = Line([
+        LiteralField(50, 4),
+    ])
 
     @property
     def arquivo(self) -> Optional[str]:
@@ -4114,11 +4052,9 @@ class CS(Register):
 
     IDENTIFIER = "CS  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(1, 4),
-        ]
-    )
+    LINE = Line([
+        IntegerField(1, 4),
+    ])
 
     @property
     def consistencia(self) -> Optional[int]:
@@ -4144,15 +4080,13 @@ class ACNUMPOS(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMPOS"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4216,15 +4150,13 @@ class ACNUMJUS(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMJUS"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4314,16 +4246,14 @@ class ACDESVIO(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  DESVIO"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(10, 24, 2),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        FloatField(10, 24, 2),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4395,15 +4325,13 @@ class ACVOLMIN(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VOLMIN"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(10, 19, 2),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4467,15 +4395,13 @@ class ACVOLMAX(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VOLMAX"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(10, 19, 2),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4540,16 +4466,14 @@ class ACCOTVOL(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTVOL"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(15, 24, 3),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        FloatField(15, 24, 3),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4622,16 +4546,14 @@ class ACCOTARE(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTARE"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(15, 24, 3),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        FloatField(15, 24, 3),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4704,15 +4626,13 @@ class ACPROESP(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  PROESP"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(10, 19, 3),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(10, 19, 3),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4777,15 +4697,13 @@ class ACPERHID(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  PERHID"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(10, 19, 3),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(10, 19, 3),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4850,16 +4768,14 @@ class ACNCHAVE(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NCHAVE"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(10, 24, 3),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        FloatField(10, 24, 3),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -4932,17 +4848,15 @@ class ACCOTVAZ(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTVAZ"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            IntegerField(5, 24),
-            FloatField(15, 29, 3),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        IntegerField(5, 24),
+        FloatField(15, 29, 3),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5023,16 +4937,14 @@ class ACCOFEVA(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COFEVA"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            IntegerField(5, 24),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        IntegerField(5, 24),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5105,15 +5017,13 @@ class ACNUMCON(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMCON"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5178,16 +5088,14 @@ class ACNUMMAQ(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMMAQ"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            IntegerField(5, 24),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        IntegerField(5, 24),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5260,16 +5168,14 @@ class ACPOTEFE(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  POTEFE"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(11, 24, 3),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        FloatField(11, 24, 3),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5342,16 +5248,14 @@ class ACALTEFE(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  ALTEFE"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(10, 24, 2),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        FloatField(10, 24, 2),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5408,16 +5312,14 @@ class ACVAZEFE(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VAZEFE"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            IntegerField(5, 24),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        IntegerField(5, 24),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5490,15 +5392,13 @@ class ACJUSMED(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  JUSMED"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(10, 19, 2),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5563,15 +5463,13 @@ class ACVERTJU(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VERTJU"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5635,15 +5533,13 @@ class ACVAZMIN(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VAZMIN"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5707,15 +5603,13 @@ class ACTIPERH(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  TIPERH"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5781,15 +5675,13 @@ class ACJUSENA(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  JUSENA"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5854,15 +5746,13 @@ class ACVSVERT(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VSVERT"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(10, 19, 2),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -5927,15 +5817,13 @@ class ACVMDESV(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VMDESV"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        FloatField(10, 19, 2),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -6000,15 +5888,13 @@ class ACNPOSNW(Register):
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NPOSNW"
     IDENTIFIER_DIGITS = 15
-    LINE = Line(
-        [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
-        ]
-    )
+    LINE = Line([
+        IntegerField(3, 4),
+        IntegerField(5, 19),
+        LiteralField(3, 69),
+        IntegerField(2, 73),
+        IntegerField(4, 76),
+    ])
 
     # Override
     def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
@@ -6073,27 +5959,15 @@ class VL(Register):
 
     IDENTIFIER = "VL  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(4, 4),
-            FloatField(15, 10, 2),
-            FloatField(
-                size=15, starting_position=26, decimal_digits=9, format="E"
-            ),
-            FloatField(
-                size=15, starting_position=42, decimal_digits=9, format="E"
-            ),
-            FloatField(
-                size=15, starting_position=58, decimal_digits=9, format="E"
-            ),
-            FloatField(
-                size=15, starting_position=74, decimal_digits=9, format="E"
-            ),
-            FloatField(
-                size=15, starting_position=90, decimal_digits=9, format="E"
-            ),
-        ]
-    )
+    LINE = Line([
+        IntegerField(4, 4),
+        FloatField(15, 10, 2),
+        FloatField(size=15, starting_position=26, decimal_digits=9, format="E"),
+        FloatField(size=15, starting_position=42, decimal_digits=9, format="E"),
+        FloatField(size=15, starting_position=58, decimal_digits=9, format="E"),
+        FloatField(size=15, starting_position=74, decimal_digits=9, format="E"),
+        FloatField(size=15, starting_position=90, decimal_digits=9, format="E"),
+    ])
 
     @property
     def codigo_usina_influenciada(self) -> Optional[int]:
@@ -6204,13 +6078,11 @@ class VU(Register):
 
     IDENTIFIER = "VU  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(4, 4),
-            IntegerField(4, 10),
-            FloatField(15, 16, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(4, 4),
+        IntegerField(4, 10),
+        FloatField(15, 16, 2),
+    ])
 
     @property
     def codigo_usina_influenciada(self) -> Optional[int]:
@@ -6266,13 +6138,11 @@ class VA(Register):
 
     IDENTIFIER = "VA  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line(
-        [
-            IntegerField(4, 4),
-            IntegerField(4, 10),
-            FloatField(15, 16, 2),
-        ]
-    )
+    LINE = Line([
+        IntegerField(4, 4),
+        IntegerField(4, 10),
+        FloatField(15, 16, 2),
+    ])
 
     @property
     def codigo_usina_influenciada(self) -> Optional[int]:
