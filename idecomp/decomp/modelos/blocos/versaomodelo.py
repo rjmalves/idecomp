@@ -1,6 +1,4 @@
 from cfinterface.components.block import Block
-from cfinterface.components.literalfield import LiteralField
-from cfinterface.components.line import Line
 
 from typing import IO
 
@@ -26,8 +24,7 @@ class VersaoModelo(Block):
 
     def read(self, file: IO, *args, **kwargs):
         linha = file.readline()
-        modelo_linha = Line([LiteralField(size=7, starting_position=29)])
-        self.data = modelo_linha.read(linha)[0]
+        self.data = linha.split("Versao")[1].strip().split("-")[0].strip()
 
 
 class VersaoModeloLibs(Block):
@@ -51,5 +48,4 @@ class VersaoModeloLibs(Block):
 
     def read(self, file: IO, *args, **kwargs):
         linha = file.readline()
-        modelo_linha = Line([LiteralField(size=6, starting_position=32)])
-        self.data = modelo_linha.read(linha)[0]
+        self.data = linha.split("Versão:")[1].strip()
