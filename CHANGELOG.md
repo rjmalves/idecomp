@@ -1,3 +1,15 @@
+# v1.7.0
+
+- Gestão do projeto através de arquivo `pyproject.toml` em substituição ao par `setup.py` + `requirements.txt`.
+- Correção no processamento do registro de alteração cadastral de potência efetiva (AC POTEFE) do arquivo `dadger.rvX`.
+- Correção na leitura da versão do DECOMP nos arquivos de saída.
+- Correção na leitura das probabilidades em casos deterministicos.
+- Atualizado o suporte ao registro de intercâmbio (IA) do arquivo `dadger.rvX`.
+- Suporte à leitura do arquivo de saída `dec_eco_evap.csv`, `dec_eco_qlat.csv`, `dec_estatevap.csv`, `dec_estatfpha.rvX`, `dec_oper_evap.csv`, `dec_oper_rhesoft.csv`, `eco_fpha_.rvX`.
+- Dependência da cfinterface atualizada para v1.8.0.
+- Descontinuado o uso do `pylama` como linter para garantir padrões PEP de código devido à falta de suporte em Python >= 3.12. Adoção do [ruff](https://github.com/astral-sh/ruff) em substituição.
+
+
 # v1.6.0
 
 - Suporte à leitura do arquivo de saída `avl_turb_max.csv`.
