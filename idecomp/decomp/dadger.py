@@ -1,5 +1,6 @@
 from typing import Any, List, Optional, Type, TypeVar, Union
 
+import numpy as np
 import pandas  # type: ignore
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
@@ -220,9 +221,7 @@ class Dadger(RegisterFile):
         super().__init__(data)
 
     def __expande_colunas_df(self, df: pandas.DataFrame) -> pandas.DataFrame:
-        colunas_com_listas = df.map(
-            lambda linha: isinstance(linha, list)
-        ).all()
+        colunas_com_listas = df.map(lambda linha: isinstance(linha, list)).all()
         nomes_colunas = [
             c for c in colunas_com_listas[colunas_com_listas].index
         ]
@@ -230,7 +229,10 @@ class Dadger(RegisterFile):
             num_elementos = len(df.at[0, c])
             particoes_coluna = [f"{c}_{i}" for i in range(1, num_elementos + 1)]
             df[particoes_coluna] = df.apply(
-                lambda linha: linha[c], axis=1, result_type="expand"
+                lambda linha: linha[c]
+                + [np.nan] * max(0, num_elementos - len(linha[c])),
+                axis=1,
+                result_type="expand",
             )
             df.drop(columns=[c], inplace=True)
         return df
