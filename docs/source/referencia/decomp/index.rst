@@ -33,6 +33,7 @@ DECOMP
    arquivos/dec_oper_usie
    arquivos/dec_oper_usih
    arquivos/dec_oper_usit
+   arquivos/eco_fpha
    arquivos/fcfnw
    arquivos/hidr
    arquivos/inviabunic
