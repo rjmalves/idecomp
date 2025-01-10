@@ -23,6 +23,7 @@ DECOMP
    arquivos/dec_eco_evap
    arquivos/dec_eco_qlat
    arquivos/dec_estatevap
+   arquivos/dec_estatfpha
    arquivos/dec_fcf_cortes
    arquivos/dec_oper_evap
    arquivos/dec_oper_gnl
