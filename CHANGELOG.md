@@ -2,6 +2,7 @@
 
 - Gestão do projeto através de arquivo `pyproject.toml` em substituição ao par `setup.py` + `requirements.txt`.
 - Correção no processamento do registro de alteração cadastral de potência efetiva (AC POTEFE) do arquivo `dadger.rvX`.
+- Correção na expansão para DataFrame dos registros de duração dos patamares (DP) do arquivo `dadger.rvX`.
 - Correção na leitura da versão do DECOMP nos arquivos de saída.
 - Correção na leitura das probabilidades em casos deterministicos.
 - Atualizado o suporte ao registro de intercâmbio (IA) do arquivo `dadger.rvX`.
@@ -9,12 +10,10 @@
 - Dependência da cfinterface atualizada para v1.8.0.
 - Descontinuado o uso do `pylama` como linter para garantir padrões PEP de código devido à falta de suporte em Python >= 3.12. Adoção do [ruff](https://github.com/astral-sh/ruff) em substituição.
 
-
 # v1.6.0
 
 - Suporte à leitura do arquivo de saída `avl_turb_max.csv`.
 - Suporte à leitura dos arquivos de saída `oper_disp_usih.csv`, `oper_disp_usih_ree.csv` e`oper_disp_subm.csv`.
-
 
 # v1.5.0
 
@@ -45,18 +44,15 @@
 
 - Fix na leitura do arquivo `vazoes.rvX` quando gerado por versões antigas do GEVAZP, onde o número de postos não fazia parte dos dados do arquivo.
 
-
 # v1.1.0
 
 - Atualizada a modelagem dos registros do dadger sensíveis ao número de estágios para o máximo suportado pelo modelo (TI, VE).
 - Atualizada a modelagem com propriedades para registros do dadger de manutenção e disponibilidade (MP, MT, FD).
 - Atualizada na classe `Dadger` as propriedades para acesso aos registros atualizados (MP, MT, FD).
 
-
 # v1.0.1
 
 - Fix nas colunas o DataFrame de Volume Útil de Reservatórios do arquivo Relato
-
 
 # v1.0.0
 
