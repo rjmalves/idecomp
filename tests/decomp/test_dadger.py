@@ -503,7 +503,7 @@ def test_registro_ni_dadger():
     assert r.iteracoes == 200
     r.iteracoes = 0
     assert r.iteracoes == 0
-    assert r.tipo_limite == None
+    assert r.tipo_limite is None
     r.tipo_limite = 1
     assert r.tipo_limite == 1
 
@@ -791,7 +791,7 @@ def test_registro_fu_dadger():
     assert r.estagio == 1
     assert r.codigo_usina == 47
     assert r.coeficiente == 1
-    assert r.frequencia == None
+    assert r.frequencia is None
 
 
 def test_registro_fi_dadger():

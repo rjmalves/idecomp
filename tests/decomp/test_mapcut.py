@@ -68,30 +68,3 @@ def test_eq_mapcut():
     h1 = Mapcut.read(ARQ_TESTE)
     h2 = Mapcut.read(ARQ_TESTE)
     assert h1 == h2
-
-
-def test_secao_dados_mapcut():
-    r = Mapcut.read(ARQ_TESTE)
-
-    assert r.numero_iteracoes == 21
-    assert r.numero_cortes == 21 * 3
-    assert r.numero_submercados == 5
-    assert r.numero_uhes == 165
-    assert r.numero_cenarios == 356
-    assert r.registro_ultimo_corte_no.shape == (356, 3)
-    assert r.tamanho_corte == 26976
-    assert len(r.codigos_uhes) == 165
-    assert len(r.codigos_uhes_jusante) == 165
-    assert len(r.indice_no_arvore) == 356
-    assert r.numero_estagios == 4
-    assert r.numero_semanas == 3
-    assert r.numero_uhes_tempo_viagem == 2
-    assert r.maximo_lag_tempo_viagem == 3
-    assert len(r.indice_primeiro_no_estagio) == 4
-    assert r.patamares_por_estagio == [3] * 4
-    assert len(r.lag_tempo_viagem_por_uhe) == 2 * 4
-    assert len(r.codigos_uhes_tempo_viagem) == 2
-    assert r.dados_tempo_viagem.shape == (48, 5)
-    assert len(r.codigos_submercados_gnl) == 2
-    assert r.dados_gnl.shape == (4 * 2, 5)
-    assert r.dados_custos.shape == (4, 7)

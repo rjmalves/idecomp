@@ -1,7 +1,6 @@
 from idecomp.decomp.cortdeco import Cortdeco
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
-import pytest
 import pandas as pd
 
 ARQ_TESTE = "./tests/mocks/arquivos/cortdeco.rv2"

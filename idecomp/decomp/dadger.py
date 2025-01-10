@@ -220,7 +220,7 @@ class Dadger(RegisterFile):
         super().__init__(data)
 
     def __expande_colunas_df(self, df: pandas.DataFrame) -> pandas.DataFrame:
-        colunas_com_listas = df.applymap(
+        colunas_com_listas = df.map(
             lambda linha: isinstance(linha, list)
         ).all()
         nomes_colunas = [

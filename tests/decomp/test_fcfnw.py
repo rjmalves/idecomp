@@ -1,13 +1,12 @@
 # Rotinas de testes associadas ao arquivo fcfnwx.rvx do DECOMP
 from idecomp.decomp.modelos.fcfnw import BlocoCortesFCF
 
-from idecomp.decomp.fcfnw import Fcfnw
 
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
-from tests.mocks.arquivos.fcfnwn import MockBlocoFCFn, MockFcfnwn
-from tests.mocks.arquivos.fcfnwi import MockBlocoFCFi, MockFcfnwi
+from tests.mocks.arquivos.fcfnwn import MockBlocoFCFn
+from tests.mocks.arquivos.fcfnwi import MockBlocoFCFi
 
 
 def test_bloco_fcfnwn():

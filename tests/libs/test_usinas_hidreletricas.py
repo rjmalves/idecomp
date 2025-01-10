@@ -6,7 +6,6 @@ from idecomp.libs.modelos.usinas_hidreletricas import (
     HidreletricaCurvaJusanteAfogamentoExplicitoUsina,
     HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
 )
-import pandas as pd  # type: ignore
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 

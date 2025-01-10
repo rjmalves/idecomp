@@ -1,6 +1,5 @@
 from idecomp.decomp.oper_disp_usih_subm import OperDispUsihSubm
 
-import numpy as np  # type: ignore
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
