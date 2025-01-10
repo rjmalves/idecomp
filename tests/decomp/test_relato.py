@@ -153,10 +153,10 @@ def test_bloco_relatorio_operacao_uhe():
     assert b.data[1].iloc[0, 2] == 1.0
     assert b.data[1].iloc[0, 3] == 1
     assert b.data[1].iloc[0, 4] == "CAMARGOS"
-    assert b.data[1].iloc[0, 5] == True
-    assert b.data[1].iloc[0, 6] == False
-    assert b.data[1].iloc[0, 7] == False
-    assert b.data[1].iloc[0, 8] == False
+    assert b.data[1].iloc[0, 5]
+    assert not b.data[1].iloc[0, 6]
+    assert not b.data[1].iloc[0, 7]
+    assert not b.data[1].iloc[0, 8]
     assert b.data[1].iloc[0, 9] == 25.3
     assert b.data[1].iloc[0, 10] == 24.9
     assert b.data[1].iloc[0, 11] == 55.1
@@ -187,7 +187,7 @@ def test_bloco_relatorio_operacao_ute():
     assert b.data.iloc[0, 2] == 1.0
     assert b.data.iloc[0, 3] == "SE"
     assert b.data.iloc[0, 4] == "SANTA CRUZ"
-    assert b.data.iloc[0, 5] == None
+    assert b.data.iloc[0, 5] is None
     assert b.data.iloc[0, 6] == 350.0
     assert b.data.iloc[0, 7] == 350.0
     assert b.data.iloc[0, 8] == 350.0

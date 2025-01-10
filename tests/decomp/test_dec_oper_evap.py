@@ -1,6 +1,5 @@
 from idecomp.decomp.dec_oper_evap import DecOperEvap
 
-import numpy as np  # type: ignore
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 

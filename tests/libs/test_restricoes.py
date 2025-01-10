@@ -34,7 +34,6 @@ from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
 from tests.mocks.arquivos.restricoes_libs import (
-    MockRestricaoEletrica,
     MockRestricaoEletricaFormula,
     MockRestricaoEletricaFormulaDataPatamar,
     MockRestricaoEletricaFormulaPeriodoPatamar,
