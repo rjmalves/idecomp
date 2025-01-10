@@ -21,6 +21,7 @@ DECOMP
    arquivos/dec_eco_cotajus
    arquivos/dec_eco_discr
    arquivos/dec_eco_evap
+   arquivos/dec_estatevap
    arquivos/dec_fcf_cortes
    arquivos/dec_oper_evap
    arquivos/dec_oper_gnl
