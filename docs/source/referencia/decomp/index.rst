@@ -27,6 +27,7 @@ DECOMP
    arquivos/dec_oper_gnl
    arquivos/dec_oper_interc
    arquivos/dec_oper_ree
+   arquivos/dec_oper_rhesoft
    arquivos/dec_oper_sist
    arquivos/dec_oper_usie
    arquivos/dec_oper_usih
