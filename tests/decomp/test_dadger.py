@@ -2048,6 +2048,7 @@ def test_campos_nao_encontrados_dadger():
     assert d.va() is None
     assert d.vu() is None
     assert d.da() is None
+    assert d.ia() is None
 
 
 def test_campos_encontrados_dadger():
@@ -2084,6 +2085,7 @@ def test_campos_encontrados_dadger():
     assert d.he(1, 1) is not None
     assert d.cm(1) is not None
     assert len(d.lq(df=True).columns) == 12
+    assert d.ia(1) is not None
 
 
 def test_cria_lu_dadger():
