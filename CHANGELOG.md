@@ -1,3 +1,7 @@
+# v1.7.1
+
+- Atualiza requisitos mínimos de dependências: `numpy` reduzida para `>=2.0`
+
 # v1.7.0
 
 - Gestão do projeto através de arquivo `pyproject.toml` em substituição ao par `setup.py` + `requirements.txt`.
