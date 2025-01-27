@@ -375,7 +375,7 @@ class BlocoRelatorioOperacaoRelato(Block):
                 "nome_usina",
                 "considera_evaporacao",
                 "considera_tempo_viagem",
-                "considera_soleira_vertedouro",
+                "abaixo_soleira_vertedouro",
                 "considera_defluencia_minima_0",
             ]
             df["estagio"] = [estagio] * len(numeros)
@@ -385,7 +385,7 @@ class BlocoRelatorioOperacaoRelato(Block):
             df["nome_usina"] = usinas
             df["considera_evaporacao"] = evaporacao
             df["considera_tempo_viagem"] = tv_afluencia
-            df["considera_soleira_vertedouro"] = cota_abaixo_crista
+            df["abaixo_soleira_vertedouro"] = cota_abaixo_crista
             df["considera_defluencia_minima_0"] = def_minima_zero
             df = df[cols_adic + cols]
             return df

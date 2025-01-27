@@ -208,7 +208,7 @@ class Relato(BlockFile):
         - nome_usina (`str`)
         - considera_evaporacao (`bool`)
         - considera_tempo_viagem (`bool`)
-        - considera_soleira_vertedouro (`bool`)
+        - abaixo_soleira_vertedouro (`bool`)
         - considera_defluencia_minima_0 (`bool`)
         - volume_inicial_percentual (`float`)
         - volume_final_percentual (`float`)
@@ -264,9 +264,7 @@ class Relato(BlockFile):
                 BlocoRelatorioOperacaoUTERelato
             )
             if blocos is not None:
-                self.__relatorios_operacao_ute = self.__concatena_blocos(
-                    blocos
-                )
+                self.__relatorios_operacao_ute = self.__concatena_blocos(blocos)
         return self.__relatorios_operacao_ute
 
     @property
@@ -404,9 +402,7 @@ class Relato(BlockFile):
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None
         """
-        b = self.data.get_blocks_of_type(
-            BlocoEnergiaArmazenadaSubsistemaRelato
-        )
+        b = self.data.get_blocks_of_type(BlocoEnergiaArmazenadaSubsistemaRelato)
         if isinstance(b, BlocoEnergiaArmazenadaSubsistemaRelato):
             return b.data
         return None
