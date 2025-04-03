@@ -504,9 +504,9 @@ class Dadger(RegisterFile):
 
     def ri(
         self,
-        codigo_usina: int = None,
-        estagio: int = None,
-        codigo_submercado: int = None,
+        codigo_usina: Optional[int] = None,
+        estagio: Optional[int] = None,
+        codigo_submercado: Optional[int] = None,
         df: bool = False,
     ) -> Optional[Union[RI, List[RI], pandas.DataFrame]]:
         """
