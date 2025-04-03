@@ -439,6 +439,30 @@ def test_registro_ri_dadger():
         None,
         None,
     ]
+    assert r.codigo_usina == 66
+    r.codigo_usina = 0
+    assert r.codigo_usina == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.geracao_minima_60_hz == [1680, 1680, 1680, None, None]
+    r.geracao_minima_60_hz = [None, None, None, None, None]
+    assert r.geracao_minima_60_hz == [None, None, None, None, None]
+    assert r.geracao_maxima_60_hz == [7000, 7000, 7000, None, None]
+    r.geracao_maxima_60_hz = [None, None, None, None, None]
+    assert r.geracao_maxima_60_hz == [None, None, None, None, None]
+    assert r.geracao_minima_50_hz == [5079, 4418, 3474, None, None]
+    r.geracao_minima_50_hz = [None, None, None, None, None]
+    assert r.geracao_minima_50_hz == [None, None, None, None, None]
+    assert r.geracao_maxima_50_hz == [7000, 7000, 7000, None, None]
+    r.geracao_maxima_50_hz = [None, None, None, None, None]
+    assert r.geracao_maxima_50_hz == [None, None, None, None, None]
+    assert r.carga_ande == [3179, 2518, 1574, None, None]
+    r.carga_ande = [None, None, None, None, None]
+    assert r.carga_ande == [None, None, None, None, None]
 
 
 def test_registro_ia_dadger():
@@ -2049,6 +2073,7 @@ def test_campos_nao_encontrados_dadger():
     assert d.vu() is None
     assert d.da() is None
     assert d.ia() is None
+    assert d.ri() is None
 
 
 def test_campos_encontrados_dadger():
@@ -2086,6 +2111,7 @@ def test_campos_encontrados_dadger():
     assert d.cm(1) is not None
     assert len(d.lq(df=True).columns) == 12
     assert d.ia(1) is not None
+    assert d.ri(66) is not None
 
 
 def test_cria_lu_dadger():
