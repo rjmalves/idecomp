@@ -502,6 +502,38 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    def ri(
+        self,
+        codigo_usina: int = None,
+        estagio: int = None,
+        codigo_submercado: int = None,
+        df: bool = False,
+    ) -> Optional[Union[RI, List[RI], pandas.DataFrame]]:
+        """
+        Obtém um registro que define as restrições de Itaipu
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo_usina: código da UHE Itaipu
+        :type codigo_usina: int
+        :param estagio: estagio de validade das informações
+        :type estagio: int
+        :param codigo_submercado: código do submercado da UHE Itaipu
+        :type codigo_submercado: int
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RI` | list[:class:`RI`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RI,
+            codigo_usina=codigo_usina,
+            estagio=estagio,
+            codigo_submercado=codigo_submercado,
+            df=df,
+        )
+
     def ac(
         self,
         codigo_usina: int,
