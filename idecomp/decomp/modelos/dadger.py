@@ -4797,7 +4797,7 @@ class ACCOTARE(Register):
         [
             IntegerField(3, 4),
             IntegerField(5, 19),
-            FloatField(15, 24, 3),
+            FloatField(15, 24, 3, 'D'),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),

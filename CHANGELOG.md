@@ -1,3 +1,7 @@
+# v1.7.2
+
+- Atualiza registro AC COTARE do `dadger.rvX` para utilizar notação científica com formatador 'D'
+
 # v1.7.1
 
 - Atualiza requisitos mínimos de dependências: `numpy` reduzida para `>=2.0`
