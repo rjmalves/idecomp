@@ -1,3 +1,7 @@
+# v1.7.3
+
+- Atualiza registro AC COTARE do `dadger.rvX` com maior precisão de dígitos significativos
+
 # v1.7.2
 
 - Atualiza registro AC COTARE do `dadger.rvX` para utilizar notação científica com formatador 'D'
