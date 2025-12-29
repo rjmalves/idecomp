@@ -763,11 +763,11 @@ class Dadger(RegisterFile):
                     data=[None] * len(ultimo_registro.data),
                 )
                 novo_registro.codigo_restricao = (
-                    ultimo_registro.codigo_restricao
+                    ultimo_registro.codigo_restricao  # type: ignore
                 )
-                novo_registro.limite_inferior = ultimo_registro.limite_inferior
-                novo_registro.limite_superior = ultimo_registro.limite_superior
-                novo_registro.estagio = estagio
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore
+                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore
+                novo_registro.estagio = estagio  # type: ignore
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro
             return None
@@ -1383,10 +1383,10 @@ class Dadger(RegisterFile):
                 novo_registro = LV(
                     data=[None] * len(ultimo_registro.data),
                 )
-                novo_registro.codigo_restricao = codigo_restricao
-                novo_registro.limite_inferior = ultimo_registro.limite_inferior
-                novo_registro.limite_superior = ultimo_registro.limite_superior
-                novo_registro.estagio = estagio
+                novo_registro.codigo_restricao = codigo_restricao  # type: ignore
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore
+                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore
+                novo_registro.estagio = estagio  # type: ignore
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro
             return None
@@ -1550,10 +1550,10 @@ class Dadger(RegisterFile):
                 novo_registro = LQ(
                     data=[None] * len(ultimo_registro.data),
                 )
-                novo_registro.codigo_restricao = codigo_restricao
-                novo_registro.limite_superior = ultimo_registro.limite_superior
-                novo_registro.limite_inferior = ultimo_registro.limite_inferior
-                novo_registro.estagio = estagio
+                novo_registro.codigo_restricao = codigo_restricao  # type: ignore
+                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore
+                novo_registro.estagio = estagio  # type: ignore
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro
             return None
