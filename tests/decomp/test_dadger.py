@@ -38,6 +38,7 @@ from idecomp.decomp.modelos.dadger import (
     CS,
     ACJUSMED,
     ACCOTVOL,
+    ACCOTARE,
     ACNUMJUS,
     ACVOLMIN,
     ACCOFEVA,
@@ -121,6 +122,7 @@ from tests.mocks.arquivos.dadger import (
     MockCS,
     MockACJUSMED,
     MockACCOTVOL,
+    MockACCOTARE,
     MockACNUMJUS,
     MockACVOLMIN,
     MockACCOFEVA,
@@ -938,6 +940,40 @@ def test_registro_accotvol_dadger():
     r.ordem = 2
     assert r.ordem == 2
     assert r.coeficiente == 90.0
+    r.coeficiente = 3.14
+    assert r.coeficiente == 3.14
+    assert r.mes == "JAN"
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana == 1
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano == 2020
+    r.ano = 2022
+    assert r.ano == 2022
+
+def test_registro_accotare_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockACCOTARE))
+    r = ACCOTARE()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [
+        285,
+        1,
+        3211416.0,
+        "JAN",
+        1,
+        2020,
+    ]
+    assert r.codigo_usina == 285
+    r.codigo_usina = 10
+    assert r.codigo_usina == 10
+    assert r.ordem == 1
+    r.ordem = 2
+    assert r.ordem == 2
+    assert r.coeficiente == 3211416.0
     r.coeficiente = 3.14
     assert r.coeficiente == 3.14
     assert r.mes == "JAN"

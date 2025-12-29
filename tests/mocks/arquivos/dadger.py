@@ -72,6 +72,8 @@ MockACJUSMED = "AC  285  JUSMED         73.47                                   
 
 MockACCOTVOL = "AC  285  COTVOL        1         90.000                              JAN  1 2020"
 
+MockACCOTARE = "AC  285  COTARE        1   3.211416D+06                              JAN  1 2020"
+
 MockACVOLMIN = "AC   34  VOLMIN         15563       "
 
 MockACCOFEVA = "AC   95  COFEVA       10    0   "
@@ -3391,6 +3393,8 @@ MockDadger = [
     "AC  288  NUMPOS      300                              \n",
     "&Desvio de Belo Monte Complementar para Belo Monte Principal\n",
     "AC  314  DESVIO      288  9999999.                    \n",
+    "AC  001  COTARE        1   0.000000D+00\n"
+    # "AC  001  COTARE        1   3.211416D+06\n"
     "&\n",
     "&------------------------------------------------------------------------------\n",
     "& Adequacao para usinas em que o vertimento possui influencia no canal de fuga\n",
