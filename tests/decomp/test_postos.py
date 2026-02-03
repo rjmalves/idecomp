@@ -2,6 +2,7 @@ from idecomp.decomp.modelos.postos import RegistroPostos
 from idecomp.decomp.postos import Postos
 
 from os.path import join
+import pandas as pd  # type: ignore
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
@@ -61,7 +62,7 @@ def test_leitura_escrita_postos():
     m_releitura: MagicMock = mock_open(read_data=b"".join(linhas_escritas))
     with patch("builtins.open", m_releitura):
         h2 = Postos.read(ARQ_TEST)
-        assert h1 == h2
+        assert h1.postos.equals(h2.postos)
 
 
 def test_leitura_escrita_editando_postos():

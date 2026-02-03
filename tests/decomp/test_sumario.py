@@ -39,5 +39,5 @@ def test_neq_sumario():
     with patch("builtins.open", m):
         rel1 = Relato.read("./tests/mocks/arquivos/sumario.py")
         rel2 = Relato.read("./tests/mocks/arquivos/sumario.py")
-        rel1.cmo_medio_submercado.iloc[0, 0] = 0
+        rel1.cmo_medio_submercado.iloc[0, 0] = "teste"
         assert rel1 != rel2

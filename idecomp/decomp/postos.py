@@ -35,7 +35,7 @@ class Postos(RegisterFile):
             return None
         df = pd.DataFrame(
             data={
-                "nome": [r.data[0] for r in registros],
+                "nome": [r.data[0] if r.data[0] is not None else "" for r in registros],
                 "ano_inicio_historico": [r.data[1] for r in registros],
                 "ano_fim_historico": [r.data[2] for r in registros],
             }
