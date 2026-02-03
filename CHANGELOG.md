@@ -1,3 +1,7 @@
+# v1.8.0
+
+- Atualiza processamento do `postos.dat` para suporte a python `>=3.13` e pandas `>=3.0.0`
+
 # v1.7.3
 
 - Atualiza registro AC COTARE do `dadger.rvX` com maior precisão de dígitos significativos
