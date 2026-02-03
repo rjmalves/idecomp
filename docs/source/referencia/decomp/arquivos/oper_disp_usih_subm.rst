@@ -1,4 +1,4 @@
-.. _oper_disp_usih_subm
+.. _oper_disp_usih_subm:
 
 ====================================================================
 Disponibilidade hidráulica por submercado (oper_disp_usih_subm.csv)

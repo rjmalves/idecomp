@@ -9,5 +9,5 @@ Tempos de Execução (decomp.tim)
 As informações de saída do DECOMP, localizadas no arquivo geralmente denominado
 decomp.tim, são armazenadas na classe:
 
-.. autoclass:: DecompTim
+.. autoclass:: Decomptim
    :members:

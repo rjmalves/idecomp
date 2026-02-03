@@ -18,38 +18,38 @@ para cada um.
 
 
 
-.. autoclass:: RegistroREHorizPer
+.. autoclass:: RegistroReHorizPer
    :members:
 
-.. autoclass:: RegistroREHorizData
+.. autoclass:: RegistroReHorizData
    :members:
 
-.. autoclass:: RegistroRE
+.. autoclass:: RegistroRe
    :members:
 
-.. autoclass:: RegistroREPerPat
+.. autoclass:: RegistroRePerPat
    :members:
 
-.. autoclass:: RegistroREDataPat
+.. autoclass:: RegistroReDataPat
    :members:
 
-.. autoclass:: RegistroRELimFormPerPat
+.. autoclass:: RegistroReLimFormPerPat
    :members:
 
-.. autoclass:: RegistroRELimFormDataPat
+.. autoclass:: RegistroReLimFormDataPat
    :members:
 
 
-.. autoclass:: RegistroRERegraAtiva
+.. autoclass:: RegistroReRegraAtiva
    :members:
 
-.. autoclass:: RegistroREHabilita
+.. autoclass:: RegistroReHabilita
    :members:
 
-.. autoclass:: RegistroRETratViol
+.. autoclass:: RegistroReTratViol
    :members:
 
-.. autoclass:: RegistroRETratViolPer
+.. autoclass:: RegistroReTratViolPer
    :members:
 
 .. autoclass:: RegistroAliasElet
