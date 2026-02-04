@@ -1,3 +1,7 @@
+# v1.8.1
+
+- Aumento nas capacidade máximas de estágios (25) e subsistemas (15) para processamento 
+
 # v1.8.0
 
 - Atualiza processamento do `postos.dat` para suporte a python `>=3.13` e pandas `>=3.0.0`
