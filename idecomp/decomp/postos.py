@@ -1,4 +1,5 @@
 from cfinterface.files.registerfile import RegisterFile
+from cfinterface.storage import StorageType
 from idecomp.decomp.modelos.postos import RegistroPostos
 import pandas as pd  # type: ignore
 
@@ -16,7 +17,7 @@ class Postos(RegisterFile):
 
     REGISTERS = [RegistroPostos]
     POSTOS = 320
-    STORAGE = "BINARY"
+    STORAGE = StorageType.BINARY
 
     def __init__(self, data=...) -> None:
         super().__init__(data)
@@ -35,7 +36,10 @@ class Postos(RegisterFile):
             return None
         df = pd.DataFrame(
             data={
-                "nome": [r.data[0] if r.data[0] is not None else "" for r in registros],
+                "nome": [
+                    r.data[0] if r.data[0] is not None else ""
+                    for r in registros
+                ],
                 "ano_inicio_historico": [r.data[1] for r in registros],
                 "ano_fim_historico": [r.data[2] for r in registros],
             }

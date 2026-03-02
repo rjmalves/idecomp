@@ -52,8 +52,9 @@ def test_neq_dec_oper_gnl():
 def test_atributos_encontrados_dec_oper_gnl_v31():
     m: MagicMock = mock_open(read_data="".join(MockDecOperGnlv31))
     with patch("builtins.open", m):
-        DecOperGnl.set_version("31.0.2")
-        rel = DecOperGnl.read("./tests/mocks/arquivos/dec_oper_gnl.py")
+        rel = DecOperGnl.read(
+            "./tests/mocks/arquivos/dec_oper_gnl.py", version="31.0.2"
+        )
         assert rel.versao == "31.0.2"
         assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1

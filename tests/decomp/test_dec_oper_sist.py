@@ -62,8 +62,9 @@ def test_neq_dec_oper_sist():
 def test_atributos_encontrados_dec_oper_sist_v31():
     m: MagicMock = mock_open(read_data="".join(MockDecOperSistv31))
     with patch("builtins.open", m):
-        DecOperSist.set_version("31.0.2")
-        rel = DecOperSist.read("./tests/mocks/arquivos/dec_oper_sist.py")
+        rel = DecOperSist.read(
+            "./tests/mocks/arquivos/dec_oper_sist.py", version="31.0.2"
+        )
         assert rel.versao == "31.0.2"
         assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1

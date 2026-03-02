@@ -51,8 +51,9 @@ def test_neq_dec_oper_evap():
 def test_atributos_encontrados_dec_oper_evap_v31():
     m: MagicMock = mock_open(read_data="".join(MockDecOperEvapv31))
     with patch("builtins.open", m):
-        DecOperEvap.set_version("31.0.2")
-        rel = DecOperEvap.read("./tests/mocks/arquivos/dec_oper_evap.py")
+        rel = DecOperEvap.read(
+            "./tests/mocks/arquivos/dec_oper_evap.py", version="31.0.2"
+        )
         assert rel.versao == "31.0.2"
         assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1

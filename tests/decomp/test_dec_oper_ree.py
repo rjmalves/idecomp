@@ -45,8 +45,9 @@ def test_neq_dec_oper_ree():
 def test_atributos_encontrados_dec_oper_ree_v31():
     m: MagicMock = mock_open(read_data="".join(MockDecOperReev31))
     with patch("builtins.open", m):
-        DecOperRee.set_version("31.0.2")
-        rel = DecOperRee.read("./tests/mocks/arquivos/dec_oper_ree.py")
+        rel = DecOperRee.read(
+            "./tests/mocks/arquivos/dec_oper_ree.py", version="31.0.2"
+        )
         assert rel.versao == "31.0.2"
         assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1

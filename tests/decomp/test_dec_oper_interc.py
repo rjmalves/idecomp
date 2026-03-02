@@ -49,8 +49,9 @@ def test_neq_dec_oper_interc():
 def test_atributos_encontrados_dec_oper_interc_v31():
     m: MagicMock = mock_open(read_data="".join(MockDecOperIntercv31))
     with patch("builtins.open", m):
-        DecOperInterc.set_version("31.0.2")
-        rel = DecOperInterc.read("./tests/mocks/arquivos/dec_oper_interc.py")
+        rel = DecOperInterc.read(
+            "./tests/mocks/arquivos/dec_oper_interc.py", version="31.0.2"
+        )
         assert rel.versao == "31.0.2"
         print(rel.tabela)
         assert rel.tabela.at[0, "estagio"] == 1

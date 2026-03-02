@@ -1,4 +1,5 @@
 from cfinterface.files.sectionfile import SectionFile
+from cfinterface.storage import StorageType
 from idecomp.decomp.modelos.mapcut import SecaoDadosMapcut
 import pandas as pd  # type: ignore
 from typing import List
@@ -17,7 +18,7 @@ class Mapcut(SectionFile):
     T = TypeVar("T")
 
     SECTIONS = [SecaoDadosMapcut]
-    STORAGE = "BINARY"
+    STORAGE = StorageType.BINARY
 
     def __init__(self, data=...) -> None:
         super().__init__(data)

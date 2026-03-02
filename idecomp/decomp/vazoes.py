@@ -3,6 +3,7 @@ from typing import List, Optional, TypeVar
 import numpy as np  # type: ignore
 import pandas as pd  # type: ignore
 from cfinterface.files.sectionfile import SectionFile
+from cfinterface.storage import StorageType
 
 from idecomp.decomp.modelos.vazoes import SecaoVazoesPostos
 
@@ -16,7 +17,7 @@ class Vazoes(SectionFile):
     T = TypeVar("T")
 
     SECTIONS = [SecaoVazoesPostos]
-    STORAGE = "BINARY"
+    STORAGE = StorageType.BINARY
 
     def __init__(self, data=...) -> None:
         super().__init__(data)

@@ -1,4 +1,5 @@
 from cfinterface.files.sectionfile import SectionFile
+from cfinterface.storage import StorageType
 from idecomp.decomp.modelos.cortdeco import SecaoDadosCortdeco
 
 import pandas as pd  # type: ignore
@@ -14,7 +15,7 @@ class Cortdeco(SectionFile):
     T = TypeVar("T")
 
     SECTIONS = [SecaoDadosCortdeco]
-    STORAGE = "BINARY"
+    STORAGE = StorageType.BINARY
 
     def __obtem_secao_cortdeco(self) -> Optional[pd.DataFrame]:
         s = self.data.get_sections_of_type(SecaoDadosCortdeco)
@@ -34,7 +35,7 @@ class Cortdeco(SectionFile):
         codigos_submercados: List[int] = [],
         lag_maximo_tempo_viagem: int = 3,
         *args,
-        **kwargs
+        **kwargs,
     ) -> "Cortdeco":
         a = super().read(
             content,
@@ -48,7 +49,7 @@ class Cortdeco(SectionFile):
             codigos_submercados=codigos_submercados,
             lag_maximo_tempo_viagem=lag_maximo_tempo_viagem,
             *args,
-            **kwargs
+            **kwargs,
         )
         return a
 
@@ -57,13 +58,13 @@ class Cortdeco(SectionFile):
         to: Union[str, IO],
         df_registro_ultimo_corte_no: pd.DataFrame = pd.DataFrame(),
         *args,
-        **kwargs
+        **kwargs,
     ):
         super().write(
             to,
             df_registro_ultimo_corte_no=df_registro_ultimo_corte_no,
             *args,
-            **kwargs
+            **kwargs,
         )
 
     @property
@@ -188,9 +189,7 @@ class Cortdeco(SectionFile):
                 "uhe", expand=True
             )[1]
             df_melted["codigo_usina"] = (
-                df_melted["variable"]
-                .str.split("_", expand=True)[0]
-                .astype(int)
+                df_melted["variable"].str.split("_", expand=True)[0].astype(int)
             )
             df_melted["lag"] = (
                 df_melted["variable"]

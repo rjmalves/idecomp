@@ -1,0 +1,181 @@
+{
+  "plan": "idecomp-quality-performance",
+  "last_updated": "2026-03-02T18:14:22Z",
+  "progressive": true,
+  "tickets": {
+    "ticket-001-bump-cfinterface-dependency.md": {
+      "status": "completed",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 1.0,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 1.0
+        }
+      },
+      "agent": "orchestrator",
+      "workflow_step": null
+    },
+    "ticket-002-migrate-storage-literals.md": {
+      "status": "completed",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 0.98,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 0.8
+        }
+      },
+      "agent": "orchestrator",
+      "workflow_step": null
+    },
+    "ticket-003-fix-identity-test-verify-suite.md": {
+      "status": "completed",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 0.96,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 0.6
+        }
+      },
+      "agent": "orchestrator",
+      "workflow_step": null
+    },
+    "ticket-004-fix-mypy-error-cortdeco.md": {
+      "status": "pending",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 1.0,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 1.0
+        }
+      }
+    },
+    "ticket-005-add-mypy-strict-config.md": {
+      "status": "pending",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 1.0,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 1.0
+        }
+      }
+    },
+    "ticket-006-enable-mypy-strict-decomp.md": {
+      "status": "pending",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 0.92,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 0.8,
+          "dependency_clarity": 1.0,
+          "atomicity": 0.6
+        }
+      }
+    },
+    "ticket-007-enable-mypy-strict-libs.md": {
+      "status": "pending",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 0.98,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 0.8
+        }
+      }
+    },
+    "ticket-008-replace-bare-type-ignores.md": {
+      "status": "pending",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 0.92,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 0.8,
+          "dependency_clarity": 1.0,
+          "atomicity": 0.6
+        }
+      }
+    },
+    "ticket-009-implement-lazy-imports-decomp.md": {
+      "status": "pending",
+      "detail_level": "detailed",
+      "scores": {
+        "readiness": 1.0,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 1.0
+        }
+      }
+    },
+    "ticket-010-add-round-trip-tests.md": {
+      "status": "pending",
+      "detail_level": "outline"
+    },
+    "ticket-011-optimize-dataframe-concatenation.md": {
+      "status": "pending",
+      "detail_level": "outline"
+    },
+    "ticket-012-add-pytest-xdist.md": {
+      "status": "pending",
+      "detail_level": "outline"
+    },
+    "ticket-013-create-benchmark-suite.md": {
+      "status": "pending",
+      "detail_level": "outline"
+    },
+    "ticket-014-write-migration-guide-changelog.md": {
+      "status": "pending",
+      "detail_level": "outline"
+    },
+    "ticket-015-bump-package-version.md": {
+      "status": "pending",
+      "detail_level": "outline"
+    }
+  },
+  "epics": {
+    "epic-01-foundation-and-storagetype-migration": {
+      "phase": "completed",
+      "learning_extracted": false
+    },
+    "epic-02-quality-and-type-safety": {
+      "phase": "executing",
+      "learning_extracted": false
+    },
+    "epic-03-testing-and-performance": {
+      "phase": "outline",
+      "learning_extracted": false
+    },
+    "epic-04-documentation": {
+      "phase": "outline",
+      "learning_extracted": false
+    }
+  }
+}
