@@ -28,8 +28,8 @@ from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
 
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
-from typing import Union, List, TypeVar, Optional
-import pandas as pd  # type: ignore
+from typing import Any, List, Optional, TypeVar, Union
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class Relato(BlockFile):
@@ -69,7 +69,7 @@ class Relato(BlockFile):
         BlocoDiasExcluidosSemanas,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
         self.__relatorios_operacao_ute = None
         self.__relatorios_operacao_uhe = None
@@ -77,7 +77,7 @@ class Relato(BlockFile):
         self.__balanco_energetico = None
 
     def __concatena_blocos(
-        self, blocos: Union[T, List[T]], indice_data=None
+        self, blocos: Union[T, List[T]], indice_data: Optional[int] = None
     ) -> Optional[pd.DataFrame]:
         df = None
         if not isinstance(blocos, list):

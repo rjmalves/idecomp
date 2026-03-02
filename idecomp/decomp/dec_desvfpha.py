@@ -3,7 +3,7 @@ from idecomp.decomp.modelos.dec_desvfpha import TabelaDesvFpha
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from typing import Optional
-import pandas as pd  # type: ignore
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class DecDesvFpha(ArquivoCSV):

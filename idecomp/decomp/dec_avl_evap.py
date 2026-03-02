@@ -3,7 +3,7 @@ from idecomp.decomp.modelos.dec_avl_evap import TabelaAvlEvap
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from typing import Optional
-import pandas as pd  # type: ignore
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class DecAvlEvap(ArquivoCSV):

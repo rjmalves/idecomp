@@ -1,7 +1,7 @@
 from typing import Any, List, Optional, Type, TypeVar, Union
 
 import numpy as np
-import pandas  # type: ignore
+import pandas  # type: ignore[import-untyped]  # no pandas-stubs package
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 
@@ -217,7 +217,7 @@ class Dadger(RegisterFile):
         DA,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     def __expande_colunas_df(self, df: pandas.DataFrame) -> pandas.DataFrame:
@@ -238,7 +238,7 @@ class Dadger(RegisterFile):
         return df
 
     def __registros_ou_df(
-        self, t: Type[T], **kwargs
+        self, t: Type[T], **kwargs: Any
     ) -> Optional[Union[T, List[T], pandas.DataFrame]]:
         if kwargs.get("df"):
             return self.__expande_colunas_df(self._as_df(t))
@@ -539,7 +539,7 @@ class Dadger(RegisterFile):
         codigo_usina: int,
         modificacao: Any,
         df: bool = False,
-        **kwargs,
+        **kwargs: Any,
     ) -> Optional[Union[AC, List[AC], pandas.DataFrame]]:
         """
         Obtém um registro que define modificações nos parâmetros
@@ -751,8 +751,8 @@ class Dadger(RegisterFile):
             if any([estagio is None, ei is None, ef is None]):
                 return None
             ultimo_registro = None
-            if ei is not None and estagio <= ef:  # type: ignore
-                for e in range(ei, estagio + 1):  # type: ignore
+            if ei is not None and estagio <= ef:  # type: ignore[operator]
+                for e in range(ei, estagio + 1):  # type: ignore[operator]
                     registro_estagio = self.data.get_registers_of_type(
                         LU, codigo_restricao=codigo_restricao, estagio=e
                     )
@@ -763,11 +763,11 @@ class Dadger(RegisterFile):
                     data=[None] * len(ultimo_registro.data),
                 )
                 novo_registro.codigo_restricao = (
-                    ultimo_registro.codigo_restricao  # type: ignore
+                    ultimo_registro.codigo_restricao  # type: ignore[assignment]
                 )
-                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore
-                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore
-                novo_registro.estagio = estagio  # type: ignore
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore[assignment]
+                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore[assignment]
+                novo_registro.estagio = estagio  # type: ignore[assignment]
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro
             return None
@@ -1372,8 +1372,8 @@ class Dadger(RegisterFile):
             if any([estagio is None, ei is None, ef is None]):
                 return None
             ultimo_registro = None
-            if ei is not None and estagio <= ef:  # type: ignore
-                for e in range(ei, estagio + 1):  # type: ignore
+            if ei is not None and estagio <= ef:  # type: ignore[operator]
+                for e in range(ei, estagio + 1):  # type: ignore[operator]
                     registro_estagio = self.data.get_registers_of_type(
                         LV, codigo_restricao=codigo_restricao, estagio=e
                     )
@@ -1383,10 +1383,10 @@ class Dadger(RegisterFile):
                 novo_registro = LV(
                     data=[None] * len(ultimo_registro.data),
                 )
-                novo_registro.codigo_restricao = codigo_restricao  # type: ignore
-                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore
-                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore
-                novo_registro.estagio = estagio  # type: ignore
+                novo_registro.codigo_restricao = codigo_restricao  # type: ignore[assignment]
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore[assignment]
+                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore[assignment]
+                novo_registro.estagio = estagio  # type: ignore[assignment]
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro
             return None
@@ -1539,8 +1539,8 @@ class Dadger(RegisterFile):
             if any([estagio is None, ei is None, ef is None]):
                 return None
             ultimo_registro = None
-            if ei is not None and estagio <= ef:  # type: ignore
-                for e in range(ei, estagio + 1):  # type: ignore
+            if ei is not None and estagio <= ef:  # type: ignore[operator]
+                for e in range(ei, estagio + 1):  # type: ignore[operator]
                     registro_estagio = self.data.get_registers_of_type(
                         LQ, codigo_restricao=codigo_restricao, estagio=e
                     )
@@ -1550,10 +1550,10 @@ class Dadger(RegisterFile):
                 novo_registro = LQ(
                     data=[None] * len(ultimo_registro.data),
                 )
-                novo_registro.codigo_restricao = codigo_restricao  # type: ignore
-                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore
-                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore
-                novo_registro.estagio = estagio  # type: ignore
+                novo_registro.codigo_restricao = codigo_restricao  # type: ignore[assignment]
+                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore[assignment]
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore[assignment]
+                novo_registro.estagio = estagio  # type: ignore[assignment]
                 self.data.add_after(ultimo_registro, novo_registro)
                 return novo_registro
             return None

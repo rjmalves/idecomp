@@ -5,8 +5,8 @@ from idecomp.decomp.modelos.dec_oper_evap import (
 )
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
-from typing import Optional
-import pandas as pd  # type: ignore
+from typing import Any, Optional
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class DecOperEvap(ArquivoCSV):

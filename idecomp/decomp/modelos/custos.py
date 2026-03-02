@@ -6,8 +6,8 @@ from cfinterface.components.line import Line
 from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
-import pandas as pd  # type: ignore
-from typing import IO, List
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
+from typing import Any, IO, List, Optional
 
 
 class BlocoRelatorioCustos(Block):
@@ -24,7 +24,7 @@ class BlocoRelatorioCustos(Block):
     BEGIN_PATTERN = r" RELATORIO DAS VARIAVEIS DUAIS NO ESTAGIO"
     END_PATTERN = "X----X-"
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__scenario_line = Line([IntegerField(2, 44), IntegerField(4, 54)])
         self.__dual_variables_line = Line(
@@ -59,7 +59,7 @@ class BlocoRelatorioCustos(Block):
                 ]
             )
 
-    def __read_bloco_variaveis_duais(self, file: IO):
+    def __read_bloco_variaveis_duais(self, file: IO[Any]) -> None:
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [
                 "usina",
@@ -95,7 +95,7 @@ class BlocoRelatorioCustos(Block):
             usinas.append(dados[0])
             pihs.append(dados[1])
 
-    def __read_bloco_restricoes_fcf(self, file: IO):
+    def __read_bloco_restricoes_fcf(self, file: IO[Any]) -> None:
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [
                 "indice_corte",
@@ -134,7 +134,7 @@ class BlocoRelatorioCustos(Block):
             pis.append(dados[1])
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         str_bloco_variaveis_duais = "Aproveitamento  Bal.Hidr."
         str_bloco_restricoes_fcf = "Restricoes da FCF"
 

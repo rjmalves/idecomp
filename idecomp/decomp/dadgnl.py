@@ -1,8 +1,8 @@
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 from idecomp.decomp.modelos.dadgnl import TG, GS, NL, GL
-from typing import Type, List, Optional, TypeVar, Union
-import pandas as pd  # type: ignore
+from typing import Any, List, Optional, Type, TypeVar, Union
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class Dadgnl(RegisterFile):
@@ -23,7 +23,7 @@ class Dadgnl(RegisterFile):
 
     REGISTERS = [TG, GS, NL, GL]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     def __expande_colunas_df(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -45,7 +45,7 @@ class Dadgnl(RegisterFile):
         return df
 
     def __registros_ou_df(
-        self, t: Type[T], **kwargs
+        self, t: Type[T], **kwargs: Any
     ) -> Optional[Union[T, List[T], pd.DataFrame]]:
         if kwargs.get("df"):
             return self.__expande_colunas_df(self._as_df(t))

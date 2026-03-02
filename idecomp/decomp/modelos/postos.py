@@ -24,7 +24,7 @@ class RegistroPostos(Register):
     )
 
     @classmethod
-    def set_postos(cls, postos: int):
+    def set_postos(cls, postos: int) -> None:
         cls.POSTOS = postos
         cls.LINE = Line(
             [
@@ -40,5 +40,5 @@ class RegistroPostos(Register):
         return self.data
 
     @postos.setter
-    def postos(self, v: List[int]):
+    def postos(self, v: List[int]) -> None:
         self.data = v

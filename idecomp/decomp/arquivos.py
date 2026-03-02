@@ -1,7 +1,7 @@
 from idecomp.decomp.modelos.arquivos import BlocoNomesArquivos
 
 from cfinterface.files.sectionfile import SectionFile
-from typing import TypeVar, Optional, List
+from typing import Any, List, Optional, TypeVar
 
 
 class Arquivos(SectionFile):
@@ -28,7 +28,7 @@ class Arquivos(SectionFile):
                     return dado
         return None
 
-    def __atualiza_nome_por_indice(self, indice: int, nome: str):
+    def __atualiza_nome_por_indice(self, indice: int, nome: str) -> None:
         b = self.data.get_sections_of_type(BlocoNomesArquivos)
         if isinstance(b, BlocoNomesArquivos):
             if indice in b.data.index:
@@ -55,7 +55,7 @@ class Arquivos(SectionFile):
         return self.__le_nome_por_indice(0)
 
     @dadger.setter
-    def dadger(self, arq: str):
+    def dadger(self, arq: str) -> None:
         self.__atualiza_nome_por_indice(0, arq)
 
     @property
@@ -66,7 +66,7 @@ class Arquivos(SectionFile):
         return self.__le_nome_por_indice(1)
 
     @vazoes.setter
-    def vazoes(self, arq: str):
+    def vazoes(self, arq: str) -> None:
         self.__atualiza_nome_por_indice(1, arq)
 
     @property
@@ -77,7 +77,7 @@ class Arquivos(SectionFile):
         return self.__le_nome_por_indice(2)
 
     @hidr.setter
-    def hidr(self, arq: str):
+    def hidr(self, arq: str) -> None:
         self.__atualiza_nome_por_indice(2, arq)
 
     @property
@@ -88,7 +88,7 @@ class Arquivos(SectionFile):
         return self.__le_nome_por_indice(3)
 
     @mlt.setter
-    def mlt(self, arq: str):
+    def mlt(self, arq: str) -> None:
         self.__atualiza_nome_por_indice(3, arq)
 
     @property
@@ -99,7 +99,7 @@ class Arquivos(SectionFile):
         return self.__le_nome_por_indice(4)
 
     @perdas.setter
-    def perdas(self, arq: str):
+    def perdas(self, arq: str) -> None:
         self.__atualiza_nome_por_indice(4, arq)
 
     @property
@@ -110,7 +110,7 @@ class Arquivos(SectionFile):
         return self.__le_nome_por_indice(5)
 
     @dadgnl.setter
-    def dadgnl(self, arq: str):
+    def dadgnl(self, arq: str) -> None:
         self.__atualiza_nome_por_indice(5, arq)
 
     @property
@@ -121,5 +121,5 @@ class Arquivos(SectionFile):
         return self.__le_nome_por_indice(6)
 
     @caminho.setter
-    def caminho(self, arq: str):
+    def caminho(self, arq: str) -> None:
         self.__atualiza_nome_por_indice(6, arq)

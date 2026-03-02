@@ -2,8 +2,8 @@ from cfinterface.files.sectionfile import SectionFile
 from cfinterface.storage import StorageType
 from idecomp.decomp.modelos.cortdeco import SecaoDadosCortdeco
 
-import pandas as pd  # type: ignore
-from typing import TypeVar, Optional, Union, List, IO
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
+from typing import Any, IO, List, Optional, TypeVar, Union, cast
 
 
 class Cortdeco(SectionFile):
@@ -34,8 +34,8 @@ class Cortdeco(SectionFile):
         codigos_uhes_tempo_viagem: List[int] = [],
         codigos_submercados: List[int] = [],
         lag_maximo_tempo_viagem: int = 3,
-        *args,
-        **kwargs,
+        *args: Any,
+        **kwargs: Any,
     ) -> "Cortdeco":
         a = super().read(
             content,
@@ -51,15 +51,15 @@ class Cortdeco(SectionFile):
             *args,
             **kwargs,
         )
-        return a
+        return cast("Cortdeco", a)
 
     def write(
         self,
-        to: Union[str, IO],
+        to: Union[str, IO[Any]],
         df_registro_ultimo_corte_no: pd.DataFrame = pd.DataFrame(),
-        *args,
-        **kwargs,
-    ):
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().write(
             to,
             df_registro_ultimo_corte_no=df_registro_ultimo_corte_no,
@@ -100,7 +100,7 @@ class Cortdeco(SectionFile):
         return self.__obtem_secao_cortdeco()
 
     @cortes.setter
-    def cortes(self, df: pd.DataFrame):
+    def cortes(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_cortdeco()
         if dados is not None:
             dados = df

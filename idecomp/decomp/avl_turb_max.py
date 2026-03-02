@@ -1,6 +1,6 @@
 from typing import Optional
 
-import pandas as pd  # type: ignore
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from idecomp.decomp.modelos.avl_turb_max import TabelaAvlTurbMax

@@ -1,10 +1,10 @@
 from cfinterface.files.registerfile import RegisterFile
 from cfinterface.storage import StorageType
 from idecomp.decomp.modelos.postos import RegistroPostos
-import pandas as pd  # type: ignore
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
-from typing import TypeVar, List, Optional, Union, IO
+from typing import Any, IO, List, Optional, TypeVar, Union
 
 
 class Postos(RegisterFile):
@@ -19,12 +19,12 @@ class Postos(RegisterFile):
     POSTOS = 320
     STORAGE = StorageType.BINARY
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
         self.__df: Optional[pd.DataFrame] = None
         RegistroPostos.set_postos(self.POSTOS)
 
-    def write(self, to: Union[str, IO], *args, **kwargs):
+    def write(self, to: Union[str, IO[Any]], *args: Any, **kwargs: Any) -> None:
         self.__atualiza_registros()
         super().write(to, *args, **kwargs)
 
@@ -54,8 +54,8 @@ class Postos(RegisterFile):
         )
         return df
 
-    def __atualiza_registros(self):
-        registros: List[RegistroPostos] = [r for r in self.data][1:]
+    def __atualiza_registros(self) -> None:
+        registros: List[RegistroPostos] = [r for r in self.data][1:]  # type: ignore[assignment]
         n_registros = len(registros)
         n_meses = self.postos.shape[0]
         # Deleta os registros que sobraram
@@ -86,5 +86,5 @@ class Postos(RegisterFile):
         return self.__df
 
     @postos.setter
-    def postos(self, df: pd.DataFrame):
+    def postos(self, df: pd.DataFrame) -> None:
         self.__df = df

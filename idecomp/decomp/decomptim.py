@@ -1,8 +1,8 @@
 from idecomp.decomp.modelos.decomptim import BlocoTemposEtapas
 
 from cfinterface.files.blockfile import BlockFile
-from typing import TypeVar, Optional
-import pandas as pd  # type: ignore
+from typing import Any, Optional, TypeVar
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class Decomptim(BlockFile):
@@ -21,7 +21,7 @@ class Decomptim(BlockFile):
         BlocoTemposEtapas,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     @property

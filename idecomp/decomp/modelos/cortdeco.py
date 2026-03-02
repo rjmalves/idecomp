@@ -1,7 +1,7 @@
 from cfinterface.components.section import Section
-from typing import IO, List
-import numpy as np  # type: ignore
-import pandas as pd  # type: ignore
+from typing import Any, IO, List
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class SecaoDadosCortdeco(Section):
@@ -44,7 +44,7 @@ class SecaoDadosCortdeco(Section):
         else:
             return self.data.equals(bloco.data)
 
-    def __inicializa_variaveis(self, numero_total_cortes):
+    def __inicializa_variaveis(self, numero_total_cortes: int) -> None:
 
         self.__numero_coeficientes_rhs = 1
         self.__numero_coeficientes_varm = int(len(self.__codigos_uhes))
@@ -77,8 +77,8 @@ class SecaoDadosCortdeco(Section):
         )
 
     def __le_e_atribui_int(
-        self, file: IO, destino: np.ndarray, tamanho: int, indice: int
-    ):
+        self, file: IO[Any], destino: np.ndarray, tamanho: int, indice: int
+    ) -> None:
         destino[indice, :] = np.frombuffer(
             file.read(tamanho * 4),
             dtype=np.int32,
@@ -86,8 +86,8 @@ class SecaoDadosCortdeco(Section):
         )
 
     def __le_e_atribui_float(
-        self, file: IO, destino: np.ndarray, tamanho: int, indice: int
-    ):
+        self, file: IO[Any], destino: np.ndarray, tamanho: int, indice: int
+    ) -> None:
         destino[indice, :] = np.frombuffer(
             file.read(tamanho * 8),
             dtype=np.float64,
@@ -96,7 +96,7 @@ class SecaoDadosCortdeco(Section):
 
     def __le_registro(
         self,
-        file: IO,
+        file: IO[Any],
         offset: int,
         indice: int,
     ) -> int:
@@ -109,7 +109,7 @@ class SecaoDadosCortdeco(Section):
         self.__tabela_int[indice, 0] = indice
         return indice_proximo_corte
 
-    def __converte_array_em_dataframe(self, no: int, estagio: int):
+    def __converte_array_em_dataframe(self, no: int, estagio: int) -> pd.DataFrame:
         df_int = pd.DataFrame(
             self.__tabela_int[:, 0],
             columns=[
@@ -146,8 +146,8 @@ class SecaoDadosCortdeco(Section):
 
     def __le_arquivo(
         self,
-        file: IO,
-    ):
+        file: IO[Any],
+    ) -> None:
         df_cortes_completo = pd.DataFrame()
         # Realiza leitura para cada no que constroi corte
         for _, row in self.__registro_ultimo_corte_no.iterrows():
@@ -254,8 +254,8 @@ class SecaoDadosCortdeco(Section):
         return df_cortes.sort_values(by=["indice_registro"])
 
     def __atualiza_registros(
-        self, file: IO, df_registro_ultimo_corte_no: pd.DataFrame
-    ):
+        self, file: IO[Any], df_registro_ultimo_corte_no: pd.DataFrame
+    ) -> None:
         df_cortes = self.__identifica_indices_registros(
             df_registro_ultimo_corte_no
         )
@@ -280,9 +280,9 @@ class SecaoDadosCortdeco(Section):
                 ).tobytes()
             )
 
-    def read(
+    def read(  # type: ignore[override]  # cfinterface base returns bool and has different positional params
         self,
-        file: IO,
+        file: IO[Any],
         tamanho_registro: int,
         registro_ultimo_corte_no: pd.DataFrame,
         numero_total_cortes: int,
@@ -292,9 +292,9 @@ class SecaoDadosCortdeco(Section):
         codigos_uhes_tempo_viagem: List[int],
         codigos_submercados: List[int],
         lag_maximo_tempo_viagem: int,
-        *args,
-        **kwargs,
-    ):
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         # Atribui variáveis locais
         self.__tamanho_registro = tamanho_registro
         self.__numero_total_cortes = numero_total_cortes
@@ -313,11 +313,11 @@ class SecaoDadosCortdeco(Section):
         # Ignore bytes restantes
         _ = file.read()
 
-    def write(
+    def write(  # type: ignore[override]  # cfinterface base returns bool
         self,
-        file: IO,
-        *args,
-        **kwargs,
-    ):
+        file: IO[Any],
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         df_registro_ultimo_corte_no = kwargs["df_registro_ultimo_corte_no"]
         self.__atualiza_registros(file, df_registro_ultimo_corte_no)

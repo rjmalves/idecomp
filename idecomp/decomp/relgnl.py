@@ -4,8 +4,8 @@ from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesRERelgnl
 from idecomp.decomp.modelos.relgnl import BlocoRelatorioOperacaoRelgnl
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
-from typing import Type, List, TypeVar, Optional
-import pandas as pd  # type: ignore
+from typing import Any, List, Optional, Type, TypeVar
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class Relgnl(BlockFile):
@@ -28,7 +28,7 @@ class Relgnl(BlockFile):
         BlocoRelatorioOperacaoRelgnl,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
         self.__relatorio_operacao_gnl = None
 

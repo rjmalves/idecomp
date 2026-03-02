@@ -4,7 +4,7 @@ from idecomp.decomp.modelos.dec_estatfpha import (
 from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
 from cfinterface.files.blockfile import BlockFile
 from typing import Optional, Type, TypeVar
-import pandas as pd  # type: ignore
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class DecEstatFpha(BlockFile):

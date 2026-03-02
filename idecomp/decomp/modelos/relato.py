@@ -17,9 +17,9 @@ from cfinterface.components.field import Field
 from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
-import numpy as np  # type: ignore
-import pandas as pd  # type: ignore
-from typing import IO, List, Tuple, Dict
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
+from typing import Any, Dict, IO, List, Optional, Tuple
 
 
 class BlocoREEsSubsistemas(Block):
@@ -33,7 +33,7 @@ class BlocoREEsSubsistemas(Block):
     BEGIN_PATTERN = "Relatorio dos dados da configuracao dos Reservatorios"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__line = Line(
             [
@@ -60,7 +60,7 @@ class BlocoREEsSubsistemas(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
@@ -112,7 +112,7 @@ class BlocoUHEsREEsSubsistemas(Block):
     )
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__line = Line(
             [
@@ -141,7 +141,7 @@ class BlocoUHEsREEsSubsistemas(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
@@ -196,7 +196,7 @@ class BlocoConvergenciaRelato(Block):
     BEGIN_PATTERN = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__line = Line(
             [
@@ -229,7 +229,7 @@ class BlocoConvergenciaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             colunas = [
                 "iteracao",
@@ -271,7 +271,7 @@ class BlocoConvergenciaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if len(linha) < 5:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             if "----" in linha:
@@ -300,7 +300,7 @@ class BlocoRelatorioOperacaoRelato(Block):
     BEGIN_PATTERN = r"RELATORIO  DA  OPERACAO "
     END_PATTERN = "X----X-"
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__scenario_line = Line(
             [IntegerField(2, 34), IntegerField(4, 47), FloatField(8, 67, 6)]
@@ -347,7 +347,7 @@ class BlocoRelatorioOperacaoRelato(Block):
                 ]
             )
 
-    def __read_bloco_operacao_uhe(self, file: IO):
+    def __read_bloco_operacao_uhe(self, file: IO[Any]) -> None:
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [
                 "volume_inicial_percentual",
@@ -426,7 +426,7 @@ class BlocoRelatorioOperacaoRelato(Block):
             tabela[i, :] = dados[3:]
             i += 1
 
-    def __read_bloco_operacao_geral(self, file: IO):
+    def __read_bloco_operacao_geral(self, file: IO[Any]) -> None:
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(
                 data={
@@ -456,25 +456,25 @@ class BlocoRelatorioOperacaoRelato(Block):
         linha_custo_exp = Line([FloatField(14, 54, 2, format="E")])
         linha_custo_subsis = Line([LiteralField(2, 44), FloatField(14, 54, 2)])
 
-        custo_futuro: list = linha_custo.read(file.readline())
+        custo_futuro: List[Any] = linha_custo.read(file.readline())
         file.readline()
         file.readline()
-        custo_estagio: list = linha_custo.read(file.readline())
+        custo_estagio: List[Any] = linha_custo.read(file.readline())
         file.readline()
         file.readline()
-        custo_gt: list = linha_custo.read(file.readline())
+        custo_gt: List[Any] = linha_custo.read(file.readline())
         file.readline()
         file.readline()
         file.readline()
         file.readline()
-        custo_desvio: list = linha_custo.read(file.readline())
-        custo_vert_reservatorio: list = linha_custo.read(file.readline())
-        custo_vert_fio: list = linha_custo.read(file.readline())
-        custo_turbinamento_reservatorio: list = linha_custo.read(
+        custo_desvio: List[Any] = linha_custo.read(file.readline())
+        custo_vert_reservatorio: List[Any] = linha_custo.read(file.readline())
+        custo_vert_fio: List[Any] = linha_custo.read(file.readline())
+        custo_turbinamento_reservatorio: List[Any] = linha_custo.read(
             file.readline()
         )
-        custo_turbinamento_fio: list = linha_custo.read(file.readline())
-        custo_intercambio: list = linha_custo_exp.read(file.readline())
+        custo_turbinamento_fio: List[Any] = linha_custo.read(file.readline())
+        custo_intercambio: List[Any] = linha_custo_exp.read(file.readline())
         file.readline()
 
         cmos: Dict[str, float] = {}
@@ -487,7 +487,7 @@ class BlocoRelatorioOperacaoRelato(Block):
             cmos[dados_linha[0]] = dados_linha[1]
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         str_bloco_operacao_uhe = "# Aproveitamento(s) com evaporacao "
         str_bloco_operacao_geral = "Valor  esperado  do  custo  futuro:"
         # str_bloco_restricoes_rhe = (
@@ -534,7 +534,7 @@ class BlocoRelatorioOperacaoUTERelato(Block):
     BEGIN_PATTERN = r"RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
     END_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__scenario_line = Line(
             [IntegerField(2, 34), IntegerField(4, 47), FloatField(8, 67, 6)]
@@ -566,7 +566,7 @@ class BlocoRelatorioOperacaoUTERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [f"geracao_patamar{i}" for i in range(1, n_pats + 1)] + [
                 "custo"
@@ -617,7 +617,7 @@ class BlocoRelatorioOperacaoUTERelato(Block):
             linha: str = file.readline()
             # Verifica se acabou
             if self.ends(linha):
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 file.seek(posicao_ultima_linha)
                 self.data = converte_tabela_para_df()
                 break
@@ -654,7 +654,7 @@ class BlocoBalancoEnergeticoRelato(Block):
     BEGIN_PATTERN = "RELATORIO  DO  BALANCO  ENERGETICO"
     END_PATTERN = r"RELATORIO\s+DA\s+OPERACAO"  # noqa
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__linha_cenario = Line(
             [IntegerField(2, 34), IntegerField(4, 47), FloatField(8, 67, 6)]
@@ -714,7 +714,7 @@ class BlocoBalancoEnergeticoRelato(Block):
         ), [c for c in colunas if c != "Interligacao"]
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_para_df() -> pd.DataFrame:
             tamanho_maior_linha = max([len(lin) for lin in linhas])
             tabela = np.zeros((len(linhas), tamanho_maior_linha))
@@ -871,7 +871,7 @@ class BlocoCMORelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"estagio_{s}" for s in range(1, num_estagios + 1)]
@@ -902,8 +902,8 @@ class BlocoCMORelato(Block):
             FloatField(10, 11 + i * 11, 2) for i in range(num_estagios)
         ]
         self.__linha = Line(campo_subsis + campos_cmos)
-        subsistemas_distintos: list = []
-        patamares_distintos: list = []
+        subsistemas_distintos: List[Any] = []
+        patamares_distintos: List[Any] = []
         tabela = np.zeros((MAX_SUBSISTEMAS * MAX_PATAMARES, num_estagios))
         # Salta outra linha
         file.readline()
@@ -912,7 +912,7 @@ class BlocoCMORelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -957,7 +957,7 @@ class BlocoCustoOperacaoValorEsperadoRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"estagio_{s}" for s in range(1, num_estagios + 1)]
@@ -977,7 +977,7 @@ class BlocoCustoOperacaoValorEsperadoRelato(Block):
             FloatField(12, 11 + i * 13, 1) for i in range(num_estagios)
         ]
         self.__linha = Line(campo_parcela + campos_custos)
-        parcelas: list = []
+        parcelas: List[Any] = []
         tabela = np.zeros((2, num_estagios))
         # Salta outra linha
         file.readline()
@@ -1015,7 +1015,7 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"estagio_{s}" for s in range(1, num_estagios + 1)]
@@ -1036,7 +1036,7 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
             FloatField(10, 11 + i * 11, 1) for i in range(num_estagios)
         ]
         self.__linha = Line(campo_subsis + campos_gt)
-        subsistemas: list = []
+        subsistemas: List[Any] = []
         tabela = np.zeros((MAX_SUBSISTEMAS * MAX_PATAMARES, num_estagios))
         # Salta outra linha
         file.readline()
@@ -1045,7 +1045,7 @@ class BlocoGeracaoTermicaSubsistemaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1081,7 +1081,7 @@ class BlocoVolumeUtilReservatorioRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["inicial"] + [
@@ -1119,7 +1119,7 @@ class BlocoVolumeUtilReservatorioRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1140,7 +1140,7 @@ class BlocoDadosTermicasRelato(Block):
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Usinas  Termicas"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__line = Line(
             [
@@ -1175,7 +1175,7 @@ class BlocoDadosTermicasRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
                 "geracao_minima_patamar_1",
@@ -1218,7 +1218,7 @@ class BlocoDadosTermicasRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X---X----------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1263,7 +1263,7 @@ class BlocoDisponibilidadesTermicasRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [f"estagio_{s}" for s in range(1, num_estagios + 1)]
@@ -1299,7 +1299,7 @@ class BlocoDisponibilidadesTermicasRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1321,7 +1321,7 @@ class BlocoDadosMercadoRelato(Block):
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Mercado"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__line = Line(
             [
@@ -1351,7 +1351,7 @@ class BlocoDadosMercadoRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
                 "patamar_1",
@@ -1382,7 +1382,7 @@ class BlocoDadosMercadoRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X---------X------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1422,7 +1422,7 @@ class BlocoENAAcoplamentoREERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def le_tabela(linha: str) -> np.ndarray:
             indice_ree = int(linha.split("REE: ")[1].split("-")[0].strip())
             ree = linha.split("REE: ")[1].split("/")[0].split("-")[1].strip()
@@ -1444,7 +1444,7 @@ class BlocoENAAcoplamentoREERelato(Block):
             while True:
                 linha = file.readline()
                 if len(linha) < 4:
-                    tab = tab[:i, :]  # type: ignore
+                    tab = tab[:i, :]
                     break
                 tab[i, :] = linha_tabela.read(linha)
                 indices_rees.append(indice_ree)
@@ -1516,7 +1516,7 @@ class BlocoEnergiaArmazenadaREERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["inicial"] + [
@@ -1558,7 +1558,7 @@ class BlocoEnergiaArmazenadaREERelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1596,7 +1596,7 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["inicial"] + [
@@ -1635,7 +1635,7 @@ class BlocoEnergiaArmazenadaSubsistemaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X------------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1657,7 +1657,7 @@ class BlocoENAPreEstudoMensalREERelato(Block):
     BEGIN_PATTERN = r"ENERGIA NATURAL AFLUENTE POR REE \(MESES"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         campos_ree: List[Field] = [
             LiteralField(14, 4),
@@ -1685,7 +1685,7 @@ class BlocoENAPreEstudoMensalREERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["energia_armazenada_maxima"] + [
@@ -1707,7 +1707,7 @@ class BlocoENAPreEstudoMensalREERelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X--------------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1730,7 +1730,7 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
     BEGIN_PATTERN = r"ENERGIA NATURAL AFLUENTE POR SUBSISTEMA \(MESES"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         campos_subsis: List[Field] = [
             LiteralField(14, 4),
@@ -1757,7 +1757,7 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["energia_armazenada_maxima"] + [
@@ -1779,7 +1779,7 @@ class BlocoENAPreEstudoMensalSubsistemaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X--------------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1802,7 +1802,7 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
     BEGIN_PATTERN = r"DADOS DE ENERGIA NATURAL AFLUENTE POR REE \(SEMANAS"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         campos_ree: List[Field] = [
             LiteralField(14, 4),
@@ -1830,7 +1830,7 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["energia_armazenada_maxima"] + [
@@ -1856,7 +1856,7 @@ class BlocoENAPreEstudoSemanalREERelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X--------------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1879,7 +1879,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
     BEGIN_PATTERN = r"NATURAL AFLUENTE POR SUBSISTEMA\(SEMANAS"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         campos_subsis: List[Field] = [
             LiteralField(14, 4),
@@ -1906,7 +1906,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = ["energia_armazenada_maxima"] + [
@@ -1932,7 +1932,7 @@ class BlocoENAPreEstudoSemanalSubsistemaRelato(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X--------------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -1955,7 +1955,7 @@ class BlocoDiasExcluidosSemanas(Block):
     BEGIN_PATTERN = " Mes inicial do periodo de estudos"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
 
         self.__line = Line([IntegerField(2, 53)])
@@ -1975,7 +1975,7 @@ class BlocoDiasExcluidosSemanas(Block):
             return self.data == bloco.data
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         file.readline()
         dias_semana_inicial = self.__line.read(file.readline())[0]
         dias_semana_final = self.__line.read(file.readline())[0]

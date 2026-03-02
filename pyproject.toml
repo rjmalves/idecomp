@@ -55,6 +55,44 @@ include = [
 [tool.ruff]
 line-length = 80
 
+[tool.mypy]
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = "idecomp.decomp.*"
+strict = true
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = "idecomp.decomp.modelos.*"
+strict = true
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = "idecomp.decomp.modelos.blocos.*"
+strict = true
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = "idecomp.decomp.modelos.arquivoscsv.*"
+strict = true
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = "idecomp.libs.*"
+strict = true
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = "idecomp.libs.modelos.*"
+strict = true
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+module = "idecomp.config"
+strict = true
+warn_return_any = false
+
 # Remove this override once cfinterface 1.9.0 is published to PyPI
 [tool.uv.sources]
 cfinterface = { path = "/home/rogerio/git/cfinterface" }

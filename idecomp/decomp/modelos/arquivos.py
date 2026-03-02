@@ -1,8 +1,8 @@
 from cfinterface.components.section import Section
 from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
-from typing import IO, List
-import pandas as pd  # type: ignore
+from typing import Any, IO, List, Optional
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class BlocoNomesArquivos(Section):
@@ -13,7 +13,7 @@ class BlocoNomesArquivos(Section):
 
     __slots__ = ["__linha"]
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__linha = Line([LiteralField(80, 0)])
 
@@ -32,8 +32,8 @@ class BlocoNomesArquivos(Section):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
-        def converte_tabela_em_df():
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
+        def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame(data={"Nome": nomes})
             return df
 
@@ -47,7 +47,7 @@ class BlocoNomesArquivos(Section):
             nomes.append(dados[0])
 
     # Override
-    def write(self, file: IO, *args, **kwargs):
+    def write(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         if not isinstance(self.data, pd.DataFrame):
             raise ValueError("Dados do arquivos não foram lidos")
         for _, linha in self.data.iterrows():

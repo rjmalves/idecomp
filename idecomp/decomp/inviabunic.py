@@ -2,8 +2,8 @@ from idecomp.decomp.modelos.inviabunic import BlocoInviabilidadesIteracoes
 from idecomp.decomp.modelos.inviabunic import BlocoInviabilidadesSimFinal
 
 from cfinterface.files.blockfile import BlockFile
-from typing import TypeVar, Optional
-import pandas as pd  # type: ignore
+from typing import Any, Optional, TypeVar
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class InviabUnic(BlockFile):
@@ -22,7 +22,7 @@ class InviabUnic(BlockFile):
         BlocoInviabilidadesSimFinal,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     @property

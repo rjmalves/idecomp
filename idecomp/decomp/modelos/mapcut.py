@@ -1,7 +1,7 @@
 from cfinterface.components.section import Section
-from typing import IO, List
-import numpy as np  # type: ignore
-import pandas as pd  # type: ignore
+from typing import Any, IO, List, Optional
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 from datetime import datetime
 
 
@@ -15,7 +15,7 @@ class SecaoDadosMapcut(Section):
 
     REGISTER_SIZE = 48020
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.data = {
             "dados_gerais": [],  # registro 1
@@ -44,7 +44,7 @@ class SecaoDadosMapcut(Section):
         else:
             return self.data == bloco.data
 
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         # Leitura do primeiro registro (dados gerais)
         self.__le_primeiro_registro(file)
         # Leitura do segundo registro (dados do caso)
@@ -62,7 +62,7 @@ class SecaoDadosMapcut(Section):
         # Leitura do nono e décimo registro (dados de usinas gnl)
         self.__le_nono_decimo_registros(file)
 
-    def __le_primeiro_registro(self, file: IO):
+    def __le_primeiro_registro(self, file: IO[Any]) -> None:
         tamanho_primeiro_bloco = 5
         dados_primeiro_bloco = np.frombuffer(
             file.read(tamanho_primeiro_bloco * 4),
@@ -79,7 +79,7 @@ class SecaoDadosMapcut(Section):
         dados = list(dados_primeiro_bloco) + list(dados_segundo_bloco)
         self.data["dados_gerais"] = list(dados)
 
-    def __le_segundo_registro(self, file: IO):
+    def __le_segundo_registro(self, file: IO[Any]) -> None:
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho = 4
         dados = np.frombuffer(
@@ -90,7 +90,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_caso"] = list(dados)
 
-    def __le_terceiro_registro(self, file: IO):
+    def __le_terceiro_registro(self, file: IO[Any]) -> None:
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho = self.numero_uhes
         dados = np.frombuffer(
@@ -101,7 +101,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_uhes"] = list(dados)
 
-    def __le_quarto_registro(self, file: IO):
+    def __le_quarto_registro(self, file: IO[Any]) -> None:
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho = self.numero_uhes
         dados = np.frombuffer(
@@ -112,7 +112,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_uhes_topologia"] = list(dados)
 
-    def __le_quinto_registro(self, file: IO):
+    def __le_quinto_registro(self, file: IO[Any]) -> None:
         self.__contador_registro = self.__contador_registro + 14
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho = self.numero_cenarios
@@ -124,7 +124,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_arvore"] = list(dados)
 
-    def __le_sexto_registro(self, file: IO):
+    def __le_sexto_registro(self, file: IO[Any]) -> None:
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho_primeiro_bloco = 5
         dados_primeiro_bloco = np.frombuffer(
@@ -154,7 +154,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_estagios"] = list(dados)
 
-    def __le_setimo_registro(self, file: IO):
+    def __le_setimo_registro(self, file: IO[Any]) -> None:
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho_primeiro_bloco = 3
         tamanho_segundo_bloco = 1
@@ -172,7 +172,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_tempo_viagem"] += list(dados)
 
-    def __le_oitavo_registro(self, file: IO):
+    def __le_oitavo_registro(self, file: IO[Any]) -> None:
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho = 1
         dados_primeiro_bloco = np.frombuffer(
@@ -189,7 +189,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_tempo_viagem"] += list(dados)
 
-    def __le_setimo_oitavo_registros(self, file: IO):
+    def __le_setimo_oitavo_registros(self, file: IO[Any]) -> None:
         for uhe in range(1, self.numero_uhes_tempo_viagem + 1, 1):
             for est in range(1, self.numero_estagios + 1, 1):
                 lags = self.lag_tempo_viagem_por_uhe[(uhe * est) - 1]
@@ -199,7 +199,7 @@ class SecaoDadosMapcut(Section):
                     else:
                         self.__le_oitavo_registro(file)
 
-    def __le_nono_registro(self, file: IO):
+    def __le_nono_registro(self, file: IO[Any]) -> None:
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho_primeiro_bloco = 1
         dados_primeiro_bloco = np.frombuffer(
@@ -228,7 +228,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_gnl"] += list(dados)
 
-    def __le_decimo_registro(self, file: IO):
+    def __le_decimo_registro(self, file: IO[Any]) -> None:
         file.seek(self.__contador_registro * self.REGISTER_SIZE)
         tamanho = 6
         dados = np.frombuffer(
@@ -239,7 +239,7 @@ class SecaoDadosMapcut(Section):
         self.__contador_registro = self.__contador_registro + 1
         self.data["dados_custos"] += list(dados)
 
-    def __le_nono_decimo_registros(self, file: IO):
+    def __le_nono_decimo_registros(self, file: IO[Any]) -> None:
         for _ in range(self.numero_estagios):
             self.__le_nono_registro(file)
             self.__le_decimo_registro(file)
@@ -297,15 +297,15 @@ class SecaoDadosMapcut(Section):
         return datetime(year=ano, month=mes, day=dia)
 
     @property
-    def codigos_uhes(self) -> list:
+    def codigos_uhes(self) -> List[Any]:
         return self.data["dados_uhes"]
 
     @property
-    def codigos_uhes_jusante(self) -> list:
+    def codigos_uhes_jusante(self) -> List[Any]:
         return self.data["dados_uhes_topologia"]
 
     @property
-    def indice_no_arvore(self) -> list:
+    def indice_no_arvore(self) -> List[Any]:
         return self.data["dados_arvore"]
 
     @property
@@ -325,14 +325,14 @@ class SecaoDadosMapcut(Section):
         return self.data["dados_estagios"][4]
 
     @property
-    def indice_primeiro_no_estagio(self) -> list:
+    def indice_primeiro_no_estagio(self) -> List[Any]:
         offset = 5
         return self.data["dados_estagios"][
             offset : (offset + self.numero_estagios)
         ]
 
     @property
-    def patamares_por_estagio(self) -> list:
+    def patamares_por_estagio(self) -> List[Any]:
         offset = 4 + self.numero_estagios + 1
         patamares_estagio = self.data["dados_estagios"][
             offset : (offset + self.numero_estagios)
@@ -340,7 +340,7 @@ class SecaoDadosMapcut(Section):
         return patamares_estagio
 
     @property
-    def lag_tempo_viagem_por_uhe(self) -> list:
+    def lag_tempo_viagem_por_uhe(self) -> List[Any]:
         return self.data["dados_estagios"][
             -(self.numero_uhes_tempo_viagem * self.numero_estagios) :
         ]
@@ -392,11 +392,11 @@ class SecaoDadosMapcut(Section):
         return df_tempo_viagem.reset_index(drop=True)
 
     @property
-    def codigos_uhes_tempo_viagem(self) -> list:
+    def codigos_uhes_tempo_viagem(self) -> List[Any]:
         return self.dados_tempo_viagem["codigo_usina"].unique().tolist()
 
     @property
-    def codigos_submercados_gnl(self) -> list:
+    def codigos_submercados_gnl(self) -> List[Any]:
         codigos_submercados = (
             self.dados_gnl["codigo_submercado"].unique().tolist()
         )

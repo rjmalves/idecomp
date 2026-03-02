@@ -1,8 +1,8 @@
 from cfinterface.files.sectionfile import SectionFile
 from cfinterface.storage import StorageType
 from idecomp.decomp.modelos.mapcut import SecaoDadosMapcut
-import pandas as pd  # type: ignore
-from typing import List
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
+from typing import Any, List
 from datetime import datetime
 
 
@@ -20,7 +20,7 @@ class Mapcut(SectionFile):
     SECTIONS = [SecaoDadosMapcut]
     STORAGE = StorageType.BINARY
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     def __obtem_dados(self) -> Optional[SecaoDadosMapcut]:
@@ -165,7 +165,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def indice_no_arvore(self) -> Optional[list]:
+    def indice_no_arvore(self) -> Optional[List[Any]]:
         """
         Os índice do nó pai na árvore de cenários
         para cada nó da árvore.
@@ -232,7 +232,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def indice_primeiro_no_estagio(self) -> Optional[list]:
+    def indice_primeiro_no_estagio(self) -> Optional[List[Any]]:
         """
         O índice do primeiro nó de cada estágio.
 
@@ -245,7 +245,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def patamares_por_estagio(self) -> Optional[list]:
+    def patamares_por_estagio(self) -> Optional[List[Any]]:
         """
         O número de patamares de carga por estágio.
 
@@ -258,7 +258,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def lag_tempo_viagem_por_uhe(self) -> Optional[list]:
+    def lag_tempo_viagem_por_uhe(self) -> Optional[List[Any]]:
         """
         O lag (em estágios) de uma usina para cada período.
 

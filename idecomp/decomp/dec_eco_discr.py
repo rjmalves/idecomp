@@ -3,7 +3,7 @@ from idecomp.decomp.modelos.dec_eco_discr import TabelaEcoDiscr
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from typing import Optional
-import pandas as pd  # type: ignore
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class DecEcoDiscr(ArquivoCSV):

@@ -1,7 +1,7 @@
 from idecomp.decomp.modelos.caso import NomeCaso
 
 from cfinterface.files.sectionfile import SectionFile
-from typing import TypeVar, Optional
+from typing import Any, Optional, TypeVar
 
 
 class Caso(SectionFile):
@@ -18,7 +18,7 @@ class Caso(SectionFile):
 
     SECTIONS = [NomeCaso]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     @property
@@ -35,7 +35,7 @@ class Caso(SectionFile):
         return None
 
     @arquivos.setter
-    def arquivos(self, a: str):
+    def arquivos(self, a: str) -> None:
         b = self.data.get_sections_of_type(NomeCaso)
         if isinstance(b, NomeCaso):
             b.data = a

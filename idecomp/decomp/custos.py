@@ -2,8 +2,8 @@ from idecomp.decomp.modelos.custos import BlocoRelatorioCustos
 
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
-from typing import List, TypeVar, Optional
-import pandas as pd  # type: ignore
+from typing import Any, List, Optional, TypeVar
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 
 
 class Custos(BlockFile):
@@ -22,13 +22,13 @@ class Custos(BlockFile):
         BlocoRelatorioCustos,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
         self.__relatorios_variaveis_duais = None
         self.__relatorios_fcf = None
 
     def __concatena_blocos(
-        self, blocos, indice_data: int
+        self, blocos: List[Any], indice_data: int
     ) -> Optional[pd.DataFrame]:
         """
         Adiciona uma coluna com o estágio de cada bloco, assumindo

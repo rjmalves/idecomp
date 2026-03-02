@@ -1,6 +1,6 @@
 {
   "plan": "idecomp-quality-performance",
-  "last_updated": "2026-03-02T18:14:22Z",
+  "last_updated": "2026-03-02T19:30:00Z",
   "progressive": true,
   "tickets": {
     "ticket-001-bump-cfinterface-dependency.md": {
@@ -52,7 +52,7 @@
       "workflow_step": null
     },
     "ticket-004-fix-mypy-error-cortdeco.md": {
-      "status": "pending",
+      "status": "completed",
       "detail_level": "detailed",
       "scores": {
         "readiness": 1.0,
@@ -63,10 +63,12 @@
           "dependency_clarity": 1.0,
           "atomicity": 1.0
         }
-      }
+      },
+      "agent": "orchestrator",
+      "workflow_step": null
     },
     "ticket-005-add-mypy-strict-config.md": {
-      "status": "pending",
+      "status": "completed",
       "detail_level": "detailed",
       "scores": {
         "readiness": 1.0,
@@ -77,11 +79,14 @@
           "dependency_clarity": 1.0,
           "atomicity": 1.0
         }
-      }
+      },
+      "agent": "orchestrator",
+      "workflow_step": null
     },
     "ticket-006-enable-mypy-strict-decomp.md": {
-      "status": "pending",
+      "status": "completed",
       "detail_level": "detailed",
+      "agent": "python-task-automation-developer",
       "scores": {
         "readiness": 0.92,
         "readiness_breakdown": {

@@ -1,7 +1,7 @@
-from typing import List, Optional, TypeVar
+from typing import Any, List, Optional, TypeVar
 
-import numpy as np  # type: ignore
-import pandas as pd  # type: ignore
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 from cfinterface.files.sectionfile import SectionFile
 from cfinterface.storage import StorageType
 
@@ -19,7 +19,7 @@ class Vazoes(SectionFile):
     SECTIONS = [SecaoVazoesPostos]
     STORAGE = StorageType.BINARY
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
         self.__df_probabilidades: Optional[pd.DataFrame] = None
         self.__df_previsoes_semanais: Optional[pd.DataFrame] = None
@@ -52,7 +52,7 @@ class Vazoes(SectionFile):
             return None
 
     @numero_aberturas_estagios.setter
-    def numero_aberturas_estagios(self, a: List[int]):
+    def numero_aberturas_estagios(self, a: List[int]) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             dados.numero_aberturas_estagios = a
@@ -96,7 +96,7 @@ class Vazoes(SectionFile):
         return self.__df_probabilidades
 
     @probabilidades.setter
-    def probabilidades(self, df: pd.DataFrame):
+    def probabilidades(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             dados.probabilidades_nos = df["probabilidade"].tolist()
@@ -132,7 +132,7 @@ class Vazoes(SectionFile):
         return self.__df_previsoes_semanais
 
     @previsoes.setter
-    def previsoes(self, df: pd.DataFrame):
+    def previsoes(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -179,7 +179,7 @@ class Vazoes(SectionFile):
         return self.__df_previsoes_semanais_com_postos_artificiais
 
     @previsoes_com_postos_artificiais.setter
-    def previsoes_com_postos_artificiais(self, df: pd.DataFrame):
+    def previsoes_com_postos_artificiais(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -238,7 +238,7 @@ class Vazoes(SectionFile):
         return self.__df_cenarios_mensais_gerados
 
     @cenarios_gerados.setter
-    def cenarios_gerados(self, df: pd.DataFrame):
+    def cenarios_gerados(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -294,7 +294,7 @@ class Vazoes(SectionFile):
         return self.__df_cenarios_mensais_calculados_com_postos_artificiais
 
     @cenarios_calculados_com_postos_artificiais.setter
-    def cenarios_calculados_com_postos_artificiais(self, df: pd.DataFrame):
+    def cenarios_calculados_com_postos_artificiais(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -334,7 +334,7 @@ class Vazoes(SectionFile):
         return self.__df_observacoes_semanais
 
     @observacoes_semanais.setter
-    def observacoes_semanais(self, df: pd.DataFrame):
+    def observacoes_semanais(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -380,7 +380,7 @@ class Vazoes(SectionFile):
         return self.__df_observacoes_mensais
 
     @observacoes_mensais.setter
-    def observacoes_mensais(self, df: pd.DataFrame):
+    def observacoes_mensais(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos

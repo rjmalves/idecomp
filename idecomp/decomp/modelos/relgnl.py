@@ -8,9 +8,9 @@ from cfinterface.components.field import Field
 from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
-import numpy as np  # type: ignore
-import pandas as pd  # type: ignore
-from typing import IO, List
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
+from typing import Any, IO, List, Optional
 
 
 class BlocoDadosUsinasRelgnl(Block):
@@ -24,7 +24,7 @@ class BlocoDadosUsinasRelgnl(Block):
     BEGIN_PATTERN = "Relatorio  dos  Dados  de  Usinas  Termicas GNL"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__line = Line(
             [
@@ -59,7 +59,7 @@ class BlocoDadosUsinasRelgnl(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             cols = [
                 "geracao_minima_patamar_1",
@@ -102,7 +102,7 @@ class BlocoDadosUsinasRelgnl(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if "X---X----------X" in linha:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             # Senão, lê mais uma linha
@@ -147,7 +147,7 @@ class BlocoComandosUsinasAjustesTGRelgnl(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             colunas = ["patamar_1", "patamar_2", "patamar_3"]
             df = pd.DataFrame(tabela, columns=colunas)
@@ -196,7 +196,7 @@ class BlocoComandosUsinasAjustesTGRelgnl(Block):
         while True:
             linha: str = file.readline()
             if len(linha) < 3:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             dados = self.__linha.read(linha)
@@ -235,7 +235,7 @@ class BlocoComandosUsinasAjustesRERelgnl(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_em_df() -> pd.DataFrame:
             colunas = ["patamar_1", "patamar_2", "patamar_3"]
             df = pd.DataFrame(tabela, columns=colunas)
@@ -285,7 +285,7 @@ class BlocoComandosUsinasAjustesRERelgnl(Block):
         while True:
             linha: str = file.readline()
             if len(linha) < 3:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
             dados = self.__linha.read(linha)
@@ -309,7 +309,7 @@ class BlocoRelatorioOperacaoRelgnl(Block):
     BEGIN_PATTERN = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
     END_PATTERN = "RELATORIO  DA  OPERACAO  TERMICA E CONTRATOS"
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
         super().__init__(previous, next, data)
         self.__linha_cenario = Line(
             [IntegerField(2, 34), IntegerField(4, 47), FloatField(8, 67, 6)]
@@ -346,7 +346,7 @@ class BlocoRelatorioOperacaoRelgnl(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]  # cfinterface base returns bool
         def converte_tabela_para_df() -> pd.DataFrame:
             df = pd.DataFrame(tabela)
             cols = [
@@ -408,7 +408,7 @@ class BlocoRelatorioOperacaoRelgnl(Block):
             # Verifica se acabou
             if self.ends(linha) or len(linha) == 0:
                 file.seek(ultima_linha)
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_para_df()
                 break
             # Senão, procura a linha que identifica o subsistema
