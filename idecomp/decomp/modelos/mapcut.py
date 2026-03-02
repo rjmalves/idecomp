@@ -392,7 +392,9 @@ class SecaoDadosMapcut(Section):
                 "coeficiente_amortecimento": coef_amortecimento,
             }
             dfs.append(pd.DataFrame(dados_tempo_viagem))
-        return pd.concat(dfs).reset_index(drop=True)
+        if dfs:
+            return pd.concat(dfs).reset_index(drop=True)
+        return pd.DataFrame()
 
     @property
     def codigos_uhes_tempo_viagem(self) -> List[Any]:
@@ -440,7 +442,9 @@ class SecaoDadosMapcut(Section):
 
             dfs.append(pd.DataFrame(dados))
 
-        return pd.concat(dfs).reset_index(drop=True)
+        if dfs:
+            return pd.concat(dfs).reset_index(drop=True)
+        return pd.DataFrame()
 
     @property
     def dados_custos(self) -> pd.DataFrame:
@@ -468,4 +472,6 @@ class SecaoDadosMapcut(Section):
             }
             offset = offset + 6
             dfs.append(pd.DataFrame(dados_custos))
-        return pd.concat(dfs).reset_index(drop=True)
+        if dfs:
+            return pd.concat(dfs).reset_index(drop=True)
+        return pd.DataFrame()
