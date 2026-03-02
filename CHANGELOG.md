@@ -1,6 +1,17 @@
+# v1.9.0
+
+- Dependência cfinterface atualizada para >= 1.9.0
+- Migração de literais de armazenamento para enum StorageType nos handlers binários
+- Habilitação de modo estrito do mypy em todos os módulos de produção
+- Importações lazy via PEP 562 no módulo `idecomp.decomp`
+- Otimização de concatenação de DataFrames em handlers BlockFile
+- Suporte a execução paralela de testes com pytest-xdist
+- Suite de benchmarks para medição de desempenho de leitura
+- Testes round-trip adicionados para handlers Caso e Arquivos
+
 # v1.8.1
 
-- Aumento nas capacidade máximas de estágios (25) e subsistemas (15) para processamento 
+- Aumento nas capacidade máximas de estágios (25) e subsistemas (15) para processamento
 
 # v1.8.0
 

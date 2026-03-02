@@ -19,7 +19,7 @@ Progressive plan to upgrade idecomp (v1.8.1 -> v1.9.0) to leverage cfinterface v
 | 01   | Foundation and StorageType Migration | 3 (detailed) | completed |
 | 02   | Quality and Type Safety              | 6 (detailed) | completed |
 | 03   | Testing and Performance              | 4 (refined)  | completed |
-| 04   | Documentation                        | 2 (outline)  | pending   |
+| 04   | Documentation                        | 2 (refined)  | completed |
 
 ## Progress Tracking
 
@@ -38,8 +38,8 @@ Progressive plan to upgrade idecomp (v1.8.1 -> v1.9.0) to leverage cfinterface v
 | ticket-011 | Optimize DataFrame concatenation in BlockFile handlers | epic-03 | completed | Refined      | 0.97      | 0.90    | EXCELLENT |
 | ticket-012 | Add pytest-xdist and optimize test execution           | epic-03 | completed | Refined      | 1.00      | 0.90    | EXCELLENT |
 | ticket-013 | Create benchmark suite for read performance            | epic-03 | completed | Refined      | 1.00      | 0.90    | EXCELLENT |
-| ticket-014 | Write migration guide and update changelog for v1.9.0  | epic-04 | pending   | Outline      | --        | --      | --        |
-| ticket-015 | Bump package version to 1.9.0                          | epic-04 | pending   | Outline      | --        | --      | --        |
+| ticket-014 | Write migration guide and update changelog for v1.9.0  | epic-04 | completed | Refined      | 0.98      | 0.90    | EXCELLENT |
+| ticket-015 | Bump package version to 1.9.0                          | epic-04 | completed | Refined      | 1.00      | 0.98    | EXCELLENT |
 
 ## Key Differences from inewave Plan
 

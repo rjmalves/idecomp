@@ -1,6 +1,6 @@
 {
   "plan": "idecomp-quality-performance",
-  "last_updated": "2026-03-02T19:13:48Z",
+  "last_updated": "2026-03-02T19:35:13Z",
   "progressive": true,
   "tickets": {
     "ticket-001-bump-cfinterface-dependency.md": {
@@ -174,7 +174,7 @@
       "status": "completed",
       "detail_level": "refined",
       "scores": {
-        "quality": 0.90,
+        "quality": 0.9,
         "quality_breakdown": {
           "conformance": 1.0,
           "scope_adherence": 1.0,
@@ -198,7 +198,7 @@
       "status": "completed",
       "detail_level": "refined",
       "scores": {
-        "quality": 0.90,
+        "quality": 0.9,
         "quality_breakdown": {
           "conformance": 1.0,
           "scope_adherence": 1.0,
@@ -222,7 +222,7 @@
       "status": "completed",
       "detail_level": "refined",
       "scores": {
-        "quality": 0.90,
+        "quality": 0.9,
         "quality_breakdown": {
           "conformance": 1.0,
           "scope_adherence": 1.0,
@@ -246,7 +246,7 @@
       "status": "completed",
       "detail_level": "refined",
       "scores": {
-        "quality": 0.90,
+        "quality": 0.9,
         "quality_breakdown": {
           "conformance": 1.0,
           "scope_adherence": 1.0,
@@ -267,12 +267,52 @@
       "agent": "orchestrator"
     },
     "ticket-014-write-migration-guide-changelog.md": {
-      "status": "pending",
-      "detail_level": "outline"
+      "status": "completed",
+      "detail_level": "refined",
+      "scores": {
+        "quality": 0.90,
+        "quality_breakdown": {
+          "conformance": 1.0,
+          "scope_adherence": 1.0,
+          "lint_cleanliness": 1.0,
+          "type_safety": 1.0,
+          "test_delta": 0.0
+        },
+        "readiness": 0.98,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 0.8
+        }
+      },
+      "workflow_step": null,
+      "agent": "orchestrator"
     },
     "ticket-015-bump-package-version.md": {
-      "status": "pending",
-      "detail_level": "outline"
+      "status": "completed",
+      "detail_level": "refined",
+      "scores": {
+        "quality": 0.975,
+        "quality_breakdown": {
+          "conformance": 1.0,
+          "scope_adherence": 1.0,
+          "lint_cleanliness": 1.0,
+          "type_safety": 1.0,
+          "test_delta": 0.75
+        },
+        "readiness": 1.0,
+        "readiness_breakdown": {
+          "structure": 1.0,
+          "testability": 1.0,
+          "boundary": 1.0,
+          "dependency_clarity": 1.0,
+          "atomicity": 1.0
+        }
+      },
+      "workflow_step": null,
+      "agent": "orchestrator"
     }
   },
   "epics": {
@@ -289,8 +329,8 @@
       "learning_extracted": false
     },
     "epic-04-documentation": {
-      "phase": "outline",
-      "learning_extracted": false
+      "phase": "completed",
+      "learning_extracted": true
     }
   }
 }
