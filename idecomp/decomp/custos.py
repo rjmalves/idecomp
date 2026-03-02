@@ -38,17 +38,10 @@ class Custos(BlockFile):
         :return: O DataFrame com os estágios
         :rtype: pd.DataFrame
         """
-        df = None
-        for b in blocos:
-            if not isinstance(b, Block):
-                continue
-            df_estagio = b.data[indice_data]
-            if df is None:
-                df = df_estagio
-            else:
-                df = pd.concat([df, df_estagio], ignore_index=True)
-        if df is not None:
-            return df
+        dfs = [b.data[indice_data] for b in blocos if isinstance(b, Block)]
+        dfs = [df for df in dfs if df is not None]
+        if dfs:
+            return pd.concat(dfs, ignore_index=True)
         return None
 
     @property

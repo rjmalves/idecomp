@@ -30,6 +30,7 @@ classifiers = [
 dev = [
     "pytest",
     "pytest-cov",
+    "pytest-xdist",
     "ruff",
     "mypy",
     "sphinx-rtd-theme",
@@ -51,6 +52,10 @@ path = "idecomp/__init__.py"
 include = [
   "idecomp/",
 ]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["ignore::DeprecationWarning"]
 
 [tool.ruff]
 line-length = 80

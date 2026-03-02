@@ -15,7 +15,12 @@ class SecaoDadosMapcut(Section):
 
     REGISTER_SIZE = 48020
 
-    def __init__(self, previous: Optional[Any] = None, next: Optional[Any] = None, data: Optional[Any] = None) -> None:
+    def __init__(
+        self,
+        previous: Optional[Any] = None,
+        next: Optional[Any] = None,
+        data: Optional[Any] = None,
+    ) -> None:
         super().__init__(previous, next, data)
         self.data = {
             "dados_gerais": [],  # registro 1
@@ -350,7 +355,7 @@ class SecaoDadosMapcut(Section):
         offset = 0
         lags_tempo_vigem = []
         coef_amortecimento = []
-        df_tempo_viagem = pd.DataFrame()
+        dfs: List[pd.DataFrame] = []
 
         for u in range(self.numero_uhes_tempo_viagem):
             # Pega informações do registro de dados de tempo de viagem
@@ -386,10 +391,8 @@ class SecaoDadosMapcut(Section):
                 "indice_lag": lags_tempo_vigem,
                 "coeficiente_amortecimento": coef_amortecimento,
             }
-            df_tempo_viagem = pd.concat(
-                [df_tempo_viagem, pd.DataFrame(dados_tempo_viagem)]
-            )
-        return df_tempo_viagem.reset_index(drop=True)
+            dfs.append(pd.DataFrame(dados_tempo_viagem))
+        return pd.concat(dfs).reset_index(drop=True)
 
     @property
     def codigos_uhes_tempo_viagem(self) -> List[Any]:
@@ -405,7 +408,7 @@ class SecaoDadosMapcut(Section):
     @property
     def dados_gnl(self) -> pd.DataFrame:
         offset = 0
-        df_dados_gnl = pd.DataFrame()
+        dfs: List[pd.DataFrame] = []
         for est in range(self.numero_estagios):
             numero_utes_gnl = int(self.data["dados_gnl"][offset])
             codigos_submercados = self.data["dados_gnl"][
@@ -435,14 +438,14 @@ class SecaoDadosMapcut(Section):
                 "numero_patamares": numero_patamares,
             }
 
-            df_dados_gnl = pd.concat([df_dados_gnl, pd.DataFrame(dados)])
+            dfs.append(pd.DataFrame(dados))
 
-        return df_dados_gnl.reset_index(drop=True)
+        return pd.concat(dfs).reset_index(drop=True)
 
     @property
     def dados_custos(self) -> pd.DataFrame:
         offset = 0
-        df_custos = pd.DataFrame()
+        dfs: List[pd.DataFrame] = []
         for est in range(self.numero_estagios):
             dados_custos = {
                 "estagio": [est + 1],
@@ -464,5 +467,5 @@ class SecaoDadosMapcut(Section):
                 ],
             }
             offset = offset + 6
-            df_custos = pd.concat([df_custos, pd.DataFrame(dados_custos)])
-        return df_custos.reset_index(drop=True)
+            dfs.append(pd.DataFrame(dados_custos))
+        return pd.concat(dfs).reset_index(drop=True)

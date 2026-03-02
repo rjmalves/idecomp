@@ -42,21 +42,16 @@ class Relgnl(BlockFile):
         :return: O DataFrame com os estágios
         :rtype: pd.DataFrame
         """
-
-        col_estagio: List[int] = []
-        df = None
+        dfs = []
         for i, b in enumerate(self.data.of_type(bloco)):
             if not isinstance(b, Block):
                 continue
             df_estagio = b.data.copy()
-            col_estagio += [i + 1] * df_estagio.shape[0]
-            if df is None:
-                df = df_estagio
-            else:
-                df = pd.concat([df, df_estagio], ignore_index=True)
-        if df is not None:
-            cols = list(df.columns)
-            df["Estágio"] = col_estagio
+            df_estagio["Estágio"] = i + 1
+            dfs.append(df_estagio)
+        if dfs:
+            df = pd.concat(dfs, ignore_index=True)
+            cols = [c for c in df.columns if c != "Estágio"]
             return df[["Estágio"] + cols]
         return None
 

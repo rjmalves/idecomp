@@ -79,17 +79,15 @@ class Relato(BlockFile):
     def __concatena_blocos(
         self, blocos: Union[T, List[T]], indice_data: Optional[int] = None
     ) -> Optional[pd.DataFrame]:
-        df = None
         if not isinstance(blocos, list):
             blocos = [blocos]
-        for b in blocos:
-            df_estagio = b.data if indice_data is None else b.data[indice_data]
-            if df is None:
-                df = df_estagio
-            else:
-                df = pd.concat([df, df_estagio], ignore_index=True)
-        if df is not None:
-            return df
+        dfs = [
+            b.data if indice_data is None else b.data[indice_data]
+            for b in blocos
+        ]
+        dfs = [df for df in dfs if df is not None]
+        if dfs:
+            return pd.concat(dfs, ignore_index=True)
         return None
 
     @property
