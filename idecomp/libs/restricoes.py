@@ -1,6 +1,6 @@
-from typing import Type, TypeVar, List, Optional, Union
+from typing import Any, Type, TypeVar, List, Optional, Union
 from datetime import datetime
-import pandas as pd  # type: ignore
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 from idecomp.libs.modelos.restricoes import (
@@ -73,7 +73,7 @@ class Restricoes(RegisterFile):
     ]
 
     def __registros_ou_df(
-        self, t: Type[T], **kwargs
+        self, t: Type[T], **kwargs: Any
     ) -> Optional[Union[T, List[T], pd.DataFrame]]:
         if kwargs.get("df"):
             return self._as_df(t)

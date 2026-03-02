@@ -1,6 +1,6 @@
 {
   "plan": "idecomp-quality-performance",
-  "last_updated": "2026-03-02T19:30:00Z",
+  "last_updated": "2026-03-02T18:48:44Z",
   "progressive": true,
   "tickets": {
     "ticket-001-bump-cfinterface-dependency.md": {
@@ -99,9 +99,17 @@
       }
     },
     "ticket-007-enable-mypy-strict-libs.md": {
-      "status": "pending",
+      "status": "completed",
       "detail_level": "detailed",
       "scores": {
+        "quality": 0.90,
+        "quality_breakdown": {
+          "conformance": 1.0,
+          "scope_adherence": 1.0,
+          "lint_cleanliness": 1.0,
+          "type_safety": 1.0,
+          "test_delta": 0.0
+        },
         "readiness": 0.98,
         "readiness_breakdown": {
           "structure": 1.0,
@@ -110,10 +118,12 @@
           "dependency_clarity": 1.0,
           "atomicity": 0.8
         }
-      }
+      },
+      "workflow_step": null,
+      "agent": "python-task-automation-developer"
     },
     "ticket-008-replace-bare-type-ignores.md": {
-      "status": "pending",
+      "status": "completed",
       "detail_level": "detailed",
       "scores": {
         "readiness": 0.92,
@@ -123,13 +133,31 @@
           "boundary": 0.8,
           "dependency_clarity": 1.0,
           "atomicity": 0.6
+        },
+        "quality": 1.0,
+        "quality_breakdown": {
+          "conformance": 1.0,
+          "scope_adherence": 1.0,
+          "lint_cleanliness": 1.0,
+          "type_safety": 1.0,
+          "test_delta": 1.0
         }
-      }
+      },
+      "agent": "orchestrator",
+      "workflow_step": null
     },
     "ticket-009-implement-lazy-imports-decomp.md": {
-      "status": "pending",
+      "status": "completed",
       "detail_level": "detailed",
       "scores": {
+        "quality": 0.90,
+        "quality_breakdown": {
+          "conformance": 1.0,
+          "scope_adherence": 1.0,
+          "lint_cleanliness": 1.0,
+          "type_safety": 1.0,
+          "test_delta": 0.0
+        },
         "readiness": 1.0,
         "readiness_breakdown": {
           "structure": 1.0,
@@ -138,7 +166,9 @@
           "dependency_clarity": 1.0,
           "atomicity": 1.0
         }
-      }
+      },
+      "workflow_step": null,
+      "agent": "orchestrator"
     },
     "ticket-010-add-round-trip-tests.md": {
       "status": "pending",

@@ -1,43 +1,61 @@
-# Inclui os membros
+from typing import Any
+import importlib
 
-from .arquivos import Arquivos  # noqa
-from .avl_cortesfpha_dec import AvlCortesFpha  # noqa
-from .avl_turb_max import AvlTurbMax  # noqa
-from .caso import Caso  # noqa
-from .cortdeco import Cortdeco  # noqa
-from .custos import Custos  # noqa
-from .dadger import Dadger  # noqa
-from .dadgnl import Dadgnl  # noqa
-from .dec_avl_evap import DecAvlEvap  # noqa
-from .dec_cortes_evap import DecCortesEvap  # noqa
-from .dec_desvfpha import DecDesvFpha  # noqa
-from .dec_eco_cotajus import DecEcoCotajus  # noqa
-from .dec_eco_discr import DecEcoDiscr  # noqa
-from .dec_eco_evap import DecEcoEvap  # noqa
-from .dec_eco_qlat import DecEcoQlat  # noqa
-from .dec_estatevap import DecEstatEvap  # noqa
-from .dec_estatfpha import DecEstatFpha  # noqa
-from .dec_fcf_cortes import DecFcfCortes  # noqa
-from .dec_oper_evap import DecOperEvap  # noqa
-from .dec_oper_gnl import DecOperGnl  # noqa
-from .dec_oper_interc import DecOperInterc  # noqa
-from .dec_oper_ree import DecOperRee  # noqa
-from .dec_oper_rhesoft import DecOperRheSoft  # noqa
-from .dec_oper_sist import DecOperSist  # noqa
-from .dec_oper_usie import DecOperUsie  # noqa
-from .dec_oper_usih import DecOperUsih  # noqa
-from .dec_oper_usit import DecOperUsit  # noqa
-from .decomptim import Decomptim  # noqa
-from .eco_fpha import EcoFpha  # noqa
-from .fcfnw import Fcfnw  # noqa
-from .hidr import Hidr  # noqa
-from .inviabunic import InviabUnic  # noqa
-from .mapcut import Mapcut  # noqa
-from .oper_desvio_fpha import OperDesvioFpha  # noqa
-from .oper_disp_usih_ree import OperDispUsihRee  # noqa
-from .oper_disp_usih_subm import OperDispUsihSubm  # noqa
-from .oper_disp_usih import OperDispUsih  # noqa
-from .postos import Postos  # noqa
-from .relato import Relato  # noqa
-from .relgnl import Relgnl  # noqa
-from .vazoes import Vazoes  # noqa
+_LAZY_IMPORTS: dict[str, str] = {
+    "Arquivos": ".arquivos",
+    "AvlCortesFpha": ".avl_cortesfpha_dec",
+    "AvlTurbMax": ".avl_turb_max",
+    "Caso": ".caso",
+    "Cortdeco": ".cortdeco",
+    "Custos": ".custos",
+    "Dadger": ".dadger",
+    "Dadgnl": ".dadgnl",
+    "DecAvlEvap": ".dec_avl_evap",
+    "DecCortesEvap": ".dec_cortes_evap",
+    "DecDesvFpha": ".dec_desvfpha",
+    "DecEcoCotajus": ".dec_eco_cotajus",
+    "DecEcoDiscr": ".dec_eco_discr",
+    "DecEcoEvap": ".dec_eco_evap",
+    "DecEcoQlat": ".dec_eco_qlat",
+    "DecEstatEvap": ".dec_estatevap",
+    "DecEstatFpha": ".dec_estatfpha",
+    "DecFcfCortes": ".dec_fcf_cortes",
+    "DecOperEvap": ".dec_oper_evap",
+    "DecOperGnl": ".dec_oper_gnl",
+    "DecOperInterc": ".dec_oper_interc",
+    "DecOperRee": ".dec_oper_ree",
+    "DecOperRheSoft": ".dec_oper_rhesoft",
+    "DecOperSist": ".dec_oper_sist",
+    "DecOperUsie": ".dec_oper_usie",
+    "DecOperUsih": ".dec_oper_usih",
+    "DecOperUsit": ".dec_oper_usit",
+    "Decomptim": ".decomptim",
+    "EcoFpha": ".eco_fpha",
+    "Fcfnw": ".fcfnw",
+    "Hidr": ".hidr",
+    "InviabUnic": ".inviabunic",
+    "Mapcut": ".mapcut",
+    "OperDesvioFpha": ".oper_desvio_fpha",
+    "OperDispUsihRee": ".oper_disp_usih_ree",
+    "OperDispUsihSubm": ".oper_disp_usih_subm",
+    "OperDispUsih": ".oper_disp_usih",
+    "Postos": ".postos",
+    "Relato": ".relato",
+    "Relgnl": ".relgnl",
+    "Vazoes": ".vazoes",
+}
+
+__all__ = sorted(_LAZY_IMPORTS.keys())
+
+
+def __getattr__(name: str) -> Any:
+    if name in _LAZY_IMPORTS:
+        module = importlib.import_module(_LAZY_IMPORTS[name], __name__)
+        value = getattr(module, name)
+        globals()[name] = value
+        return value
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__() -> list[str]:
+    return __all__

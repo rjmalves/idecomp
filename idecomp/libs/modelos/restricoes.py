@@ -40,7 +40,7 @@ class RegistroRestricaoEletricaHorizontePeriodo(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -54,7 +54,7 @@ class RegistroRestricaoEletricaHorizontePeriodo(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -68,7 +68,7 @@ class RegistroRestricaoEletricaHorizontePeriodo(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, n: int):
+    def estagio_fim(self, n: int) -> None:
         self.data[2] = n
 
 
@@ -103,7 +103,7 @@ class RegistroRestricaoEletricaHorizonteData(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -117,7 +117,7 @@ class RegistroRestricaoEletricaHorizonteData(Register):
         return self.data[1]
 
     @data_inicio.setter
-    def data_inicio(self, c: datetime):
+    def data_inicio(self, c: datetime) -> None:
         self.data[1] = c
 
     @property
@@ -131,7 +131,7 @@ class RegistroRestricaoEletricaHorizonteData(Register):
         return self.data[2]
 
     @data_fim.setter
-    def data_fim(self, n: datetime):
+    def data_fim(self, n: datetime) -> None:
         self.data[2] = n
 
 
@@ -164,7 +164,7 @@ class RegistroRestricaoEletricaFormula(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -178,7 +178,7 @@ class RegistroRestricaoEletricaFormula(Register):
         return self.data[1]
 
     @formula.setter
-    def formula(self, n: str):
+    def formula(self, n: str) -> None:
         self.data[1] = n
 
 
@@ -215,7 +215,7 @@ class RegistroRestricaoEletricaFormulaPeriodoPatamar(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -229,7 +229,7 @@ class RegistroRestricaoEletricaFormulaPeriodoPatamar(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -243,7 +243,7 @@ class RegistroRestricaoEletricaFormulaPeriodoPatamar(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, c: int):
+    def estagio_fim(self, c: int) -> None:
         self.data[2] = c
 
     @property
@@ -257,7 +257,7 @@ class RegistroRestricaoEletricaFormulaPeriodoPatamar(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, c: int):
+    def patamar(self, c: int) -> None:
         self.data[3] = c
 
     @property
@@ -271,7 +271,7 @@ class RegistroRestricaoEletricaFormulaPeriodoPatamar(Register):
         return self.data[4]
 
     @formula.setter
-    def formula(self, n: str):
+    def formula(self, n: str) -> None:
         self.data[4] = n
 
 
@@ -308,7 +308,7 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -322,7 +322,7 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
         return self.data[1]
 
     @data_inicio.setter
-    def data_inicio(self, c: datetime):
+    def data_inicio(self, c: datetime) -> None:
         self.data[1] = c
 
     @property
@@ -336,7 +336,7 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
         return self.data[2]
 
     @data_fim.setter
-    def data_fim(self, c: datetime):
+    def data_fim(self, c: datetime) -> None:
         self.data[2] = c
 
     @property
@@ -350,7 +350,7 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, c: int):
+    def patamar(self, c: int) -> None:
         self.data[3] = c
 
     @property
@@ -364,7 +364,7 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
         return self.data[4]
 
     @formula.setter
-    def formula(self, n: str):
+    def formula(self, n: str) -> None:
         self.data[4] = n
 
 
@@ -402,7 +402,7 @@ class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -416,7 +416,7 @@ class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -430,7 +430,7 @@ class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, v: int):
+    def estagio_fim(self, v: int) -> None:
         self.data[2] = v
 
     @property
@@ -444,7 +444,7 @@ class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, v: int):
+    def patamar(self, v: int) -> None:
         self.data[3] = v
 
     @property
@@ -458,7 +458,7 @@ class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
         return self.data[4]
 
     @limite_inferior.setter
-    def limite_inferior(self, v: str):
+    def limite_inferior(self, v: str) -> None:
         self.data[4] = v
 
     @property
@@ -472,7 +472,7 @@ class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
         return self.data[5]
 
     @limite_superior.setter
-    def limite_superior(self, v: str):
+    def limite_superior(self, v: str) -> None:
         self.data[5] = v
 
 
@@ -510,7 +510,7 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -524,7 +524,7 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
         return self.data[1]
 
     @data_inicio.setter
-    def data_inicio(self, c: datetime):
+    def data_inicio(self, c: datetime) -> None:
         self.data[1] = c
 
     @property
@@ -538,7 +538,7 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
         return self.data[2]
 
     @data_fim.setter
-    def data_fim(self, v: datetime):
+    def data_fim(self, v: datetime) -> None:
         self.data[2] = v
 
     @property
@@ -552,7 +552,7 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, v: int):
+    def patamar(self, v: int) -> None:
         self.data[3] = v
 
     @property
@@ -566,7 +566,7 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
         return self.data[4]
 
     @limite_inferior.setter
-    def limite_inferior(self, v: str):
+    def limite_inferior(self, v: str) -> None:
         self.data[4] = v
 
     @property
@@ -580,7 +580,7 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
         return self.data[5]
 
     @limite_superior.setter
-    def limite_superior(self, v: str):
+    def limite_superior(self, v: str) -> None:
         self.data[5] = v
 
 
@@ -613,7 +613,7 @@ class RegistroAliasEletrico(Register):
         return self.data[0]
 
     @codigo_alias.setter
-    def codigo_alias(self, c: int):
+    def codigo_alias(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -627,7 +627,7 @@ class RegistroAliasEletrico(Register):
         return self.data[1]
 
     @identificador_alias.setter
-    def identificador_alias(self, n: str):
+    def identificador_alias(self, n: str) -> None:
         self.data[1] = n
 
 
@@ -664,7 +664,7 @@ class RegistroAliasEletricoValorPeriodoPatamar(Register):
         return self.data[0]
 
     @codigo_alias.setter
-    def codigo_alias(self, c: int):
+    def codigo_alias(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -678,7 +678,7 @@ class RegistroAliasEletricoValorPeriodoPatamar(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -692,7 +692,7 @@ class RegistroAliasEletricoValorPeriodoPatamar(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, v: int):
+    def estagio_fim(self, v: int) -> None:
         self.data[2] = v
 
     @property
@@ -706,7 +706,7 @@ class RegistroAliasEletricoValorPeriodoPatamar(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, v: int):
+    def patamar(self, v: int) -> None:
         self.data[3] = v
 
     @property
@@ -720,7 +720,7 @@ class RegistroAliasEletricoValorPeriodoPatamar(Register):
         return self.data[4]
 
     @valor.setter
-    def valor(self, v: float):
+    def valor(self, v: float) -> None:
         self.data[4] = v
 
 
@@ -754,7 +754,7 @@ class RegistroRestricaoEletricaRegraAtivacao(Register):
         return self.data[0]
 
     @codigo_regra_ativacao.setter
-    def codigo_regra_ativacao(self, c: int):
+    def codigo_regra_ativacao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -768,7 +768,7 @@ class RegistroRestricaoEletricaRegraAtivacao(Register):
         return self.data[1]
 
     @regra_ativacao.setter
-    def regra_ativacao(self, n: str):
+    def regra_ativacao(self, n: str) -> None:
         self.data[1] = n
 
 
@@ -802,7 +802,7 @@ class RegistroRestricaoEletricaHabilita(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -816,7 +816,7 @@ class RegistroRestricaoEletricaHabilita(Register):
         return self.data[1]
 
     @codigo_regra_ativacao.setter
-    def codigo_regra_ativacao(self, n: int):
+    def codigo_regra_ativacao(self, n: int) -> None:
         self.data[1] = n
 
 
@@ -851,7 +851,7 @@ class RegistroRestricaoEletricaTratamentoViolacao(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -865,7 +865,7 @@ class RegistroRestricaoEletricaTratamentoViolacao(Register):
         return self.data[1]
 
     @tipo_violacao.setter
-    def tipo_violacao(self, n: str):
+    def tipo_violacao(self, n: str) -> None:
         self.data[1] = n
 
     @property
@@ -879,7 +879,7 @@ class RegistroRestricaoEletricaTratamentoViolacao(Register):
         return self.data[2]
 
     @custo_violacao.setter
-    def custo_violacao(self, n: float):
+    def custo_violacao(self, n: float) -> None:
         self.data[2] = n
 
 
@@ -917,7 +917,7 @@ class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -931,7 +931,7 @@ class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -945,7 +945,7 @@ class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, c: int):
+    def estagio_fim(self, c: int) -> None:
         self.data[2] = c
 
     @property
@@ -959,7 +959,7 @@ class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(Register):
         return self.data[3]
 
     @tipo_violacao.setter
-    def tipo_violacao(self, n: str):
+    def tipo_violacao(self, n: str) -> None:
         self.data[3] = n
 
     @property
@@ -973,7 +973,7 @@ class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(Register):
         return self.data[4]
 
     @custo_violacao.setter
-    def custo_violacao(self, n: float):
+    def custo_violacao(self, n: float) -> None:
         self.data[4] = n
 
 
@@ -1008,7 +1008,7 @@ class RegistroReHorizPer(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1022,7 +1022,7 @@ class RegistroReHorizPer(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -1036,7 +1036,7 @@ class RegistroReHorizPer(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, n: int):
+    def estagio_fim(self, n: int) -> None:
         self.data[2] = n
 
 
@@ -1071,7 +1071,7 @@ class RegistroReHorizData(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1085,7 +1085,7 @@ class RegistroReHorizData(Register):
         return self.data[1]
 
     @data_inicio.setter
-    def data_inicio(self, c: datetime):
+    def data_inicio(self, c: datetime) -> None:
         self.data[1] = c
 
     @property
@@ -1099,7 +1099,7 @@ class RegistroReHorizData(Register):
         return self.data[2]
 
     @data_fim.setter
-    def data_fim(self, n: datetime):
+    def data_fim(self, n: datetime) -> None:
         self.data[2] = n
 
 
@@ -1132,7 +1132,7 @@ class RegistroRe(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1146,7 +1146,7 @@ class RegistroRe(Register):
         return self.data[1]
 
     @formula.setter
-    def formula(self, n: str):
+    def formula(self, n: str) -> None:
         self.data[1] = n
 
 
@@ -1183,7 +1183,7 @@ class RegistroRePerPat(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1197,7 +1197,7 @@ class RegistroRePerPat(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -1211,7 +1211,7 @@ class RegistroRePerPat(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, c: int):
+    def estagio_fim(self, c: int) -> None:
         self.data[2] = c
 
     @property
@@ -1225,7 +1225,7 @@ class RegistroRePerPat(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, c: int):
+    def patamar(self, c: int) -> None:
         self.data[3] = c
 
     @property
@@ -1239,7 +1239,7 @@ class RegistroRePerPat(Register):
         return self.data[4]
 
     @formula.setter
-    def formula(self, n: str):
+    def formula(self, n: str) -> None:
         self.data[4] = n
 
 
@@ -1276,7 +1276,7 @@ class RegistroReDataPat(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1290,7 +1290,7 @@ class RegistroReDataPat(Register):
         return self.data[1]
 
     @data_inicio.setter
-    def data_inicio(self, c: datetime):
+    def data_inicio(self, c: datetime) -> None:
         self.data[1] = c
 
     @property
@@ -1304,7 +1304,7 @@ class RegistroReDataPat(Register):
         return self.data[2]
 
     @data_fim.setter
-    def data_fim(self, c: datetime):
+    def data_fim(self, c: datetime) -> None:
         self.data[2] = c
 
     @property
@@ -1318,7 +1318,7 @@ class RegistroReDataPat(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, c: int):
+    def patamar(self, c: int) -> None:
         self.data[3] = c
 
     @property
@@ -1332,7 +1332,7 @@ class RegistroReDataPat(Register):
         return self.data[4]
 
     @formula.setter
-    def formula(self, n: str):
+    def formula(self, n: str) -> None:
         self.data[4] = n
 
 
@@ -1370,7 +1370,7 @@ class RegistroReLimFormPerPat(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1384,7 +1384,7 @@ class RegistroReLimFormPerPat(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -1398,7 +1398,7 @@ class RegistroReLimFormPerPat(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, v: int):
+    def estagio_fim(self, v: int) -> None:
         self.data[2] = v
 
     @property
@@ -1412,7 +1412,7 @@ class RegistroReLimFormPerPat(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, v: int):
+    def patamar(self, v: int) -> None:
         self.data[3] = v
 
     @property
@@ -1426,7 +1426,7 @@ class RegistroReLimFormPerPat(Register):
         return self.data[4]
 
     @limite_inferior.setter
-    def limite_inferior(self, v: str):
+    def limite_inferior(self, v: str) -> None:
         self.data[4] = v
 
     @property
@@ -1440,7 +1440,7 @@ class RegistroReLimFormPerPat(Register):
         return self.data[5]
 
     @limite_superior.setter
-    def limite_superior(self, v: str):
+    def limite_superior(self, v: str) -> None:
         self.data[5] = v
 
 
@@ -1478,7 +1478,7 @@ class RegistroReLimFormDataPat(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1492,7 +1492,7 @@ class RegistroReLimFormDataPat(Register):
         return self.data[1]
 
     @data_inicio.setter
-    def data_inicio(self, c: datetime):
+    def data_inicio(self, c: datetime) -> None:
         self.data[1] = c
 
     @property
@@ -1506,7 +1506,7 @@ class RegistroReLimFormDataPat(Register):
         return self.data[2]
 
     @data_fim.setter
-    def data_fim(self, v: datetime):
+    def data_fim(self, v: datetime) -> None:
         self.data[2] = v
 
     @property
@@ -1520,7 +1520,7 @@ class RegistroReLimFormDataPat(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, v: int):
+    def patamar(self, v: int) -> None:
         self.data[3] = v
 
     @property
@@ -1534,7 +1534,7 @@ class RegistroReLimFormDataPat(Register):
         return self.data[4]
 
     @limite_inferior.setter
-    def limite_inferior(self, v: str):
+    def limite_inferior(self, v: str) -> None:
         self.data[4] = v
 
     @property
@@ -1548,7 +1548,7 @@ class RegistroReLimFormDataPat(Register):
         return self.data[5]
 
     @limite_superior.setter
-    def limite_superior(self, v: str):
+    def limite_superior(self, v: str) -> None:
         self.data[5] = v
 
 
@@ -1581,7 +1581,7 @@ class RegistroAliasElet(Register):
         return self.data[0]
 
     @codigo_alias.setter
-    def codigo_alias(self, c: int):
+    def codigo_alias(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1595,7 +1595,7 @@ class RegistroAliasElet(Register):
         return self.data[1]
 
     @identificador_alias.setter
-    def identificador_alias(self, n: str):
+    def identificador_alias(self, n: str) -> None:
         self.data[1] = n
 
 
@@ -1632,7 +1632,7 @@ class RegistroAliasEletValPerPat(Register):
         return self.data[0]
 
     @codigo_alias.setter
-    def codigo_alias(self, c: int):
+    def codigo_alias(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1646,7 +1646,7 @@ class RegistroAliasEletValPerPat(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -1660,7 +1660,7 @@ class RegistroAliasEletValPerPat(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, v: int):
+    def estagio_fim(self, v: int) -> None:
         self.data[2] = v
 
     @property
@@ -1674,7 +1674,7 @@ class RegistroAliasEletValPerPat(Register):
         return self.data[3]
 
     @patamar.setter
-    def patamar(self, v: int):
+    def patamar(self, v: int) -> None:
         self.data[3] = v
 
     @property
@@ -1688,7 +1688,7 @@ class RegistroAliasEletValPerPat(Register):
         return self.data[4]
 
     @valor.setter
-    def valor(self, v: float):
+    def valor(self, v: float) -> None:
         self.data[4] = v
 
 
@@ -1722,7 +1722,7 @@ class RegistroReRegraAtiva(Register):
         return self.data[0]
 
     @codigo_regra_ativacao.setter
-    def codigo_regra_ativacao(self, c: int):
+    def codigo_regra_ativacao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1736,7 +1736,7 @@ class RegistroReRegraAtiva(Register):
         return self.data[1]
 
     @regra_ativacao.setter
-    def regra_ativacao(self, n: str):
+    def regra_ativacao(self, n: str) -> None:
         self.data[1] = n
 
 
@@ -1770,7 +1770,7 @@ class RegistroReHabilita(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1784,7 +1784,7 @@ class RegistroReHabilita(Register):
         return self.data[1]
 
     @codigo_regra_ativacao.setter
-    def codigo_regra_ativacao(self, n: int):
+    def codigo_regra_ativacao(self, n: int) -> None:
         self.data[1] = n
 
 
@@ -1819,7 +1819,7 @@ class RegistroReTratViol(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1833,7 +1833,7 @@ class RegistroReTratViol(Register):
         return self.data[1]
 
     @tipo_violacao.setter
-    def tipo_violacao(self, n: str):
+    def tipo_violacao(self, n: str) -> None:
         self.data[1] = n
 
     @property
@@ -1847,7 +1847,7 @@ class RegistroReTratViol(Register):
         return self.data[2]
 
     @custo_violacao.setter
-    def custo_violacao(self, n: float):
+    def custo_violacao(self, n: float) -> None:
         self.data[2] = n
 
 
@@ -1885,7 +1885,7 @@ class RegistroReTratViolPer(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -1899,7 +1899,7 @@ class RegistroReTratViolPer(Register):
         return self.data[1]
 
     @estagio_inicio.setter
-    def estagio_inicio(self, c: int):
+    def estagio_inicio(self, c: int) -> None:
         self.data[1] = c
 
     @property
@@ -1913,7 +1913,7 @@ class RegistroReTratViolPer(Register):
         return self.data[2]
 
     @estagio_fim.setter
-    def estagio_fim(self, c: int):
+    def estagio_fim(self, c: int) -> None:
         self.data[2] = c
 
     @property
@@ -1927,7 +1927,7 @@ class RegistroReTratViolPer(Register):
         return self.data[3]
 
     @tipo_violacao.setter
-    def tipo_violacao(self, n: str):
+    def tipo_violacao(self, n: str) -> None:
         self.data[3] = n
 
     @property
@@ -1941,5 +1941,5 @@ class RegistroReTratViolPer(Register):
         return self.data[4]
 
     @custo_violacao.setter
-    def custo_violacao(self, n: float):
+    def custo_violacao(self, n: float) -> None:
         self.data[4] = n
