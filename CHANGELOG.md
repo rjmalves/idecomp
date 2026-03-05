@@ -1,6 +1,10 @@
+# v1.8.2
+
+- Dependência cfinterface fixada em `>=1.8,<=1.8.3` para compatibilidade com a versão atual
+
 # v1.8.1
 
-- Aumento nas capacidade máximas de estágios (25) e subsistemas (15) para processamento 
+- Aumento nas capacidade máximas de estágios (25) e subsistemas (15) para processamento
 
 # v1.8.0
 
