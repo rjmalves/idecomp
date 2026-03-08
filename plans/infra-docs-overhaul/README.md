@@ -21,24 +21,24 @@ Modernize the idecomp Python package infrastructure, CI/CD pipelines, documentat
 
 ## Progress
 
-| Ticket     | Title                                                    | Epic    | Status    | Detail Level | Readiness | Quality | Badge     |
-| ---------- | -------------------------------------------------------- | ------- | --------- | ------------ | --------- | ------- | --------- |
-| ticket-001 | Modernize pyproject.toml Metadata and Dependency Groups  | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT |
-| ticket-002 | Restructure CI Workflow into Parallel Jobs               | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT |
-| ticket-003 | Migrate Docs Deployment to Official GitHub Pages Actions | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT |
-| ticket-004 | Create Tag-Triggered Release Workflow                    | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT |
-| ticket-005 | Add Pre-commit Hooks Configuration                       | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT |
-| ticket-006 | Migrate Sphinx Theme to Furo                             | epic-02 | pending   | Detailed     | 1.00      | --      | --        |
-| ticket-007 | Update Sphinx-Gallery Examples for Furo Compatibility    | epic-02 | pending   | Detailed     | 0.94      | --      | --        |
-| ticket-008 | Create Architecture Documentation Page                   | epic-03 | pending   | Outline      | --        | --      | --        |
-| ticket-009 | Create FAQ Documentation Page                            | epic-03 | pending   | Outline      | --        | --      | --        |
-| ticket-010 | Create Performance Guide Page                            | epic-03 | pending   | Outline      | --        | --      | --        |
-| ticket-011 | Improve API Reference with Autosummary Blocks            | epic-03 | pending   | Outline      | --        | --      | --        |
-| ticket-012 | Update index.rst Toctree with Guias Section              | epic-03 | pending   | Outline      | --        | --      | --        |
-| ticket-013 | Expand README with Badges and Sections                   | epic-04 | pending   | Outline      | --        | --      | --        |
-| ticket-014 | Create CONTRIBUTING.md                                   | epic-04 | pending   | Outline      | --        | --      | --        |
-| ticket-015 | Reformat CHANGELOG to Keep a Changelog Standard          | epic-04 | pending   | Outline      | --        | --      | --        |
-| ticket-016 | Update Installation Documentation                        | epic-04 | pending   | Outline      | --        | --      | --        |
+| Ticket     | Title                                                    | Epic    | Status    | Detail Level | Readiness | Quality | Badge      |
+| ---------- | -------------------------------------------------------- | ------- | --------- | ------------ | --------- | ------- | ---------- |
+| ticket-001 | Modernize pyproject.toml Metadata and Dependency Groups  | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT  |
+| ticket-002 | Restructure CI Workflow into Parallel Jobs               | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT  |
+| ticket-003 | Migrate Docs Deployment to Official GitHub Pages Actions | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT  |
+| ticket-004 | Create Tag-Triggered Release Workflow                    | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT  |
+| ticket-005 | Add Pre-commit Hooks Configuration                       | epic-01 | completed | Detailed     | 1.00      | 1.00    | EXCELLENT  |
+| ticket-006 | Migrate Sphinx Theme to Furo                             | epic-02 | completed | Detailed     | 1.00      | 0.85    | ACCEPTABLE |
+| ticket-007 | Update Sphinx-Gallery Examples for Furo Compatibility    | epic-02 | completed | Detailed     | 0.94      | 1.00    | EXCELLENT  |
+| ticket-008 | Create Architecture Documentation Page                   | epic-03 | pending   | Outline      | --        | --      | --         |
+| ticket-009 | Create FAQ Documentation Page                            | epic-03 | pending   | Outline      | --        | --      | --         |
+| ticket-010 | Create Performance Guide Page                            | epic-03 | pending   | Outline      | --        | --      | --         |
+| ticket-011 | Improve API Reference with Autosummary Blocks            | epic-03 | pending   | Outline      | --        | --      | --         |
+| ticket-012 | Update index.rst Toctree with Guias Section              | epic-03 | pending   | Outline      | --        | --      | --         |
+| ticket-013 | Expand README with Badges and Sections                   | epic-04 | pending   | Outline      | --        | --      | --         |
+| ticket-014 | Create CONTRIBUTING.md                                   | epic-04 | pending   | Outline      | --        | --      | --         |
+| ticket-015 | Reformat CHANGELOG to Keep a Changelog Standard          | epic-04 | pending   | Outline      | --        | --      | --         |
+| ticket-016 | Update Installation Documentation                        | epic-04 | pending   | Outline      | --        | --      | --         |
 
 ## Dependency Graph
 
