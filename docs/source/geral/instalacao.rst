@@ -1,43 +1,64 @@
 Instalação
 ============
 
-O *idecomp* é compatível com versões de Python >= 3.8. 
+O *idecomp* requer Python >= 3.10.
 
-Em posse de uma instalação local de Python, é recomendado que se use um ambiente virtual para instalação de módulos de terceiros, sendo que o *idecomp* não é uma exceção.
-Para mais detalhes sobre o uso de ambientes virtuais, recomenda-se a leitura do recurso oficial de Python para ambientes virtuais: `venv <https://docs.python.org/3/library/venv.html>`_.
-
-Antes de prosseguir, é necessário verificar se está instalada a última versão do ``pip``, o gerenciador de pacotes de Python. Isso pode ser feito com, por exemplo::
-
-    $ python -m pip install ---upgrade pip
+Use um ambiente virtual para instalar dependências. Veja a documentação oficial de `venv <https://docs.python.org/3/library/venv.html>`_ para detalhes.
 
 
 Instalando a versão distribuída oficialmente
 ---------------------------------------------
 
-É possível instalar a versão distribuída oficialmente com ``pip``::
+É possível instalar a versão distribuída oficialmente com ``pip``:
 
-    $ pip install idecomp
+.. code-block:: bash
 
-Para atualizar para uma versão mais recente, basta adicionar a flag ``--upgrade``::
+    pip install idecomp
 
-    $ pip install --upgrade idecomp
+Para atualizar para uma versão mais recente, basta adicionar a flag ``--upgrade``:
 
-Para instalar uma versão específica::
+.. code-block:: bash
 
-    $ pip install --upgrade idecomp==x.y.z
+    pip install --upgrade idecomp
+
+Para instalar uma versão específica:
+
+.. code-block:: bash
+
+    pip install idecomp==x.y.z
+
+.. tip::
+
+    Se você utiliza o gerenciador de pacotes `uv <https://docs.astral.sh/uv/>`_, é possível adicionar o *idecomp* ao seu projeto com:
+
+    .. code-block:: bash
+
+        uv add idecomp
+
 
 Instalando a versão de desenvolvimento
----------------------------------------
+----------------------------------------
 
-É possível realizar a instalação desta versão fazendo o uso do `Git <https://git-scm.com/>`_. Para instalar a versão de desenvolvimento, é necessário
-primeiramente desinstalar a versão instalada (se houver), com::
+É possível realizar a instalação da versão de desenvolvimento clonando o repositório e instalando as dependências com `uv <https://docs.astral.sh/uv/>`_:
 
-    $ pip uninstall idecomp
+.. code-block:: bash
 
-Em seguida, basta fazer::
+    git clone https://github.com/rjmalves/idecomp.git
+    cd idecomp
+    uv sync --extra dev
 
-    $ pip install git+https://github.com/rjmalves/idecomp
+Também é possível instalar diretamente a partir do repositório remoto com ``pip``, sem necessidade de clonar:
 
-Também é possível selecionar um branch ou release específicos::
+.. code-block:: bash
 
-    $ pip install git+https://github.com/rjmalves/idecomp@v1.0.0
+    pip install git+https://github.com/rjmalves/idecomp
+
+
+Verificando a instalação
+--------------------------
+
+Após a instalação, verifique se o pacote está disponível:
+
+.. code-block:: bash
+
+    python -c "import idecomp; print(idecomp.__version__)"
