@@ -3,6 +3,12 @@
 LIBS
 =======
 
+.. autosummary::
+   :nosignatures:
+
+   idecomp.libs.restricoes.Restricoes
+   idecomp.libs.usinas_hidreletricas.UsinasHidreletricas
+
 .. toctree::
    :maxdepth: 2
 
