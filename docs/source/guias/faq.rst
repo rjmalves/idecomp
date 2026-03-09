@@ -12,13 +12,13 @@ Como instalo o idecomp?
 
 O *idecomp* está disponível no PyPI e pode ser instalado com o ``pip``:
 
-.. code-block:: python
+.. code-block:: bash
 
     pip install idecomp
 
 Para instalar uma versão específica:
 
-.. code-block:: python
+.. code-block:: bash
 
     pip install idecomp==1.8.2
 
@@ -28,8 +28,8 @@ de dependências.
 Qual versão do Python é compatível com o idecomp?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-O *idecomp* requer **Python 3.8 ou superior**. As versões 3.10, 3.11 e 3.12 são as
-mais testadas e recomendadas para uso em produção.
+O *idecomp* requer **Python 3.10 ou superior**. As versões 3.10, 3.11 e 3.12 são
+testadas no CI e recomendadas para uso em produção.
 
 Estou com problemas de conflito de versão com o cfinterface. O que fazer?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -39,14 +39,14 @@ que é responsável pelo mecanismo de parse dos arquivos. A versão compatível 
 ``<=1.8.3``. Caso você tenha uma versão incompatível instalada, force a reinstalação com
 a restrição correta:
 
-.. code-block:: python
+.. code-block:: bash
 
     pip install "cfinterface<=1.8.3" --force-reinstall
 
 Se o conflito persistir, crie um ambiente virtual limpo e instale o *idecomp* a partir
 do zero:
 
-.. code-block:: python
+.. code-block:: bash
 
     python -m venv .venv
     source .venv/bin/activate  # Linux/macOS

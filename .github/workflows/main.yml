@@ -73,4 +73,4 @@ jobs:
       - name: Install the project
         run: uv sync --extra docs
       - name: Sphinx build
-        run: uv run sphinx-build -M html docs/source docs/build
+        run: uv run sphinx-build -M html -W --keep-going docs/source docs/build
