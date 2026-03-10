@@ -6,6 +6,34 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.9.0] - 2026-03-10
+
+### Adicionado
+
+- Documentação de arquitetura, FAQ e guia de desempenho (pt_BR)
+- Blocos autosummary na referência de API para 41 classes do DECOMP e 2 de libs
+- Arquivo `CONTRIBUTING.md` com instruções de desenvolvimento
+- Workflow de release com publicação automática no PyPI via tag
+- Hooks de pre-commit com ruff e mypy
+- Suporte a Python 3.13 e 3.14 na matriz de CI
+
+### Modificado
+
+- Dependência cfinterface atualizada para `>=1.9.0`
+- Dependência pandas atualizada para `>=3.0.0`
+- Dependência numpy atualizada para `>=2.2.1`
+- Versão mínima de Python alterada de 3.10 para 3.11
+- Tipagem estrita mypy em todos os 97 arquivos fonte
+- Tema da documentação migrado de RTD para Furo com suporte a dark mode
+- CI reestruturado em 4 jobs paralelos (lint, typecheck, test, docs)
+- Deploy da documentação migrado para GitHub Pages oficial
+- README expandido com badges, exemplos e seções de contribuição
+- CHANGELOG reformatado para o padrão Keep a Changelog
+
+### Removido
+
+- Suporte a Python 3.10
+
 ## [1.8.2] - 2026-02-04
 
 ### Modificado
