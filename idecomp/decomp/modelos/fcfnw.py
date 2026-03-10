@@ -1,13 +1,14 @@
 # Imports do próprio módulo
 
 # Imports de módulos externos
+from typing import IO, Any
+
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.block import Block
-from cfinterface.components.line import Line
-from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.floatfield import FloatField
-import numpy as np  # type: ignore
-import pandas as pd  # type: ignore
-from typing import IO
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.line import Line
 
 
 class BlocoCortesFCF(Block):
@@ -36,7 +37,7 @@ class BlocoCortesFCF(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         def converte_tabela_em_df() -> pd.DataFrame:
             if ree:
                 colunas = ["corte", "RHS", "REE", "coef_earm"] + [
@@ -124,7 +125,7 @@ class BlocoCortesFCF(Block):
             # Confere se a leitura não acabou
             linha = file.readline()
             if len(linha) < 5:
-                tabela = tabela[:i, :]  # type: ignore
+                tabela = tabela[:i, :]
                 self.data = converte_tabela_em_df()
                 break
 

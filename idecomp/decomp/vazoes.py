@@ -1,7 +1,7 @@
-from typing import List, Optional, TypeVar
+from typing import Any, TypeVar
 
-import numpy as np  # type: ignore
-import pandas as pd  # type: ignore
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.files.sectionfile import SectionFile
 
 from idecomp.decomp.modelos.vazoes import SecaoVazoesPostos
@@ -18,26 +18,26 @@ class Vazoes(SectionFile):
     SECTIONS = [SecaoVazoesPostos]
     STORAGE = "BINARY"
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
-        self.__df_probabilidades: Optional[pd.DataFrame] = None
-        self.__df_previsoes_semanais: Optional[pd.DataFrame] = None
-        self.__df_cenarios_mensais_gerados: Optional[pd.DataFrame] = None
-        self.__df_previsoes_semanais_com_postos_artificiais: Optional[
-            pd.DataFrame
-        ] = None
-        self.__df_cenarios_mensais_calculados_com_postos_artificiais: Optional[
-            pd.DataFrame
-        ] = None
-        self.__df_observacoes_mensais: Optional[pd.DataFrame] = None
-        self.__df_observacoes_semanais: Optional[pd.DataFrame] = None
+        self.__df_probabilidades: pd.DataFrame | None = None
+        self.__df_previsoes_semanais: pd.DataFrame | None = None
+        self.__df_cenarios_mensais_gerados: pd.DataFrame | None = None
+        self.__df_previsoes_semanais_com_postos_artificiais: (
+            pd.DataFrame | None
+        ) = None
+        self.__df_cenarios_mensais_calculados_com_postos_artificiais: (
+            pd.DataFrame | None
+        ) = None
+        self.__df_observacoes_mensais: pd.DataFrame | None = None
+        self.__df_observacoes_semanais: pd.DataFrame | None = None
 
-    def __obtem_secao_vazoes(self) -> Optional[SecaoVazoesPostos]:
+    def __obtem_secao_vazoes(self) -> SecaoVazoesPostos | None:
         s = self.data.get_sections_of_type(SecaoVazoesPostos)
         return s if not isinstance(s, list) else None
 
     @property
-    def numero_aberturas_estagios(self) -> Optional[List[int]]:
+    def numero_aberturas_estagios(self) -> list[int] | None:
         """
         Obtém a lista com o número de aberturas por estágio da árvore.
 
@@ -51,13 +51,13 @@ class Vazoes(SectionFile):
             return None
 
     @numero_aberturas_estagios.setter
-    def numero_aberturas_estagios(self, a: List[int]):
+    def numero_aberturas_estagios(self, a: list[int]) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             dados.numero_aberturas_estagios = a
 
     @property
-    def probabilidades(self) -> Optional[pd.DataFrame]:
+    def probabilidades(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com as probabilidades de cada nó da árvore de cenários
         que foi gerada para o modelo.
@@ -95,14 +95,14 @@ class Vazoes(SectionFile):
         return self.__df_probabilidades
 
     @probabilidades.setter
-    def probabilidades(self, df: pd.DataFrame):
+    def probabilidades(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             dados.probabilidades_nos = df["probabilidade"].tolist()
             self.__df_probabilidades = None
 
     @property
-    def previsoes(self) -> Optional[pd.DataFrame]:
+    def previsoes(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com as vazões previstas de cada nó da árvore de
         cenários, para a etapa determinística da execução, por posto.
@@ -131,7 +131,7 @@ class Vazoes(SectionFile):
         return self.__df_previsoes_semanais
 
     @previsoes.setter
-    def previsoes(self, df: pd.DataFrame):
+    def previsoes(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -146,7 +146,7 @@ class Vazoes(SectionFile):
             self.__df_previsoes_semanais = None
 
     @property
-    def previsoes_com_postos_artificiais(self) -> Optional[pd.DataFrame]:
+    def previsoes_com_postos_artificiais(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com as vazões previstas de cada nó da árvore de
         cenários, para a etapa determinística da execução, por posto.
@@ -178,7 +178,7 @@ class Vazoes(SectionFile):
         return self.__df_previsoes_semanais_com_postos_artificiais
 
     @previsoes_com_postos_artificiais.setter
-    def previsoes_com_postos_artificiais(self, df: pd.DataFrame):
+    def previsoes_com_postos_artificiais(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -195,7 +195,7 @@ class Vazoes(SectionFile):
             self.__df_previsoes_semanais_com_postos_artificiais = None
 
     @property
-    def cenarios_gerados(self) -> Optional[pd.DataFrame]:
+    def cenarios_gerados(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com as cenários gerados de cada nó da árvore de
         cenários, para a etapa estocástica da execução, por posto.
@@ -237,7 +237,7 @@ class Vazoes(SectionFile):
         return self.__df_cenarios_mensais_gerados
 
     @cenarios_gerados.setter
-    def cenarios_gerados(self, df: pd.DataFrame):
+    def cenarios_gerados(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -250,7 +250,7 @@ class Vazoes(SectionFile):
     @property
     def cenarios_calculados_com_postos_artificiais(
         self,
-    ) -> Optional[pd.DataFrame]:
+    ) -> pd.DataFrame | None:
         """
         Obtém a tabela com as cenários gerados de cada nó da árvore de
         cenários, para a etapa estocástica da execução, por posto.
@@ -293,7 +293,9 @@ class Vazoes(SectionFile):
         return self.__df_cenarios_mensais_calculados_com_postos_artificiais
 
     @cenarios_calculados_com_postos_artificiais.setter
-    def cenarios_calculados_com_postos_artificiais(self, df: pd.DataFrame):
+    def cenarios_calculados_com_postos_artificiais(
+        self, df: pd.DataFrame
+    ) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -304,7 +306,7 @@ class Vazoes(SectionFile):
             self.__df_cenarios_mensais_calculados_com_postos_artificiais = None
 
     @property
-    def observacoes_semanais(self) -> Optional[pd.DataFrame]:
+    def observacoes_semanais(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com as observações semanais de cada nó da árvore de
         cenários, por posto.
@@ -333,7 +335,7 @@ class Vazoes(SectionFile):
         return self.__df_observacoes_semanais
 
     @observacoes_semanais.setter
-    def observacoes_semanais(self, df: pd.DataFrame):
+    def observacoes_semanais(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos
@@ -350,7 +352,7 @@ class Vazoes(SectionFile):
             self.__df_observacoes_semanais = None
 
     @property
-    def observacoes_mensais(self) -> Optional[pd.DataFrame]:
+    def observacoes_mensais(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com as observações mensais de cada nó da árvore de
         cenários, por posto.
@@ -379,7 +381,7 @@ class Vazoes(SectionFile):
         return self.__df_observacoes_mensais
 
     @observacoes_mensais.setter
-    def observacoes_mensais(self, df: pd.DataFrame):
+    def observacoes_mensais(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_vazoes()
         if dados is not None:
             n_postos = dados.numero_postos

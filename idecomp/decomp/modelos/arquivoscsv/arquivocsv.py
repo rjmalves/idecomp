@@ -1,13 +1,14 @@
+from typing import TypeVar
+
+import pandas as pd  # type: ignore
+from cfinterface.components.block import Block
+from cfinterface.files.blockfile import BlockFile
+
+from idecomp.decomp.modelos.blocos.tabelacsv import TabelaCSV, TabelaCSVLibs
 from idecomp.decomp.modelos.blocos.versaomodelo import (
     VersaoModelo,
     VersaoModeloLibs,
 )
-from idecomp.decomp.modelos.blocos.tabelacsv import TabelaCSV, TabelaCSVLibs
-
-from cfinterface.components.block import Block
-from cfinterface.files.blockfile import BlockFile
-import pandas as pd  # type: ignore
-from typing import List, Type, TypeVar, Optional
 
 
 class ArquivoCSV(BlockFile):
@@ -23,12 +24,12 @@ class ArquivoCSV(BlockFile):
     implementado para cada arquivo específico a ser lido.
     """
 
-    BLOCKS: List[Type[Block]] = [VersaoModelo]
+    BLOCKS: list[type[Block]] = [VersaoModelo]
     ENCODING = "iso-8859-1"
 
     T = TypeVar("T")
 
-    def _bloco_por_tipo(self, bloco: Type[T], indice: int) -> Optional[T]:
+    def _bloco_por_tipo(self, bloco: type[T], indice: int) -> T | None:
         """
         Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
 
@@ -41,15 +42,13 @@ class ArquivoCSV(BlockFile):
         """
         try:
             return next(
-                b
-                for i, b in enumerate(self.data.of_type(bloco))
-                if i == indice
+                b for i, b in enumerate(self.data.of_type(bloco)) if i == indice
             )
         except StopIteration:
             return None
 
     @property
-    def versao(self) -> Optional[str]:
+    def versao(self) -> str | None:
         """
         A versão do modelo utilizada para executar o caso.
 
@@ -64,7 +63,7 @@ class ArquivoCSV(BlockFile):
             return b_libs.data
         return None
 
-    def _tabela(self) -> Optional[pd.DataFrame]:
+    def _tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 

@@ -1,6 +1,6 @@
-from typing import IO, List
+from typing import IO, Any
 
-import numpy as np  # type: ignore
+import numpy as np
 from cfinterface.components.section import Section
 
 
@@ -9,11 +9,16 @@ class SecaoVazoesPostos(Section):
     Registro com os dados associados às vazões dos postos.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     TAMANHO_REGISTRO = 320
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(
+        self,
+        previous: Any = None,
+        next: Any = None,
+        data: Any = None,
+    ) -> None:
         super().__init__(previous, next, data)
         self.data = {
             "dados_gerais": [],
@@ -32,15 +37,17 @@ class SecaoVazoesPostos(Section):
         if not isinstance(o, SecaoVazoesPostos):
             return False
         bloco: SecaoVazoesPostos = o
-        if not all([
-            isinstance(self.data, dict),
-            isinstance(o.data, dict),
-        ]):
+        if not all(
+            [
+                isinstance(self.data, dict),
+                isinstance(o.data, dict),
+            ]
+        ):
             return False
         else:
             return self.data == bloco.data
 
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         # Leitura do primeiro registro (dados gerais)
         self.__le_primeiro_registro(file)
         # Leitura do segundo registro (códigos UHEs)
@@ -68,7 +75,7 @@ class SecaoVazoesPostos(Section):
         # semanais observadas)
         self.__le_decimo_registro(file)
 
-    def __le_primeiro_registro(self, file: IO):
+    def __le_primeiro_registro(self, file: IO[Any]) -> None:
         dados = np.frombuffer(
             file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
             dtype=np.int32,
@@ -76,7 +83,7 @@ class SecaoVazoesPostos(Section):
         )
         self.data["dados_gerais"] = list(dados)
 
-    def __le_segundo_registro(self, file: IO):
+    def __le_segundo_registro(self, file: IO[Any]) -> None:
         dados = np.frombuffer(
             file.read(
                 SecaoVazoesPostos.TAMANHO_REGISTRO
@@ -89,7 +96,7 @@ class SecaoVazoesPostos(Section):
         )
         self.data["codigos_uhes"] = list(dados)
 
-    def __le_terceiro_registro(self, file: IO):
+    def __le_terceiro_registro(self, file: IO[Any]) -> None:
         dados_caso = np.frombuffer(
             file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
             dtype=np.int32,
@@ -97,7 +104,7 @@ class SecaoVazoesPostos(Section):
         )
         self.data["dados_caso"] = list(dados_caso)
 
-    def __le_quarto_registro(self, file: IO):
+    def __le_quarto_registro(self, file: IO[Any]) -> None:
         dados_cenarios = np.frombuffer(
             file.read(
                 SecaoVazoesPostos.TAMANHO_REGISTRO
@@ -110,7 +117,7 @@ class SecaoVazoesPostos(Section):
         )
         self.data["dados_cenarios"] = list(dados_cenarios)
 
-    def __le_quinto_registro(self, file: IO):
+    def __le_quinto_registro(self, file: IO[Any]) -> None:
         for _ in range(self.numero_semanas_completas):
             dados_cenarios = np.frombuffer(
                 file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
@@ -119,7 +126,7 @@ class SecaoVazoesPostos(Section):
             )
             self.data["previsoes"] += list(dados_cenarios)
 
-    def __le_sexto_registro(self, file: IO):
+    def __le_sexto_registro(self, file: IO[Any]) -> None:
         for _ in range(self.numero_cenarios_estocasticos):
             dados_cenarios = np.frombuffer(
                 file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
@@ -128,7 +135,7 @@ class SecaoVazoesPostos(Section):
             )
             self.data["cenarios_gerados"] += list(dados_cenarios)
 
-    def __le_setimo_registro(self, file: IO):
+    def __le_setimo_registro(self, file: IO[Any]) -> None:
         for _ in range(self.numero_semanas_completas):
             dados_cenarios = np.frombuffer(
                 file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
@@ -139,7 +146,7 @@ class SecaoVazoesPostos(Section):
                 dados_cenarios
             )
 
-    def __le_oitavo_registro(self, file: IO):
+    def __le_oitavo_registro(self, file: IO[Any]) -> None:
         for _ in range(self.numero_cenarios_estocasticos):
             dados_cenarios = np.frombuffer(
                 file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
@@ -150,7 +157,7 @@ class SecaoVazoesPostos(Section):
                 dados_cenarios
             )
 
-    def __le_nono_registro(self, file: IO):
+    def __le_nono_registro(self, file: IO[Any]) -> None:
         for _ in range(self.numero_meses_observados):
             dados_cenarios = np.frombuffer(
                 file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
@@ -159,7 +166,7 @@ class SecaoVazoesPostos(Section):
             )
             self.data["observacoes_mensais"] += list(dados_cenarios)
 
-    def __le_decimo_registro(self, file: IO):
+    def __le_decimo_registro(self, file: IO[Any]) -> None:
         for _ in range(self.numero_semanas_observadas):
             dados_cenarios = np.frombuffer(
                 file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
@@ -168,7 +175,7 @@ class SecaoVazoesPostos(Section):
             )
             self.data["observacoes_semanais"] += list(dados_cenarios)
 
-    def write(self, file: IO, *args, **kwargs):
+    def write(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         # Escrita do primeiro registro (dados gerais)
         self.__escreve_primeiro_registro(file)
         # Escrita do segundo registro (códigos UHEs)
@@ -196,20 +203,20 @@ class SecaoVazoesPostos(Section):
         # semanais observadas)
         self.__escreve_decimo_registro(file)
 
-    def __escreve_primeiro_registro(self, file: IO):
+    def __escreve_primeiro_registro(self, file: IO[Any]) -> None:
         file.write(
             np.array(self.data["dados_gerais"], dtype=np.int32).tobytes()
         )
 
-    def __escreve_segundo_registro(self, file: IO):
+    def __escreve_segundo_registro(self, file: IO[Any]) -> None:
         file.write(
             np.array(self.data["codigos_uhes"], dtype=np.int32).tobytes()
         )
 
-    def __escreve_terceiro_registro(self, file: IO):
+    def __escreve_terceiro_registro(self, file: IO[Any]) -> None:
         file.write(np.array(self.data["dados_caso"], dtype=np.int32).tobytes())
 
-    def __escreve_quarto_registro(self, file: IO):
+    def __escreve_quarto_registro(self, file: IO[Any]) -> None:
         num_entradas = len(self.data["dados_cenarios"])
         num_valores = (
             self.__numero_blocos_cenarios() * SecaoVazoesPostos.TAMANHO_REGISTRO
@@ -220,22 +227,22 @@ class SecaoVazoesPostos(Section):
             np.array(self.data["dados_cenarios"], dtype=np.float32).tobytes()
         )
 
-    def __escreve_quinto_registro(self, file: IO):
+    def __escreve_quinto_registro(self, file: IO[Any]) -> None:
         file.write(np.array(self.data["previsoes"], dtype=np.int32).tobytes())
 
-    def __escreve_sexto_registro(self, file: IO):
+    def __escreve_sexto_registro(self, file: IO[Any]) -> None:
         file.write(
             np.array(self.data["cenarios_gerados"], dtype=np.int32).tobytes()
         )
 
-    def __escreve_setimo_registro(self, file: IO):
+    def __escreve_setimo_registro(self, file: IO[Any]) -> None:
         file.write(
             np.array(
                 self.data["previsoes_com_postos_artificiais"], dtype=np.int32
             ).tobytes()
         )
 
-    def __escreve_oitavo_registro(self, file: IO):
+    def __escreve_oitavo_registro(self, file: IO[Any]) -> None:
         file.write(
             np.array(
                 self.data["cenarios_calculados_com_postos_artificiais"],
@@ -243,12 +250,12 @@ class SecaoVazoesPostos(Section):
             ).tobytes()
         )
 
-    def __escreve_nono_registro(self, file: IO):
+    def __escreve_nono_registro(self, file: IO[Any]) -> None:
         file.write(
             np.array(self.data["observacoes_mensais"], dtype=np.int32).tobytes()
         )
 
-    def __escreve_decimo_registro(self, file: IO):
+    def __escreve_decimo_registro(self, file: IO[Any]) -> None:
         file.write(
             np.array(
                 self.data["observacoes_semanais"], dtype=np.int32
@@ -279,7 +286,7 @@ class SecaoVazoesPostos(Section):
         return self.data["dados_gerais"][0]
 
     @numero_uhes.setter
-    def numero_uhes(self, n: int):
+    def numero_uhes(self, n: int) -> None:
         self.data["dados_gerais"][0] = n
 
     @property
@@ -287,15 +294,15 @@ class SecaoVazoesPostos(Section):
         return self.data["dados_gerais"][1]
 
     @numero_estagios.setter
-    def numero_estagios(self, n: int):
+    def numero_estagios(self, n: int) -> None:
         self.data["dados_gerais"][1] = n
 
     @property
-    def numero_aberturas_estagios(self) -> List[int]:
+    def numero_aberturas_estagios(self) -> list[int]:
         return self.data["dados_gerais"][2 : 2 + self.numero_estagios]
 
     @numero_aberturas_estagios.setter
-    def numero_aberturas_estagios(self, n: List[int]):
+    def numero_aberturas_estagios(self, n: list[int]) -> None:
         self.data["dados_gerais"][2 : 2 + self.numero_estagios] = n
 
     @property
@@ -304,15 +311,15 @@ class SecaoVazoesPostos(Section):
         return 320 if valor_arquivo == 0 else valor_arquivo
 
     @numero_postos.setter
-    def numero_postos(self, n: int):
+    def numero_postos(self, n: int) -> None:
         self.data["dados_gerais"][2 + self.numero_estagios] = n
 
     @property
-    def codigos_uhes(self) -> List[int]:
+    def codigos_uhes(self) -> list[int]:
         return self.data["codigos_uhes"][: self.numero_uhes]
 
     @codigos_uhes.setter
-    def codigos_uhes(self, n: List[int]):
+    def codigos_uhes(self, n: list[int]) -> None:
         self.data["codigos_uhes"][: self.numero_uhes] = n
 
     @property
@@ -344,59 +351,61 @@ class SecaoVazoesPostos(Section):
         return self.data["dados_caso"][5]
 
     @property
-    def probabilidades_nos(self) -> List[float]:
+    def probabilidades_nos(self) -> list[float]:
         return self.data["dados_cenarios"][
             : sum(self.numero_aberturas_estagios)
         ]
 
     @probabilidades_nos.setter
-    def probabilidades_nos(self, probs: List[float]):
+    def probabilidades_nos(self, probs: list[float]) -> None:
         self.data["dados_cenarios"] = probs
 
     @property
-    def previsoes(self) -> List[int]:
+    def previsoes(self) -> list[int]:
         return self.data["previsoes"]
 
     @previsoes.setter
-    def previsoes(self, prevs: List[int]):
+    def previsoes(self, prevs: list[int]) -> None:
         self.data["previsoes"] = prevs
 
     @property
-    def cenarios_gerados(self) -> List[int]:
+    def cenarios_gerados(self) -> list[int]:
         return self.data["cenarios_gerados"]
 
     @cenarios_gerados.setter
-    def cenarios_gerados(self, cens: List[int]):
+    def cenarios_gerados(self, cens: list[int]) -> None:
         self.data["cenarios_gerados"] = cens
 
     @property
-    def previsoes_com_postos_artificiais(self) -> List[int]:
+    def previsoes_com_postos_artificiais(self) -> list[int]:
         return self.data["previsoes_com_postos_artificiais"]
 
     @previsoes_com_postos_artificiais.setter
-    def previsoes_com_postos_artificiais(self, prevs: List[int]):
+    def previsoes_com_postos_artificiais(self, prevs: list[int]) -> None:
         self.data["previsoes_com_postos_artificiais"] = prevs
 
     @property
-    def cenarios_calculados_com_postos_artificiais(self) -> List[int]:
+    def cenarios_calculados_com_postos_artificiais(self) -> list[int]:
         return self.data["cenarios_calculados_com_postos_artificiais"]
 
     @cenarios_calculados_com_postos_artificiais.setter
-    def cenarios_calculados_com_postos_artificiais(self, cens: List[int]):
+    def cenarios_calculados_com_postos_artificiais(
+        self, cens: list[int]
+    ) -> None:
         self.data["cenarios_calculados_com_postos_artificiais"] = cens
 
     @property
-    def observacoes_mensais(self) -> List[int]:
+    def observacoes_mensais(self) -> list[int]:
         return self.data["observacoes_mensais"]
 
     @observacoes_mensais.setter
-    def observacoes_mensais(self, obs: List[int]):
+    def observacoes_mensais(self, obs: list[int]) -> None:
         self.data["observacoes_mensais"] = obs
 
     @property
-    def observacoes_semanais(self) -> List[int]:
+    def observacoes_semanais(self) -> list[int]:
         return self.data["observacoes_semanais"]
 
     @observacoes_semanais.setter
-    def observacoes_semanais(self, obs: List[int]):
+    def observacoes_semanais(self, obs: list[int]) -> None:
         self.data["observacoes_semanais"] = obs

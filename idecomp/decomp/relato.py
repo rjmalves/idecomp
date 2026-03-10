@@ -1,35 +1,32 @@
-from idecomp.decomp.modelos.relato import BlocoREEsSubsistemas
-from idecomp.decomp.modelos.relato import BlocoUHEsREEsSubsistemas
-from idecomp.decomp.modelos.relato import BlocoConvergenciaRelato
-from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoRelato
-from idecomp.decomp.modelos.relato import BlocoRelatorioOperacaoUTERelato
-from idecomp.decomp.modelos.relato import BlocoBalancoEnergeticoRelato
-from idecomp.decomp.modelos.relato import BlocoCMORelato
-from idecomp.decomp.modelos.relato import BlocoGeracaoTermicaSubsistemaRelato
-from idecomp.decomp.modelos.relato import BlocoCustoOperacaoValorEsperadoRelato
-from idecomp.decomp.modelos.relato import BlocoENAAcoplamentoREERelato
-from idecomp.decomp.modelos.relato import BlocoVolumeUtilReservatorioRelato
-from idecomp.decomp.modelos.relato import BlocoDadosTermicasRelato
-from idecomp.decomp.modelos.relato import BlocoDisponibilidadesTermicasRelato
-from idecomp.decomp.modelos.relato import BlocoDadosMercadoRelato
-from idecomp.decomp.modelos.relato import BlocoEnergiaArmazenadaREERelato
-from idecomp.decomp.modelos.relato import (
-    BlocoEnergiaArmazenadaSubsistemaRelato,
-)  # noqa
-from idecomp.decomp.modelos.relato import BlocoENAPreEstudoMensalREERelato
-from idecomp.decomp.modelos.relato import (
-    BlocoENAPreEstudoMensalSubsistemaRelato,
-)  # noqa
-from idecomp.decomp.modelos.relato import BlocoENAPreEstudoSemanalREERelato
-from idecomp.decomp.modelos.relato import (
-    BlocoENAPreEstudoSemanalSubsistemaRelato,
-)  # noqa
-from idecomp.decomp.modelos.relato import BlocoDiasExcluidosSemanas
+from typing import Any, TypeVar
 
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
-from typing import Union, List, TypeVar, Optional
-import pandas as pd  # type: ignore
+
+from idecomp.decomp.modelos.relato import (
+    BlocoBalancoEnergeticoRelato,
+    BlocoCMORelato,
+    BlocoConvergenciaRelato,
+    BlocoCustoOperacaoValorEsperadoRelato,
+    BlocoDadosMercadoRelato,
+    BlocoDadosTermicasRelato,
+    BlocoDiasExcluidosSemanas,
+    BlocoDisponibilidadesTermicasRelato,
+    BlocoENAAcoplamentoREERelato,
+    BlocoENAPreEstudoMensalREERelato,
+    BlocoENAPreEstudoMensalSubsistemaRelato,
+    BlocoENAPreEstudoSemanalREERelato,
+    BlocoENAPreEstudoSemanalSubsistemaRelato,
+    BlocoEnergiaArmazenadaREERelato,
+    BlocoEnergiaArmazenadaSubsistemaRelato,
+    BlocoGeracaoTermicaSubsistemaRelato,
+    BlocoREEsSubsistemas,
+    BlocoRelatorioOperacaoRelato,
+    BlocoRelatorioOperacaoUTERelato,
+    BlocoUHEsREEsSubsistemas,
+    BlocoVolumeUtilReservatorioRelato,
+)  # noqa  # noqa  # noqa
 
 
 class Relato(BlockFile):
@@ -69,7 +66,7 @@ class Relato(BlockFile):
         BlocoDiasExcluidosSemanas,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
         self.__relatorios_operacao_ute = None
         self.__relatorios_operacao_uhe = None
@@ -77,8 +74,8 @@ class Relato(BlockFile):
         self.__balanco_energetico = None
 
     def __concatena_blocos(
-        self, blocos: Union[T, List[T]], indice_data=None
-    ) -> Optional[pd.DataFrame]:
+        self, blocos: T | list[T], indice_data: int | None = None
+    ) -> pd.DataFrame | None:
         df = None
         if not isinstance(blocos, list):
             blocos = [blocos]
@@ -93,7 +90,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def rees_submercados(self) -> Optional[pd.DataFrame]:
+    def rees_submercados(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de relação entre os REEs e os submercados do
         DECOMP existente no :class:`Relato`
@@ -113,7 +110,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def uhes_rees_submercados(self) -> Optional[pd.DataFrame]:
+    def uhes_rees_submercados(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de relação entre as UHEs, REEs e os submercados do
         DECOMP existente no :class:`Relato`
@@ -135,7 +132,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def convergencia(self) -> Optional[pd.DataFrame]:
+    def convergencia(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de convergência do DECOMP existente no
         :class:`Relato`
@@ -161,7 +158,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def relatorio_operacao_custos(self) -> Optional[pd.DataFrame]:
+    def relatorio_operacao_custos(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de operação de cada UHE por estágio do DECOMP
         existente no :class:`Relato`
@@ -186,7 +183,7 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__relatorios_operacao_custos is None:
-            blocos_custos: List[BlocoRelatorioOperacaoRelato] = []
+            blocos_custos: list[BlocoRelatorioOperacaoRelato] = []
             for b in self.data.of_type(BlocoRelatorioOperacaoRelato):
                 if b.data[0] == "GERAL":
                     blocos_custos.append(b)
@@ -196,7 +193,7 @@ class Relato(BlockFile):
         return self.__relatorios_operacao_custos
 
     @property
-    def relatorio_operacao_uhe(self) -> Optional[pd.DataFrame]:
+    def relatorio_operacao_uhe(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de operação de cada UHE por estágio do DECOMP
         existente no :class:`Relato`
@@ -230,7 +227,7 @@ class Relato(BlockFile):
         :rtype: pd.DataFrame | None
         """
         if self.__relatorios_operacao_uhe is None:
-            blocos_uhe: List[BlocoRelatorioOperacaoRelato] = []
+            blocos_uhe: list[BlocoRelatorioOperacaoRelato] = []
             for b in self.data.of_type(BlocoRelatorioOperacaoRelato):
                 if b.data[0] == "UHE":
                     blocos_uhe.append(b)
@@ -240,7 +237,7 @@ class Relato(BlockFile):
         return self.__relatorios_operacao_uhe
 
     @property
-    def relatorio_operacao_ute(self) -> Optional[pd.DataFrame]:
+    def relatorio_operacao_ute(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de operação de cada UTE por estágio do DECOMP
         existente no :class:`Relato`
@@ -268,7 +265,7 @@ class Relato(BlockFile):
         return self.__relatorios_operacao_ute
 
     @property
-    def balanco_energetico(self) -> Optional[pd.DataFrame]:
+    def balanco_energetico(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de balanço energético entre os patamares para
         cada estágio do DECOMP existente no :class:`Relato`
@@ -307,7 +304,7 @@ class Relato(BlockFile):
         return self.__balanco_energetico
 
     @property
-    def cmo_medio_submercado(self) -> Optional[pd.DataFrame]:
+    def cmo_medio_submercado(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de CMO existente no :class:`Relato`
 
@@ -327,7 +324,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def geracao_termica_submercado(self) -> Optional[pd.DataFrame]:
+    def geracao_termica_submercado(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de Geração Térmica existente no :class:`Relato`
 
@@ -346,7 +343,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def custo_operacao_valor_esperado(self) -> Optional[pd.DataFrame]:
+    def custo_operacao_valor_esperado(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de Custo de Operação existente no :class:`Relato`
 
@@ -365,7 +362,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def energia_armazenada_ree(self) -> Optional[pd.DataFrame]:
+    def energia_armazenada_ree(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de Energia Armazenada por REE (em %)
         existente no :class:`Relato`
@@ -387,7 +384,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def energia_armazenada_submercado(self) -> Optional[pd.DataFrame]:
+    def energia_armazenada_submercado(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de Energia Armazenada por Submercado (em %)
         existente no :class:`Relato`
@@ -408,7 +405,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def volume_util_reservatorios(self) -> Optional[pd.DataFrame]:
+    def volume_util_reservatorios(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de Volumes Úteis por reservatório (em %)
         existente no :class:`Relato`
@@ -430,7 +427,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def dados_termicas(self) -> Optional[pd.DataFrame]:
+    def dados_termicas(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de dados cadastrais das usinas térmicas
         existente no :class:`Relato`.
@@ -458,7 +455,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def disponibilidades_termicas(self) -> Optional[pd.DataFrame]:
+    def disponibilidades_termicas(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de disponibilidades das usinas térmicas
         existente no :class:`Relato`.
@@ -479,7 +476,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def dados_mercado(self) -> Optional[pd.DataFrame]:
+    def dados_mercado(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de dados do mercado de energia
         existente no :class:`Relato`.
@@ -501,7 +498,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def ena_acoplamento_ree(self) -> Optional[pd.DataFrame]:
+    def ena_acoplamento_ree(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de ENA para acoplamento com o longo prazo
         (em MWmed) existente no :class:`Relato`
@@ -523,7 +520,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def ena_pre_estudo_mensal_ree(self) -> Optional[pd.DataFrame]:
+    def ena_pre_estudo_mensal_ree(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de ENA Pré-Estudo Mensal por REE
         existente no :class:`Relato`
@@ -545,7 +542,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def ena_pre_estudo_mensal_submercado(self) -> Optional[pd.DataFrame]:
+    def ena_pre_estudo_mensal_submercado(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de ENA Pré-Estudo Mensal por Submercado
         existente no :class:`Relato`
@@ -569,7 +566,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def ena_pre_estudo_semanal_ree(self) -> Optional[pd.DataFrame]:
+    def ena_pre_estudo_semanal_ree(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de ENA Pré-Estudo Semanal por REE
         existente no :class:`Relato`
@@ -591,7 +588,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def ena_pre_estudo_semanal_submercado(self) -> Optional[pd.DataFrame]:
+    def ena_pre_estudo_semanal_submercado(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de ENA Pré-Estudo Semanal por Submercado
         existente no :class:`Relato`
@@ -615,7 +612,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def energia_armazenada_maxima_submercado(self) -> Optional[pd.DataFrame]:
+    def energia_armazenada_maxima_submercado(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de Energia Armazenada Máxima (EARMax) em MWmes
         por submercado existente no :class:`Relato`
@@ -635,7 +632,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def dias_excluidos_semana_inicial(self) -> Optional[int]:
+    def dias_excluidos_semana_inicial(self) -> int | None:
         """
         Obtém o número de dias excluídos da semana inicial.
 
@@ -648,7 +645,7 @@ class Relato(BlockFile):
         return None
 
     @property
-    def dias_excluidos_semana_final(self) -> Optional[int]:
+    def dias_excluidos_semana_final(self) -> int | None:
         """
         Obtém o número de dias excluídos da semana final.
 

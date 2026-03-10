@@ -1,11 +1,11 @@
-from typing import IO, List, Optional
+from typing import IO, Any
 
 from cfinterface.components.floatfield import FloatField
 from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.register import Register
-from numpy import abs  # type: ignore
+from numpy import abs
 
 
 class TE(Register):
@@ -13,14 +13,14 @@ class TE(Register):
     Registro que contém a usina modificada.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "TE  "
     IDENTIFIER_DIGITS = 4
     LINE = Line([LiteralField(75, 4)])
 
     @property
-    def titulo(self) -> Optional[str]:
+    def titulo(self) -> str | None:
         """
         O único conteúdo do registro (título do estudo).
 
@@ -30,7 +30,7 @@ class TE(Register):
         return self.data[0]
 
     @titulo.setter
-    def titulo(self, t: str):
+    def titulo(self, t: str) -> None:
         self.data[0] = t
 
 
@@ -39,14 +39,14 @@ class SB(Register):
     Registro que contém o cadastro dos submercados.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "SB  "
     IDENTIFIER_DIGITS = 4
     LINE = Line([IntegerField(2, 4), LiteralField(2, 9)])
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O código de cadastro do submercado.
 
@@ -56,11 +56,11 @@ class SB(Register):
         return self.data[0]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, cod: int):
+    def codigo_submercado(self, cod: int) -> None:
         self.data[0] = cod
 
     @property
-    def nome_submercado(self) -> Optional[str]:
+    def nome_submercado(self) -> str | None:
         """
         O nome de cadastro do submercado.
 
@@ -70,7 +70,7 @@ class SB(Register):
         return self.data[1]
 
     @nome_submercado.setter
-    def nome_submercado(self, n: str):
+    def nome_submercado(self, n: str) -> None:
         self.data[1] = n
 
 
@@ -80,7 +80,7 @@ class UH(Register):
     iniciais no estudo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "UH  "
     IDENTIFIER_DIGITS = 4
@@ -100,7 +100,7 @@ class UH(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código de cadastro da UHE.
 
@@ -110,11 +110,11 @@ class UH(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, cod: int):
+    def codigo_usina(self, cod: int) -> None:
         self.data[0] = cod
 
     @property
-    def codigo_ree(self) -> Optional[int]:
+    def codigo_ree(self) -> int | None:
         """
         O REE de cadastro da UHE.
 
@@ -124,11 +124,11 @@ class UH(Register):
         return self.data[1]
 
     @codigo_ree.setter
-    def codigo_ree(self, n: int):
+    def codigo_ree(self, n: int) -> None:
         self.data[1] = n
 
     @property
-    def volume_inicial(self) -> Optional[float]:
+    def volume_inicial(self) -> float | None:
         """
         O volume inicial da UHE para o estudo.
 
@@ -138,11 +138,11 @@ class UH(Register):
         return self.data[2]
 
     @volume_inicial.setter
-    def volume_inicial(self, v: float):
+    def volume_inicial(self, v: float) -> None:
         self.data[2] = v
 
     @property
-    def vazao_defluente_minima(self) -> Optional[float]:
+    def vazao_defluente_minima(self) -> float | None:
         """
         O vazão defluente mínima da usina em m3/s.
 
@@ -152,11 +152,11 @@ class UH(Register):
         return self.data[3]
 
     @vazao_defluente_minima.setter
-    def vazao_defluente_minima(self, v: float):
+    def vazao_defluente_minima(self, v: float) -> None:
         self.data[3] = v
 
     @property
-    def evaporacao(self) -> Optional[int]:
+    def evaporacao(self) -> int | None:
         """
         A consideração ou não de evaporação para a UHE.
 
@@ -166,11 +166,11 @@ class UH(Register):
         return self.data[4]
 
     @evaporacao.setter
-    def evaporacao(self, e: int):
+    def evaporacao(self, e: int) -> None:
         self.data[4] = e
 
     @property
-    def estagio_inicio_producao(self) -> Optional[int]:
+    def estagio_inicio_producao(self) -> int | None:
         """
         Estágio a partir da qual a usina começa a produzir energia.
 
@@ -180,11 +180,11 @@ class UH(Register):
         return self.data[5]
 
     @estagio_inicio_producao.setter
-    def estagio_inicio_producao(self, e: int):
+    def estagio_inicio_producao(self, e: int) -> None:
         self.data[5] = e
 
     @property
-    def volume_morto_inicial(self) -> Optional[float]:
+    def volume_morto_inicial(self) -> float | None:
         """
         Volume morto inicial da usina.
 
@@ -194,11 +194,11 @@ class UH(Register):
         return self.data[6]
 
     @volume_morto_inicial.setter
-    def volume_morto_inicial(self, e: float):
+    def volume_morto_inicial(self, e: float) -> None:
         self.data[6] = e
 
     @property
-    def limite_superior_vertimento(self) -> Optional[float]:
+    def limite_superior_vertimento(self) -> float | None:
         """
         O limite superior para vertimento da usina.
 
@@ -208,11 +208,11 @@ class UH(Register):
         return self.data[7]
 
     @limite_superior_vertimento.setter
-    def limite_superior_vertimento(self, e: float):
+    def limite_superior_vertimento(self, e: float) -> None:
         self.data[7] = e
 
     @property
-    def balanco_hidrico_patamar(self) -> Optional[int]:
+    def balanco_hidrico_patamar(self) -> int | None:
         """
         Consideração do balanço hídrico por patamar.
 
@@ -222,11 +222,11 @@ class UH(Register):
         return self.data[8]
 
     @balanco_hidrico_patamar.setter
-    def balanco_hidrico_patamar(self, e: int):
+    def balanco_hidrico_patamar(self, e: int) -> None:
         self.data[8] = e
 
     @property
-    def configuracao_newave(self) -> Optional[str]:
+    def configuracao_newave(self) -> str | None:
         """
         Sinaliza a existência da usina na configuração
         do NEWAVE, para compatibilização.
@@ -237,7 +237,7 @@ class UH(Register):
         return self.data[9]
 
     @configuracao_newave.setter
-    def configuracao_newave(self, e: str):
+    def configuracao_newave(self, e: str) -> None:
         self.data[9] = e
 
 
@@ -248,7 +248,7 @@ class CT(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CT  "
     IDENTIFIER_DIGITS = 4
@@ -278,10 +278,10 @@ class CT(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -292,7 +292,7 @@ class CT(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código de cadastro da UTE.
 
@@ -302,11 +302,11 @@ class CT(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, codigo: int):
+    def codigo_usina(self, codigo: int) -> None:
         self.data[0] = codigo
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O submercado de cadastro da UTE.
 
@@ -316,11 +316,11 @@ class CT(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, submercado: int):
+    def codigo_submercado(self, submercado: int) -> None:
         self.data[1] = submercado
 
     @property
-    def nome_usina(self) -> Optional[str]:
+    def nome_usina(self) -> str | None:
         """
         O nome de cadastro da UTE.
 
@@ -330,11 +330,11 @@ class CT(Register):
         return self.data[2]
 
     @nome_usina.setter
-    def nome_usina(self, nome: str):
+    def nome_usina(self, nome: str) -> None:
         self.data[2] = nome
 
     @property
-    def estagio(self) -> Optional[str]:
+    def estagio(self) -> str | None:
         """
         O estágio associado às propriedades cadastradas.
 
@@ -344,11 +344,11 @@ class CT(Register):
         return self.data[3]
 
     @estagio.setter
-    def estagio(self, estagio: int):
+    def estagio(self, estagio: int) -> None:
         self.data[3] = estagio
 
     @property
-    def inflexibilidade(self) -> Optional[List[float]]:
+    def inflexibilidade(self) -> list[float] | None:
         """
         A inflexibilidade da UTE por patamar.
 
@@ -358,11 +358,11 @@ class CT(Register):
         return [v for v in self.data[4::3] if v is not None]
 
     @inflexibilidade.setter
-    def inflexibilidade(self, inflex: List[float]):
+    def inflexibilidade(self, inflex: list[float]) -> None:
         self.__atualiza_dados_lista(inflex, 4, 3)
 
     @property
-    def disponibilidade(self) -> Optional[List[float]]:
+    def disponibilidade(self) -> list[float] | None:
         """
         A disponibilidade da UTE por patamar.
 
@@ -372,11 +372,11 @@ class CT(Register):
         return [v for v in self.data[5::3] if v is not None]
 
     @disponibilidade.setter
-    def disponibilidade(self, disp: List[float]):
+    def disponibilidade(self, disp: list[float]) -> None:
         self.__atualiza_dados_lista(disp, 5, 3)
 
     @property
-    def cvu(self) -> Optional[List[float]]:
+    def cvu(self) -> list[float] | None:
         """
         O CVU da UTE por patamar.
 
@@ -386,7 +386,7 @@ class CT(Register):
         return [v for v in self.data[6::3] if v is not None]
 
     @cvu.setter
-    def cvu(self, cvu: List[float]):
+    def cvu(self, cvu: list[float]) -> None:
         self.__atualiza_dados_lista(cvu, 6, 3)
 
 
@@ -396,7 +396,7 @@ class UE(Register):
     (usinas elevatórias).
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "UE  "
     IDENTIFIER_DIGITS = 4
@@ -414,7 +414,7 @@ class UE(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código de cadastro da UE.
 
@@ -424,11 +424,11 @@ class UE(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, cod: int):
+    def codigo_usina(self, cod: int) -> None:
         self.data[0] = cod
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O submercado de cadastro da UE, conforme registro SB.
 
@@ -438,11 +438,11 @@ class UE(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, n: int):
+    def codigo_submercado(self, n: int) -> None:
         self.data[1] = n
 
     @property
-    def nome_usina(self) -> Optional[str]:
+    def nome_usina(self) -> str | None:
         """
         O nome da estação de bombeamento.
 
@@ -452,11 +452,11 @@ class UE(Register):
         return self.data[2]
 
     @nome_usina.setter
-    def nome_usina(self, v: str):
+    def nome_usina(self, v: str) -> None:
         self.data[2] = v
 
     @property
-    def codigo_usina_montante(self) -> Optional[int]:
+    def codigo_usina_montante(self) -> int | None:
         """
         O código da UHE a montante, conforme registro UH.
 
@@ -466,11 +466,11 @@ class UE(Register):
         return self.data[3]
 
     @codigo_usina_montante.setter
-    def codigo_usina_montante(self, v: int):
+    def codigo_usina_montante(self, v: int) -> None:
         self.data[3] = v
 
     @property
-    def codigo_usina_jusante(self) -> Optional[int]:
+    def codigo_usina_jusante(self) -> int | None:
         """
         O código da UHE a jusante, conforme registro UH.
 
@@ -480,11 +480,11 @@ class UE(Register):
         return self.data[4]
 
     @codigo_usina_jusante.setter
-    def codigo_usina_jusante(self, e: int):
+    def codigo_usina_jusante(self, e: int) -> None:
         self.data[4] = e
 
     @property
-    def vazao_minima_bombeavel(self) -> Optional[float]:
+    def vazao_minima_bombeavel(self) -> float | None:
         """
         A vazão mínima bombeável.
 
@@ -494,11 +494,11 @@ class UE(Register):
         return self.data[5]
 
     @vazao_minima_bombeavel.setter
-    def vazao_minima_bombeavel(self, e: float):
+    def vazao_minima_bombeavel(self, e: float) -> None:
         self.data[5] = e
 
     @property
-    def vazao_maxima_bombeavel(self) -> Optional[float]:
+    def vazao_maxima_bombeavel(self) -> float | None:
         """
         A vazão mínima bombeável.
 
@@ -508,11 +508,11 @@ class UE(Register):
         return self.data[6]
 
     @vazao_maxima_bombeavel.setter
-    def vazao_maxima_bombeavel(self, e: float):
+    def vazao_maxima_bombeavel(self, e: float) -> None:
         self.data[6] = e
 
     @property
-    def taxa_consumo(self) -> Optional[float]:
+    def taxa_consumo(self) -> float | None:
         """
         A taxa de consumo.
 
@@ -522,7 +522,7 @@ class UE(Register):
         return self.data[7]
 
     @taxa_consumo.setter
-    def taxa_consumo(self, e: float):
+    def taxa_consumo(self, e: float) -> None:
         self.data[7] = e
 
 
@@ -532,7 +532,7 @@ class DP(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "DP  "
     IDENTIFIER_DIGITS = 4
@@ -556,10 +556,10 @@ class DP(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -570,7 +570,7 @@ class DP(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado às durações especificadas.
 
@@ -580,11 +580,11 @@ class DP(Register):
         return self.data[0]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[0] = e
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O submercado associado às durações especificadas.
 
@@ -594,11 +594,11 @@ class DP(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, sub: int):
+    def codigo_submercado(self, sub: int) -> None:
         self.data[1] = sub
 
     @property
-    def numero_patamares(self) -> Optional[int]:
+    def numero_patamares(self) -> int | None:
         """
         O número de patamares.
 
@@ -608,11 +608,11 @@ class DP(Register):
         return self.data[2]
 
     @numero_patamares.setter
-    def numero_patamares(self, n: int):
+    def numero_patamares(self, n: int) -> None:
         self.data[2] = n
 
     @property
-    def carga(self) -> Optional[List[float]]:
+    def carga(self) -> list[float] | None:
         """
         A carga em Mwmed pata cada patamar de carga
 
@@ -622,11 +622,11 @@ class DP(Register):
         return [v for v in self.data[3::2] if v is not None]
 
     @carga.setter
-    def carga(self, c: List[float]):
+    def carga(self, c: list[float]) -> None:
         self.__atualiza_dados_lista(c, 3, 2)
 
     @property
-    def duracao(self) -> Optional[List[float]]:
+    def duracao(self) -> list[float] | None:
         """
         A duração de cada patamar de carga em horas
 
@@ -636,7 +636,7 @@ class DP(Register):
         return [v for v in self.data[4::2] if v is not None]
 
     @duracao.setter
-    def duracao(self, d: List[float]):
+    def duracao(self, d: list[float]) -> None:
         self.__atualiza_dados_lista(d, 4, 2)
 
 
@@ -646,7 +646,7 @@ class PQ(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "PQ  "
     IDENTIFIER_DIGITS = 4
@@ -665,10 +665,10 @@ class PQ(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -679,7 +679,7 @@ class PQ(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def nome(self) -> Optional[str]:
+    def nome(self) -> str | None:
         """
         O nome da geração.
 
@@ -689,11 +689,11 @@ class PQ(Register):
         return self.data[0]
 
     @nome.setter
-    def nome(self, nome: str):
+    def nome(self, nome: str) -> None:
         self.data[0] = nome
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O submercado associado à geração.
 
@@ -703,11 +703,11 @@ class PQ(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, sub: int):
+    def codigo_submercado(self, sub: int) -> None:
         self.data[1] = sub
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado à geração.
 
@@ -717,11 +717,11 @@ class PQ(Register):
         return self.data[2]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[2] = e
 
     @property
-    def geracao(self) -> Optional[List[float]]:
+    def geracao(self) -> list[float] | None:
         """
         A geração em Mwmed para cada patamar de carga.
 
@@ -731,7 +731,7 @@ class PQ(Register):
         return [v for v in self.data[3:8] if v is not None]
 
     @geracao.setter
-    def geracao(self, c: List[float]):
+    def geracao(self, c: list[float]) -> None:
         self.__atualiza_dados_lista(c, 3, 1)
 
 
@@ -741,7 +741,7 @@ class CD(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CD  "
     IDENTIFIER_DIGITS = 4
@@ -766,10 +766,10 @@ class CD(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -780,7 +780,7 @@ class CD(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_curva(self) -> Optional[int]:
+    def codigo_curva(self) -> int | None:
         """
         O código da curva de déficit.
 
@@ -790,11 +790,11 @@ class CD(Register):
         return self.data[0]
 
     @codigo_curva.setter
-    def codigo_curva(self, n: int):
+    def codigo_curva(self, n: int) -> None:
         self.data[0] = n
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O código do submercado associado.
 
@@ -804,11 +804,11 @@ class CD(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, s: int):
+    def codigo_submercado(self, s: int) -> None:
         self.data[1] = s
 
     @property
-    def nome_curva(self) -> Optional[str]:
+    def nome_curva(self) -> str | None:
         """
         O nome da curva de déficit
 
@@ -818,11 +818,11 @@ class CD(Register):
         return self.data[2]
 
     @nome_curva.setter
-    def nome_curva(self, n: str):
+    def nome_curva(self, n: str) -> None:
         self.data[2] = n
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio de vigência do custo de déficit
 
@@ -832,11 +832,11 @@ class CD(Register):
         return self.data[3]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[3] = e
 
     @property
-    def limite_superior(self) -> Optional[List[float]]:
+    def limite_superior(self) -> list[float] | None:
         """
         O limite superior para consideração dos custos.
 
@@ -846,11 +846,11 @@ class CD(Register):
         return [v for v in self.data[4::2] if v is not None]
 
     @limite_superior.setter
-    def limite_superior(self, lim: List[float]):
+    def limite_superior(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 4, 2)
 
     @property
-    def custo(self) -> Optional[List[float]]:
+    def custo(self) -> list[float] | None:
         """
         O custo de déficit.
 
@@ -860,7 +860,7 @@ class CD(Register):
         return [v for v in self.data[5::2] if v is not None]
 
     @custo.setter
-    def custo(self, cus: List[float]):
+    def custo(self, cus: list[float]) -> None:
         self.__atualiza_dados_lista(cus, 5, 2)
 
 
@@ -870,7 +870,7 @@ class RI(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "RI  "
     IDENTIFIER_DIGITS = 4
@@ -909,10 +909,10 @@ class RI(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -923,7 +923,7 @@ class RI(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da usina de Itaipu.
 
@@ -933,11 +933,11 @@ class RI(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, codigo: int):
+    def codigo_usina(self, codigo: int) -> None:
         self.data[0] = codigo
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O índice do estágio.
 
@@ -947,11 +947,11 @@ class RI(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, estagio: int):
+    def estagio(self, estagio: int) -> None:
         self.data[1] = estagio
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O submercado que representa o Sudeste.
 
@@ -961,11 +961,11 @@ class RI(Register):
         return self.data[2]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, submercado: int):
+    def codigo_submercado(self, submercado: int) -> None:
         self.data[2] = submercado
 
     @property
-    def geracao_minima_60_hz(self) -> Optional[List[float]]:
+    def geracao_minima_60_hz(self) -> list[float] | None:
         """
         A geração mínima de Itaipu 60 Hz.
 
@@ -975,11 +975,11 @@ class RI(Register):
         return self.data[3::5]
 
     @geracao_minima_60_hz.setter
-    def geracao_minima_60_hz(self, lim: List[float]):
+    def geracao_minima_60_hz(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 3, 5)
 
     @property
-    def geracao_maxima_60_hz(self) -> Optional[List[float]]:
+    def geracao_maxima_60_hz(self) -> list[float] | None:
         """
         A geração máxima de Itaipu 60 Hz.
 
@@ -989,11 +989,11 @@ class RI(Register):
         return self.data[4::5]
 
     @geracao_maxima_60_hz.setter
-    def geracao_maxima_60_hz(self, lim: List[float]):
+    def geracao_maxima_60_hz(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 4, 5)
 
     @property
-    def geracao_minima_50_hz(self) -> Optional[List[float]]:
+    def geracao_minima_50_hz(self) -> list[float] | None:
         """
         A geração mínima de Itaipu 50 Hz.
 
@@ -1003,11 +1003,11 @@ class RI(Register):
         return self.data[5::5]
 
     @geracao_minima_50_hz.setter
-    def geracao_minima_50_hz(self, lim: List[float]):
+    def geracao_minima_50_hz(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 5, 5)
 
     @property
-    def geracao_maxima_50_hz(self) -> Optional[List[float]]:
+    def geracao_maxima_50_hz(self) -> list[float] | None:
         """
         A geração máxima de Itaipu 50 Hz.
 
@@ -1017,11 +1017,11 @@ class RI(Register):
         return self.data[6::5]
 
     @geracao_maxima_50_hz.setter
-    def geracao_maxima_50_hz(self, lim: List[float]):
+    def geracao_maxima_50_hz(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 6, 5)
 
     @property
-    def carga_ande(self) -> Optional[List[float]]:
+    def carga_ande(self) -> list[float] | None:
         """
         A carga da ANDE.
 
@@ -1031,7 +1031,7 @@ class RI(Register):
         return self.data[7::5]
 
     @carga_ande.setter
-    def carga_ande(self, lim: List[float]):
+    def carga_ande(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 7, 5)
 
 
@@ -1041,7 +1041,7 @@ class IA(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "IA  "
     IDENTIFIER_DIGITS = 4
@@ -1065,7 +1065,7 @@ class IA(Register):
     )
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O índice do estágio.
 
@@ -1075,11 +1075,11 @@ class IA(Register):
         return self.data[0]
 
     @estagio.setter
-    def estagio(self, t: int):
+    def estagio(self, t: int) -> None:
         self.data[0] = t
 
     @property
-    def nome_submercado_de(self) -> Optional[str]:
+    def nome_submercado_de(self) -> str | None:
         """
         O nome do submercado de origem.
 
@@ -1089,11 +1089,11 @@ class IA(Register):
         return self.data[1]
 
     @nome_submercado_de.setter
-    def nome_submercado_de(self, t: str):
+    def nome_submercado_de(self, t: str) -> None:
         self.data[1] = t
 
     @property
-    def nome_submercado_para(self) -> Optional[str]:
+    def nome_submercado_para(self) -> str | None:
         """
         O nome do submercado de destino.
 
@@ -1103,7 +1103,7 @@ class IA(Register):
         return self.data[2]
 
     @nome_submercado_para.setter
-    def nome_submercado_para(self, t: str):
+    def nome_submercado_para(self, t: str) -> None:
         self.data[2] = t
 
 
@@ -1112,7 +1112,7 @@ class TX(Register):
     Registro que contém a taxa de desconto anual do modelo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "TX  "
     IDENTIFIER_DIGITS = 4
@@ -1123,7 +1123,7 @@ class TX(Register):
     )
 
     @property
-    def taxa(self) -> Optional[float]:
+    def taxa(self) -> float | None:
         """
         A taxa de desconto em % utilizada no estudo.
 
@@ -1133,7 +1133,7 @@ class TX(Register):
         return self.data[0]
 
     @taxa.setter
-    def taxa(self, t: float):
+    def taxa(self, t: float) -> None:
         self.data[0] = t
 
 
@@ -1142,7 +1142,7 @@ class GP(Register):
     Registro que contém o gap de tolerância para convergência.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "GP  "
     IDENTIFIER_DIGITS = 4
@@ -1153,7 +1153,7 @@ class GP(Register):
     )
 
     @property
-    def gap(self) -> Optional[float]:
+    def gap(self) -> float | None:
         """
         O gap considerado para convergência no estudo
 
@@ -1163,7 +1163,7 @@ class GP(Register):
         return self.data[0]
 
     @gap.setter
-    def gap(self, g: float):
+    def gap(self, g: float) -> None:
         self.data[0] = g
 
 
@@ -1172,14 +1172,14 @@ class NI(Register):
     Registro que contém o número máximo de iterações do modelo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "NI  "
     IDENTIFIER_DIGITS = 4
     LINE = Line([IntegerField(3, 4), IntegerField(1, 8)])
 
     @property
-    def iteracoes(self) -> Optional[int]:
+    def iteracoes(self) -> int | None:
         """
         O número máximo de iterações do modelo no estudo
 
@@ -1189,11 +1189,11 @@ class NI(Register):
         return self.data[0]
 
     @iteracoes.setter
-    def iteracoes(self, i: int):
+    def iteracoes(self, i: int) -> None:
         self.data[0] = i
 
     @property
-    def tipo_limite(self) -> Optional[int]:
+    def tipo_limite(self) -> int | None:
         """
         Se o número de interações fornecido é mínimo ou máximo.
 
@@ -1203,7 +1203,7 @@ class NI(Register):
         return self.data[1]
 
     @tipo_limite.setter
-    def tipo_limite(self, i: int):
+    def tipo_limite(self, i: int) -> None:
         self.data[1] = i
 
 
@@ -1212,7 +1212,7 @@ class DT(Register):
     Registro que contém a data de referência do estudo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "DT  "
     IDENTIFIER_DIGITS = 4
@@ -1225,7 +1225,7 @@ class DT(Register):
     )
 
     @property
-    def dia(self) -> Optional[int]:
+    def dia(self) -> int | None:
         """
         O dia de referência para realização do estudo
 
@@ -1235,11 +1235,11 @@ class DT(Register):
         return self.data[0]
 
     @dia.setter
-    def dia(self, d: int):
+    def dia(self, d: int) -> None:
         self.data[0] = d
 
     @property
-    def mes(self) -> Optional[int]:
+    def mes(self) -> int | None:
         """
         O mês de referência para realização do estudo
 
@@ -1249,11 +1249,11 @@ class DT(Register):
         return self.data[1]
 
     @mes.setter
-    def mes(self, m: int):
+    def mes(self, m: int) -> None:
         self.data[1] = m
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         """
         O ano de referência para realização do estudo
 
@@ -1263,7 +1263,7 @@ class DT(Register):
         return self.data[2]
 
     @ano.setter
-    def ano(self, a: int):
+    def ano(self, a: int) -> None:
         self.data[2] = a
 
 
@@ -1273,7 +1273,7 @@ class MP(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "MP  "
     IDENTIFIER_DIGITS = 4
@@ -1310,10 +1310,10 @@ class MP(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -1324,7 +1324,7 @@ class MP(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UHE associada às manutenções programadas.
 
@@ -1333,11 +1333,11 @@ class MP(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def frequencia(self) -> Optional[int]:
+    def frequencia(self) -> int | None:
         """
         A frequência quando se trata da UHE Itaipu.
 
@@ -1346,11 +1346,11 @@ class MP(Register):
         return self.data[1]
 
     @frequencia.setter
-    def frequencia(self, c: int):
+    def frequencia(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def manutencao(self) -> Optional[List[float]]:
+    def manutencao(self) -> list[float] | None:
         """
         Os fatores de manutenção programada por estágio do
         estudo. A posição na lista indica a qual estágio
@@ -1362,7 +1362,7 @@ class MP(Register):
         return [v for v in self.data[2::] if v is not None]
 
     @manutencao.setter
-    def manutencao(self, m: List[float]):
+    def manutencao(self, m: list[float]) -> None:
         self.__atualiza_dados_lista(m, 2, 1)
 
 
@@ -1372,7 +1372,7 @@ class MT(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "MT  "
     IDENTIFIER_DIGITS = 4
@@ -1409,10 +1409,10 @@ class MT(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -1423,7 +1423,7 @@ class MT(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UTE associada às manutenções programadas.
 
@@ -1432,11 +1432,11 @@ class MT(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O código do submercado ao qual a UTE pertence.
 
@@ -1445,11 +1445,11 @@ class MT(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, c: int):
+    def codigo_submercado(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def manutencao(self) -> Optional[List[float]]:
+    def manutencao(self) -> list[float] | None:
         """
         Os fatores de manutenção programada por estágio do
         estudo. A posição na lista indica a qual estágio
@@ -1461,7 +1461,7 @@ class MT(Register):
         return [v for v in self.data[2::] if v is not None]
 
     @manutencao.setter
-    def manutencao(self, m: List[float]):
+    def manutencao(self, m: list[float]) -> None:
         self.__atualiza_dados_lista(m, 2, 1)
 
 
@@ -1471,7 +1471,7 @@ class FD(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "FD  "
     IDENTIFIER_DIGITS = 4
@@ -1508,10 +1508,10 @@ class FD(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -1522,7 +1522,7 @@ class FD(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UHE associada aos fatores de disponibilidade.
 
@@ -1531,11 +1531,11 @@ class FD(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def frequencia(self) -> Optional[int]:
+    def frequencia(self) -> int | None:
         """
         A frequência quando se trata da UHE Itaipu.
 
@@ -1544,11 +1544,11 @@ class FD(Register):
         return self.data[1]
 
     @frequencia.setter
-    def frequencia(self, c: int):
+    def frequencia(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def fator(self) -> Optional[List[float]]:
+    def fator(self) -> list[float] | None:
         """
         Os fatores de disponibilidade por estágio do
         estudo. A posição na lista indica a qual estágio
@@ -1560,7 +1560,7 @@ class FD(Register):
         return [v for v in self.data[2::] if v is not None]
 
     @fator.setter
-    def fator(self, m: List[float]):
+    def fator(self, m: list[float]) -> None:
         self.__atualiza_dados_lista(m, 2, 1)
 
 
@@ -1570,7 +1570,7 @@ class VE(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "VE  "
     IDENTIFIER_DIGITS = 4
@@ -1606,10 +1606,10 @@ class VE(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -1620,7 +1620,7 @@ class VE(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da usina associada ao volume.
 
@@ -1630,11 +1630,11 @@ class VE(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def volume(self) -> Optional[List[float]]:
+    def volume(self) -> list[float] | None:
         """
         O volume de espera por estagio.
 
@@ -1644,7 +1644,7 @@ class VE(Register):
         return [v for v in self.data[1:] if v is not None]
 
     @volume.setter
-    def volume(self, cus: List[float]):
+    def volume(self, cus: list[float]) -> None:
         self.__atualiza_dados_lista(cus, 1, 1)
 
 
@@ -1653,7 +1653,7 @@ class RE(Register):
     Registro que contém os cadastros de restrições elétricas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "RE  "
     IDENTIFIER_DIGITS = 4
@@ -1666,7 +1666,7 @@ class RE(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código de cadastro para a restrição
 
@@ -1676,11 +1676,11 @@ class RE(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio_inicial(self) -> Optional[int]:
+    def estagio_inicial(self) -> int | None:
         """
         O estágio inicial para consideração da restrição
 
@@ -1690,11 +1690,11 @@ class RE(Register):
         return self.data[1]
 
     @estagio_inicial.setter
-    def estagio_inicial(self, e: int):
+    def estagio_inicial(self, e: int) -> None:
         self.data[1] = e
 
     @property
-    def estagio_final(self) -> Optional[int]:
+    def estagio_final(self) -> int | None:
         """
         O estágio final para consideração da restrição
 
@@ -1704,7 +1704,7 @@ class RE(Register):
         return self.data[2]
 
     @estagio_final.setter
-    def estagio_final(self, e: int):
+    def estagio_final(self, e: int) -> None:
         self.data[2] = e
 
 
@@ -1714,7 +1714,7 @@ class LU(Register):
 
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "LU  "
     IDENTIFIER_DIGITS = 4
@@ -1737,10 +1737,10 @@ class LU(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -1751,7 +1751,7 @@ class LU(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição RE associada aos limites
 
@@ -1761,11 +1761,11 @@ class LU(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio inicial para consideração dos limites, até
         que sejam especificados novos limites.
@@ -1776,11 +1776,11 @@ class LU(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[1] = e
 
     @property
-    def limite_inferior(self) -> Optional[List[float]]:
+    def limite_inferior(self) -> list[float] | None:
         """
         O limite inferior por patamar para a restrição elétrica
 
@@ -1790,11 +1790,11 @@ class LU(Register):
         return self.data[2::2]
 
     @limite_inferior.setter
-    def limite_inferior(self, lim: List[float]):
+    def limite_inferior(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 2, 2)
 
     @property
-    def limite_superior(self) -> Optional[List[float]]:
+    def limite_superior(self) -> list[float] | None:
         """
         O limite superior por patamar para a restrição elétrica
 
@@ -1804,7 +1804,7 @@ class LU(Register):
         return self.data[3::2]
 
     @limite_superior.setter
-    def limite_superior(self, lim: List[float]):
+    def limite_superior(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 3, 2)
 
 
@@ -1814,7 +1814,7 @@ class FU(Register):
     nas restrições elétricas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "FU  "
     IDENTIFIER_DIGITS = 4
@@ -1829,7 +1829,7 @@ class FU(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição elétrica, segundo registro RE.
 
@@ -1838,11 +1838,11 @@ class FU(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado.
 
@@ -1851,11 +1851,11 @@ class FU(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, c: int):
+    def estagio(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O número da UHE conforme registro UH.
 
@@ -1864,11 +1864,11 @@ class FU(Register):
         return self.data[2]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[2] = c
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         """
         O coeficiente de participação da usina na restrição.
 
@@ -1877,11 +1877,11 @@ class FU(Register):
         return self.data[3]
 
     @coeficiente.setter
-    def coeficiente(self, f: float):
+    def coeficiente(self, f: float) -> None:
         self.data[3] = f
 
     @property
-    def frequencia(self) -> Optional[int]:
+    def frequencia(self) -> int | None:
         """
         A frequência para restrição elétrica, valendo 50 ou 60
         para Itaipu e 0 para as demais.
@@ -1891,7 +1891,7 @@ class FU(Register):
         return self.data[4]
 
     @frequencia.setter
-    def frequencia(self, c: int):
+    def frequencia(self, c: int) -> None:
         self.data[4] = c
 
 
@@ -1901,7 +1901,7 @@ class FT(Register):
     nas restrições elétricas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "FT  "
     IDENTIFIER_DIGITS = 4
@@ -1916,7 +1916,7 @@ class FT(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição elétrica, segundo registro RE.
 
@@ -1925,11 +1925,11 @@ class FT(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado.
 
@@ -1938,11 +1938,11 @@ class FT(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, c: int):
+    def estagio(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O número da UTE conforme registro CT.
 
@@ -1951,11 +1951,11 @@ class FT(Register):
         return self.data[2]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[2] = c
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O código do submercado conforme registros CT ou TG.
 
@@ -1964,11 +1964,11 @@ class FT(Register):
         return self.data[3]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, s: int):
+    def codigo_submercado(self, s: int) -> None:
         self.data[3] = s
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         """
         O coeficiente de participação da usina na restrição.
 
@@ -1977,7 +1977,7 @@ class FT(Register):
         return self.data[4]
 
     @coeficiente.setter
-    def coeficiente(self, f: float):
+    def coeficiente(self, f: float) -> None:
         self.data[4] = f
 
 
@@ -1987,7 +1987,7 @@ class FI(Register):
     entre os subsistemas associados à restrição elétrica.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "FI  "
     IDENTIFIER_DIGITS = 4
@@ -2002,7 +2002,7 @@ class FI(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição elétrica, segundo registro RE.
 
@@ -2011,11 +2011,11 @@ class FI(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado.
 
@@ -2024,11 +2024,11 @@ class FI(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, c: int):
+    def estagio(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def codigo_submercado_de(self) -> Optional[str]:
+    def codigo_submercado_de(self) -> str | None:
         """
         O submercado de origem conforme registros SB.
 
@@ -2037,11 +2037,11 @@ class FI(Register):
         return self.data[2]
 
     @codigo_submercado_de.setter
-    def codigo_submercado_de(self, s: str):
+    def codigo_submercado_de(self, s: str) -> None:
         self.data[2] = s
 
     @property
-    def codigo_submercado_para(self) -> Optional[str]:
+    def codigo_submercado_para(self) -> str | None:
         """
         O submercado de destino conforme registros SB.
 
@@ -2050,11 +2050,11 @@ class FI(Register):
         return self.data[3]
 
     @codigo_submercado_para.setter
-    def codigo_submercado_para(self, s: str):
+    def codigo_submercado_para(self, s: str) -> None:
         self.data[3] = s
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         """
         O coeficiente de participação da interligação.
 
@@ -2063,7 +2063,7 @@ class FI(Register):
         return self.data[4]
 
     @coeficiente.setter
-    def coeficiente(self, f: float):
+    def coeficiente(self, f: float) -> None:
         self.data[4] = f
 
 
@@ -2072,7 +2072,7 @@ class VI(Register):
     Registro que contém os tempos de viagem da água entre usinas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "VI  "
     IDENTIFIER_DIGITS = 4
@@ -2094,10 +2094,10 @@ class VI(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -2108,7 +2108,7 @@ class VI(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UHE a partir do qual é contabilizado
         o tempo de viagem.
@@ -2119,11 +2119,11 @@ class VI(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def duracao(self) -> Optional[int]:
+    def duracao(self) -> int | None:
         """
         A duração da viagem da água (em horas) entre a UHE do
         código informado e sua usina à jusante segundo o hidr.
@@ -2134,11 +2134,11 @@ class VI(Register):
         return self.data[1]
 
     @duracao.setter
-    def duracao(self, d: int):
+    def duracao(self, d: int) -> None:
         self.data[1] = d
 
     @property
-    def vazao(self) -> Optional[List[float]]:
+    def vazao(self) -> list[float] | None:
         """
         As vazões defluentes das semanas passadas para a usina
         do código informado. A posição da vazão na lista indica
@@ -2150,7 +2150,7 @@ class VI(Register):
         return [v for v in self.data[2::] if v is not None]
 
     @vazao.setter
-    def vazao(self, v: List[float]):
+    def vazao(self, v: list[float]) -> None:
         self.__atualiza_dados_lista(v, 2, 1)
 
 
@@ -2160,7 +2160,7 @@ class IR(Register):
     geração de relatórios de saída.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "IR  "
     IDENTIFIER_DIGITS = 4
@@ -2174,7 +2174,7 @@ class IR(Register):
     )
 
     @property
-    def tipo(self) -> Optional[str]:
+    def tipo(self) -> str | None:
         """
         Mnemônico que contém o tipo de relatório de
         saída escolhido.
@@ -2185,7 +2185,7 @@ class IR(Register):
         return self.data[0]
 
     @tipo.setter
-    def tipo(self, t: str):
+    def tipo(self, t: str) -> None:
         self.data[0] = t
 
 
@@ -2194,7 +2194,7 @@ class CI(Register):
     Registro que define contratos de importação de energia.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CI  "
     IDENTIFIER_DIGITS = 4
@@ -2223,7 +2223,7 @@ class CE(Register):
     Registro que define contratos de exportação de energia.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CE  "
     IDENTIFIER_DIGITS = 4
@@ -2253,7 +2253,7 @@ class FC(Register):
     pelo NEWAVE.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "FC  "
     IDENTIFIER_DIGITS = 4
@@ -2265,7 +2265,7 @@ class FC(Register):
     )
 
     @property
-    def tipo(self) -> Optional[str]:
+    def tipo(self) -> str | None:
         """
         O tipo de arquivo da FCF na forma dos mnemônicos
         aceitos pelo DECOMP.
@@ -2276,7 +2276,7 @@ class FC(Register):
         return self.data[0]
 
     @property
-    def caminho(self) -> Optional[str]:
+    def caminho(self) -> str | None:
         """
         O caminho relativo ou completo para o arquivo da
         FCF.
@@ -2287,7 +2287,7 @@ class FC(Register):
         return self.data[1]
 
     @caminho.setter
-    def caminho(self, c: str):
+    def caminho(self, c: str) -> None:
         self.data[1] = c
 
 
@@ -2296,7 +2296,7 @@ class EA(Register):
     Registro que a ENA dos meses que antecedem o estudo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "EA  "
     IDENTIFIER_DIGITS = 4
@@ -2319,10 +2319,10 @@ class EA(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -2333,7 +2333,7 @@ class EA(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_ree(self) -> Optional[int]:
+    def codigo_ree(self) -> int | None:
         """
         O código do REE
 
@@ -2343,11 +2343,11 @@ class EA(Register):
         return self.data[0]
 
     @codigo_ree.setter
-    def codigo_ree(self, c: int):
+    def codigo_ree(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def ena(self) -> Optional[List[float]]:
+    def ena(self) -> list[float] | None:
         """
         A ENA passada para o REE.
 
@@ -2357,7 +2357,7 @@ class EA(Register):
         return [v for v in self.data[1::] if v is not None]
 
     @ena.setter
-    def ena(self, c: List[float]):
+    def ena(self, c: list[float]) -> None:
         self.__atualiza_dados_lista(c, 1, 1)
         self.data[1:] = c
 
@@ -2367,7 +2367,7 @@ class ES(Register):
     Registro que define a ENA das semanas que antecedem o estudo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "ES  "
     IDENTIFIER_DIGITS = 4
@@ -2385,10 +2385,10 @@ class ES(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -2399,7 +2399,7 @@ class ES(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_ree(self) -> Optional[int]:
+    def codigo_ree(self) -> int | None:
         """
         O código do REE
 
@@ -2409,11 +2409,11 @@ class ES(Register):
         return self.data[0]
 
     @codigo_ree.setter
-    def codigo_ree(self, c: int):
+    def codigo_ree(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def numero_semanas_mes_anterior(self) -> Optional[int]:
+    def numero_semanas_mes_anterior(self) -> int | None:
         """
         O número de semanas do mês anterior
 
@@ -2423,11 +2423,11 @@ class ES(Register):
         return self.data[1]
 
     @numero_semanas_mes_anterior.setter
-    def numero_semanas_mes_anterior(self, c: int):
+    def numero_semanas_mes_anterior(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def ena(self) -> Optional[List[float]]:
+    def ena(self) -> list[float] | None:
         """
         A ENA passada para o REE.
 
@@ -2437,7 +2437,7 @@ class ES(Register):
         return [v for v in self.data[2::] if v is not None]
 
     @ena.setter
-    def ena(self, c: List[float]):
+    def ena(self, c: list[float]) -> None:
         self.__atualiza_dados_lista(c, 1, 1)
         self.data[2:] = c
 
@@ -2447,7 +2447,7 @@ class QI(Register):
     Registro que define o tempo de viagem para o cálculo da ENA.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "QI  "
     IDENTIFIER_DIGITS = 4
@@ -2464,10 +2464,10 @@ class QI(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -2478,7 +2478,7 @@ class QI(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UHE.
 
@@ -2488,11 +2488,11 @@ class QI(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def vazao(self) -> Optional[List[float]]:
+    def vazao(self) -> list[float] | None:
         """
         As vazões incrementais para cálculo da ENA.
 
@@ -2502,7 +2502,7 @@ class QI(Register):
         return [v for v in self.data[1::] if v is not None]
 
     @vazao.setter
-    def vazao(self, c: List[float]):
+    def vazao(self, c: list[float]) -> None:
         self.__atualiza_dados_lista(c, 1, 1)
         self.data[1:] = c
 
@@ -2513,7 +2513,7 @@ class RT(Register):
     vertedouro e de canais de desvio.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "RT  "
     IDENTIFIER_DIGITS = 4
@@ -2524,7 +2524,7 @@ class RT(Register):
     )
 
     @property
-    def restricao(self) -> Optional[str]:
+    def restricao(self) -> str | None:
         """
         O mnemônico da restrição removida.
 
@@ -2534,7 +2534,7 @@ class RT(Register):
         return self.data[0]
 
     @restricao.setter
-    def restricao(self, m: str):
+    def restricao(self, m: str) -> None:
         self.data[0] = m
 
 
@@ -2577,10 +2577,10 @@ class TI(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -2591,7 +2591,7 @@ class TI(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UHE associada às taxas de irrigação
 
@@ -2600,11 +2600,11 @@ class TI(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def taxa(self) -> Optional[List[float]]:
+    def taxa(self) -> list[float] | None:
         """
         As taxas de irrigação por estágio do estudo. A
         posição da taxa na lista indica a qual estágio
@@ -2616,7 +2616,7 @@ class TI(Register):
         return [v for v in self.data[1::] if v is not None]
 
     @taxa.setter
-    def taxa(self, tx: List[float]):
+    def taxa(self, tx: list[float]) -> None:
         self.__atualiza_dados_lista(tx, 1, 1)
 
 
@@ -2626,7 +2626,7 @@ class DA(Register):
     (desvios de água) por UHE.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "DA  "
     IDENTIFIER_DIGITS = 4
@@ -2642,7 +2642,7 @@ class DA(Register):
     )
 
     @property
-    def codigo_usina_retirada(self) -> Optional[int]:
+    def codigo_usina_retirada(self) -> int | None:
         """
         O código da UHE a montante da qual será feita a retirada.
 
@@ -2652,11 +2652,11 @@ class DA(Register):
         return self.data[0]
 
     @codigo_usina_retirada.setter
-    def codigo_usina_retirada(self, c: int):
+    def codigo_usina_retirada(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def codigo_usina_retorno(self) -> Optional[int]:
+    def codigo_usina_retorno(self) -> int | None:
         """
         O código da UHE a montante da qual se derá o retorno.
 
@@ -2666,11 +2666,11 @@ class DA(Register):
         return self.data[1]
 
     @codigo_usina_retorno.setter
-    def codigo_usina_retorno(self, c: int):
+    def codigo_usina_retorno(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado à restrição DA.
 
@@ -2680,11 +2680,11 @@ class DA(Register):
         return self.data[2]
 
     @estagio.setter
-    def estagio(self, c: int):
+    def estagio(self, c: int) -> None:
         self.data[2] = c
 
     @property
-    def vazao_desviada(self) -> Optional[float]:
+    def vazao_desviada(self) -> float | None:
         """
         A vazão a ser desviada em m³/s.
 
@@ -2694,11 +2694,11 @@ class DA(Register):
         return self.data[3]
 
     @vazao_desviada.setter
-    def vazao_desviada(self, c: float):
+    def vazao_desviada(self, c: float) -> None:
         self.data[3] = c
 
     @property
-    def retorno_percentual(self) -> Optional[float]:
+    def retorno_percentual(self) -> float | None:
         """
         O retorno em percentual da vazão desviada.
 
@@ -2708,11 +2708,11 @@ class DA(Register):
         return self.data[4]
 
     @retorno_percentual.setter
-    def retorno_percentual(self, c: float):
+    def retorno_percentual(self, c: float) -> None:
         self.data[4] = c
 
     @property
-    def custo(self) -> Optional[float]:
+    def custo(self) -> float | None:
         """
         O custo de não antedimento do desvio em $/hm³.
 
@@ -2722,7 +2722,7 @@ class DA(Register):
         return self.data[5]
 
     @custo.setter
-    def custo(self, c: float):
+    def custo(self, c: float) -> None:
         self.data[5] = c
 
 
@@ -2732,7 +2732,7 @@ class FP(Register):
     função de produção das usinas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "FP  "
     IDENTIFIER_DIGITS = 4
@@ -2755,7 +2755,7 @@ class FP(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UHE associada à restrição FP.
 
@@ -2765,11 +2765,11 @@ class FP(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado à restrição FP.
 
@@ -2779,11 +2779,11 @@ class FP(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[1] = e
 
     @property
-    def tipo_entrada_janela_turbinamento(self) -> Optional[int]:
+    def tipo_entrada_janela_turbinamento(self) -> int | None:
         """
         O tipo de entrada da janela de turbinamento fornecido
         na restrição FP. 0 para limites em percentual da vazão turbinada
@@ -2795,11 +2795,11 @@ class FP(Register):
         return self.data[2]
 
     @tipo_entrada_janela_turbinamento.setter
-    def tipo_entrada_janela_turbinamento(self, t: int):
+    def tipo_entrada_janela_turbinamento(self, t: int) -> None:
         self.data[2] = t
 
     @property
-    def numero_pontos_turbinamento(self) -> Optional[int]:
+    def numero_pontos_turbinamento(self) -> int | None:
         """
         O número de pontos para discretização da janela de
         turbinamento. Máximo permitido de 1000 pontos.
@@ -2810,11 +2810,11 @@ class FP(Register):
         return self.data[3]
 
     @numero_pontos_turbinamento.setter
-    def numero_pontos_turbinamento(self, n: int):
+    def numero_pontos_turbinamento(self, n: int) -> None:
         self.data[3] = n
 
     @property
-    def limite_inferior_janela_turbinamento(self) -> Optional[float]:
+    def limite_inferior_janela_turbinamento(self) -> float | None:
         """
         O limite inferior da janela de turbinamento.
 
@@ -2824,11 +2824,11 @@ class FP(Register):
         return self.data[4]
 
     @limite_inferior_janela_turbinamento.setter
-    def limite_inferior_janela_turbinamento(self, lim: float):
+    def limite_inferior_janela_turbinamento(self, lim: float) -> None:
         self.data[4] = lim
 
     @property
-    def limite_superior_janela_turbinamento(self) -> Optional[float]:
+    def limite_superior_janela_turbinamento(self) -> float | None:
         """
         O limite superior da janela de turbinamento.
 
@@ -2838,11 +2838,11 @@ class FP(Register):
         return self.data[5]
 
     @limite_superior_janela_turbinamento.setter
-    def limite_superior_janela_turbinamento(self, lim: float):
+    def limite_superior_janela_turbinamento(self, lim: float) -> None:
         self.data[5] = lim
 
     @property
-    def tipo_entrada_janela_volume(self) -> Optional[int]:
+    def tipo_entrada_janela_volume(self) -> int | None:
         """
         O tipo de entrada da janela de volume fornecido
         na restrição FP. 0 para limites em percentual do volume útil
@@ -2854,11 +2854,11 @@ class FP(Register):
         return self.data[6]
 
     @tipo_entrada_janela_volume.setter
-    def tipo_entrada_janela_volume(self, t: int):
+    def tipo_entrada_janela_volume(self, t: int) -> None:
         self.data[6] = t
 
     @property
-    def numero_pontos_volume(self) -> Optional[int]:
+    def numero_pontos_volume(self) -> int | None:
         """
         O número de pontos para discretização da janela de
         volume. Máximo permitido de 1000 pontos.
@@ -2869,11 +2869,11 @@ class FP(Register):
         return self.data[7]
 
     @numero_pontos_volume.setter
-    def numero_pontos_volume(self, n: int):
+    def numero_pontos_volume(self, n: int) -> None:
         self.data[7] = n
 
     @property
-    def limite_inferior_janela_volume(self) -> Optional[float]:
+    def limite_inferior_janela_volume(self) -> float | None:
         """
         A redução aplicada ao volume útil da usina, para ser utilizado
         como limite inferior da janela de volume.
@@ -2884,11 +2884,11 @@ class FP(Register):
         return self.data[8]
 
     @limite_inferior_janela_volume.setter
-    def limite_inferior_janela_volume(self, lim: float):
+    def limite_inferior_janela_volume(self, lim: float) -> None:
         self.data[8] = lim
 
     @property
-    def limite_superior_janela_volume(self) -> Optional[float]:
+    def limite_superior_janela_volume(self) -> float | None:
         """
         O acréscimo aplicado ao volume útil da usina, para ser utilizado
         como limite superior da janela de volume.
@@ -2899,7 +2899,7 @@ class FP(Register):
         return self.data[9]
 
     @limite_superior_janela_volume.setter
-    def limite_superior_janela_volume(self, lim: float):
+    def limite_superior_janela_volume(self, lim: float) -> None:
         self.data[9] = lim
 
 
@@ -2909,7 +2909,7 @@ class RQ(Register):
     mínima histórica para cada REE.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "RQ  "
     IDENTIFIER_DIGITS = 4
@@ -2929,10 +2929,10 @@ class RQ(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -2943,7 +2943,7 @@ class RQ(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_ree(self) -> Optional[int]:
+    def codigo_ree(self) -> int | None:
         """
         O código do REE associado às vazões mínimas.
 
@@ -2953,11 +2953,11 @@ class RQ(Register):
         return self.data[0]
 
     @codigo_ree.setter
-    def codigo_ree(self, r: int):
+    def codigo_ree(self, r: int) -> None:
         self.data[0] = r
 
     @property
-    def vazao(self) -> Optional[List[float]]:
+    def vazao(self) -> list[float] | None:
         """
         As vazões defluentes mínimas (percentuais)
         para o REE, por estágio [e1, e2, e3, ...].
@@ -2968,7 +2968,7 @@ class RQ(Register):
         return [v for v in self.data[1:] if v is not None]
 
     @vazao.setter
-    def vazao(self, v: List[float]):
+    def vazao(self, v: list[float]) -> None:
         self.__atualiza_dados_lista(v, 1, 1)
         self.data[1:] = v
 
@@ -2979,7 +2979,7 @@ class EZ(Register):
     volume útil para acoplamento.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "EZ  "
     IDENTIFIER_DIGITS = 4
@@ -2991,7 +2991,7 @@ class EZ(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         Código da UHE associada, conforme registro UH.
 
@@ -3001,11 +3001,11 @@ class EZ(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def volume(self) -> Optional[float]:
+    def volume(self) -> float | None:
         """
         O volume útil considerado para cálculo.
 
@@ -3015,7 +3015,7 @@ class EZ(Register):
         return self.data[1]
 
     @volume.setter
-    def volume(self, u: float):
+    def volume(self, u: float) -> None:
         self.data[1] = u
 
 
@@ -3024,7 +3024,7 @@ class HV(Register):
     Registro que contém os cadastros de restrições de volume armazenado.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "HV  "
     IDENTIFIER_DIGITS = 4
@@ -3037,7 +3037,7 @@ class HV(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição HV.
 
@@ -3047,11 +3047,11 @@ class HV(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio_inicial(self) -> Optional[int]:
+    def estagio_inicial(self) -> int | None:
         """
         O estágio inicial de consideração da restrição HV.
 
@@ -3061,11 +3061,11 @@ class HV(Register):
         return self.data[1]
 
     @estagio_inicial.setter
-    def estagio_inicial(self, e: int):
+    def estagio_inicial(self, e: int) -> None:
         self.data[1] = e
 
     @property
-    def estagio_final(self) -> Optional[int]:
+    def estagio_final(self) -> int | None:
         """
         O estágio final de consideração da restrição HV.
 
@@ -3075,7 +3075,7 @@ class HV(Register):
         return self.data[2]
 
     @estagio_final.setter
-    def estagio_final(self, e: int):
+    def estagio_final(self, e: int) -> None:
         self.data[2] = e
 
 
@@ -3085,7 +3085,7 @@ class LV(Register):
     restrições de volume armazenado.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "LV  "
     IDENTIFIER_DIGITS = 4
@@ -3099,7 +3099,7 @@ class LV(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição HV associada aos limites
 
@@ -3109,11 +3109,11 @@ class LV(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """'
         O estágio de consideração dos limites.
 
@@ -3123,11 +3123,11 @@ class LV(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[1] = e
 
     @property
-    def limite_inferior(self) -> Optional[float]:
+    def limite_inferior(self) -> float | None:
         """
         O limite inferior para o armazenamento.
 
@@ -3137,11 +3137,11 @@ class LV(Register):
         return self.data[2]
 
     @limite_inferior.setter
-    def limite_inferior(self, lim: float):
+    def limite_inferior(self, lim: float) -> None:
         self.data[2] = lim
 
     @property
-    def limite_superior(self) -> Optional[float]:
+    def limite_superior(self) -> float | None:
         """
         O limite superior para o armazenamento.
 
@@ -3151,7 +3151,7 @@ class LV(Register):
         return self.data[3]
 
     @limite_superior.setter
-    def limite_superior(self, lim: float):
+    def limite_superior(self, lim: float) -> None:
         self.data[3] = lim
 
 
@@ -3161,7 +3161,7 @@ class CV(Register):
     nas restrições de volume armazenado.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CV  "
     IDENTIFIER_DIGITS = 4
@@ -3176,7 +3176,7 @@ class CV(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição de volume, segundo registro HV.
 
@@ -3185,11 +3185,11 @@ class CV(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado.
 
@@ -3198,11 +3198,11 @@ class CV(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, c: int):
+    def estagio(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O número da UHE ou estação de bombeamento conforme registros UH ou UE.
 
@@ -3211,11 +3211,11 @@ class CV(Register):
         return self.data[2]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[2] = c
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         """
         O coeficiente da variável na restrição.
 
@@ -3224,11 +3224,11 @@ class CV(Register):
         return self.data[3]
 
     @coeficiente.setter
-    def coeficiente(self, f: float):
+    def coeficiente(self, f: float) -> None:
         self.data[3] = f
 
     @property
-    def tipo(self) -> Optional[str]:
+    def tipo(self) -> str | None:
         """
         O mnemônico de tipo da restrição.
 
@@ -3237,7 +3237,7 @@ class CV(Register):
         return self.data[4]
 
     @tipo.setter
-    def tipo(self, t: str):
+    def tipo(self, t: str) -> None:
         self.data[4] = t
 
 
@@ -3246,7 +3246,7 @@ class HQ(Register):
     Registro que contém os cadastros de restrições de vazões.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "HQ  "
     IDENTIFIER_DIGITS = 4
@@ -3259,7 +3259,7 @@ class HQ(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição HQ.
 
@@ -3269,11 +3269,11 @@ class HQ(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio_inicial(self) -> Optional[int]:
+    def estagio_inicial(self) -> int | None:
         """
         O estágio inicial de consideração da restrição HQ.
 
@@ -3283,11 +3283,11 @@ class HQ(Register):
         return self.data[1]
 
     @estagio_inicial.setter
-    def estagio_inicial(self, e: int):
+    def estagio_inicial(self, e: int) -> None:
         self.data[1] = e
 
     @property
-    def estagio_final(self) -> Optional[int]:
+    def estagio_final(self) -> int | None:
         """
         O estágio final de consideração da restrição HQ.
 
@@ -3297,7 +3297,7 @@ class HQ(Register):
         return self.data[2]
 
     @estagio_final.setter
-    def estagio_final(self, e: int):
+    def estagio_final(self, e: int) -> None:
         self.data[2] = e
 
 
@@ -3307,7 +3307,7 @@ class LQ(Register):
     restrições de vazão.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "LQ  "
     IDENTIFIER_DIGITS = 4
@@ -3330,10 +3330,10 @@ class LQ(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -3344,7 +3344,7 @@ class LQ(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição HQ associada aos limites
 
@@ -3354,11 +3354,11 @@ class LQ(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio de consideração dos limites.
 
@@ -3368,11 +3368,11 @@ class LQ(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[1] = e
 
     @property
-    def limite_inferior(self) -> Optional[List[float]]:
+    def limite_inferior(self) -> list[float] | None:
         """
         O limite inferior por patamar para a vazão.
 
@@ -3382,11 +3382,11 @@ class LQ(Register):
         return self.data[2::2]
 
     @limite_inferior.setter
-    def limite_inferior(self, lim: List[float]):
+    def limite_inferior(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 2, 2)
 
     @property
-    def limite_superior(self) -> Optional[List[float]]:
+    def limite_superior(self) -> list[float] | None:
         """
         O limite superior por patamar para a vazão.
 
@@ -3396,7 +3396,7 @@ class LQ(Register):
         return self.data[3::2]
 
     @limite_superior.setter
-    def limite_superior(self, lim: List[float]):
+    def limite_superior(self, lim: list[float]) -> None:
         self.__atualiza_dados_lista(lim, 3, 2)
 
 
@@ -3406,7 +3406,7 @@ class CQ(Register):
     nas restrições de vazão.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CQ  "
     IDENTIFIER_DIGITS = 4
@@ -3421,7 +3421,7 @@ class CQ(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código da restrição de vazão, segundo registro HQ.
 
@@ -3430,11 +3430,11 @@ class CQ(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio associado.
 
@@ -3443,11 +3443,11 @@ class CQ(Register):
         return self.data[1]
 
     @estagio.setter
-    def estagio(self, c: int):
+    def estagio(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O número da UHE conforme registro UH.
 
@@ -3456,11 +3456,11 @@ class CQ(Register):
         return self.data[2]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[2] = c
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         """
         O coeficiente da variável na restrição.
 
@@ -3469,11 +3469,11 @@ class CQ(Register):
         return self.data[3]
 
     @coeficiente.setter
-    def coeficiente(self, f: float):
+    def coeficiente(self, f: float) -> None:
         self.data[3] = f
 
     @property
-    def tipo(self) -> Optional[str]:
+    def tipo(self) -> str | None:
         """
         O mnemônico de tipo da restrição.
 
@@ -3482,7 +3482,7 @@ class CQ(Register):
         return self.data[4]
 
     @tipo.setter
-    def tipo(self, t: str):
+    def tipo(self, t: str) -> None:
         self.data[4] = t
 
 
@@ -3491,7 +3491,7 @@ class AR(Register):
     Registro que contém as configurações de aversão a risco.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "AR  "
     IDENTIFIER_DIGITS = 4
@@ -3504,7 +3504,7 @@ class AR(Register):
     )
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio inicial de aplicação do CVaR.
 
@@ -3514,11 +3514,11 @@ class AR(Register):
         return self.data[0]
 
     @estagio.setter
-    def estagio(self, p: int):
+    def estagio(self, p: int) -> None:
         self.data[0] = p
 
     @property
-    def lamb(self) -> Optional[float]:
+    def lamb(self) -> float | None:
         """
         O valor de lambda utilizado no CVaR.
 
@@ -3528,11 +3528,11 @@ class AR(Register):
         return self.data[1]
 
     @lamb.setter
-    def lamb(self, v: float):
+    def lamb(self, v: float) -> None:
         self.data[1] = v
 
     @property
-    def alfa(self) -> Optional[float]:
+    def alfa(self) -> float | None:
         """
         O valor de alfa utilizado no CVaR.
 
@@ -3542,7 +3542,7 @@ class AR(Register):
         return self.data[2]
 
     @alfa.setter
-    def alfa(self, v: float):
+    def alfa(self, v: float) -> None:
         self.data[2] = v
 
 
@@ -3552,7 +3552,7 @@ class EV(Register):
     da evaporação.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "EV  "
     IDENTIFIER_DIGITS = 4
@@ -3564,7 +3564,7 @@ class EV(Register):
     )
 
     @property
-    def modelo(self) -> Optional[int]:
+    def modelo(self) -> int | None:
         """
         O modelo de evaporação considerado
 
@@ -3574,11 +3574,11 @@ class EV(Register):
         return self.data[0]
 
     @modelo.setter
-    def modelo(self, m: int):
+    def modelo(self, m: int) -> None:
         self.data[0] = m
 
     @property
-    def volume_referencia(self) -> Optional[str]:
+    def volume_referencia(self) -> str | None:
         """
         O mnemônico para o volume considerado
 
@@ -3588,7 +3588,7 @@ class EV(Register):
         return self.data[1]
 
     @volume_referencia.setter
-    def volume_referencia(self, v: str):
+    def volume_referencia(self, v: str) -> None:
         self.data[1] = v
 
 
@@ -3597,7 +3597,7 @@ class FJ(Register):
     Registro que contém o arquivo de polinômios de jusante.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "FJ  "
     IDENTIFIER_DIGITS = 4
@@ -3618,7 +3618,7 @@ class FJ(Register):
         return self.data[0]
 
     @arquivo.setter
-    def arquivo(self, a: str):
+    def arquivo(self, a: str) -> None:
         self.data[0] = a
 
 
@@ -3628,7 +3628,7 @@ class HE(Register):
     armazenada.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "HE  "
     IDENTIFIER_DIGITS = 4
@@ -3647,7 +3647,7 @@ class HE(Register):
     )
 
     @property
-    def codigo_restricao(self) -> Optional[int]:
+    def codigo_restricao(self) -> int | None:
         """
         O código de cadastro da restrição HE
 
@@ -3657,11 +3657,11 @@ class HE(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def tipo_limite(self) -> Optional[int]:
+    def tipo_limite(self) -> int | None:
         """
         O tipo de limite especificado na restrição HE,
         em valor absoluto ou percentual.
@@ -3672,11 +3672,11 @@ class HE(Register):
         return self.data[1]
 
     @tipo_limite.setter
-    def tipo_limite(self, t: int):
+    def tipo_limite(self, t: int) -> None:
         self.data[1] = t
 
     @property
-    def limite(self) -> Optional[float]:
+    def limite(self) -> float | None:
         """
         O limite para a energia armazenada associada
         ao registro HE.
@@ -3687,11 +3687,11 @@ class HE(Register):
         return self.data[2]
 
     @limite.setter
-    def limite(self, lim: float):
+    def limite(self, lim: float) -> None:
         self.data[2] = lim
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio para consideração da restrição.
 
@@ -3701,11 +3701,11 @@ class HE(Register):
         return self.data[3]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[3] = e
 
     @property
-    def valor_penalidade(self) -> Optional[float]:
+    def valor_penalidade(self) -> float | None:
         """
         O valor da penalidade para a violação da restrição.
 
@@ -3715,11 +3715,11 @@ class HE(Register):
         return self.data[4]
 
     @valor_penalidade.setter
-    def valor_penalidade(self, p: float):
+    def valor_penalidade(self, p: float) -> None:
         self.data[4] = p
 
     @property
-    def forma_calculo_produtibilidades(self) -> Optional[int]:
+    def forma_calculo_produtibilidades(self) -> int | None:
         """
         Flag para indicar a forma de cálculo das produtividades
         das usinas usadas nas restrição.
@@ -3730,11 +3730,11 @@ class HE(Register):
         return self.data[5]
 
     @forma_calculo_produtibilidades.setter
-    def forma_calculo_produtibilidades(self, t: int):
+    def forma_calculo_produtibilidades(self, t: int) -> None:
         self.data[5] = t
 
     @property
-    def tipo_valores_produtibilidades(self) -> Optional[int]:
+    def tipo_valores_produtibilidades(self) -> int | None:
         """
         Flag para indicar o tipo dos valores das produtividades
         das usinas usadas nas restrição.
@@ -3745,11 +3745,11 @@ class HE(Register):
         return self.data[6]
 
     @tipo_valores_produtibilidades.setter
-    def tipo_valores_produtibilidades(self, t: int):
+    def tipo_valores_produtibilidades(self, t: int) -> None:
         self.data[6] = t
 
     @property
-    def tipo_penalidade(self) -> Optional[int]:
+    def tipo_penalidade(self) -> int | None:
         """
         O tipo de penalidade a ser considerada ao violar a
         restrição (inviabilidade ou penalização).
@@ -3760,11 +3760,11 @@ class HE(Register):
         return self.data[7]
 
     @tipo_penalidade.setter
-    def tipo_penalidade(self, t: int):
+    def tipo_penalidade(self, t: int) -> None:
         self.data[7] = t
 
     @property
-    def arquivo_produtibilidades(self) -> Optional[str]:
+    def arquivo_produtibilidades(self) -> str | None:
         """
         O arquivo com as definições das produtibilidades usadas
         para o cálculo da restrição RHE.
@@ -3775,7 +3775,7 @@ class HE(Register):
         return self.data[8]
 
     @arquivo_produtibilidades.setter
-    def arquivo_produtibilidades(self, t: str):
+    def arquivo_produtibilidades(self, t: str) -> None:
         self.data[8] = t
 
 
@@ -3784,7 +3784,7 @@ class CM(Register):
     Registro que contém os coeficientes de uma restrição RHE.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CM  "
     IDENTIFIER_DIGITS = 4
@@ -3801,7 +3801,7 @@ class CM(Register):
         return self.data[0]
 
     @codigo_restricao.setter
-    def codigo_restricao(self, c: int):
+    def codigo_restricao(self, c: int) -> None:
         self.data[0] = c
 
     @property
@@ -3815,7 +3815,7 @@ class CM(Register):
         return self.data[1]
 
     @codigo_ree.setter
-    def codigo_ree(self, e: int):
+    def codigo_ree(self, e: int) -> None:
         self.data[1] = e
 
     @property
@@ -3829,7 +3829,7 @@ class CM(Register):
         return self.data[2]
 
     @coeficiente.setter
-    def coeficiente(self, c: float):
+    def coeficiente(self, c: float) -> None:
         self.data[2] = c
 
 
@@ -3839,7 +3839,7 @@ class PD(Register):
     resolução do PL.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "PD  "
     IDENTIFIER_DIGITS = 4
@@ -3850,7 +3850,7 @@ class PD(Register):
     )
 
     @property
-    def algoritmo(self) -> Optional[str]:
+    def algoritmo(self) -> str | None:
         """
         O algoritmo considerado.
 
@@ -3860,7 +3860,7 @@ class PD(Register):
         return self.data[0]
 
     @algoritmo.setter
-    def algoritmo(self, m: str):
+    def algoritmo(self, m: str) -> None:
         self.data[0] = m
 
 
@@ -3870,7 +3870,7 @@ class PU(Register):
     via PL único.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "PU  "
     IDENTIFIER_DIGITS = 4
@@ -3881,7 +3881,7 @@ class PU(Register):
     )
 
     @property
-    def pl(self) -> Optional[int]:
+    def pl(self) -> int | None:
         """
         O tipo de pl considerado.
 
@@ -3891,7 +3891,7 @@ class PU(Register):
         return self.data[0]
 
     @pl.setter
-    def pl(self, m: int):
+    def pl(self, m: int) -> None:
         self.data[0] = m
 
 
@@ -3900,7 +3900,7 @@ class RC(Register):
     Registro que inclui restrições do tipo escada.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "RC  "
     IDENTIFIER_DIGITS = 4
@@ -3911,7 +3911,7 @@ class RC(Register):
     )
 
     @property
-    def mnemonico(self) -> Optional[str]:
+    def mnemonico(self) -> str | None:
         """
         O tipo de mnemonico considerado.
 
@@ -3921,7 +3921,7 @@ class RC(Register):
         return self.data[0]
 
     @mnemonico.setter
-    def mnemonico(self, m: str):
+    def mnemonico(self, m: str) -> None:
         self.data[0] = m
 
 
@@ -3931,7 +3931,7 @@ class PE(Register):
     intercâmbio e desvios.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "PE  "
     IDENTIFIER_DIGITS = 4
@@ -3944,7 +3944,7 @@ class PE(Register):
     )
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O código do submercado considerado
 
@@ -3954,11 +3954,11 @@ class PE(Register):
         return self.data[0]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, m: int):
+    def codigo_submercado(self, m: int) -> None:
         self.data[0] = m
 
     @property
-    def tipo(self) -> Optional[int]:
+    def tipo(self) -> int | None:
         """
         O tipo de penalidade a ser modificado
 
@@ -3968,11 +3968,11 @@ class PE(Register):
         return self.data[1]
 
     @tipo.setter
-    def tipo(self, m: int):
+    def tipo(self, m: int) -> None:
         self.data[1] = m
 
     @property
-    def penalidade(self) -> Optional[float]:
+    def penalidade(self) -> float | None:
         """
         O novo valor de penalidade
 
@@ -3982,7 +3982,7 @@ class PE(Register):
         return self.data[2]
 
     @penalidade.setter
-    def penalidade(self, m: float):
+    def penalidade(self, m: float) -> None:
         self.data[2] = m
 
 
@@ -3991,7 +3991,7 @@ class TS(Register):
     Registro que altera as tolerâncias do solver.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "TS  "
     IDENTIFIER_DIGITS = 4
@@ -4005,7 +4005,7 @@ class TS(Register):
     )
 
     @property
-    def tolerancia_primaria(self) -> Optional[float]:
+    def tolerancia_primaria(self) -> float | None:
         """
         A nova tolerância primária do solver.
 
@@ -4015,11 +4015,11 @@ class TS(Register):
         return self.data[0]
 
     @tolerancia_primaria.setter
-    def tolerancia_primaria(self, m: float):
+    def tolerancia_primaria(self, m: float) -> None:
         self.data[0] = m
 
     @property
-    def tolerancia_secundaria(self) -> Optional[float]:
+    def tolerancia_secundaria(self) -> float | None:
         """
         A nova tolerância secundária do solver.
 
@@ -4029,11 +4029,11 @@ class TS(Register):
         return self.data[1]
 
     @tolerancia_secundaria.setter
-    def tolerancia_secundaria(self, m: float):
+    def tolerancia_secundaria(self, m: float) -> None:
         self.data[1] = m
 
     @property
-    def zera_coeficientes(self) -> Optional[int]:
+    def zera_coeficientes(self) -> int | None:
         """
         Habilita ou não a funcionalidade de zerar coeficientes
         em casos de cortes não ótimos.
@@ -4044,11 +4044,11 @@ class TS(Register):
         return self.data[2]
 
     @zera_coeficientes.setter
-    def zera_coeficientes(self, m: int):
+    def zera_coeficientes(self, m: int) -> None:
         self.data[2] = m
 
     @property
-    def tolerancia_teste_otimalidade(self) -> Optional[float]:
+    def tolerancia_teste_otimalidade(self) -> float | None:
         """
         A nova tolerância usada no teste de otimalidade da
         solução do PL.
@@ -4059,7 +4059,7 @@ class TS(Register):
         return self.data[3]
 
     @tolerancia_teste_otimalidade.setter
-    def tolerancia_teste_otimalidade(self, m: float):
+    def tolerancia_teste_otimalidade(self, m: float) -> None:
         self.data[3] = m
 
 
@@ -4069,7 +4069,7 @@ class PV(Register):
     do problema e as tolerâncias para a viabilidade das restrições.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "PV  "
     IDENTIFIER_DIGITS = 4
@@ -4085,7 +4085,7 @@ class PV(Register):
     )
 
     @property
-    def penalidade_variaveis_folga(self) -> Optional[float]:
+    def penalidade_variaveis_folga(self) -> float | None:
         """
         A nova penalidade para as variáveis de folga (R$/MWh).
 
@@ -4095,11 +4095,11 @@ class PV(Register):
         return self.data[0]
 
     @penalidade_variaveis_folga.setter
-    def penalidade_variaveis_folga(self, m: float):
+    def penalidade_variaveis_folga(self, m: float) -> None:
         self.data[0] = m
 
     @property
-    def tolerancia_viabilidade_restricoes(self) -> Optional[float]:
+    def tolerancia_viabilidade_restricoes(self) -> float | None:
         """
         A nova tolerância para a viabilidade das restrições.
 
@@ -4109,11 +4109,11 @@ class PV(Register):
         return self.data[1]
 
     @tolerancia_viabilidade_restricoes.setter
-    def tolerancia_viabilidade_restricoes(self, m: float):
+    def tolerancia_viabilidade_restricoes(self, m: float) -> None:
         self.data[1] = m
 
     @property
-    def iteracoes_atualizacao_penalidade(self) -> Optional[int]:
+    def iteracoes_atualizacao_penalidade(self) -> int | None:
         """
         O número de iterações para atualização da penalidade variável
         iterativa para as folgas.
@@ -4124,11 +4124,11 @@ class PV(Register):
         return self.data[2]
 
     @iteracoes_atualizacao_penalidade.setter
-    def iteracoes_atualizacao_penalidade(self, m: int):
+    def iteracoes_atualizacao_penalidade(self, m: int) -> None:
         self.data[2] = m
 
     @property
-    def fator_multiplicacao_folga(self) -> Optional[float]:
+    def fator_multiplicacao_folga(self) -> float | None:
         """
         O fator para multiplicação da folga ao longo das restrições.
 
@@ -4138,11 +4138,11 @@ class PV(Register):
         return self.data[3]
 
     @fator_multiplicacao_folga.setter
-    def fator_multiplicacao_folga(self, m: float):
+    def fator_multiplicacao_folga(self, m: float) -> None:
         self.data[3] = m
 
     @property
-    def valor_inicial_variaveis_folga(self) -> Optional[float]:
+    def valor_inicial_variaveis_folga(self) -> float | None:
         """
         O valor inicial ou mínimo para as variáveis de folga.
 
@@ -4152,11 +4152,11 @@ class PV(Register):
         return self.data[4]
 
     @valor_inicial_variaveis_folga.setter
-    def valor_inicial_variaveis_folga(self, m: float):
+    def valor_inicial_variaveis_folga(self, m: float) -> None:
         self.data[4] = m
 
     @property
-    def valor_final_variaveis_folga(self) -> Optional[float]:
+    def valor_final_variaveis_folga(self) -> float | None:
         """
         O valor final ou máximo para as variáveis de folga.
 
@@ -4166,7 +4166,7 @@ class PV(Register):
         return self.data[5]
 
     @valor_final_variaveis_folga.setter
-    def valor_final_variaveis_folga(self, m: float):
+    def valor_final_variaveis_folga(self, m: float) -> None:
         self.data[5] = m
 
 
@@ -4176,7 +4176,7 @@ class CX(Register):
     complexos no NEWAVE com o DECOMP.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CX  "
     IDENTIFIER_DIGITS = 4
@@ -4188,7 +4188,7 @@ class CX(Register):
     )
 
     @property
-    def codigo_newave(self) -> Optional[int]:
+    def codigo_newave(self) -> int | None:
         """
         O código da usina no NEWAVE
 
@@ -4198,11 +4198,11 @@ class CX(Register):
         return self.data[0]
 
     @codigo_newave.setter
-    def codigo_newave(self, m: int):
+    def codigo_newave(self, m: int) -> None:
         self.data[0] = m
 
     @property
-    def codigo_decomp(self) -> Optional[int]:
+    def codigo_decomp(self) -> int | None:
         """
         O código da usina no DECOMP
 
@@ -4212,7 +4212,7 @@ class CX(Register):
         return self.data[1]
 
     @codigo_decomp.setter
-    def codigo_decomp(self, m: int):
+    def codigo_decomp(self, m: int) -> None:
         self.data[1] = m
 
 
@@ -4221,7 +4221,7 @@ class FA(Register):
     Registro que indica o nome do arquivo índice CSV.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "FA  "
     IDENTIFIER_DIGITS = 4
@@ -4232,7 +4232,7 @@ class FA(Register):
     )
 
     @property
-    def arquivo(self) -> Optional[str]:
+    def arquivo(self) -> str | None:
         """
         O nome do arquivo índice CSV.
 
@@ -4242,7 +4242,7 @@ class FA(Register):
         return self.data[0]
 
     @arquivo.setter
-    def arquivo(self, m: str):
+    def arquivo(self, m: str) -> None:
         self.data[0] = m
 
 
@@ -4251,7 +4251,7 @@ class VT(Register):
     Registro que indica o nome do arquivo com cenários de vento.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "VT  "
     IDENTIFIER_DIGITS = 4
@@ -4262,7 +4262,7 @@ class VT(Register):
     )
 
     @property
-    def arquivo(self) -> Optional[str]:
+    def arquivo(self) -> str | None:
         """
         O nome do arquivo com cenários de vento.
 
@@ -4272,7 +4272,7 @@ class VT(Register):
         return self.data[0]
 
     @arquivo.setter
-    def arquivo(self, m: str):
+    def arquivo(self, m: str) -> None:
         self.data[0] = m
 
 
@@ -4281,7 +4281,7 @@ class CS(Register):
     Registro que habilita a consistência de dados.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "CS  "
     IDENTIFIER_DIGITS = 4
@@ -4292,7 +4292,7 @@ class CS(Register):
     )
 
     @property
-    def consistencia(self) -> Optional[int]:
+    def consistencia(self) -> int | None:
         """
         Habilita ou não a consistência de dados.
 
@@ -4302,7 +4302,7 @@ class CS(Register):
         return self.data[0]
 
     @consistencia.setter
-    def consistencia(self, m: int):
+    def consistencia(self, m: int) -> None:
         self.data[0] = m
 
 
@@ -4311,7 +4311,7 @@ class ACNUMPOS(Register):
     Registro AC específico para alteração no número do posto.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMPOS"
     IDENTIFIER_DIGITS = 15
@@ -4326,7 +4326,9 @@ class ACNUMPOS(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4338,43 +4340,43 @@ class ACNUMPOS(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def codigo_posto(self) -> Optional[int]:
+    def codigo_posto(self) -> int | None:
         return self.data[1]
 
     @codigo_posto.setter
-    def codigo_posto(self, u: int):
+    def codigo_posto(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -4383,7 +4385,7 @@ class ACNUMJUS(Register):
     Registro AC específico para alteração na usina de jusante.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMJUS"
     IDENTIFIER_DIGITS = 15
@@ -4398,7 +4400,9 @@ class ACNUMJUS(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4410,7 +4414,7 @@ class ACNUMJUS(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O número da UHE conforme registro UH.
 
@@ -4419,11 +4423,11 @@ class ACNUMJUS(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def codigo_usina_jusante(self) -> Optional[int]:
+    def codigo_usina_jusante(self) -> int | None:
         """
         O número da UHE de jusante conforme registro UH.
 
@@ -4432,11 +4436,11 @@ class ACNUMJUS(Register):
         return self.data[1]
 
     @codigo_usina_jusante.setter
-    def codigo_usina_jusante(self, u: int):
+    def codigo_usina_jusante(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         """
         O mês de validade da alteração de cadastro.
 
@@ -4445,11 +4449,11 @@ class ACNUMJUS(Register):
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         """
         A semana de validade da alteração de cadastro.
 
@@ -4458,11 +4462,11 @@ class ACNUMJUS(Register):
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         """
         O ano de validade da alteração de cadastro.
 
@@ -4471,7 +4475,7 @@ class ACNUMJUS(Register):
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -4481,7 +4485,7 @@ class ACDESVIO(Register):
     para canal de desvio e limite da vazão no canal.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  DESVIO"
     IDENTIFIER_DIGITS = 15
@@ -4497,7 +4501,9 @@ class ACDESVIO(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4509,51 +4515,51 @@ class ACDESVIO(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def codigo_usina_jusante(self) -> Optional[int]:
+    def codigo_usina_jusante(self) -> int | None:
         return self.data[1]
 
     @codigo_usina_jusante.setter
-    def codigo_usina_jusante(self, u: int):
+    def codigo_usina_jusante(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def limite_vazao(self) -> Optional[float]:
+    def limite_vazao(self) -> float | None:
         return self.data[2]
 
     @limite_vazao.setter
-    def limite_vazao(self, u: float):
+    def limite_vazao(self, u: float) -> None:
         self.data[2] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -4562,7 +4568,7 @@ class ACVOLMIN(Register):
     Registro AC específico para alteração de volume mínimo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VOLMIN"
     IDENTIFIER_DIGITS = 15
@@ -4577,7 +4583,9 @@ class ACVOLMIN(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4589,43 +4597,43 @@ class ACVOLMIN(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def volume(self) -> Optional[float]:
+    def volume(self) -> float | None:
         return self.data[1]
 
     @volume.setter
-    def volume(self, u: float):
+    def volume(self, u: float) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -4634,7 +4642,7 @@ class ACVOLMAX(Register):
     Registro AC específico para alteração de volume máximo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VOLMAX"
     IDENTIFIER_DIGITS = 15
@@ -4649,7 +4657,9 @@ class ACVOLMAX(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4661,43 +4671,43 @@ class ACVOLMAX(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def volume(self) -> Optional[float]:
+    def volume(self) -> float | None:
         return self.data[1]
 
     @volume.setter
-    def volume(self, u: float):
+    def volume(self, u: float) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -4707,7 +4717,7 @@ class ACCOTVOL(Register):
     polinômio cota-volume.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTVOL"
     IDENTIFIER_DIGITS = 15
@@ -4723,7 +4733,9 @@ class ACCOTVOL(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4735,51 +4747,51 @@ class ACCOTVOL(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def ordem(self) -> Optional[int]:
+    def ordem(self) -> int | None:
         return self.data[1]
 
     @ordem.setter
-    def ordem(self, u: int):
+    def ordem(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         return self.data[2]
 
     @coeficiente.setter
-    def coeficiente(self, u: float):
+    def coeficiente(self, u: float) -> None:
         self.data[2] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -4789,7 +4801,7 @@ class ACCOTARE(Register):
     polinômio cota-área.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTARE"
     IDENTIFIER_DIGITS = 15
@@ -4797,7 +4809,7 @@ class ACCOTARE(Register):
         [
             IntegerField(3, 4),
             IntegerField(5, 19),
-            FloatField(15, 24, 8, 'D'),
+            FloatField(15, 24, 8, "D"),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),
@@ -4805,7 +4817,9 @@ class ACCOTARE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4817,51 +4831,51 @@ class ACCOTARE(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def ordem(self) -> Optional[int]:
+    def ordem(self) -> int | None:
         return self.data[1]
 
     @ordem.setter
-    def ordem(self, u: int):
+    def ordem(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         return self.data[2]
 
     @coeficiente.setter
-    def coeficiente(self, u: float):
+    def coeficiente(self, u: float) -> None:
         self.data[2] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -4871,7 +4885,7 @@ class ACPROESP(Register):
     hidráulicas em função da queda bruta (%,m,k).
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  PROESP"
     IDENTIFIER_DIGITS = 15
@@ -4886,7 +4900,9 @@ class ACPROESP(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4898,43 +4914,43 @@ class ACPROESP(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def produtibilidade(self) -> Optional[float]:
+    def produtibilidade(self) -> float | None:
         return self.data[1]
 
     @produtibilidade.setter
-    def produtibilidade(self, u: float):
+    def produtibilidade(self, u: float) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -4944,7 +4960,7 @@ class ACPERHID(Register):
     hidráulicas em função da queda bruta (%,m,k).
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  PERHID"
     IDENTIFIER_DIGITS = 15
@@ -4959,7 +4975,9 @@ class ACPERHID(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -4971,43 +4989,43 @@ class ACPERHID(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         return self.data[1]
 
     @coeficiente.setter
-    def coeficiente(self, u: float):
+    def coeficiente(self, u: float) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5017,7 +5035,7 @@ class ACNCHAVE(Register):
     (cota-vazão) e nível de jusante da faixa associada (m).
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NCHAVE"
     IDENTIFIER_DIGITS = 15
@@ -5033,7 +5051,9 @@ class ACNCHAVE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5045,51 +5065,51 @@ class ACNCHAVE(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def numero_curva(self) -> Optional[int]:
+    def numero_curva(self) -> int | None:
         return self.data[1]
 
     @numero_curva.setter
-    def numero_curva(self, u: int):
+    def numero_curva(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def nivel(self) -> Optional[float]:
+    def nivel(self) -> float | None:
         return self.data[2]
 
     @nivel.setter
-    def nivel(self, u: float):
+    def nivel(self, u: float) -> None:
         self.data[2] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5099,7 +5119,7 @@ class ACCOTVAZ(Register):
     polinômio cota-vazão.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COTVAZ"
     IDENTIFIER_DIGITS = 15
@@ -5116,7 +5136,9 @@ class ACCOTVAZ(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5128,59 +5150,59 @@ class ACCOTVAZ(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def indice_polimonio(self) -> Optional[int]:
+    def indice_polimonio(self) -> int | None:
         return self.data[1]
 
     @indice_polimonio.setter
-    def indice_polimonio(self, u: int):
+    def indice_polimonio(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def ordem(self) -> Optional[int]:
+    def ordem(self) -> int | None:
         return self.data[2]
 
     @ordem.setter
-    def ordem(self, u: int):
+    def ordem(self, u: int) -> None:
         self.data[2] = u
 
     @property
-    def coeficiente(self) -> Optional[float]:
+    def coeficiente(self) -> float | None:
         return self.data[3]
 
     @coeficiente.setter
-    def coeficiente(self, u: float):
+    def coeficiente(self, u: float) -> None:
         self.data[3] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5190,7 +5212,7 @@ class ACCOFEVA(Register):
     mensal para cada mês.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  COFEVA"
     IDENTIFIER_DIGITS = 15
@@ -5206,7 +5228,9 @@ class ACCOFEVA(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5218,51 +5242,51 @@ class ACCOFEVA(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def mes_coeficiente(self) -> Optional[int]:
+    def mes_coeficiente(self) -> int | None:
         return self.data[1]
 
     @mes_coeficiente.setter
-    def mes_coeficiente(self, u: int):
+    def mes_coeficiente(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def coeficiente(self) -> Optional[int]:
+    def coeficiente(self) -> int | None:
         return self.data[2]
 
     @coeficiente.setter
-    def coeficiente(self, u: int):
+    def coeficiente(self, u: int) -> None:
         self.data[2] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5272,7 +5296,7 @@ class ACNUMCON(Register):
     de máquinas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMCON"
     IDENTIFIER_DIGITS = 15
@@ -5287,7 +5311,9 @@ class ACNUMCON(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5299,43 +5325,43 @@ class ACNUMCON(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def numero_conjuntos(self) -> Optional[int]:
+    def numero_conjuntos(self) -> int | None:
         return self.data[1]
 
     @numero_conjuntos.setter
-    def numero_conjuntos(self, u: int):
+    def numero_conjuntos(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5345,7 +5371,7 @@ class ACNUMMAQ(Register):
     em cada conjunto de máquinas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NUMMAQ"
     IDENTIFIER_DIGITS = 15
@@ -5361,7 +5387,9 @@ class ACNUMMAQ(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5373,51 +5401,51 @@ class ACNUMMAQ(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def indice_conjunto(self) -> Optional[int]:
+    def indice_conjunto(self) -> int | None:
         return self.data[1]
 
     @indice_conjunto.setter
-    def indice_conjunto(self, u: int):
+    def indice_conjunto(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def numero_maquinas(self) -> Optional[int]:
+    def numero_maquinas(self) -> int | None:
         return self.data[2]
 
     @numero_maquinas.setter
-    def numero_maquinas(self, u: int):
+    def numero_maquinas(self, u: int) -> None:
         self.data[2] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5427,7 +5455,7 @@ class ACPOTEFE(Register):
     por unidade geradora em um conjunto de máquinas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  POTEFE"
     IDENTIFIER_DIGITS = 15
@@ -5443,7 +5471,9 @@ class ACPOTEFE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5455,51 +5485,51 @@ class ACPOTEFE(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def indice_conjunto(self) -> Optional[int]:
+    def indice_conjunto(self) -> int | None:
         return self.data[1]
 
     @indice_conjunto.setter
-    def indice_conjunto(self, u: int):
+    def indice_conjunto(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def potencia(self) -> Optional[float]:
+    def potencia(self) -> float | None:
         return self.data[2]
 
     @potencia.setter
-    def potencia(self, u: float):
+    def potencia(self, u: float) -> None:
         self.data[2] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5509,7 +5539,7 @@ class ACALTEFE(Register):
     de queda para um conjunto de máquinas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  ALTEFE"
     IDENTIFIER_DIGITS = 15
@@ -5525,7 +5555,9 @@ class ACALTEFE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5537,35 +5569,35 @@ class ACALTEFE(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5575,7 +5607,7 @@ class ACVAZEFE(Register):
     para um conjunto de máquinas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VAZEFE"
     IDENTIFIER_DIGITS = 15
@@ -5591,7 +5623,9 @@ class ACVAZEFE(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5603,51 +5637,51 @@ class ACVAZEFE(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def indice_conjunto(self) -> Optional[int]:
+    def indice_conjunto(self) -> int | None:
         return self.data[1]
 
     @indice_conjunto.setter
-    def indice_conjunto(self, u: int):
+    def indice_conjunto(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def vazao(self) -> Optional[int]:
+    def vazao(self) -> int | None:
         return self.data[2]
 
     @vazao.setter
-    def vazao(self, u: int):
+    def vazao(self, u: int) -> None:
         self.data[2] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5657,7 +5691,7 @@ class ACJUSMED(Register):
     de fuga em metros.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  JUSMED"
     IDENTIFIER_DIGITS = 15
@@ -5672,7 +5706,9 @@ class ACJUSMED(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5684,43 +5720,43 @@ class ACJUSMED(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def cota(self) -> Optional[float]:
+    def cota(self) -> float | None:
         return self.data[1]
 
     @cota.setter
-    def cota(self, u: float):
+    def cota(self, u: float) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5730,7 +5766,7 @@ class ACVERTJU(Register):
     no canal de fuga.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VERTJU"
     IDENTIFIER_DIGITS = 15
@@ -5745,7 +5781,9 @@ class ACVERTJU(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5757,43 +5795,43 @@ class ACVERTJU(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def considera_influencia(self) -> Optional[int]:
+    def considera_influencia(self) -> int | None:
         return self.data[1]
 
     @considera_influencia.setter
-    def considera_influencia(self, u: int):
+    def considera_influencia(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5802,7 +5840,7 @@ class ACVAZMIN(Register):
     Registro AC específico para alteração da vazão mínima.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VAZMIN"
     IDENTIFIER_DIGITS = 15
@@ -5817,7 +5855,9 @@ class ACVAZMIN(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5829,43 +5869,43 @@ class ACVAZMIN(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def vazao(self) -> Optional[int]:
+    def vazao(self) -> int | None:
         return self.data[1]
 
     @vazao.setter
-    def vazao(self, u: int):
+    def vazao(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5874,7 +5914,7 @@ class ACTIPERH(Register):
     Registro AC específico para alteração do tipo de perdas hidráulicas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  TIPERH"
     IDENTIFIER_DIGITS = 15
@@ -5889,7 +5929,9 @@ class ACTIPERH(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5901,43 +5943,43 @@ class ACTIPERH(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def tipo_perda(self) -> Optional[int]:
+    def tipo_perda(self) -> int | None:
         return self.data[1]
 
     @tipo_perda.setter
-    def tipo_perda(self, u: int):
+    def tipo_perda(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -5948,7 +5990,7 @@ class ACJUSENA(Register):
     armazenada e afluente.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  JUSENA"
     IDENTIFIER_DIGITS = 15
@@ -5963,7 +6005,9 @@ class ACJUSENA(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -5975,43 +6019,43 @@ class ACJUSENA(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def codigo_usina_jusante(self) -> Optional[int]:
+    def codigo_usina_jusante(self) -> int | None:
         return self.data[1]
 
     @codigo_usina_jusante.setter
-    def codigo_usina_jusante(self, u: int):
+    def codigo_usina_jusante(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -6021,7 +6065,7 @@ class ACVSVERT(Register):
     do vertedor.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VSVERT"
     IDENTIFIER_DIGITS = 15
@@ -6036,7 +6080,9 @@ class ACVSVERT(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -6048,43 +6094,43 @@ class ACVSVERT(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def volume(self) -> Optional[float]:
+    def volume(self) -> float | None:
         return self.data[1]
 
     @volume.setter
-    def volume(self, u: float):
+    def volume(self, u: float) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -6094,7 +6140,7 @@ class ACVMDESV(Register):
     do canal de desvio.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  VMDESV"
     IDENTIFIER_DIGITS = 15
@@ -6109,7 +6155,9 @@ class ACVMDESV(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -6121,43 +6169,43 @@ class ACVMDESV(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def volume(self) -> Optional[float]:
+    def volume(self) -> float | None:
         return self.data[1]
 
     @volume.setter
-    def volume(self, u: float):
+    def volume(self, u: float) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -6167,7 +6215,7 @@ class ACNPOSNW(Register):
     com o NEWAVE.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = r"AC  ([\d ]{1,3})  NPOSNW"
     IDENTIFIER_DIGITS = 15
@@ -6182,7 +6230,9 @@ class ACNPOSNW(Register):
     )
 
     # Override
-    def write(self, file: IO, storage: str = "", *args, **kwargs) -> bool:
+    def write(
+        self, file: IO[Any], storage: str = "", *args: Any, **kwargs: Any
+    ) -> bool:
         line = self.__class__.LINE.write(self.data)
         line = (
             self.__class__.IDENTIFIER[:2]  # type: ignore
@@ -6194,43 +6244,43 @@ class ACNPOSNW(Register):
         return True
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, u: int):
+    def codigo_usina(self, u: int) -> None:
         self.data[0] = u
 
     @property
-    def codigo_posto(self) -> Optional[int]:
+    def codigo_posto(self) -> int | None:
         return self.data[1]
 
     @codigo_posto.setter
-    def codigo_posto(self, u: int):
+    def codigo_posto(self, u: int) -> None:
         self.data[1] = u
 
     @property
-    def mes(self) -> Optional[str]:
+    def mes(self) -> str | None:
         return self.data[-3]
 
     @mes.setter
-    def mes(self, m: str):
+    def mes(self, m: str) -> None:
         self.data[-3] = m
 
     @property
-    def semana(self) -> Optional[int]:
+    def semana(self) -> int | None:
         return self.data[-2]
 
     @semana.setter
-    def semana(self, s: int):
+    def semana(self, s: int) -> None:
         self.data[-2] = s
 
     @property
-    def ano(self) -> Optional[int]:
+    def ano(self) -> int | None:
         return self.data[-1]
 
     @ano.setter
-    def ano(self, m: int):
+    def ano(self, m: int) -> None:
         self.data[-1] = m
 
 
@@ -6240,7 +6290,7 @@ class VL(Register):
     na cota de jusante.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "VL  "
     IDENTIFIER_DIGITS = 4
@@ -6267,7 +6317,7 @@ class VL(Register):
     )
 
     @property
-    def codigo_usina_influenciada(self) -> Optional[int]:
+    def codigo_usina_influenciada(self) -> int | None:
         """
         O código da UHE influenciada.
 
@@ -6277,11 +6327,11 @@ class VL(Register):
         return self.data[0]
 
     @codigo_usina_influenciada.setter
-    def codigo_usina_influenciada(self, c: int):
+    def codigo_usina_influenciada(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def fator_impacto_defluencia(self) -> Optional[float]:
+    def fator_impacto_defluencia(self) -> float | None:
         """
         O fator de impacto referente a defluência da usina influenciada.
 
@@ -6291,11 +6341,11 @@ class VL(Register):
         return self.data[1]
 
     @fator_impacto_defluencia.setter
-    def fator_impacto_defluencia(self, c: float):
+    def fator_impacto_defluencia(self, c: float) -> None:
         self.data[1] = c
 
     @property
-    def coeficiente_a0(self) -> Optional[float]:
+    def coeficiente_a0(self) -> float | None:
         """
         O coeficiente de grau 0 do polinômio de jusante.
 
@@ -6305,11 +6355,11 @@ class VL(Register):
         return self.data[2]
 
     @coeficiente_a0.setter
-    def coeficiente_a0(self, c: float):
+    def coeficiente_a0(self, c: float) -> None:
         self.data[2] = c
 
     @property
-    def coeficiente_a1(self) -> Optional[float]:
+    def coeficiente_a1(self) -> float | None:
         """
         O coeficiente de grau 1 do polinômio de jusante.
 
@@ -6319,11 +6369,11 @@ class VL(Register):
         return self.data[3]
 
     @coeficiente_a1.setter
-    def coeficiente_a1(self, c: float):
+    def coeficiente_a1(self, c: float) -> None:
         self.data[3] = c
 
     @property
-    def coeficiente_a2(self) -> Optional[float]:
+    def coeficiente_a2(self) -> float | None:
         """
         O coeficiente de grau 2 do polinômio de jusante.
 
@@ -6333,11 +6383,11 @@ class VL(Register):
         return self.data[4]
 
     @coeficiente_a2.setter
-    def coeficiente_a2(self, c: float):
+    def coeficiente_a2(self, c: float) -> None:
         self.data[4] = c
 
     @property
-    def coeficiente_a3(self) -> Optional[float]:
+    def coeficiente_a3(self) -> float | None:
         """
         O coeficiente de grau 3 do polinômio de jusante.
 
@@ -6347,11 +6397,11 @@ class VL(Register):
         return self.data[5]
 
     @coeficiente_a3.setter
-    def coeficiente_a3(self, c: float):
+    def coeficiente_a3(self, c: float) -> None:
         self.data[5] = c
 
     @property
-    def coeficiente_a4(self) -> Optional[float]:
+    def coeficiente_a4(self) -> float | None:
         """
         O coeficiente de grau 4 do polinômio de jusante.
 
@@ -6361,7 +6411,7 @@ class VL(Register):
         return self.data[6]
 
     @coeficiente_a4.setter
-    def coeficiente_a4(self, c: float):
+    def coeficiente_a4(self, c: float) -> None:
         self.data[6] = c
 
 
@@ -6371,7 +6421,7 @@ class VU(Register):
     jusante da primeira.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "VU  "
     IDENTIFIER_DIGITS = 4
@@ -6384,7 +6434,7 @@ class VU(Register):
     )
 
     @property
-    def codigo_usina_influenciada(self) -> Optional[int]:
+    def codigo_usina_influenciada(self) -> int | None:
         """
         O código da UHE influenciada.
 
@@ -6394,11 +6444,11 @@ class VU(Register):
         return self.data[0]
 
     @codigo_usina_influenciada.setter
-    def codigo_usina_influenciada(self, c: int):
+    def codigo_usina_influenciada(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def codigo_usina_influenciadora(self) -> Optional[int]:
+    def codigo_usina_influenciadora(self) -> int | None:
         """
         O código da UHE cuja vazão defluente influencia
         lateralmente.
@@ -6409,11 +6459,11 @@ class VU(Register):
         return self.data[1]
 
     @codigo_usina_influenciadora.setter
-    def codigo_usina_influenciadora(self, c: int):
+    def codigo_usina_influenciadora(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def fator_impacto_defluencia(self) -> Optional[float]:
+    def fator_impacto_defluencia(self) -> float | None:
         """
         O fator de impacto referente a defluência da usina influenciadora.
 
@@ -6423,7 +6473,7 @@ class VU(Register):
         return self.data[2]
 
     @fator_impacto_defluencia.setter
-    def fator_impacto_defluencia(self, c: float):
+    def fator_impacto_defluencia(self, c: float) -> None:
         self.data[2] = c
 
 
@@ -6433,7 +6483,7 @@ class VA(Register):
     jusante da primeira.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "VA  "
     IDENTIFIER_DIGITS = 4
@@ -6446,7 +6496,7 @@ class VA(Register):
     )
 
     @property
-    def codigo_usina_influenciada(self) -> Optional[int]:
+    def codigo_usina_influenciada(self) -> int | None:
         """
         O código da UHE influenciada.
 
@@ -6456,11 +6506,11 @@ class VA(Register):
         return self.data[0]
 
     @codigo_usina_influenciada.setter
-    def codigo_usina_influenciada(self, c: int):
+    def codigo_usina_influenciada(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def codigo_posto_influenciador(self) -> Optional[int]:
+    def codigo_posto_influenciador(self) -> int | None:
         """
         O código do posto cuja vazão incremental influencia
         lateralmente.
@@ -6471,11 +6521,11 @@ class VA(Register):
         return self.data[1]
 
     @codigo_posto_influenciador.setter
-    def codigo_posto_influenciador(self, c: int):
+    def codigo_posto_influenciador(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def fator_impacto_incremental(self) -> Optional[float]:
+    def fator_impacto_incremental(self) -> float | None:
         """
         O fator de impacto referente a incremental do posto influenciador.
 
@@ -6485,5 +6535,5 @@ class VA(Register):
         return self.data[2]
 
     @fator_impacto_incremental.setter
-    def fator_impacto_incremental(self, c: float):
+    def fator_impacto_incremental(self, c: float) -> None:
         self.data[2] = c

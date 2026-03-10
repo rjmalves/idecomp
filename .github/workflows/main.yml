@@ -9,11 +9,39 @@ on:
       - main
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+      - name: Install the project
+        run: uv sync --extra lint
+      - name: Ruff check
+        run: uv run ruff check ./idecomp
+      - name: Ruff format check
+        run: uv run ruff format --check ./idecomp
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+      - name: Install the project
+        run: uv sync --extra lint
+      - name: Static type check
+        run: uv run mypy ./idecomp
+
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4
       - name: Install uv
@@ -21,11 +49,9 @@ jobs:
       - name: Set up Python ${{ matrix.python-version }}
         run: uv python install ${{ matrix.python-version }}
       - name: Install the project
-        run: |
-          uv sync --all-extras --dev
-      - name: Runs tests
-        run: |
-          uv run pytest  --cov-report=xml --cov=idecomp ./tests
+        run: uv sync --extra test
+      - name: Run tests
+        run: uv run pytest --cov-report=xml --cov=idecomp ./tests
       - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
@@ -35,12 +61,16 @@ jobs:
           name: codecov-idecomp
           fail_ci_if_error: true
           verbose: true
-      - name: Static type check
-        run: |
-          uv run mypy ./idecomp
-      - name: Linter code check
-        run: |
-          uv run ruff check ./idecomp
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+      - name: Install the project
+        run: uv sync --extra docs
       - name: Sphinx build
-        run: |
-          uv run sphinx-build -M html docs/source docs/build
+        run: uv run sphinx-build -b html -W --keep-going docs/source docs/build/html

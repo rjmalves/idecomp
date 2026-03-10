@@ -1,9 +1,12 @@
-from idecomp.decomp.modelos.inviabunic import BlocoInviabilidadesIteracoes
-from idecomp.decomp.modelos.inviabunic import BlocoInviabilidadesSimFinal
+from typing import Any, TypeVar
 
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.files.blockfile import BlockFile
-from typing import TypeVar, Optional
-import pandas as pd  # type: ignore
+
+from idecomp.decomp.modelos.inviabunic import (
+    BlocoInviabilidadesIteracoes,
+    BlocoInviabilidadesSimFinal,
+)
 
 
 class InviabUnic(BlockFile):
@@ -22,11 +25,11 @@ class InviabUnic(BlockFile):
         BlocoInviabilidadesSimFinal,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     @property
-    def inviabilidades_iteracoes(self) -> Optional[pd.DataFrame]:
+    def inviabilidades_iteracoes(self) -> pd.DataFrame | None:
         """
         Tabela das inviabilidades visitadas pelo modelo durante
         as iterações. As colunas são:
@@ -48,7 +51,7 @@ class InviabUnic(BlockFile):
         return None
 
     @property
-    def inviabilidades_simulacao_final(self) -> Optional[pd.DataFrame]:
+    def inviabilidades_simulacao_final(self) -> pd.DataFrame | None:
         """
         Tabela das inviabilidades visitadas pelo modelo durante
         a simulação final. As colunas são:

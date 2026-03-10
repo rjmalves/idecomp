@@ -1,9 +1,8 @@
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.dec_oper_gnl import TabelaOperGnl, TabelaOperGnlv31
+import pandas as pd  # type: ignore
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
-from typing import Optional
-import pandas as pd  # type: ignore
+from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
+from idecomp.decomp.modelos.dec_oper_gnl import TabelaOperGnl, TabelaOperGnlv31
 
 
 class DecOperGnl(ArquivoCSV):
@@ -19,7 +18,7 @@ class DecOperGnl(ArquivoCSV):
     }
 
     @property
-    def tabela(self) -> Optional[pd.DataFrame]:
+    def tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 

@@ -1,9 +1,8 @@
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.eco_fpha import TabelaEcoFpha
+import pandas as pd  # type: ignore
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
-from typing import Optional
-import pandas as pd  # type: ignore
+from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
+from idecomp.decomp.modelos.eco_fpha import TabelaEcoFpha
 
 
 class EcoFpha(ArquivoCSV):
@@ -15,7 +14,7 @@ class EcoFpha(ArquivoCSV):
     BLOCKS = [VersaoModelo, TabelaEcoFpha]
 
     @property
-    def tabela(self) -> Optional[pd.DataFrame]:
+    def tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 

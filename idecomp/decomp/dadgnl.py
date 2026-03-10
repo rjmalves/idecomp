@@ -1,8 +1,10 @@
+from typing import Any, TypeVar
+
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
-from idecomp.decomp.modelos.dadgnl import TG, GS, NL, GL
-from typing import Type, List, Optional, TypeVar, Union
-import pandas as pd  # type: ignore
+
+from idecomp.decomp.modelos.dadgnl import GL, GS, NL, TG
 
 
 class Dadgnl(RegisterFile):
@@ -23,21 +25,17 @@ class Dadgnl(RegisterFile):
 
     REGISTERS = [TG, GS, NL, GL]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     def __expande_colunas_df(self, df: pd.DataFrame) -> pd.DataFrame:
-        colunas_com_listas = df.map(
-            lambda linha: isinstance(linha, list)
-        ).all()
+        colunas_com_listas = df.map(lambda linha: isinstance(linha, list)).all()
         nomes_colunas = [
             c for c in colunas_com_listas[colunas_com_listas].index
         ]
         for c in nomes_colunas:
             num_elementos = len(df.at[0, c])
-            particoes_coluna = [
-                f"{c}_{i}" for i in range(1, num_elementos + 1)
-            ]
+            particoes_coluna = [f"{c}_{i}" for i in range(1, num_elementos + 1)]
             df[particoes_coluna] = df.apply(
                 lambda linha: linha[c], axis=1, result_type="expand"
             )
@@ -45,8 +43,8 @@ class Dadgnl(RegisterFile):
         return df
 
     def __registros_ou_df(
-        self, t: Type[T], **kwargs
-    ) -> Optional[Union[T, List[T], pd.DataFrame]]:
+        self, t: type[T], **kwargs: Any
+    ) -> T | list[T] | pd.DataFrame | None:
         if kwargs.get("df"):
             return self.__expande_colunas_df(self._as_df(t))
         else:
@@ -55,12 +53,12 @@ class Dadgnl(RegisterFile):
 
     def tg(
         self,
-        codigo_usina: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
-        nome: Optional[str] = None,
-        estagio: Optional[int] = None,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        nome: str | None = None,
+        estagio: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[TG, List[TG], pd.DataFrame]]:
+    ) -> TG | list[TG] | pd.DataFrame | None:
         """
         Obtém um registro que define uma usina termelétrica existente
         no estudo descrito pelo :class:`Dadgnl`.
@@ -94,10 +92,10 @@ class Dadgnl(RegisterFile):
 
     def gs(
         self,
-        mes: Optional[int] = None,
-        semanas: Optional[int] = None,
+        mes: int | None = None,
+        semanas: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[GS, List[GS], pd.DataFrame]]:
+    ) -> GS | list[GS] | pd.DataFrame | None:
         """
         Obtém um registro que define o número de semanas em cada
         mês de estudo no :class:`Dadgnl`.
@@ -117,11 +115,11 @@ class Dadgnl(RegisterFile):
 
     def nl(
         self,
-        codigo_usina: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
-        lag: Optional[int] = None,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        lag: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[NL, List[NL], pd.DataFrame]]:
+    ) -> NL | list[NL] | pd.DataFrame | None:
         """
         Obtém um registro que define o número de lags para o despacho
         de uma UTE.
@@ -149,12 +147,12 @@ class Dadgnl(RegisterFile):
 
     def gl(
         self,
-        codigo_usina: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
-        estagio: Optional[int] = None,
-        data_inicio: Optional[str] = None,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        data_inicio: str | None = None,
         df: bool = False,
-    ) -> Optional[Union[GL, List[GL], pd.DataFrame]]:
+    ) -> GL | list[GL] | pd.DataFrame | None:
         """
         Obtém um registro que define o despacho por patamar
         e a duração dos patamares para uma UTE GNL.

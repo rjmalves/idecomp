@@ -1,9 +1,8 @@
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.dec_eco_cotajus import TabelaEcoCotajus
+import pandas as pd  # type: ignore
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
-from typing import Optional
-import pandas as pd  # type: ignore
+from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
+from idecomp.decomp.modelos.dec_eco_cotajus import TabelaEcoCotajus
 
 
 class DecEcoCotajus(ArquivoCSV):
@@ -15,7 +14,7 @@ class DecEcoCotajus(ArquivoCSV):
     BLOCKS = [VersaoModelo, TabelaEcoCotajus]
 
     @property
-    def tabela(self) -> Optional[pd.DataFrame]:
+    def tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 

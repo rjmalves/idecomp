@@ -1,7 +1,8 @@
-from cfinterface.components.section import Section
+from typing import IO, Any
+
 from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
-from typing import IO
+from cfinterface.components.section import Section
 
 
 class NomeCaso(Section):
@@ -12,7 +13,9 @@ class NomeCaso(Section):
 
     __slots__ = ["__linha"]
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(
+        self, previous: Any = None, next: Any = None, data: Any = None
+    ) -> None:
         super().__init__(previous, next, data)
         self.__linha = Line([LiteralField(80, 0)])
 
@@ -31,9 +34,9 @@ class NomeCaso(Section):
             return self.data == bloco.data
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         self.data = self.__linha.read(file.readline())[0]
 
     # Override
-    def write(self, file: IO, *args, **kwargs):
+    def write(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         file.write(self.__linha.write([self.data]))

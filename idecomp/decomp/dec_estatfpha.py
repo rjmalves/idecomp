@@ -1,10 +1,12 @@
+from typing import TypeVar
+
+import pandas as pd  # type: ignore
+from cfinterface.files.blockfile import BlockFile
+
+from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
 from idecomp.decomp.modelos.dec_estatfpha import (
     BlocoDesvios,
 )
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from cfinterface.files.blockfile import BlockFile
-from typing import Optional, Type, TypeVar
-import pandas as pd  # type: ignore
 
 
 class DecEstatFpha(BlockFile):
@@ -20,7 +22,7 @@ class DecEstatFpha(BlockFile):
     ENCODING = "iso-8859-1"
     T = TypeVar("T")
 
-    def _bloco_por_tipo(self, bloco: Type[T], indice: int) -> Optional[T]:
+    def _bloco_por_tipo(self, bloco: type[T], indice: int) -> T | None:
         """
         Obtém um gerador de blocos de um tipo, se houver algum no arquivo.
 
@@ -33,15 +35,13 @@ class DecEstatFpha(BlockFile):
         """
         try:
             return next(
-                b
-                for i, b in enumerate(self.data.of_type(bloco))
-                if i == indice
+                b for i, b in enumerate(self.data.of_type(bloco)) if i == indice
             )
         except StopIteration:
             return None
 
     @property
-    def versao(self) -> Optional[str]:
+    def versao(self) -> str | None:
         """
         A versão do modelo utilizada para executar o caso.
 

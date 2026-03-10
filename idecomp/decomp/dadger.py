@@ -1,7 +1,7 @@
-from typing import Any, List, Optional, Type, TypeVar, Union
+from typing import Any, TypeVar, Union
 
 import numpy as np
-import pandas  # type: ignore
+import pandas  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 
@@ -217,7 +217,7 @@ class Dadger(RegisterFile):
         DA,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     def __expande_colunas_df(self, df: pandas.DataFrame) -> pandas.DataFrame:
@@ -229,8 +229,9 @@ class Dadger(RegisterFile):
             num_elementos = len(df.at[0, c])
             particoes_coluna = [f"{c}_{i}" for i in range(1, num_elementos + 1)]
             df[particoes_coluna] = df.apply(
-                lambda linha: linha[c]
-                + [np.nan] * max(0, num_elementos - len(linha[c])),
+                lambda linha: (
+                    linha[c] + [np.nan] * max(0, num_elementos - len(linha[c]))
+                ),
                 axis=1,
                 result_type="expand",
             )
@@ -238,8 +239,8 @@ class Dadger(RegisterFile):
         return df
 
     def __registros_ou_df(
-        self, t: Type[T], **kwargs
-    ) -> Optional[Union[T, List[T], pandas.DataFrame]]:
+        self, t: type[T], **kwargs: Any
+    ) -> T | list[T] | pandas.DataFrame | None:
         if kwargs.get("df"):
             return self.__expande_colunas_df(self._as_df(t))
         else:
@@ -247,7 +248,7 @@ class Dadger(RegisterFile):
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
     @property
-    def te(self) -> Optional[TE]:
+    def te(self) -> TE | None:
         """
         Obtém o (único) registro que define o nome do estudo no
         :class:`Dadger`
@@ -263,10 +264,10 @@ class Dadger(RegisterFile):
 
     def sb(
         self,
-        codigo_submercado: Optional[int] = None,
-        nome_submercado: Optional[str] = None,
+        codigo_submercado: int | None = None,
+        nome_submercado: str | None = None,
         df: bool = False,
-    ) -> Optional[Union[SB, List[SB], pandas.DataFrame]]:
+    ) -> SB | list[SB] | pandas.DataFrame | None:
         """
         Obtém um registro que define os submercados existentes
         no estudo descrito pelo :class:`Dadger`.
@@ -287,12 +288,12 @@ class Dadger(RegisterFile):
 
     def uh(
         self,
-        codigo_usina: Optional[int] = None,
-        codigo_ree: Optional[int] = None,
-        volume_inicial: Optional[float] = None,
-        evaporacao: Optional[int] = None,
+        codigo_usina: int | None = None,
+        codigo_ree: int | None = None,
+        volume_inicial: float | None = None,
+        evaporacao: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[UH, List[UH], pandas.DataFrame]]:
+    ) -> UH | list[UH] | pandas.DataFrame | None:
         """
         Obtém um registro que define uma usina hidrelétrica existente
         no estudo descrito pelo :class:`Dadger`.
@@ -323,13 +324,13 @@ class Dadger(RegisterFile):
 
     def ue(
         self,
-        codigo_usina: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
-        nome_usina: Optional[str] = None,
-        codigo_usina_montante: Optional[int] = None,
-        codigo_usina_jusante: Optional[int] = None,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_usina: str | None = None,
+        codigo_usina_montante: int | None = None,
+        codigo_usina_jusante: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[UE, List[UE], pandas.DataFrame]]:
+    ) -> UE | list[UE] | pandas.DataFrame | None:
         """
         Obtém um registro que define uma usina elevatória existente
         no estudo descrito pelo :class:`Dadger`.
@@ -366,12 +367,12 @@ class Dadger(RegisterFile):
 
     def ct(
         self,
-        codigo_usina: Optional[int] = None,
-        estagio: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
-        nome_usina: Optional[str] = None,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_usina: str | None = None,
         df: bool = False,
-    ) -> Optional[Union[CT, List[CT], pandas.DataFrame]]:
+    ) -> CT | list[CT] | pandas.DataFrame | None:
         """
         Obtém um registro que define uma usina termelétrica existente
         no estudo descrito pelo :class:`Dadger`.
@@ -402,11 +403,11 @@ class Dadger(RegisterFile):
 
     def dp(
         self,
-        estagio: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
-        numero_patamares: Optional[int] = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        numero_patamares: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[DP, List[DP], pandas.DataFrame]]:
+    ) -> DP | list[DP] | pandas.DataFrame | None:
         """
         Obtém um registro que define as durações dos patamares
         no estudo descrito pelo :class:`Dadger`.
@@ -437,11 +438,11 @@ class Dadger(RegisterFile):
 
     def pq(
         self,
-        nome: Optional[str] = None,
-        codigo_submercado: Optional[int] = None,
-        estagio: Optional[int] = None,
+        nome: str | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[PQ, List[PQ], pandas.DataFrame]]:
+    ) -> PQ | list[PQ] | pandas.DataFrame | None:
         """
         Obtém um registro que define as gerações das pequenas usinas
         no estudo descrito pelo :class:`Dadger`.
@@ -471,11 +472,11 @@ class Dadger(RegisterFile):
 
     def ia(
         self,
-        estagio: Optional[int] = None,
-        nome_submercado_de: Optional[str] = None,
-        nome_submercado_para: Optional[str] = None,
+        estagio: int | None = None,
+        nome_submercado_de: str | None = None,
+        nome_submercado_para: str | None = None,
         df: bool = False,
-    ) -> Optional[Union[IA, List[IA], pandas.DataFrame]]:
+    ) -> IA | list[IA] | pandas.DataFrame | None:
         """
         Obtém um registro que define os limites de intercâmbio
         no estudo descrito pelo :class:`Dadger`.
@@ -504,11 +505,11 @@ class Dadger(RegisterFile):
 
     def ri(
         self,
-        codigo_usina: Optional[int] = None,
-        estagio: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[RI, List[RI], pandas.DataFrame]]:
+    ) -> RI | list[RI] | pandas.DataFrame | None:
         """
         Obtém um registro que define as restrições de Itaipu
         no estudo descrito pelo :class:`Dadger`.
@@ -539,8 +540,8 @@ class Dadger(RegisterFile):
         codigo_usina: int,
         modificacao: Any,
         df: bool = False,
-        **kwargs,
-    ) -> Optional[Union[AC, List[AC], pandas.DataFrame]]:
+        **kwargs: Any,
+    ) -> AC | list[AC] | pandas.DataFrame | None:
         """
         Obtém um registro que define modificações nos parâmetros
         das UHE em um :class:`Dadger`.
@@ -562,12 +563,12 @@ class Dadger(RegisterFile):
 
     def cd(
         self,
-        codigo_curva: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
-        nome_curva: Optional[str] = None,
-        estagio: Optional[int] = None,
+        codigo_curva: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_curva: str | None = None,
+        estagio: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[CD, List[CD], pandas.DataFrame]]:
+    ) -> CD | list[CD] | pandas.DataFrame | None:
         """
         Obtém um registro que define as curvas de déficit
         no estudo descrito pelo :class:`Dadger`.
@@ -597,7 +598,7 @@ class Dadger(RegisterFile):
         )
 
     @property
-    def tx(self) -> Optional[TX]:
+    def tx(self) -> TX | None:
         """
         Obtém o (único) registro que define a taxa de desconto
         aplicada no estudo definido no :class:`Dadger`
@@ -612,7 +613,7 @@ class Dadger(RegisterFile):
             return None
 
     @property
-    def gp(self) -> Optional[GP]:
+    def gp(self) -> GP | None:
         """
         Obtém o (único) registro que define o gap para convergência
         considerado no estudo definido no :class:`Dadger`
@@ -627,7 +628,7 @@ class Dadger(RegisterFile):
             return None
 
     @property
-    def ni(self) -> Optional[NI]:
+    def ni(self) -> NI | None:
         """
         Obtém o (único) registro que define o número máximo de iterações
         do DECOMP no estudo definido no :class:`Dadger`
@@ -642,7 +643,7 @@ class Dadger(RegisterFile):
             return None
 
     @property
-    def dt(self) -> Optional[DT]:
+    def dt(self) -> DT | None:
         """
         Obtém o (único) registro que define a data de referência do
         estudo definido no :class:`Dadger`
@@ -658,11 +659,11 @@ class Dadger(RegisterFile):
 
     def re(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio_inicial: Optional[int] = None,
-        estagio_final: Optional[int] = None,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[RE, List[RE], pandas.DataFrame]]:
+    ) -> RE | list[RE] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra uma restrição elétrica existente
         no estudo descrito pelo :class:`Dadger`.
@@ -691,10 +692,10 @@ class Dadger(RegisterFile):
 
     def lu(  # noqa
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[LU, List[LU], pandas.DataFrame]]:
+    ) -> LU | list[LU] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica os limites inferiores e
         superiores por patamar de uma restrição elétrica existente
@@ -742,7 +743,7 @@ class Dadger(RegisterFile):
 
         """
 
-        def cria_registro() -> Optional[LU]:
+        def cria_registro() -> LU | None:
             re = self.re(codigo_restricao=codigo_restricao)
             if isinstance(re, list) or re is None:
                 return None
@@ -786,12 +787,12 @@ class Dadger(RegisterFile):
 
     def fu(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
-        codigo_usina: Optional[int] = None,
-        coeficiente: Optional[float] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
         df: bool = False,
-    ) -> Optional[Union[FU, List[FU], pandas.DataFrame]]:
+    ) -> FU | list[FU] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra os coeficientes das restrições
         elétricas.
@@ -823,12 +824,12 @@ class Dadger(RegisterFile):
 
     def ft(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
-        codigo_usina: Optional[int] = None,
-        coeficiente: Optional[float] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
         df: bool = False,
-    ) -> Optional[Union[FT, List[FT], pandas.DataFrame]]:
+    ) -> FT | list[FT] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra os coeficientes das restrições
         elétricas.
@@ -860,13 +861,13 @@ class Dadger(RegisterFile):
 
     def fi(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
-        codigo_submercado_de: Optional[int] = None,
-        codigo_submercado_para: Optional[int] = None,
-        coeficiente: Optional[float] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado_de: int | None = None,
+        codigo_submercado_para: int | None = None,
+        coeficiente: float | None = None,
         df: bool = False,
-    ) -> Optional[Union[FI, List[FI], pandas.DataFrame]]:
+    ) -> FI | list[FI] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra os coeficientes das restrições
         elétricas.
@@ -901,10 +902,10 @@ class Dadger(RegisterFile):
 
     def vi(
         self,
-        codigo_usina: Optional[int] = None,
-        duracao: Optional[int] = None,
+        codigo_usina: int | None = None,
+        duracao: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[VI, List[VI], pandas.DataFrame]]:
+    ) -> VI | list[VI] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica os tempos de viagem da
         água em uma UHE existente no no estudo descrito
@@ -926,8 +927,8 @@ class Dadger(RegisterFile):
         )
 
     def ir(
-        self, tipo: Optional[str] = None, df: bool = False
-    ) -> Optional[Union[IR, List[IR], pandas.DataFrame]]:
+        self, tipo: str | None = None, df: bool = False
+    ) -> IR | list[IR] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica os relatórios de saída
         a serem produzidos pelo DECOMP após a execução do estudo
@@ -946,8 +947,8 @@ class Dadger(RegisterFile):
         return self.__registros_ou_df(IR, tipo=tipo, df=df)
 
     def rt(
-        self, restricao: Optional[str] = None, df: bool = False
-    ) -> Optional[Union[RT, List[RT], pandas.DataFrame]]:
+        self, restricao: str | None = None, df: bool = False
+    ) -> RT | list[RT] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica uma retirada de restrição
         de soleira de vertedouro ou canal de desvio.
@@ -966,10 +967,10 @@ class Dadger(RegisterFile):
 
     def fc(
         self,
-        tipo: Optional[str] = None,
-        caminho: Optional[str] = None,
+        tipo: str | None = None,
+        caminho: str | None = None,
         df: bool = False,
-    ) -> Optional[Union[FC, List[FC], pandas.DataFrame]]:
+    ) -> FC | list[FC] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica os caminhos para os
         arquivos com a FCF do NEWAVE.
@@ -989,8 +990,8 @@ class Dadger(RegisterFile):
         return self.__registros_ou_df(FC, tipo=tipo, caminho=caminho, df=df)
 
     def ea(
-        self, codigo_ree: Optional[int] = None, df: bool = False
-    ) -> Optional[Union[EA, List[EA], pandas.DataFrame]]:
+        self, codigo_ree: int | None = None, df: bool = False
+    ) -> EA | list[EA] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica a ENA dos meses anteriores
         ao estudo.
@@ -1007,10 +1008,10 @@ class Dadger(RegisterFile):
 
     def es(
         self,
-        codigo_ree: Optional[int] = None,
-        numero_semanas: Optional[int] = None,
+        codigo_ree: int | None = None,
+        numero_semanas: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[ES, List[ES], pandas.DataFrame]]:
+    ) -> ES | list[ES] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica a ENA das semanas anteriores
         ao estudo.
@@ -1031,8 +1032,8 @@ class Dadger(RegisterFile):
         )
 
     def qi(
-        self, codigo_usina: Optional[int] = None, df: bool = False
-    ) -> Optional[Union[QI, List[QI], pandas.DataFrame]]:
+        self, codigo_usina: int | None = None, df: bool = False
+    ) -> QI | list[QI] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica o tempo de viagem
         para cálculo da ENA.
@@ -1049,8 +1050,8 @@ class Dadger(RegisterFile):
         return self.__registros_ou_df(QI, codigo_usina=codigo_usina, df=df)
 
     def ti(
-        self, codigo_usina: Optional[int] = None, df: bool = False
-    ) -> Optional[Union[TI, List[TI], pandas.DataFrame]]:
+        self, codigo_usina: int | None = None, df: bool = False
+    ) -> TI | list[TI] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica as taxas de irrigação
         por posto (UHE) existente no estudo especificado no :class:`Dadger`
@@ -1068,10 +1069,10 @@ class Dadger(RegisterFile):
 
     def da(
         self,
-        codigo_usina_retirada: Optional[int] = None,
-        codigo_usina_retorno: Optional[int] = None,
+        codigo_usina_retirada: int | None = None,
+        codigo_usina_retorno: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[DA, List[DA], pandas.DataFrame]]:
+    ) -> DA | list[DA] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica as retiradas de água para
         outros usos (desvios de água) por usina (UHE) existente no
@@ -1097,10 +1098,10 @@ class Dadger(RegisterFile):
 
     def mp(
         self,
-        codigo_usina: Optional[int] = None,
-        frequencia: Optional[int] = None,
+        codigo_usina: int | None = None,
+        frequencia: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[MP, List[MP], pandas.DataFrame]]:
+    ) -> MP | list[MP] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica as manutenções programadas
         por UHE existente no estudo especificado no :class:`Dadger`
@@ -1122,10 +1123,10 @@ class Dadger(RegisterFile):
 
     def mt(
         self,
-        codigo_usina: Optional[int] = None,
-        codigo_submercado: Optional[int] = None,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[MT, List[MT], pandas.DataFrame]]:
+    ) -> MT | list[MT] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica as manutenções programadas
         por UTE existente no estudo especificado no :class:`Dadger`
@@ -1150,10 +1151,10 @@ class Dadger(RegisterFile):
 
     def fd(
         self,
-        codigo_usina: Optional[int] = None,
-        frequencia: Optional[int] = None,
+        codigo_usina: int | None = None,
+        frequencia: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[FD, List[FD], pandas.DataFrame]]:
+    ) -> FD | list[FD] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica os fatores de disponibilidade
         por UHE existente no estudo especificado no :class:`Dadger`
@@ -1175,18 +1176,18 @@ class Dadger(RegisterFile):
 
     def fp(
         self,
-        codigo_usina: Optional[int] = None,
-        estagio: Optional[int] = None,
-        tipo_entrada_janela_turbinamento: Optional[int] = None,
-        numero_pontos_turbinamento: Optional[int] = None,
-        limite_inferior_janela_turbinamento: Optional[float] = None,
-        limite_superior_janela_turbinamento: Optional[float] = None,
-        tipo_entrada_janela_volume: Optional[int] = None,
-        numero_pontos_volume: Optional[int] = None,
-        limite_inferior_janela_volume: Optional[float] = None,
-        limite_superior_janela_volume: Optional[float] = None,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        tipo_entrada_janela_turbinamento: int | None = None,
+        numero_pontos_turbinamento: int | None = None,
+        limite_inferior_janela_turbinamento: float | None = None,
+        limite_superior_janela_turbinamento: float | None = None,
+        tipo_entrada_janela_volume: int | None = None,
+        numero_pontos_volume: int | None = None,
+        limite_inferior_janela_volume: float | None = None,
+        limite_superior_janela_volume: float | None = None,
         df: bool = False,
-    ) -> Optional[Union[FP, List[FP], pandas.DataFrame]]:
+    ) -> FP | list[FP] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica as taxas de irrigação
         por posto (UHE) existente no estudo especificado no :class:`Dadger`
@@ -1242,8 +1243,8 @@ class Dadger(RegisterFile):
         )
 
     def rq(
-        self, codigo_ree: Optional[int] = None, df: bool = False
-    ) -> Optional[Union[RQ, List[RQ], pandas.DataFrame]]:
+        self, codigo_ree: int | None = None, df: bool = False
+    ) -> RQ | list[RQ] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica as vazões mínimas históricas
         por REE existentes no estudo especificado no :class:`Dadger`
@@ -1260,8 +1261,8 @@ class Dadger(RegisterFile):
         return self.__registros_ou_df(RQ, codigo_ree=codigo_ree, df=df)
 
     def ve(
-        self, codigo_usina: Optional[int] = None, df: bool = False
-    ) -> Optional[Union[VE, List[VE], pandas.DataFrame]]:
+        self, codigo_usina: int | None = None, df: bool = False
+    ) -> VE | list[VE] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica os volumes de espera
         por posto (UHE) existente no estudo especificado no :class:`Dadger`
@@ -1279,11 +1280,11 @@ class Dadger(RegisterFile):
 
     def hv(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio_inicial: Optional[int] = None,
-        estagio_final: Optional[int] = None,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[HV, List[HV], pandas.DataFrame]]:
+    ) -> HV | list[HV] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra uma restrição de volume mínimo
         armazenado existente no estudo descrito pelo :class:`Dadger`.
@@ -1312,10 +1313,10 @@ class Dadger(RegisterFile):
 
     def lv(  # noqa
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[LV, List[LV], pandas.DataFrame]]:
+    ) -> LV | list[LV] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica os limites inferior e
         superior de uma restrição de volume mínimo existente
@@ -1363,7 +1364,7 @@ class Dadger(RegisterFile):
 
         """
 
-        def cria_registro() -> Optional[LV]:
+        def cria_registro() -> LV | None:
             hv = self.hv(codigo_restricao=codigo_restricao)
             if isinstance(hv, list) or hv is None:
                 return None
@@ -1405,13 +1406,13 @@ class Dadger(RegisterFile):
 
     def cv(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
-        codigo_usina: Optional[int] = None,
-        coeficiente: Optional[float] = None,
-        tipo: Optional[str] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        tipo: str | None = None,
         df: bool = False,
-    ) -> Optional[Union[CV, List[CV], pandas.DataFrame]]:
+    ) -> CV | list[CV] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra os coeficientes das restrições
         de volume.
@@ -1446,11 +1447,11 @@ class Dadger(RegisterFile):
 
     def hq(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio_inicial: Optional[int] = None,
-        estagio_final: Optional[int] = None,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[HQ, List[HQ], pandas.DataFrame]]:
+    ) -> HQ | list[HQ] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra uma restrição de vazão
         existente no estudo descrito pelo :class:`Dadger`.
@@ -1479,10 +1480,10 @@ class Dadger(RegisterFile):
 
     def lq(  # noqa
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[LQ, List[LQ], pandas.DataFrame]]:
+    ) -> LQ | list[LQ] | pandas.DataFrame | None:
         """
         Obtém um registro que especifica os limites inferiores e
         superiores por patamar de uma restrição de vazão existente
@@ -1530,7 +1531,7 @@ class Dadger(RegisterFile):
 
         """
 
-        def cria_registro() -> Optional[LQ]:
+        def cria_registro() -> LQ | None:
             hq = self.hq(codigo_restricao=codigo_restricao)
             if isinstance(hq, list) or hq is None:
                 return None
@@ -1572,13 +1573,13 @@ class Dadger(RegisterFile):
 
     def cq(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
-        codigo_usina: Optional[int] = None,
-        coeficiente: Optional[float] = None,
-        tipo: Optional[str] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        tipo: str | None = None,
         df: bool = False,
-    ) -> Optional[Union[CQ, List[CQ], pandas.DataFrame]]:
+    ) -> CQ | list[CQ] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra os coeficientes das restrições
         de vazão.
@@ -1613,16 +1614,16 @@ class Dadger(RegisterFile):
 
     def he(
         self,
-        codigo_restricao: Optional[int] = None,
-        estagio: Optional[int] = None,
-        tipo_limite: Optional[int] = None,
-        forma_calculo_produtibilidades: Optional[int] = None,
-        tipo_valores_produtibilidades: Optional[int] = None,
-        tipo_penalidade: Optional[int] = None,
-        valor_penalidade: Optional[float] = None,
-        arquivo_produtibilidades: Optional[str] = None,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        tipo_limite: int | None = None,
+        forma_calculo_produtibilidades: int | None = None,
+        tipo_valores_produtibilidades: int | None = None,
+        tipo_penalidade: int | None = None,
+        valor_penalidade: float | None = None,
+        arquivo_produtibilidades: str | None = None,
         df: bool = False,
-    ) -> Optional[Union[HE, List[HE], pandas.DataFrame]]:
+    ) -> HE | list[HE] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra uma restrição de energia
         armazenada existente no estudo descrito pelo :class:`Dadger`.
@@ -1671,11 +1672,11 @@ class Dadger(RegisterFile):
 
     def cm(
         self,
-        codigo_restricao: Optional[int] = None,
-        codigo_ree: Optional[int] = None,
-        coeficiente: Optional[float] = None,
+        codigo_restricao: int | None = None,
+        codigo_ree: int | None = None,
+        coeficiente: float | None = None,
         df: bool = False,
-    ) -> Optional[Union[CM, List[CM], pandas.DataFrame]]:
+    ) -> CM | list[CM] | pandas.DataFrame | None:
         """
         Obtém um registro que cadastra os coeficientes das restrições
         de energia armazenada.
@@ -1702,7 +1703,7 @@ class Dadger(RegisterFile):
         )
 
     @property
-    def ev(self) -> Optional[EV]:
+    def ev(self) -> EV | None:
         """
         Obtém o (único) registro que define a evaporação
         :class:`Dadger`
@@ -1717,7 +1718,7 @@ class Dadger(RegisterFile):
             return None
 
     @property
-    def fj(self) -> Optional[FJ]:
+    def fj(self) -> FJ | None:
         """
         Obtém o (único) registro que define o arquivo `polinjus`
         :class:`Dadger`
@@ -1732,7 +1733,7 @@ class Dadger(RegisterFile):
             return None
 
     @property
-    def pu(self) -> Optional[PU]:
+    def pu(self) -> PU | None:
         """
         Obtém o (único) registro que define se será usado PL único.
 
@@ -1746,7 +1747,7 @@ class Dadger(RegisterFile):
             return None
 
     @property
-    def rc(self) -> Optional[RC]:
+    def rc(self) -> RC | None:
         """
         Obtém o (único) registro que insere restrições do tipo
         escada.
@@ -1762,11 +1763,11 @@ class Dadger(RegisterFile):
 
     def pe(
         self,
-        codigo_submercado: Optional[int] = None,
-        tipo: Optional[int] = None,
-        penalidade: Optional[float] = None,
+        codigo_submercado: int | None = None,
+        tipo: int | None = None,
+        penalidade: float | None = None,
         df: bool = False,
-    ) -> Optional[Union[PE, List[PE], pandas.DataFrame]]:
+    ) -> PE | list[PE] | pandas.DataFrame | None:
         """
         Obtém um registro que altera penalidades de vertimento,
             intercâmbio e desvios.
@@ -1794,11 +1795,11 @@ class Dadger(RegisterFile):
 
     def ts(
         self,
-        tolerancia_primaria: Optional[float] = None,
-        tolerancia_secundaria: Optional[float] = None,
-        zera_coeficientes: Optional[int] = None,
-        tolerancia_teste_otimalidade: Optional[float] = None,
-    ) -> Optional[Union[TS, List[TS]]]:
+        tolerancia_primaria: float | None = None,
+        tolerancia_secundaria: float | None = None,
+        zera_coeficientes: int | None = None,
+        tolerancia_teste_otimalidade: float | None = None,
+    ) -> TS | list[TS] | None:
         """
         Obtém um registro que altera as tolerâncias do solver.
 
@@ -1825,13 +1826,13 @@ class Dadger(RegisterFile):
 
     def pv(
         self,
-        penalidade_variaveis_folga: Optional[float] = None,
-        tolerancia_viabilidade_restricoes: Optional[float] = None,
-        iteracoes_atualizacao_penalidade: Optional[int] = None,
-        fator_multiplicacao_folga: Optional[float] = None,
-        valor_inicial_variaveis_folga: Optional[float] = None,
-        valor_final_variaveis_folga: Optional[float] = None,
-    ) -> Optional[Union[PV, List[PV]]]:
+        penalidade_variaveis_folga: float | None = None,
+        tolerancia_viabilidade_restricoes: float | None = None,
+        iteracoes_atualizacao_penalidade: int | None = None,
+        fator_multiplicacao_folga: float | None = None,
+        valor_inicial_variaveis_folga: float | None = None,
+        valor_final_variaveis_folga: float | None = None,
+    ) -> PV | list[PV] | None:
         """
         Obtém um registro que altera as penalidades das variáveis
             de folga.
@@ -1869,10 +1870,10 @@ class Dadger(RegisterFile):
 
     def cx(
         self,
-        codigo_newave: Optional[int] = None,
-        codigo_decomp: Optional[int] = None,
+        codigo_newave: int | None = None,
+        codigo_decomp: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[CX, List[CX], pandas.DataFrame]]:
+    ) -> CX | list[CX] | pandas.DataFrame | None:
         """
         Obtém um registro que altera as tolerâncias do solver.
 
@@ -1892,7 +1893,7 @@ class Dadger(RegisterFile):
         )
 
     @property
-    def fa(self) -> Optional[FA]:
+    def fa(self) -> FA | None:
         """
         Obtém o (único) registro que define o arquivo de índices.
 
@@ -1906,7 +1907,7 @@ class Dadger(RegisterFile):
             return None
 
     @property
-    def vt(self) -> Optional[VT]:
+    def vt(self) -> VT | None:
         """
         Obtém o (único) registro que define o arquivo com
             cenários de vento.
@@ -1921,7 +1922,7 @@ class Dadger(RegisterFile):
             return None
 
     @property
-    def cs(self) -> Optional[CS]:
+    def cs(self) -> CS | None:
         """
         Obtém o (único) registro que habilita a
             consistência de dados.
@@ -1937,9 +1938,9 @@ class Dadger(RegisterFile):
 
     def vl(
         self,
-        codigo_usina_influenciada: Optional[int] = None,
+        codigo_usina_influenciada: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[VL, List[VL], pandas.DataFrame]]:
+    ) -> VL | list[VL] | pandas.DataFrame | None:
         """
         Obtém um registro que define uma usina hidrelétrica que sofre
         influência de vazão lateral na cota de jusante existente
@@ -1962,10 +1963,10 @@ class Dadger(RegisterFile):
 
     def vu(
         self,
-        codigo_usina_influenciada: Optional[int] = None,
-        codigo_usina_influenciadora: Optional[int] = None,
+        codigo_usina_influenciada: int | None = None,
+        codigo_usina_influenciadora: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[VU, List[VU], pandas.DataFrame]]:
+    ) -> VU | list[VU] | pandas.DataFrame | None:
         """
         Obtém um registro que define uma usina hidrelétrica que tem
         influencia sobre a vazão de jusante da primeira existente
@@ -1991,10 +1992,10 @@ class Dadger(RegisterFile):
 
     def va(
         self,
-        codigo_usina_influenciada: Optional[int] = None,
-        codigo_posto_influenciador: Optional[int] = None,
+        codigo_usina_influenciada: int | None = None,
+        codigo_posto_influenciador: int | None = None,
         df: bool = False,
-    ) -> Optional[Union[VA, List[VA], pandas.DataFrame]]:
+    ) -> VA | list[VA] | pandas.DataFrame | None:
         """
         Obtém um registro que define um posto que tem
         influencia sobre a vazão de jusante da primeira existente
@@ -2018,9 +2019,7 @@ class Dadger(RegisterFile):
             df=df,
         )
 
-    def pd(
-        self, algoritmo: Optional[str] = None
-    ) -> Optional[Union[PD, List[PD]]]:
+    def pd(self, algoritmo: str | None = None) -> PD | list[PD] | None:
         """
         Obtém um registro que especifica o algoritmo usado para a solução.
 

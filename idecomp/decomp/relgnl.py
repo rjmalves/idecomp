@@ -1,11 +1,15 @@
-from idecomp.decomp.modelos.relgnl import BlocoDadosUsinasRelgnl
-from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesTGRelgnl
-from idecomp.decomp.modelos.relgnl import BlocoComandosUsinasAjustesRERelgnl
-from idecomp.decomp.modelos.relgnl import BlocoRelatorioOperacaoRelgnl
+from typing import Any, TypeVar
+
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.block import Block
 from cfinterface.files.blockfile import BlockFile
-from typing import Type, List, TypeVar, Optional
-import pandas as pd  # type: ignore
+
+from idecomp.decomp.modelos.relgnl import (
+    BlocoComandosUsinasAjustesRERelgnl,
+    BlocoComandosUsinasAjustesTGRelgnl,
+    BlocoDadosUsinasRelgnl,
+    BlocoRelatorioOperacaoRelgnl,
+)
 
 
 class Relgnl(BlockFile):
@@ -28,11 +32,11 @@ class Relgnl(BlockFile):
         BlocoRelatorioOperacaoRelgnl,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
         self.__relatorio_operacao_gnl = None
 
-    def __concatena_blocos(self, bloco: Type[T]) -> Optional[pd.DataFrame]:
+    def __concatena_blocos(self, bloco: type[T]) -> pd.DataFrame | None:
         """
         Adiciona uma coluna com os estágios de cada amostra e outra
         com o estágio de cada uma, assumindo
@@ -43,7 +47,7 @@ class Relgnl(BlockFile):
         :rtype: pd.DataFrame
         """
 
-        col_estagio: List[int] = []
+        col_estagio: list[int] = []
         df = None
         for i, b in enumerate(self.data.of_type(bloco)):
             if not isinstance(b, Block):
@@ -61,7 +65,7 @@ class Relgnl(BlockFile):
         return None
 
     @property
-    def usinas_termicas(self) -> Optional[pd.DataFrame]:
+    def usinas_termicas(self) -> pd.DataFrame | None:
         """
         Tabela de informações das usinas térmicas GNL.
 
@@ -88,7 +92,7 @@ class Relgnl(BlockFile):
         return None
 
     @property
-    def comandos_usinas_registros_tg(self) -> Optional[pd.DataFrame]:
+    def comandos_usinas_registros_tg(self) -> pd.DataFrame | None:
         """
         Tabela de comandos das usinas térmicas GNL com ajustes
         devido aos registros TG.
@@ -111,7 +115,7 @@ class Relgnl(BlockFile):
         return None
 
     @property
-    def comandos_usinas_restricoes_eletricas(self) -> Optional[pd.DataFrame]:
+    def comandos_usinas_restricoes_eletricas(self) -> pd.DataFrame | None:
         """
         Tabela de comandos das usinas térmicas GNL com ajustes
         devido a restrições elétricas especiais.
@@ -134,7 +138,7 @@ class Relgnl(BlockFile):
         return None
 
     @property
-    def relatorio_operacao_termica(self) -> Optional[pd.DataFrame]:
+    def relatorio_operacao_termica(self) -> pd.DataFrame | None:
         """
         Tabela com o relatório do despacho sinalizado para as usinas
         térmicas GNL.

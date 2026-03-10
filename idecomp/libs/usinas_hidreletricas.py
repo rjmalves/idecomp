@@ -1,13 +1,15 @@
-from typing import Type, TypeVar, Optional, List, Union
+from typing import Any, TypeVar
+
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
-import pandas as pd  # type: ignore
+
 from idecomp.libs.modelos.usinas_hidreletricas import (
     HidreletricaCurvaJusante,
+    HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
+    HidreletricaCurvaJusanteAfogamentoExplicitoUsina,
     HidreletricaCurvaJusantePolinomioPorPartes,
     HidreletricaCurvaJusantePolinomioPorPartesSegmento,
-    HidreletricaCurvaJusanteAfogamentoExplicitoUsina,
-    HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
 )
 
 
@@ -27,9 +29,12 @@ class UsinasHidreletricas(RegisterFile):
         HidreletricaCurvaJusante,
     ]
 
+    def __init__(self, data: Any = ...) -> None:
+        super().__init__(data)
+
     def __registros_ou_df(
-        self, t: Type[T], **kwargs
-    ) -> Optional[Union[T, List[T], pd.DataFrame]]:
+        self, t: type[T], **kwargs: Any
+    ) -> T | list[T] | pd.DataFrame | None:
         if kwargs.get("df"):
             return self._as_df(t)
         else:
@@ -38,17 +43,16 @@ class UsinasHidreletricas(RegisterFile):
 
     def hidreletrica_curvajusante(
         self,
-        codigo_usina: Optional[int] = None,
-        indice_familia: Optional[int] = None,
-        nivel_montante_referencia: Optional[float] = None,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        nivel_montante_referencia: float | None = None,
         df: bool = False,
-    ) -> Optional[
-        Union[
-            HidreletricaCurvaJusante,
-            List[HidreletricaCurvaJusante],
-            pd.DataFrame,
-        ]
-    ]:
+    ) -> (
+        HidreletricaCurvaJusante
+        | list[HidreletricaCurvaJusante]
+        | pd.DataFrame
+        | None
+    ):
         """
         Obtém registros que cadastram uma família de curvas
         de jusante para uma usina hidrelétrica. Opcionalmente,
@@ -79,17 +83,16 @@ class UsinasHidreletricas(RegisterFile):
 
     def hidreletrica_curvajusante_polinomio(
         self,
-        codigo_usina: Optional[int] = None,
-        indice_familia: Optional[int] = None,
-        numero_polinomios: Optional[int] = None,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        numero_polinomios: int | None = None,
         df: bool = False,
-    ) -> Optional[
-        Union[
-            HidreletricaCurvaJusantePolinomioPorPartes,
-            List[HidreletricaCurvaJusantePolinomioPorPartes],
-            pd.DataFrame,
-        ]
-    ]:
+    ) -> (
+        HidreletricaCurvaJusantePolinomioPorPartes
+        | list[HidreletricaCurvaJusantePolinomioPorPartes]
+        | pd.DataFrame
+        | None
+    ):
         """
         Obtém registros que cadastram uma família de curvas
         de jusante para uma usina hidrelétrica. Opcionalmente,
@@ -119,24 +122,23 @@ class UsinasHidreletricas(RegisterFile):
 
     def hidreletrica_curvajusante_polinomio_segmento(
         self,
-        codigo_usina: Optional[int] = None,
-        indice_familia: Optional[int] = None,
-        indice_polinomio: Optional[int] = None,
-        limite_inferior_vazao_jusante: Optional[float] = None,
-        limite_superior_vazao_jusante: Optional[float] = None,
-        coeficiente_a0: Optional[float] = None,
-        coeficiente_a1: Optional[float] = None,
-        coeficiente_a2: Optional[float] = None,
-        coeficiente_a3: Optional[float] = None,
-        coeficiente_a4: Optional[float] = None,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        indice_polinomio: int | None = None,
+        limite_inferior_vazao_jusante: float | None = None,
+        limite_superior_vazao_jusante: float | None = None,
+        coeficiente_a0: float | None = None,
+        coeficiente_a1: float | None = None,
+        coeficiente_a2: float | None = None,
+        coeficiente_a3: float | None = None,
+        coeficiente_a4: float | None = None,
         df: bool = False,
-    ) -> Optional[
-        Union[
-            HidreletricaCurvaJusantePolinomioPorPartesSegmento,
-            List[HidreletricaCurvaJusantePolinomioPorPartesSegmento],
-            pd.DataFrame,
-        ]
-    ]:
+    ) -> (
+        HidreletricaCurvaJusantePolinomioPorPartesSegmento
+        | list[HidreletricaCurvaJusantePolinomioPorPartesSegmento]
+        | pd.DataFrame
+        | None
+    ):
         """
         Obtém registros que cadastram os polinômios para cada família de curvas
         de jusante para uma usina hidrelétrica. Opcionalmente,
@@ -190,16 +192,15 @@ class UsinasHidreletricas(RegisterFile):
 
     def hidreletrica_curvajusante_afogamentoexplicito_usina(
         self,
-        codigo_usina: Optional[int] = None,
-        considera_afogamento: Optional[str] = None,
+        codigo_usina: int | None = None,
+        considera_afogamento: str | None = None,
         df: bool = False,
-    ) -> Optional[
-        Union[
-            HidreletricaCurvaJusanteAfogamentoExplicitoUsina,
-            List[HidreletricaCurvaJusanteAfogamentoExplicitoUsina],
-            pd.DataFrame,
-        ]
-    ]:
+    ) -> (
+        HidreletricaCurvaJusanteAfogamentoExplicitoUsina
+        | list[HidreletricaCurvaJusanteAfogamentoExplicitoUsina]
+        | pd.DataFrame
+        | None
+    ):
         """
         Obtém registros que habilitam ou desabilitam a consideração
         do tratamento do afogamento explícito por usina. Opcionalmente,
@@ -223,14 +224,13 @@ class UsinasHidreletricas(RegisterFile):
         )
 
     def hidreletrica_curvajusante_afogamentoexplicito_padrao(
-        self, considera_afogamento: Optional[str] = None, df: bool = False
-    ) -> Optional[
-        Union[
-            HidreletricaCurvaJusanteAfogamentoExplicitoPadrao,
-            List[HidreletricaCurvaJusanteAfogamentoExplicitoPadrao],
-            pd.DataFrame,
-        ]
-    ]:
+        self, considera_afogamento: str | None = None, df: bool = False
+    ) -> (
+        HidreletricaCurvaJusanteAfogamentoExplicitoPadrao
+        | list[HidreletricaCurvaJusanteAfogamentoExplicitoPadrao]
+        | pd.DataFrame
+        | None
+    ):
         """
         Obtém registros que habilitam ou desabilitam a consideração
         do tratamento do afogamento explícito padrão.

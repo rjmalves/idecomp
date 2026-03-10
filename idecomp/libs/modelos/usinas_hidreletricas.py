@@ -1,10 +1,8 @@
-from cfinterface.components.register import Register
-from cfinterface.components.line import Line
-from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.floatfield import FloatField
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
-
-from typing import Optional
+from cfinterface.components.register import Register
 
 
 class HidreletricaCurvaJusante(Register):
@@ -24,7 +22,7 @@ class HidreletricaCurvaJusante(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da usina hidrelétrica relacionada ao polinômio.
 
@@ -34,11 +32,11 @@ class HidreletricaCurvaJusante(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def indice_familia(self) -> Optional[int]:
+    def indice_familia(self) -> int | None:
         """
         O índice da família de polinômios.
 
@@ -48,11 +46,11 @@ class HidreletricaCurvaJusante(Register):
         return self.data[1]
 
     @indice_familia.setter
-    def indice_familia(self, c: int):
+    def indice_familia(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def nivel_montante_referencia(self) -> Optional[float]:
+    def nivel_montante_referencia(self) -> float | None:
         """
         O nível de montante da usina de jusante
         de referência.
@@ -63,7 +61,7 @@ class HidreletricaCurvaJusante(Register):
         return self.data[2]
 
     @nivel_montante_referencia.setter
-    def nivel_montante_referencia(self, c: float):
+    def nivel_montante_referencia(self, c: float) -> None:
         self.data[2] = c
 
 
@@ -84,7 +82,7 @@ class HidreletricaCurvaJusantePolinomioPorPartes(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da usina hidrelétrica relacionada ao polinômio.
 
@@ -94,11 +92,11 @@ class HidreletricaCurvaJusantePolinomioPorPartes(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def indice_familia(self) -> Optional[int]:
+    def indice_familia(self) -> int | None:
         """
         O índice da família de polinômios.
 
@@ -108,11 +106,11 @@ class HidreletricaCurvaJusantePolinomioPorPartes(Register):
         return self.data[1]
 
     @indice_familia.setter
-    def indice_familia(self, c: int):
+    def indice_familia(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def numero_polinomios(self) -> Optional[int]:
+    def numero_polinomios(self) -> int | None:
         """
         O número de polinômios existentes na família.
 
@@ -122,7 +120,7 @@ class HidreletricaCurvaJusantePolinomioPorPartes(Register):
         return self.data[2]
 
     @numero_polinomios.setter
-    def numero_polinomios(self, c: int):
+    def numero_polinomios(self, c: int) -> None:
         self.data[2] = c
 
 
@@ -150,7 +148,7 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da usina hidrelétrica relacionada ao polinômio.
 
@@ -160,11 +158,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def indice_familia(self) -> Optional[int]:
+    def indice_familia(self) -> int | None:
         """
         O índice da família de polinômios.
 
@@ -174,11 +172,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[1]
 
     @indice_familia.setter
-    def indice_familia(self, c: int):
+    def indice_familia(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def indice_polinomio(self) -> Optional[int]:
+    def indice_polinomio(self) -> int | None:
         """
         O índice do polinômio da respectiva família.
 
@@ -188,11 +186,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[2]
 
     @indice_polinomio.setter
-    def indice_polinomio(self, c: int):
+    def indice_polinomio(self, c: int) -> None:
         self.data[2] = c
 
     @property
-    def limite_inferior_vazao_jusante(self) -> Optional[float]:
+    def limite_inferior_vazao_jusante(self) -> float | None:
         """
         O limite inferior de vazão de jusante (defluência mais lateral)
         para janela de validade do polinômio.
@@ -203,11 +201,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[3]
 
     @limite_inferior_vazao_jusante.setter
-    def limite_inferior_vazao_jusante(self, c: float):
+    def limite_inferior_vazao_jusante(self, c: float) -> None:
         self.data[3] = c
 
     @property
-    def limite_superior_vazao_jusante(self) -> Optional[float]:
+    def limite_superior_vazao_jusante(self) -> float | None:
         """
         O limite superior de vazão de jusante (defluência mais lateral)
         para janela de validade do polinômio.
@@ -218,11 +216,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[4]
 
     @limite_superior_vazao_jusante.setter
-    def limite_superior_vazao_jusante(self, c: float):
+    def limite_superior_vazao_jusante(self, c: float) -> None:
         self.data[4] = c
 
     @property
-    def coeficiente_a0(self) -> Optional[float]:
+    def coeficiente_a0(self) -> float | None:
         """
         O coeficiente de grau 0 do polinômio.
 
@@ -232,11 +230,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[5]
 
     @coeficiente_a0.setter
-    def coeficiente_a0(self, c: float):
+    def coeficiente_a0(self, c: float) -> None:
         self.data[5] = c
 
     @property
-    def coeficiente_a1(self) -> Optional[float]:
+    def coeficiente_a1(self) -> float | None:
         """
         O coeficiente de grau 1 do polinômio.
 
@@ -246,11 +244,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[6]
 
     @coeficiente_a1.setter
-    def coeficiente_a1(self, c: float):
+    def coeficiente_a1(self, c: float) -> None:
         self.data[6] = c
 
     @property
-    def coeficiente_a2(self) -> Optional[float]:
+    def coeficiente_a2(self) -> float | None:
         """
         O coeficiente de grau 2 do polinômio.
 
@@ -260,11 +258,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[7]
 
     @coeficiente_a2.setter
-    def coeficiente_a2(self, c: float):
+    def coeficiente_a2(self, c: float) -> None:
         self.data[7] = c
 
     @property
-    def coeficiente_a3(self) -> Optional[float]:
+    def coeficiente_a3(self) -> float | None:
         """
         O coeficiente de grau 3 do polinômio.
 
@@ -274,11 +272,11 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[8]
 
     @coeficiente_a3.setter
-    def coeficiente_a3(self, c: float):
+    def coeficiente_a3(self, c: float) -> None:
         self.data[8] = c
 
     @property
-    def coeficiente_a4(self) -> Optional[float]:
+    def coeficiente_a4(self) -> float | None:
         """
         O coeficiente de grau 4 do polinômio.
 
@@ -288,7 +286,7 @@ class HidreletricaCurvaJusantePolinomioPorPartesSegmento(Register):
         return self.data[9]
 
     @coeficiente_a4.setter
-    def coeficiente_a4(self, c: float):
+    def coeficiente_a4(self, c: float) -> None:
         self.data[9] = c
 
 
@@ -308,7 +306,7 @@ class HidreletricaCurvaJusanteAfogamentoExplicitoUsina(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da usina hidrelétrica relacionada ao polinômio.
 
@@ -318,11 +316,11 @@ class HidreletricaCurvaJusanteAfogamentoExplicitoUsina(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def considera_afogamento(self) -> Optional[str]:
+    def considera_afogamento(self) -> str | None:
         """
         Habilitação do afogamento explícito.
 
@@ -332,7 +330,7 @@ class HidreletricaCurvaJusanteAfogamentoExplicitoUsina(Register):
         return self.data[1]
 
     @considera_afogamento.setter
-    def considera_afogamento(self, c: str):
+    def considera_afogamento(self, c: str) -> None:
         self.data[1] = c
 
 
@@ -351,7 +349,7 @@ class HidreletricaCurvaJusanteAfogamentoExplicitoPadrao(Register):
     )
 
     @property
-    def considera_afogamento(self) -> Optional[str]:
+    def considera_afogamento(self) -> str | None:
         """
         Habilitação do afogamento explícito.
 
@@ -361,5 +359,5 @@ class HidreletricaCurvaJusanteAfogamentoExplicitoPadrao(Register):
         return self.data[0]
 
     @considera_afogamento.setter
-    def considera_afogamento(self, c: str):
+    def considera_afogamento(self, c: str) -> None:
         self.data[0] = c

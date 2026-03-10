@@ -1,13 +1,14 @@
 # Imports do próprio módulo
 
 # Imports de módulos externos
+from typing import IO, Any
+
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.block import Block
-from cfinterface.components.line import Line
-from cfinterface.components.integerfield import IntegerField
-from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.floatfield import FloatField
-import pandas as pd  # type: ignore
-from typing import IO, List
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.line import Line
+from cfinterface.components.literalfield import LiteralField
 
 
 class BlocoRelatorioCustos(Block):
@@ -24,7 +25,9 @@ class BlocoRelatorioCustos(Block):
     BEGIN_PATTERN = r" RELATORIO DAS VARIAVEIS DUAIS NO ESTAGIO"
     END_PATTERN = "X----X-"
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(
+        self, previous: Any = None, next: Any = None, data: Any = None
+    ) -> None:
         super().__init__(previous, next, data)
         self.__scenario_line = Line([IntegerField(2, 44), IntegerField(4, 54)])
         self.__dual_variables_line = Line(
@@ -59,7 +62,7 @@ class BlocoRelatorioCustos(Block):
                 ]
             )
 
-    def __read_bloco_variaveis_duais(self, file: IO):
+    def __read_bloco_variaveis_duais(self, file: IO[Any]) -> None:
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [
                 "usina",
@@ -83,8 +86,8 @@ class BlocoRelatorioCustos(Block):
             file.readline()
 
         # Variáveis auxiliares
-        usinas: List[str] = []
-        pihs: List[float] = []
+        usinas: list[str] = []
+        pihs: list[float] = []
         while True:
             linha: str = file.readline()
             # Verifica se acabou
@@ -95,15 +98,13 @@ class BlocoRelatorioCustos(Block):
             usinas.append(dados[0])
             pihs.append(dados[1])
 
-    def __read_bloco_restricoes_fcf(self, file: IO):
+    def __read_bloco_restricoes_fcf(self, file: IO[Any]) -> None:
         def converte_tabela_para_df() -> pd.DataFrame:
             cols = [
                 "indice_corte",
                 "parcela_pi",
             ]
-            df = pd.DataFrame(
-                data={"indice_corte": indices, "parcela_pi": pis}
-            )
+            df = pd.DataFrame(data={"indice_corte": indices, "parcela_pi": pis})
             cols_adic = [
                 "estagio",
                 "cenario",
@@ -121,8 +122,8 @@ class BlocoRelatorioCustos(Block):
             file.readline()
 
         # Variáveis auxiliares
-        indices: List[int] = []
-        pis: List[float] = []
+        indices: list[int] = []
+        pis: list[float] = []
         while True:
             linha: str = file.readline()
             # Verifica se acabou
@@ -134,14 +135,14 @@ class BlocoRelatorioCustos(Block):
             pis.append(dados[1])
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         str_bloco_variaveis_duais = "Aproveitamento  Bal.Hidr."
         str_bloco_restricoes_fcf = "Restricoes da FCF"
 
         # Extrai os dados de estágio e cenário
         self.dados_cenario = self.__scenario_line.read(file.readline())
 
-        self.data: List[pd.DataFrame] = []
+        self.data: list[pd.DataFrame] = []
         while True:
             linha = file.readline()
             if str_bloco_variaveis_duais in linha:

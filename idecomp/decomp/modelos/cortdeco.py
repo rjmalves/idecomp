@@ -1,7 +1,8 @@
+from typing import IO, Any
+
+import numpy as np
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.section import Section
-from typing import IO, List
-import numpy as np  # type: ignore
-import pandas as pd  # type: ignore
 
 
 class SecaoDadosCortdeco(Section):
@@ -44,7 +45,7 @@ class SecaoDadosCortdeco(Section):
         else:
             return self.data.equals(bloco.data)
 
-    def __inicializa_variaveis(self, numero_total_cortes):
+    def __inicializa_variaveis(self, numero_total_cortes: int) -> None:
 
         self.__numero_coeficientes_rhs = 1
         self.__numero_coeficientes_varm = int(len(self.__codigos_uhes))
@@ -77,8 +78,12 @@ class SecaoDadosCortdeco(Section):
         )
 
     def __le_e_atribui_int(
-        self, file: IO, destino: np.ndarray, tamanho: int, indice: int
-    ):
+        self,
+        file: IO[Any],
+        destino: np.ndarray,
+        tamanho: int,
+        indice: int,
+    ) -> None:
         destino[indice, :] = np.frombuffer(
             file.read(tamanho * 4),
             dtype=np.int32,
@@ -86,8 +91,8 @@ class SecaoDadosCortdeco(Section):
         )
 
     def __le_e_atribui_float(
-        self, file: IO, destino: np.ndarray, tamanho: int, indice: int
-    ):
+        self, file: IO[Any], destino: np.ndarray, tamanho: int, indice: int
+    ) -> None:
         destino[indice, :] = np.frombuffer(
             file.read(tamanho * 8),
             dtype=np.float64,
@@ -96,7 +101,7 @@ class SecaoDadosCortdeco(Section):
 
     def __le_registro(
         self,
-        file: IO,
+        file: IO[Any],
         offset: int,
         indice: int,
     ) -> int:
@@ -109,7 +114,9 @@ class SecaoDadosCortdeco(Section):
         self.__tabela_int[indice, 0] = indice
         return indice_proximo_corte
 
-    def __converte_array_em_dataframe(self, no: int, estagio: int):
+    def __converte_array_em_dataframe(
+        self, no: int, estagio: int
+    ) -> pd.DataFrame:
         df_int = pd.DataFrame(
             self.__tabela_int[:, 0],
             columns=[
@@ -140,14 +147,14 @@ class SecaoDadosCortdeco(Section):
         )
 
         df = pd.concat([df_int, df_float], axis=1)
-        return df.sort_values(
-            by=["estagio", "no", "indice_corte"]
-        ).reset_index(drop=True)
+        return df.sort_values(by=["estagio", "no", "indice_corte"]).reset_index(
+            drop=True
+        )
 
     def __le_arquivo(
         self,
-        file: IO,
-    ):
+        file: IO[Any],
+    ) -> None:
         df_cortes_completo = pd.DataFrame()
         # Realiza leitura para cada no que constroi corte
         for _, row in self.__registro_ultimo_corte_no.iterrows():
@@ -254,8 +261,8 @@ class SecaoDadosCortdeco(Section):
         return df_cortes.sort_values(by=["indice_registro"])
 
     def __atualiza_registros(
-        self, file: IO, df_registro_ultimo_corte_no: pd.DataFrame
-    ):
+        self, file: IO[Any], df_registro_ultimo_corte_no: pd.DataFrame
+    ) -> None:
         df_cortes = self.__identifica_indices_registros(
             df_registro_ultimo_corte_no
         )
@@ -280,21 +287,21 @@ class SecaoDadosCortdeco(Section):
                 ).tobytes()
             )
 
-    def read(
+    def read(  # type: ignore[override]
         self,
-        file: IO,
+        file: IO[Any],
         tamanho_registro: int,
         registro_ultimo_corte_no: pd.DataFrame,
         numero_total_cortes: int,
         numero_patamares_carga: int,
         numero_estagios: int,
-        codigos_uhes: List[int],
-        codigos_uhes_tempo_viagem: List[int],
-        codigos_submercados: List[int],
+        codigos_uhes: list[int],
+        codigos_uhes_tempo_viagem: list[int],
+        codigos_submercados: list[int],
         lag_maximo_tempo_viagem: int,
-        *args,
-        **kwargs,
-    ):
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         # Atribui variáveis locais
         self.__tamanho_registro = tamanho_registro
         self.__numero_total_cortes = numero_total_cortes
@@ -313,11 +320,11 @@ class SecaoDadosCortdeco(Section):
         # Ignore bytes restantes
         _ = file.read()
 
-    def write(
+    def write(  # type: ignore[override]
         self,
-        file: IO,
-        *args,
-        **kwargs,
-    ):
+        file: IO[Any],
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         df_registro_ultimo_corte_no = kwargs["df_registro_ultimo_corte_no"]
         self.__atualiza_registros(file, df_registro_ultimo_corte_no)

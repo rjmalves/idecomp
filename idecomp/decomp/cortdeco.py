@@ -1,8 +1,9 @@
-from cfinterface.files.sectionfile import SectionFile
-from idecomp.decomp.modelos.cortdeco import SecaoDadosCortdeco
+from typing import IO, Any, TypeVar
 
-import pandas as pd  # type: ignore
-from typing import TypeVar, Optional, Union, List, IO
+import pandas as pd  # type: ignore[import-untyped]
+from cfinterface.files.sectionfile import SectionFile
+
+from idecomp.decomp.modelos.cortdeco import SecaoDadosCortdeco
 
 
 class Cortdeco(SectionFile):
@@ -16,25 +17,25 @@ class Cortdeco(SectionFile):
     SECTIONS = [SecaoDadosCortdeco]
     STORAGE = "BINARY"
 
-    def __obtem_secao_cortdeco(self) -> Optional[pd.DataFrame]:
+    def __obtem_secao_cortdeco(self) -> pd.DataFrame | None:
         s = self.data.get_sections_of_type(SecaoDadosCortdeco)
         return s.data if not isinstance(s, list) and s is not None else None
 
     @classmethod
     def read(
         cls,
-        content: Union[str, bytes],
+        content: str | bytes,
         tamanho_registro: int = 0,
         registro_ultimo_corte_no: pd.DataFrame = pd.DataFrame(),
         numero_total_cortes: int = 0,
         numero_patamares_carga: int = 3,
         numero_estagios: int = 0,
-        codigos_uhes: List[int] = [],
-        codigos_uhes_tempo_viagem: List[int] = [],
-        codigos_submercados: List[int] = [],
+        codigos_uhes: list[int] = [],
+        codigos_uhes_tempo_viagem: list[int] = [],
+        codigos_submercados: list[int] = [],
         lag_maximo_tempo_viagem: int = 3,
-        *args,
-        **kwargs
+        *args: Any,
+        **kwargs: Any,
     ) -> "Cortdeco":
         a = super().read(
             content,
@@ -48,26 +49,26 @@ class Cortdeco(SectionFile):
             codigos_submercados=codigos_submercados,
             lag_maximo_tempo_viagem=lag_maximo_tempo_viagem,
             *args,
-            **kwargs
+            **kwargs,
         )
-        return a
+        return a  # type: ignore[return-value]
 
     def write(
         self,
-        to: Union[str, IO],
+        to: str | IO[Any],
         df_registro_ultimo_corte_no: pd.DataFrame = pd.DataFrame(),
-        *args,
-        **kwargs
-    ):
+        *args: Any,
+        **kwargs: Any,
+    ) -> None:
         super().write(
             to,
             df_registro_ultimo_corte_no=df_registro_ultimo_corte_no,
             *args,
-            **kwargs
+            **kwargs,
         )
 
     @property
-    def cortes(self) -> Optional[pd.DataFrame]:
+    def cortes(self) -> pd.DataFrame | None:
         """
         Retorna o conjunto dos cortes de Benders construídos
         durante o cálculo da política
@@ -99,13 +100,13 @@ class Cortdeco(SectionFile):
         return self.__obtem_secao_cortdeco()
 
     @cortes.setter
-    def cortes(self, df: pd.DataFrame):
+    def cortes(self, df: pd.DataFrame) -> None:
         dados = self.__obtem_secao_cortdeco()
         if dados is not None:
             dados = df
 
     @property
-    def coeficientes_volume_armazenado(self) -> Optional[pd.DataFrame]:
+    def coeficientes_volume_armazenado(self) -> pd.DataFrame | None:
         """
         Retorna o conjunto dos coeficientes dos cortes de Benders construídos
         durante o cálculo da política para os eixos de volume armazenado
@@ -159,7 +160,7 @@ class Cortdeco(SectionFile):
             return None
 
     @property
-    def coeficientes_defluencia_tempo_viagem(self) -> Optional[pd.DataFrame]:
+    def coeficientes_defluencia_tempo_viagem(self) -> pd.DataFrame | None:
         """
         Retorna o conjunto dos coeficientes dos cortes de Benders construídos
         durante o cálculo da política para os eixos de vazão defluente passada
@@ -188,9 +189,7 @@ class Cortdeco(SectionFile):
                 "uhe", expand=True
             )[1]
             df_melted["codigo_usina"] = (
-                df_melted["variable"]
-                .str.split("_", expand=True)[0]
-                .astype(int)
+                df_melted["variable"].str.split("_", expand=True)[0].astype(int)
             )
             df_melted["lag"] = (
                 df_melted["variable"]
@@ -223,7 +222,7 @@ class Cortdeco(SectionFile):
             return None
 
     @property
-    def coeficientes_geracao_gnl(self) -> Optional[pd.DataFrame]:
+    def coeficientes_geracao_gnl(self) -> pd.DataFrame | None:
         """
         Retorna o conjunto dos coeficientes dos cortes de Benders construídos
         durante o cálculo da política para os eixos de geração térmica

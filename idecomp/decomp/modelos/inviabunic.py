@@ -1,10 +1,11 @@
+from typing import IO, Any
+
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.block import Block
-from cfinterface.components.line import Line
-from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.floatfield import FloatField
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
-from typing import List, IO
-import pandas as pd  # type: ignore
 
 
 class BlocoInviabilidadesIteracoes(Block):
@@ -18,7 +19,9 @@ class BlocoInviabilidadesIteracoes(Block):
     BEGIN_PATTERN = "RELATORIO DE VIOLACOES DAS RESTRICOES"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(
+        self, previous: Any = None, next: Any = None, data: Any = None
+    ) -> None:
         super().__init__(previous, next, data)
         self.__linha = Line(
             [
@@ -47,7 +50,7 @@ class BlocoInviabilidadesIteracoes(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
             df["iteracao"] = iteracoes
@@ -62,13 +65,13 @@ class BlocoInviabilidadesIteracoes(Block):
         # Salta linhas de cabeçalho
         for _ in range(4):
             file.readline()
-        iteracoes: List[int] = []
-        fwds_bwds: List[int] = []
-        estagios: List[int] = []
-        cenarios: List[int] = []
-        restricoes: List[str] = []
-        violacoes: List[float] = []
-        unidades: List[str] = []
+        iteracoes: list[int] = []
+        fwds_bwds: list[int] = []
+        estagios: list[int] = []
+        cenarios: list[int] = []
+        restricoes: list[str] = []
+        violacoes: list[float] = []
+        unidades: list[str] = []
         while True:
             # Confere se a leitura não acabou
             linha = file.readline()
@@ -97,7 +100,9 @@ class BlocoInviabilidadesSimFinal(Block):
     BEGIN_PATTERN = "SIMULACAO FINAL:"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(
+        self, previous: Any = None, next: Any = None, data: Any = None
+    ) -> None:
         super().__init__(previous, next, data)
         self.__linha = Line(
             [
@@ -124,7 +129,7 @@ class BlocoInviabilidadesSimFinal(Block):
             return self.data.equals(bloco.data)
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         def converte_tabela_em_df() -> pd.DataFrame:
             df = pd.DataFrame()
             df["estagio"] = estagios
@@ -138,11 +143,11 @@ class BlocoInviabilidadesSimFinal(Block):
         for _ in range(4):
             file.readline()
 
-        estagios: List[int] = []
-        cenarios: List[int] = []
-        restricoes: List[str] = []
-        violacoes: List[float] = []
-        unidades: List[str] = []
+        estagios: list[int] = []
+        cenarios: list[int] = []
+        restricoes: list[str] = []
+        violacoes: list[float] = []
+        unidades: list[str] = []
         while True:
             # Confere se a leitura não acabou
             linha = file.readline()

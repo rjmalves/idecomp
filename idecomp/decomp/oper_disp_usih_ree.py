@@ -1,9 +1,8 @@
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModeloLibs
-from idecomp.decomp.modelos.oper_disp_usih_ree import TabelaOperDispUsihRee
+import pandas as pd  # type: ignore
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
-from typing import Optional
-import pandas as pd  # type: ignore
+from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModeloLibs
+from idecomp.decomp.modelos.oper_disp_usih_ree import TabelaOperDispUsihRee
 
 
 class OperDispUsihRee(ArquivoCSV):
@@ -15,7 +14,7 @@ class OperDispUsihRee(ArquivoCSV):
     BLOCKS = [VersaoModeloLibs, TabelaOperDispUsihRee]
 
     @property
-    def tabela(self) -> Optional[pd.DataFrame]:
+    def tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 
