@@ -1,10 +1,11 @@
 # Imports de módulos externos
-from cfinterface.components.block import Block
-from cfinterface.components.line import Line
-from cfinterface.components.integerfield import IntegerField
-import pandas as pd  # type: ignore
-from typing import IO
 from datetime import timedelta
+from typing import IO, Any
+
+import pandas as pd  # type: ignore[import-untyped]
+from cfinterface.components.block import Block
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.line import Line
 
 
 class BlocoTemposEtapas(Block):
@@ -18,7 +19,9 @@ class BlocoTemposEtapas(Block):
     BEGIN_PATTERN = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
     END_PATTERN = ""
 
-    def __init__(self, previous=None, next=None, data=None) -> None:
+    def __init__(
+        self, previous: Any = None, next: Any = None, data: Any = None
+    ) -> None:
         super().__init__(previous, next, data)
         self.__line = Line(
             [
@@ -47,7 +50,7 @@ class BlocoTemposEtapas(Block):
         return timedelta(hours=data[0], minutes=data[1], seconds=data[2])
 
     # Override
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         def converte_tabela_em_df() -> pd.DataFrame:
 
             df = pd.DataFrame(

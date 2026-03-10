@@ -1,9 +1,9 @@
+from typing import IO, Any, TypeVar
+
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.files.registerfile import RegisterFile
+
 from idecomp.decomp.modelos.postos import RegistroPostos
-import pandas as pd  # type: ignore
-
-
-from typing import TypeVar, List, Optional, Union, IO
 
 
 class Postos(RegisterFile):
@@ -18,24 +18,27 @@ class Postos(RegisterFile):
     POSTOS = 320
     STORAGE = "BINARY"
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
-        self.__df: Optional[pd.DataFrame] = None
+        self.__df: pd.DataFrame | None = None
         RegistroPostos.set_postos(self.POSTOS)
 
-    def write(self, to: Union[str, IO], *args, **kwargs):
+    def write(self, to: str | IO[Any], *args: Any, **kwargs: Any) -> None:
         self.__atualiza_registros()
         super().write(to, *args, **kwargs)
 
-    def __monta_df_de_registros(self) -> Optional[pd.DataFrame]:
-        registros: List[RegistroPostos] = [
+    def __monta_df_de_registros(self) -> pd.DataFrame | None:
+        registros: list[RegistroPostos] = [
             r for r in self.data.of_type(RegistroPostos)
         ]
         if len(registros) == 0:
             return None
         df = pd.DataFrame(
             data={
-                "nome": [r.data[0] if r.data[0] is not None else "" for r in registros],
+                "nome": [
+                    r.data[0] if r.data[0] is not None else ""
+                    for r in registros
+                ],
                 "ano_inicio_historico": [r.data[1] for r in registros],
                 "ano_fim_historico": [r.data[2] for r in registros],
             }
@@ -50,8 +53,8 @@ class Postos(RegisterFile):
         )
         return df
 
-    def __atualiza_registros(self):
-        registros: List[RegistroPostos] = [r for r in self.data][1:]
+    def __atualiza_registros(self) -> None:
+        registros: list[RegistroPostos] = [r for r in self.data][1:]  # type: ignore[assignment]
         n_registros = len(registros)
         n_meses = self.postos.shape[0]
         # Deleta os registros que sobraram
@@ -82,5 +85,5 @@ class Postos(RegisterFile):
         return self.__df
 
     @postos.setter
-    def postos(self, df: pd.DataFrame):
+    def postos(self, df: pd.DataFrame) -> None:
         self.__df = df

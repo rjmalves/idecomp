@@ -1,11 +1,10 @@
-from cfinterface.files.sectionfile import SectionFile
-from idecomp.decomp.modelos.mapcut import SecaoDadosMapcut
-import pandas as pd  # type: ignore
-from typing import List
 from datetime import datetime
+from typing import Any, TypeVar
 
+import pandas as pd  # type: ignore[import-untyped]
+from cfinterface.files.sectionfile import SectionFile
 
-from typing import TypeVar, Optional
+from idecomp.decomp.modelos.mapcut import SecaoDadosMapcut
 
 
 class Mapcut(SectionFile):
@@ -19,15 +18,15 @@ class Mapcut(SectionFile):
     SECTIONS = [SecaoDadosMapcut]
     STORAGE = "BINARY"
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
-    def __obtem_dados(self) -> Optional[SecaoDadosMapcut]:
+    def __obtem_dados(self) -> SecaoDadosMapcut | None:
         s = self.data.get_sections_of_type(SecaoDadosMapcut)
         return s if not isinstance(s, list) else None
 
     @property
-    def numero_iteracoes(self) -> Optional[int]:
+    def numero_iteracoes(self) -> int | None:
         """
         O número de iterações.
 
@@ -40,7 +39,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def numero_cortes(self) -> Optional[int]:
+    def numero_cortes(self) -> int | None:
         """
         O número de cortes de Benders.
 
@@ -53,7 +52,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def numero_submercados(self) -> Optional[int]:
+    def numero_submercados(self) -> int | None:
         """
         O número de submercados.
 
@@ -66,7 +65,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def numero_uhes(self) -> Optional[int]:
+    def numero_uhes(self) -> int | None:
         """
         O número de usinas hidrelétricas.
 
@@ -79,7 +78,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def numero_cenarios(self) -> Optional[int]:
+    def numero_cenarios(self) -> int | None:
         """
         O número de cenarios.
 
@@ -92,7 +91,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def registro_ultimo_corte_no(self) -> Optional[pd.DataFrame]:
+    def registro_ultimo_corte_no(self) -> pd.DataFrame | None:
         """
         Retorna os dados dos índices do último registro
         de cortes para cada estágio, para leitura do
@@ -111,7 +110,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def tamanho_corte(self) -> Optional[int]:
+    def tamanho_corte(self) -> int | None:
         """
         O tamanho do corte (tamanho do registro no
         arquivo cortdeco).
@@ -125,7 +124,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def data_inicio(self) -> Optional[datetime]:
+    def data_inicio(self) -> datetime | None:
         """
         A data de início do estudo.
 
@@ -138,7 +137,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def codigos_uhes(self) -> Optional[List[int]]:
+    def codigos_uhes(self) -> list[int] | None:
         """
         Os códigos das usinas hidráulicas.
 
@@ -151,7 +150,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def codigos_uhes_jusante(self) -> Optional[List[int]]:
+    def codigos_uhes_jusante(self) -> list[int] | None:
         """
         Os códigos das usinas hidráulicas a jusante.
 
@@ -164,7 +163,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def indice_no_arvore(self) -> Optional[list]:
+    def indice_no_arvore(self) -> list[int] | None:
         """
         Os índice do nó pai na árvore de cenários
         para cada nó da árvore.
@@ -178,7 +177,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def numero_estagios(self) -> Optional[int]:
+    def numero_estagios(self) -> int | None:
         """
         O número de estágios.
 
@@ -191,7 +190,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def numero_semanas(self) -> Optional[int]:
+    def numero_semanas(self) -> int | None:
         """
         O número de semanas.
 
@@ -204,7 +203,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def numero_uhes_tempo_viagem(self) -> Optional[int]:
+    def numero_uhes_tempo_viagem(self) -> int | None:
         """
         O número de usinas hidraúlicas com tempo
         de viagem da água.
@@ -218,7 +217,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def maximo_lag_tempo_viagem(self) -> Optional[int]:
+    def maximo_lag_tempo_viagem(self) -> int | None:
         """
         O máximo lag de tempo de viagem.
 
@@ -231,7 +230,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def indice_primeiro_no_estagio(self) -> Optional[list]:
+    def indice_primeiro_no_estagio(self) -> list[int] | None:
         """
         O índice do primeiro nó de cada estágio.
 
@@ -244,7 +243,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def patamares_por_estagio(self) -> Optional[list]:
+    def patamares_por_estagio(self) -> list[int] | None:
         """
         O número de patamares de carga por estágio.
 
@@ -257,7 +256,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def lag_tempo_viagem_por_uhe(self) -> Optional[list]:
+    def lag_tempo_viagem_por_uhe(self) -> list[Any] | None:
         """
         O lag (em estágios) de uma usina para cada período.
 
@@ -270,7 +269,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def codigos_uhes_tempo_viagem(self) -> Optional[List[int]]:
+    def codigos_uhes_tempo_viagem(self) -> list[int] | None:
         """
         Os códigos das usinas hidráulicas com tempo de viagem.
 
@@ -283,7 +282,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def dados_tempo_viagem(self) -> Optional[pd.DataFrame]:
+    def dados_tempo_viagem(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com os dados de tempo de viagem.
 
@@ -302,7 +301,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def codigos_submercados_gnl(self) -> Optional[List[int]]:
+    def codigos_submercados_gnl(self) -> list[int] | None:
         """
         Os códigos das usinas térmicas com despacho
          antecipado (GNL).
@@ -316,7 +315,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def dados_gnl(self) -> Optional[pd.DataFrame]:
+    def dados_gnl(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com os dados de usinas GNL.
 
@@ -335,7 +334,7 @@ class Mapcut(SectionFile):
         return None
 
     @property
-    def dados_custos(self) -> Optional[pd.DataFrame]:
+    def dados_custos(self) -> pd.DataFrame | None:
         """
         Obtém a tabela com os dados de custos.
 

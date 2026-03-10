@@ -1,8 +1,7 @@
-from cfinterface.components.register import Register
+from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
-from cfinterface.components.integerfield import IntegerField
-from typing import List
+from cfinterface.components.register import Register
 
 
 class RegistroPostos(Register):
@@ -24,7 +23,7 @@ class RegistroPostos(Register):
     )
 
     @classmethod
-    def set_postos(cls, postos: int):
+    def set_postos(cls, postos: int) -> None:
         cls.POSTOS = postos
         cls.LINE = Line(
             [
@@ -36,9 +35,9 @@ class RegistroPostos(Register):
         )
 
     @property
-    def postos(self) -> List[int]:
+    def postos(self) -> list[int]:
         return self.data
 
     @postos.setter
-    def postos(self, v: List[int]):
+    def postos(self, v: list[int]) -> None:
         self.data = v

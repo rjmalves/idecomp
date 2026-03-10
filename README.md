@@ -12,7 +12,7 @@ O idecomp oferece:
 - Mapeamento classe-por-arquivo, com uma classe dedicada para cada arquivo do DECOMP
 - Base sólida no framework [cfinterface](https://github.com/rjmalves/cfinterface) para leitura de formatos de colunas fixas
 - Tipagem estática completa, compatível com mypy e verificadores de tipo
-- Suporte a Python >= 3.10 com API moderna orientada a objetos
+- Suporte a Python >= 3.11 com API moderna orientada a objetos
 
 ## Exemplo Rápido
 
@@ -29,7 +29,7 @@ print(f"Usinas termelétricas no estágio 1: {len(termicas)}")
 
 ## Instalação
 
-O idecomp é compatível com versões de Python >= 3.10.
+O idecomp é compatível com versões de Python >= 3.11.
 
 Instalação com pip (recomendado):
 

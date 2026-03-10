@@ -1,12 +1,11 @@
+import pandas as pd  # type: ignore
+
+from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
 from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
 from idecomp.decomp.modelos.dec_oper_sist import (
     TabelaOperSist,
     TabelaOperSistv31,
 )
-
-from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
-from typing import Optional
-import pandas as pd  # type: ignore
 
 
 class DecOperSist(ArquivoCSV):
@@ -21,7 +20,7 @@ class DecOperSist(ArquivoCSV):
     }
 
     @property
-    def tabela(self) -> Optional[pd.DataFrame]:
+    def tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 

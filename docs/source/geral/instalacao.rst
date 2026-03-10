@@ -1,7 +1,7 @@
 Instalação
 ============
 
-O *idecomp* requer Python >= 3.10.
+O *idecomp* requer Python >= 3.11.
 
 Use um ambiente virtual para instalar dependências. Veja a documentação oficial de `venv <https://docs.python.org/3/library/venv.html>`_ para detalhes.
 

@@ -683,7 +683,7 @@ def test_neq_restricoes():
     with patch("builtins.open", m):
         cf1 = Restricoes.read(ARQ_TESTE)
         cf2 = Restricoes.read(ARQ_TESTE)
-        cf2.data.remove(cf1.re_horiz_per()[0])
+        cf2.data.remove(cf2.re_horiz_per()[0])
         assert cf1 != cf2
 
 

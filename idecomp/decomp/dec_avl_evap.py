@@ -1,9 +1,8 @@
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.dec_avl_evap import TabelaAvlEvap
+import pandas as pd  # type: ignore
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
-from typing import Optional
-import pandas as pd  # type: ignore
+from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
+from idecomp.decomp.modelos.dec_avl_evap import TabelaAvlEvap
 
 
 class DecAvlEvap(ArquivoCSV):
@@ -14,7 +13,7 @@ class DecAvlEvap(ArquivoCSV):
     BLOCKS = [VersaoModelo, TabelaAvlEvap]
 
     @property
-    def tabela(self) -> Optional[pd.DataFrame]:
+    def tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 

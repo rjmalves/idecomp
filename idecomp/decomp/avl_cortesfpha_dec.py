@@ -1,9 +1,8 @@
-from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
-from idecomp.decomp.modelos.avl_cortesfpha_dec import TabelaCortesFpha
+import pandas as pd  # type: ignore
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
-from typing import Optional
-import pandas as pd  # type: ignore
+from idecomp.decomp.modelos.avl_cortesfpha_dec import TabelaCortesFpha
+from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
 
 
 class AvlCortesFpha(ArquivoCSV):
@@ -14,7 +13,7 @@ class AvlCortesFpha(ArquivoCSV):
     BLOCKS = [VersaoModelo, TabelaCortesFpha]
 
     @property
-    def tabela(self) -> Optional[pd.DataFrame]:
+    def tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 

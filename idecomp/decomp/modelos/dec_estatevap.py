@@ -1,8 +1,7 @@
 # Imports de módulos externos
-from cfinterface.components.line import Line
-from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.floatfield import FloatField
-
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.line import Line
 
 from idecomp.decomp.modelos.blocos.tabelacsv import TabelaCSV
 

@@ -1,10 +1,10 @@
-from cfinterface.components.register import Register
-from cfinterface.components.line import Line
-from cfinterface.components.integerfield import IntegerField
-from cfinterface.components.literalfield import LiteralField
-from cfinterface.components.floatfield import FloatField
+from typing import Any
 
-from typing import List, Optional
+from cfinterface.components.floatfield import FloatField
+from cfinterface.components.integerfield import IntegerField
+from cfinterface.components.line import Line
+from cfinterface.components.literalfield import LiteralField
+from cfinterface.components.register import Register
 
 
 class TG(Register):
@@ -12,7 +12,7 @@ class TG(Register):
     Registro que contém o cadastro das térmicas a GNL
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "TG  "
     IDENTIFIER_DIGITS = 4
@@ -42,10 +42,10 @@ class TG(Register):
 
     def __atualiza_dados_lista(
         self,
-        novos_dados: list,
+        novos_dados: list[Any],
         indice_inicial: int,
         espacamento: int,
-    ):
+    ) -> None:
         atuais = len(self.data)
         ultimo_indice = indice_inicial + espacamento * len(novos_dados)
         diferenca = (ultimo_indice - atuais) // espacamento
@@ -56,7 +56,7 @@ class TG(Register):
         self.data[indice_inicial::espacamento] = novos_dados
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código de cadastro da UTE.
 
@@ -66,11 +66,11 @@ class TG(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O código do submercado de cadastro da UTE.
 
@@ -79,11 +79,11 @@ class TG(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, c: int):
+    def codigo_submercado(self, c: int) -> None:
         self.data[1] = c
 
     @property
-    def nome(self) -> Optional[str]:
+    def nome(self) -> str | None:
         """
         O nome de cadastro da UTE.
 
@@ -93,11 +93,11 @@ class TG(Register):
         return self.data[2]
 
     @nome.setter
-    def nome(self, nome: str):
+    def nome(self, nome: str) -> None:
         self.data[2] = nome
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio do despacho da UTE.
 
@@ -107,11 +107,11 @@ class TG(Register):
         return self.data[3]
 
     @estagio.setter
-    def estagio(self, estagio: int):
+    def estagio(self, estagio: int) -> None:
         self.data[3] = estagio
 
     @property
-    def inflexibilidade(self) -> List[float]:
+    def inflexibilidade(self) -> list[float]:
         """
         A inflexibilidade da UTE por patamar.
 
@@ -121,11 +121,11 @@ class TG(Register):
         return [v for v in self.data[4::3] if v is not None]
 
     @inflexibilidade.setter
-    def inflexibilidade(self, inflex: List[float]):
+    def inflexibilidade(self, inflex: list[float]) -> None:
         self.__atualiza_dados_lista(inflex, 4, 3)
 
     @property
-    def disponibilidade(self) -> List[float]:
+    def disponibilidade(self) -> list[float]:
         """
         A disponibilidade da UTE por patamar.
 
@@ -135,11 +135,11 @@ class TG(Register):
         return [v for v in self.data[5::3] if v is not None]
 
     @disponibilidade.setter
-    def disponibilidade(self, disp: List[float]):
+    def disponibilidade(self, disp: list[float]) -> None:
         self.__atualiza_dados_lista(disp, 5, 3)
 
     @property
-    def cvu(self) -> List[float]:
+    def cvu(self) -> list[float]:
         """
         Os CVUs da UTE por patamar.
 
@@ -149,7 +149,7 @@ class TG(Register):
         return [v for v in self.data[6::3] if v is not None]
 
     @cvu.setter
-    def cvu(self, cvu: List[float]):
+    def cvu(self, cvu: list[float]) -> None:
         self.__atualiza_dados_lista(cvu, 6, 3)
 
 
@@ -159,7 +159,7 @@ class GS(Register):
     no estudo.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "GS  "
     IDENTIFIER_DIGITS = 4
@@ -171,7 +171,7 @@ class GS(Register):
     )
 
     @property
-    def mes(self) -> Optional[int]:
+    def mes(self) -> int | None:
         """
         O índice do mês associado ao registro GS
 
@@ -181,11 +181,11 @@ class GS(Register):
         return self.data[0]
 
     @mes.setter
-    def mes(self, m: int):
+    def mes(self, m: int) -> None:
         self.data[0] = m
 
     @property
-    def semanas(self) -> Optional[int]:
+    def semanas(self) -> int | None:
         """
         O número de semanas do mês associado ao registro GS
 
@@ -195,7 +195,7 @@ class GS(Register):
         return self.data[1]
 
     @semanas.setter
-    def semanas(self, s: int):
+    def semanas(self, s: int) -> None:
         self.data[1] = s
 
 
@@ -205,7 +205,7 @@ class NL(Register):
     de despacho antecipado em cada subsistema.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "NL  "
     IDENTIFIER_DIGITS = 4
@@ -218,7 +218,7 @@ class NL(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UTE associada ao registro NL
 
@@ -228,11 +228,11 @@ class NL(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O código do submercado de despacho da UTE
 
@@ -242,11 +242,11 @@ class NL(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, s: int):
+    def codigo_submercado(self, s: int) -> None:
         self.data[1] = s
 
     @property
-    def lag(self) -> Optional[int]:
+    def lag(self) -> int | None:
         """
         O lag de despacho da UTE
 
@@ -256,7 +256,7 @@ class NL(Register):
         return self.data[2]
 
     @lag.setter
-    def lag(self, lag: int):
+    def lag(self, lag: int) -> None:
         self.data[2] = lag
 
 
@@ -265,7 +265,7 @@ class GL(Register):
     Registro que contém os cadastros de restrições elétricas.
     """
 
-    __slots__ = []
+    __slots__: list[str] = []
 
     IDENTIFIER = "GL  "
     IDENTIFIER_DIGITS = 4
@@ -285,7 +285,7 @@ class GL(Register):
     )
 
     @property
-    def codigo_usina(self) -> Optional[int]:
+    def codigo_usina(self) -> int | None:
         """
         O código da UTE despachada no registro GL
 
@@ -295,11 +295,11 @@ class GL(Register):
         return self.data[0]
 
     @codigo_usina.setter
-    def codigo_usina(self, c: int):
+    def codigo_usina(self, c: int) -> None:
         self.data[0] = c
 
     @property
-    def codigo_submercado(self) -> Optional[int]:
+    def codigo_submercado(self) -> int | None:
         """
         O código do submercado de despacho da UTE
 
@@ -309,11 +309,11 @@ class GL(Register):
         return self.data[1]
 
     @codigo_submercado.setter
-    def codigo_submercado(self, e: int):
+    def codigo_submercado(self, e: int) -> None:
         self.data[1] = e
 
     @property
-    def estagio(self) -> Optional[int]:
+    def estagio(self) -> int | None:
         """
         O estágio de despacho da UTE
 
@@ -323,11 +323,11 @@ class GL(Register):
         return self.data[2]
 
     @estagio.setter
-    def estagio(self, e: int):
+    def estagio(self, e: int) -> None:
         self.data[2] = e
 
     @property
-    def geracao(self) -> List[float]:
+    def geracao(self) -> list[float]:
         """
         Os valores de geração por patamar para o despacho
         da UTE
@@ -337,7 +337,7 @@ class GL(Register):
         return [v for v in self.data[3:8:2] if v is not None]
 
     @geracao.setter
-    def geracao(self, gers: List[float]):
+    def geracao(self, gers: list[float]) -> None:
         novos = len(gers)
         atuais = len(self.geracao)
         if novos != atuais:
@@ -348,7 +348,7 @@ class GL(Register):
         self.data[3:9:2] = gers
 
     @property
-    def duracao(self) -> List[float]:
+    def duracao(self) -> list[float]:
         """
         As durações de cada patamar para o despacho
         da UTE
@@ -358,7 +358,7 @@ class GL(Register):
         return [v for v in self.data[4:9:2] if v is not None]
 
     @duracao.setter
-    def duracao(self, durs: List[float]):
+    def duracao(self, durs: list[float]) -> None:
         novos = len(durs)
         atuais = len(self.duracao)
         if novos != atuais:
@@ -369,7 +369,7 @@ class GL(Register):
         self.data[4:9:2] = durs
 
     @property
-    def data_inicio(self) -> Optional[str]:
+    def data_inicio(self) -> str | None:
         """
         A data de despacho da UTE
 
@@ -379,5 +379,5 @@ class GL(Register):
         return self.data[9]
 
     @data_inicio.setter
-    def data_inicio(self, d: str):
+    def data_inicio(self, d: str) -> None:
         self.data[9] = d

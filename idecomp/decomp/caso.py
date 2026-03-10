@@ -1,7 +1,8 @@
-from idecomp.decomp.modelos.caso import NomeCaso
+from typing import Any, TypeVar
 
 from cfinterface.files.sectionfile import SectionFile
-from typing import TypeVar, Optional
+
+from idecomp.decomp.modelos.caso import NomeCaso
 
 
 class Caso(SectionFile):
@@ -18,11 +19,11 @@ class Caso(SectionFile):
 
     SECTIONS = [NomeCaso]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     @property
-    def arquivos(self) -> Optional[str]:
+    def arquivos(self) -> str | None:
         """
         Caminho para o arquivo `arquivos.dat` de entrada do DECOMP.
 
@@ -35,7 +36,7 @@ class Caso(SectionFile):
         return None
 
     @arquivos.setter
-    def arquivos(self, a: str):
+    def arquivos(self, a: str) -> None:
         b = self.data.get_sections_of_type(NomeCaso)
         if isinstance(b, NomeCaso):
             b.data = a

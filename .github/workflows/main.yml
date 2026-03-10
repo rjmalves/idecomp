@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v4
       - name: Install uv
@@ -73,4 +73,4 @@ jobs:
       - name: Install the project
         run: uv sync --extra docs
       - name: Sphinx build
-        run: uv run sphinx-build -M html -W --keep-going docs/source docs/build
+        run: uv run sphinx-build -b html -W --keep-going docs/source docs/build/html

@@ -1,8 +1,8 @@
+from typing import IO, Any
+
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.block import Block
 from cfinterface.components.line import Line
-
-from typing import IO, List, Dict
-import pandas as pd  # type: ignore
 
 
 class TabelaCSV(Block):
@@ -15,10 +15,10 @@ class TabelaCSV(Block):
 
     BEGIN_PATTERN = "-----;------;"
     LINE_MODEL = Line([])
-    COLUMN_NAMES: List[str] = []
+    COLUMN_NAMES: list[str] = []
     END_PATTERN = ""
 
-    def _monta_df(self, dados: dict) -> pd.DataFrame:
+    def _monta_df(self, dados: dict[str, Any]) -> pd.DataFrame:
         return pd.DataFrame(data=dados, columns=self.__class__.COLUMN_NAMES)
 
     def __eq__(self, o: object) -> bool:
@@ -32,7 +32,7 @@ class TabelaCSV(Block):
             else:
                 return self.data.equals(o.data)
 
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         if len(self.__class__.LINE_MODEL.fields) != len(
             self.__class__.COLUMN_NAMES
         ):
@@ -51,7 +51,9 @@ class TabelaCSV(Block):
             elif len(linha) < 3:
                 return
         # Lê a tabela
-        dados: Dict[str, List] = {c: [] for c in self.__class__.COLUMN_NAMES}
+        dados: dict[str, list[Any]] = {
+            c: [] for c in self.__class__.COLUMN_NAMES
+        }
         while True:
             linha = file.readline()
             if len(linha) < 3:
@@ -72,10 +74,10 @@ class TabelaCSVLibs(Block):
 
     BEGIN_PATTERN = "&IIIIIII;IIIIIII;"
     LINE_MODEL = Line([])
-    COLUMN_NAMES: List[str] = []
+    COLUMN_NAMES: list[str] = []
     END_PATTERN = ""
 
-    def _monta_df(self, dados: dict) -> pd.DataFrame:
+    def _monta_df(self, dados: dict[str, Any]) -> pd.DataFrame:
         return pd.DataFrame(data=dados, columns=self.__class__.COLUMN_NAMES)
 
     def __eq__(self, o: object) -> bool:
@@ -89,7 +91,7 @@ class TabelaCSVLibs(Block):
             else:
                 return self.data.equals(o.data)
 
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
         if len(self.__class__.LINE_MODEL.fields) != len(
             self.__class__.COLUMN_NAMES
         ):
@@ -102,7 +104,9 @@ class TabelaCSVLibs(Block):
 
         # Lê a tabela
         linha = file.readline()
-        dados: Dict[str, List] = {c: [] for c in self.__class__.COLUMN_NAMES}
+        dados: dict[str, list[Any]] = {
+            c: [] for c in self.__class__.COLUMN_NAMES
+        }
         while True:
             linha = file.readline()
             if len(linha) < 3:

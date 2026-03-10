@@ -28,20 +28,20 @@ de dependências.
 Qual versão do Python é compatível com o idecomp?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-O *idecomp* requer **Python 3.10 ou superior**. As versões 3.10, 3.11 e 3.12 são
+O *idecomp* requer **Python 3.11 ou superior**. As versões 3.11, 3.12, 3.13 e 3.14 são
 testadas no CI e recomendadas para uso em produção.
 
 Estou com problemas de conflito de versão com o cfinterface. O que fazer?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 O *idecomp* depende da biblioteca `cfinterface <https://github.com/rjmalves/cfinterface>`_,
-que é responsável pelo mecanismo de parse dos arquivos. A versão compatível é fixada em
-``<=1.8.3``. Caso você tenha uma versão incompatível instalada, force a reinstalação com
+que é responsável pelo mecanismo de parse dos arquivos. A versão compatível é
+``>=1.9.0``. Caso você tenha uma versão incompatível instalada, force a reinstalação com
 a restrição correta:
 
 .. code-block:: bash
 
-    pip install "cfinterface<=1.8.3" --force-reinstall
+    pip install "cfinterface>=1.9.0" --force-reinstall
 
 Se o conflito persistir, crie um ambiente virtual limpo e instale o *idecomp* a partir
 do zero:

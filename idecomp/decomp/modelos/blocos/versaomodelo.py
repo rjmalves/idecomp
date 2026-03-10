@@ -1,6 +1,6 @@
-from cfinterface.components.block import Block
+from typing import IO, Any
 
-from typing import IO
+from cfinterface.components.block import Block
 
 
 class VersaoModelo(Block):
@@ -22,9 +22,10 @@ class VersaoModelo(Block):
                 return False
             return self.data == o.data
 
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[str], *args: Any, **kwargs: Any) -> bool:
         linha = file.readline()
         self.data = linha.split("Versao")[1].strip().split("-")[0].strip()
+        return True
 
 
 class VersaoModeloLibs(Block):
@@ -46,6 +47,7 @@ class VersaoModeloLibs(Block):
                 return False
             return self.data == o.data
 
-    def read(self, file: IO, *args, **kwargs):
+    def read(self, file: IO[str], *args: Any, **kwargs: Any) -> bool:
         linha = file.readline()
         self.data = linha.split("Versão:")[1].strip()
+        return True

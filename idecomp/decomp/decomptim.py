@@ -1,8 +1,9 @@
-from idecomp.decomp.modelos.decomptim import BlocoTemposEtapas
+from typing import Any, TypeVar
 
+import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.files.blockfile import BlockFile
-from typing import TypeVar, Optional
-import pandas as pd  # type: ignore
+
+from idecomp.decomp.modelos.decomptim import BlocoTemposEtapas
 
 
 class Decomptim(BlockFile):
@@ -21,11 +22,11 @@ class Decomptim(BlockFile):
         BlocoTemposEtapas,
     ]
 
-    def __init__(self, data=...) -> None:
+    def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
 
     @property
-    def tempos_etapas(self) -> Optional[pd.DataFrame]:
+    def tempos_etapas(self) -> pd.DataFrame | None:
         """
         Obtém a tabela dos tempos de execução do DECOMP existente no
         :class:`Decomptim`

@@ -1,5 +1,3 @@
-from typing import Optional
-
 import pandas as pd  # type: ignore
 
 from idecomp.decomp.modelos.arquivoscsv.arquivocsv import ArquivoCSV
@@ -14,7 +12,7 @@ class AvlTurbMax(ArquivoCSV):
     BLOCKS = [TabelaAvlTurbMax]
 
     @property
-    def tabela(self) -> Optional[pd.DataFrame]:
+    def tabela(self) -> pd.DataFrame | None:
         """
         A tabela de dados que está contida no arquivo.
 

@@ -1,8 +1,9 @@
-from idecomp.decomp.modelos.fcfnw import BlocoCortesFCF
+from typing import TypeVar
 
-from cfinterface.files.blockfile import BlockFile
-from typing import TypeVar, Optional
 import pandas as pd  # type: ignore
+from cfinterface.files.blockfile import BlockFile
+
+from idecomp.decomp.modelos.fcfnw import BlocoCortesFCF
 
 
 class Fcfnw(BlockFile):
@@ -20,7 +21,7 @@ class Fcfnw(BlockFile):
     BLOCKS = [BlocoCortesFCF]
 
     @property
-    def cortes(self) -> Optional[pd.DataFrame]:
+    def cortes(self) -> pd.DataFrame | None:
         """
         Obtém a tabela de cortes do NEWAVE existente no
         :class:`Fcfnw`.
