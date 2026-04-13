@@ -655,11 +655,11 @@ class PQ(Register):
             LiteralField(10, 4),
             IntegerField(2, 14),
             IntegerField(2, 19),
-            FloatField(5, 24, 0),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
-            FloatField(5, 39, 0),
-            FloatField(5, 44, 0),
+            FloatField(5, 24, 4, compact=True),
+            FloatField(5, 29, 4, compact=True),
+            FloatField(5, 34, 4, compact=True),
+            FloatField(5, 39, 4, compact=True),
+            FloatField(5, 44, 4, compact=True),
         ]
     )
 
@@ -1118,7 +1118,7 @@ class TX(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FloatField(5, 4, 0),
+            FloatField(5, 4, 3),
         ]
     )
 
@@ -1722,16 +1722,16 @@ class LU(Register):
         [
             IntegerField(3, 4),
             IntegerField(2, 9),
-            FloatField(10, 14, 1),
-            FloatField(10, 24, 1),
-            FloatField(10, 34, 1),
-            FloatField(10, 44, 1),
-            FloatField(10, 54, 1),
-            FloatField(10, 64, 1),
-            FloatField(10, 74, 1),
-            FloatField(10, 84, 1),
-            FloatField(10, 94, 1),
-            FloatField(10, 104, 1),
+            FloatField(10, 14, 2),
+            FloatField(10, 24, 2),
+            FloatField(10, 34, 2),
+            FloatField(10, 44, 2),
+            FloatField(10, 54, 2),
+            FloatField(10, 64, 2),
+            FloatField(10, 74, 2),
+            FloatField(10, 84, 2),
+            FloatField(10, 94, 2),
+            FloatField(10, 104, 2),
         ]
     )
 
@@ -2080,15 +2080,15 @@ class VI(Register):
         [
             IntegerField(3, 4),
             IntegerField(3, 9),
-            FloatField(5, 14, 0),
-            FloatField(5, 19, 0),
-            FloatField(5, 24, 0),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
-            FloatField(5, 39, 0),
-            FloatField(5, 44, 0),
-            FloatField(5, 49, 0),
-            FloatField(5, 54, 0),
+            FloatField(5, 14, 3),
+            FloatField(5, 19, 3),
+            FloatField(5, 24, 3),
+            FloatField(5, 29, 3),
+            FloatField(5, 34, 3),
+            FloatField(5, 39, 3),
+            FloatField(5, 44, 3),
+            FloatField(5, 49, 3),
+            FloatField(5, 54, 3),
         ]
     )
 
@@ -2204,14 +2204,14 @@ class CI(Register):
             IntegerField(2, 8),
             LiteralField(10, 11),
             IntegerField(2, 24),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
+            FloatField(5, 29, 3),
+            FloatField(5, 34, 3),
             FloatField(10, 39, 2),
-            FloatField(5, 49, 0),
-            FloatField(5, 54, 0),
+            FloatField(5, 49, 3),
+            FloatField(5, 54, 3),
             FloatField(10, 59, 2),
-            FloatField(5, 69, 0),
-            FloatField(5, 74, 0),
+            FloatField(5, 69, 3),
+            FloatField(5, 74, 3),
             FloatField(10, 79, 2),
             FloatField(5, 89, 3),
         ]
@@ -2233,14 +2233,14 @@ class CE(Register):
             IntegerField(2, 8),
             LiteralField(10, 11),
             IntegerField(2, 24),
-            FloatField(5, 29, 0),
-            FloatField(5, 34, 0),
+            FloatField(5, 29, 3),
+            FloatField(5, 34, 3),
             FloatField(10, 39, 2),
-            FloatField(5, 49, 0),
-            FloatField(5, 54, 0),
+            FloatField(5, 49, 3),
+            FloatField(5, 54, 3),
             FloatField(10, 59, 2),
-            FloatField(5, 69, 0),
-            FloatField(5, 74, 0),
+            FloatField(5, 69, 3),
+            FloatField(5, 74, 3),
             FloatField(10, 79, 2),
             FloatField(5, 89, 3),
         ]
@@ -2742,15 +2742,15 @@ class FP(Register):
             IntegerField(3, 9),
             IntegerField(1, 14),
             IntegerField(4, 16),
-            FloatField(5, 21, 0),
-            FloatField(5, 27, 0),
+            FloatField(5, 21, 3),
+            FloatField(5, 27, 3),
             IntegerField(1, 34),
             IntegerField(4, 36),
-            FloatField(5, 41, 0),
-            FloatField(5, 47, 0),
-            FloatField(5, 54, 0),
-            FloatField(5, 60, 0),
-            FloatField(5, 66, 0),
+            FloatField(5, 41, 3),
+            FloatField(5, 47, 3),
+            FloatField(5, 54, 3),
+            FloatField(5, 60, 3),
+            FloatField(5, 66, 3),
         ]
     )
 
@@ -3498,8 +3498,8 @@ class AR(Register):
     LINE = Line(
         [
             IntegerField(3, 5),
-            FloatField(5, 11, 0),
-            FloatField(5, 17, 0),
+            FloatField(5, 11, 3),
+            FloatField(5, 17, 3),
         ]
     )
 
