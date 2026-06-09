@@ -6,6 +6,26 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.11.0] - 2026-06-09
+
+### Adicionado
+
+- Suporte ao formato estendido do arquivo `hidr.dat`, com os coeficientes dos polinômios cota-volume e cota-área em precisão dupla (registros de 832 bytes), através do novo registro `RegistroUHEHidrF64`. A classe `Hidr` detecta o formato automaticamente pelo tamanho do arquivo, reconhecendo cadastros de 320 ou 600 usinas em registros de 792 ou 832 bytes, com possibilidade de forçar via `version="f32"` ou `version="f64"`.
+- Propriedade `tamanho_registro` e método `converte_tamanho_registro` na classe `Hidr`, permitindo inspecionar e converter entre os formatos de precisão simples e dupla.
+
+## [1.10.0] - 2026-04-13
+
+### Corrigido
+
+- Precisão decimal insuficiente em campos `FloatField` de diversos registros do `dadger`, que causava corrupção de valores na leitura e escrita (round-trip):
+  - Registro `PQ` (geração): `decimal_digits` de 0 para 4 com `compact=True`, eliminando 462 valores corrompidos, incluindo o zeramento completo de valores pequenos como `0.0563 → 0`.
+  - Registro `LU` (limites): `decimal_digits` de 1 para 2, corrigindo truncamentos como `860.55 → 860.5`.
+  - Registros `TX`, `VI`, `CI`, `CE`, `FP` e `AR`: `decimal_digits` de 0 para 3, por segurança, seguindo o padrão já adotado nos registros `FD` e `MP`.
+
+### Modificado
+
+- Dependência cfinterface atualizada para `>=1.10.0`, que disponibiliza o modo `compact` do `FloatField` (omissão do zero à esquerda para `|valor| < 1`, preservando a precisão em campos estreitos de 5 caracteres) e a correção da duplicação de registros no fallback de codificação da leitura.
+
 ## [1.9.0] - 2026-03-10
 
 ### Adicionado
