@@ -1,88 +1,215 @@
+from pathlib import Path
 from typing import IO, Any, TypeVar
+from warnings import warn
 
-import pandas as pd  # type: ignore[import-untyped]
+import pandas as pd  # type: ignore[import-untyped]  # no pandas-stubs package
 from cfinterface.files.registerfile import RegisterFile
+from cfinterface.storage import StorageType
 
 from idecomp.config import MESES_ABREV
-from idecomp.decomp.modelos.hidr import RegistroUHEHidr
+from idecomp.decomp.modelos.hidr import RegistroUHEHidr, RegistroUHEHidrF64
 
 
 class Hidr(RegisterFile):
     """
-    Armazena os dados de entrada do NEWAVE referentes ao cadastro das
+    Armazena os dados de entrada do DECOMP referentes ao cadastro das
     usinas hidroelétricas.
+
+    Suporta os dois formatos do arquivo binário: o formato com
+    registros de 792 bytes (coeficientes dos polinômios volume-cota e
+    cota-área em 32 bits) e o formato com registros de 832 bytes
+    (coeficientes em 64 bits). Na leitura, o formato é detectado
+    automaticamente pelo tamanho do arquivo, que corresponde a 320 ou
+    600 registros em um dos dois tamanhos, podendo ser forçado com
+    `version="f32"` ou `version="f64"`. A escrita é feita sempre no
+    mesmo formato lido, a menos que seja feita uma conversão explícita
+    com :meth:`converte_tamanho_registro`.
     """
 
     T = TypeVar("T")
 
     REGISTERS = [RegistroUHEHidr]
-    STORAGE = "BINARY"
+    VERSIONS = {
+        "f32": [RegistroUHEHidr],
+        "f64": [RegistroUHEHidrF64],
+    }
+    STORAGE = StorageType.BINARY
+
+    __REGISTROS_POR_TAMANHO: dict[int, type[RegistroUHEHidr]] = {
+        RegistroUHEHidr.TAMANHO_REGISTRO: RegistroUHEHidr,
+        RegistroUHEHidrF64.TAMANHO_REGISTRO: RegistroUHEHidrF64,
+    }
+
+    # Quantidades de registros (usinas) que o cadastro do hidr pode
+    # conter. O arquivo é um vetor de tamanho fixo, idêntico nos dois
+    # formatos de precisão.
+    __NUMEROS_REGISTROS_SUPORTADOS = (320, 600)
+
+    # Tamanhos de arquivo (em bytes) reconhecidos, mapeando cada tamanho
+    # válido para a respectiva versão. Derivado das combinações de
+    # número de registros e tamanho de registro; as quatro combinações
+    # geram tamanhos distintos, sem ambiguidade entre os formatos.
+    __TAMANHOS_VALIDOS: dict[int, str] = {
+        num * tamanho: versao
+        for num in __NUMEROS_REGISTROS_SUPORTADOS
+        for versao, tamanho in (
+            ("f32", RegistroUHEHidr.TAMANHO_REGISTRO),
+            ("f64", RegistroUHEHidrF64.TAMANHO_REGISTRO),
+        )
+    }
 
     def __init__(self, data: Any = ...) -> None:
         super().__init__(data)
         self.__df: pd.DataFrame | None = None
+
+    @classmethod
+    def __detecta_versao(cls, content: str | bytes) -> str | None:
+        """
+        Detecta o formato do arquivo a partir do tamanho do seu
+        conteúdo. Um arquivo hidr válido contém 320 ou 600 registros,
+        de 792 bytes (coeficientes em 32 bits) ou de 832 bytes
+        (coeficientes em 64 bits), resultando em um dos tamanhos
+        reconhecidos. Tamanhos diferentes geram um aviso e a leitura
+        assume o formato de 792 bytes.
+        """
+        if isinstance(content, bytes):
+            num_bytes = len(content)
+        elif isinstance(content, str) and Path(content).is_file():
+            num_bytes = Path(content).stat().st_size
+        else:
+            return None
+        versao = cls.__TAMANHOS_VALIDOS.get(num_bytes)
+        if versao is not None:
+            return versao
+        warn(
+            f"O tamanho do arquivo hidr ({num_bytes} bytes) não"
+            + " corresponde a nenhum formato conhecido (320 ou 600"
+            + " registros de 792 ou 832 bytes). Assumindo registros de"
+            + f" {RegistroUHEHidr.TAMANHO_REGISTRO} bytes. Use o"
+            + ' argumento version="f32" ou version="f64" para forçar o'
+            + " formato.",
+            stacklevel=3,
+        )
+        return None
+
+    @classmethod
+    def read(
+        cls,
+        content: str | bytes,
+        *args: Any,
+        version: str | None = None,
+        **kwargs: Any,
+    ) -> "Hidr":
+        if version is None:
+            version = cls.__detecta_versao(content)
+        h = super().read(content, *args, version=version, **kwargs)
+        assert isinstance(h, Hidr)
+        return h
+
+    @property
+    def tamanho_registro(self) -> int:
+        """
+        O tamanho em bytes dos registros do arquivo: 792 para o
+        formato com coeficientes dos polinômios em 32 bits ou 832
+        para o formato em 64 bits.
+
+        :return: O tamanho do registro em bytes
+        :rtype: int
+        """
+        for r in self.data.of_type(RegistroUHEHidr):
+            return type(r).TAMANHO_REGISTRO
+        return RegistroUHEHidr.TAMANHO_REGISTRO
+
+    def converte_tamanho_registro(self, precisao: str) -> None:
+        """
+        Converte os registros do arquivo para o formato com o tamanho
+        de registro dado, de modo que a próxima escrita seja feita
+        neste formato. A conversão de 832 para 792 bytes implica em
+        perda de precisão nos coeficientes dos polinômios volume-cota
+        e cota-área.
+
+        :param precisao: A precisão dos coeficients dos polinômios
+            ('f32' ou 'f64')
+        """
+
+        mapa_tamanhos = {"f32": 792, "f64": 832}
+
+        tamanho_registro = mapa_tamanhos.get(precisao)
+        if tamanho_registro is None:
+            raise ValueError(
+                f"Precisão inválida: '{precisao}'. Os valores"
+                + " suportados são 'f32' e 'f64'."
+            )
+        classe_registro = self.__class__.__REGISTROS_POR_TAMANHO[
+            tamanho_registro
+        ]
+        for r in list(self.data.of_type(RegistroUHEHidr)):
+            if type(r) is classe_registro:
+                continue
+            novo = classe_registro(data=list(r.data))
+            self.data.add_after(r, novo)
+            self.data.remove(r)
 
     def write(self, to: str | IO[Any], *args: Any, **kwargs: Any) -> None:
         self.__atualiza_registros()
         super().write(to, *args, **kwargs)
 
     def __monta_df_de_registros(self) -> pd.DataFrame | None:
-        registros = self.data.get_registers_of_type(RegistroUHEHidr)
-        if registros is None:
+        registros: list[RegistroUHEHidr] = [
+            r for r in self.data.of_type(RegistroUHEHidr)
+        ]
+        if len(registros) == 0:
             return None
-        elif isinstance(registros, RegistroUHEHidr):
-            registros = [registros]
-        df = pd.DataFrame(
-            columns=[
-                "nome_usina",
-                "posto",
-                "submercado",
-                "empresa",
-                "codigo_usina_jusante",
-                "desvio",
-                "volume_minimo",
-                "volume_maximo",
-                "volume_vertedouro",
-                "volume_desvio",
-                "cota_minima",
-                "cota_maxima",
-                *[f"a{i}_volume_cota" for i in range(5)],
-                *[f"a{i}_cota_area" for i in range(5)],
-                *[f"evaporacao_{m}" for m in MESES_ABREV],
-                "numero_conjuntos_maquinas",
-                *[f"maquinas_conjunto_{i}" for i in range(1, 6)],
-                *[f"potencia_nominal_conjunto_{i}" for i in range(1, 6)],
-                *[f"queda_nominal_conjunto_{i}" for i in range(1, 6)],
-                *[f"vazao_nominal_conjunto_{i}" for i in range(1, 6)],
-                "produtibilidade_especifica",
-                "perdas",
-                "numero_polinomios_jusante",
-                *[f"a{i}_jusante_1" for i in range(5)],
-                *[f"a{i}_jusante_2" for i in range(5)],
-                *[f"a{i}_jusante_3" for i in range(5)],
-                *[f"a{i}_jusante_4" for i in range(5)],
-                *[f"a{i}_jusante_5" for i in range(5)],
-                *[f"a{i}_jusante_6" for i in range(5)],
-                *[f"referencia_jusante_{i}" for i in range(1, 7)],
-                "canal_fuga_medio",
-                "influencia_vertimento_canal_fuga",
-                "fator_carga_maximo",
-                "fator_carga_minimo",
-                "vazao_minima_historica",
-                "numero_unidades_base",
-                "tipo_turbina",
-                "representacao_conjunto",
-                "teif",
-                "ip",
-                "tipo_perda",
-                "data",
-                "observacao",
-                "volume_referencia",
-                "tipo_regulacao",
-            ]
-        )
-        for i, r in enumerate(registros):
-            df.loc[i + 1] = [
+        colunas = [
+            "nome_usina",
+            "posto",
+            "submercado",
+            "empresa",
+            "codigo_usina_jusante",
+            "desvio",
+            "volume_minimo",
+            "volume_maximo",
+            "volume_vertedouro",
+            "volume_desvio",
+            "cota_minima",
+            "cota_maxima",
+            *[f"a{i}_volume_cota" for i in range(5)],
+            *[f"a{i}_cota_area" for i in range(5)],
+            *[f"evaporacao_{m}" for m in MESES_ABREV],
+            "numero_conjuntos_maquinas",
+            *[f"maquinas_conjunto_{i}" for i in range(1, 6)],
+            *[f"potencia_nominal_conjunto_{i}" for i in range(1, 6)],
+            *[f"queda_nominal_conjunto_{i}" for i in range(1, 6)],
+            *[f"vazao_nominal_conjunto_{i}" for i in range(1, 6)],
+            "produtibilidade_especifica",
+            "perdas",
+            "numero_polinomios_jusante",
+            *[f"a{i}_jusante_1" for i in range(5)],
+            *[f"a{i}_jusante_2" for i in range(5)],
+            *[f"a{i}_jusante_3" for i in range(5)],
+            *[f"a{i}_jusante_4" for i in range(5)],
+            *[f"a{i}_jusante_5" for i in range(5)],
+            *[f"a{i}_jusante_6" for i in range(5)],
+            *[f"referencia_jusante_{i}" for i in range(1, 7)],
+            "canal_fuga_medio",
+            "influencia_vertimento_canal_fuga",
+            "fator_carga_maximo",
+            "fator_carga_minimo",
+            "vazao_minima_historica",
+            "numero_unidades_base",
+            "tipo_turbina",
+            "representacao_conjunto",
+            "teif",
+            "ip",
+            "tipo_perda",
+            "data",
+            "observacao",
+            "volume_referencia",
+            "tipo_regulacao",
+        ]
+
+        dados = [
+            [
                 r.nome,
                 r.posto,
                 r.subsistema,
@@ -123,16 +250,24 @@ class Hidr(RegisterFile):
                 r.volume_referencia,
                 r.tipo_regulacao,
             ]
+            for r in registros
+        ]
+
+        df = pd.DataFrame(
+            data=dados,
+            index=range(1, len(registros) + 1),
+            columns=colunas,
+        )
         df.index.name = "codigo_usina"
 
         df = df.astype(
             {
                 "nome_usina": str,
-                "posto": int,
-                "submercado": int,
-                "empresa": int,
-                "codigo_usina_jusante": int,
-                "desvio": int,
+                "posto": "Int64",
+                "submercado": "Int64",
+                "empresa": "Int64",
+                "codigo_usina_jusante": "Int64",
+                "desvio": "Int64",
                 "volume_minimo": float,
                 "volume_maximo": float,
                 "volume_vertedouro": float,
@@ -142,16 +277,16 @@ class Hidr(RegisterFile):
                 "produtibilidade_especifica": float,
                 "perdas": float,
                 "canal_fuga_medio": float,
-                "influencia_vertimento_canal_fuga": int,
+                "influencia_vertimento_canal_fuga": "Int64",
                 "fator_carga_maximo": float,
                 "fator_carga_minimo": float,
-                "vazao_minima_historica": int,
-                "numero_unidades_base": int,
-                "tipo_turbina": int,
-                "representacao_conjunto": int,
+                "vazao_minima_historica": "Int64",
+                "numero_unidades_base": "Int64",
+                "tipo_turbina": "Int64",
+                "representacao_conjunto": "Int64",
                 "teif": float,
                 "ip": float,
-                "tipo_perda": int,
+                "tipo_perda": "Int64",
                 "data": str,
                 "observacao": str,
                 "volume_referencia": float,
