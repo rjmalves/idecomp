@@ -32,7 +32,7 @@ classifiers = [
 
 [project.optional-dependencies]
 test = ["pytest", "pytest-cov", "pytest-xdist"]
-lint = ["mypy", "pre-commit", "ruff"]
+lint = ["mypy", "pre-commit", "ruff<0.16"]
 docs = [
     "sphinx",
     "furo",
