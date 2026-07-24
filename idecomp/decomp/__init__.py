@@ -33,6 +33,7 @@ from .fcfnw import Fcfnw  # noqa
 from .hidr import Hidr  # noqa
 from .inviabunic import InviabUnic  # noqa
 from .mapcut import Mapcut  # noqa
+from .mlt import Mlt  # noqa
 from .oper_desvio_fpha import OperDesvioFpha  # noqa
 from .oper_disp_usih_ree import OperDispUsihRee  # noqa
 from .oper_disp_usih_subm import OperDispUsihSubm  # noqa
