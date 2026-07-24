@@ -498,6 +498,27 @@ def test_registro_ia_dadger():
     assert r.limite_para_de == [None, None, None, None, None]
 
 
+def test_escrita_ia_limites_fracionarios_dadger():
+    r = IA()
+    r.estagio = 1
+    r.nome_submercado_de = "SE"
+    r.nome_submercado_para = "SU"
+    r.limite_de_para = [6800.5, None, None, None, None]
+    r.limite_para_de = [9800.25, None, None, None, None]
+    m: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m):
+        with open("", "w") as fp:
+            r.write(fp)
+        linha = m().write.call_args.args[0]
+    m2: MagicMock = mock_open(read_data=linha)
+    r2 = IA()
+    with patch("builtins.open", m2):
+        with open("", "") as fp:
+            r2.read(fp)
+    assert r2.limite_de_para[0] == 6800.5
+    assert r2.limite_para_de[0] == 9800.25
+
+
 def test_registro_tx_dadger():
     m: MagicMock = mock_open(read_data="".join(MockTX))
     r = TX()
