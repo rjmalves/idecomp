@@ -490,6 +490,33 @@ def test_registro_ia_dadger():
         None,
         None,
     ]
+    assert r.limite_de_para == [4200, 4200, 4200, None, None]
+    r.limite_de_para = [None, None, None, None, None]
+    assert r.limite_de_para == [None, None, None, None, None]
+    assert r.limite_para_de == [5500, 5500, 5500, None, None]
+    r.limite_para_de = [None, None, None, None, None]
+    assert r.limite_para_de == [None, None, None, None, None]
+
+
+def test_escrita_ia_limites_fracionarios_dadger():
+    r = IA()
+    r.estagio = 1
+    r.nome_submercado_de = "SE"
+    r.nome_submercado_para = "SU"
+    r.limite_de_para = [6800.5, None, None, None, None]
+    r.limite_para_de = [9800.25, None, None, None, None]
+    m: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m):
+        with open("", "w") as fp:
+            r.write(fp)
+        linha = m().write.call_args.args[0]
+    m2: MagicMock = mock_open(read_data=linha)
+    r2 = IA()
+    with patch("builtins.open", m2):
+        with open("", "") as fp:
+            r2.read(fp)
+    assert r2.limite_de_para[0] == 6800.5
+    assert r2.limite_para_de[0] == 9800.25
 
 
 def test_registro_tx_dadger():
@@ -951,6 +978,7 @@ def test_registro_accotvol_dadger():
     assert r.ano == 2020
     r.ano = 2022
     assert r.ano == 2022
+
 
 def test_registro_accotare_dadger():
     m: MagicMock = mock_open(read_data="".join(MockACCOTARE))
@@ -2119,6 +2147,7 @@ def test_campos_encontrados_dadger():
     assert d.te is not None
     assert d.sb(1) is not None
     assert d.uh(1) is not None
+    assert d.ue(1) is not None
     assert d.ct(65, 1) is not None
     assert d.dp(1, 1) is not None
     assert d.ac(285, ACJUSMED) is not None
@@ -2148,6 +2177,10 @@ def test_campos_encontrados_dadger():
     assert len(d.lq(df=True).columns) == 12
     assert d.ia(1) is not None
     assert d.ri(66) is not None
+    assert len(d.ue(df=True)) == 4
+    assert "taxa_consumo" in d.ue(df=True).columns
+    assert "limite_de_para_1" in d.ia(df=True).columns
+    assert "limite_para_de_5" in d.ia(df=True).columns
 
 
 def test_cria_lu_dadger():

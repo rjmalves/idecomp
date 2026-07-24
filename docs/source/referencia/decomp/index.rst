@@ -39,6 +39,7 @@ DECOMP
    idecomp.decomp.hidr.Hidr
    idecomp.decomp.inviabunic.InviabUnic
    idecomp.decomp.mapcut.Mapcut
+   idecomp.decomp.mlt.Mlt
    idecomp.decomp.oper_desvio_fpha.OperDesvioFpha
    idecomp.decomp.oper_disp_usih.OperDispUsih
    idecomp.decomp.oper_disp_usih_ree.OperDispUsihRee
@@ -84,6 +85,7 @@ DECOMP
    arquivos/hidr
    arquivos/inviabunic
    arquivos/mapcut
+   arquivos/mlt
    arquivos/oper_desvio_fpha
    arquivos/oper_disp_usih
    arquivos/oper_disp_usih_ree
