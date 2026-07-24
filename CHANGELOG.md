@@ -6,15 +6,22 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.12.0] - 2026-07-24
+
 ### Adicionado
 
 - Leitor do arquivo `mlt.dat`, com as médias mensais de longo termo (MLT) de cada posto por mês do ano, através da nova classe `Mlt`. O conteúdo é exposto como um `DataFrame` na propriedade `valores`, com uma linha por mês e uma coluna por posto, em m³/s.
 - Leitor do arquivo `renovaveis.csv`, com o cadastro dos parques eólicos equivalentes, através da nova classe `Renovaveis` e dos registros da família `PEE` (`PEECadastro`, `PEESubmercado`, `PEEConfiguracaoPeriodo`, `PEEPotenciaInstaladaPeriodo` e `PEEGeracaoPeriodoPatamarCenario`).
 
+### Alterado
+
+- Versão mínima de `cfinterface` elevada para `1.10.1`.
+
 ### Corrigido
 
 - O registro `IA` do `dadger` lia os limites de intercâmbio por patamar, mas não os expunha, de forma que `ia(df=True)` os omitia. Adicionadas as propriedades `limite_de_para` e `limite_para_de`.
 - O método `ue` do `Dadger` retornava os dados do registro `UH` em vez do registro `UE`.
+- Precisão decimal insuficiente (`decimal_digits=0`) nos limites de intercâmbio do registro `IA`, que arredondava para inteiro valores fracionários na escrita (round-trip). Ajustada para `decimal_digits=2`.
 
 ## [1.11.0] - 2026-06-09
 
