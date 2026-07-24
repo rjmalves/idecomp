@@ -1064,6 +1064,21 @@ class IA(Register):
         ]
     )
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list[Any],
+        indice_inicial: int,
+        espacamento: int,
+    ) -> None:
+        atuais = len(self.data)
+        ultimo_indice = indice_inicial + espacamento * len(novos_dados)
+        diferenca = (ultimo_indice - atuais) // espacamento
+        if diferenca > 0:
+            self.data += [None] * (ultimo_indice - atuais)
+            diferenca -= 1
+        novos_dados += [None] * abs(diferenca)
+        self.data[indice_inicial::espacamento] = novos_dados
+
     @property
     def estagio(self) -> int | None:
         """
@@ -1105,6 +1120,34 @@ class IA(Register):
     @nome_submercado_para.setter
     def nome_submercado_para(self, t: str) -> None:
         self.data[2] = t
+
+    @property
+    def limite_de_para(self) -> list[float] | None:
+        """
+        Os limites de intercâmbio no sentido de -> para, por patamar.
+
+        :return: Os limites por patamar.
+        :rtype: list[float] | None
+        """
+        return self.data[4::2]
+
+    @limite_de_para.setter
+    def limite_de_para(self, lim: list[float]) -> None:
+        self.__atualiza_dados_lista(lim, 4, 2)
+
+    @property
+    def limite_para_de(self) -> list[float] | None:
+        """
+        Os limites de intercâmbio no sentido para -> de, por patamar.
+
+        :return: Os limites por patamar.
+        :rtype: list[float] | None
+        """
+        return self.data[5::2]
+
+    @limite_para_de.setter
+    def limite_para_de(self, lim: list[float]) -> None:
+        self.__atualiza_dados_lista(lim, 5, 2)
 
 
 class TX(Register):

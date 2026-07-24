@@ -356,7 +356,7 @@ class Dadger(RegisterFile):
         :rtype: :class:`UE` | list[:class:`UE`] | :class:`pandas.DataFrame` | None
         """
         return self.__registros_ou_df(
-            UH,
+            UE,
             codigo_usina=codigo_usina,
             codigo_submercado=codigo_submercado,
             nome_usina=nome_usina,
