@@ -6,6 +6,6 @@ idecomp é um módulo em Python para manipulação dos arquivos de entrada
 e saída do DECOMP.
 """
 
-__version__ = "1.12.0"
+__version__ = "1.13.0"
 
 from . import decomp  # noqa
