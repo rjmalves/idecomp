@@ -6,6 +6,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.13.0] - 2026-07-31
+
 ### Adicionado
 
 - Acessores nomeados para os registros `CI` e `CE` (contratos de importação/exportação de energia) do `dadger`, em paridade com o registro `CT`: propriedades `numero_contrato`, `codigo_submercado`, `nome_contrato`, `estagio`, `limite_inferior`, `limite_superior` e `custo` (listas por patamar) e `fator_perdas`, todas com getters e setters, além dos métodos `ci` e `ce` na classe `Dadger`, com filtros e suporte a `df=True`. O último campo do registro (colunas 90-94), antes anônimo, corresponde ao fator de perdas para o centro de gravidade da carga (manual do DECOMP, §3.4.5.6) e passa a ser exposto pela propriedade `fator_perdas`.
