@@ -56,6 +56,7 @@ from idecomp.decomp.modelos.dadger import (
     FP,
     IR,
     CI,
+    CE,
     FC,
     TI,
     RQ,
@@ -140,6 +141,7 @@ from tests.mocks.arquivos.dadger import (
     MockFP,
     MockIR,
     MockCI,
+    MockCE,
     MockFC,
     MockTI,
     MockRQ,
@@ -1434,7 +1436,110 @@ def test_registro_ci_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [0, 2, "", 1, 0, 0, 0.0, 0, 0, 0.0, 0, 0, 0.0, None]
+    assert r.data == [
+        1,
+        2,
+        "IMPORTA",
+        1,
+        100.5,
+        200.0,
+        15.5,
+        100.5,
+        200.0,
+        15.5,
+        100.5,
+        200.0,
+        15.5,
+        3.0,
+    ]
+    # O limite inferior fracionário (100.5) é preservado na escrita: o campo
+    # F5.0 do manual admite decimais quando informados no deck.
+    m2: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m2):
+        with open("", "w") as fp:
+            r.write(fp)
+        escritas = "".join(c.args[0] for c in m2().write.call_args_list)
+    assert escritas.rstrip("\n") == MockCI
+    assert r.numero_contrato == 1
+    r.numero_contrato = 0
+    assert r.numero_contrato == 0
+    assert r.codigo_submercado == 2
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.nome_contrato == "IMPORTA"
+    r.nome_contrato = "A"
+    assert r.nome_contrato == "A"
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.limite_inferior == [100.5, 100.5, 100.5]
+    r.limite_inferior = [1.0, 2.0, 3.0]
+    assert r.limite_inferior == [1.0, 2.0, 3.0]
+    assert r.fator_perdas == 3.0
+    assert r.limite_superior == [200.0, 200.0, 200.0]
+    r.limite_superior = [4.0, 5.0, 6.0]
+    assert r.limite_superior == [4.0, 5.0, 6.0]
+    assert r.custo == [15.5, 15.5, 15.5]
+    r.custo = [7.0, 8.0, 9.0]
+    assert r.custo == [7.0, 8.0, 9.0]
+    assert r.fator_perdas == 3.0
+    r.fator_perdas = 10.0
+    assert r.fator_perdas == 10.0
+
+
+def test_registro_ce_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockCE))
+    r = CE()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [
+        1,
+        1,
+        "EXPORTA",
+        1,
+        80.0,
+        150.0,
+        42.75,
+        80.0,
+        150.0,
+        42.75,
+        80.0,
+        150.0,
+        42.75,
+        5.0,
+    ]
+    m2: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m2):
+        with open("", "w") as fp:
+            r.write(fp)
+        escritas = "".join(c.args[0] for c in m2().write.call_args_list)
+    assert escritas.rstrip("\n") == MockCE
+    assert r.numero_contrato == 1
+    r.numero_contrato = 0
+    assert r.numero_contrato == 0
+    assert r.codigo_submercado == 1
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.nome_contrato == "EXPORTA"
+    r.nome_contrato = "A"
+    assert r.nome_contrato == "A"
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.limite_inferior == [80.0, 80.0, 80.0]
+    r.limite_inferior = [1.0, 2.0, 3.0]
+    assert r.limite_inferior == [1.0, 2.0, 3.0]
+    assert r.fator_perdas == 5.0
+    assert r.limite_superior == [150.0, 150.0, 150.0]
+    r.limite_superior = [4.0, 5.0, 6.0]
+    assert r.limite_superior == [4.0, 5.0, 6.0]
+    assert r.custo == [42.75, 42.75, 42.75]
+    r.custo = [7.0, 8.0, 9.0]
+    assert r.custo == [7.0, 8.0, 9.0]
+    assert r.fator_perdas == 5.0
+    r.fator_perdas = 10.0
+    assert r.fator_perdas == 10.0
 
 
 def test_registro_fc_dadger():
@@ -2138,6 +2243,8 @@ def test_campos_nao_encontrados_dadger():
     assert d.da() is None
     assert d.ia() is None
     assert d.ri() is None
+    assert d.ci() is None
+    assert d.ce() is None
 
 
 def test_campos_encontrados_dadger():
@@ -2181,6 +2288,57 @@ def test_campos_encontrados_dadger():
     assert "taxa_consumo" in d.ue(df=True).columns
     assert "limite_de_para_1" in d.ia(df=True).columns
     assert "limite_para_de_5" in d.ia(df=True).columns
+    assert d.ci(1, 2, 1) is not None
+    assert d.ce(1, 1, 1) is not None
+
+
+def test_ci_ce_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    # Um mesmo contrato aparece em múltiplos estágios
+    assert len(d.ci(numero_contrato=1)) == 2
+    assert len(d.ce(numero_contrato=1)) == 2
+
+    ci = d.ci(numero_contrato=2, estagio=1)
+    assert isinstance(ci, CI)
+    assert ci.codigo_submercado == 2
+    assert ci.nome_contrato == "IMPORTB"
+    assert ci.limite_inferior == [50.0, 50.0, 50.0]
+    assert ci.limite_superior == [90.0, 90.0, 90.0]
+    assert ci.custo == [12.0, 12.0, 12.0]
+    assert ci.fator_perdas == 2.0
+
+    ce = d.ce(numero_contrato=1, estagio=2)
+    assert isinstance(ce, CE)
+    assert ce.limite_inferior == [85.0, 85.0, 85.0]
+    assert ce.custo == [43.75, 43.75, 43.75]
+    assert ce.fator_perdas == 5.0
+
+    # DataFrame: uma linha por (contrato, estágio), colunas por patamar
+    df_ci = d.ci(df=True)
+    assert len(df_ci) == 3
+    for coluna in [
+        "numero_contrato",
+        "codigo_submercado",
+        "nome_contrato",
+        "estagio",
+        "fator_perdas",
+        "limite_inferior_1",
+        "limite_inferior_3",
+        "limite_superior_1",
+        "limite_superior_3",
+        "custo_1",
+        "custo_3",
+    ]:
+        assert coluna in df_ci.columns
+    assert "limite_inferior_4" not in df_ci.columns
+
+    df_ce = d.ce(df=True)
+    assert len(df_ce) == 2
+    assert "fator_perdas" in df_ce.columns
+    assert "custo_3" in df_ce.columns
 
 
 def test_cria_lu_dadger():

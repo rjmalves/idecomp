@@ -6,15 +6,15 @@ MockUH = "UH    1  10        25.29               1\n"
 
 MockCT = "CT   13   1   ANGRA 2    1   1350.1350.     20.121350.1350.     20.121350.1350.     20.12"
 
-MockUE = (
-    "UE  001   1   Sta Cecilia    181  125         0.0     160.0      0.20"
-)
+MockUE = "UE  001   1   Sta Cecilia    181  125         0.0     160.0      0.20"
 
 MockDP = "DP   1    1   3       45078.0      32.0   41680.0      41.0   33894.0      95.0"
 
 MockPQ = "PQ  SECO_PCH   1    1    2527 2553 2503"
 
-MockCD = "CD   1    1   1PDEF      1     100   5249.34  100   5249.34  100   5249.34"
+MockCD = (
+    "CD   1    1   1PDEF      1     100   5249.34  100   5249.34  100   5249.34"
+)
 
 MockRI = "RI  66    1   1    1680   7000   5079   7000   3179   1680   7000   4418   7000   2518   1680   7000   3474   7000   1574"
 
@@ -38,7 +38,9 @@ MockVE = "VE   24  95.4197.0197.0197.0197.8399.18"
 
 MockRE = "RE    5   1    6"
 
-MockLU = "LU   21   1           50       212        50       212        50       212"
+MockLU = (
+    "LU   21   1           50       212        50       212        50       212"
+)
 
 MockFU = "FU   43   1    47           1"
 
@@ -108,7 +110,9 @@ MockFP = (
 
 MockIR = "IR  NORMAL    17   61"
 
-MockCI = "CI  000  2               1       0    0      0.00    0    0      0.00    0    0      0.00"
+MockCI = "CI    1  2 IMPORTA       1   100.5200.0     15.50100.5200.0     15.50100.5200.0     15.503.000"
+
+MockCE = "CE    1  1 EXPORTA       1   80.00150.0     42.7580.00150.0     42.7580.00150.0     42.755.000"
 
 MockFC = "FC  NEWV21    ../../cortesh.dat"
 
@@ -132,7 +136,9 @@ MockCV = "CV  117   1    43  -1.5866762     VARM"
 
 MockHQ = "HQ    5   1    6"
 
-MockLQ = "LQ   10   1          300      9999       300      9999       300      9999"
+MockLQ = (
+    "LQ   10   1          300      9999       300      9999       300      9999"
+)
 
 MockCQ = "CQ   11   1    27           1     QDEF"
 
@@ -3487,7 +3493,12 @@ MockDadger = [
     "&   num ss nome  S     EST    LINF|LSUP | CUSTO   LINF|LSUP | CUSTO   LINF|LSUP|  CUSTO \n",
     "&   xxx XX xxxxxxxxxx   XX   xxxxxXXXXXxxxxxxxxxxXXXXXxxxxxXXXXXXXXXXxxxxxXXXXXxxxxxxxxxx \n",
     "&CI\n",
-    "CI  000  2               1       0    0      0.00    0    0      0.00    0    0      0.00\n",
+    "CI    1  2 IMPORTA       1   100.0200.0     15.50100.0200.0     15.50100.0200.0     15.503.000\n",
+    "CI    1  2 IMPORTA       2   110.0210.0     16.50110.0210.0     16.50110.0210.0     16.503.000\n",
+    "CI    2  2 IMPORTB       1   50.0090.00     12.0050.0090.00     12.0050.0090.00     12.002.000\n",
+    "&CE\n",
+    "CE    1  1 EXPORTA       1   80.00150.0     42.7580.00150.0     42.7580.00150.0     42.755.000\n",
+    "CE    1  1 EXPORTA       2   85.00155.0     43.7585.00155.0     43.7585.00155.0     43.755.000\n",
     "&----------------------------------------------------------------------------------------------\n",
     "&         BLOCO 30 ***  CONTINUACAO DO PROCESSAMENTO DO ESTUDO  ***\n",
     "&         (REGISTRO RS)\n",

@@ -2260,6 +2260,133 @@ class CI(Register):
         ]
     )
 
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list[Any],
+        indice_inicial: int,
+        espacamento: int,
+    ) -> None:
+        # Atualiza apenas os 3 patamares de carga, preservando o fator de
+        # perdas (campo 15), armazenado logo após o custo do último patamar.
+        valores = (list(novos_dados) + [None] * 3)[:3]
+        fim = indice_inicial + espacamento * 3
+        self.data[indice_inicial:fim:espacamento] = valores
+
+    @property
+    def numero_contrato(self) -> int | None:
+        """
+        O número do contrato de importação.
+
+        :return: O número.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @numero_contrato.setter
+    def numero_contrato(self, n: int) -> None:
+        self.data[0] = n
+
+    @property
+    def codigo_submercado(self) -> int | None:
+        """
+        O índice do submercado ao qual pertence o contrato.
+
+        :return: O submercado.
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @codigo_submercado.setter
+    def codigo_submercado(self, s: int) -> None:
+        self.data[1] = s
+
+    @property
+    def nome_contrato(self) -> str | None:
+        """
+        O nome do contrato de importação.
+
+        :return: O nome como uma `str`.
+        :rtype: str | None
+        """
+        return self.data[2]
+
+    @nome_contrato.setter
+    def nome_contrato(self, n: str) -> None:
+        self.data[2] = n
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio associado às propriedades cadastradas.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[3]
+
+    @estagio.setter
+    def estagio(self, e: int) -> None:
+        self.data[3] = e
+
+    @property
+    def limite_inferior(self) -> list[float] | None:
+        """
+        O limite inferior de importação de energia por patamar,
+        em MWmed.
+
+        :return: O limite inferior.
+        :rtype: list[float] | None
+        """
+        return self.data[4:13:3]
+
+    @limite_inferior.setter
+    def limite_inferior(self, lim: list[float]) -> None:
+        self.__atualiza_dados_lista(lim, 4, 3)
+
+    @property
+    def limite_superior(self) -> list[float] | None:
+        """
+        O limite superior de importação de energia por patamar,
+        em MWmed.
+
+        :return: O limite superior.
+        :rtype: list[float] | None
+        """
+        return self.data[5:13:3]
+
+    @limite_superior.setter
+    def limite_superior(self, lim: list[float]) -> None:
+        self.__atualiza_dados_lista(lim, 5, 3)
+
+    @property
+    def custo(self) -> list[float] | None:
+        """
+        O custo da energia importada por patamar, em $/MWh.
+
+        :return: O custo.
+        :rtype: list[float] | None
+        """
+        return self.data[6:13:3]
+
+    @custo.setter
+    def custo(self, c: list[float]) -> None:
+        self.__atualiza_dados_lista(c, 6, 3)
+
+    @property
+    def fator_perdas(self) -> float | None:
+        """
+        O fator de perdas para o centro de gravidade da carga,
+        em %.
+
+        :return: O fator de perdas.
+        :rtype: float | None
+        """
+        return self.data[13]
+
+    @fator_perdas.setter
+    def fator_perdas(self, f: float) -> None:
+        self.data[13] = f
+
 
 class CE(Register):
     """
@@ -2288,6 +2415,133 @@ class CE(Register):
             FloatField(5, 89, 3),
         ]
     )
+
+    def __atualiza_dados_lista(
+        self,
+        novos_dados: list[Any],
+        indice_inicial: int,
+        espacamento: int,
+    ) -> None:
+        # Atualiza apenas os 3 patamares de carga, preservando o fator de
+        # perdas (campo 15), armazenado logo após o custo do último patamar.
+        valores = (list(novos_dados) + [None] * 3)[:3]
+        fim = indice_inicial + espacamento * 3
+        self.data[indice_inicial:fim:espacamento] = valores
+
+    @property
+    def numero_contrato(self) -> int | None:
+        """
+        O número do contrato de exportação.
+
+        :return: O número.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @numero_contrato.setter
+    def numero_contrato(self, n: int) -> None:
+        self.data[0] = n
+
+    @property
+    def codigo_submercado(self) -> int | None:
+        """
+        O índice do submercado ao qual pertence o contrato.
+
+        :return: O submercado.
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @codigo_submercado.setter
+    def codigo_submercado(self, s: int) -> None:
+        self.data[1] = s
+
+    @property
+    def nome_contrato(self) -> str | None:
+        """
+        O nome do contrato de exportação.
+
+        :return: O nome como uma `str`.
+        :rtype: str | None
+        """
+        return self.data[2]
+
+    @nome_contrato.setter
+    def nome_contrato(self, n: str) -> None:
+        self.data[2] = n
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio associado às propriedades cadastradas.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[3]
+
+    @estagio.setter
+    def estagio(self, e: int) -> None:
+        self.data[3] = e
+
+    @property
+    def limite_inferior(self) -> list[float] | None:
+        """
+        O limite inferior de exportação de energia por patamar,
+        em MWmed.
+
+        :return: O limite inferior.
+        :rtype: list[float] | None
+        """
+        return self.data[4:13:3]
+
+    @limite_inferior.setter
+    def limite_inferior(self, lim: list[float]) -> None:
+        self.__atualiza_dados_lista(lim, 4, 3)
+
+    @property
+    def limite_superior(self) -> list[float] | None:
+        """
+        O limite superior de exportação de energia por patamar,
+        em MWmed.
+
+        :return: O limite superior.
+        :rtype: list[float] | None
+        """
+        return self.data[5:13:3]
+
+    @limite_superior.setter
+    def limite_superior(self, lim: list[float]) -> None:
+        self.__atualiza_dados_lista(lim, 5, 3)
+
+    @property
+    def custo(self) -> list[float] | None:
+        """
+        O custo da energia exportada por patamar, em $/MWh.
+
+        :return: O custo.
+        :rtype: list[float] | None
+        """
+        return self.data[6:13:3]
+
+    @custo.setter
+    def custo(self, c: list[float]) -> None:
+        self.__atualiza_dados_lista(c, 6, 3)
+
+    @property
+    def fator_perdas(self) -> float | None:
+        """
+        O fator de perdas para o centro de gravidade da carga,
+        em %.
+
+        :return: O fator de perdas.
+        :rtype: float | None
+        """
+        return self.data[13]
+
+    @fator_perdas.setter
+    def fator_perdas(self, f: float) -> None:
+        self.data[13] = f
 
 
 class FC(Register):

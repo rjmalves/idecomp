@@ -597,6 +597,92 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    def ci(
+        self,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        nome_contrato: str | None = None,
+        df: bool = False,
+    ) -> CI | list[CI] | pandas.DataFrame | None:
+        """
+        Obtém um registro que define um contrato de importação de energia
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param numero_contrato: número do contrato
+        :type numero_contrato: int | None
+        :param codigo_submercado: submercado ao qual pertence o contrato
+        :type codigo_submercado: int | None
+        :param estagio: estágio associado ao registro
+        :type estagio: int | None
+        :param nome_contrato: nome do contrato
+        :type nome_contrato: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`CI` | list[:class:`CI`] | :class:`pandas.DataFrame` | None
+
+        Quando ``df=True``, o DataFrame retornado possui uma linha por
+        registro (contrato, estágio) e as colunas ``numero_contrato``,
+        ``codigo_submercado``, ``nome_contrato``, ``estagio``,
+        ``fator_perdas`` e, para cada um dos 3 patamares de carga, as
+        colunas ``limite_inferior_{n}``, ``limite_superior_{n}`` e
+        ``custo_{n}``.
+        """
+        return self.__registros_ou_df(
+            CI,
+            numero_contrato=numero_contrato,
+            codigo_submercado=codigo_submercado,
+            estagio=estagio,
+            nome_contrato=nome_contrato,
+            df=df,
+        )
+
+    def ce(
+        self,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        nome_contrato: str | None = None,
+        df: bool = False,
+    ) -> CE | list[CE] | pandas.DataFrame | None:
+        """
+        Obtém um registro que define um contrato de exportação de energia
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param numero_contrato: número do contrato
+        :type numero_contrato: int | None
+        :param codigo_submercado: submercado ao qual pertence o contrato
+        :type codigo_submercado: int | None
+        :param estagio: estágio associado ao registro
+        :type estagio: int | None
+        :param nome_contrato: nome do contrato
+        :type nome_contrato: str | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`CE` | list[:class:`CE`] | :class:`pandas.DataFrame` | None
+
+        Quando ``df=True``, o DataFrame retornado possui uma linha por
+        registro (contrato, estágio) e as colunas ``numero_contrato``,
+        ``codigo_submercado``, ``nome_contrato``, ``estagio``,
+        ``fator_perdas`` e, para cada um dos 3 patamares de carga, as
+        colunas ``limite_inferior_{n}``, ``limite_superior_{n}`` e
+        ``custo_{n}``.
+        """
+        return self.__registros_ou_df(
+            CE,
+            numero_contrato=numero_contrato,
+            codigo_submercado=codigo_submercado,
+            estagio=estagio,
+            nome_contrato=nome_contrato,
+            df=df,
+        )
+
     @property
     def tx(self) -> TX | None:
         """
