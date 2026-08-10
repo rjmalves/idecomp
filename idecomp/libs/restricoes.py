@@ -10,6 +10,7 @@ from idecomp.libs.modelos.restricoes import (
     RegistroAliasEletrico,
     RegistroAliasEletricoValorPeriodoPatamar,
     RegistroAliasEletValPerPat,
+    RegistroExpressaoEletrica,
     RegistroRe,
     RegistroReDataPat,
     RegistroReHabilita,
@@ -25,6 +26,8 @@ from idecomp.libs.modelos.restricoes import (
     RegistroRestricaoEletricaHabilita,
     RegistroRestricaoEletricaHorizonteData,
     RegistroRestricaoEletricaHorizontePeriodo,
+    RegistroRestricaoEletricaInequacao,
+    RegistroRestricaoEletricaInequacaoPeriodoPatamar,
     RegistroRestricaoEletricaLimitesFormulaDataPatamar,
     RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar,
     RegistroRestricaoEletricaRegraAtivacao,
@@ -49,6 +52,9 @@ class Restricoes(RegisterFile):
         RegistroRestricaoEletricaFormulaPeriodoPatamar,
         RegistroRestricaoEletricaFormulaDataPatamar,
         RegistroRestricaoEletricaFormula,
+        RegistroExpressaoEletrica,
+        RegistroRestricaoEletricaInequacaoPeriodoPatamar,
+        RegistroRestricaoEletricaInequacao,
         RegistroRestricaoEletricaHabilita,
         RegistroRestricaoEletricaLimitesFormulaDataPatamar,
         RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar,
@@ -111,6 +117,132 @@ class Restricoes(RegisterFile):
             RegistroRestricaoEletricaFormula,
             codigo_restricao=codigo_restricao,
             formula=formula,
+            df=df,
+        )
+
+    def expressao_eletrica(
+        self,
+        codigo_expressao: int | None = None,
+        identificador_expressao: str | None = None,
+        formula: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroExpressaoEletrica
+        | list[RegistroExpressaoEletrica]
+        | pd.DataFrame
+        | None
+    ):
+        """
+        Obtém um registro que define uma expressão elétrica nomeada e
+        reutilizável,
+        definido através do nome completo do card.
+
+        :param codigo_expressao: código que especifica a expressão
+        :type codigo_expressao: int | None
+        :param identificador_expressao: nome identificador da expressão
+        :type identificador_expressao: str | None
+        :param formula: equação que define a expressão
+        :type formula: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroExpressaoEletrica` |
+            list[:class:`RegistroExpressaoEletrica`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroExpressaoEletrica,
+            codigo_expressao=codigo_expressao,
+            identificador_expressao=identificador_expressao,
+            formula=formula,
+            df=df,
+        )
+
+    def restricao_eletrica_inequacao(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        operador: str | None = None,
+        formula_limite: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaInequacao
+        | list[RegistroRestricaoEletricaInequacao]
+        | pd.DataFrame
+        | None
+    ):
+        """
+        Obtém um registro que cadastra uma restrição elétrica (RE) na forma
+        de inequação, cujo lado direito é uma fórmula linear arbitrária,
+        definido através do nome completo do card.
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param formula: equação do lado esquerdo da inequação
+        :type formula: str | None
+        :param operador: operador relacional da inequação (`>=` ou `<=`)
+        :type operador: str | None
+        :param formula_limite: equação do lado direito (limite) da inequação
+        :type formula_limite: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaInequacao` |
+            list[:class:`RegistroRestricaoEletricaInequacao`] | `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaInequacao,
+            codigo_restricao=codigo_restricao,
+            formula=formula,
+            operador=operador,
+            formula_limite=formula_limite,
+            df=df,
+        )
+
+    def restricao_eletrica_inequacao_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        operador: str | None = None,
+        formula_limite: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaInequacaoPeriodoPatamar
+        | list[RegistroRestricaoEletricaInequacaoPeriodoPatamar]
+        | pd.DataFrame
+        | None
+    ):
+        """
+        Obtém um registro que cadastra uma restrição elétrica (RE) na forma
+        de inequação, com validade por intervalo de estágios e patamar,
+        definido através do nome completo do card.
+
+        :param codigo_restricao: código que especifica a restrição
+        :type codigo_restricao: int | None
+        :param estagio_inicio: estágio inicial de validade da restrição
+        :type estagio_inicio: int | None
+        :param estagio_fim: estágio final de validade da restrição
+        :type estagio_fim: int | None
+        :param patamar: patamar de carga de validade da restrição
+        :type patamar: int | None
+        :param formula: equação do lado esquerdo da inequação
+        :type formula: str | None
+        :param operador: operador relacional da inequação (`>=` ou `<=`)
+        :type operador: str | None
+        :param formula_limite: equação do lado direito (limite) da inequação
+        :type formula_limite: str | None
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`RegistroRestricaoEletricaInequacaoPeriodoPatamar` |
+            list[:class:`RegistroRestricaoEletricaInequacaoPeriodoPatamar`] |
+            `pd.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            RegistroRestricaoEletricaInequacaoPeriodoPatamar,
+            codigo_restricao=codigo_restricao,
+            estagio_inicio=estagio_inicio,
+            estagio_fim=estagio_fim,
+            patamar=patamar,
+            formula=formula,
+            operador=operador,
+            formula_limite=formula_limite,
             df=df,
         )
 
@@ -1027,7 +1159,7 @@ class Restricoes(RegisterFile):
             list[:class:`RegistroReTratViolPer`] | `pd.DataFrame` | None
         """
         return self.__registros_ou_df(
-            RegistroReTratViol,
+            RegistroReTratViolPer,
             codigo_restricao=codigo_restricao,
             estagio_inicio=estagio_inicio,
             estagio_fim=estagio_fim,

@@ -41,6 +41,11 @@ MockRestricaoEletricaRegraAtivacao = "RESTRICAO-ELETRICA-REGRA-ATIVACAO; 62; 530
 MockRestricaoEletricaHabilita = "RESTRICAO-ELETRICA-HABILITA; 703; 61\n"
 MockRestricaoEletricaTratamentoViolacao = "RESTRICAO-ELETRICA-TRATAMENTO-VIOLACAO;     701;hard        ;            1.0"
 MockRestricaoEletricaTratamentoViolacaoPeriodo = "RESTRICAO-ELETRICA-TRATAMENTO-VIOLACAO-PERIODO;  701;      1;      6;        hard;        1000.0"
+MockExpressaoEletrica = "EXPRESSAO-ELETRICA;5;RNE;FSENE + FNNE\n"
+MockRestricaoEletricaInequacao = "RESTRICAO-ELETRICA-INEQUACAO;402;disp_usih(261) - ger_usih(261) + disp_usih(34) - ger_usih(34) + disp_usih(31) - ger_usih(31) + disp_usih(33) - ger_usih(33) + disp_usih(17) - ger_usih(17) + disp_usih(18) - ger_usih(18) + disp_usih(6) - ger_usih(6);>=;0.05*(val_demanda(1) + val_demanda(2))\n"
+MockRestricaoEletricaInequacaoPeriodoPatamar = (
+    "RESTRICAO-ELETRICA-INEQUACAO-PERIODO-PATAMAR;406;1;6;1;EXPNE;<=;14700\n"
+)
 
 
 MockRestricaoEletrica = [
@@ -148,6 +153,24 @@ MockRestricaoEletrica = [
     "RE-HABILITA; 705; 63\n",
     "RESTRICAO-ELETRICA-HABILITA; 706; 63\n",
     "RESTRICAO-ELETRICA-HABILITA; 707; 64\n",
+    "&\n",
+    "&**************************************************\n",
+    "& Tratamento de violação por intervalo de estágios\n",
+    "&**************************************************\n",
+    "RE-TRAT-VIOL-PER;  701;      1;      6;        hard;        1000.0\n",
+    "RE-TRAT-VIOL-PER;  702;      1;      6;        soft;        2000.0\n",
+    "RESTRICAO-ELETRICA-TRATAMENTO-VIOLACAO-PERIODO;  703;      1;      6;        hard;        1000.0\n",
+    "RESTRICAO-ELETRICA-TRATAMENTO-VIOLACAO-PERIODO;  704;      1;      6;        soft;        2000.0\n",
+    "&\n",
+    "&**************************************************\n",
+    "& Expressões e inequações elétricas\n",
+    "&**************************************************\n",
+    "EXPRESSAO-ELETRICA;1;FNESE;ener_interc(3,1) - ener_interc(1,3)\n",
+    "EXPRESSAO-ELETRICA;5;RNE;FSENE + FNNE\n",
+    "RESTRICAO-ELETRICA-INEQUACAO;403;RNE;<=;11000-0.04*val_demanda(3)\n",
+    "RESTRICAO-ELETRICA-INEQUACAO;404;FNNE;<=;7800\n",
+    "RESTRICAO-ELETRICA-INEQUACAO-PERIODO-PATAMAR;406;1;6;1;EXPNE;<=;14700\n",
+    "RESTRICAO-ELETRICA-INEQUACAO-PERIODO-PATAMAR;407;1;6;2;FMCCO;<=;5000\n",
     "&\n",
     "\n",
     "\n",

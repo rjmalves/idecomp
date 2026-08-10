@@ -6,6 +6,16 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.14.0] - 2026-08-10
+
+### Adicionado
+
+- Leitura de três famílias de cards da funcionalidade `RESTRICAO-ELETRICA-ESPECIAL` do ambiente LIBS que ainda não eram modeladas: `EXPRESSAO-ELETRICA` (expressões elétricas nomeadas e reutilizáveis), `RESTRICAO-ELETRICA-INEQUACAO` (inequação com lado direito por fórmula linear arbitrária) e `RESTRICAO-ELETRICA-INEQUACAO-PERIODO-PATAMAR` (inequação por intervalo de estágios e patamar), através dos registros `RegistroExpressaoEletrica`, `RegistroRestricaoEletricaInequacao` e `RegistroRestricaoEletricaInequacaoPeriodoPatamar` e dos acessores `expressao_eletrica`, `restricao_eletrica_inequacao` e `restricao_eletrica_inequacao_periodo_patamar` da classe `Restricoes`, com filtros e suporte a `df=True`. As fórmulas (`formula` / `formula_limite`) são retornadas na íntegra, sem interpretação.
+
+### Corrigido
+
+- O método `re_trat_viol_per` da classe `Restricoes` recuperava registros do tipo `RegistroReTratViol` em vez de `RegistroReTratViolPer`, retornando o tipo errado e ignorando os filtros `estagio_inicio` e `estagio_fim`.
+
 ## [1.13.0] - 2026-07-31
 
 ### Adicionado

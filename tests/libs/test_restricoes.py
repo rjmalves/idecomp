@@ -1,5 +1,8 @@
 from datetime import datetime
 from idecomp.libs.modelos.restricoes import (
+    RegistroExpressaoEletrica,
+    RegistroRestricaoEletricaInequacao,
+    RegistroRestricaoEletricaInequacaoPeriodoPatamar,
     RegistroRestricaoEletricaHorizontePeriodo,
     RegistroRestricaoEletricaHorizonteData,
     RegistroRestricaoEletricaFormulaPeriodoPatamar,
@@ -34,6 +37,9 @@ from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
 from tests.mocks.arquivos.restricoes_libs import (
+    MockExpressaoEletrica,
+    MockRestricaoEletricaInequacao,
+    MockRestricaoEletricaInequacaoPeriodoPatamar,
     MockRestricaoEletricaFormula,
     MockRestricaoEletricaFormulaDataPatamar,
     MockRestricaoEletricaFormulaPeriodoPatamar,
@@ -176,6 +182,94 @@ def test_registro_restricao_eletrica_formula():
     assert r.formula == "re(405) + constante_aditiva"
     r.formula = "teste"
     assert r.formula == "teste"
+
+
+def test_registro_expressao_eletrica():
+    m: MagicMock = mock_open(read_data="".join(MockExpressaoEletrica))
+    r = RegistroExpressaoEletrica()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [5, "RNE", "FSENE + FNNE"]
+    assert r.codigo_expressao == 5
+    r.codigo_expressao = 0
+    assert r.codigo_expressao == 0
+    assert r.identificador_expressao == "RNE"
+    r.identificador_expressao = "teste"
+    assert r.identificador_expressao == "teste"
+    assert r.formula == "FSENE + FNNE"
+    r.formula = "teste"
+    assert r.formula == "teste"
+
+
+def test_registro_restricao_eletrica_inequacao():
+    m: MagicMock = mock_open(read_data="".join(MockRestricaoEletricaInequacao))
+    r = RegistroRestricaoEletricaInequacao()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    formula_longa = (
+        "disp_usih(261) - ger_usih(261) + disp_usih(34) - ger_usih(34)"
+        " + disp_usih(31) - ger_usih(31) + disp_usih(33) - ger_usih(33)"
+        " + disp_usih(17) - ger_usih(17) + disp_usih(18) - ger_usih(18)"
+        " + disp_usih(6) - ger_usih(6)"
+    )
+    # A fórmula é retornada na íntegra: guarda contra o truncamento
+    # que ocorreria com um LiteralField dimensionado pequeno demais.
+    assert len(formula_longa) > 200
+    assert r.data == [
+        402,
+        formula_longa,
+        ">=",
+        "0.05*(val_demanda(1) + val_demanda(2))",
+    ]
+    assert r.codigo_restricao == 402
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.formula == formula_longa
+    r.formula = "teste"
+    assert r.formula == "teste"
+    assert r.operador == ">="
+    r.operador = "<="
+    assert r.operador == "<="
+    assert r.formula_limite == "0.05*(val_demanda(1) + val_demanda(2))"
+    r.formula_limite = "teste"
+    assert r.formula_limite == "teste"
+
+
+def test_registro_restricao_eletrica_inequacao_periodo_patamar():
+    m: MagicMock = mock_open(
+        read_data="".join(MockRestricaoEletricaInequacaoPeriodoPatamar)
+    )
+    r = RegistroRestricaoEletricaInequacaoPeriodoPatamar()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [406, 1, 6, 1, "EXPNE", "<=", "14700"]
+    assert r.codigo_restricao == 406
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio_inicio == 1
+    r.estagio_inicio = 0
+    assert r.estagio_inicio == 0
+    assert r.estagio_fim == 6
+    r.estagio_fim = 0
+    assert r.estagio_fim == 0
+    assert r.patamar == 1
+    r.patamar = 0
+    assert r.patamar == 0
+    assert r.formula == "EXPNE"
+    r.formula = "teste"
+    assert r.formula == "teste"
+    assert r.operador == "<="
+    r.operador = ">="
+    assert r.operador == ">="
+    assert r.formula_limite == "14700"
+    r.formula_limite = "teste"
+    assert r.formula_limite == "teste"
 
 
 def test_registro_re_per_pat():
@@ -668,6 +762,15 @@ def test_atributos_encontrados_restricoes():
         assert len(e.restricao_eletrica_regra_ativacao()) > 0
         assert len(e.re_habilita()) > 0
         assert len(e.restricao_eletrica_habilita()) > 0
+        assert len(e.expressao_eletrica()) > 0
+        assert len(e.restricao_eletrica_inequacao()) > 0
+        assert len(e.restricao_eletrica_inequacao_periodo_patamar()) > 0
+        assert len(e.restricao_eletrica_tratamento_violacao_periodo()) > 0
+        tratamentos_periodo = e.re_trat_viol_per()
+        assert len(tratamentos_periodo) > 0
+        assert all(
+            isinstance(r, RegistroReTratViolPer) for r in tratamentos_periodo
+        )
 
 
 def test_eq_restricoes():

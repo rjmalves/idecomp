@@ -369,6 +369,271 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
         self.data[4] = n
 
 
+class RegistroExpressaoEletrica(Register):
+    """
+    Registro que contém a definição de uma expressão elétrica nomeada
+    e reutilizável, referenciada por outras fórmulas e inequações através
+    do seu identificador,
+    definido através do nome completo do card.
+    """
+
+    __slots__ = []
+
+    IDENTIFIER = "EXPRESSAO-ELETRICA"
+    IDENTIFIER_DIGITS = 18
+    LINE = Line(
+        [
+            IntegerField(size=20),
+            LiteralField(size=200),
+            LiteralField(size=1000),
+        ],
+        delimiter=";",
+    )
+
+    @property
+    def codigo_expressao(self) -> int | None:
+        """
+        O código da expressão.
+
+        :return: O código
+        :rtype: Optional[int]
+        """
+        return self.data[0]
+
+    @codigo_expressao.setter
+    def codigo_expressao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def identificador_expressao(self) -> str | None:
+        """
+        O identificador da expressão elétrica personalizada.
+
+        :return: O identificador
+        :rtype: Optional[str]
+        """
+        return self.data[1]
+
+    @identificador_expressao.setter
+    def identificador_expressao(self, n: str) -> None:
+        self.data[1] = n
+
+    @property
+    def formula(self) -> str | None:
+        """
+        A fórmula que define a expressão.
+
+        :return: A fórmula
+        :rtype: Optional[str]
+        """
+        return self.data[2]
+
+    @formula.setter
+    def formula(self, n: str) -> None:
+        self.data[2] = n
+
+
+class RegistroRestricaoEletricaInequacaoPeriodoPatamar(Register):
+    """
+    Registro que contém uma restrição elétrica (RE) na forma de inequação,
+    com validade por intervalo de estágios e patamar,
+    definido através do nome completo do card.
+    """
+
+    __slots__ = []
+
+    IDENTIFIER = "RESTRICAO-ELETRICA-INEQUACAO-PERIODO-PATAMAR"
+    IDENTIFIER_DIGITS = 44
+    LINE = Line(
+        [
+            IntegerField(size=20),
+            IntegerField(size=20),
+            IntegerField(size=20),
+            IntegerField(size=20),
+            LiteralField(size=1000),
+            LiteralField(size=200),
+            LiteralField(size=1000),
+        ],
+        delimiter=";",
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição.
+
+        :return: O código
+        :rtype: Optional[int]
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio_inicio(self) -> int | None:
+        """
+        O estágio de início da validade da restrição.
+
+        :return: O estágio
+        :rtype: Optional[int]
+        """
+        return self.data[1]
+
+    @estagio_inicio.setter
+    def estagio_inicio(self, c: int) -> None:
+        self.data[1] = c
+
+    @property
+    def estagio_fim(self) -> int | None:
+        """
+        O estágio de fim da validade da restrição.
+
+        :return: O estágio
+        :rtype: Optional[int]
+        """
+        return self.data[2]
+
+    @estagio_fim.setter
+    def estagio_fim(self, c: int) -> None:
+        self.data[2] = c
+
+    @property
+    def patamar(self) -> int | None:
+        """
+        O índice do patamar de carga.
+
+        :return: O patamar
+        :rtype: Optional[int]
+        """
+        return self.data[3]
+
+    @patamar.setter
+    def patamar(self, c: int) -> None:
+        self.data[3] = c
+
+    @property
+    def formula(self) -> str | None:
+        """
+        A fórmula do lado esquerdo da inequação.
+
+        :return: A fórmula
+        :rtype: Optional[str]
+        """
+        return self.data[4]
+
+    @formula.setter
+    def formula(self, n: str) -> None:
+        self.data[4] = n
+
+    @property
+    def operador(self) -> str | None:
+        """
+        O operador relacional da inequação (`>=` ou `<=`).
+
+        :return: O operador
+        :rtype: Optional[str]
+        """
+        return self.data[5]
+
+    @operador.setter
+    def operador(self, n: str) -> None:
+        self.data[5] = n
+
+    @property
+    def formula_limite(self) -> str | None:
+        """
+        A fórmula do lado direito (limite) da inequação.
+
+        :return: A fórmula
+        :rtype: Optional[str]
+        """
+        return self.data[6]
+
+    @formula_limite.setter
+    def formula_limite(self, n: str) -> None:
+        self.data[6] = n
+
+
+class RegistroRestricaoEletricaInequacao(Register):
+    """
+    Registro que contém uma restrição elétrica (RE) na forma de inequação,
+    cujo lado direito é uma fórmula linear arbitrária,
+    definido através do nome completo do card.
+    """
+
+    __slots__ = []
+
+    IDENTIFIER = "RESTRICAO-ELETRICA-INEQUACAO"
+    IDENTIFIER_DIGITS = 28
+    LINE = Line(
+        [
+            IntegerField(size=20),
+            LiteralField(size=1000),
+            LiteralField(size=200),
+            LiteralField(size=1000),
+        ],
+        delimiter=";",
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição.
+
+        :return: O código
+        :rtype: Optional[int]
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def formula(self) -> str | None:
+        """
+        A fórmula do lado esquerdo da inequação.
+
+        :return: A fórmula
+        :rtype: Optional[str]
+        """
+        return self.data[1]
+
+    @formula.setter
+    def formula(self, n: str) -> None:
+        self.data[1] = n
+
+    @property
+    def operador(self) -> str | None:
+        """
+        O operador relacional da inequação (`>=` ou `<=`).
+
+        :return: O operador
+        :rtype: Optional[str]
+        """
+        return self.data[2]
+
+    @operador.setter
+    def operador(self, n: str) -> None:
+        self.data[2] = n
+
+    @property
+    def formula_limite(self) -> str | None:
+        """
+        A fórmula do lado direito (limite) da inequação.
+
+        :return: A fórmula
+        :rtype: Optional[str]
+        """
+        return self.data[3]
+
+    @formula_limite.setter
+    def formula_limite(self, n: str) -> None:
+        self.data[3] = n
+
+
 class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
     """
     Registro que contém os limites de cada restrição

@@ -73,6 +73,15 @@ para cada um.
 .. autoclass:: RegistroRestricaoEletricaFormulaDataPatamar
    :members:
    
+.. autoclass:: RegistroExpressaoEletrica
+   :members:
+
+.. autoclass:: RegistroRestricaoEletricaInequacaoPeriodoPatamar
+   :members:
+
+.. autoclass:: RegistroRestricaoEletricaInequacao
+   :members:
+
 .. autoclass:: RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar
    :members:
    
