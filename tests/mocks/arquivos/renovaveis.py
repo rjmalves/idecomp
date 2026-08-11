@@ -55,3 +55,19 @@ MockPEEPotenciaInstaladaPeriodo = (
 )
 
 MockPEEGeracaoPeriodoPatamarCenario = "PEE-GER-PER-PAT-CEN;1;1;1;1;81.0966"
+
+MockPEEGeracaoPeriodoPatamarCenarioComPeriodoFinal = (
+    "PEE-GER-PER-PAT-CEN;1;1;1;1;1;7.7428"
+)
+
+# Variante do arquivo com o layout de 6 campos do card
+# PEE-GER-PER-PAT-CEN (intervalo de períodos, com PerFin).
+MockRenovaveisPeriodoFinal = [
+    "&                   ;CodPEE   ;PerIni ;PerFin ;Pat   ;Cen;GerEolica\n",
+    "PEE-GER-PER-PAT-CEN;1;1;1;1;1;7.7428\n",
+    "PEE-GER-PER-PAT-CEN;1;1;1;2;1;5.7284\n",
+    "PEE-GER-PER-PAT-CEN;1;1;1;3;1;4.387\n",
+    "PEE-GER-PER-PAT-CEN;1;2;2;1;1;7.7428\n",
+    "PEE-GER-PER-PAT-CEN;14;3;3;2;353;1.627114\n",
+    "PEE-GER-PER-PAT-CEN;14;3;3;3;353;1.611293\n",
+]

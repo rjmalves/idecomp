@@ -8,6 +8,7 @@ from idecomp.libs.modelos.renovaveis import (
     PEECadastro,
     PEEConfiguracaoPeriodo,
     PEEGeracaoPeriodoPatamarCenario,
+    PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal,
     PEEPotenciaInstaladaPeriodo,
     PEESubmercado,
 )
@@ -22,6 +23,7 @@ class Renovaveis(RegisterFile):
     T = TypeVar("T", bound=Register)
 
     REGISTERS = [
+        PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal,
         PEEGeracaoPeriodoPatamarCenario,
         PEEPotenciaInstaladaPeriodo,
         PEEConfiguracaoPeriodo,
@@ -192,8 +194,10 @@ class Renovaveis(RegisterFile):
         geracao: float | None = None,
         df: bool = False,
     ) -> (
-        PEEGeracaoPeriodoPatamarCenario
-        | list[PEEGeracaoPeriodoPatamarCenario]
+        list[
+            PEEGeracaoPeriodoPatamarCenario
+            | PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal
+        ]
         | pd.DataFrame
         | None
     ):
@@ -202,6 +206,13 @@ class Renovaveis(RegisterFile):
         equivalente por período, patamar e cenário. Opcionalmente, o
         retorno pode ser transformado em um `DataFrame`, apenas para
         leitura das informações.
+
+        O card `PEE-GER-PER-PAT-CEN` possui dois layouts, distinguidos pela
+        quantidade de campos da linha: o de período único (5 campos) e o de
+        intervalo de períodos (6 campos, com `PerFin`). Ambos são lidos e
+        combinados neste método, expondo sempre as colunas
+        `codigo_pee, estagio, patamar, cenario, geracao` e, quando o layout
+        de intervalo está presente, também `estagio_final`.
 
         :param codigo_pee: código que especifica o parque
         :type codigo_pee: int | None
@@ -216,16 +227,52 @@ class Renovaveis(RegisterFile):
         :param df: ignorar os filtros e retornar
             todos os dados de registros como um DataFrame
         :type df: bool
-        :return: Um ou mais registros, se existirem.
-        :rtype: `PEEGeracaoPeriodoPatamarCenario` |
-            list[`PEEGeracaoPeriodoPatamarCenario`] | `None` | `DataFrame`
+        :return: Os registros, se existirem.
+        :rtype: list[`PEEGeracaoPeriodoPatamarCenario` |
+            `PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal`] |
+            `None` | `DataFrame`
         """
-        return self.__registros_ou_df(
+        tipos: tuple[type[Register], ...] = (
+            PEEGeracaoPeriodoPatamarCenario,
+            PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal,
+        )
+        if df:
+            frames = [f for f in (self._as_df(t) for t in tipos) if not f.empty]
+            if len(frames) == 0:
+                return pd.DataFrame()
+            if len(frames) == 1:
+                return frames[0]
+            return pd.concat(frames, ignore_index=True)
+        registros: list[
+            PEEGeracaoPeriodoPatamarCenario
+            | PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal
+        ] = []
+        periodo_unico = self.data.get_registers_of_type(
             PEEGeracaoPeriodoPatamarCenario,
             codigo_pee=codigo_pee,
             estagio=estagio,
             patamar=patamar,
             cenario=cenario,
             geracao=geracao,
-            df=df,
         )
+        if periodo_unico is not None:
+            registros.extend(
+                periodo_unico
+                if isinstance(periodo_unico, list)
+                else [periodo_unico]
+            )
+        com_periodo_final = self.data.get_registers_of_type(
+            PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal,
+            codigo_pee=codigo_pee,
+            estagio=estagio,
+            patamar=patamar,
+            cenario=cenario,
+            geracao=geracao,
+        )
+        if com_periodo_final is not None:
+            registros.extend(
+                com_periodo_final
+                if isinstance(com_periodo_final, list)
+                else [com_periodo_final]
+            )
+        return registros if len(registros) > 0 else None

@@ -6,6 +6,12 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.14.2] - 2026-08-11
+
+### Corrigido
+
+- O registro `PEE-GER-PER-PAT-CEN` do arquivo `renovaveis.csv` existe em dois layouts reais, que diferem pela presença da coluna `PerFin`: um de período único, com 5 campos (`CodPEE; PerIni; Pat; Cen; GerEolica`), e um de intervalo de períodos, com 6 campos (`CodPEE; PerIni; PerFin; Pat; Cen; GerEolica`). A correção da 1.14.1, ao fixar o layout de 5 campos, regrediu a leitura dos decks de 6 campos (que a 1.13.0 lia). Os dois layouts passam a ser suportados e distinguidos automaticamente pela quantidade de campos da linha, através dos registros `PEEGeracaoPeriodoPatamarCenario` (5 campos) e `PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal` (6 campos). O acessor `pee_ger_per_pat_cen` da classe `Renovaveis` combina os dois e expõe sempre as colunas `codigo_pee, estagio, patamar, cenario, geracao` — e também `estagio_final` quando o layout de intervalo está presente.
+
 ## [1.14.1] - 2026-08-11
 
 ### Corrigido
