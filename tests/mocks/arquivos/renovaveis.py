@@ -34,12 +34,12 @@ MockRenovaveis = [
     " PEE-POT-INST-PER;       12;      1;      3;          99999\n",
     " PEE-POT-INST-PER;       13;      1;      3;          99999\n",
     " PEE-POT-INST-PER;       14;      1;      3;          99999\n",
-    "PEE-GER-PER-PAT-CEN;1;1;1;1;1;81.0966\n",
-    "PEE-GER-PER-PAT-CEN;1;1;1;2;1;87.6335\n",
-    "PEE-GER-PER-PAT-CEN;1;1;1;3;1;134.5896\n",
-    "PEE-GER-PER-PAT-CEN;1;2;2;1;1;102.0333\n",
-    "PEE-GER-PER-PAT-CEN;14;3;3;2;353;1.627114\n",
-    "PEE-GER-PER-PAT-CEN;14;3;3;3;353;1.611293\n",
+    "PEE-GER-PER-PAT-CEN;1;1;1;1;81.0966\n",
+    "PEE-GER-PER-PAT-CEN;1;1;2;1;87.6335\n",
+    "PEE-GER-PER-PAT-CEN;1;1;3;1;134.5896\n",
+    "PEE-GER-PER-PAT-CEN;1;2;1;1;102.0333\n",
+    "PEE-GER-PER-PAT-CEN;14;3;2;353;1.627114\n",
+    "PEE-GER-PER-PAT-CEN;14;3;3;353;1.611293\n",
 ]
 
 MockPEECadastro = " PEE-CAD;        1;Eolica SECO"
@@ -54,4 +54,4 @@ MockPEEPotenciaInstaladaPeriodo = (
     " PEE-POT-INST-PER;        1;      1;      3;          99999"
 )
 
-MockPEEGeracaoPeriodoPatamarCenario = "PEE-GER-PER-PAT-CEN;1;1;1;1;1;81.0966"
+MockPEEGeracaoPeriodoPatamarCenario = "PEE-GER-PER-PAT-CEN;1;1;1;1;81.0966"

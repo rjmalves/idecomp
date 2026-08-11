@@ -158,15 +158,16 @@ def test_df_renovaveis_pee_ger_per_pat_cen():
         renovaveis = Renovaveis.read(ARQ_TESTE)
         df = renovaveis.pee_ger_per_pat_cen(df=True)
         assert len(df) == 6
+        # A coluna de geração deve estar totalmente preenchida: guarda contra
+        # a regressão em que um campo espúrio deslocava tudo e zerava geracao.
+        assert df["geracao"].notna().all()
         assert df.at[0, "codigo_pee"] == 1
-        assert df.at[0, "estagio_inicial"] == 1
-        assert df.at[0, "estagio_final"] == 1
+        assert df.at[0, "estagio"] == 1
         assert df.at[0, "patamar"] == 1
         assert df.at[0, "cenario"] == 1
         assert df.at[0, "geracao"] == 81.0966
         assert df.at[5, "codigo_pee"] == 14
-        assert df.at[5, "estagio_inicial"] == 3
-        assert df.at[5, "estagio_final"] == 3
+        assert df.at[5, "estagio"] == 3
         assert df.at[5, "patamar"] == 3
         assert df.at[5, "cenario"] == 353
         assert df.at[5, "geracao"] == 1.611293
@@ -181,16 +182,13 @@ def test_registro_renovaveis_pee_ger_per_pat_cen():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [1, 1, 1, 1, 1, 81.0966]
+    assert r.data == [1, 1, 1, 1, 81.0966]
     assert r.codigo_pee == 1
     r.codigo_pee = 0
     assert r.codigo_pee == 0
-    assert r.estagio_inicial == 1
-    r.estagio_inicial = 0
-    assert r.estagio_inicial == 0
-    assert r.estagio_final == 1
-    r.estagio_final = 0
-    assert r.estagio_final == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
     assert r.patamar == 1
     r.patamar = 0
     assert r.patamar == 0

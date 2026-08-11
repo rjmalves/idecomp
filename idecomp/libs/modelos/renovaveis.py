@@ -254,7 +254,6 @@ class PEEGeracaoPeriodoPatamarCenario(Register):
             IntegerField(),
             IntegerField(),
             IntegerField(),
-            IntegerField(),
             FloatField(decimal_digits=4),
         ],
         delimiter=";",
@@ -275,32 +274,18 @@ class PEEGeracaoPeriodoPatamarCenario(Register):
         self.data[0] = c
 
     @property
-    def estagio_inicial(self) -> int | None:
+    def estagio(self) -> int | None:
         """
-        O estágio inicial de validade da geração.
+        O estágio (período) de validade da geração.
 
         :return: O estágio
         :rtype: int | None
         """
         return self.data[1]
 
-    @estagio_inicial.setter
-    def estagio_inicial(self, e: int) -> None:
+    @estagio.setter
+    def estagio(self, e: int) -> None:
         self.data[1] = e
-
-    @property
-    def estagio_final(self) -> int | None:
-        """
-        O estágio final de validade da geração.
-
-        :return: O estágio
-        :rtype: int | None
-        """
-        return self.data[2]
-
-    @estagio_final.setter
-    def estagio_final(self, e: int) -> None:
-        self.data[2] = e
 
     @property
     def patamar(self) -> int | None:
@@ -310,11 +295,11 @@ class PEEGeracaoPeriodoPatamarCenario(Register):
         :return: O patamar
         :rtype: int | None
         """
-        return self.data[3]
+        return self.data[2]
 
     @patamar.setter
     def patamar(self, p: int) -> None:
-        self.data[3] = p
+        self.data[2] = p
 
     @property
     def cenario(self) -> int | None:
@@ -324,11 +309,11 @@ class PEEGeracaoPeriodoPatamarCenario(Register):
         :return: O cenário
         :rtype: int | None
         """
-        return self.data[4]
+        return self.data[3]
 
     @cenario.setter
     def cenario(self, c: int) -> None:
-        self.data[4] = c
+        self.data[3] = c
 
     @property
     def geracao(self) -> float | None:
@@ -338,8 +323,8 @@ class PEEGeracaoPeriodoPatamarCenario(Register):
         :return: A geração em MW
         :rtype: float | None
         """
-        return self.data[5]
+        return self.data[4]
 
     @geracao.setter
     def geracao(self, g: float) -> None:
-        self.data[5] = g
+        self.data[4] = g

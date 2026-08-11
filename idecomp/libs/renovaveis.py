@@ -186,8 +186,7 @@ class Renovaveis(RegisterFile):
     def pee_ger_per_pat_cen(
         self,
         codigo_pee: int | None = None,
-        estagio_inicial: int | None = None,
-        estagio_final: int | None = None,
+        estagio: int | None = None,
         patamar: int | None = None,
         cenario: int | None = None,
         geracao: float | None = None,
@@ -206,10 +205,8 @@ class Renovaveis(RegisterFile):
 
         :param codigo_pee: código que especifica o parque
         :type codigo_pee: int | None
-        :param estagio_inicial: estágio inicial de validade
-        :type estagio_inicial: int | None
-        :param estagio_final: estágio final de validade
-        :type estagio_final: int | None
+        :param estagio: estágio (período) de validade
+        :type estagio: int | None
         :param patamar: índice do patamar de carga
         :type patamar: int | None
         :param cenario: índice do cenário
@@ -226,8 +223,7 @@ class Renovaveis(RegisterFile):
         return self.__registros_ou_df(
             PEEGeracaoPeriodoPatamarCenario,
             codigo_pee=codigo_pee,
-            estagio_inicial=estagio_inicial,
-            estagio_final=estagio_final,
+            estagio=estagio,
             patamar=patamar,
             cenario=cenario,
             geracao=geracao,

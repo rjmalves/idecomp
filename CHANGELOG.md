@@ -6,6 +6,12 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.14.1] - 2026-08-11
+
+### Corrigido
+
+- O registro `PEE-GER-PER-PAT-CEN` (classe `PEEGeracaoPeriodoPatamarCenario`) era declarado com 6 campos, incluindo um `estagio_final` inexistente, enquanto o card real possui 5 campos com um único período (`CodPEE; PerIni; Pat; Cen; GerEolica`). O deslocamento posicional fazia o valor de geração cair na coluna `cenario` e a coluna `geracao` ser lida como `None` em todas as linhas. O registro passa a ter 5 campos, e o acessor `pee_ger_per_pat_cen` da classe `Renovaveis` teve o parâmetro `estagio_final` removido e `estagio_inicial` renomeado para `estagio`.
+
 ## [1.14.0] - 2026-08-10
 
 ### Adicionado
