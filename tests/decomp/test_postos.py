@@ -2,7 +2,6 @@ from idecomp.decomp.modelos.postos import RegistroPostos
 from idecomp.decomp.postos import Postos
 
 from os.path import join
-import pandas as pd  # type: ignore
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 

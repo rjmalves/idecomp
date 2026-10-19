@@ -61,7 +61,7 @@ def test_atributos_nao_encontrados_mapcut():
     m: MagicMock = mock_open(read_data=b"")
     with pytest.raises(ValueError):
         with patch("builtins.open", m):
-            h = Mapcut.read(ARQ_TESTE)
+            Mapcut.read(ARQ_TESTE)
 
 
 def test_eq_mapcut():
