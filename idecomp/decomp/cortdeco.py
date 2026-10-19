@@ -51,7 +51,8 @@ class Cortdeco(SectionFile):
             *args,
             **kwargs,
         )
-        return a  # type: ignore[return-value]
+        assert isinstance(a, Cortdeco)
+        return a
 
     def write(
         self,
