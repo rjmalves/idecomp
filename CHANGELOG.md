@@ -6,6 +6,14 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Adicionado
+
+- Método `ez` na classe `Dadger` para o registro `EZ` (bloco "FUNCAO DE ENERGIA ARMAZENADA"), que define o percentual do volume útil de cada usina de um subsistema acoplado hidraulicamente considerado no cálculo da energia armazenada do subsistema de jusante, com filtros por `codigo_usina` e `volume` e suporte a `df=True` (colunas `codigo_usina` e `volume`).
+
+### Corrigido
+
+- A documentação do registro `EZ` e da propriedade `volume` descrevia o campo como percentual do volume máximo, enquanto o manual do DECOMP (§3.4.6.20) o define como percentual do volume útil. O nome da propriedade foi mantido.
+
 ## [1.14.2] - 2026-08-11
 
 ### Corrigido
