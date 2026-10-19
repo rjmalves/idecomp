@@ -6,6 +6,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.15.0] - 2026-10-19
+
 ### Adicionado
 
 - Método `ez` na classe `Dadger` para o registro `EZ` (bloco "FUNCAO DE ENERGIA ARMAZENADA"), que define o percentual do volume útil de cada usina de um subsistema acoplado hidraulicamente considerado no cálculo da energia armazenada do subsistema de jusante, com filtros por `codigo_usina` e `volume` e suporte a `df=True` (colunas `codigo_usina` e `volume`).
