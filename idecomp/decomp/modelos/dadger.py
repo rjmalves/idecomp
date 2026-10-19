@@ -3272,8 +3272,9 @@ class RQ(Register):
 
 class EZ(Register):
     """
-    Registro que contém o percentual máximo do
-    volume útil para acoplamento.
+    Registro que contém o percentual do volume útil das usinas
+    de subsistemas acoplados hidraulicamente considerado no
+    cálculo da energia armazenada.
     """
 
     __slots__: list[str] = []
@@ -3304,9 +3305,9 @@ class EZ(Register):
     @property
     def volume(self) -> float | None:
         """
-        O volume útil considerado para cálculo.
+        O percentual do volume útil considerado para cálculo.
 
-        :return: O volume útil em % do volume máximo.
+        :return: O percentual do volume útil (%).
         :rtype: float | None
         """
         return self.data[1]

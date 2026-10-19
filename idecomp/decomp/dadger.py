@@ -1346,6 +1346,33 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(RQ, codigo_ree=codigo_ree, df=df)
 
+    def ez(
+        self,
+        codigo_usina: int | None = None,
+        volume: float | None = None,
+        df: bool = False,
+    ) -> EZ | list[EZ] | pandas.DataFrame | None:
+        """
+        Obtém um registro que especifica o percentual do volume útil
+        das usinas de subsistemas acoplados considerado no cálculo da
+        energia armazenada existente no estudo especificado
+        no :class:`Dadger`
+
+        :param codigo_usina: Código da UHE associada
+        :type codigo_usina: int | None
+        :param volume: Percentual do volume útil (%)
+        :type volume: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`EZ` | list[:class:`EZ`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            EZ, codigo_usina=codigo_usina, volume=volume, df=df
+        )
+
     def ve(
         self, codigo_usina: int | None = None, df: bool = False
     ) -> VE | list[VE] | pandas.DataFrame | None:

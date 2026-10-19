@@ -1712,6 +1712,34 @@ def test_registro_ez_dadger():
     assert r.volume == 100.0
 
 
+def test_leitura_escrita_ez_dadger():
+    # O campo é F5.0 no manual: valores escritos sem decimais ("55.")
+    # também devem ser lidos e preservados na escrita.
+    for linha, dados in [
+        ("EZ  251   55.0", [251, 55.0]),
+        ("EZ  252  100.0", [252, 100.0]),
+        ("EZ  156  100.0", [156, 100.0]),
+        ("EZ  251   55.", [251, 55.0]),
+    ]:
+        m: MagicMock = mock_open(read_data=linha)
+        r = EZ()
+        with patch("builtins.open", m):
+            with open("", "") as fp:
+                r.read(fp)
+        assert r.data == dados
+        m2: MagicMock = mock_open(read_data="")
+        with patch("builtins.open", m2):
+            with open("", "w") as fp:
+                r.write(fp)
+            escrita = "".join(c.args[0] for c in m2().write.call_args_list)
+        m3: MagicMock = mock_open(read_data=escrita)
+        r2 = EZ()
+        with patch("builtins.open", m3):
+            with open("", "") as fp:
+                r2.read(fp)
+        assert r2.data == dados
+
+
 def test_registro_hv_dadger():
     m: MagicMock = mock_open(read_data="".join(MockHV))
     r = HV()
@@ -2288,6 +2316,7 @@ def test_campos_encontrados_dadger():
     assert "taxa_consumo" in d.ue(df=True).columns
     assert "limite_de_para_1" in d.ia(df=True).columns
     assert "limite_para_de_5" in d.ia(df=True).columns
+    assert d.ez(251) is not None
     assert d.ci(1, 2, 1) is not None
     assert d.ce(1, 1, 1) is not None
 
@@ -2339,6 +2368,33 @@ def test_ci_ce_dadger():
     assert len(df_ce) == 2
     assert "fator_perdas" in df_ce.columns
     assert "custo_3" in df_ce.columns
+
+
+def test_ez_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    ez = d.ez(codigo_usina=251)
+    assert isinstance(ez, EZ)
+    assert ez.volume == 55.0
+    assert len(d.ez(volume=100.0)) == 9
+
+    df_ez = d.ez(df=True)
+    assert len(df_ez) == 10
+    assert list(df_ez.columns) == ["codigo_usina", "volume"]
+    assert df_ez["codigo_usina"].tolist() == [
+        251,
+        252,
+        253,
+        257,
+        261,
+        162,
+        156,
+        148,
+        155,
+        57,
+    ]
 
 
 def test_cria_lu_dadger():
