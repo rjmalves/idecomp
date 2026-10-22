@@ -74,18 +74,18 @@ class Vazoes(SectionFile):
             dados = self.__obtem_secao_vazoes()
             if dados is not None:
                 probs = dados.probabilidades_nos
-                numero_estagios = dados.numero_estagios
                 numero_semanas = dados.numero_semanas_completas
-                cenarios = [1] * dados.numero_semanas_completas
-                for num_aberturas in dados.numero_aberturas_estagios[
-                    numero_semanas:
-                ]:
+                estagios = list(range(1, numero_semanas + 1))
+                cenarios = [1] * numero_semanas
+                for e, num_aberturas in enumerate(
+                    dados.numero_aberturas_estagios[numero_semanas:],
+                    start=numero_semanas + 1,
+                ):
+                    estagios += [e] * num_aberturas
                     cenarios += list(range(1, num_aberturas + 1))
                 df = pd.DataFrame(
                     data={
-                        "estagio": list(range(1, numero_estagios))
-                        + [numero_estagios]
-                        * dados.numero_cenarios_estocasticos,
+                        "estagio": estagios,
                         "no": list(range(1, len(probs) + 1)),
                         "cenario": cenarios,
                         "probabilidade": probs,

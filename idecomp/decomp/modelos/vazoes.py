@@ -127,7 +127,7 @@ class SecaoVazoesPostos(Section):
             self.data["previsoes"] += list(dados_cenarios)
 
     def __le_sexto_registro(self, file: IO[Any]) -> None:
-        for _ in range(self.numero_cenarios_estocasticos):
+        for _ in range(self.numero_registros_cenarios_estocasticos):
             dados_cenarios = np.frombuffer(
                 file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
                 dtype=np.int32,
@@ -147,7 +147,7 @@ class SecaoVazoesPostos(Section):
             )
 
     def __le_oitavo_registro(self, file: IO[Any]) -> None:
-        for _ in range(self.numero_cenarios_estocasticos):
+        for _ in range(self.numero_registros_cenarios_estocasticos):
             dados_cenarios = np.frombuffer(
                 file.read(SecaoVazoesPostos.TAMANHO_REGISTRO * 4),
                 dtype=np.int32,
@@ -344,7 +344,19 @@ class SecaoVazoesPostos(Section):
 
     @property
     def numero_cenarios_estocasticos(self) -> int:
+        """
+        Número de caminhos completos (folhas) da árvore de cenários.
+        """
         return int(np.prod(self.numero_aberturas_estagios))
+
+    @property
+    def numero_registros_cenarios_estocasticos(self) -> int:
+        """
+        Número de registros de cenários gerados no arquivo: um por
+        abertura de cada estágio estocástico.
+        """
+        n = self.numero_semanas_completas
+        return int(np.sum(self.numero_aberturas_estagios[n:]))
 
     @property
     def versao_modelo(self) -> int:
