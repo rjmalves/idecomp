@@ -6,6 +6,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.15.1] - 2026-10-22
+
 ### Corrigido
 
 - A leitura do arquivo `vazoes.rvX` dimensionava os registros de cenários gerados (`cenarios_gerados` e `cenarios_calculados_com_postos_artificiais`) pelo produto das aberturas de todos os estágios, enquanto o arquivo contém um registro por abertura de cada estágio estocástico (soma das aberturas a partir de `numero_semanas_completas`). Em decks com mais de um estágio estocástico, como os de estágios mensais, os registros seguintes eram lidos deslocados ou a leitura falhava. A tabela `probabilidades` da classe `Vazoes` também passa a atribuir o `estagio` de cada nó a partir das aberturas por estágio, em vez de supor que apenas o último estágio é estocástico [#95](https://github.com/rjmalves/idecomp/pull/95) (@renanmaciel-84).
@@ -252,7 +254,17 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 - Métodos le_arquivo e escreve_arquivo deprecados
 
-[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.8.2...HEAD
+[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.15.1...HEAD
+[1.15.1]: https://github.com/rjmalves/idecomp/compare/v1.15.0...v1.15.1
+[1.15.0]: https://github.com/rjmalves/idecomp/compare/v1.14.2...v1.15.0
+[1.14.2]: https://github.com/rjmalves/idecomp/compare/v1.14.1...v1.14.2
+[1.14.1]: https://github.com/rjmalves/idecomp/compare/v1.14.0...v1.14.1
+[1.14.0]: https://github.com/rjmalves/idecomp/compare/v1.13.0...v1.14.0
+[1.13.0]: https://github.com/rjmalves/idecomp/compare/v1.12.0...v1.13.0
+[1.12.0]: https://github.com/rjmalves/idecomp/compare/v1.11.0...v1.12.0
+[1.11.0]: https://github.com/rjmalves/idecomp/compare/v1.10.0...v1.11.0
+[1.10.0]: https://github.com/rjmalves/idecomp/compare/v1.9.0...v1.10.0
+[1.9.0]: https://github.com/rjmalves/idecomp/compare/v1.8.2...v1.9.0
 [1.8.2]: https://github.com/rjmalves/idecomp/compare/v1.8.1...v1.8.2
 [1.8.1]: https://github.com/rjmalves/idecomp/compare/v1.8.0...v1.8.1
 [1.8.0]: https://github.com/rjmalves/idecomp/compare/v1.7.3...v1.8.0
