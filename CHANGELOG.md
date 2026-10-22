@@ -8,7 +8,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Corrigido
 
-- A leitura do arquivo `vazoes.rvX` dimensionava os registros de cenários gerados (`cenarios_gerados` e `cenarios_calculados_com_postos_artificiais`) pelo produto das aberturas de todos os estágios, enquanto o arquivo contém um registro por abertura de cada estágio estocástico (soma das aberturas a partir de `numero_semanas_completas`). Em decks com mais de um estágio estocástico, como os de estágios mensais, os registros seguintes eram lidos deslocados ou a leitura falhava. A tabela `probabilidades` da classe `Vazoes` também passa a atribuir o `estagio` de cada nó a partir das aberturas por estágio, em vez de supor que apenas o último estágio é estocástico.
+- A leitura do arquivo `vazoes.rvX` dimensionava os registros de cenários gerados (`cenarios_gerados` e `cenarios_calculados_com_postos_artificiais`) pelo produto das aberturas de todos os estágios, enquanto o arquivo contém um registro por abertura de cada estágio estocástico (soma das aberturas a partir de `numero_semanas_completas`). Em decks com mais de um estágio estocástico, como os de estágios mensais, os registros seguintes eram lidos deslocados ou a leitura falhava. A tabela `probabilidades` da classe `Vazoes` também passa a atribuir o `estagio` de cada nó a partir das aberturas por estágio, em vez de supor que apenas o último estágio é estocástico [#95](https://github.com/rjmalves/idecomp/pull/95) (@renanmaciel-84).
 
 ## [1.15.0] - 2026-10-19
 
