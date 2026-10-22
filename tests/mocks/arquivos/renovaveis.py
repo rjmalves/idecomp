@@ -71,3 +71,42 @@ MockRenovaveisPeriodoFinal = [
     "PEE-GER-PER-PAT-CEN;14;3;3;2;353;1.627114\n",
     "PEE-GER-PER-PAT-CEN;14;3;3;3;353;1.611293\n",
 ]
+
+MockPEEGeracaoPeriodoPatamar = (
+    "PEE-GER-PER-PAT ;        1;      1;     2;1465.012485"
+)
+
+MockPEEGeracaoPeriodoPatamarComPeriodoFinal = (
+    "PEE-GER-PER-PAT ;        1;      1;      7;     2;1401.719926"
+)
+
+# Variante do arquivo com geração determinística (card PEE-GER-PER-PAT, sem
+# cenários), no layout de 5 campos (intervalo de períodos, com PerFin). Os
+# demais cards trazem espaço antes do ";", como nos decks com esse formato.
+MockRenovaveisDeterministico = [
+    "&       ;CodPEE   ;NomePEE\n",
+    "PEE-CAD ;        1;PQ_SECO_Red_PCH\n",
+    "PEE-CAD ;        3;PQ_SECO_Red_EOL\n",
+    "PEE-SUBM ;        1;        1\n",
+    "PEE-SUBM ;        3;        1\n",
+    "PEE-CONFIG-PER ;        1;      1;      7;fixo\n",
+    "PEE-CONFIG-PER ;        3;      1;      7;centralizado\n",
+    "PEE-POT-INST-PER ;        1;      1;      7;         99999.0\n",
+    "PEE-POT-INST-PER ;        3;      1;      7;         99999.0\n",
+    "&                   ;CodPEE   ;PerIni ;PerFin ;Pat;Ger Renovavel\n",
+    "PEE-GER-PER-PAT ;        1;      1;      1;     1;1465.012485\n",
+    "PEE-GER-PER-PAT ;        1;      1;      1;     2;1401.719926\n",
+    "PEE-GER-PER-PAT ;        1;      1;      1;     3;1385.392781\n",
+    "PEE-GER-PER-PAT ;        3;      2;      7;     1;13219.0328\n",
+]
+
+# Arquivo com os quatro layouts de geração convivendo, com variações de
+# espaçamento em torno do identificador.
+MockRenovaveisLayoutsGeracao = [
+    "PEE-GER-PER-PAT-CEN;1;1;1;1;81.0966\n",
+    "PEE-GER-PER-PAT-CEN;1;2;2;1;1;7.7428\n",
+    "PEE-GER-PER-PAT;1;3;1;1465.012485\n",
+    "   PEE-GER-PER-PAT ;2;4;2;12.5\n",
+    "PEE-GER-PER-PAT     ;3;5;7;3;13219.0328\n",
+    "PEE-GER-PER-PAT\t;4;6;7;1;0.0\n",
+]
