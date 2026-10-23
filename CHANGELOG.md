@@ -11,6 +11,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 - Registros `PEEGeracaoPeriodoPatamar` e `PEEGeracaoPeriodoPatamarComPeriodoFinal` para o card `PEE-GER-PER-PAT` do arquivo de renováveis, que informa a geração determinística dos parques eólicos equivalentes por período e patamar, sem a coluna de cenários do `PEE-GER-PER-PAT-CEN`. Os dois layouts do card são distinguidos pela quantidade de campos: período único (4 campos) e intervalo de períodos (5 campos, com `PerFin`). O identificador é aceito com nenhum, um ou mais espaços antes do `;`, e o card `PEE-GER-PER-PAT-CEN` continua sendo lido pelos registros existentes.
 - Método `pee_ger_per_pat` na classe `Renovaveis`, com filtros por `codigo_pee`, `estagio`, `patamar` e `geracao` e suporte a `df=True`, que combina os dois layouts nas colunas `codigo_pee, estagio, patamar, geracao` e, quando o layout de intervalo está presente, `estagio_final`.
 
+### Corrigido
+
+- A geração do card `PEE-GER-PER-PAT-CEN` do arquivo de renováveis era lida com o tamanho padrão de campo de 8 caracteres, nos dois layouts do card, e os valores mais longos eram cortados (`17699.689` era lido como `17699.68`). O campo passa a ter o mesmo tamanho dos registros do card `PEE-GER-PER-PAT` e dos demais arquivos CSV da `libs`, e o valor é lido inteiro. Arquivos lidos de novo podem ter diferenças nas últimas casas decimais em relação a leituras anteriores.
+
 ## [1.15.1] - 2026-10-22
 
 ### Corrigido

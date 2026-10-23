@@ -21,6 +21,8 @@ from tests.mocks.arquivos.renovaveis import (
     MockPEEPotenciaInstaladaPeriodo,
     MockPEEGeracaoPeriodoPatamarCenario,
     MockPEEGeracaoPeriodoPatamarCenarioComPeriodoFinal,
+    MockPEEGeracaoPeriodoPatamarCenarioValorLongo,
+    MockPEEGeracaoPeriodoPatamarCenarioComPeriodoFinalValorLongo,
     MockPEEGeracaoPeriodoPatamar,
     MockPEEGeracaoPeriodoPatamarComPeriodoFinal,
     MockRenovaveisDeterministico,
@@ -259,6 +261,35 @@ def test_df_renovaveis_pee_ger_per_pat_cen_com_periodo_final():
         assert df.at[5, "patamar"] == 3
         assert df.at[5, "cenario"] == 353
         assert df.at[5, "geracao"] == 1.611293
+
+
+def test_registro_renovaveis_pee_ger_per_pat_cen_valor_longo():
+    # A geração deve ser lida inteira, sem cortar no 8º caractere.
+    m: MagicMock = mock_open(
+        read_data="".join(MockPEEGeracaoPeriodoPatamarCenarioValorLongo)
+    )
+    r = PEEGeracaoPeriodoPatamarCenario()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [3, 2, 3, 1, 17699.689]
+    assert r.geracao == 17699.689
+
+
+def test_registro_renovaveis_pee_ger_per_pat_cen_com_periodo_final_valor_longo():
+    m: MagicMock = mock_open(
+        read_data="".join(
+            MockPEEGeracaoPeriodoPatamarCenarioComPeriodoFinalValorLongo
+        )
+    )
+    r = PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [11, 3, 3, 3, 1, 14587.9881]
+    assert r.geracao == 14587.9881
 
 
 def test_dispatch_layouts_pee_ger_per_pat_cen():

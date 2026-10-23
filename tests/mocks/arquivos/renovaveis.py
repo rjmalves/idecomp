@@ -60,6 +60,16 @@ MockPEEGeracaoPeriodoPatamarCenarioComPeriodoFinal = (
     "PEE-GER-PER-PAT-CEN;1;1;1;1;1;7.7428"
 )
 
+# Gerações com mais de 8 caracteres, como no deck oficial, nos dois
+# layouts do card PEE-GER-PER-PAT-CEN.
+MockPEEGeracaoPeriodoPatamarCenarioValorLongo = (
+    "PEE-GER-PER-PAT-CEN;3;2;3;1;17699.689"
+)
+
+MockPEEGeracaoPeriodoPatamarCenarioComPeriodoFinalValorLongo = (
+    "PEE-GER-PER-PAT-CEN;        11;      3;      3;     3;  1;14587.9881"
+)
+
 # Variante do arquivo com o layout de 6 campos do card
 # PEE-GER-PER-PAT-CEN (intervalo de períodos, com PerFin).
 MockRenovaveisPeriodoFinal = [
