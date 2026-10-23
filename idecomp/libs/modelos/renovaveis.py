@@ -286,7 +286,7 @@ class PEEGeracaoPeriodoPatamarCenario(Register):
             IntegerField(),
             IntegerField(),
             IntegerField(),
-            FloatField(decimal_digits=4),
+            FloatField(size=20, decimal_digits=6),
         ],
         delimiter=";",
     )
@@ -392,7 +392,7 @@ class PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal(Register):
             IntegerField(),
             IntegerField(),
             IntegerField(),
-            FloatField(decimal_digits=4),
+            FloatField(size=20, decimal_digits=6),
         ],
         delimiter=";",
     )
