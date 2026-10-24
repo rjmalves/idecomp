@@ -6,6 +6,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.16.0] - 2026-10-24
+
 ### Adicionado
 
 - Registros `PEEGeracaoPeriodoPatamar` e `PEEGeracaoPeriodoPatamarComPeriodoFinal` e método `pee_ger_per_pat` da classe `Renovaveis`, para o card `PEE-GER-PER-PAT` do arquivo de renováveis, com a geração determinística dos parques eólicos equivalentes, sem a dimensão de cenários do `PEE-GER-PER-PAT-CEN`. Os layouts de período único e de intervalo de períodos são lidos, e `df=True` combina os dois [#96](https://github.com/rjmalves/idecomp/pull/96) (@jhuliamacedo).
@@ -265,7 +267,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 - Métodos le_arquivo e escreve_arquivo deprecados
 
-[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.15.1...HEAD
+[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.16.0...HEAD
+[1.16.0]: https://github.com/rjmalves/idecomp/compare/v1.15.1...v1.16.0
 [1.15.1]: https://github.com/rjmalves/idecomp/compare/v1.15.0...v1.15.1
 [1.15.0]: https://github.com/rjmalves/idecomp/compare/v1.14.2...v1.15.0
 [1.14.2]: https://github.com/rjmalves/idecomp/compare/v1.14.1...v1.14.2
