@@ -6,6 +6,16 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Adicionado
+
+- Registros `PEEGeracaoPeriodoPatamar` e `PEEGeracaoPeriodoPatamarComPeriodoFinal` para o card `PEE-GER-PER-PAT` do arquivo de renováveis, que informa a geração determinística dos parques eólicos equivalentes por período e patamar, sem a coluna de cenários do `PEE-GER-PER-PAT-CEN`. Os dois layouts do card são distinguidos pela quantidade de campos: período único (4 campos) e intervalo de períodos (5 campos, com `PerFin`). O identificador é aceito com nenhum, um ou mais espaços antes do `;`, e o card `PEE-GER-PER-PAT-CEN` continua sendo lido pelos registros existentes.
+- Método `pee_ger_per_pat` na classe `Renovaveis`, com filtros por `codigo_pee`, `estagio`, `patamar` e `geracao` e suporte a `df=True`, que combina os dois layouts nas colunas `codigo_pee, estagio, patamar, geracao` e, quando o layout de intervalo está presente, `estagio_final`.
+
+### Corrigido
+
+- Três campos numéricos de arquivos CSV da `libs` eram lidos com o tamanho padrão de campo de 8 caracteres, e os valores mais longos eram cortados (`17699.689` era lido como `17699.68`): a geração do card `PEE-GER-PER-PAT-CEN`, nos dois layouts do card, e a potência do card `PEE-POT-INST-PER`, ambos do arquivo de renováveis, e o nível de montante do registro `HIDRELETRICA-CURVAJUSANTE` da classe `UsinasHidreletricas`. Os campos passam a ter o mesmo tamanho dos demais campos numéricos dos arquivos CSV da `libs`, e o valor é lido inteiro. Arquivos lidos de novo podem ter diferenças nas últimas casas decimais em relação a leituras anteriores.
+- A geração do card `PEE-GER-PER-PAT-CEN` era escrita com 4 casas decimais, e valores como `1.338901` voltavam como `1.3389`. Passa a ser escrita com 6 casas decimais, como no card `PEE-GER-PER-PAT`.
+
 ## [1.15.1] - 2026-10-22
 
 ### Corrigido

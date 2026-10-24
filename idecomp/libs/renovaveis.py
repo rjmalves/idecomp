@@ -7,8 +7,10 @@ from cfinterface.files.registerfile import RegisterFile
 from idecomp.libs.modelos.renovaveis import (
     PEECadastro,
     PEEConfiguracaoPeriodo,
+    PEEGeracaoPeriodoPatamar,
     PEEGeracaoPeriodoPatamarCenario,
     PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal,
+    PEEGeracaoPeriodoPatamarComPeriodoFinal,
     PEEPotenciaInstaladaPeriodo,
     PEESubmercado,
 )
@@ -25,6 +27,8 @@ class Renovaveis(RegisterFile):
     REGISTERS = [
         PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal,
         PEEGeracaoPeriodoPatamarCenario,
+        PEEGeracaoPeriodoPatamarComPeriodoFinal,
+        PEEGeracaoPeriodoPatamar,
         PEEPotenciaInstaladaPeriodo,
         PEEConfiguracaoPeriodo,
         PEESubmercado,
@@ -267,6 +271,89 @@ class Renovaveis(RegisterFile):
             estagio=estagio,
             patamar=patamar,
             cenario=cenario,
+            geracao=geracao,
+        )
+        if com_periodo_final is not None:
+            registros.extend(
+                com_periodo_final
+                if isinstance(com_periodo_final, list)
+                else [com_periodo_final]
+            )
+        return registros if len(registros) > 0 else None
+
+    def pee_ger_per_pat(
+        self,
+        codigo_pee: int | None = None,
+        estagio: int | None = None,
+        patamar: int | None = None,
+        geracao: float | None = None,
+        df: bool = False,
+    ) -> (
+        list[PEEGeracaoPeriodoPatamar | PEEGeracaoPeriodoPatamarComPeriodoFinal]
+        | pd.DataFrame
+        | None
+    ):
+        """
+        Obtém registros que definem a geração determinística de um parque
+        eólico equivalente por período e patamar, sem a dimensão de
+        cenários. Opcionalmente, o retorno pode ser transformado em um
+        `DataFrame`, apenas para leitura das informações.
+
+        O card `PEE-GER-PER-PAT` possui dois layouts, distinguidos pela
+        quantidade de campos da linha: o de período único (4 campos) e o de
+        intervalo de períodos (5 campos, com `PerFin`). Ambos são lidos e
+        combinados neste método, expondo sempre as colunas
+        `codigo_pee, estagio, patamar, geracao` e, quando o layout de
+        intervalo está presente, também `estagio_final`.
+
+        :param codigo_pee: código que especifica o parque
+        :type codigo_pee: int | None
+        :param estagio: estágio (período) de validade
+        :type estagio: int | None
+        :param patamar: índice do patamar de carga
+        :type patamar: int | None
+        :param geracao: geração do parque
+        :type geracao: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+        :return: Os registros, se existirem.
+        :rtype: list[`PEEGeracaoPeriodoPatamar` |
+            `PEEGeracaoPeriodoPatamarComPeriodoFinal`] |
+            `None` | `DataFrame`
+        """
+        tipos: tuple[type[Register], ...] = (
+            PEEGeracaoPeriodoPatamar,
+            PEEGeracaoPeriodoPatamarComPeriodoFinal,
+        )
+        if df:
+            frames = [f for f in (self._as_df(t) for t in tipos) if not f.empty]
+            if len(frames) == 0:
+                return pd.DataFrame()
+            if len(frames) == 1:
+                return frames[0]
+            return pd.concat(frames, ignore_index=True)
+        registros: list[
+            PEEGeracaoPeriodoPatamar | PEEGeracaoPeriodoPatamarComPeriodoFinal
+        ] = []
+        periodo_unico = self.data.get_registers_of_type(
+            PEEGeracaoPeriodoPatamar,
+            codigo_pee=codigo_pee,
+            estagio=estagio,
+            patamar=patamar,
+            geracao=geracao,
+        )
+        if periodo_unico is not None:
+            registros.extend(
+                periodo_unico
+                if isinstance(periodo_unico, list)
+                else [periodo_unico]
+            )
+        com_periodo_final = self.data.get_registers_of_type(
+            PEEGeracaoPeriodoPatamarComPeriodoFinal,
+            codigo_pee=codigo_pee,
+            estagio=estagio,
+            patamar=patamar,
             geracao=geracao,
         )
         if com_periodo_final is not None:

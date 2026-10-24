@@ -21,6 +21,22 @@ def _quantidade_campos(linha: str | bytes) -> int:
     return len(linha.split(";")) - 1
 
 
+def _identificador(linha: str | bytes) -> str:
+    """
+    Extrai o identificador do card de uma linha delimitada por ``;``,
+    descartando os espaços em torno dele, para que nenhum, um ou mais
+    espaços antes do ``;`` (ou no início da linha) sejam aceitos.
+
+    :param linha: a linha lida do arquivo
+    :type linha: str | bytes
+    :return: o identificador do card
+    :rtype: str
+    """
+    if isinstance(linha, bytes):
+        return linha.split(b";")[0].strip().decode("utf-8", errors="ignore")
+    return linha.split(";")[0].strip()
+
+
 class PEECadastro(Register):
     """ """
 
@@ -195,7 +211,7 @@ class PEEPotenciaInstaladaPeriodo(Register):
             IntegerField(),
             IntegerField(),
             IntegerField(),
-            FloatField(decimal_digits=3),
+            FloatField(size=20, decimal_digits=3),
         ],
         delimiter=";",
     )
@@ -270,7 +286,7 @@ class PEEGeracaoPeriodoPatamarCenario(Register):
             IntegerField(),
             IntegerField(),
             IntegerField(),
-            FloatField(decimal_digits=4),
+            FloatField(size=20, decimal_digits=6),
         ],
         delimiter=";",
     )
@@ -376,7 +392,7 @@ class PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal(Register):
             IntegerField(),
             IntegerField(),
             IntegerField(),
-            FloatField(decimal_digits=4),
+            FloatField(size=20, decimal_digits=6),
         ],
         delimiter=";",
     )
@@ -475,3 +491,205 @@ class PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal(Register):
     @geracao.setter
     def geracao(self, g: float) -> None:
         self.data[5] = g
+
+
+class PEEGeracaoPeriodoPatamar(Register):
+    """
+    Registro ``PEE-GER-PER-PAT`` de período único (4 campos), que informa
+    a geração determinística de um parque eólico equivalente por período e
+    patamar, sem a dimensão de cenários do ``PEE-GER-PER-PAT-CEN``. O
+    layout com intervalo de períodos é tratado por
+    :class:`PEEGeracaoPeriodoPatamarComPeriodoFinal`.
+    """
+
+    __slots__ = []
+
+    IDENTIFIER = "PEE-GER-PER-PAT"
+    IDENTIFIER_DIGITS = 16
+    LINE = Line(
+        [
+            IntegerField(),
+            IntegerField(),
+            IntegerField(),
+            FloatField(size=20, decimal_digits=6),
+        ],
+        delimiter=";",
+    )
+
+    @classmethod
+    def matches(
+        cls, line: str | bytes, storage: str | StorageType = ""
+    ) -> bool:
+        """
+        Casa apenas as linhas cujo identificador é exatamente
+        ``PEE-GER-PER-PAT`` (nunca ``PEE-GER-PER-PAT-CEN``, do qual é
+        prefixo) e que possuem 4 campos.
+        """
+        return (
+            _identificador(line) == cls.IDENTIFIER
+            and _quantidade_campos(line) == 4
+        )
+
+    @property
+    def codigo_pee(self) -> int | None:
+        """
+        O código do parque eólico equivalente.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_pee.setter
+    def codigo_pee(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio (período) de validade da geração.
+
+        :return: O estágio
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, e: int) -> None:
+        self.data[1] = e
+
+    @property
+    def patamar(self) -> int | None:
+        """
+        O índice do patamar de carga.
+
+        :return: O patamar
+        :rtype: int | None
+        """
+        return self.data[2]
+
+    @patamar.setter
+    def patamar(self, p: int) -> None:
+        self.data[2] = p
+
+    @property
+    def geracao(self) -> float | None:
+        """
+        A geração do parque eólico equivalente.
+
+        :return: A geração em MW
+        :rtype: float | None
+        """
+        return self.data[3]
+
+    @geracao.setter
+    def geracao(self, g: float) -> None:
+        self.data[3] = g
+
+
+class PEEGeracaoPeriodoPatamarComPeriodoFinal(Register):
+    """
+    Variante do registro ``PEE-GER-PER-PAT`` com 5 campos, em que o
+    período é informado por um intervalo (``PerIni`` e ``PerFin``) em vez de
+    um único período. Expõe as mesmas propriedades da variante de período
+    único, acrescida de ``estagio_final``.
+    """
+
+    __slots__ = []
+
+    IDENTIFIER = "PEE-GER-PER-PAT"
+    IDENTIFIER_DIGITS = 16
+    LINE = Line(
+        [
+            IntegerField(),
+            IntegerField(),
+            IntegerField(),
+            IntegerField(),
+            FloatField(size=20, decimal_digits=6),
+        ],
+        delimiter=";",
+    )
+
+    @classmethod
+    def matches(
+        cls, line: str | bytes, storage: str | StorageType = ""
+    ) -> bool:
+        """
+        Casa apenas as linhas cujo identificador é exatamente
+        ``PEE-GER-PER-PAT`` (nunca ``PEE-GER-PER-PAT-CEN``, do qual é
+        prefixo) e que possuem 5 campos.
+        """
+        return (
+            _identificador(line) == cls.IDENTIFIER
+            and _quantidade_campos(line) == 5
+        )
+
+    @property
+    def codigo_pee(self) -> int | None:
+        """
+        O código do parque eólico equivalente.
+
+        :return: O código
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_pee.setter
+    def codigo_pee(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio (período) inicial de validade da geração.
+
+        :return: O estágio
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, e: int) -> None:
+        self.data[1] = e
+
+    @property
+    def estagio_final(self) -> int | None:
+        """
+        O estágio (período) final de validade da geração.
+
+        :return: O estágio
+        :rtype: int | None
+        """
+        return self.data[2]
+
+    @estagio_final.setter
+    def estagio_final(self, e: int) -> None:
+        self.data[2] = e
+
+    @property
+    def patamar(self) -> int | None:
+        """
+        O índice do patamar de carga.
+
+        :return: O patamar
+        :rtype: int | None
+        """
+        return self.data[3]
+
+    @patamar.setter
+    def patamar(self, p: int) -> None:
+        self.data[3] = p
+
+    @property
+    def geracao(self) -> float | None:
+        """
+        A geração do parque eólico equivalente.
+
+        :return: A geração em MW
+        :rtype: float | None
+        """
+        return self.data[4]
+
+    @geracao.setter
+    def geracao(self, g: float) -> None:
+        self.data[4] = g

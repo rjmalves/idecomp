@@ -12,6 +12,7 @@ from unittest.mock import MagicMock, patch
 from tests.mocks.arquivos.polinjus import (
     MockPolinjus,
     MockHidreletricaCurvaJusante,
+    MockHidreletricaCurvaJusanteValorLongo,
     MockHidreletricaCurvaJusantePolinomio,
     MockHidreletricaCurvaJusantePolinomioSegmento,
     MockHidreletricaCurvaJusanteAfogamentoExplicitoUsina,
@@ -67,6 +68,19 @@ def test_registro_polinjus_hidreletrica_curvajusante():
     assert r.nivel_montante_referencia == 885.3052
     r.nivel_montante_referencia = 0
     assert r.nivel_montante_referencia == 0
+
+
+def test_registro_polinjus_hidreletrica_curvajusante_valor_longo():
+    # O nível deve ser lido inteiro, sem cortar no 8º caractere.
+    m: MagicMock = mock_open(
+        read_data="".join(MockHidreletricaCurvaJusanteValorLongo)
+    )
+    r = HidreletricaCurvaJusante()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [1, 1, 1085.3052]
 
 
 def test_df_polinjus_hidreletrica_curvajusante_polinomio():
