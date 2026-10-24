@@ -1076,6 +1076,22 @@ def test_registro_ac_coeficientes_dadger_decimais_implicitos():
         assert r.data[indice] == 123.45, linha
 
 
+def test_leitura_escrita_ac_coeficientes_dadger():
+    # Os coeficientes de ordem mais alta dos polinômios são pequenos e não
+    # podem ser zerados na escrita.
+    for classe, linha, indice in [
+        (ACCOTVOL, "AC  285  COTVOL        3  -1.234567E-06", 2),
+        (ACCOTARE, "AC  285  COTARE        3  -1.234567E-06", 2),
+        (ACCOTVAZ, "AC  285  COTVAZ        1    3  -1.234567E-06", 3),
+        (ACCOTVOL, "AC  285  COTVOL        1         256.72", 2),
+    ]:
+        r = _le_registro(classe, linha)
+        escrita = _escreve_registro(r)
+        assert _le_registro(classe, escrita).data[indice] == r.data[indice], (
+            escrita
+        )
+
+
 def test_registro_acvolmin_dadger():
     m: MagicMock = mock_open(read_data="".join(MockACVOLMIN))
     r = ACVOLMIN()

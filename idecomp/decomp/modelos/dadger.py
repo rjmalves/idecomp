@@ -5025,7 +5025,7 @@ class ACCOTVOL(Register):
         [
             IntegerField(3, 4),
             IntegerField(5, 19),
-            FortranFloatField(15, 24, 3, implied_decimals=8),
+            FortranFloatField(15, 24, 8, "D", implied_decimals=8),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),
@@ -5428,7 +5428,7 @@ class ACCOTVAZ(Register):
             IntegerField(3, 4),
             IntegerField(5, 19),
             IntegerField(5, 24),
-            FortranFloatField(15, 29, 3, implied_decimals=8),
+            FortranFloatField(15, 29, 8, "D", implied_decimals=8),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),
