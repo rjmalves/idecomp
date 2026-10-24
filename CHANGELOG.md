@@ -8,11 +8,11 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Adicionado
 
-- Registros `PEEGeracaoPeriodoPatamar` e `PEEGeracaoPeriodoPatamarComPeriodoFinal` e método `pee_ger_per_pat` da classe `Renovaveis`, para o card `PEE-GER-PER-PAT` do arquivo de renováveis, com a geração determinística dos parques eólicos equivalentes, sem a dimensão de cenários do `PEE-GER-PER-PAT-CEN`. Os layouts de período único e de intervalo de períodos são lidos, e `df=True` combina os dois.
+- Registros `PEEGeracaoPeriodoPatamar` e `PEEGeracaoPeriodoPatamarComPeriodoFinal` e método `pee_ger_per_pat` da classe `Renovaveis`, para o card `PEE-GER-PER-PAT` do arquivo de renováveis, com a geração determinística dos parques eólicos equivalentes, sem a dimensão de cenários do `PEE-GER-PER-PAT-CEN`. Os layouts de período único e de intervalo de períodos são lidos, e `df=True` combina os dois [#96](https://github.com/rjmalves/idecomp/pull/96) (@jhuliamacedo).
 
 ### Corrigido
 
-- Valores com mais de 8 caracteres eram cortados na leitura da geração do card `PEE-GER-PER-PAT-CEN` e da potência do `PEE-POT-INST-PER`, no arquivo de renováveis, e do nível de montante do `HIDRELETRICA-CURVAJUSANTE`, na classe `UsinasHidreletricas` (`17699.689` era lido como `17699.68`). A geração do `PEE-GER-PER-PAT-CEN` também passa a ser escrita com 6 casas decimais, em vez de 4.
+- Valores com mais de 8 caracteres eram cortados na leitura da geração do card `PEE-GER-PER-PAT-CEN` e da potência do `PEE-POT-INST-PER`, no arquivo de renováveis, e do nível de montante do `HIDRELETRICA-CURVAJUSANTE`, na classe `UsinasHidreletricas` (`17699.689` era lido como `17699.68`). A geração do `PEE-GER-PER-PAT-CEN` também passa a ser escrita com 6 casas decimais, em vez de 4 [#96](https://github.com/rjmalves/idecomp/pull/96) (@jhuliamacedo).
 - Os campos `Fw.d` e `Ew.d` com `d > 0` no manual do DECOMP passam a ser lidos com o ponto decimal implícito do Fortran, como o DECOMP os lê: em `F10.2`, `299` é lido como `2.99`, e não `299.0`, enquanto `299.` e `296.52` continuam lidos como escritos. São os custos dos registros `CT`, `CD`, `CI` e `CE` do `dadger` e `TG` do `dadgnl`, as tolerâncias do `TS` e os coeficientes do `AC` `COTVOL`, `COTARE` e `COTVAZ`, que passam a ser sempre escritos com ponto decimal (um valor que não caiba no campo com o ponto gera erro).
 - O campo 5 do registro `TS` era lido nas colunas da tolerância secundária, e a escrita do registro sobrescrevia essa tolerância e descartava o campo 5.
 - Os coeficientes do `AC` `COTVOL` e `COTVAZ` eram escritos com 3 casas decimais, o que zerava os coeficientes pequenos (`-1.234567E-06` era escrito como `-0.000`). Passam a ser escritos em notação científica, como os do `COTARE`.
