@@ -65,6 +65,40 @@ def test_registro_tg_dadgnl():
     assert r.disponibilidade == [0.0, 0.0, 0.0]
 
 
+def test_registro_tg_dadgnl_custo_sem_ponto_decimal():
+    # O custo é F10.2 no manual: escrito sem ponto decimal, "299" vale 2.99
+    # para o DECOMP. As capacidades são F5.0 e são lidas como escritas.
+    for linha, dados in [
+        (
+            "TG   86   1   ST.CRUZ NO 1       0  500    296.52    0  500    296.52    0  500    296.52",
+            [0.0, 500.0, 296.52, 0.0, 500.0, 296.52, 0.0, 500.0, 296.52],
+        ),
+        (
+            "TG  224   3   P. SERGIPE 1       01593.       299    01593.       299    01593.       299",
+            [0.0, 1593.0, 2.99, 0.0, 1593.0, 2.99, 0.0, 1593.0, 2.99],
+        ),
+    ]:
+        m: MagicMock = mock_open(read_data=linha)
+        r = TG()
+        with patch("builtins.open", m):
+            with open("", "") as fp:
+                r.read(fp)
+        assert r.data[4:13] == dados
+        m2: MagicMock = mock_open(read_data="")
+        with patch("builtins.open", m2):
+            with open("", "w") as fp:
+                r.write(fp)
+            escrita = "".join(c.args[0] for c in m2().write.call_args_list)
+        for inicio in [39, 59, 79]:
+            assert "." in escrita[inicio : inicio + 10]
+        m3: MagicMock = mock_open(read_data=escrita)
+        r2 = TG()
+        with patch("builtins.open", m3):
+            with open("", "") as fp:
+                r2.read(fp)
+        assert r2.data == r.data
+
+
 def test_registro_gs_dadgnl():
     m: MagicMock = mock_open(read_data="".join(MockGS))
     r = GS()

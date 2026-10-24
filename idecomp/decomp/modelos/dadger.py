@@ -7,6 +7,8 @@ from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.register import Register
 from numpy import abs
 
+from idecomp.decomp.modelos.campos.fortranfloatfield import FortranFloatField
+
 
 class TE(Register):
     """
@@ -260,19 +262,19 @@ class CT(Register):
             IntegerField(2, 24),
             FloatField(5, 29, 2),
             FloatField(5, 34, 2),
-            FloatField(10, 39, 2),
+            FortranFloatField(10, 39, 2, implied_decimals=2),
             FloatField(5, 49, 2),
             FloatField(5, 54, 2),
-            FloatField(10, 59, 2),
+            FortranFloatField(10, 59, 2, implied_decimals=2),
             FloatField(5, 69, 2),
             FloatField(5, 74, 2),
-            FloatField(10, 79, 2),
+            FortranFloatField(10, 79, 2, implied_decimals=2),
             FloatField(5, 89, 2),
             FloatField(5, 94, 2),
-            FloatField(10, 99, 2),
+            FortranFloatField(10, 99, 2, implied_decimals=2),
             FloatField(5, 109, 2),
             FloatField(5, 114, 2),
-            FloatField(10, 119, 2),
+            FortranFloatField(10, 119, 2, implied_decimals=2),
         ]
     )
 
@@ -752,15 +754,15 @@ class CD(Register):
             LiteralField(10, 14),
             IntegerField(2, 24),
             FloatField(5, 29, 1),
-            FloatField(10, 34, 2),
+            FortranFloatField(10, 34, 2, implied_decimals=2),
             FloatField(5, 44, 1),
-            FloatField(10, 49, 2),
+            FortranFloatField(10, 49, 2, implied_decimals=2),
             FloatField(5, 59, 1),
-            FloatField(10, 64, 2),
+            FortranFloatField(10, 64, 2, implied_decimals=2),
             FloatField(5, 74, 1),
-            FloatField(10, 79, 2),
+            FortranFloatField(10, 79, 2, implied_decimals=2),
             FloatField(5, 89, 1),
-            FloatField(10, 94, 2),
+            FortranFloatField(10, 94, 2, implied_decimals=2),
         ]
     )
 
@@ -2249,13 +2251,13 @@ class CI(Register):
             IntegerField(2, 24),
             FloatField(5, 29, 3),
             FloatField(5, 34, 3),
-            FloatField(10, 39, 2),
+            FortranFloatField(10, 39, 2, implied_decimals=2),
             FloatField(5, 49, 3),
             FloatField(5, 54, 3),
-            FloatField(10, 59, 2),
+            FortranFloatField(10, 59, 2, implied_decimals=2),
             FloatField(5, 69, 3),
             FloatField(5, 74, 3),
-            FloatField(10, 79, 2),
+            FortranFloatField(10, 79, 2, implied_decimals=2),
             FloatField(5, 89, 3),
         ]
     )
@@ -2405,13 +2407,13 @@ class CE(Register):
             IntegerField(2, 24),
             FloatField(5, 29, 3),
             FloatField(5, 34, 3),
-            FloatField(10, 39, 2),
+            FortranFloatField(10, 39, 2, implied_decimals=2),
             FloatField(5, 49, 3),
             FloatField(5, 54, 3),
-            FloatField(10, 59, 2),
+            FortranFloatField(10, 59, 2, implied_decimals=2),
             FloatField(5, 69, 3),
             FloatField(5, 74, 3),
-            FloatField(10, 79, 2),
+            FortranFloatField(10, 79, 2, implied_decimals=2),
             FloatField(5, 89, 3),
         ]
     )
@@ -4295,10 +4297,10 @@ class TS(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FloatField(17, 4, 15),
-            FloatField(17, 22, 15),
+            FortranFloatField(17, 4, 15, implied_decimals=15),
+            FortranFloatField(17, 22, 15, implied_decimals=15),
             IntegerField(1, 42),
-            FloatField(17, 22, 15),
+            FortranFloatField(17, 46, 15, implied_decimals=15),
         ]
     )
 
@@ -5023,7 +5025,7 @@ class ACCOTVOL(Register):
         [
             IntegerField(3, 4),
             IntegerField(5, 19),
-            FloatField(15, 24, 3),
+            FortranFloatField(15, 24, 8, "D", implied_decimals=8),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),
@@ -5107,7 +5109,7 @@ class ACCOTARE(Register):
         [
             IntegerField(3, 4),
             IntegerField(5, 19),
-            FloatField(15, 24, 8, "D"),
+            FortranFloatField(15, 24, 8, "D", implied_decimals=8),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),
@@ -5426,7 +5428,7 @@ class ACCOTVAZ(Register):
             IntegerField(3, 4),
             IntegerField(5, 19),
             IntegerField(5, 24),
-            FloatField(15, 29, 3),
+            FortranFloatField(15, 29, 8, "D", implied_decimals=8),
             LiteralField(3, 69),
             IntegerField(2, 73),
             IntegerField(4, 76),

@@ -6,6 +6,8 @@ from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.register import Register
 
+from idecomp.decomp.modelos.campos.fortranfloatfield import FortranFloatField
+
 
 class TG(Register):
     """
@@ -24,19 +26,19 @@ class TG(Register):
             IntegerField(2, 24),
             FloatField(5, 29, 1),
             FloatField(5, 34, 1),
-            FloatField(10, 39, 2),
+            FortranFloatField(10, 39, 2, implied_decimals=2),
             FloatField(5, 49, 1),
             FloatField(5, 54, 1),
-            FloatField(10, 59, 2),
+            FortranFloatField(10, 59, 2, implied_decimals=2),
             FloatField(5, 69, 1),
             FloatField(5, 74, 1),
-            FloatField(10, 79, 2),
+            FortranFloatField(10, 79, 2, implied_decimals=2),
             FloatField(5, 89, 1),
             FloatField(5, 94, 1),
-            FloatField(10, 99, 2),
+            FortranFloatField(10, 99, 2, implied_decimals=2),
             FloatField(5, 109, 1),
             FloatField(5, 114, 1),
-            FloatField(10, 119, 2),
+            FortranFloatField(10, 119, 2, implied_decimals=2),
         ]
     )
 
