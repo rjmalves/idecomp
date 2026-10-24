@@ -8,6 +8,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Corrigido
 
+- Os campos com formato `Fw.d` ou `Ew.d` (`d > 0`) no manual do DECOMP passam a ser lidos com o ponto decimal implícito do Fortran, como o DECOMP os lê: um valor escrito sem ponto decimal tem seus últimos `d` dígitos tomados como a parte fracionária. Em `F10.2`, `299` é lido como `2.99`, e não mais como `299.0`; um valor com ponto decimal (`299.`, `296.52`) continua sendo lido como escrito, e os brancos dentro do campo são ignorados. São afetados os custos (`F10.2`) dos registros `CT`, `CD`, `CI` e `CE` do `dadger` e `TG` do `dadgnl`, as tolerâncias (`F17.15`) do registro `TS` e os coeficientes (`E15.8`) dos registros `AC` `COTVOL`, `COTARE` e `COTVAZ`. Na escrita, esses campos sempre contêm o ponto decimal, e um valor que só caberia no campo sem o ponto passa a gerar um erro, em vez de ser escrito com um valor que o DECOMP leria reescalado.
 - O campo 5 do registro `TS` (tolerância do teste de otimalidade, colunas 47-63) era lido nas colunas da tolerância secundária, e a escrita do registro sobrescrevia a tolerância secundária e descartava o campo 5. O campo passa a ser lido e escrito nas colunas do manual.
 
 ## [1.15.1] - 2026-10-22

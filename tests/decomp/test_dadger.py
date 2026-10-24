@@ -39,6 +39,7 @@ from idecomp.decomp.modelos.dadger import (
     ACJUSMED,
     ACCOTVOL,
     ACCOTARE,
+    ACCOTVAZ,
     ACNUMJUS,
     ACVOLMIN,
     ACCOFEVA,
@@ -180,6 +181,33 @@ def _escreve_registro(r) -> str:
         with open("", "w") as fp:
             r.write(fp)
         return "".join(c.args[0] for c in m().write.call_args_list)
+
+
+def _substitui_campo(linha: str, inicio: int, tamanho: int, texto: str) -> str:
+    linha = linha.ljust(inicio + tamanho)
+    return linha[:inicio] + texto.rjust(tamanho) + linha[inicio + tamanho :]
+
+
+def _verifica_custos_f10_2(classe, linha, inicios, indices):
+    # Os custos são F10.2 no manual: sem ponto decimal, os 2 últimos
+    # dígitos são a parte fracionária, como o DECOMP lê o campo.
+    for texto, valor in [
+        ("299", 2.99),
+        ("299.", 299.0),
+        ("-299", -2.99),
+        ("29 9", 2.99),
+        ("", None),
+    ]:
+        r = _le_registro(classe, _substitui_campo(linha, inicios[0], 10, texto))
+        assert r.data[indices[0]] == valor, texto
+    for inicio in inicios:
+        linha = _substitui_campo(linha, inicio, 10, "299")
+    r = _le_registro(classe, linha)
+    assert [r.data[i] for i in indices] == [2.99] * len(indices)
+    escrita = _escreve_registro(r)
+    for inicio in inicios:
+        assert escrita[inicio : inicio + 10] == "      2.99"
+    assert _le_registro(classe, escrita).data == r.data
 
 
 def test_registro_te_dadger():
@@ -1034,6 +1062,20 @@ def test_registro_accotare_dadger():
     assert r.ano == 2022
 
 
+def test_registro_ac_coeficientes_dadger_decimais_implicitos():
+    # Os coeficientes dos polinômios são E15.8 no manual: sem ponto
+    # decimal, os 8 últimos dígitos são a parte fracionária.
+    for classe, linha, indice in [
+        (ACCOTVOL, "AC  285  COTVOL        1      123456789", 2),
+        (ACCOTARE, "AC  285  COTARE        1      123456789", 2),
+        (ACCOTVAZ, "AC  285  COTVAZ        1    2      123456789", 3),
+    ]:
+        r = _le_registro(classe, linha)
+        assert r.data[indice] == 1.23456789, linha
+        r = _le_registro(classe, linha.replace("123456789", "1.2345E+2"))
+        assert r.data[indice] == 123.45, linha
+
+
 def test_registro_acvolmin_dadger():
     m: MagicMock = mock_open(read_data="".join(MockACVOLMIN))
     r = ACVOLMIN()
@@ -1445,6 +1487,24 @@ def test_registro_ir_dadger():
     assert r.tipo == "NORMAL"
     r.tipo = "ABC"
     assert r.tipo == "ABC"
+
+
+def test_registro_ct_dadger_custo_sem_ponto_decimal():
+    _verifica_custos_f10_2(
+        CT, MockCT, [39, 59, 79, 99, 119], [6, 9, 12, 15, 18]
+    )
+
+
+def test_registro_cd_dadger_custo_sem_ponto_decimal():
+    _verifica_custos_f10_2(CD, MockCD, [34, 49, 64, 79, 94], [5, 7, 9, 11, 13])
+
+
+def test_registro_ci_dadger_custo_sem_ponto_decimal():
+    _verifica_custos_f10_2(CI, MockCI, [39, 59, 79], [6, 9, 12])
+
+
+def test_registro_ce_dadger_custo_sem_ponto_decimal():
+    _verifica_custos_f10_2(CE, MockCE, [39, 59, 79], [6, 9, 12])
 
 
 def test_registro_ci_dadger():
@@ -2068,6 +2128,21 @@ def test_registro_ts_dadger():
     assert r.tolerancia_teste_otimalidade == 0.000000000005
     r.tolerancia_teste_otimalidade = 0.00000000002
     assert r.tolerancia_teste_otimalidade == 0.00000000002
+
+
+def test_registro_ts_dadger_decimais_implicitos():
+    # As tolerâncias são F17.15 no manual: sem ponto decimal, "1" vale
+    # 1e-15 para o DECOMP.
+    linha = (
+        "TS  "
+        + "1".rjust(17)
+        + " "
+        + "1.E-7".rjust(17)
+        + "   1   "
+        + "5".rjust(17)
+    )
+    r = _le_registro(TS, linha)
+    assert r.data == [1e-15, 1e-7, 1, 5e-15]
 
 
 def test_leitura_escrita_ts_dadger():
