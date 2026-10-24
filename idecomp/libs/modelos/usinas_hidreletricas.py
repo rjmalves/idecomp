@@ -16,7 +16,7 @@ class HidreletricaCurvaJusante(Register):
         [
             IntegerField(),
             IntegerField(),
-            FloatField(decimal_digits=4),
+            FloatField(size=20, decimal_digits=4),
         ],
         delimiter=";",
     )
