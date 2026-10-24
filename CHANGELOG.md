@@ -8,67 +8,65 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Adicionado
 
-- Registros `PEEGeracaoPeriodoPatamar` e `PEEGeracaoPeriodoPatamarComPeriodoFinal` para o card `PEE-GER-PER-PAT` do arquivo de renováveis, que informa a geração determinística dos parques eólicos equivalentes por período e patamar, sem a coluna de cenários do `PEE-GER-PER-PAT-CEN`. Os dois layouts do card são distinguidos pela quantidade de campos: período único (4 campos) e intervalo de períodos (5 campos, com `PerFin`). O identificador é aceito com nenhum, um ou mais espaços antes do `;`, e o card `PEE-GER-PER-PAT-CEN` continua sendo lido pelos registros existentes.
-- Método `pee_ger_per_pat` na classe `Renovaveis`, com filtros por `codigo_pee`, `estagio`, `patamar` e `geracao` e suporte a `df=True`, que combina os dois layouts nas colunas `codigo_pee, estagio, patamar, geracao` e, quando o layout de intervalo está presente, `estagio_final`.
+- Registros `PEEGeracaoPeriodoPatamar` e `PEEGeracaoPeriodoPatamarComPeriodoFinal` e método `pee_ger_per_pat` da classe `Renovaveis`, para o card `PEE-GER-PER-PAT` do arquivo de renováveis, com a geração determinística dos parques eólicos equivalentes, sem a dimensão de cenários do `PEE-GER-PER-PAT-CEN`. Os layouts de período único e de intervalo de períodos são lidos, e `df=True` combina os dois.
 
 ### Corrigido
 
-- Três campos numéricos de arquivos CSV da `libs` eram lidos com o tamanho padrão de campo de 8 caracteres, e os valores mais longos eram cortados (`17699.689` era lido como `17699.68`): a geração do card `PEE-GER-PER-PAT-CEN`, nos dois layouts do card, e a potência do card `PEE-POT-INST-PER`, ambos do arquivo de renováveis, e o nível de montante do registro `HIDRELETRICA-CURVAJUSANTE` da classe `UsinasHidreletricas`. Os campos passam a ter o mesmo tamanho dos demais campos numéricos dos arquivos CSV da `libs`, e o valor é lido inteiro. Arquivos lidos de novo podem ter diferenças nas últimas casas decimais em relação a leituras anteriores.
-- A geração do card `PEE-GER-PER-PAT-CEN` era escrita com 4 casas decimais, e valores como `1.338901` voltavam como `1.3389`. Passa a ser escrita com 6 casas decimais, como no card `PEE-GER-PER-PAT`.
-- Os campos com formato `Fw.d` ou `Ew.d` (`d > 0`) no manual do DECOMP passam a ser lidos com o ponto decimal implícito do Fortran, como o DECOMP os lê: um valor escrito sem ponto decimal tem seus últimos `d` dígitos tomados como a parte fracionária. Em `F10.2`, `299` é lido como `2.99`, e não mais como `299.0`; um valor com ponto decimal (`299.`, `296.52`) continua sendo lido como escrito, e os brancos dentro do campo são ignorados. São afetados os custos (`F10.2`) dos registros `CT`, `CD`, `CI` e `CE` do `dadger` e `TG` do `dadgnl`, as tolerâncias (`F17.15`) do registro `TS` e os coeficientes (`E15.8`) dos registros `AC` `COTVOL`, `COTARE` e `COTVAZ`. Na escrita, esses campos sempre contêm o ponto decimal, e um valor que só caberia no campo sem o ponto passa a gerar um erro, em vez de ser escrito com um valor que o DECOMP leria reescalado.
-- O campo 5 do registro `TS` (tolerância do teste de otimalidade, colunas 47-63) era lido nas colunas da tolerância secundária, e a escrita do registro sobrescrevia a tolerância secundária e descartava o campo 5. O campo passa a ser lido e escrito nas colunas do manual.
-- Os coeficientes dos registros `AC` `COTVOL` e `COTVAZ` eram escritos com 3 casas decimais fixas, e os coeficientes pequenos, como os de ordem mais alta dos polinômios, eram zerados (`-1.234567E-06` era escrito como `-0.000`). Passam a ser escritos em notação científica com 8 casas decimais, como os do registro `AC` `COTARE`.
+- Valores com mais de 8 caracteres eram cortados na leitura da geração do card `PEE-GER-PER-PAT-CEN` e da potência do `PEE-POT-INST-PER`, no arquivo de renováveis, e do nível de montante do `HIDRELETRICA-CURVAJUSANTE`, na classe `UsinasHidreletricas` (`17699.689` era lido como `17699.68`). A geração do `PEE-GER-PER-PAT-CEN` também passa a ser escrita com 6 casas decimais, em vez de 4.
+- Os campos `Fw.d` e `Ew.d` com `d > 0` no manual do DECOMP passam a ser lidos com o ponto decimal implícito do Fortran, como o DECOMP os lê: em `F10.2`, `299` é lido como `2.99`, e não `299.0`, enquanto `299.` e `296.52` continuam lidos como escritos. São os custos dos registros `CT`, `CD`, `CI` e `CE` do `dadger` e `TG` do `dadgnl`, as tolerâncias do `TS` e os coeficientes do `AC` `COTVOL`, `COTARE` e `COTVAZ`, que passam a ser sempre escritos com ponto decimal (um valor que não caiba no campo com o ponto gera erro).
+- O campo 5 do registro `TS` era lido nas colunas da tolerância secundária, e a escrita do registro sobrescrevia essa tolerância e descartava o campo 5.
+- Os coeficientes do `AC` `COTVOL` e `COTVAZ` eram escritos com 3 casas decimais, o que zerava os coeficientes pequenos (`-1.234567E-06` era escrito como `-0.000`). Passam a ser escritos em notação científica, como os do `COTARE`.
 
 ## [1.15.1] - 2026-10-22
 
 ### Corrigido
 
-- A leitura do arquivo `vazoes.rvX` dimensionava os registros de cenários gerados (`cenarios_gerados` e `cenarios_calculados_com_postos_artificiais`) pelo produto das aberturas de todos os estágios, enquanto o arquivo contém um registro por abertura de cada estágio estocástico (soma das aberturas a partir de `numero_semanas_completas`). Em decks com mais de um estágio estocástico, como os de estágios mensais, os registros seguintes eram lidos deslocados ou a leitura falhava. A tabela `probabilidades` da classe `Vazoes` também passa a atribuir o `estagio` de cada nó a partir das aberturas por estágio, em vez de supor que apenas o último estágio é estocástico [#95](https://github.com/rjmalves/idecomp/pull/95) (@renanmaciel-84).
+- Em decks com mais de um estágio estocástico, como os mensais, a leitura do `vazoes.rvX` dimensionava errado os registros de cenários gerados, e os registros seguintes eram lidos deslocados ou a leitura falhava. A tabela `probabilidades` da classe `Vazoes` também supunha que apenas o último estágio era estocástico e passa a atribuir o `estagio` de cada nó pelas aberturas de cada estágio [#95](https://github.com/rjmalves/idecomp/pull/95) (@renanmaciel-84).
 
 ## [1.15.0] - 2026-10-19
 
 ### Adicionado
 
-- Método `ez` na classe `Dadger` para o registro `EZ` (bloco "FUNCAO DE ENERGIA ARMAZENADA"), que define o percentual do volume útil de cada usina de um subsistema acoplado hidraulicamente considerado no cálculo da energia armazenada do subsistema de jusante, com filtros por `codigo_usina` e `volume` e suporte a `df=True` (colunas `codigo_usina` e `volume`).
+- Método `ez` na classe `Dadger` para o registro `EZ`, o percentual do volume útil de cada usina de um subsistema acoplado hidraulicamente considerado na energia armazenada do subsistema de jusante, com filtros por `codigo_usina` e `volume` e suporte a `df=True`.
 
 ### Corrigido
 
-- A documentação do registro `EZ` e da propriedade `volume` descrevia o campo como percentual do volume máximo, enquanto o manual do DECOMP (§3.4.6.20) o define como percentual do volume útil. O nome da propriedade foi mantido.
+- A documentação do registro `EZ` descrevia o campo `volume` como percentual do volume máximo, e não do volume útil, como no manual do DECOMP. O nome da propriedade foi mantido.
 
 ## [1.14.2] - 2026-08-11
 
 ### Corrigido
 
-- O registro `PEE-GER-PER-PAT-CEN` do arquivo `renovaveis.csv` existe em dois layouts reais, que diferem pela presença da coluna `PerFin`: um de período único, com 5 campos (`CodPEE; PerIni; Pat; Cen; GerEolica`), e um de intervalo de períodos, com 6 campos (`CodPEE; PerIni; PerFin; Pat; Cen; GerEolica`). A correção da 1.14.1, ao fixar o layout de 5 campos, regrediu a leitura dos decks de 6 campos (que a 1.13.0 lia). Os dois layouts passam a ser suportados e distinguidos automaticamente pela quantidade de campos da linha, através dos registros `PEEGeracaoPeriodoPatamarCenario` (5 campos) e `PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal` (6 campos). O acessor `pee_ger_per_pat_cen` da classe `Renovaveis` combina os dois e expõe sempre as colunas `codigo_pee, estagio, patamar, cenario, geracao` — e também `estagio_final` quando o layout de intervalo está presente.
+- O card `PEE-GER-PER-PAT-CEN` do `renovaveis.csv` tem dois layouts, de período único (5 campos) e de intervalo de períodos (6 campos, com `PerFin`), e a correção da 1.14.1 deixou de ler o segundo. Os dois passam a ser lidos, pelos registros `PEEGeracaoPeriodoPatamarCenario` e `PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal`, e o método `pee_ger_per_pat_cen` da classe `Renovaveis` os combina, com a coluna `estagio_final` quando há o layout de intervalo.
 
 ## [1.14.1] - 2026-08-11
 
 ### Corrigido
 
-- O registro `PEE-GER-PER-PAT-CEN` (classe `PEEGeracaoPeriodoPatamarCenario`) era declarado com 6 campos, incluindo um `estagio_final` inexistente, enquanto o card real possui 5 campos com um único período (`CodPEE; PerIni; Pat; Cen; GerEolica`). O deslocamento posicional fazia o valor de geração cair na coluna `cenario` e a coluna `geracao` ser lida como `None` em todas as linhas. O registro passa a ter 5 campos, e o acessor `pee_ger_per_pat_cen` da classe `Renovaveis` teve o parâmetro `estagio_final` removido e `estagio_inicial` renomeado para `estagio`.
+- O registro `PEE-GER-PER-PAT-CEN` (`PEEGeracaoPeriodoPatamarCenario`) era declarado com um campo `estagio_final` que o card não tem, e a geração era lida na coluna `cenario`, com `geracao` sempre `None`. O registro passa a ter 5 campos, e o método `pee_ger_per_pat_cen` da classe `Renovaveis` perde o parâmetro `estagio_final` e tem `estagio_inicial` renomeado para `estagio`.
 
 ## [1.14.0] - 2026-08-10
 
 ### Adicionado
 
-- Leitura de três famílias de cards da funcionalidade `RESTRICAO-ELETRICA-ESPECIAL` do ambiente LIBS que ainda não eram modeladas: `EXPRESSAO-ELETRICA` (expressões elétricas nomeadas e reutilizáveis), `RESTRICAO-ELETRICA-INEQUACAO` (inequação com lado direito por fórmula linear arbitrária) e `RESTRICAO-ELETRICA-INEQUACAO-PERIODO-PATAMAR` (inequação por intervalo de estágios e patamar), através dos registros `RegistroExpressaoEletrica`, `RegistroRestricaoEletricaInequacao` e `RegistroRestricaoEletricaInequacaoPeriodoPatamar` e dos acessores `expressao_eletrica`, `restricao_eletrica_inequacao` e `restricao_eletrica_inequacao_periodo_patamar` da classe `Restricoes`, com filtros e suporte a `df=True`. As fórmulas (`formula` / `formula_limite`) são retornadas na íntegra, sem interpretação.
+- Cards `EXPRESSAO-ELETRICA`, `RESTRICAO-ELETRICA-INEQUACAO` e `RESTRICAO-ELETRICA-INEQUACAO-PERIODO-PATAMAR` da funcionalidade `RESTRICAO-ELETRICA-ESPECIAL` das LIBS, com os registros `RegistroExpressaoEletrica`, `RegistroRestricaoEletricaInequacao` e `RegistroRestricaoEletricaInequacaoPeriodoPatamar` e os métodos `expressao_eletrica`, `restricao_eletrica_inequacao` e `restricao_eletrica_inequacao_periodo_patamar` da classe `Restricoes`, com filtros e suporte a `df=True`. As fórmulas são retornadas como texto, sem interpretação.
 
 ### Corrigido
 
-- O método `re_trat_viol_per` da classe `Restricoes` recuperava registros do tipo `RegistroReTratViol` em vez de `RegistroReTratViolPer`, retornando o tipo errado e ignorando os filtros `estagio_inicio` e `estagio_fim`.
+- O método `re_trat_viol_per` da classe `Restricoes` retornava registros `RegistroReTratViol` em vez de `RegistroReTratViolPer` e ignorava os filtros `estagio_inicio` e `estagio_fim`.
 
 ## [1.13.0] - 2026-07-31
 
 ### Adicionado
 
-- Acessores nomeados para os registros `CI` e `CE` (contratos de importação/exportação de energia) do `dadger`, em paridade com o registro `CT`: propriedades `numero_contrato`, `codigo_submercado`, `nome_contrato`, `estagio`, `limite_inferior`, `limite_superior` e `custo` (listas por patamar) e `fator_perdas`, todas com getters e setters, além dos métodos `ci` e `ce` na classe `Dadger`, com filtros e suporte a `df=True`. O último campo do registro (colunas 90-94), antes anônimo, corresponde ao fator de perdas para o centro de gravidade da carga (manual do DECOMP, §3.4.5.6) e passa a ser exposto pela propriedade `fator_perdas`.
+- Propriedades nomeadas para os registros `CI` e `CE` do `dadger`, como no registro `CT` (`numero_contrato`, `codigo_submercado`, `nome_contrato`, `estagio`, `limite_inferior`, `limite_superior`, `custo` e `fator_perdas`), e métodos `ci` e `ce` na classe `Dadger`, com filtros e suporte a `df=True`. O último campo do registro, antes sem nome, é o fator de perdas.
 
 ## [1.12.0] - 2026-07-24
 
 ### Adicionado
 
-- Leitor do arquivo `mlt.dat`, com as médias mensais de longo termo (MLT) de cada posto por mês do ano, através da nova classe `Mlt`. O conteúdo é exposto como um `DataFrame` na propriedade `valores`, com uma linha por mês e uma coluna por posto, em m³/s.
-- Leitor do arquivo `renovaveis.csv`, com o cadastro dos parques eólicos equivalentes, através da nova classe `Renovaveis` e dos registros da família `PEE` (`PEECadastro`, `PEESubmercado`, `PEEConfiguracaoPeriodo`, `PEEPotenciaInstaladaPeriodo` e `PEEGeracaoPeriodoPatamarCenario`).
+- Leitor do arquivo `mlt.dat` (classe `Mlt`), com as médias de longo termo (MLT) de cada posto por mês, em m³/s, na propriedade `valores`.
+- Leitor do arquivo `renovaveis.csv` (classe `Renovaveis`), com os registros dos parques eólicos equivalentes (`PEECadastro`, `PEESubmercado`, `PEEConfiguracaoPeriodo`, `PEEPotenciaInstaladaPeriodo` e `PEEGeracaoPeriodoPatamarCenario`).
 
 ### Alterado
 
@@ -76,29 +74,29 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Corrigido
 
-- O registro `IA` do `dadger` lia os limites de intercâmbio por patamar, mas não os expunha, de forma que `ia(df=True)` os omitia. Adicionadas as propriedades `limite_de_para` e `limite_para_de`.
+- O registro `IA` do `dadger` não expunha os limites de intercâmbio por patamar, que `ia(df=True)` omitia. Adicionadas as propriedades `limite_de_para` e `limite_para_de`.
 - O método `ue` do `Dadger` retornava os dados do registro `UH` em vez do registro `UE`.
-- Precisão decimal insuficiente (`decimal_digits=0`) nos limites de intercâmbio do registro `IA`, que arredondava para inteiro valores fracionários na escrita (round-trip). Ajustada para `decimal_digits=2`.
+- Os limites de intercâmbio do registro `IA` eram escritos sem casas decimais, o que arredondava valores fracionários. Passam a ser escritos com 2 casas decimais.
 
 ## [1.11.0] - 2026-06-09
 
 ### Adicionado
 
-- Suporte ao formato estendido do arquivo `hidr.dat`, com os coeficientes dos polinômios cota-volume e cota-área em precisão dupla (registros de 832 bytes), através do novo registro `RegistroUHEHidrF64`. A classe `Hidr` detecta o formato automaticamente pelo tamanho do arquivo, reconhecendo cadastros de 320 ou 600 usinas em registros de 792 ou 832 bytes, com possibilidade de forçar via `version="f32"` ou `version="f64"`.
-- Propriedade `tamanho_registro` e método `converte_tamanho_registro` na classe `Hidr`, permitindo inspecionar e converter entre os formatos de precisão simples e dupla.
+- Suporte ao formato do `hidr.dat` com os coeficientes dos polinômios cota-volume e cota-área em precisão dupla (registros de 832 bytes), pelo registro `RegistroUHEHidrF64`. A classe `Hidr` detecta o formato pelo tamanho do arquivo, e ele pode ser forçado com `version="f32"` ou `version="f64"`.
+- Propriedade `tamanho_registro` e método `converte_tamanho_registro` na classe `Hidr`, para consultar e converter o formato.
 
 ## [1.10.0] - 2026-04-13
 
 ### Corrigido
 
-- Precisão decimal insuficiente em campos `FloatField` de diversos registros do `dadger`, que causava corrupção de valores na leitura e escrita (round-trip):
-  - Registro `PQ` (geração): `decimal_digits` de 0 para 4 com `compact=True`, eliminando 462 valores corrompidos, incluindo o zeramento completo de valores pequenos como `0.0563 → 0`.
-  - Registro `LU` (limites): `decimal_digits` de 1 para 2, corrigindo truncamentos como `860.55 → 860.5`.
-  - Registros `TX`, `VI`, `CI`, `CE`, `FP` e `AR`: `decimal_digits` de 0 para 3, por segurança, seguindo o padrão já adotado nos registros `FD` e `MP`.
+- Precisão decimal insuficiente na escrita de campos de registros do `dadger`, que corrompia valores numa leitura seguida de escrita:
+  - `PQ` (geração): de 0 para 4 casas decimais, no modo compacto; valores pequenos como `0.0563` eram escritos como `0`.
+  - `LU` (limites): de 1 para 2 casas decimais (`860.55` era escrito como `860.5`).
+  - `TX`, `VI`, `CI`, `CE`, `FP` e `AR`: de 0 para 3 casas decimais, como nos registros `FD` e `MP`.
 
 ### Modificado
 
-- Dependência cfinterface atualizada para `>=1.10.0`, que disponibiliza o modo `compact` do `FloatField` (omissão do zero à esquerda para `|valor| < 1`, preservando a precisão em campos estreitos de 5 caracteres) e a correção da duplicação de registros no fallback de codificação da leitura.
+- Versão mínima de `cfinterface` elevada para `1.10.0`, que traz o modo `compact` do `FloatField` (sem o zero à esquerda para `|valor| < 1`) e corrige a duplicação de registros no fallback de codificação da leitura.
 
 ## [1.9.0] - 2026-03-10
 
