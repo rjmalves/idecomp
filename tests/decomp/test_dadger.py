@@ -165,6 +165,23 @@ from tests.mocks.arquivos.dadger import (
 )
 
 
+def _le_registro(classe, linha):
+    m: MagicMock = mock_open(read_data=linha)
+    r = classe()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    return r
+
+
+def _escreve_registro(r) -> str:
+    m: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m):
+        with open("", "w") as fp:
+            r.write(fp)
+        return "".join(c.args[0] for c in m().write.call_args_list)
+
+
 def test_registro_te_dadger():
     m: MagicMock = mock_open(read_data="".join(MockTE))
     r = TE()
@@ -2038,7 +2055,7 @@ def test_registro_ts_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [0.00000000001, 0.000000000001, 1, 0.000000000001]
+    assert r.data == [0.00000000001, 0.000000000001, 1, 0.000000000005]
     assert r.tolerancia_primaria == 0.00000000001
     r.tolerancia_primaria = 0.00000000002
     assert r.tolerancia_primaria == 0.00000000002
@@ -2048,9 +2065,18 @@ def test_registro_ts_dadger():
     assert r.zera_coeficientes == 1
     r.zera_coeficientes = 0
     assert r.zera_coeficientes == 0
-    assert r.tolerancia_teste_otimalidade == 0.000000000001
+    assert r.tolerancia_teste_otimalidade == 0.000000000005
     r.tolerancia_teste_otimalidade = 0.00000000002
     assert r.tolerancia_teste_otimalidade == 0.00000000002
+
+
+def test_leitura_escrita_ts_dadger():
+    # Escrever o registro não pode sobrescrever a tolerância secundária
+    # nem descartar a tolerância do teste de otimalidade (colunas 47-63).
+    r = _le_registro(TS, MockTS)
+    escrita = _escreve_registro(r)
+    assert escrita.rstrip("\n") == MockTS
+    assert _le_registro(TS, escrita).data == r.data
 
 
 def test_registro_pv_dadger():

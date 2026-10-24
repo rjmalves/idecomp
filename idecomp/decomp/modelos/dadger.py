@@ -4298,7 +4298,7 @@ class TS(Register):
             FloatField(17, 4, 15),
             FloatField(17, 22, 15),
             IntegerField(1, 42),
-            FloatField(17, 22, 15),
+            FloatField(17, 46, 15),
         ]
     )
 

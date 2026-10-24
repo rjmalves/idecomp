@@ -6,6 +6,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Corrigido
+
+- O campo 5 do registro `TS` (tolerância do teste de otimalidade, colunas 47-63) era lido nas colunas da tolerância secundária, e a escrita do registro sobrescrevia a tolerância secundária e descartava o campo 5. O campo passa a ser lido e escrito nas colunas do manual.
+
 ## [1.15.1] - 2026-10-22
 
 ### Corrigido
