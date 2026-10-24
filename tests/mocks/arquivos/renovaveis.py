@@ -54,6 +54,11 @@ MockPEEPotenciaInstaladaPeriodo = (
     " PEE-POT-INST-PER;        1;      1;      3;          99999"
 )
 
+# Potência com mais de 8 caracteres.
+MockPEEPotenciaInstaladaPeriodoValorLongo = (
+    " PEE-POT-INST-PER;        1;      1;      3;      12345.678"
+)
+
 MockPEEGeracaoPeriodoPatamarCenario = "PEE-GER-PER-PAT-CEN;1;1;1;1;81.0966"
 
 MockPEEGeracaoPeriodoPatamarCenarioComPeriodoFinal = (

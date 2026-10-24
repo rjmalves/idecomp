@@ -211,7 +211,7 @@ class PEEPotenciaInstaladaPeriodo(Register):
             IntegerField(),
             IntegerField(),
             IntegerField(),
-            FloatField(decimal_digits=3),
+            FloatField(size=20, decimal_digits=3),
         ],
         delimiter=";",
     )

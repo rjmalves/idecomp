@@ -213,6 +213,11 @@ MockHidreletricaCurvaJusante = (
     " HIDRELETRICA-CURVAJUSANTE                   ;0001;001;  885.3052"
 )
 
+# Nível de montante com mais de 8 caracteres.
+MockHidreletricaCurvaJusanteValorLongo = (
+    " HIDRELETRICA-CURVAJUSANTE                   ;0001;001; 1085.3052"
+)
+
 MockHidreletricaCurvaJusantePolinomio = (
     " HIDRELETRICA-CURVAJUSANTE-POLINOMIOPORPARTES;0001;001;002"
 )

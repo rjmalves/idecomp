@@ -19,6 +19,7 @@ from tests.mocks.arquivos.renovaveis import (
     MockPEESubmercado,
     MockPEEConfiguracaoPeriodo,
     MockPEEPotenciaInstaladaPeriodo,
+    MockPEEPotenciaInstaladaPeriodoValorLongo,
     MockPEEGeracaoPeriodoPatamarCenario,
     MockPEEGeracaoPeriodoPatamarCenarioComPeriodoFinal,
     MockPEEGeracaoPeriodoPatamarCenarioValorLongo,
@@ -161,6 +162,19 @@ def test_registro_renovaveis_pee_pot_inst_per():
     assert r.potencia_instalada == 99999.0
     r.potencia_instalada = 0.0
     assert r.potencia_instalada == 0.0
+
+
+def test_registro_renovaveis_pee_pot_inst_per_valor_longo():
+    # A potência deve ser lida inteira, sem cortar no 8º caractere.
+    m: MagicMock = mock_open(
+        read_data="".join(MockPEEPotenciaInstaladaPeriodoValorLongo)
+    )
+    r = PEEPotenciaInstaladaPeriodo()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [1, 1, 3, 12345.678]
 
 
 def test_df_renovaveis_pee_ger_per_pat_cen():

@@ -13,7 +13,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Corrigido
 
-- A geração do card `PEE-GER-PER-PAT-CEN` do arquivo de renováveis era lida com o tamanho padrão de campo de 8 caracteres, nos dois layouts do card, e os valores mais longos eram cortados (`17699.689` era lido como `17699.68`). O campo passa a ter o mesmo tamanho dos registros do card `PEE-GER-PER-PAT` e dos demais arquivos CSV da `libs`, e o valor é lido inteiro. Arquivos lidos de novo podem ter diferenças nas últimas casas decimais em relação a leituras anteriores.
+- Três campos numéricos de arquivos CSV da `libs` eram lidos com o tamanho padrão de campo de 8 caracteres, e os valores mais longos eram cortados (`17699.689` era lido como `17699.68`): a geração do card `PEE-GER-PER-PAT-CEN`, nos dois layouts do card, e a potência do card `PEE-POT-INST-PER`, ambos do arquivo de renováveis, e o nível de montante do registro `HIDRELETRICA-CURVAJUSANTE` da classe `UsinasHidreletricas`. Os campos passam a ter o mesmo tamanho dos demais campos numéricos dos arquivos CSV da `libs`, e o valor é lido inteiro. Arquivos lidos de novo podem ter diferenças nas últimas casas decimais em relação a leituras anteriores.
+- A geração do card `PEE-GER-PER-PAT-CEN` era escrita com 4 casas decimais, e valores como `1.338901` voltavam como `1.3389`. Passa a ser escrita com 6 casas decimais, como no card `PEE-GER-PER-PAT`.
 
 ## [1.15.1] - 2026-10-22
 
