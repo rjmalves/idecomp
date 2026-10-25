@@ -160,15 +160,24 @@ class Relato(BlockFile):
     @property
     def relatorio_operacao_custos(self) -> pd.DataFrame | None:
         """
-        Obtém a tabela de operação de cada UHE por estágio do DECOMP
-        existente no :class:`Relato`
+        Obtém a tabela de custos de operação por estágio e cenário do
+        DECOMP existente no :class:`Relato`. O `custo_presente` é
+        atualizado para valor presente, enquanto o `custo_presente_nominal`
+        e as parcelas são nominais. Os custos são os impressos, em 1000 $,
+        e os CMOs em $/MWh.
 
         - estagio (`int`)
         - cenario (`int`)
         - probabilidade (`float`)
         - custo_futuro (`float`)
+        - custo_presente_nominal (`float`)
         - custo_presente (`float`)
+        - geracao_termica_minima (`float`)
         - geracao_termica (`float`)
+        - contrato_importacao_minimo (`float`)
+        - contrato_importacao (`float`)
+        - contrato_exportacao_minimo (`float`)
+        - contrato_exportacao (`float`)
         - violacao_desvio (`float`)
         - penalidade_vertimento_reservatorio (`float`)
         - penalidade_vertimento_fio (`float`)
