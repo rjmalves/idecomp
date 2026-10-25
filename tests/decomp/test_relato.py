@@ -25,6 +25,8 @@ from idecomp.decomp.modelos.relato import (
 
 from idecomp.decomp.relato import Relato
 
+import pandas as pd
+
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
@@ -49,6 +51,7 @@ from tests.mocks.arquivos.relato import (
     MockCustoOperacaoValorEsperado,
     MockRelato,
     MockRelatorioOperacaoCustos,
+    MockRelatorioOperacaoCustosNotasInviabilidade,
     MockRelatorioOperacaoUHE,
     MockRelatorioOperacaoUTE,
     MockVolumeUtilReservatorio,
@@ -148,6 +151,27 @@ def test_bloco_relatorio_operacao_custos():
     assert list(b.data[1].columns) == list(esperado)
     for coluna, valor in esperado.items():
         assert b.data[1].at[0, coluna] == valor, coluna
+
+
+def test_bloco_relatorio_operacao_custos_notas_inviabilidade():
+    # As notas após os CMOs não são subsistemas e ficam para o próximo bloco
+    m: MagicMock = mock_open(read_data="".join(MockRelatorioOperacaoCustos))
+    b = BlocoRelatorioOperacaoRelato()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+    m_notas: MagicMock = mock_open(
+        read_data="".join(MockRelatorioOperacaoCustosNotasInviabilidade)
+    )
+    b_notas = BlocoRelatorioOperacaoRelato()
+    with patch("builtins.open", m_notas):
+        with open("", "") as fp:
+            b_notas.read(fp)
+            proxima_linha = fp.readline()
+
+    assert b_notas.data[0] == "GERAL"
+    pd.testing.assert_frame_equal(b_notas.data[1], b.data[1])
+    assert proxima_linha.startswith("   - VER DEFINICAO DA INVIABILIDADE")
 
 
 def test_bloco_relatorio_operacao_uhe():

@@ -495,8 +495,12 @@ class BlocoRelatorioOperacaoRelato(Block):
 
         cmos: dict[str, float] = {}
         while True:
+            pos = file.tell()
             linha = file.readline()
-            if len(linha.strip()) < 4:
+            # Os CMOs terminam na primeira linha de outro conteúdo, como as
+            # notas de inviabilidade, que é devolvida ao arquivo
+            if "Custo marginal de operacao do subsistema" not in linha:
+                file.seek(pos)
                 self.data = ["GERAL", converte_tabela_para_df()]
                 break
             dados_linha = linha_custo_subsis.read(linha)

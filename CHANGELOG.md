@@ -6,6 +6,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Corrigido
+
+- Quando o DECOMP imprime as notas de inviabilidade logo após os CMOs, como em `- VER DEFINICAO DA INVIABILIDADE PARA ESTAGIO  1 ...`, a tabela `relatorio_operacao_custos` da classe `Relato` lia as notas como subsistemas e ganhava colunas vazias, como `cmo_AG` e `cmo_AZ`.
+
 ## [1.17.0] - 2026-10-25
 
 ### Adicionado
