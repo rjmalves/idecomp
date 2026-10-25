@@ -118,25 +118,36 @@ def test_bloco_relatorio_operacao_custos():
         with open("", "") as fp:
             b.read(fp)
 
+    # As colunas seguem a ordem em que as parcelas são impressas
+    esperado = {
+        "estagio": 1,
+        "cenario": 1,
+        "probabilidade": 1.0,
+        "custo_futuro": 408096349.11,
+        "custo_presente_nominal": 126757.66,
+        "custo_presente": 126483.42,
+        "geracao_termica_minima": 62421.07,
+        "geracao_termica": 126469.80,
+        "contrato_importacao_minimo": 1234.56,
+        "contrato_importacao": 2345.67,
+        "contrato_exportacao_minimo": 345.67,
+        "contrato_exportacao": 456.78,
+        "violacao_desvio": 0.0,
+        "penalidade_vertimento_reservatorio": 0.13,
+        "penalidade_vertimento_fio": 1.95,
+        "violacao_turbinamento_reservatorio": 3.34,
+        "violacao_turbinamento_fio": 7.90,
+        "penalidade_intercambio": 0.29,
+        "cmo_SE": 0.0,
+        "cmo_S": 355.15,
+        "cmo_NE": 0.0,
+        "cmo_N": 0.0,
+        "cmo_FC": 0.0,
+    }
     assert b.data[1].shape[0] == 1
-    assert b.data[1].shape[1] == 17
-    assert b.data[1].iloc[0, 0] == 1
-    assert b.data[1].iloc[0, 1] == 1
-    assert b.data[1].iloc[0, 2] == 1.0
-    assert b.data[1].iloc[0, 3] == 408096349.11
-    assert b.data[1].iloc[0, 4] == 126483.42
-    assert b.data[1].iloc[0, 5] == 126469.80
-    assert b.data[1].iloc[0, 6] == 0.0
-    assert b.data[1].iloc[0, 7] == 0.13
-    assert b.data[1].iloc[0, 8] == 1.95
-    assert b.data[1].iloc[0, 9] == 3.34
-    assert b.data[1].iloc[0, 10] == 7.90
-    assert b.data[1].iloc[0, 11] == 0.29
-    assert b.data[1].iloc[0, 12] == 0.0
-    assert b.data[1].iloc[0, 13] == 355.15
-    assert b.data[1].iloc[0, 14] == 0.0
-    assert b.data[1].iloc[0, 15] == 0.0
-    assert b.data[1].iloc[0, 16] == 0.0
+    assert list(b.data[1].columns) == list(esperado)
+    for coluna, valor in esperado.items():
+        assert b.data[1].at[0, coluna] == valor, coluna
 
 
 def test_bloco_relatorio_operacao_uhe():
@@ -401,9 +412,7 @@ def test_bloco_energia_armazenada_ree():
 
 
 def test_bloco_energia_armazenada_submercado():
-    m: MagicMock = mock_open(
-        read_data="".join(MockEnergiaArmazenadaSubsistema)
-    )
+    m: MagicMock = mock_open(read_data="".join(MockEnergiaArmazenadaSubsistema))
     b = BlocoEnergiaArmazenadaSubsistemaRelato()
     with patch("builtins.open", m):
         with open("", "") as fp:

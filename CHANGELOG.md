@@ -6,6 +6,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Adicionado
+
+- Colunas `custo_presente_nominal`, `geracao_termica_minima`, `contrato_importacao_minimo`, `contrato_importacao`, `contrato_exportacao_minimo` e `contrato_exportacao` na tabela `relatorio_operacao_custos` da classe `Relato`, com as parcelas do custo do estágio que eram ignoradas na leitura do relatório da operação. O `custo_presente` é atualizado para valor presente, enquanto o `custo_presente_nominal` e as parcelas são nominais. As colunas seguem a ordem do relatório, o que desloca as colunas a partir do `custo_presente`.
+
 ## [1.16.0] - 2026-10-24
 
 ### Adicionado

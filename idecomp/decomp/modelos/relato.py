@@ -444,8 +444,14 @@ class BlocoRelatorioOperacaoRelato(Block):
                     "cenario": cenario,
                     "probabilidade": probabilidade,
                     "custo_futuro": custo_futuro,
+                    "custo_presente_nominal": custo_estagio_nominal,
                     "custo_presente": custo_estagio,
+                    "geracao_termica_minima": custo_gt_minima,
                     "geracao_termica": custo_gt,
+                    "contrato_importacao_minimo": custo_importacao_minima,
+                    "contrato_importacao": custo_importacao,
+                    "contrato_exportacao_minimo": custo_exportacao_minima,
+                    "contrato_exportacao": custo_exportacao,
                     "violacao_desvio": custo_desvio,
                     "penalidade_vertimento_reservatorio": custo_vert_reservatorio,
                     "penalidade_vertimento_fio": custo_vert_fio,
@@ -468,15 +474,15 @@ class BlocoRelatorioOperacaoRelato(Block):
 
         custo_futuro: list[Any] = linha_custo.read(file.readline())
         file.readline()
-        file.readline()
+        custo_estagio_nominal: list[Any] = linha_custo.read(file.readline())
         custo_estagio: list[Any] = linha_custo.read(file.readline())
         file.readline()
-        file.readline()
+        custo_gt_minima: list[Any] = linha_custo.read(file.readline())
         custo_gt: list[Any] = linha_custo.read(file.readline())
-        file.readline()
-        file.readline()
-        file.readline()
-        file.readline()
+        custo_importacao_minima: list[Any] = linha_custo.read(file.readline())
+        custo_importacao: list[Any] = linha_custo.read(file.readline())
+        custo_exportacao_minima: list[Any] = linha_custo.read(file.readline())
+        custo_exportacao: list[Any] = linha_custo.read(file.readline())
         custo_desvio: list[Any] = linha_custo.read(file.readline())
         custo_vert_reservatorio: list[Any] = linha_custo.read(file.readline())
         custo_vert_fio: list[Any] = linha_custo.read(file.readline())
