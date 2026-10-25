@@ -290,6 +290,17 @@ MockRelatorioOperacaoCustos = [
     "                                                                                                                                                                                                        \n",
 ]
 
+# Em decks inviáveis, o DECOMP imprime as notas logo após os CMOs, sem linha
+# em branco
+MockRelatorioOperacaoCustosNotasInviabilidade = (
+    MockRelatorioOperacaoCustos[:-1]
+    + [
+        "   - VER DEFINICAO DA INVIABILIDADE PARA ESTAGIO  1 CENARIO    1 NO ARQUIVO RELATO\n",
+        "   - VER DEFINICAO DO NAO ATENDIMENTO AO ARMAZENAMENTO MINIMO PARA ESTAGIO   4 CENARIO     1 NO ARQUIVO RELATO2\n",
+    ]
+    + MockRelatorioOperacaoCustos[-1:]
+)
+
 MockRelatorioOperacaoUHE = [
     "   RELATORIO  DA  OPERACAO                                                                                                                                                                              \n",
     "\n",
