@@ -6,6 +6,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.17.1] - 2026-10-25
+
 ### Corrigido
 
 - Quando o DECOMP imprime as notas de inviabilidade logo após os CMOs, como em `- VER DEFINICAO DA INVIABILIDADE PARA ESTAGIO  1 ...`, a tabela `relatorio_operacao_custos` da classe `Relato` lia as notas como subsistemas e ganhava colunas vazias, como `cmo_AG` e `cmo_AZ`.
@@ -277,7 +279,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 - Métodos le_arquivo e escreve_arquivo deprecados
 
-[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.17.0...HEAD
+[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.17.1...HEAD
+[1.17.1]: https://github.com/rjmalves/idecomp/compare/v1.17.0...v1.17.1
 [1.17.0]: https://github.com/rjmalves/idecomp/compare/v1.16.0...v1.17.0
 [1.16.0]: https://github.com/rjmalves/idecomp/compare/v1.15.1...v1.16.0
 [1.15.1]: https://github.com/rjmalves/idecomp/compare/v1.15.0...v1.15.1
