@@ -1,4 +1,4 @@
-from typing import Any, TypeVar
+from typing import Any, Literal, TypeVar, overload
 
 import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
@@ -47,6 +47,28 @@ class Renovaveis(RegisterFile):
             kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
+    @overload
+    def pee_cad(
+        self,
+        codigo_pee: int | None = None,
+        nome_pee: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def pee_cad(
+        self,
+        codigo_pee: int | None = None,
+        nome_pee: str | None = None,
+        df: Literal[False] = False,
+    ) -> PEECadastro | list[PEECadastro] | None: ...
+    @overload
+    def pee_cad(
+        self,
+        codigo_pee: int | None = None,
+        nome_pee: str | None = None,
+        df: bool = False,
+    ) -> PEECadastro | list[PEECadastro] | pd.DataFrame | None: ...
     def pee_cad(
         self,
         codigo_pee: int | None = None,
@@ -75,6 +97,28 @@ class Renovaveis(RegisterFile):
             df=df,
         )
 
+    @overload
+    def pee_subm(
+        self,
+        codigo_pee: int | None = None,
+        codigo_submercado: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def pee_subm(
+        self,
+        codigo_pee: int | None = None,
+        codigo_submercado: int | None = None,
+        df: Literal[False] = False,
+    ) -> PEESubmercado | list[PEESubmercado] | None: ...
+    @overload
+    def pee_subm(
+        self,
+        codigo_pee: int | None = None,
+        codigo_submercado: int | None = None,
+        df: bool = False,
+    ) -> PEESubmercado | list[PEESubmercado] | pd.DataFrame | None: ...
     def pee_subm(
         self,
         codigo_pee: int | None = None,
@@ -103,6 +147,39 @@ class Renovaveis(RegisterFile):
             df=df,
         )
 
+    @overload
+    def pee_config_per(
+        self,
+        codigo_pee: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        estado_operacao: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def pee_config_per(
+        self,
+        codigo_pee: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        estado_operacao: str | None = None,
+        df: Literal[False] = False,
+    ) -> PEEConfiguracaoPeriodo | list[PEEConfiguracaoPeriodo] | None: ...
+    @overload
+    def pee_config_per(
+        self,
+        codigo_pee: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        estado_operacao: str | None = None,
+        df: bool = False,
+    ) -> (
+        PEEConfiguracaoPeriodo
+        | list[PEEConfiguracaoPeriodo]
+        | pd.DataFrame
+        | None
+    ): ...
     def pee_config_per(
         self,
         codigo_pee: int | None = None,
@@ -146,6 +223,41 @@ class Renovaveis(RegisterFile):
             df=df,
         )
 
+    @overload
+    def pee_pot_inst_per(
+        self,
+        codigo_pee: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        potencia_instalada: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def pee_pot_inst_per(
+        self,
+        codigo_pee: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        potencia_instalada: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        PEEPotenciaInstaladaPeriodo | list[PEEPotenciaInstaladaPeriodo] | None
+    ): ...
+    @overload
+    def pee_pot_inst_per(
+        self,
+        codigo_pee: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        potencia_instalada: float | None = None,
+        df: bool = False,
+    ) -> (
+        PEEPotenciaInstaladaPeriodo
+        | list[PEEPotenciaInstaladaPeriodo]
+        | pd.DataFrame
+        | None
+    ): ...
     def pee_pot_inst_per(
         self,
         codigo_pee: int | None = None,
@@ -189,6 +301,50 @@ class Renovaveis(RegisterFile):
             df=df,
         )
 
+    @overload
+    def pee_ger_per_pat_cen(
+        self,
+        codigo_pee: int | None = None,
+        estagio: int | None = None,
+        patamar: int | None = None,
+        cenario: int | None = None,
+        geracao: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def pee_ger_per_pat_cen(
+        self,
+        codigo_pee: int | None = None,
+        estagio: int | None = None,
+        patamar: int | None = None,
+        cenario: int | None = None,
+        geracao: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        list[
+            PEEGeracaoPeriodoPatamarCenario
+            | PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal
+        ]
+        | None
+    ): ...
+    @overload
+    def pee_ger_per_pat_cen(
+        self,
+        codigo_pee: int | None = None,
+        estagio: int | None = None,
+        patamar: int | None = None,
+        cenario: int | None = None,
+        geracao: float | None = None,
+        df: bool = False,
+    ) -> (
+        list[
+            PEEGeracaoPeriodoPatamarCenario
+            | PEEGeracaoPeriodoPatamarCenarioComPeriodoFinal
+        ]
+        | pd.DataFrame
+        | None
+    ): ...
     def pee_ger_per_pat_cen(
         self,
         codigo_pee: int | None = None,
@@ -281,6 +437,41 @@ class Renovaveis(RegisterFile):
             )
         return registros if len(registros) > 0 else None
 
+    @overload
+    def pee_ger_per_pat(
+        self,
+        codigo_pee: int | None = None,
+        estagio: int | None = None,
+        patamar: int | None = None,
+        geracao: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def pee_ger_per_pat(
+        self,
+        codigo_pee: int | None = None,
+        estagio: int | None = None,
+        patamar: int | None = None,
+        geracao: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        list[PEEGeracaoPeriodoPatamar | PEEGeracaoPeriodoPatamarComPeriodoFinal]
+        | None
+    ): ...
+    @overload
+    def pee_ger_per_pat(
+        self,
+        codigo_pee: int | None = None,
+        estagio: int | None = None,
+        patamar: int | None = None,
+        geracao: float | None = None,
+        df: bool = False,
+    ) -> (
+        list[PEEGeracaoPeriodoPatamar | PEEGeracaoPeriodoPatamarComPeriodoFinal]
+        | pd.DataFrame
+        | None
+    ): ...
     def pee_ger_per_pat(
         self,
         codigo_pee: int | None = None,

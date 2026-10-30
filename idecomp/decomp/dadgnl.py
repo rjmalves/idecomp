@@ -1,4 +1,4 @@
-from typing import Any, TypeVar
+from typing import Any, Literal, TypeVar, overload
 
 import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
@@ -51,6 +51,34 @@ class Dadgnl(RegisterFile):
             kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
+    @overload
+    def tg(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        nome: str | None = None,
+        estagio: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def tg(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        nome: str | None = None,
+        estagio: int | None = None,
+        df: Literal[False] = False,
+    ) -> TG | list[TG] | None: ...
+    @overload
+    def tg(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        nome: str | None = None,
+        estagio: int | None = None,
+        df: bool = False,
+    ) -> TG | list[TG] | pd.DataFrame | None: ...
     def tg(
         self,
         codigo_usina: int | None = None,
@@ -90,6 +118,28 @@ class Dadgnl(RegisterFile):
             df=df,
         )
 
+    @overload
+    def gs(
+        self,
+        mes: int | None = None,
+        semanas: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def gs(
+        self,
+        mes: int | None = None,
+        semanas: int | None = None,
+        df: Literal[False] = False,
+    ) -> GS | list[GS] | None: ...
+    @overload
+    def gs(
+        self,
+        mes: int | None = None,
+        semanas: int | None = None,
+        df: bool = False,
+    ) -> GS | list[GS] | pd.DataFrame | None: ...
     def gs(
         self,
         mes: int | None = None,
@@ -113,6 +163,31 @@ class Dadgnl(RegisterFile):
         """
         return self.__registros_ou_df(GS, mes=mes, semanas=semanas, df=df)
 
+    @overload
+    def nl(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        lag: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def nl(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        lag: int | None = None,
+        df: Literal[False] = False,
+    ) -> NL | list[NL] | None: ...
+    @overload
+    def nl(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        lag: int | None = None,
+        df: bool = False,
+    ) -> NL | list[NL] | pd.DataFrame | None: ...
     def nl(
         self,
         codigo_usina: int | None = None,
@@ -145,6 +220,34 @@ class Dadgnl(RegisterFile):
             df=df,
         )
 
+    @overload
+    def gl(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        data_inicio: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def gl(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        data_inicio: str | None = None,
+        df: Literal[False] = False,
+    ) -> GL | list[GL] | None: ...
+    @overload
+    def gl(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        data_inicio: str | None = None,
+        df: bool = False,
+    ) -> GL | list[GL] | pd.DataFrame | None: ...
     def gl(
         self,
         codigo_usina: int | None = None,

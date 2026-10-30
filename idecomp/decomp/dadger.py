@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Union
+from typing import Any, Literal, TypeVar, Union, overload
 
 import numpy as np
 import pandas  # type: ignore[import-untyped]
@@ -278,6 +278,28 @@ class Dadger(RegisterFile):
         else:
             return None
 
+    @overload
+    def sb(
+        self,
+        codigo_submercado: int | None = None,
+        nome_submercado: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def sb(
+        self,
+        codigo_submercado: int | None = None,
+        nome_submercado: str | None = None,
+        df: Literal[False] = False,
+    ) -> SB | list[SB] | None: ...
+    @overload
+    def sb(
+        self,
+        codigo_submercado: int | None = None,
+        nome_submercado: str | None = None,
+        df: bool = False,
+    ) -> SB | list[SB] | pandas.DataFrame | None: ...
     def sb(
         self,
         codigo_submercado: int | None = None,
@@ -302,6 +324,34 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def uh(
+        self,
+        codigo_usina: int | None = None,
+        codigo_ree: int | None = None,
+        volume_inicial: float | None = None,
+        evaporacao: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def uh(
+        self,
+        codigo_usina: int | None = None,
+        codigo_ree: int | None = None,
+        volume_inicial: float | None = None,
+        evaporacao: int | None = None,
+        df: Literal[False] = False,
+    ) -> UH | list[UH] | None: ...
+    @overload
+    def uh(
+        self,
+        codigo_usina: int | None = None,
+        codigo_ree: int | None = None,
+        volume_inicial: float | None = None,
+        evaporacao: int | None = None,
+        df: bool = False,
+    ) -> UH | list[UH] | pandas.DataFrame | None: ...
     def uh(
         self,
         codigo_usina: int | None = None,
@@ -338,6 +388,37 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ue(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_usina: str | None = None,
+        codigo_usina_montante: int | None = None,
+        codigo_usina_jusante: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ue(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_usina: str | None = None,
+        codigo_usina_montante: int | None = None,
+        codigo_usina_jusante: int | None = None,
+        df: Literal[False] = False,
+    ) -> UE | list[UE] | None: ...
+    @overload
+    def ue(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_usina: str | None = None,
+        codigo_usina_montante: int | None = None,
+        codigo_usina_jusante: int | None = None,
+        df: bool = False,
+    ) -> UE | list[UE] | pandas.DataFrame | None: ...
     def ue(
         self,
         codigo_usina: int | None = None,
@@ -381,6 +462,34 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ct(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_usina: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ct(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_usina: str | None = None,
+        df: Literal[False] = False,
+    ) -> CT | list[CT] | None: ...
+    @overload
+    def ct(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_usina: str | None = None,
+        df: bool = False,
+    ) -> CT | list[CT] | pandas.DataFrame | None: ...
     def ct(
         self,
         codigo_usina: int | None = None,
@@ -417,6 +526,31 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def dp(
+        self,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        numero_patamares: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def dp(
+        self,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        numero_patamares: int | None = None,
+        df: Literal[False] = False,
+    ) -> DP | list[DP] | None: ...
+    @overload
+    def dp(
+        self,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        numero_patamares: int | None = None,
+        df: bool = False,
+    ) -> DP | list[DP] | pandas.DataFrame | None: ...
     def dp(
         self,
         estagio: int | None = None,
@@ -452,6 +586,31 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def pq(
+        self,
+        nome: str | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def pq(
+        self,
+        nome: str | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        df: Literal[False] = False,
+    ) -> PQ | list[PQ] | None: ...
+    @overload
+    def pq(
+        self,
+        nome: str | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        df: bool = False,
+    ) -> PQ | list[PQ] | pandas.DataFrame | None: ...
     def pq(
         self,
         nome: str | None = None,
@@ -486,6 +645,31 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ia(
+        self,
+        estagio: int | None = None,
+        nome_submercado_de: str | None = None,
+        nome_submercado_para: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ia(
+        self,
+        estagio: int | None = None,
+        nome_submercado_de: str | None = None,
+        nome_submercado_para: str | None = None,
+        df: Literal[False] = False,
+    ) -> IA | list[IA] | None: ...
+    @overload
+    def ia(
+        self,
+        estagio: int | None = None,
+        nome_submercado_de: str | None = None,
+        nome_submercado_para: str | None = None,
+        df: bool = False,
+    ) -> IA | list[IA] | pandas.DataFrame | None: ...
     def ia(
         self,
         estagio: int | None = None,
@@ -519,6 +703,31 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ri(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ri(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        df: Literal[False] = False,
+    ) -> RI | list[RI] | None: ...
+    @overload
+    def ri(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado: int | None = None,
+        df: bool = False,
+    ) -> RI | list[RI] | pandas.DataFrame | None: ...
     def ri(
         self,
         codigo_usina: int | None = None,
@@ -551,6 +760,31 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ac(
+        self,
+        codigo_usina: int | None,
+        modificacao: type[T],
+        *,
+        df: Literal[True],
+        **kwargs: Any,
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ac(
+        self,
+        codigo_usina: int | None,
+        modificacao: type[T],
+        df: Literal[False] = False,
+        **kwargs: Any,
+    ) -> T | list[T] | None: ...
+    @overload
+    def ac(
+        self,
+        codigo_usina: int | None,
+        modificacao: type[T],
+        df: bool = False,
+        **kwargs: Any,
+    ) -> T | list[T] | pandas.DataFrame | None: ...
     def ac(
         self,
         codigo_usina: int | None,
@@ -579,6 +813,34 @@ class Dadger(RegisterFile):
             modificacao, **{"codigo_usina": codigo_usina, **kwargs, "df": df}
         )
 
+    @overload
+    def cd(
+        self,
+        codigo_curva: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_curva: str | None = None,
+        estagio: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def cd(
+        self,
+        codigo_curva: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_curva: str | None = None,
+        estagio: int | None = None,
+        df: Literal[False] = False,
+    ) -> CD | list[CD] | None: ...
+    @overload
+    def cd(
+        self,
+        codigo_curva: int | None = None,
+        codigo_submercado: int | None = None,
+        nome_curva: str | None = None,
+        estagio: int | None = None,
+        df: bool = False,
+    ) -> CD | list[CD] | pandas.DataFrame | None: ...
     def cd(
         self,
         codigo_curva: int | None = None,
@@ -615,6 +877,34 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ci(
+        self,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        nome_contrato: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ci(
+        self,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        nome_contrato: str | None = None,
+        df: Literal[False] = False,
+    ) -> CI | list[CI] | None: ...
+    @overload
+    def ci(
+        self,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        nome_contrato: str | None = None,
+        df: bool = False,
+    ) -> CI | list[CI] | pandas.DataFrame | None: ...
     def ci(
         self,
         numero_contrato: int | None = None,
@@ -658,6 +948,34 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ce(
+        self,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        nome_contrato: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ce(
+        self,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        nome_contrato: str | None = None,
+        df: Literal[False] = False,
+    ) -> CE | list[CE] | None: ...
+    @overload
+    def ce(
+        self,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        estagio: int | None = None,
+        nome_contrato: str | None = None,
+        df: bool = False,
+    ) -> CE | list[CE] | pandas.DataFrame | None: ...
     def ce(
         self,
         numero_contrato: int | None = None,
@@ -761,6 +1079,31 @@ class Dadger(RegisterFile):
         else:
             return None
 
+    @overload
+    def re(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def re(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: Literal[False] = False,
+    ) -> RE | list[RE] | None: ...
+    @overload
+    def re(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: bool = False,
+    ) -> RE | list[RE] | pandas.DataFrame | None: ...
     def re(
         self,
         codigo_restricao: int | None = None,
@@ -794,6 +1137,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def lu(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def lu(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: Literal[False] = False,
+    ) -> LU | list[LU] | None: ...
+    @overload
+    def lu(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: bool = False,
+    ) -> LU | list[LU] | pandas.DataFrame | None: ...
     def lu(  # noqa
         self,
         codigo_restricao: int | None = None,
@@ -889,6 +1254,34 @@ class Dadger(RegisterFile):
                 lu = cria_registro()
             return lu
 
+    @overload
+    def fu(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def fu(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        df: Literal[False] = False,
+    ) -> FU | list[FU] | None: ...
+    @overload
+    def fu(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        df: bool = False,
+    ) -> FU | list[FU] | pandas.DataFrame | None: ...
     def fu(
         self,
         codigo_restricao: int | None = None,
@@ -926,6 +1319,34 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ft(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ft(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        df: Literal[False] = False,
+    ) -> FT | list[FT] | None: ...
+    @overload
+    def ft(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        df: bool = False,
+    ) -> FT | list[FT] | pandas.DataFrame | None: ...
     def ft(
         self,
         codigo_restricao: int | None = None,
@@ -963,6 +1384,37 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def fi(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado_de: int | None = None,
+        codigo_submercado_para: int | None = None,
+        coeficiente: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def fi(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado_de: int | None = None,
+        codigo_submercado_para: int | None = None,
+        coeficiente: float | None = None,
+        df: Literal[False] = False,
+    ) -> FI | list[FI] | None: ...
+    @overload
+    def fi(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_submercado_de: int | None = None,
+        codigo_submercado_para: int | None = None,
+        coeficiente: float | None = None,
+        df: bool = False,
+    ) -> FI | list[FI] | pandas.DataFrame | None: ...
     def fi(
         self,
         codigo_restricao: int | None = None,
@@ -1004,6 +1456,37 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def fe(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        coeficiente: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def fe(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        coeficiente: float | None = None,
+        df: Literal[False] = False,
+    ) -> FE | list[FE] | None: ...
+    @overload
+    def fe(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        coeficiente: float | None = None,
+        df: bool = False,
+    ) -> FE | list[FE] | pandas.DataFrame | None: ...
     def fe(
         self,
         codigo_restricao: int | None = None,
@@ -1045,6 +1528,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def vi(
+        self,
+        codigo_usina: int | None = None,
+        duracao: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def vi(
+        self,
+        codigo_usina: int | None = None,
+        duracao: int | None = None,
+        df: Literal[False] = False,
+    ) -> VI | list[VI] | None: ...
+    @overload
+    def vi(
+        self,
+        codigo_usina: int | None = None,
+        duracao: int | None = None,
+        df: bool = False,
+    ) -> VI | list[VI] | pandas.DataFrame | None: ...
     def vi(
         self,
         codigo_usina: int | None = None,
@@ -1071,6 +1576,18 @@ class Dadger(RegisterFile):
             VI, codigo_usina=codigo_usina, duracao=duracao, df=df
         )
 
+    @overload
+    def ir(
+        self, tipo: str | None = None, *, df: Literal[True]
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ir(
+        self, tipo: str | None = None, df: Literal[False] = False
+    ) -> IR | list[IR] | None: ...
+    @overload
+    def ir(
+        self, tipo: str | None = None, df: bool = False
+    ) -> IR | list[IR] | pandas.DataFrame | None: ...
     def ir(
         self, tipo: str | None = None, df: bool = False
     ) -> IR | list[IR] | pandas.DataFrame | None:
@@ -1091,6 +1608,18 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(IR, tipo=tipo, df=df)
 
+    @overload
+    def rt(
+        self, restricao: str | None = None, *, df: Literal[True]
+    ) -> pandas.DataFrame: ...
+    @overload
+    def rt(
+        self, restricao: str | None = None, df: Literal[False] = False
+    ) -> RT | list[RT] | None: ...
+    @overload
+    def rt(
+        self, restricao: str | None = None, df: bool = False
+    ) -> RT | list[RT] | pandas.DataFrame | None: ...
     def rt(
         self, restricao: str | None = None, df: bool = False
     ) -> RT | list[RT] | pandas.DataFrame | None:
@@ -1110,6 +1639,28 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(RT, restricao=restricao, df=df)
 
+    @overload
+    def fc(
+        self,
+        tipo: str | None = None,
+        caminho: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def fc(
+        self,
+        tipo: str | None = None,
+        caminho: str | None = None,
+        df: Literal[False] = False,
+    ) -> FC | list[FC] | None: ...
+    @overload
+    def fc(
+        self,
+        tipo: str | None = None,
+        caminho: str | None = None,
+        df: bool = False,
+    ) -> FC | list[FC] | pandas.DataFrame | None: ...
     def fc(
         self,
         tipo: str | None = None,
@@ -1134,6 +1685,18 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(FC, tipo=tipo, caminho=caminho, df=df)
 
+    @overload
+    def ea(
+        self, codigo_ree: int | None = None, *, df: Literal[True]
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ea(
+        self, codigo_ree: int | None = None, df: Literal[False] = False
+    ) -> EA | list[EA] | None: ...
+    @overload
+    def ea(
+        self, codigo_ree: int | None = None, df: bool = False
+    ) -> EA | list[EA] | pandas.DataFrame | None: ...
     def ea(
         self, codigo_ree: int | None = None, df: bool = False
     ) -> EA | list[EA] | pandas.DataFrame | None:
@@ -1151,6 +1714,28 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(EA, codigo_ree=codigo_ree, df=df)
 
+    @overload
+    def es(
+        self,
+        codigo_ree: int | None = None,
+        numero_semanas: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def es(
+        self,
+        codigo_ree: int | None = None,
+        numero_semanas: int | None = None,
+        df: Literal[False] = False,
+    ) -> ES | list[ES] | None: ...
+    @overload
+    def es(
+        self,
+        codigo_ree: int | None = None,
+        numero_semanas: int | None = None,
+        df: bool = False,
+    ) -> ES | list[ES] | pandas.DataFrame | None: ...
     def es(
         self,
         codigo_ree: int | None = None,
@@ -1176,6 +1761,18 @@ class Dadger(RegisterFile):
             ES, codigo_ree=codigo_ree, numero_semanas=numero_semanas, df=df
         )
 
+    @overload
+    def qi(
+        self, codigo_usina: int | None = None, *, df: Literal[True]
+    ) -> pandas.DataFrame: ...
+    @overload
+    def qi(
+        self, codigo_usina: int | None = None, df: Literal[False] = False
+    ) -> QI | list[QI] | None: ...
+    @overload
+    def qi(
+        self, codigo_usina: int | None = None, df: bool = False
+    ) -> QI | list[QI] | pandas.DataFrame | None: ...
     def qi(
         self, codigo_usina: int | None = None, df: bool = False
     ) -> QI | list[QI] | pandas.DataFrame | None:
@@ -1194,6 +1791,18 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(QI, codigo_usina=codigo_usina, df=df)
 
+    @overload
+    def ti(
+        self, codigo_usina: int | None = None, *, df: Literal[True]
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ti(
+        self, codigo_usina: int | None = None, df: Literal[False] = False
+    ) -> TI | list[TI] | None: ...
+    @overload
+    def ti(
+        self, codigo_usina: int | None = None, df: bool = False
+    ) -> TI | list[TI] | pandas.DataFrame | None: ...
     def ti(
         self, codigo_usina: int | None = None, df: bool = False
     ) -> TI | list[TI] | pandas.DataFrame | None:
@@ -1212,6 +1821,28 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(TI, codigo_usina=codigo_usina, df=df)
 
+    @overload
+    def da(
+        self,
+        codigo_usina_retirada: int | None = None,
+        codigo_usina_retorno: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def da(
+        self,
+        codigo_usina_retirada: int | None = None,
+        codigo_usina_retorno: int | None = None,
+        df: Literal[False] = False,
+    ) -> DA | list[DA] | None: ...
+    @overload
+    def da(
+        self,
+        codigo_usina_retirada: int | None = None,
+        codigo_usina_retorno: int | None = None,
+        df: bool = False,
+    ) -> DA | list[DA] | pandas.DataFrame | None: ...
     def da(
         self,
         codigo_usina_retirada: int | None = None,
@@ -1241,6 +1872,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def mp(
+        self,
+        codigo_usina: int | None = None,
+        frequencia: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def mp(
+        self,
+        codigo_usina: int | None = None,
+        frequencia: int | None = None,
+        df: Literal[False] = False,
+    ) -> MP | list[MP] | None: ...
+    @overload
+    def mp(
+        self,
+        codigo_usina: int | None = None,
+        frequencia: int | None = None,
+        df: bool = False,
+    ) -> MP | list[MP] | pandas.DataFrame | None: ...
     def mp(
         self,
         codigo_usina: int | None = None,
@@ -1266,6 +1919,28 @@ class Dadger(RegisterFile):
             MP, codigo_usina=codigo_usina, frequencia=frequencia, df=df
         )
 
+    @overload
+    def mt(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def mt(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        df: Literal[False] = False,
+    ) -> MT | list[MT] | None: ...
+    @overload
+    def mt(
+        self,
+        codigo_usina: int | None = None,
+        codigo_submercado: int | None = None,
+        df: bool = False,
+    ) -> MT | list[MT] | pandas.DataFrame | None: ...
     def mt(
         self,
         codigo_usina: int | None = None,
@@ -1294,6 +1969,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def fd(
+        self,
+        codigo_usina: int | None = None,
+        frequencia: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def fd(
+        self,
+        codigo_usina: int | None = None,
+        frequencia: int | None = None,
+        df: Literal[False] = False,
+    ) -> FD | list[FD] | None: ...
+    @overload
+    def fd(
+        self,
+        codigo_usina: int | None = None,
+        frequencia: int | None = None,
+        df: bool = False,
+    ) -> FD | list[FD] | pandas.DataFrame | None: ...
     def fd(
         self,
         codigo_usina: int | None = None,
@@ -1319,6 +2016,52 @@ class Dadger(RegisterFile):
             FD, codigo_usina=codigo_usina, frequencia=frequencia, df=df
         )
 
+    @overload
+    def fp(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        tipo_entrada_janela_turbinamento: int | None = None,
+        numero_pontos_turbinamento: int | None = None,
+        limite_inferior_janela_turbinamento: float | None = None,
+        limite_superior_janela_turbinamento: float | None = None,
+        tipo_entrada_janela_volume: int | None = None,
+        numero_pontos_volume: int | None = None,
+        limite_inferior_janela_volume: float | None = None,
+        limite_superior_janela_volume: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def fp(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        tipo_entrada_janela_turbinamento: int | None = None,
+        numero_pontos_turbinamento: int | None = None,
+        limite_inferior_janela_turbinamento: float | None = None,
+        limite_superior_janela_turbinamento: float | None = None,
+        tipo_entrada_janela_volume: int | None = None,
+        numero_pontos_volume: int | None = None,
+        limite_inferior_janela_volume: float | None = None,
+        limite_superior_janela_volume: float | None = None,
+        df: Literal[False] = False,
+    ) -> FP | list[FP] | None: ...
+    @overload
+    def fp(
+        self,
+        codigo_usina: int | None = None,
+        estagio: int | None = None,
+        tipo_entrada_janela_turbinamento: int | None = None,
+        numero_pontos_turbinamento: int | None = None,
+        limite_inferior_janela_turbinamento: float | None = None,
+        limite_superior_janela_turbinamento: float | None = None,
+        tipo_entrada_janela_volume: int | None = None,
+        numero_pontos_volume: int | None = None,
+        limite_inferior_janela_volume: float | None = None,
+        limite_superior_janela_volume: float | None = None,
+        df: bool = False,
+    ) -> FP | list[FP] | pandas.DataFrame | None: ...
     def fp(
         self,
         codigo_usina: int | None = None,
@@ -1387,6 +2130,18 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def rq(
+        self, codigo_ree: int | None = None, *, df: Literal[True]
+    ) -> pandas.DataFrame: ...
+    @overload
+    def rq(
+        self, codigo_ree: int | None = None, df: Literal[False] = False
+    ) -> RQ | list[RQ] | None: ...
+    @overload
+    def rq(
+        self, codigo_ree: int | None = None, df: bool = False
+    ) -> RQ | list[RQ] | pandas.DataFrame | None: ...
     def rq(
         self, codigo_ree: int | None = None, df: bool = False
     ) -> RQ | list[RQ] | pandas.DataFrame | None:
@@ -1405,6 +2160,28 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(RQ, codigo_ree=codigo_ree, df=df)
 
+    @overload
+    def ez(
+        self,
+        codigo_usina: int | None = None,
+        volume: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ez(
+        self,
+        codigo_usina: int | None = None,
+        volume: float | None = None,
+        df: Literal[False] = False,
+    ) -> EZ | list[EZ] | None: ...
+    @overload
+    def ez(
+        self,
+        codigo_usina: int | None = None,
+        volume: float | None = None,
+        df: bool = False,
+    ) -> EZ | list[EZ] | pandas.DataFrame | None: ...
     def ez(
         self,
         codigo_usina: int | None = None,
@@ -1432,6 +2209,18 @@ class Dadger(RegisterFile):
             EZ, codigo_usina=codigo_usina, volume=volume, df=df
         )
 
+    @overload
+    def ve(
+        self, codigo_usina: int | None = None, *, df: Literal[True]
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ve(
+        self, codigo_usina: int | None = None, df: Literal[False] = False
+    ) -> VE | list[VE] | None: ...
+    @overload
+    def ve(
+        self, codigo_usina: int | None = None, df: bool = False
+    ) -> VE | list[VE] | pandas.DataFrame | None: ...
     def ve(
         self, codigo_usina: int | None = None, df: bool = False
     ) -> VE | list[VE] | pandas.DataFrame | None:
@@ -1450,6 +2239,31 @@ class Dadger(RegisterFile):
         """
         return self.__registros_ou_df(VE, codigo_usina=codigo_usina, df=df)
 
+    @overload
+    def hv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def hv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: Literal[False] = False,
+    ) -> HV | list[HV] | None: ...
+    @overload
+    def hv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: bool = False,
+    ) -> HV | list[HV] | pandas.DataFrame | None: ...
     def hv(
         self,
         codigo_restricao: int | None = None,
@@ -1483,6 +2297,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def lv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def lv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: Literal[False] = False,
+    ) -> LV | list[LV] | None: ...
+    @overload
+    def lv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: bool = False,
+    ) -> LV | list[LV] | pandas.DataFrame | None: ...
     def lv(  # noqa
         self,
         codigo_restricao: int | None = None,
@@ -1576,6 +2412,37 @@ class Dadger(RegisterFile):
                 lv = cria_registro()
             return lv
 
+    @overload
+    def cv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        tipo: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def cv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        tipo: str | None = None,
+        df: Literal[False] = False,
+    ) -> CV | list[CV] | None: ...
+    @overload
+    def cv(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        tipo: str | None = None,
+        df: bool = False,
+    ) -> CV | list[CV] | pandas.DataFrame | None: ...
     def cv(
         self,
         codigo_restricao: int | None = None,
@@ -1617,6 +2484,31 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def hq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def hq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: Literal[False] = False,
+    ) -> HQ | list[HQ] | None: ...
+    @overload
+    def hq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: bool = False,
+    ) -> HQ | list[HQ] | pandas.DataFrame | None: ...
     def hq(
         self,
         codigo_restricao: int | None = None,
@@ -1650,6 +2542,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def lq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def lq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: Literal[False] = False,
+    ) -> LQ | list[LQ] | None: ...
+    @overload
+    def lq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: bool = False,
+    ) -> LQ | list[LQ] | pandas.DataFrame | None: ...
     def lq(  # noqa
         self,
         codigo_restricao: int | None = None,
@@ -1743,6 +2657,37 @@ class Dadger(RegisterFile):
                 lq = cria_registro()
             return lq
 
+    @overload
+    def cq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        tipo: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def cq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        tipo: str | None = None,
+        df: Literal[False] = False,
+    ) -> CQ | list[CQ] | None: ...
+    @overload
+    def cq(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        coeficiente: float | None = None,
+        tipo: str | None = None,
+        df: bool = False,
+    ) -> CQ | list[CQ] | pandas.DataFrame | None: ...
     def cq(
         self,
         codigo_restricao: int | None = None,
@@ -1784,6 +2729,31 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def ha(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ha(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: Literal[False] = False,
+    ) -> HA | list[HA] | None: ...
+    @overload
+    def ha(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: bool = False,
+    ) -> HA | list[HA] | pandas.DataFrame | None: ...
     def ha(
         self,
         codigo_restricao: int | None = None,
@@ -1817,6 +2787,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def la(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def la(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: Literal[False] = False,
+    ) -> LA | list[LA] | None: ...
+    @overload
+    def la(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: bool = False,
+    ) -> LA | list[LA] | pandas.DataFrame | None: ...
     def la(  # noqa
         self,
         codigo_restricao: int | None = None,
@@ -1902,6 +2894,31 @@ class Dadger(RegisterFile):
                 la = cria_registro()
             return la
 
+    @overload
+    def ca(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def ca(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        df: Literal[False] = False,
+    ) -> CA | list[CA] | None: ...
+    @overload
+    def ca(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        df: bool = False,
+    ) -> CA | list[CA] | pandas.DataFrame | None: ...
     def ca(
         self,
         codigo_restricao: int | None = None,
@@ -1934,6 +2951,46 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def he(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        tipo_limite: int | None = None,
+        forma_calculo_produtibilidades: int | None = None,
+        tipo_valores_produtibilidades: int | None = None,
+        tipo_penalidade: int | None = None,
+        valor_penalidade: float | None = None,
+        arquivo_produtibilidades: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def he(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        tipo_limite: int | None = None,
+        forma_calculo_produtibilidades: int | None = None,
+        tipo_valores_produtibilidades: int | None = None,
+        tipo_penalidade: int | None = None,
+        valor_penalidade: float | None = None,
+        arquivo_produtibilidades: str | None = None,
+        df: Literal[False] = False,
+    ) -> HE | list[HE] | None: ...
+    @overload
+    def he(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        tipo_limite: int | None = None,
+        forma_calculo_produtibilidades: int | None = None,
+        tipo_valores_produtibilidades: int | None = None,
+        tipo_penalidade: int | None = None,
+        valor_penalidade: float | None = None,
+        arquivo_produtibilidades: str | None = None,
+        df: bool = False,
+    ) -> HE | list[HE] | pandas.DataFrame | None: ...
     def he(
         self,
         codigo_restricao: int | None = None,
@@ -1992,6 +3049,31 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def cm(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_ree: int | None = None,
+        coeficiente: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def cm(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_ree: int | None = None,
+        coeficiente: float | None = None,
+        df: Literal[False] = False,
+    ) -> CM | list[CM] | None: ...
+    @overload
+    def cm(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_ree: int | None = None,
+        coeficiente: float | None = None,
+        df: bool = False,
+    ) -> CM | list[CM] | pandas.DataFrame | None: ...
     def cm(
         self,
         codigo_restricao: int | None = None,
@@ -2083,6 +3165,31 @@ class Dadger(RegisterFile):
         else:
             return None
 
+    @overload
+    def pe(
+        self,
+        codigo_submercado: int | None = None,
+        tipo: int | None = None,
+        penalidade: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def pe(
+        self,
+        codigo_submercado: int | None = None,
+        tipo: int | None = None,
+        penalidade: float | None = None,
+        df: Literal[False] = False,
+    ) -> PE | list[PE] | None: ...
+    @overload
+    def pe(
+        self,
+        codigo_submercado: int | None = None,
+        tipo: int | None = None,
+        penalidade: float | None = None,
+        df: bool = False,
+    ) -> PE | list[PE] | pandas.DataFrame | None: ...
     def pe(
         self,
         codigo_submercado: int | None = None,
@@ -2190,6 +3297,28 @@ class Dadger(RegisterFile):
             valor_final_variaveis_folga=valor_final_variaveis_folga,
         )
 
+    @overload
+    def cx(
+        self,
+        codigo_newave: int | None = None,
+        codigo_decomp: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def cx(
+        self,
+        codigo_newave: int | None = None,
+        codigo_decomp: int | None = None,
+        df: Literal[False] = False,
+    ) -> CX | list[CX] | None: ...
+    @overload
+    def cx(
+        self,
+        codigo_newave: int | None = None,
+        codigo_decomp: int | None = None,
+        df: bool = False,
+    ) -> CX | list[CX] | pandas.DataFrame | None: ...
     def cx(
         self,
         codigo_newave: int | None = None,
@@ -2258,6 +3387,20 @@ class Dadger(RegisterFile):
         else:
             return None
 
+    @overload
+    def vl(
+        self, codigo_usina_influenciada: int | None = None, *, df: Literal[True]
+    ) -> pandas.DataFrame: ...
+    @overload
+    def vl(
+        self,
+        codigo_usina_influenciada: int | None = None,
+        df: Literal[False] = False,
+    ) -> VL | list[VL] | None: ...
+    @overload
+    def vl(
+        self, codigo_usina_influenciada: int | None = None, df: bool = False
+    ) -> VL | list[VL] | pandas.DataFrame | None: ...
     def vl(
         self,
         codigo_usina_influenciada: int | None = None,
@@ -2283,6 +3426,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def vu(
+        self,
+        codigo_usina_influenciada: int | None = None,
+        codigo_usina_influenciadora: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def vu(
+        self,
+        codigo_usina_influenciada: int | None = None,
+        codigo_usina_influenciadora: int | None = None,
+        df: Literal[False] = False,
+    ) -> VU | list[VU] | None: ...
+    @overload
+    def vu(
+        self,
+        codigo_usina_influenciada: int | None = None,
+        codigo_usina_influenciadora: int | None = None,
+        df: bool = False,
+    ) -> VU | list[VU] | pandas.DataFrame | None: ...
     def vu(
         self,
         codigo_usina_influenciada: int | None = None,
@@ -2312,6 +3477,28 @@ class Dadger(RegisterFile):
             df=df,
         )
 
+    @overload
+    def va(
+        self,
+        codigo_usina_influenciada: int | None = None,
+        codigo_posto_influenciador: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pandas.DataFrame: ...
+    @overload
+    def va(
+        self,
+        codigo_usina_influenciada: int | None = None,
+        codigo_posto_influenciador: int | None = None,
+        df: Literal[False] = False,
+    ) -> VA | list[VA] | None: ...
+    @overload
+    def va(
+        self,
+        codigo_usina_influenciada: int | None = None,
+        codigo_posto_influenciador: int | None = None,
+        df: bool = False,
+    ) -> VA | list[VA] | pandas.DataFrame | None: ...
     def va(
         self,
         codigo_usina_influenciada: int | None = None,

@@ -11,6 +11,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 - Registro `FE` e método `fe` da classe `Dadger`, com os coeficientes dos contratos de importação e exportação de energia nas restrições elétricas, com filtros por `codigo_restricao`, `estagio`, `numero_contrato`, `codigo_submercado` e `coeficiente` e suporte a `df=True`.
 - Registros `HA`, `LA` e `CA` e métodos `ha`, `la` e `ca` da classe `Dadger`, para as restrições de afluência: o horizonte de cada restrição, os limites inferior e superior por estágio e as usinas da restrição. Como o `lv`, o método `la` cria o registro de um estágio do horizonte do `HA` que ainda não tenha limites, a partir do último estágio definido.
 - Propriedades `indice_conjunto` e `altura` no registro `ACALTEFE`, com o conjunto de máquinas e a altura efetiva da modificação `AC ALTEFE`.
+- Sobrecargas (`typing.overload`) sobre o argumento `df` em todos os métodos de acesso a registros das classes `Dadger` e `Dadgnl` e dos arquivos das LIBS, para que verificadores de tipo reconheçam o retorno `pd.DataFrame` com `df=True` e o registro, a lista de registros ou `None` com `df=False`.
 
 ### Modificado
 
