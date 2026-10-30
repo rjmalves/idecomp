@@ -150,6 +150,15 @@ de operação:
 .. autoclass:: CQ
    :members:
 
+.. autoclass:: HA
+   :members:
+
+.. autoclass:: LA
+   :members:
+
+.. autoclass:: CA
+   :members:
+
 .. autoclass:: AR
    :members:
 

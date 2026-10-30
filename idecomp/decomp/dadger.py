@@ -32,6 +32,7 @@ from idecomp.decomp.modelos.dadger import (
     ACVOLMIN,
     ACVSVERT,
     AR,
+    CA,
     CD,
     CE,
     CI,
@@ -58,11 +59,13 @@ from idecomp.decomp.modelos.dadger import (
     FT,
     FU,
     GP,
+    HA,
     HE,
     HQ,
     HV,
     IA,
     IR,
+    LA,
     LQ,
     LU,
     LV,
@@ -181,6 +184,9 @@ class Dadger(RegisterFile):
         HQ,
         LQ,
         CQ,
+        HA,
+        LA,
+        CA,
         AR,
         EV,
         HE,
@@ -1773,6 +1779,156 @@ class Dadger(RegisterFile):
             estagio=estagio,
             coeficiente=coeficiente,
             tipo=tipo,
+            df=df,
+        )
+
+    def ha(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicial: int | None = None,
+        estagio_final: int | None = None,
+        df: bool = False,
+    ) -> HA | list[HA] | pandas.DataFrame | None:
+        """
+        Obtém um registro que cadastra uma restrição de afluência
+        existente no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo_restricao: código que especifica o registro
+            da restrição de afluência
+        :type codigo_restricao: int | None
+        :param estagio_inicial: estágio inicial da restrição de afluência
+        :type estagio_inicial: int | None
+        :param estagio_final: estágio final da restrição de afluência
+        :type estagio_final: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`HA` | list[:class:`HA`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            HA,
+            codigo_restricao=codigo_restricao,
+            estagio_inicial=estagio_inicial,
+            estagio_final=estagio_final,
+            df=df,
+        )
+
+    def la(  # noqa
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        df: bool = False,
+    ) -> LA | list[LA] | pandas.DataFrame | None:
+        """
+        Obtém um registro que especifica os limites inferior e
+        superior de uma restrição de afluência existente
+        no estudo descrito pelo :class:`Dadger`.
+
+        :param codigo_restricao: Índice do código que especifica o registro
+            da restrição de afluência
+        :type codigo_restricao: int | None
+        :param estagio: Estágio sobre o qual valerão os limites da
+            restrição de afluência
+        :type estagio: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se existirem.
+        :rtype: :class:`LA` | list[:class:`LA`] | :class:`pandas.DataFrame` | None
+
+        **Exemplos**
+
+        Para um objeto :class:`Dadger` que possua uma restrição HA
+        de código 1, definida para os estágios de 1 a 5, com limites
+        LA definidos apenas para o estágio 1, estes podem ser acessados com:
+
+        >>> la = dadger.la(1, 1)
+        >>> la
+            <idecomp.decomp.modelos.dadger.LA object at 0x0000026E5C269550>
+
+        Se for acessado o registro LA em um estágio dentro
+        dos limites do registro HA, porém sem limites próprios definidos,
+        será criado um registro idêntico ao do último estágio existente,
+        e este será retornado:
+
+        >>> la2 = dadger.la(1, 5)
+        >>> la.limite_inferior == la2.limite_inferior
+            True
+
+        """
+
+        def cria_registro() -> LA | None:
+            ha = self.ha(codigo_restricao=codigo_restricao)
+            if isinstance(ha, list) or ha is None:
+                return None
+            ei = ha.estagio_inicial
+            ef = ha.estagio_final
+            if any([estagio is None, ei is None, ef is None]):
+                return None
+            ultimo_registro = None
+            if ei is not None and estagio <= ef:  # type: ignore
+                for e in range(ei, estagio + 1):  # type: ignore
+                    registro_estagio = self.data.get_registers_of_type(
+                        LA, codigo_restricao=codigo_restricao, estagio=e
+                    )
+                    if registro_estagio is not None:
+                        ultimo_registro = registro_estagio
+            if isinstance(ultimo_registro, LA):
+                novo_registro = LA(
+                    data=[None] * len(ultimo_registro.data),
+                )
+                novo_registro.codigo_restricao = codigo_restricao  # type: ignore
+                novo_registro.limite_inferior = ultimo_registro.limite_inferior  # type: ignore
+                novo_registro.limite_superior = ultimo_registro.limite_superior  # type: ignore
+                novo_registro.estagio = estagio  # type: ignore
+                self.data.add_after(ultimo_registro, novo_registro)
+                return novo_registro
+            return None
+
+        if df:
+            return self.__expande_colunas_df(self._as_df(LA))
+        else:
+            la = self.data.get_registers_of_type(
+                LA, codigo_restricao=codigo_restricao, estagio=estagio
+            )
+            if isinstance(la, list):
+                return la
+            if la is None:
+                la = cria_registro()
+            return la
+
+    def ca(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        codigo_usina: int | None = None,
+        df: bool = False,
+    ) -> CA | list[CA] | pandas.DataFrame | None:
+        """
+        Obtém um registro que cadastra as usinas das restrições
+        de afluência.
+
+        :param codigo_restricao: código que especifica o registro
+        :type codigo_restricao: int | None
+        :param estagio: o estágio do registro
+        :type estagio: int | None
+        :param codigo_usina: o código da UHE para a restrição
+        :type codigo_usina: int | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se houverem.
+        :rtype: :class:`CA` | list[:class:`CA`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            CA,
+            codigo_restricao=codigo_restricao,
+            estagio=estagio,
+            codigo_usina=codigo_usina,
             df=df,
         )
 

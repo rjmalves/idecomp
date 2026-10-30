@@ -3873,6 +3873,200 @@ class CQ(Register):
         self.data[4] = t
 
 
+class HA(Register):
+    """
+    Registro que contém os cadastros de restrições de afluência.
+    """
+
+    __slots__: list[str] = []
+
+    IDENTIFIER = "HA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(2, 14),
+        ]
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição HA.
+
+        :return: O código.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio_inicial(self) -> int | None:
+        """
+        O estágio inicial de consideração da restrição HA.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @estagio_inicial.setter
+    def estagio_inicial(self, e: int) -> None:
+        self.data[1] = e
+
+    @property
+    def estagio_final(self) -> int | None:
+        """
+        O estágio final de consideração da restrição HA.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[2]
+
+    @estagio_final.setter
+    def estagio_final(self, e: int) -> None:
+        self.data[2] = e
+
+
+class LA(Register):
+    """
+    Registro que contém os cadastros dos limites das
+    restrições de afluência.
+    """
+
+    __slots__: list[str] = []
+
+    IDENTIFIER = "LA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            FloatField(10, 14, 2),
+            FloatField(10, 24, 2),
+        ]
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição HA associada aos limites
+
+        :return: O código.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio de consideração dos limites.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, e: int) -> None:
+        self.data[1] = e
+
+    @property
+    def limite_inferior(self) -> float | None:
+        """
+        O limite inferior para a afluência.
+
+        :return: O limite.
+        :rtype: float | None
+        """
+        return self.data[2]
+
+    @limite_inferior.setter
+    def limite_inferior(self, lim: float) -> None:
+        self.data[2] = lim
+
+    @property
+    def limite_superior(self) -> float | None:
+        """
+        O limite superior para a afluência.
+
+        :return: O limite.
+        :rtype: float | None
+        """
+        return self.data[3]
+
+    @limite_superior.setter
+    def limite_superior(self, lim: float) -> None:
+        self.data[3] = lim
+
+
+class CA(Register):
+    """
+    Registro que contém as usinas hidráulicas
+    nas restrições de afluência.
+    """
+
+    __slots__: list[str] = []
+
+    IDENTIFIER = "CA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 14),
+        ]
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição de afluência, segundo registro HA.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int) -> None:
+        self.data[1] = c
+
+    @property
+    def codigo_usina(self) -> int | None:
+        """
+        O número da UHE conforme registro UH.
+
+        :return: O número da UHE como `int`.
+        """
+        return self.data[2]
+
+    @codigo_usina.setter
+    def codigo_usina(self, c: int) -> None:
+        self.data[2] = c
+
+
 class AR(Register):
     """
     Registro que contém as configurações de aversão a risco.

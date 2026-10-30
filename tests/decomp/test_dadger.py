@@ -68,6 +68,9 @@ from idecomp.decomp.modelos.dadger import (
     LV,
     CV,
     HQ,
+    HA,
+    LA,
+    CA,
     LQ,
     CQ,
     AR,
@@ -162,6 +165,9 @@ from tests.mocks.arquivos.dadger import (
     MockHQ,
     MockLQ,
     MockCQ,
+    MockHA,
+    MockLA,
+    MockCA,
     MockAR,
     MockEV,
     MockHE,
@@ -2039,6 +2045,63 @@ def test_registro_cq_dadger():
     assert r.tipo == ""
 
 
+def test_registro_ha_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockHA))
+    r = HA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [7, 1, 6]
+    assert r.codigo_restricao == 7
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio_inicial == 1
+    r.estagio_inicial = 0
+    assert r.estagio_inicial == 0
+    assert r.estagio_final == 6
+    r.estagio_final = 0
+    assert r.estagio_final == 0
+
+
+def test_registro_la_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockLA))
+    r = LA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [7, 1, 150.5, 3200.0]
+    assert r.codigo_restricao == 7
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.limite_inferior == 150.5
+    r.limite_inferior = 0
+    assert r.limite_inferior == 0
+    assert r.limite_superior == 3200.0
+    r.limite_superior = 0
+    assert r.limite_superior == 0
+
+
+def test_registro_ca_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockCA))
+    r = CA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [7, 1, 156]
+    assert r.codigo_restricao == 7
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.codigo_usina == 156
+    r.codigo_usina = 10
+    assert r.codigo_usina == 10
+
+
 def test_registro_ar_dadger():
     m: MagicMock = mock_open(read_data="".join(MockAR))
     r = AR()
@@ -2447,6 +2510,9 @@ def test_campos_nao_encontrados_dadger():
     assert d.lv(0, 0) is None
     assert d.hq(0) is None
     assert d.lq(0, 0) is None
+    assert d.ha(0) is None
+    assert d.la(0, 0) is None
+    assert d.ca(0, 0) is None
     assert d.fe(0, 0) is None
     assert d.he(0, 0) is None
     assert d.cm(0) is None
@@ -2500,6 +2566,9 @@ def test_campos_encontrados_dadger():
     assert d.lv(101, 1) is not None
     assert d.hq(254) is not None
     assert d.lq(254, 1) is not None
+    assert d.ha(7) is not None
+    assert d.la(7, 1) is not None
+    assert d.ca(7, 1) is not None
     assert d.fe(449, 1, 1, 2) is not None
     assert d.he(1, 1) is not None
     assert d.cm(1) is not None
@@ -2603,6 +2672,29 @@ def test_fe_dadger():
     assert df_fe["coeficiente"].tolist() == [1.0, 0.5, -1.0]
 
 
+def test_ha_la_ca_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    ha = d.ha(7)
+    assert isinstance(ha, HA)
+    assert ha.estagio_final == 6
+    la = d.la(7, 3)
+    assert isinstance(la, LA)
+    assert la.limite_inferior == 200.0
+    ca = d.ca(7, 1)
+    assert isinstance(ca, CA)
+    assert ca.codigo_usina == 156
+
+    df_la = d.la(df=True)
+    assert df_la["estagio"].tolist() == [1, 3]
+    assert df_la["limite_inferior"].tolist() == [150.5, 200.0]
+    assert df_la["limite_superior"].tolist() == [3200.0, 3000.0]
+    assert d.ha(df=True)["codigo_restricao"].tolist() == [7]
+    assert d.ca(df=True)["codigo_usina"].tolist() == [156]
+
+
 def test_cx_dadger():
     m: MagicMock = mock_open(read_data="".join(MockDadger))
     with patch("builtins.open", m):
@@ -2694,6 +2786,22 @@ def test_cria_lv_dadger():
         assert lv.limite_superior == d.lv(3, 1).limite_superior
         lv.limite_superior = 0.0
         assert lv.limite_superior != d.lv(3, 1).limite_superior
+
+
+def test_cria_la_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+        la = d.la(7, 2)
+        assert la is not None
+        assert la.limite_inferior == d.la(7, 1).limite_inferior
+        la.limite_inferior = 0.0
+        assert la.limite_inferior != d.la(7, 1).limite_inferior
+        assert la.limite_superior == d.la(7, 1).limite_superior
+        la.limite_superior = 0.0
+        assert la.limite_superior != d.la(7, 1).limite_superior
+        assert d.la(7, 4).limite_inferior == d.la(7, 3).limite_inferior
+        assert d.la(7, 7) is None
 
 
 def test_cria_lq_dadger():
