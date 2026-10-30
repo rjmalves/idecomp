@@ -1098,7 +1098,7 @@ class Dadger(RegisterFile):
         :return: Um ou mais registros, se existirem.
         :rtype: :class:`EA` | list[:class:`EA`] | :class:`pandas.DataFrame` | None
         """
-        return self.data.get_registers_of_type(EA, codigo_ree=codigo_ree, df=df)
+        return self.__registros_ou_df(EA, codigo_ree=codigo_ree, df=df)
 
     def es(
         self,

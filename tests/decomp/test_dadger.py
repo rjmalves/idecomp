@@ -2522,6 +2522,19 @@ def test_cx_dadger():
     assert df_cx["codigo_decomp"].tolist() == [147, 146, 175, 174, 173]
 
 
+def test_ea_dadger():
+    m: MagicMock = mock_open(read_data=MockEA + "\n")
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    ea = d.ea(1)
+    assert isinstance(ea, EA)
+    assert ea.codigo_ree == 1
+    df_ea = d.ea(df=True)
+    assert df_ea["codigo_ree"].tolist() == [1]
+    assert "ena_1" in df_ea.columns
+
+
 def test_registros_modelados_dadger():
     # Todo registro modelado precisa estar em REGISTERS para ser lido
     registros = [

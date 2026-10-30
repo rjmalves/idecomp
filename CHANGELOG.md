@@ -9,6 +9,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 ### Corrigido
 
 - Os registros `CX`, `CS`, `PD`, `PE`, `PU`, `PV`, `RC` e `TS` eram modelados, mas não estavam entre os registros lidos pela classe `Dadger`: as linhas eram mantidas apenas como texto, e os métodos de acesso `cx`, `cs`, `pd`, `pe`, `pu`, `pv`, `rc` e `ts` sempre retornavam `None`. A escrita do arquivo não muda.
+- O método `ea` da classe `Dadger` repassava o argumento `df` como filtro dos registros e gerava `AttributeError` sempre que o `dadger` tinha registros `EA`.
 
 ## [1.17.1] - 2026-10-25
 
