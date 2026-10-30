@@ -6,6 +6,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.18.1] - 2026-10-30
+
 ### Modificado
 
 - Versão mínima de `cfinterface` elevada para `1.10.3`, que lê como `None` os campos que faltam no fim de uma linha delimitada por `;`.
@@ -307,7 +309,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 - Métodos le_arquivo e escreve_arquivo deprecados
 
-[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.18.0...HEAD
+[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.18.1...HEAD
+[1.18.1]: https://github.com/rjmalves/idecomp/compare/v1.18.0...v1.18.1
 [1.18.0]: https://github.com/rjmalves/idecomp/compare/v1.17.1...v1.18.0
 [1.17.1]: https://github.com/rjmalves/idecomp/compare/v1.17.0...v1.17.1
 [1.17.0]: https://github.com/rjmalves/idecomp/compare/v1.16.0...v1.17.0
