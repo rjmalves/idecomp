@@ -778,6 +778,20 @@ def test_atributos_encontrados_restricoes():
         )
 
 
+def test_identificador_minusculo_restricoes():
+    linha_minuscula = MockRe.lower()
+    m: MagicMock = mock_open(read_data=MockRe + linha_minuscula)
+    with patch("builtins.open", m):
+        e = Restricoes.read(ARQ_TESTE)
+    assert isinstance(e.re(), RegistroRe)
+    m_escrita: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m_escrita):
+        e.write(ARQ_TESTE)
+    chamadas = m_escrita.mock_calls
+    escritas = [chamadas[i].args[0] for i in range(1, len(chamadas) - 1)]
+    assert linha_minuscula in escritas
+
+
 def test_eq_restricoes():
     m: MagicMock = mock_open(read_data="".join(MockRestricoes))
     with patch("builtins.open", m):
