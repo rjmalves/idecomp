@@ -70,15 +70,15 @@ utiliza todas as três, dependendo do formato do arquivo DECOMP em questão:
         arq = Dadger.read("./dadger.rv0")
 
         # Acessa o registro TE (título do estudo)
-        titulo = arq.te
+        titulo = arq.te.titulo
         print(titulo)
 
         # Acessa a tabela de usinas hidrelétricas como DataFrame
-        df_usinas = arq.uh
+        df_usinas = arq.uh(df=True)
         print(df_usinas.head())
 
         # Modifica um dado e salva o arquivo de entrada atualizado
-        arq.te = "Novo titulo do estudo"
+        arq.te.titulo = "Novo titulo do estudo"
         arq.write("./dadger.rv0")
 
 :class:`cfinterface.files.blockfile.BlockFile`
