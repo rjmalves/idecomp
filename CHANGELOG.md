@@ -6,6 +6,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.18.0] - 2026-10-30
+
 ### Adicionado
 
 - Registro `FE` e método `fe` da classe `Dadger`, com os coeficientes dos contratos de importação e exportação de energia nas restrições elétricas, com filtros por `codigo_restricao`, `estagio`, `numero_contrato`, `codigo_submercado` e `coeficiente` e suporte a `df=True`.
@@ -297,7 +299,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 - Métodos le_arquivo e escreve_arquivo deprecados
 
-[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.17.1...HEAD
+[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.18.0...HEAD
+[1.18.0]: https://github.com/rjmalves/idecomp/compare/v1.17.1...v1.18.0
 [1.17.1]: https://github.com/rjmalves/idecomp/compare/v1.17.0...v1.17.1
 [1.17.0]: https://github.com/rjmalves/idecomp/compare/v1.16.0...v1.17.0
 [1.16.0]: https://github.com/rjmalves/idecomp/compare/v1.15.1...v1.16.0
