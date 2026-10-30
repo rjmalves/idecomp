@@ -5877,6 +5877,22 @@ class ACALTEFE(Register):
         self.data[0] = u
 
     @property
+    def indice_conjunto(self) -> int | None:
+        return self.data[1]
+
+    @indice_conjunto.setter
+    def indice_conjunto(self, u: int) -> None:
+        self.data[1] = u
+
+    @property
+    def altura(self) -> float | None:
+        return self.data[2]
+
+    @altura.setter
+    def altura(self, u: float) -> None:
+        self.data[2] = u
+
+    @property
     def mes(self) -> str | None:
         return self.data[-3]
 

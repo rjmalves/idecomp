@@ -54,6 +54,7 @@ from idecomp.decomp.modelos.dadger import (
     ACNUMCON,
     ACNUMMAQ,
     ACPOTEFE,
+    ACALTEFE,
     FP,
     IR,
     CI,
@@ -144,6 +145,7 @@ from tests.mocks.arquivos.dadger import (
     MockACNUMCON,
     MockACNUMMAQ,
     MockACPOTEFE,
+    MockACALTEFE,
     MockFP,
     MockIR,
     MockCI,
@@ -1459,6 +1461,39 @@ def test_registro_acpotefe_dadger():
     assert r.ano == 2022
 
 
+def test_registro_acaltefe_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockACALTEFE))
+    r = ACALTEFE()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [154, 1, 76.7, "AGO", 1, 2025]
+    assert r.codigo_usina == 154
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.indice_conjunto == 1
+    r.indice_conjunto = 2
+    assert r.indice_conjunto == 2
+    assert r.altura == 76.7
+    r.altura = 45.3
+    assert r.altura == 45.3
+    assert r.mes == "AGO"
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana == 1
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano == 2025
+    r.ano = 2022
+    assert r.ano == 2022
+
+
+def test_leitura_escrita_acaltefe_dadger():
+    r = _le_registro(ACALTEFE, MockACALTEFE)
+    assert _escreve_registro(r) == MockACALTEFE + "\n"
+
+
 def test_registro_fp_dadger():
     m: MagicMock = mock_open(read_data="".join(MockFP))
     r = FP()
@@ -2505,6 +2540,22 @@ def test_ci_ce_dadger():
     assert len(df_ce) == 2
     assert "fator_perdas" in df_ce.columns
     assert "custo_3" in df_ce.columns
+
+
+def test_acaltefe_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    altefe = d.ac(275, ACALTEFE)
+    assert isinstance(altefe, ACALTEFE)
+    assert altefe.indice_conjunto == 2
+    assert altefe.altura == 45.3
+
+    df_altefe = d.ac(None, ACALTEFE, df=True)
+    assert df_altefe["codigo_usina"].tolist() == [275]
+    assert df_altefe["indice_conjunto"].tolist() == [2]
+    assert df_altefe["altura"].tolist() == [45.3]
 
 
 def test_cx_dadger():

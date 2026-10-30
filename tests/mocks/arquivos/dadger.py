@@ -104,6 +104,8 @@ MockACNUMMAQ = "AC  275  NUMMAQ        1    2                                   
 
 MockACPOTEFE = "AC  275  POTEFE        1      22.5                                   JAN  1"
 
+MockACALTEFE = "AC  154  ALTEFE        1     76.70                                   AGO  1 2025"
+
 MockFP = (
     "FP  999    1  0    5     0   100  0    5    20    20                 0"
 )
@@ -3451,6 +3453,7 @@ MockDadger = [
     "AC  275  NUMMAQ        1    2                                        JAN  1\n",
     "AC  275  NUMMAQ        2   12                                        JAN  1\n",
     "AC  275  POTEFE        1      22.5                                   JAN  1\n",
+    "AC  275  ALTEFE        2     45.30                                   JAN  1\n",
     "AC  275  POTEFE        2     350.0                                   JAN  1\n",
     "&- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n",
     "&                                EXPANSAO 2ï¿½  MES                        \n",
