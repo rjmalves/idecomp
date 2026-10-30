@@ -51,6 +51,7 @@ from idecomp.decomp.modelos.dadger import (
     FA,
     FC,
     FD,
+    FE,
     FI,
     FJ,
     FP,
@@ -161,6 +162,7 @@ class Dadger(RegisterFile):
         FU,
         FT,
         FI,
+        FE,
         VI,
         IR,
         CI,
@@ -990,6 +992,47 @@ class Dadger(RegisterFile):
             estagio=estagio,
             codigo_submercado_de=codigo_submercado_de,
             codigo_submercado_para=codigo_submercado_para,
+            coeficiente=coeficiente,
+            df=df,
+        )
+
+    def fe(
+        self,
+        codigo_restricao: int | None = None,
+        estagio: int | None = None,
+        numero_contrato: int | None = None,
+        codigo_submercado: int | None = None,
+        coeficiente: float | None = None,
+        df: bool = False,
+    ) -> FE | list[FE] | pandas.DataFrame | None:
+        """
+        Obtém um registro que cadastra os coeficientes dos contratos
+        de importação e exportação nas restrições elétricas.
+
+        :param codigo_restricao: código que especifica o registro
+        :type codigo_restricao: int | None
+        :param estagio: o estágio do coeficiente
+        :type estagio: int | None
+        :param numero_contrato: o número do contrato para a restrição
+        :type numero_contrato: int | None
+        :param codigo_submercado: o código do submercado do contrato
+        :type codigo_submercado: int | None
+        :param coeficiente: valor do coeficiente para o contrato
+            na restrição
+        :type coeficiente: float | None
+        :param df: ignorar os filtros e retornar
+            todos os dados de registros como um DataFrame
+        :type df: bool
+
+        :return: Um ou mais registros, se houverem.
+        :rtype: :class:`FE` | list[:class:`FE`] | :class:`pandas.DataFrame` | None
+        """
+        return self.__registros_ou_df(
+            FE,
+            codigo_restricao=codigo_restricao,
+            estagio=estagio,
+            numero_contrato=numero_contrato,
+            codigo_submercado=codigo_submercado,
             coeficiente=coeficiente,
             df=df,
         )

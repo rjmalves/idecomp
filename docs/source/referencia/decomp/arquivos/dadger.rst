@@ -90,6 +90,9 @@ de operação:
 .. autoclass:: FI
    :members:
 
+.. autoclass:: FE
+   :members:
+
 .. autoclass:: VI
    :members:
 

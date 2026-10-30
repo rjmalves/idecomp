@@ -23,6 +23,7 @@ from idecomp.decomp.modelos.dadger import (
     RE,
     LU,
     FU,
+    FE,
     FI,
     FT,
     VI,
@@ -117,6 +118,7 @@ from tests.mocks.arquivos.dadger import (
     MockFU,
     MockFI,
     MockFT,
+    MockFE,
     MockVI,
     MockPD,
     MockPU,
@@ -929,6 +931,31 @@ def test_registro_ft_dadger():
     assert r.codigo_usina == 310
     assert r.codigo_submercado == 4
     assert r.coeficiente == 1
+
+
+def test_registro_fe_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockFE))
+    r = FE()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [449, 1, 1, 2, 0.5]
+    assert r.codigo_restricao == 449
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.numero_contrato == 1
+    r.numero_contrato = 0
+    assert r.numero_contrato == 0
+    assert r.codigo_submercado == 2
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.coeficiente == 0.5
+    r.coeficiente = -1
+    assert r.coeficiente == -1
 
 
 def test_registro_vi_dadger():
@@ -2420,6 +2447,7 @@ def test_campos_nao_encontrados_dadger():
     assert d.lv(0, 0) is None
     assert d.hq(0) is None
     assert d.lq(0, 0) is None
+    assert d.fe(0, 0) is None
     assert d.he(0, 0) is None
     assert d.cm(0) is None
     assert d.vl() is None
@@ -2472,6 +2500,7 @@ def test_campos_encontrados_dadger():
     assert d.lv(101, 1) is not None
     assert d.hq(254) is not None
     assert d.lq(254, 1) is not None
+    assert d.fe(449, 1, 1, 2) is not None
     assert d.he(1, 1) is not None
     assert d.cm(1) is not None
     assert len(d.lq(df=True).columns) == 12
@@ -2556,6 +2585,22 @@ def test_acaltefe_dadger():
     assert df_altefe["codigo_usina"].tolist() == [275]
     assert df_altefe["indice_conjunto"].tolist() == [2]
     assert df_altefe["altura"].tolist() == [45.3]
+
+
+def test_fe_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    assert len(d.fe(codigo_restricao=449)) == 3
+    fe = d.fe(449, 1, 1, 1)
+    assert isinstance(fe, FE)
+    assert fe.coeficiente == -1.0
+
+    df_fe = d.fe(df=True)
+    assert df_fe["estagio"].tolist() == [1, 3, 1]
+    assert df_fe["codigo_submercado"].tolist() == [2, 2, 1]
+    assert df_fe["coeficiente"].tolist() == [1.0, 0.5, -1.0]
 
 
 def test_cx_dadger():

@@ -2112,6 +2112,93 @@ class FI(Register):
         self.data[4] = f
 
 
+class FE(Register):
+    """
+    Registro que contém os coeficientes dos contratos de importação
+    e exportação nas restrições elétricas.
+    """
+
+    __slots__: list[str] = []
+
+    IDENTIFIER = "FE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 14),
+            IntegerField(2, 19),
+            FloatField(10, 24, 7),
+        ]
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição elétrica, segundo registro RE.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int) -> None:
+        self.data[1] = c
+
+    @property
+    def numero_contrato(self) -> int | None:
+        """
+        O número do contrato de importação ou exportação conforme
+        registros CI ou CE.
+
+        :return: O número do contrato como `int`.
+        """
+        return self.data[2]
+
+    @numero_contrato.setter
+    def numero_contrato(self, c: int) -> None:
+        self.data[2] = c
+
+    @property
+    def codigo_submercado(self) -> int | None:
+        """
+        O código do submercado conforme registro SB.
+
+        :return: O código do submercado como `int`.
+        """
+        return self.data[3]
+
+    @codigo_submercado.setter
+    def codigo_submercado(self, s: int) -> None:
+        self.data[3] = s
+
+    @property
+    def coeficiente(self) -> float | None:
+        """
+        O coeficiente de participação do contrato na restrição.
+
+        :return: O coeficiente como `float`
+        """
+        return self.data[4]
+
+    @coeficiente.setter
+    def coeficiente(self, f: float) -> None:
+        self.data[4] = f
+
+
 class VI(Register):
     """
     Registro que contém os tempos de viagem da água entre usinas.

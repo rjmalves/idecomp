@@ -48,6 +48,8 @@ MockFI = "FI  417   1   NE   SE            1"
 
 MockFT = "FT  449   1   310  4             1"
 
+MockFE = "FE  449   1     1   2          0.5"
+
 MockVI = "VI  156  360    296  296  293  328  455"
 
 MockPD = "PD  PRIMAL"
@@ -2608,6 +2610,9 @@ MockDadger = [
     "FT  449   1   310  4             1\n",
     "FT  449   1   317  4             1\n",
     "FT  449   1   318  4             1\n",
+    "FE  449   1     1   2          1.0\n",
+    "FE  449   3     1   2          0.5\n",
+    "FE  449   1     1   1         -1.0\n",
     "FT  449   1   319  4             1\n",
     "& ------------------------------------ REGIAO MACAPA -------------------------------------------------\n",
     "& Representacao Operativa da Importacao da Regiao Macapa\n",

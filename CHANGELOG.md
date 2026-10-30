@@ -8,6 +8,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Adicionado
 
+- Registro `FE` e método `fe` da classe `Dadger`, com os coeficientes dos contratos de importação e exportação de energia nas restrições elétricas, com filtros por `codigo_restricao`, `estagio`, `numero_contrato`, `codigo_submercado` e `coeficiente` e suporte a `df=True`.
 - Propriedades `indice_conjunto` e `altura` no registro `ACALTEFE`, com o conjunto de máquinas e a altura efetiva da modificação `AC ALTEFE`.
 
 ### Corrigido
