@@ -33,6 +33,11 @@ from idecomp.libs.modelos.restricoes import (
 
 from idecomp.libs.restricoes import Restricoes
 
+import inspect
+
+from cfinterface.components.register import Register
+
+import idecomp.libs.modelos.restricoes as modelos_restricoes
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
@@ -808,3 +813,14 @@ def test_leitura_escrita_restricoes():
     with patch("builtins.open", m_releitura):
         cf2 = Restricoes.read(ARQ_TESTE)
         assert cf1 == cf2
+
+
+def test_registros_modelados_restricoes():
+    # Todo registro modelado precisa estar em REGISTERS para ser lido
+    registros = [
+        c
+        for _, c in inspect.getmembers(modelos_restricoes, inspect.isclass)
+        if issubclass(c, Register)
+        and c.__module__ == modelos_restricoes.__name__
+    ]
+    assert [r for r in registros if r not in Restricoes.REGISTERS] == []
