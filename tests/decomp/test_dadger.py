@@ -79,6 +79,11 @@ from idecomp.decomp.modelos.dadger import (
     DA,
 )
 
+import inspect
+
+from cfinterface.components.register import Register
+
+import idecomp.decomp.modelos.dadger as modelos_dadger
 from idecomp.decomp.dadger import Dadger
 
 from tests.mocks.mock_open import mock_open
@@ -2390,6 +2395,14 @@ def test_campos_nao_encontrados_dadger():
     assert d.ri() is None
     assert d.ci() is None
     assert d.ce() is None
+    assert d.cx() is None
+    assert d.pd() is None
+    assert d.pu is None
+    assert d.rc is None
+    assert d.pe() is None
+    assert d.ts() is None
+    assert d.pv() is None
+    assert d.cs is None
 
 
 def test_campos_encontrados_dadger():
@@ -2436,6 +2449,13 @@ def test_campos_encontrados_dadger():
     assert d.ez(251) is not None
     assert d.ci(1, 2, 1) is not None
     assert d.ce(1, 1, 1) is not None
+    assert d.pd("PRIMAL") is not None
+    assert d.pu is not None
+    assert d.rc is not None
+    assert d.pe(1) is not None
+    assert d.ts() is not None
+    assert d.pv() is not None
+    assert d.cs is not None
 
 
 def test_ci_ce_dadger():
@@ -2485,6 +2505,31 @@ def test_ci_ce_dadger():
     assert len(df_ce) == 2
     assert "fator_perdas" in df_ce.columns
     assert "custo_3" in df_ce.columns
+
+
+def test_cx_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    cx = d.cx(codigo_newave=132, codigo_decomp=146)
+    assert isinstance(cx, CX)
+    assert len(d.cx(codigo_newave=176)) == 3
+
+    df_cx = d.cx(df=True)
+    assert list(df_cx.columns) == ["codigo_decomp", "codigo_newave"]
+    assert df_cx["codigo_newave"].tolist() == [132, 132, 176, 176, 176]
+    assert df_cx["codigo_decomp"].tolist() == [147, 146, 175, 174, 173]
+
+
+def test_registros_modelados_dadger():
+    # Todo registro modelado precisa estar em REGISTERS para ser lido
+    registros = [
+        c
+        for _, c in inspect.getmembers(modelos_dadger, inspect.isclass)
+        if issubclass(c, Register) and c.__module__ == modelos_dadger.__name__
+    ]
+    assert [r for r in registros if r not in Dadger.REGISTERS] == []
 
 
 def test_ez_dadger():

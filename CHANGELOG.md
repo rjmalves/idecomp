@@ -6,6 +6,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Corrigido
+
+- Os registros `CX`, `CS`, `PD`, `PE`, `PU`, `PV`, `RC` e `TS` eram modelados, mas não estavam entre os registros lidos pela classe `Dadger`: as linhas eram mantidas apenas como texto, e os métodos de acesso `cx`, `cs`, `pd`, `pe`, `pu`, `pv`, `rc` e `ts` sempre retornavam `None`. A escrita do arquivo não muda.
+
 ## [1.17.1] - 2026-10-25
 
 ### Corrigido
