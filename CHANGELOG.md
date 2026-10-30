@@ -16,6 +16,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 ### Modificado
 
 - O método `ac` da classe `Dadger` aceita `codigo_usina=None`, que retorna a modificação de todas as usinas, e o retorno passa a ser tipado pela classe informada em `modificacao`.
+- A classe `Restricoes` passa a ser exportada por `idecomp.libs`, como as classes `Renovaveis` e `UsinasHidreletricas`.
 
 ### Corrigido
 
