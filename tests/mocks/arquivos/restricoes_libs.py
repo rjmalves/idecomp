@@ -5,9 +5,9 @@ MockRePerPat = (
     "RE-PER-PAT;702;      1;     NA;      ; re(405) + constante_aditiva \n"
 )
 MockReDataPat = "RE-DATA-PAT;702;2021/01/01;;; re(405) + constante_aditiva \n"
-MockReLimFormPerPat = "RE-LIM-FOR-PER-PAT;    701;      1;     6 ;     1;               ;        4100       \n"
+MockReLimFormPerPat = "RE-LIM-FORM-PER-PAT;    701;      1;     6 ;     1;               ;        4100       \n"
 MockReLimFormDataPat = (
-    "RE-LIM-FOR-PER-PAT;    701;2021/01/01; ;     1; ;4100       \n"
+    "RE-LIM-FORM-DATA-PAT;    701;2021/01/01; ;     1; ;4100       \n"
 )
 MockAliasElet = "ALIAS-ELET ;  1 ; constante_aditiva\n"
 MockAliasEletValPerPat = (
@@ -30,7 +30,7 @@ MockRestricaoEletricaFormula = (
     "RESTRICAO-ELETRICA-FORMULA;702;re(405) + constante_aditiva\n"
 )
 MockRestricaoEletricaFormulaPeriodoPatamar = "RESTRICAO-ELETRICA-FORMULA-PERIODO-PATAMAR;702;      1;     NA;      ; re(405) + constante_aditiva \n"
-MockRestricaoEletricaFormulaDataPatamar = "RESTRICAO-ELETRICA-FORMULA-DATA-PATAMART;702;2021/01/01;;; re(405) + constante_aditiva \n"
+MockRestricaoEletricaFormulaDataPatamar = "RESTRICAO-ELETRICA-FORMULA-DATA-PATAMAR;702;2021/01/01;;; re(405) + constante_aditiva \n"
 MockRestricaoEletricaLimitesFormulaPeriodoPatamar = "RESTRICAO-ELETRICA-LIMITES-FORMULA-PERIODO-PATAMAR;    701;      1;     6 ;     1;               ;        4100       \n"
 MockRestricaoEletricaLimitesFormulaDataPatamar = "RESTRICAO-ELETRICA-LIMITES-FORMULA-DATA-PATAMAR;    701;2021/01/01; ;     1; ;4100       \n"
 MockAliasEletrico = "ALIAS-ELETRICO;  1 ; constante_aditiva\n"
