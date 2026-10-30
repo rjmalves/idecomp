@@ -6,11 +6,37 @@ from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.register import Register
+from cfinterface.storage import StorageType
 
 from idecomp.config import FORMATO_CAMPOS_DATA_LIBS
 
 
-class RegistroRestricaoEletricaHorizontePeriodo(Register):
+class RegistroRestricao(Register):
+    """
+    Base dos registros do arquivo de restrições das LIBS.
+
+    Uma linha só é lida como o registro quando o seu primeiro campo é
+    exatamente o identificador. Sem isso, o ``RE`` também casaria com
+    qualquer linha que apenas começasse com ``RE``, e
+    ``RESTRICAO-ELETRICA-FORMULA`` com as linhas de
+    ``RESTRICAO-ELETRICA-FORMULA-PERIODO-PATAMAR``.
+    """
+
+    __slots__ = []
+
+    @classmethod
+    def matches(
+        cls, line: str | bytes, storage: str | StorageType = ""
+    ) -> bool:
+        identificador = cls.IDENTIFIER
+        if isinstance(line, bytes):
+            if isinstance(identificador, str):
+                identificador = identificador.encode()
+            return line.split(b";", 1)[0].rstrip() == identificador
+        return line.split(";", 1)[0].rstrip() == identificador
+
+
+class RegistroRestricaoEletricaHorizontePeriodo(RegistroRestricao):
     """
     Registro que contém o cadastro do horizonte de validade
     da restrição RE, através de um horizonte de período,
@@ -73,7 +99,7 @@ class RegistroRestricaoEletricaHorizontePeriodo(Register):
         self.data[2] = n
 
 
-class RegistroRestricaoEletricaHorizonteData(Register):
+class RegistroRestricaoEletricaHorizonteData(RegistroRestricao):
     """
     Registro que contém o cadastro do horizonte de validade
     da restrição RE, através de um intervalo de datas,
@@ -136,7 +162,7 @@ class RegistroRestricaoEletricaHorizonteData(Register):
         self.data[2] = n
 
 
-class RegistroRestricaoEletricaFormula(Register):
+class RegistroRestricaoEletricaFormula(RegistroRestricao):
     """
     Registro que contém um cadastro de restrição elétrica (RE),
     definido através do nome completo do card.
@@ -183,7 +209,7 @@ class RegistroRestricaoEletricaFormula(Register):
         self.data[1] = n
 
 
-class RegistroRestricaoEletricaFormulaPeriodoPatamar(Register):
+class RegistroRestricaoEletricaFormulaPeriodoPatamar(RegistroRestricao):
     """
     Registro que contém um cadastro de restrição elétrica (RE)
     que varia ao longo do tempo, informada por intervalo de estágios,
@@ -276,7 +302,7 @@ class RegistroRestricaoEletricaFormulaPeriodoPatamar(Register):
         self.data[4] = n
 
 
-class RegistroRestricaoEletricaFormulaDataPatamar(Register):
+class RegistroRestricaoEletricaFormulaDataPatamar(RegistroRestricao):
     """
     Registro que contém um cadastro de restrição elétrica (RE)
     que variam ao longo do tempo, informada por intervalo de data,
@@ -369,7 +395,7 @@ class RegistroRestricaoEletricaFormulaDataPatamar(Register):
         self.data[4] = n
 
 
-class RegistroExpressaoEletrica(Register):
+class RegistroExpressaoEletrica(RegistroRestricao):
     """
     Registro que contém a definição de uma expressão elétrica nomeada
     e reutilizável, referenciada por outras fórmulas e inequações através
@@ -433,7 +459,7 @@ class RegistroExpressaoEletrica(Register):
         self.data[2] = n
 
 
-class RegistroRestricaoEletricaInequacaoPeriodoPatamar(Register):
+class RegistroRestricaoEletricaInequacaoPeriodoPatamar(RegistroRestricao):
     """
     Registro que contém uma restrição elétrica (RE) na forma de inequação,
     com validade por intervalo de estágios e patamar,
@@ -556,7 +582,7 @@ class RegistroRestricaoEletricaInequacaoPeriodoPatamar(Register):
         self.data[6] = n
 
 
-class RegistroRestricaoEletricaInequacao(Register):
+class RegistroRestricaoEletricaInequacao(RegistroRestricao):
     """
     Registro que contém uma restrição elétrica (RE) na forma de inequação,
     cujo lado direito é uma fórmula linear arbitrária,
@@ -634,7 +660,7 @@ class RegistroRestricaoEletricaInequacao(Register):
         self.data[3] = n
 
 
-class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
+class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(RegistroRestricao):
     """
     Registro que contém os limites de cada restrição
     RE por período e patamar,
@@ -742,7 +768,7 @@ class RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar(Register):
         self.data[5] = v
 
 
-class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
+class RegistroRestricaoEletricaLimitesFormulaDataPatamar(RegistroRestricao):
     """
     Registro que contém os limites de cada restrição
     RE por intervalo de data e patamar,
@@ -850,7 +876,7 @@ class RegistroRestricaoEletricaLimitesFormulaDataPatamar(Register):
         self.data[5] = v
 
 
-class RegistroAliasEletrico(Register):
+class RegistroAliasEletrico(RegistroRestricao):
     """
     Registro que contém um cadastro alias elétrico,
     definido através do nome completo do card.
@@ -897,7 +923,7 @@ class RegistroAliasEletrico(Register):
         self.data[1] = n
 
 
-class RegistroAliasEletricoValorPeriodoPatamar(Register):
+class RegistroAliasEletricoValorPeriodoPatamar(RegistroRestricao):
     """
     Registro que contém os valores assumidos pelo alias
     para cada período e patamar,
@@ -990,7 +1016,7 @@ class RegistroAliasEletricoValorPeriodoPatamar(Register):
         self.data[4] = v
 
 
-class RegistroRestricaoEletricaRegraAtivacao(Register):
+class RegistroRestricaoEletricaRegraAtivacao(RegistroRestricao):
     """
     Registro que define uma regra para ativação e desativação das
     restrições,
@@ -1038,7 +1064,7 @@ class RegistroRestricaoEletricaRegraAtivacao(Register):
         self.data[1] = n
 
 
-class RegistroRestricaoEletricaHabilita(Register):
+class RegistroRestricaoEletricaHabilita(RegistroRestricao):
     """
     Registro que contém a associação entre uma restrição
     e uma regra de ativação,
@@ -1086,7 +1112,7 @@ class RegistroRestricaoEletricaHabilita(Register):
         self.data[1] = n
 
 
-class RegistroRestricaoEletricaTratamentoViolacao(Register):
+class RegistroRestricaoEletricaTratamentoViolacao(RegistroRestricao):
     """
     Registro que contém a definição do tipo de violação e valor
     do custo de violação de uma restrição elétrica,
@@ -1149,7 +1175,7 @@ class RegistroRestricaoEletricaTratamentoViolacao(Register):
         self.data[2] = n
 
 
-class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(Register):
+class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(RegistroRestricao):
     """
     Registro que contém a definição do tipo de violação e valor
     do custo de violação de uma restrição elétrica definida para
@@ -1243,7 +1269,7 @@ class RegistroRestricaoEletricaTratamentoViolacaoPeriodo(Register):
         self.data[4] = n
 
 
-class RegistroReHorizPer(Register):
+class RegistroReHorizPer(RegistroRestricao):
     """
     Registro que contém o cadastro do horizonte de validade
     da restrição RE, através de um horizonte de período,
@@ -1306,7 +1332,7 @@ class RegistroReHorizPer(Register):
         self.data[2] = n
 
 
-class RegistroReHorizData(Register):
+class RegistroReHorizData(RegistroRestricao):
     """
     Registro que contém o cadastro do horizonte de validade
     da restrição RE, através de um intervalo de datas,
@@ -1369,7 +1395,7 @@ class RegistroReHorizData(Register):
         self.data[2] = n
 
 
-class RegistroRe(Register):
+class RegistroRe(RegistroRestricao):
     """
     Registro que contém um cadastro de restrição elétrica (RE),
     definido através do nome alternativo (apelido) do card.
@@ -1416,7 +1442,7 @@ class RegistroRe(Register):
         self.data[1] = n
 
 
-class RegistroRePerPat(Register):
+class RegistroRePerPat(RegistroRestricao):
     """
     Registro que contém um cadastro de restrição elétrica (RE)
     que varia ao longo do tempo, informada por intervalo de estágios,
@@ -1509,7 +1535,7 @@ class RegistroRePerPat(Register):
         self.data[4] = n
 
 
-class RegistroReDataPat(Register):
+class RegistroReDataPat(RegistroRestricao):
     """
     Registro que contém um cadastro de restrição elétrica (RE)
     que variam ao longo do tempo, informada por intervalo de data,
@@ -1602,7 +1628,7 @@ class RegistroReDataPat(Register):
         self.data[4] = n
 
 
-class RegistroReLimFormPerPat(Register):
+class RegistroReLimFormPerPat(RegistroRestricao):
     """
     Registro que contém os limites de cada restrição
     RE por período e patamar,
@@ -1710,7 +1736,7 @@ class RegistroReLimFormPerPat(Register):
         self.data[5] = v
 
 
-class RegistroReLimFormDataPat(Register):
+class RegistroReLimFormDataPat(RegistroRestricao):
     """
     Registro que contém os limites de cada restrição
     RE por intervalo de data e patamar,
@@ -1818,7 +1844,7 @@ class RegistroReLimFormDataPat(Register):
         self.data[5] = v
 
 
-class RegistroAliasElet(Register):
+class RegistroAliasElet(RegistroRestricao):
     """
     Registro que contém um cadastro alias elétrico,
     definido através do nome alternativo (apelido) do card.
@@ -1865,7 +1891,7 @@ class RegistroAliasElet(Register):
         self.data[1] = n
 
 
-class RegistroAliasEletValPerPat(Register):
+class RegistroAliasEletValPerPat(RegistroRestricao):
     """
     Registro que contém os valores assumidos pelo alias
     para cada período e patamar,
@@ -1958,7 +1984,7 @@ class RegistroAliasEletValPerPat(Register):
         self.data[4] = v
 
 
-class RegistroReRegraAtiva(Register):
+class RegistroReRegraAtiva(RegistroRestricao):
     """
     Registro que define uma regra para ativação e desativação das
     restrições,
@@ -2006,7 +2032,7 @@ class RegistroReRegraAtiva(Register):
         self.data[1] = n
 
 
-class RegistroReHabilita(Register):
+class RegistroReHabilita(RegistroRestricao):
     """
     Registro que contém a associação entre uma restrição
     e uma regra de ativação,
@@ -2054,7 +2080,7 @@ class RegistroReHabilita(Register):
         self.data[1] = n
 
 
-class RegistroReTratViol(Register):
+class RegistroReTratViol(RegistroRestricao):
     """
     Registro que contém a definição do tipo de violação e valor
     do custo de violação de uma restrição elétrica,
@@ -2117,7 +2143,7 @@ class RegistroReTratViol(Register):
         self.data[2] = n
 
 
-class RegistroReTratViolPer(Register):
+class RegistroReTratViolPer(RegistroRestricao):
     """
     Registro que contém a definição do tipo de violação e valor
     do custo de violação de uma restrição elétrica definida para

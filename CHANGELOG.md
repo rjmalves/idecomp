@@ -6,6 +6,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Corrigido
+
+- LIBS (`restricao-eletrica.csv`): os registros de `Restricoes` casavam com qualquer linha que começasse pelo seu identificador. Uma linha de um card que o `idecomp` não modela, mas que começa com `RE` (como um `RE-LIM-FOR-PER-PAT` digitado errado), era lida como um registro `RE`, com o código e a fórmula tirados dos seus campos, e só a ordem de leitura evitava que `RESTRICAO-ELETRICA-FORMULA` lesse as linhas de `RESTRICAO-ELETRICA-FORMULA-PERIODO-PATAMAR`. Uma linha só passa a ser lida como registro quando o seu primeiro campo é exatamente o identificador; as demais são mantidas como texto e reescritas sem alterações. Os arquivos que só têm os registros conhecidos são lidos como antes.
+
 ## [1.18.1] - 2026-10-30
 
 ### Modificado

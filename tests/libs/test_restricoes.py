@@ -792,6 +792,42 @@ def test_identificador_minusculo_restricoes():
     assert linha_minuscula in escritas
 
 
+def test_identificador_que_so_comeca_como_o_de_um_registro_restricoes():
+    linhas_desconhecidas = "RE-CARD-DESCONHECIDO;1;2;3\nRE-LIM-FOR-PER-PAT;701;1;6;1;;4100\n"
+    m: MagicMock = mock_open(read_data=MockRe + linhas_desconhecidas)
+    with patch("builtins.open", m):
+        e = Restricoes.read(ARQ_TESTE)
+    registro = e.re()
+    assert isinstance(registro, RegistroRe)
+    assert registro.codigo_restricao == 702
+    m_escrita: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m_escrita):
+        e.write(ARQ_TESTE)
+    chamadas = m_escrita.mock_calls
+    escritas = [chamadas[i].args[0] for i in range(1, len(chamadas) - 1)]
+    assert "".join(escritas).endswith(linhas_desconhecidas)
+
+
+def test_identificador_que_comeca_com_o_de_outro_registro_restricoes():
+    assert not RegistroRestricaoEletricaFormula.matches(
+        MockRestricaoEletricaFormulaPeriodoPatamar
+    )
+    assert not RegistroRestricaoEletricaInequacao.matches(
+        MockRestricaoEletricaInequacaoPeriodoPatamar
+    )
+    assert not RegistroAliasEletrico.matches(
+        MockAliasEletricoValorPeriodoPatamar
+    )
+    assert not RegistroRe.matches(MockReHorizPer)
+    assert RegistroRe.matches("RE ;702;re(405)\n")
+
+
+def test_identificador_em_bytes_restricoes():
+    assert RegistroRe.matches(b"RE ;702;re(405)\n")
+    assert not RegistroRe.matches(b"RE-HORIZ-PER;701;1;6\n")
+    assert RegistroReHorizPer.matches(b"RE-HORIZ-PER;701;1;6\n")
+
+
 def test_eq_restricoes():
     m: MagicMock = mock_open(read_data="".join(MockRestricoes))
     with patch("builtins.open", m):
@@ -836,5 +872,6 @@ def test_registros_modelados_restricoes():
         for _, c in inspect.getmembers(modelos_restricoes, inspect.isclass)
         if issubclass(c, Register)
         and c.__module__ == modelos_restricoes.__name__
+        and c is not modelos_restricoes.RegistroRestricao
     ]
     assert [r for r in registros if r not in Restricoes.REGISTERS] == []
