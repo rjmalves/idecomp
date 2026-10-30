@@ -553,24 +553,26 @@ class Dadger(RegisterFile):
 
     def ac(
         self,
-        codigo_usina: int,
-        modificacao: Any,
+        codigo_usina: int | None,
+        modificacao: type[T],
         df: bool = False,
         **kwargs: Any,
-    ) -> AC | list[AC] | pandas.DataFrame | None:
+    ) -> T | list[T] | pandas.DataFrame | None:
         """
         Obtém um registro que define modificações nos parâmetros
         das UHE em um :class:`Dadger`.
 
-        :param codigo_usina: código da UHE modificada
-        :type codigo_usina: int
+        :param codigo_usina: código da UHE modificada, ou None
+            para não filtrar por usina
+        :type codigo_usina: int | None
         :param modificacao: classe da modificação realizada
         :type modificacao: subtipos do tipo `AC`
         :param df: ignorar os filtros e retornar
             todos os dados de registros como um DataFrame
         :type df: bool
 
-        :return: Um ou mais registros, se existirem.
+        :return: Um ou mais registros, do tipo da modificação
+            informada, se existirem.
         :rtype: `AC` | list[`AC`] | :class:`pandas.DataFrame` | None
         """
         return self.__registros_ou_df(

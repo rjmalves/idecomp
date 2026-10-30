@@ -12,6 +12,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 - Registros `HA`, `LA` e `CA` e métodos `ha`, `la` e `ca` da classe `Dadger`, para as restrições de afluência: o horizonte de cada restrição, os limites inferior e superior por estágio e as usinas da restrição. Como o `lv`, o método `la` cria o registro de um estágio do horizonte do `HA` que ainda não tenha limites, a partir do último estágio definido.
 - Propriedades `indice_conjunto` e `altura` no registro `ACALTEFE`, com o conjunto de máquinas e a altura efetiva da modificação `AC ALTEFE`.
 
+### Modificado
+
+- O método `ac` da classe `Dadger` aceita `codigo_usina=None`, que retorna a modificação de todas as usinas, e o retorno passa a ser tipado pela classe informada em `modificacao`.
+
 ### Corrigido
 
 - Os registros `CX`, `CS`, `PD`, `PE`, `PU`, `PV`, `RC` e `TS` eram modelados, mas não estavam entre os registros lidos pela classe `Dadger`: as linhas eram mantidas apenas como texto, e os métodos de acesso `cx`, `cs`, `pd`, `pe`, `pu`, `pv`, `rc` e `ts` sempre retornavam `None`. A escrita do arquivo não muda.
