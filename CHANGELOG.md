@@ -6,6 +6,14 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Modificado
+
+- Versão mínima de `cfinterface` elevada para `1.10.3`, que lê como `None` os campos que faltam no fim de uma linha delimitada por `;`.
+
+### Corrigido
+
+- Uma linha dos arquivos das LIBS com menos campos que o seu registro recebia, nos campos que faltavam, os valores da linha anterior do mesmo registro. No `indices.csv`, uma linha como `RESTRICAO-ELETRICA-ESPECIAL;Restricoes`, sem o arquivo, apontava para o arquivo da linha anterior. Esses campos passam a ser lidos como `None`.
+
 ## [1.18.0] - 2026-10-30
 
 ### Adicionado
