@@ -45,10 +45,11 @@ O idecomp organiza seu código em dois subpacotes principais:
         ``DecOperSist``, ``DecOperUsih``, ``DecOperRee``, entre outros.
 
 ``idecomp/libs/``
-    Contém 2 módulos auxiliares para arquivos do tipo LIBS utilizados em conjunto
-    com o DECOMP: ``UsinasHidreletricas`` (``usinas_hidreletricas.py``) e
-    ``Restricoes`` (``restricoes.py``), com seus respectivos modelos em
-    ``idecomp/libs/modelos/``.
+    Contém 4 módulos auxiliares para arquivos do tipo LIBS utilizados em conjunto
+    com o DECOMP: ``Indices`` (``indices.py``), ``Renovaveis``
+    (``renovaveis.py``), ``Restricoes`` (``restricoes.py``) e
+    ``UsinasHidreletricas`` (``usinas_hidreletricas.py``), com seus respectivos
+    modelos em ``idecomp/libs/modelos/``.
 
 Framework cfinterface
 ---------------------
