@@ -10,6 +10,7 @@ from unittest.mock import MagicMock, patch
 
 from tests.mocks.arquivos.indices import (
     MockIndices,
+    MockIndicesLinhaCurta,
     MockIndicesRepetidos,
     MockRegistroIndice,
     MockRegistroIndiceCampoVazio,
@@ -134,6 +135,16 @@ def test_identificadores_repetidos_indices():
         minusculo = indices.indices("restricao-eletrica-especial")
         assert isinstance(minusculo, RegistroIndice)
         assert minusculo.arquivo == "restricao-eletrica-2.csv"
+
+
+def test_linha_curta_indices():
+    m: MagicMock = mock_open(read_data="".join(MockIndicesLinhaCurta))
+    with patch("builtins.open", m):
+        indices = Indices.read(ARQ_TESTE)
+        curta = indices.indices("RESTRICAO-ELETRICA-ESPECIAL")
+        assert isinstance(curta, RegistroIndice)
+        assert curta.descricao == "Restricoes"
+        assert curta.arquivo is None
 
 
 def test_eq_indices():
