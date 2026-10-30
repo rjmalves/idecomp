@@ -274,7 +274,7 @@ Cada propriedade de uma classe de arquivo corresponde a um **registro** (em arqu
 baseados em ``RegisterFile``) ou a um **bloco** (em arquivos baseados em
 ``BlockFile``). Os modelos internos ficam em ``idecomp/decomp/modelos/``.
 
-Por exemplo, no ``Dadger`` (``RegisterFile``), a propriedade ``uh`` corresponde ao
+Por exemplo, no ``Dadger`` (``RegisterFile``), o método ``uh`` corresponde ao
 registro ``UH`` do ``dadger.rvX``, que define as usinas hidrelétricas do estudo:
 
 .. code-block:: python
@@ -283,8 +283,8 @@ registro ``UH`` do ``dadger.rvX``, que define as usinas hidrelétricas do estudo
 
     arq = Dadger.read("./dadger.rv0")
 
-    # Propriedade 'uh' mapeia para o registro UH do dadger.rvX
-    df_usinas = arq.uh
+    # O método 'uh' mapeia para o registro UH do dadger.rvX
+    df_usinas = arq.uh(df=True)
     print(df_usinas.columns.tolist())
 
 No ``Relato`` (``BlockFile``), a propriedade ``convergencia`` mapeia para o bloco
@@ -293,6 +293,41 @@ arquivo de saída.
 
 Para entender a correspondência entre propriedades e registros/blocos de um arquivo
 específico, consulte a :doc:`../referencia/decomp/index` ou a documentação do cfinterface.
+
+O que retornam os métodos de acesso a registros, como ``Dadger.uh()``?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Nos arquivos baseados em ``RegisterFile`` (``Dadger``, ``Dadgnl`` e os arquivos
+das LIBS), cada método de acesso recebe filtros opcionais pelos campos do registro
+e o argumento ``df``. O tipo do retorno depende de ``df`` e de quantos registros
+atendem aos filtros:
+
+- com ``df=False`` (padrão), o retorno é ``None`` quando nenhum registro atende aos
+  filtros, **o próprio registro** quando apenas um atende e uma **lista** quando
+  mais de um atende;
+- com ``df=True``, os filtros são ignorados e o retorno é sempre um
+  ``pd.DataFrame`` com todos os registros do tipo, vazio quando não há nenhum.
+
+Os métodos possuem sobrecargas (``typing.overload``) sobre ``df``, de modo que
+verificadores de tipo reconhecem o retorno ``pd.DataFrame`` quando ``df=True``.
+Quando o código precisa de uma lista independentemente da quantidade de registros
+encontrados, normalize o retorno:
+
+.. code-block:: python
+
+    from idecomp.decomp import Dadger
+
+    arq = Dadger.read("./dadger.rv0")
+
+    # Um único registro UH, ou None
+    uh = arq.uh(1)
+
+    # Um registro CT ou uma lista deles, conforme o deck
+    r = arq.ct(estagio=1)
+    cts = [] if r is None else r if isinstance(r, list) else [r]
+
+    # Todos os registros CT, sempre como DataFrame
+    df_ct = arq.ct(df=True)
 
 Erros Comuns
 ------------

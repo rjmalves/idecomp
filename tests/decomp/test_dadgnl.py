@@ -2,6 +2,11 @@ from idecomp.decomp.modelos.dadgnl import TG, GL, GS, NL
 
 from idecomp.decomp.dadgnl import Dadgnl
 
+import inspect
+
+from cfinterface.components.register import Register
+
+import idecomp.decomp.modelos.dadgnl as modelos_dadgnl
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
@@ -219,3 +224,13 @@ def test_leitura_escrita_dadgnl():
     with patch("builtins.open", m_releitura):
         d2 = Dadgnl.read("./tests/mocks/arquivos/dadgnl.py")
         assert d1 == d2
+
+
+def test_registros_modelados_dadgnl():
+    # Todo registro modelado precisa estar em REGISTERS para ser lido
+    registros = [
+        c
+        for _, c in inspect.getmembers(modelos_dadgnl, inspect.isclass)
+        if issubclass(c, Register) and c.__module__ == modelos_dadgnl.__name__
+    ]
+    assert [r for r in registros if r not in Dadgnl.REGISTERS] == []

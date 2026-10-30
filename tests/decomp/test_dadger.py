@@ -23,6 +23,7 @@ from idecomp.decomp.modelos.dadger import (
     RE,
     LU,
     FU,
+    FE,
     FI,
     FT,
     VI,
@@ -54,6 +55,7 @@ from idecomp.decomp.modelos.dadger import (
     ACNUMCON,
     ACNUMMAQ,
     ACPOTEFE,
+    ACALTEFE,
     FP,
     IR,
     CI,
@@ -66,6 +68,9 @@ from idecomp.decomp.modelos.dadger import (
     LV,
     CV,
     HQ,
+    HA,
+    LA,
+    CA,
     LQ,
     CQ,
     AR,
@@ -79,6 +84,11 @@ from idecomp.decomp.modelos.dadger import (
     DA,
 )
 
+import inspect
+
+from cfinterface.components.register import Register
+
+import idecomp.decomp.modelos.dadger as modelos_dadger
 from idecomp.decomp.dadger import Dadger
 
 from tests.mocks.mock_open import mock_open
@@ -111,6 +121,7 @@ from tests.mocks.arquivos.dadger import (
     MockFU,
     MockFI,
     MockFT,
+    MockFE,
     MockVI,
     MockPD,
     MockPU,
@@ -139,6 +150,7 @@ from tests.mocks.arquivos.dadger import (
     MockACNUMCON,
     MockACNUMMAQ,
     MockACPOTEFE,
+    MockACALTEFE,
     MockFP,
     MockIR,
     MockCI,
@@ -153,6 +165,9 @@ from tests.mocks.arquivos.dadger import (
     MockHQ,
     MockLQ,
     MockCQ,
+    MockHA,
+    MockLA,
+    MockCA,
     MockAR,
     MockEV,
     MockHE,
@@ -924,6 +939,31 @@ def test_registro_ft_dadger():
     assert r.coeficiente == 1
 
 
+def test_registro_fe_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockFE))
+    r = FE()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [449, 1, 1, 2, 0.5]
+    assert r.codigo_restricao == 449
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.numero_contrato == 1
+    r.numero_contrato = 0
+    assert r.numero_contrato == 0
+    assert r.codigo_submercado == 2
+    r.codigo_submercado = 0
+    assert r.codigo_submercado == 0
+    assert r.coeficiente == 0.5
+    r.coeficiente = -1
+    assert r.coeficiente == -1
+
+
 def test_registro_vi_dadger():
     m: MagicMock = mock_open(read_data="".join(MockVI))
     r = VI()
@@ -1454,6 +1494,39 @@ def test_registro_acpotefe_dadger():
     assert r.ano == 2022
 
 
+def test_registro_acaltefe_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockACALTEFE))
+    r = ACALTEFE()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+
+    assert r.data == [154, 1, 76.7, "AGO", 1, 2025]
+    assert r.codigo_usina == 154
+    r.codigo_usina = 40
+    assert r.codigo_usina == 40
+    assert r.indice_conjunto == 1
+    r.indice_conjunto = 2
+    assert r.indice_conjunto == 2
+    assert r.altura == 76.7
+    r.altura = 45.3
+    assert r.altura == 45.3
+    assert r.mes == "AGO"
+    r.mes = "DEZ"
+    assert r.mes == "DEZ"
+    assert r.semana == 1
+    r.semana = 5
+    assert r.semana == 5
+    assert r.ano == 2025
+    r.ano = 2022
+    assert r.ano == 2022
+
+
+def test_leitura_escrita_acaltefe_dadger():
+    r = _le_registro(ACALTEFE, MockACALTEFE)
+    assert _escreve_registro(r) == MockACALTEFE + "\n"
+
+
 def test_registro_fp_dadger():
     m: MagicMock = mock_open(read_data="".join(MockFP))
     r = FP()
@@ -1972,6 +2045,63 @@ def test_registro_cq_dadger():
     assert r.tipo == ""
 
 
+def test_registro_ha_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockHA))
+    r = HA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [7, 1, 6]
+    assert r.codigo_restricao == 7
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio_inicial == 1
+    r.estagio_inicial = 0
+    assert r.estagio_inicial == 0
+    assert r.estagio_final == 6
+    r.estagio_final = 0
+    assert r.estagio_final == 0
+
+
+def test_registro_la_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockLA))
+    r = LA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [7, 1, 150.5, 3200.0]
+    assert r.codigo_restricao == 7
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.limite_inferior == 150.5
+    r.limite_inferior = 0
+    assert r.limite_inferior == 0
+    assert r.limite_superior == 3200.0
+    r.limite_superior = 0
+    assert r.limite_superior == 0
+
+
+def test_registro_ca_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockCA))
+    r = CA()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            r.read(fp)
+    assert r.data == [7, 1, 156]
+    assert r.codigo_restricao == 7
+    r.codigo_restricao = 0
+    assert r.codigo_restricao == 0
+    assert r.estagio == 1
+    r.estagio = 0
+    assert r.estagio == 0
+    assert r.codigo_usina == 156
+    r.codigo_usina = 10
+    assert r.codigo_usina == 10
+
+
 def test_registro_ar_dadger():
     m: MagicMock = mock_open(read_data="".join(MockAR))
     r = AR()
@@ -2380,6 +2510,10 @@ def test_campos_nao_encontrados_dadger():
     assert d.lv(0, 0) is None
     assert d.hq(0) is None
     assert d.lq(0, 0) is None
+    assert d.ha(0) is None
+    assert d.la(0, 0) is None
+    assert d.ca(0, 0) is None
+    assert d.fe(0, 0) is None
     assert d.he(0, 0) is None
     assert d.cm(0) is None
     assert d.vl() is None
@@ -2390,6 +2524,14 @@ def test_campos_nao_encontrados_dadger():
     assert d.ri() is None
     assert d.ci() is None
     assert d.ce() is None
+    assert d.cx() is None
+    assert d.pd() is None
+    assert d.pu is None
+    assert d.rc is None
+    assert d.pe() is None
+    assert d.ts() is None
+    assert d.pv() is None
+    assert d.cs is None
 
 
 def test_campos_encontrados_dadger():
@@ -2424,6 +2566,10 @@ def test_campos_encontrados_dadger():
     assert d.lv(101, 1) is not None
     assert d.hq(254) is not None
     assert d.lq(254, 1) is not None
+    assert d.ha(7) is not None
+    assert d.la(7, 1) is not None
+    assert d.ca(7, 1) is not None
+    assert d.fe(449, 1, 1, 2) is not None
     assert d.he(1, 1) is not None
     assert d.cm(1) is not None
     assert len(d.lq(df=True).columns) == 12
@@ -2436,6 +2582,13 @@ def test_campos_encontrados_dadger():
     assert d.ez(251) is not None
     assert d.ci(1, 2, 1) is not None
     assert d.ce(1, 1, 1) is not None
+    assert d.pd("PRIMAL") is not None
+    assert d.pu is not None
+    assert d.rc is not None
+    assert d.pe(1) is not None
+    assert d.ts() is not None
+    assert d.pv() is not None
+    assert d.cs is not None
 
 
 def test_ci_ce_dadger():
@@ -2485,6 +2638,99 @@ def test_ci_ce_dadger():
     assert len(df_ce) == 2
     assert "fator_perdas" in df_ce.columns
     assert "custo_3" in df_ce.columns
+
+
+def test_acaltefe_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    altefe = d.ac(275, ACALTEFE)
+    assert isinstance(altefe, ACALTEFE)
+    assert altefe.indice_conjunto == 2
+    assert altefe.altura == 45.3
+
+    df_altefe = d.ac(None, ACALTEFE, df=True)
+    assert df_altefe["codigo_usina"].tolist() == [275]
+    assert df_altefe["indice_conjunto"].tolist() == [2]
+    assert df_altefe["altura"].tolist() == [45.3]
+
+
+def test_fe_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    assert len(d.fe(codigo_restricao=449)) == 3
+    fe = d.fe(449, 1, 1, 1)
+    assert isinstance(fe, FE)
+    assert fe.coeficiente == -1.0
+
+    df_fe = d.fe(df=True)
+    assert df_fe["estagio"].tolist() == [1, 3, 1]
+    assert df_fe["codigo_submercado"].tolist() == [2, 2, 1]
+    assert df_fe["coeficiente"].tolist() == [1.0, 0.5, -1.0]
+
+
+def test_ha_la_ca_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    ha = d.ha(7)
+    assert isinstance(ha, HA)
+    assert ha.estagio_final == 6
+    la = d.la(7, 3)
+    assert isinstance(la, LA)
+    assert la.limite_inferior == 200.0
+    ca = d.ca(7, 1)
+    assert isinstance(ca, CA)
+    assert ca.codigo_usina == 156
+
+    df_la = d.la(df=True)
+    assert df_la["estagio"].tolist() == [1, 3]
+    assert df_la["limite_inferior"].tolist() == [150.5, 200.0]
+    assert df_la["limite_superior"].tolist() == [3200.0, 3000.0]
+    assert d.ha(df=True)["codigo_restricao"].tolist() == [7]
+    assert d.ca(df=True)["codigo_usina"].tolist() == [156]
+
+
+def test_cx_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    cx = d.cx(codigo_newave=132, codigo_decomp=146)
+    assert isinstance(cx, CX)
+    assert len(d.cx(codigo_newave=176)) == 3
+
+    df_cx = d.cx(df=True)
+    assert list(df_cx.columns) == ["codigo_decomp", "codigo_newave"]
+    assert df_cx["codigo_newave"].tolist() == [132, 132, 176, 176, 176]
+    assert df_cx["codigo_decomp"].tolist() == [147, 146, 175, 174, 173]
+
+
+def test_ea_dadger():
+    m: MagicMock = mock_open(read_data=MockEA + "\n")
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+
+    ea = d.ea(1)
+    assert isinstance(ea, EA)
+    assert ea.codigo_ree == 1
+    df_ea = d.ea(df=True)
+    assert df_ea["codigo_ree"].tolist() == [1]
+    assert "ena_1" in df_ea.columns
+
+
+def test_registros_modelados_dadger():
+    # Todo registro modelado precisa estar em REGISTERS para ser lido
+    registros = [
+        c
+        for _, c in inspect.getmembers(modelos_dadger, inspect.isclass)
+        if issubclass(c, Register) and c.__module__ == modelos_dadger.__name__
+    ]
+    assert [r for r in registros if r not in Dadger.REGISTERS] == []
 
 
 def test_ez_dadger():
@@ -2540,6 +2786,22 @@ def test_cria_lv_dadger():
         assert lv.limite_superior == d.lv(3, 1).limite_superior
         lv.limite_superior = 0.0
         assert lv.limite_superior != d.lv(3, 1).limite_superior
+
+
+def test_cria_la_dadger():
+    m: MagicMock = mock_open(read_data="".join(MockDadger))
+    with patch("builtins.open", m):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+        la = d.la(7, 2)
+        assert la is not None
+        assert la.limite_inferior == d.la(7, 1).limite_inferior
+        la.limite_inferior = 0.0
+        assert la.limite_inferior != d.la(7, 1).limite_inferior
+        assert la.limite_superior == d.la(7, 1).limite_superior
+        la.limite_superior = 0.0
+        assert la.limite_superior != d.la(7, 1).limite_superior
+        assert d.la(7, 4).limite_inferior == d.la(7, 3).limite_inferior
+        assert d.la(7, 7) is None
 
 
 def test_cria_lq_dadger():

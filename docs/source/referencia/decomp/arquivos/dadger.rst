@@ -90,6 +90,9 @@ de operação:
 .. autoclass:: FI
    :members:
 
+.. autoclass:: FE
+   :members:
+
 .. autoclass:: VI
    :members:
 
@@ -145,6 +148,15 @@ de operação:
    :members:
 
 .. autoclass:: CQ
+   :members:
+
+.. autoclass:: HA
+   :members:
+
+.. autoclass:: LA
+   :members:
+
+.. autoclass:: CA
    :members:
 
 .. autoclass:: AR

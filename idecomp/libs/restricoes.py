@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Any, TypeVar
+from typing import Any, Literal, TypeVar, overload
 
 import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
@@ -90,6 +90,37 @@ class Restricoes(RegisterFile):
             kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
+    @overload
+    def restricao_eletrica_formula(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_formula(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaFormula
+        | list[RegistroRestricaoEletricaFormula]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_formula(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaFormula
+        | list[RegistroRestricaoEletricaFormula]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_formula(
         self,
         codigo_restricao: int | None = None,
@@ -120,6 +151,36 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def expressao_eletrica(
+        self,
+        codigo_expressao: int | None = None,
+        identificador_expressao: str | None = None,
+        formula: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def expressao_eletrica(
+        self,
+        codigo_expressao: int | None = None,
+        identificador_expressao: str | None = None,
+        formula: str | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroExpressaoEletrica | list[RegistroExpressaoEletrica] | None: ...
+    @overload
+    def expressao_eletrica(
+        self,
+        codigo_expressao: int | None = None,
+        identificador_expressao: str | None = None,
+        formula: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroExpressaoEletrica
+        | list[RegistroExpressaoEletrica]
+        | pd.DataFrame
+        | None
+    ): ...
     def expressao_eletrica(
         self,
         codigo_expressao: int | None = None,
@@ -155,6 +216,43 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_inequacao(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        operador: str | None = None,
+        formula_limite: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_inequacao(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        operador: str | None = None,
+        formula_limite: str | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaInequacao
+        | list[RegistroRestricaoEletricaInequacao]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_inequacao(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        operador: str | None = None,
+        formula_limite: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaInequacao
+        | list[RegistroRestricaoEletricaInequacao]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_inequacao(
         self,
         codigo_restricao: int | None = None,
@@ -194,6 +292,52 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_inequacao_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        operador: str | None = None,
+        formula_limite: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_inequacao_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        operador: str | None = None,
+        formula_limite: str | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaInequacaoPeriodoPatamar
+        | list[RegistroRestricaoEletricaInequacaoPeriodoPatamar]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_inequacao_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        operador: str | None = None,
+        formula_limite: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaInequacaoPeriodoPatamar
+        | list[RegistroRestricaoEletricaInequacaoPeriodoPatamar]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_inequacao_periodo_patamar(
         self,
         codigo_restricao: int | None = None,
@@ -246,6 +390,28 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroRe | list[RegistroRe] | None: ...
+    @overload
+    def re(
+        self,
+        codigo_restricao: int | None = None,
+        formula: str | None = None,
+        df: bool = False,
+    ) -> RegistroRe | list[RegistroRe] | pd.DataFrame | None: ...
     def re(
         self,
         codigo_restricao: int | None = None,
@@ -271,6 +437,40 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_horizonte_periodo(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_horizonte_periodo(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaHorizontePeriodo
+        | list[RegistroRestricaoEletricaHorizontePeriodo]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_horizonte_periodo(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaHorizontePeriodo
+        | list[RegistroRestricaoEletricaHorizontePeriodo]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_horizonte_periodo(
         self,
         codigo_restricao: int | None = None,
@@ -306,6 +506,33 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_horiz_per(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_horiz_per(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReHorizPer | list[RegistroReHorizPer] | None: ...
+    @overload
+    def re_horiz_per(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroReHorizPer | list[RegistroReHorizPer] | pd.DataFrame | None
+    ): ...
     def re_horiz_per(
         self,
         codigo_restricao: int | None = None,
@@ -336,6 +563,40 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_horizonte_data(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_horizonte_data(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaHorizonteData
+        | list[RegistroRestricaoEletricaHorizonteData]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_horizonte_data(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaHorizonteData
+        | list[RegistroRestricaoEletricaHorizonteData]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_horizonte_data(
         self,
         codigo_restricao: int | None = None,
@@ -371,6 +632,33 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_horiz_data(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_horiz_data(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReHorizData | list[RegistroReHorizData] | None: ...
+    @overload
+    def re_horiz_data(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroReHorizData | list[RegistroReHorizData] | pd.DataFrame | None
+    ): ...
     def re_horiz_data(
         self,
         codigo_restricao: int | None = None,
@@ -401,6 +689,46 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_formula_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_formula_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaFormulaPeriodoPatamar
+        | list[RegistroRestricaoEletricaFormulaPeriodoPatamar]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_formula_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaFormulaPeriodoPatamar
+        | list[RegistroRestricaoEletricaFormulaPeriodoPatamar]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_formula_periodo_patamar(
         self,
         codigo_restricao: int | None = None,
@@ -445,6 +773,37 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_per_pat(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_per_pat(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroRePerPat | list[RegistroRePerPat] | None: ...
+    @overload
+    def re_per_pat(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        df: bool = False,
+    ) -> RegistroRePerPat | list[RegistroRePerPat] | pd.DataFrame | None: ...
     def re_per_pat(
         self,
         codigo_restricao: int | None = None,
@@ -484,6 +843,46 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_formula_data_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_formula_data_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaFormulaDataPatamar
+        | list[RegistroRestricaoEletricaFormulaDataPatamar]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_formula_data_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaFormulaDataPatamar
+        | list[RegistroRestricaoEletricaFormulaDataPatamar]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_formula_data_patamar(
         self,
         codigo_restricao: int | None = None,
@@ -528,6 +927,37 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_data_pat(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_data_pat(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReDataPat | list[RegistroReDataPat] | None: ...
+    @overload
+    def re_data_pat(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        formula: str | None = None,
+        df: bool = False,
+    ) -> RegistroReDataPat | list[RegistroReDataPat] | pd.DataFrame | None: ...
     def re_data_pat(
         self,
         codigo_restricao: int | None = None,
@@ -567,6 +997,49 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_limites_formula_data_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_limites_formula_data_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaLimitesFormulaDataPatamar
+        | list[RegistroRestricaoEletricaLimitesFormulaDataPatamar]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_limites_formula_data_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaLimitesFormulaDataPatamar
+        | list[RegistroRestricaoEletricaLimitesFormulaDataPatamar]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_limites_formula_data_patamar(
         self,
         codigo_restricao: int | None = None,
@@ -615,6 +1088,45 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_lim_form_data_pat(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_lim_form_data_pat(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReLimFormDataPat | list[RegistroReLimFormDataPat] | None: ...
+    @overload
+    def re_lim_form_data_pat(
+        self,
+        codigo_restricao: int | None = None,
+        data_inicio: datetime | None = None,
+        data_fim: datetime | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroReLimFormDataPat
+        | list[RegistroReLimFormDataPat]
+        | pd.DataFrame
+        | None
+    ): ...
     def re_lim_form_data_pat(
         self,
         codigo_restricao: int | None = None,
@@ -662,6 +1174,49 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_limite_formula_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_limite_formula_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar
+        | list[RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_limite_formula_periodo_patamar(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar
+        | list[RegistroRestricaoEletricaLimitesFormulaPeriodoPatamar]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_limite_formula_periodo_patamar(
         self,
         codigo_restricao: int | None = None,
@@ -710,6 +1265,45 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_lim_form_per_pat(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_lim_form_per_pat(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReLimFormPerPat | list[RegistroReLimFormPerPat] | None: ...
+    @overload
+    def re_lim_form_per_pat(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        limite_inferior: float | None = None,
+        limite_superior: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroReLimFormPerPat
+        | list[RegistroReLimFormPerPat]
+        | pd.DataFrame
+        | None
+    ): ...
     def re_lim_form_per_pat(
         self,
         codigo_restricao: int | None = None,
@@ -757,6 +1351,33 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def alias_eletrico(
+        self,
+        codigo_alias: int | None = None,
+        identificador_alias: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def alias_eletrico(
+        self,
+        codigo_alias: int | None = None,
+        identificador_alias: str | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroAliasEletrico | list[RegistroAliasEletrico] | None: ...
+    @overload
+    def alias_eletrico(
+        self,
+        codigo_alias: int | None = None,
+        identificador_alias: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroAliasEletrico
+        | list[RegistroAliasEletrico]
+        | pd.DataFrame
+        | None
+    ): ...
     def alias_eletrico(
         self,
         codigo_alias: int | None = None,
@@ -787,6 +1408,28 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def alias_elet(
+        self,
+        codigo_alias: int | None = None,
+        identificador_alias: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def alias_elet(
+        self,
+        codigo_alias: int | None = None,
+        identificador_alias: str | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroAliasElet | list[RegistroAliasElet] | None: ...
+    @overload
+    def alias_elet(
+        self,
+        codigo_alias: int | None = None,
+        identificador_alias: str | None = None,
+        df: bool = False,
+    ) -> RegistroAliasElet | list[RegistroAliasElet] | pd.DataFrame | None: ...
     def alias_elet(
         self,
         codigo_alias: int | None = None,
@@ -812,6 +1455,46 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def alias_eletrico_valor_periodo_patamar(
+        self,
+        codigo_alias: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        valor: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def alias_eletrico_valor_periodo_patamar(
+        self,
+        codigo_alias: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        valor: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroAliasEletricoValorPeriodoPatamar
+        | list[RegistroAliasEletricoValorPeriodoPatamar]
+        | None
+    ): ...
+    @overload
+    def alias_eletrico_valor_periodo_patamar(
+        self,
+        codigo_alias: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        valor: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroAliasEletricoValorPeriodoPatamar
+        | list[RegistroAliasEletricoValorPeriodoPatamar]
+        | pd.DataFrame
+        | None
+    ): ...
     def alias_eletrico_valor_periodo_patamar(
         self,
         codigo_alias: int | None = None,
@@ -855,6 +1538,44 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def alias_elet_val_per_pat(
+        self,
+        codigo_alias: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        valor: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def alias_elet_val_per_pat(
+        self,
+        codigo_alias: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        valor: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroAliasEletValPerPat | list[RegistroAliasEletValPerPat] | None
+    ): ...
+    @overload
+    def alias_elet_val_per_pat(
+        self,
+        codigo_alias: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        patamar: int | None = None,
+        valor: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroAliasEletValPerPat
+        | list[RegistroAliasEletValPerPat]
+        | pd.DataFrame
+        | None
+    ): ...
     def alias_elet_val_per_pat(
         self,
         codigo_alias: int | None = None,
@@ -898,6 +1619,37 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_regra_ativacao(
+        self,
+        codigo_regra_ativacao: int | None = None,
+        regra_ativacao: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_regra_ativacao(
+        self,
+        codigo_regra_ativacao: int | None = None,
+        regra_ativacao: str | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaRegraAtivacao
+        | list[RegistroRestricaoEletricaRegraAtivacao]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_regra_ativacao(
+        self,
+        codigo_regra_ativacao: int | None = None,
+        regra_ativacao: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaRegraAtivacao
+        | list[RegistroRestricaoEletricaRegraAtivacao]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_regra_ativacao(
         self,
         codigo_regra_ativacao: int | None = None,
@@ -929,6 +1681,30 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_regra_ativa(
+        self,
+        codigo_regra_ativacao: int | None = None,
+        regra_ativacao: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_regra_ativa(
+        self,
+        codigo_regra_ativacao: int | None = None,
+        regra_ativacao: str | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReRegraAtiva | list[RegistroReRegraAtiva] | None: ...
+    @overload
+    def re_regra_ativa(
+        self,
+        codigo_regra_ativacao: int | None = None,
+        regra_ativacao: str | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroReRegraAtiva | list[RegistroReRegraAtiva] | pd.DataFrame | None
+    ): ...
     def re_regra_ativa(
         self,
         codigo_regra_ativacao: int | None = None,
@@ -957,6 +1733,37 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_habilita(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_regra_ativacao: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_habilita(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_regra_ativacao: int | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaHabilita
+        | list[RegistroRestricaoEletricaHabilita]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_habilita(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_regra_ativacao: int | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaHabilita
+        | list[RegistroRestricaoEletricaHabilita]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_habilita(
         self,
         codigo_restricao: int | None = None,
@@ -988,6 +1795,30 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_habilita(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_regra_ativacao: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_habilita(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_regra_ativacao: int | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReHabilita | list[RegistroReHabilita] | None: ...
+    @overload
+    def re_habilita(
+        self,
+        codigo_restricao: int | None = None,
+        codigo_regra_ativacao: int | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroReHabilita | list[RegistroReHabilita] | pd.DataFrame | None
+    ): ...
     def re_habilita(
         self,
         codigo_restricao: int | None = None,
@@ -1014,6 +1845,40 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_tratamento_violacao(
+        self,
+        codigo_restricao: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_tratamento_violacao(
+        self,
+        codigo_restricao: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaTratamentoViolacao
+        | list[RegistroRestricaoEletricaTratamentoViolacao]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_tratamento_violacao(
+        self,
+        codigo_restricao: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaTratamentoViolacao
+        | list[RegistroRestricaoEletricaTratamentoViolacao]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_tratamento_violacao(
         self,
         codigo_restricao: int | None = None,
@@ -1049,6 +1914,33 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_trat_viol(
+        self,
+        codigo_restricao: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_trat_viol(
+        self,
+        codigo_restricao: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReTratViol | list[RegistroReTratViol] | None: ...
+    @overload
+    def re_trat_viol(
+        self,
+        codigo_restricao: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroReTratViol | list[RegistroReTratViol] | pd.DataFrame | None
+    ): ...
     def re_trat_viol(
         self,
         codigo_restricao: int | None = None,
@@ -1079,6 +1971,46 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def restricao_eletrica_tratamento_violacao_periodo(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def restricao_eletrica_tratamento_violacao_periodo(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        RegistroRestricaoEletricaTratamentoViolacaoPeriodo
+        | list[RegistroRestricaoEletricaTratamentoViolacaoPeriodo]
+        | None
+    ): ...
+    @overload
+    def restricao_eletrica_tratamento_violacao_periodo(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroRestricaoEletricaTratamentoViolacaoPeriodo
+        | list[RegistroRestricaoEletricaTratamentoViolacaoPeriodo]
+        | pd.DataFrame
+        | None
+    ): ...
     def restricao_eletrica_tratamento_violacao_periodo(
         self,
         codigo_restricao: int | None = None,
@@ -1124,6 +2056,42 @@ class Restricoes(RegisterFile):
             df=df,
         )
 
+    @overload
+    def re_trat_viol_per(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def re_trat_viol_per(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        df: Literal[False] = False,
+    ) -> RegistroReTratViolPer | list[RegistroReTratViolPer] | None: ...
+    @overload
+    def re_trat_viol_per(
+        self,
+        codigo_restricao: int | None = None,
+        estagio_inicio: int | None = None,
+        estagio_fim: int | None = None,
+        tipo_violacao: str | None = None,
+        custo_violacao: float | None = None,
+        df: bool = False,
+    ) -> (
+        RegistroReTratViolPer
+        | list[RegistroReTratViolPer]
+        | pd.DataFrame
+        | None
+    ): ...
     def re_trat_viol_per(
         self,
         codigo_restricao: int | None = None,

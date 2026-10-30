@@ -9,6 +9,11 @@ from idecomp.libs.modelos.renovaveis import (
     PEEGeracaoPeriodoPatamar,
     PEEGeracaoPeriodoPatamarComPeriodoFinal,
 )
+import inspect
+
+from cfinterface.components.register import Register
+
+import idecomp.libs.modelos.renovaveis as modelos_renovaveis
 from tests.mocks.mock_open import mock_open
 from unittest.mock import MagicMock, patch
 
@@ -500,3 +505,14 @@ def test_leitura_escrita_renovaveis_deterministico():
             cf2 = Renovaveis.read(ARQ_TESTE)
             assert cf1 == cf2
             assert len(cf2.pee_ger_per_pat()) == len(cf1.pee_ger_per_pat())
+
+
+def test_registros_modelados_renovaveis():
+    # Todo registro modelado precisa estar em REGISTERS para ser lido
+    registros = [
+        c
+        for _, c in inspect.getmembers(modelos_renovaveis, inspect.isclass)
+        if issubclass(c, Register)
+        and c.__module__ == modelos_renovaveis.__name__
+    ]
+    assert [r for r in registros if r not in Renovaveis.REGISTERS] == []

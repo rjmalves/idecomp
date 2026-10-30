@@ -1,4 +1,4 @@
-from typing import Any, TypeVar
+from typing import Any, Literal, TypeVar, overload
 
 import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
@@ -41,6 +41,36 @@ class UsinasHidreletricas(RegisterFile):
             kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
 
+    @overload
+    def hidreletrica_curvajusante(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        nivel_montante_referencia: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def hidreletrica_curvajusante(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        nivel_montante_referencia: float | None = None,
+        df: Literal[False] = False,
+    ) -> HidreletricaCurvaJusante | list[HidreletricaCurvaJusante] | None: ...
+    @overload
+    def hidreletrica_curvajusante(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        nivel_montante_referencia: float | None = None,
+        df: bool = False,
+    ) -> (
+        HidreletricaCurvaJusante
+        | list[HidreletricaCurvaJusante]
+        | pd.DataFrame
+        | None
+    ): ...
     def hidreletrica_curvajusante(
         self,
         codigo_usina: int | None = None,
@@ -81,6 +111,40 @@ class UsinasHidreletricas(RegisterFile):
             df=df,
         )
 
+    @overload
+    def hidreletrica_curvajusante_polinomio(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        numero_polinomios: int | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def hidreletrica_curvajusante_polinomio(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        numero_polinomios: int | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        HidreletricaCurvaJusantePolinomioPorPartes
+        | list[HidreletricaCurvaJusantePolinomioPorPartes]
+        | None
+    ): ...
+    @overload
+    def hidreletrica_curvajusante_polinomio(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        numero_polinomios: int | None = None,
+        df: bool = False,
+    ) -> (
+        HidreletricaCurvaJusantePolinomioPorPartes
+        | list[HidreletricaCurvaJusantePolinomioPorPartes]
+        | pd.DataFrame
+        | None
+    ): ...
     def hidreletrica_curvajusante_polinomio(
         self,
         codigo_usina: int | None = None,
@@ -120,6 +184,61 @@ class UsinasHidreletricas(RegisterFile):
             df=df,
         )
 
+    @overload
+    def hidreletrica_curvajusante_polinomio_segmento(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        indice_polinomio: int | None = None,
+        limite_inferior_vazao_jusante: float | None = None,
+        limite_superior_vazao_jusante: float | None = None,
+        coeficiente_a0: float | None = None,
+        coeficiente_a1: float | None = None,
+        coeficiente_a2: float | None = None,
+        coeficiente_a3: float | None = None,
+        coeficiente_a4: float | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def hidreletrica_curvajusante_polinomio_segmento(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        indice_polinomio: int | None = None,
+        limite_inferior_vazao_jusante: float | None = None,
+        limite_superior_vazao_jusante: float | None = None,
+        coeficiente_a0: float | None = None,
+        coeficiente_a1: float | None = None,
+        coeficiente_a2: float | None = None,
+        coeficiente_a3: float | None = None,
+        coeficiente_a4: float | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        HidreletricaCurvaJusantePolinomioPorPartesSegmento
+        | list[HidreletricaCurvaJusantePolinomioPorPartesSegmento]
+        | None
+    ): ...
+    @overload
+    def hidreletrica_curvajusante_polinomio_segmento(
+        self,
+        codigo_usina: int | None = None,
+        indice_familia: int | None = None,
+        indice_polinomio: int | None = None,
+        limite_inferior_vazao_jusante: float | None = None,
+        limite_superior_vazao_jusante: float | None = None,
+        coeficiente_a0: float | None = None,
+        coeficiente_a1: float | None = None,
+        coeficiente_a2: float | None = None,
+        coeficiente_a3: float | None = None,
+        coeficiente_a4: float | None = None,
+        df: bool = False,
+    ) -> (
+        HidreletricaCurvaJusantePolinomioPorPartesSegmento
+        | list[HidreletricaCurvaJusantePolinomioPorPartesSegmento]
+        | pd.DataFrame
+        | None
+    ): ...
     def hidreletrica_curvajusante_polinomio_segmento(
         self,
         codigo_usina: int | None = None,
@@ -190,6 +309,37 @@ class UsinasHidreletricas(RegisterFile):
             df=df,
         )
 
+    @overload
+    def hidreletrica_curvajusante_afogamentoexplicito_usina(
+        self,
+        codigo_usina: int | None = None,
+        considera_afogamento: str | None = None,
+        *,
+        df: Literal[True],
+    ) -> pd.DataFrame: ...
+    @overload
+    def hidreletrica_curvajusante_afogamentoexplicito_usina(
+        self,
+        codigo_usina: int | None = None,
+        considera_afogamento: str | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        HidreletricaCurvaJusanteAfogamentoExplicitoUsina
+        | list[HidreletricaCurvaJusanteAfogamentoExplicitoUsina]
+        | None
+    ): ...
+    @overload
+    def hidreletrica_curvajusante_afogamentoexplicito_usina(
+        self,
+        codigo_usina: int | None = None,
+        considera_afogamento: str | None = None,
+        df: bool = False,
+    ) -> (
+        HidreletricaCurvaJusanteAfogamentoExplicitoUsina
+        | list[HidreletricaCurvaJusanteAfogamentoExplicitoUsina]
+        | pd.DataFrame
+        | None
+    ): ...
     def hidreletrica_curvajusante_afogamentoexplicito_usina(
         self,
         codigo_usina: int | None = None,
@@ -223,6 +373,29 @@ class UsinasHidreletricas(RegisterFile):
             df=df,
         )
 
+    @overload
+    def hidreletrica_curvajusante_afogamentoexplicito_padrao(
+        self, considera_afogamento: str | None = None, *, df: Literal[True]
+    ) -> pd.DataFrame: ...
+    @overload
+    def hidreletrica_curvajusante_afogamentoexplicito_padrao(
+        self,
+        considera_afogamento: str | None = None,
+        df: Literal[False] = False,
+    ) -> (
+        HidreletricaCurvaJusanteAfogamentoExplicitoPadrao
+        | list[HidreletricaCurvaJusanteAfogamentoExplicitoPadrao]
+        | None
+    ): ...
+    @overload
+    def hidreletrica_curvajusante_afogamentoexplicito_padrao(
+        self, considera_afogamento: str | None = None, df: bool = False
+    ) -> (
+        HidreletricaCurvaJusanteAfogamentoExplicitoPadrao
+        | list[HidreletricaCurvaJusanteAfogamentoExplicitoPadrao]
+        | pd.DataFrame
+        | None
+    ): ...
     def hidreletrica_curvajusante_afogamentoexplicito_padrao(
         self, considera_afogamento: str | None = None, df: bool = False
     ) -> (

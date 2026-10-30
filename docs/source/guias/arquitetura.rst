@@ -45,10 +45,11 @@ O idecomp organiza seu código em dois subpacotes principais:
         ``DecOperSist``, ``DecOperUsih``, ``DecOperRee``, entre outros.
 
 ``idecomp/libs/``
-    Contém 2 módulos auxiliares para arquivos do tipo LIBS utilizados em conjunto
-    com o DECOMP: ``UsinasHidreletricas`` (``usinas_hidreletricas.py``) e
-    ``Restricoes`` (``restricoes.py``), com seus respectivos modelos em
-    ``idecomp/libs/modelos/``.
+    Contém 4 módulos auxiliares para arquivos do tipo LIBS utilizados em conjunto
+    com o DECOMP: ``Indices`` (``indices.py``), ``Renovaveis``
+    (``renovaveis.py``), ``Restricoes`` (``restricoes.py``) e
+    ``UsinasHidreletricas`` (``usinas_hidreletricas.py``), com seus respectivos
+    modelos em ``idecomp/libs/modelos/``.
 
 Framework cfinterface
 ---------------------
@@ -69,15 +70,15 @@ utiliza todas as três, dependendo do formato do arquivo DECOMP em questão:
         arq = Dadger.read("./dadger.rv0")
 
         # Acessa o registro TE (título do estudo)
-        titulo = arq.te
+        titulo = arq.te.titulo
         print(titulo)
 
         # Acessa a tabela de usinas hidrelétricas como DataFrame
-        df_usinas = arq.uh
+        df_usinas = arq.uh(df=True)
         print(df_usinas.head())
 
         # Modifica um dado e salva o arquivo de entrada atualizado
-        arq.te = "Novo titulo do estudo"
+        arq.te.titulo = "Novo titulo do estudo"
         arq.write("./dadger.rv0")
 
 :class:`cfinterface.files.blockfile.BlockFile`

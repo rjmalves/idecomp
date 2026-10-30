@@ -2112,6 +2112,93 @@ class FI(Register):
         self.data[4] = f
 
 
+class FE(Register):
+    """
+    Registro que contém os coeficientes dos contratos de importação
+    e exportação nas restrições elétricas.
+    """
+
+    __slots__: list[str] = []
+
+    IDENTIFIER = "FE  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 14),
+            IntegerField(2, 19),
+            FloatField(10, 24, 7),
+        ]
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição elétrica, segundo registro RE.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int) -> None:
+        self.data[1] = c
+
+    @property
+    def numero_contrato(self) -> int | None:
+        """
+        O número do contrato de importação ou exportação conforme
+        registros CI ou CE.
+
+        :return: O número do contrato como `int`.
+        """
+        return self.data[2]
+
+    @numero_contrato.setter
+    def numero_contrato(self, c: int) -> None:
+        self.data[2] = c
+
+    @property
+    def codigo_submercado(self) -> int | None:
+        """
+        O código do submercado conforme registro SB.
+
+        :return: O código do submercado como `int`.
+        """
+        return self.data[3]
+
+    @codigo_submercado.setter
+    def codigo_submercado(self, s: int) -> None:
+        self.data[3] = s
+
+    @property
+    def coeficiente(self) -> float | None:
+        """
+        O coeficiente de participação do contrato na restrição.
+
+        :return: O coeficiente como `float`
+        """
+        return self.data[4]
+
+    @coeficiente.setter
+    def coeficiente(self, f: float) -> None:
+        self.data[4] = f
+
+
 class VI(Register):
     """
     Registro que contém os tempos de viagem da água entre usinas.
@@ -3784,6 +3871,200 @@ class CQ(Register):
     @tipo.setter
     def tipo(self, t: str) -> None:
         self.data[4] = t
+
+
+class HA(Register):
+    """
+    Registro que contém os cadastros de restrições de afluência.
+    """
+
+    __slots__: list[str] = []
+
+    IDENTIFIER = "HA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(2, 14),
+        ]
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição HA.
+
+        :return: O código.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio_inicial(self) -> int | None:
+        """
+        O estágio inicial de consideração da restrição HA.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @estagio_inicial.setter
+    def estagio_inicial(self, e: int) -> None:
+        self.data[1] = e
+
+    @property
+    def estagio_final(self) -> int | None:
+        """
+        O estágio final de consideração da restrição HA.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[2]
+
+    @estagio_final.setter
+    def estagio_final(self, e: int) -> None:
+        self.data[2] = e
+
+
+class LA(Register):
+    """
+    Registro que contém os cadastros dos limites das
+    restrições de afluência.
+    """
+
+    __slots__: list[str] = []
+
+    IDENTIFIER = "LA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            FloatField(10, 14, 2),
+            FloatField(10, 24, 2),
+        ]
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição HA associada aos limites
+
+        :return: O código.
+        :rtype: int | None
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio de consideração dos limites.
+
+        :return: O estágio.
+        :rtype: int | None
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, e: int) -> None:
+        self.data[1] = e
+
+    @property
+    def limite_inferior(self) -> float | None:
+        """
+        O limite inferior para a afluência.
+
+        :return: O limite.
+        :rtype: float | None
+        """
+        return self.data[2]
+
+    @limite_inferior.setter
+    def limite_inferior(self, lim: float) -> None:
+        self.data[2] = lim
+
+    @property
+    def limite_superior(self) -> float | None:
+        """
+        O limite superior para a afluência.
+
+        :return: O limite.
+        :rtype: float | None
+        """
+        return self.data[3]
+
+    @limite_superior.setter
+    def limite_superior(self, lim: float) -> None:
+        self.data[3] = lim
+
+
+class CA(Register):
+    """
+    Registro que contém as usinas hidráulicas
+    nas restrições de afluência.
+    """
+
+    __slots__: list[str] = []
+
+    IDENTIFIER = "CA  "
+    IDENTIFIER_DIGITS = 4
+    LINE = Line(
+        [
+            IntegerField(3, 4),
+            IntegerField(2, 9),
+            IntegerField(3, 14),
+        ]
+    )
+
+    @property
+    def codigo_restricao(self) -> int | None:
+        """
+        O código da restrição de afluência, segundo registro HA.
+
+        :return: O código como `int`.
+        """
+        return self.data[0]
+
+    @codigo_restricao.setter
+    def codigo_restricao(self, c: int) -> None:
+        self.data[0] = c
+
+    @property
+    def estagio(self) -> int | None:
+        """
+        O estágio associado.
+
+        :return: O estágio como `int`.
+        """
+        return self.data[1]
+
+    @estagio.setter
+    def estagio(self, c: int) -> None:
+        self.data[1] = c
+
+    @property
+    def codigo_usina(self) -> int | None:
+        """
+        O número da UHE conforme registro UH.
+
+        :return: O número da UHE como `int`.
+        """
+        return self.data[2]
+
+    @codigo_usina.setter
+    def codigo_usina(self, c: int) -> None:
+        self.data[2] = c
 
 
 class AR(Register):
@@ -5875,6 +6156,22 @@ class ACALTEFE(Register):
     @codigo_usina.setter
     def codigo_usina(self, u: int) -> None:
         self.data[0] = u
+
+    @property
+    def indice_conjunto(self) -> int | None:
+        return self.data[1]
+
+    @indice_conjunto.setter
+    def indice_conjunto(self, u: int) -> None:
+        self.data[1] = u
+
+    @property
+    def altura(self) -> float | None:
+        return self.data[2]
+
+    @altura.setter
+    def altura(self, u: float) -> None:
+        self.data[2] = u
 
     @property
     def mes(self) -> str | None:
