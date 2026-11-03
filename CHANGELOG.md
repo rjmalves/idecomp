@@ -8,11 +8,11 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Corrigido
 
-- `dec_oper_sist.csv`: a partir da versão 32.9 do DECOMP, o arquivo tem a coluna `ANDE` (carga da ANDE) entre `IntercLiq` e `Itaipu50`. O arquivo era lido sem erro, mas com as colunas deslocadas a partir dela: `itaipu_50MW` recebia a carga da ANDE e `earm_final_percentual` recebia a energia armazenada final. A tabela da classe `DecOperSist` passa a ter a coluna `ande_MW`, e o formato é registrado na versão `32.9`.
+- `dec_oper_sist.csv`: a partir da versão 32.9 do DECOMP, o arquivo tem a coluna `ANDE` (carga da ANDE) entre `IntercLiq` e `Itaipu50`. O arquivo era lido sem erro, mas com as colunas deslocadas a partir dela: `itaipu_50MW` recebia a carga da ANDE e `earm_final_percentual` recebia a energia armazenada final. A tabela da classe `DecOperSist` passa a ter a coluna `ande_MW`, e o formato é registrado na versão `32.9` [#103](https://github.com/rjmalves/idecomp/pull/103) (@jhuliamacedo).
 
 ### Modificado
 
-- A leitura padrão da classe `DecOperSist` passa a usar o formato da versão 32.9. Os arquivos de versões anteriores devem ser lidos informando a versão, como em `DecOperSist.read(caminho, version="31.14")`. Como o `cfinterface` compara as versões como texto, uma versão de 32.10 a 32.99 informada em `version=` (como `"32.15.1"`) ainda seleciona o formato anterior à 32.9 e lê as colunas deslocadas. Os arquivos dessas versões devem ser lidos sem `version=` ou com `version="32.9"`.
+- A leitura padrão da classe `DecOperSist` passa a usar o formato da versão 32.9. Os arquivos de versões anteriores devem ser lidos informando a versão, como em `DecOperSist.read(caminho, version="31.14")`. Como o `cfinterface` compara as versões como texto, uma versão de 32.10 a 32.99 informada em `version=` (como `"32.15.1"`) ainda seleciona o formato anterior à 32.9 e lê as colunas deslocadas. Os arquivos dessas versões devem ser lidos sem `version=` ou com `version="32.9"` [#103](https://github.com/rjmalves/idecomp/pull/103) (@jhuliamacedo).
 
 ## [1.18.2] - 2026-10-30
 
