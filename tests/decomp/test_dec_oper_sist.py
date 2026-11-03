@@ -6,13 +6,62 @@ from unittest.mock import MagicMock, patch
 from tests.mocks.arquivos.dec_oper_sist import (
     MockDecOperSist,
     MockDecOperSistv31,
+    MockDecOperSistv32_9,
 )
 
 
-def test_atributos_encontrados_dec_oper_sist():
-    m: MagicMock = mock_open(read_data="".join(MockDecOperSist))
+def test_atributos_encontrados_dec_oper_sist_v32_9():
+    m: MagicMock = mock_open(read_data="".join(MockDecOperSistv32_9))
     with patch("builtins.open", m):
         rel = DecOperSist.read("./tests/mocks/arquivos/dec_oper_sist.py")
+        assert rel.versao == "32.15.1_coin"
+        assert rel.tabela.shape == (16, 27)
+        assert rel.tabela.at[0, "estagio"] == 1
+        assert rel.tabela.at[0, "no"] == 1
+        assert rel.tabela.at[0, "cenario"] == 1
+        assert rel.tabela.at[0, "patamar"] == 1
+        assert rel.tabela.at[0, "duracao"] == 30.00
+        assert rel.tabela.at[0, "codigo_submercado"] == 1
+        assert rel.tabela.at[0, "nome_submercado"] == "SE"
+        assert rel.tabela.at[0, "demanda_MW"] == 49929.0
+        assert rel.tabela.at[0, "geracao_pequenas_usinas_MW"] == 1155.6
+        assert rel.tabela.at[0, "geracao_termica_MW"] == 4124.10
+        assert rel.tabela.at[0, "geracao_termica_antecipada_MW"] == 0.00
+        assert rel.tabela.at[0, "geracao_hidroeletrica_MW"] == 31278.38
+        assert rel.tabela.at[0, "geracao_eolica_MW"] == 5871.25
+        assert rel.tabela.at[0, "energia_bombeamento_MW"] == 0.00
+        assert rel.tabela.at[0, "energia_importada_MW"] == 0.00
+        assert rel.tabela.at[0, "energia_exportada_MW"] == 0.00
+        assert rel.tabela.at[0, "intercambio_liquido_MW"] == 11341.69
+        assert rel.tabela.at[0, "ande_MW"] == 3842.00
+        assert rel.tabela.at[0, "itaipu_50MW"] == 6992.00
+        assert rel.tabela.at[0, "itaipu_60MW"] == 6102.55
+        assert rel.tabela.at[0, "deficit_MW"] == 0.00
+        assert rel.tabela.at[0, "ena_MWmes"] == 5648.9
+        assert rel.tabela.at[0, "earm_inicial_MWmes"] == 118033.54
+        assert rel.tabela.at[0, "earm_inicial_percentual"] == 57.42
+        assert rel.tabela.at[0, "earm_final_MWmes"] == 117684.14
+        assert rel.tabela.at[0, "earm_final_percentual"] == 57.25
+        assert rel.tabela.at[0, "cmo"] == 46.68
+
+
+def test_dec_oper_sist_v32_9_selecionado_pela_versao():
+    m: MagicMock = mock_open(read_data="".join(MockDecOperSistv32_9))
+    with patch("builtins.open", m):
+        rel = DecOperSist.read(
+            "./tests/mocks/arquivos/dec_oper_sist.py", version="32.9"
+        )
+        assert rel.tabela.at[0, "ande_MW"] == 3842.00
+        assert rel.tabela.at[0, "cmo"] == 46.68
+
+
+def test_atributos_encontrados_dec_oper_sist_v31_1():
+    m: MagicMock = mock_open(read_data="".join(MockDecOperSist))
+    with patch("builtins.open", m):
+        rel = DecOperSist.read(
+            "./tests/mocks/arquivos/dec_oper_sist.py", version="31.14"
+        )
+        assert "ande_MW" not in rel.tabela.columns
         assert rel.versao == "31.14"
         assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "no"] == 1
@@ -43,7 +92,7 @@ def test_atributos_encontrados_dec_oper_sist():
 
 
 def test_eq_dec_oper_sist():
-    m: MagicMock = mock_open(read_data="".join(MockDecOperSist))
+    m: MagicMock = mock_open(read_data="".join(MockDecOperSistv32_9))
     with patch("builtins.open", m):
         rel1 = DecOperSist.read("./tests/mocks/arquivos/dec_oper_sist.py")
         rel2 = DecOperSist.read("./tests/mocks/arquivos/dec_oper_sist.py")
@@ -51,7 +100,7 @@ def test_eq_dec_oper_sist():
 
 
 def test_neq_dec_oper_sist():
-    m: MagicMock = mock_open(read_data="".join(MockDecOperSist))
+    m: MagicMock = mock_open(read_data="".join(MockDecOperSistv32_9))
     with patch("builtins.open", m):
         rel1 = DecOperSist.read("./tests/mocks/arquivos/dec_oper_sist.py")
         rel2 = DecOperSist.read("./tests/mocks/arquivos/dec_oper_sist.py")
@@ -62,8 +111,9 @@ def test_neq_dec_oper_sist():
 def test_atributos_encontrados_dec_oper_sist_v31():
     m: MagicMock = mock_open(read_data="".join(MockDecOperSistv31))
     with patch("builtins.open", m):
-        DecOperSist.set_version("31.0.2")
-        rel = DecOperSist.read("./tests/mocks/arquivos/dec_oper_sist.py")
+        rel = DecOperSist.read(
+            "./tests/mocks/arquivos/dec_oper_sist.py", version="31.0.2"
+        )
         assert rel.versao == "31.0.2"
         assert rel.tabela.at[0, "estagio"] == 1
         assert rel.tabela.at[0, "cenario"] == 1

@@ -5,6 +5,7 @@ from idecomp.decomp.modelos.blocos.versaomodelo import VersaoModelo
 from idecomp.decomp.modelos.dec_oper_sist import (
     TabelaOperSist,
     TabelaOperSistv31,
+    TabelaOperSistv31_1,
 )
 
 
@@ -16,7 +17,8 @@ class DecOperSist(ArquivoCSV):
     BLOCKS = [VersaoModelo, TabelaOperSist]
     VERSIONS = {
         "31.0.2": [VersaoModelo, TabelaOperSistv31],
-        "31.1.2": [VersaoModelo, TabelaOperSist],
+        "31.1.2": [VersaoModelo, TabelaOperSistv31_1],
+        "32.9": [VersaoModelo, TabelaOperSist],
     }
 
     @property
@@ -41,6 +43,7 @@ class DecOperSist(ArquivoCSV):
         - energia_importada_MW (`float`)
         - energia_exportada_MW (`float`)
         - intercambio_liquido_MW (`float`)
+        - ande_MW (`float`), a partir da versão 32.9
         - itaipu_50MW (`float`)
         - itaipu_60MW (`float`)
         - deficit_MW (`float`)
