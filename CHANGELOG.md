@@ -12,7 +12,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Modificado
 
-- A leitura padrão da classe `DecOperSist` passa a usar o formato da versão 32.9. Os arquivos de versões anteriores devem ser lidos informando a versão, como em `DecOperSist.read(caminho, version="31.14")`.
+- A leitura padrão da classe `DecOperSist` passa a usar o formato da versão 32.9. Os arquivos de versões anteriores devem ser lidos informando a versão, como em `DecOperSist.read(caminho, version="31.14")`. Como o `cfinterface` compara as versões como texto, uma versão de 32.10 a 32.99 informada em `version=` (como `"32.15.1"`) ainda seleciona o formato anterior à 32.9 e lê as colunas deslocadas. Os arquivos dessas versões devem ser lidos sem `version=` ou com `version="32.9"`.
 
 ## [1.18.2] - 2026-10-30
 
