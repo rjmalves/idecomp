@@ -8,6 +8,7 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Corrigido
 
+- `AC POTEFE`: a potência efetiva era lida e escrita nas colunas 25-35, uma a mais que o campo F10.0 do manual (colunas 25-34). Uma potência como `611.111`, reescrita pela `idecomp`, era lida pelo DECOMP como `611.11`, o que alterava os resultados do caso.
 - Os campos reais do `dadger` eram escritos com o número de casas decimais do modelo, o que arredondava os valores informados no deck com mais casas: os limites `3.571` de um registro `CT`, por exemplo, eram reescritos como `3.57`. A escrita passa a usar o número de casas do modelo apenas quando ele reproduz o valor; caso contrário, usa o texto mais curto que reproduz o valor e cabe no campo, em notação exponencial se necessário, como `1.E+21`. Um valor que não cabe no campo de nenhuma forma gera `ValueError`, e não é mais escrito além das colunas do campo.
 - A escrita dos campos do `dadger` em formato exponencial cortava o expoente quando o texto não cabia no campo.
 - Os campos inteiros e reais do `dadger` passam a ser lidos como o DECOMP os lê: os brancos dentro do campo são ignorados, como em `1 2`, lido como `12`, e o expoente pode vir sem letra, como em `1.0+21`. Esses campos eram lidos como `None`. Um inteiro que não cabe no seu campo passa a gerar `ValueError` na escrita, e não é mais escrito além das colunas do campo.

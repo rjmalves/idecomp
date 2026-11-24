@@ -6051,7 +6051,7 @@ class ACPOTEFE(Register):
         [
             FortranIntegerField(3, 4),
             FortranIntegerField(5, 19),
-            FortranFloatField(11, 24, 3),
+            FortranFloatField(10, 24, 3),
             LiteralField(3, 69),
             FortranIntegerField(2, 73),
             FortranIntegerField(4, 76),

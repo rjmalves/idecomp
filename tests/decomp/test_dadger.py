@@ -1597,6 +1597,24 @@ def test_registro_ce_dadger_custo_sem_ponto_decimal():
     _verifica_custos_f10_2(CE, MockCE, [39, 59, 79], [6, 9, 12])
 
 
+def _verifica_reescrita(classe, linha):
+    # A linha é reescrita como está, nas colunas do manual.
+    r = _le_registro(classe, linha)
+    assert _escreve_registro(r).rstrip() == linha.rstrip()
+    return r
+
+
+def test_registro_acpotefe_dadger_potencia_nas_colunas_do_manual():
+    # A potência é F10.0 no manual, nas colunas 25-34. Escrita nas
+    # colunas 25-35, "611.111" era lido pelo DECOMP como 611.11.
+    linha = (
+        "AC  288  POTEFE        1   611.111"
+        + "                                   ABR  1 2026"
+    )
+    r = _verifica_reescrita(ACPOTEFE, linha)
+    assert r.potencia == 611.111
+
+
 def test_registro_acproesp_dadger_produtibilidade_com_seis_decimais():
     linha = _substitui_campo("AC  288  PROESP", 19, 10, "0.008829")
     r = _le_registro(ACPROESP, linha)
