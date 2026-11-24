@@ -1,11 +1,30 @@
 # Imports de módulos externos
+import re
 from datetime import timedelta
-from typing import IO, Any
+from typing import IO, Any, Final, Literal
 
 import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.block import Block
-from cfinterface.components.integerfield import IntegerField
-from cfinterface.components.line import Line
+
+_TEMPO: Final = re.compile(r"(\d+)h\s*(\d+)min\s*([\d.]+)s")
+_LEITURA_DADOS: Final = re.compile(r"^Leitura de Dados:")
+_ENVIO_INICIAL: Final = re.compile(r"^Envio de Variaveis:")
+_GRUPO_ITERACAO: Final = re.compile(
+    r"^Iteracao\s+\d+\s+-\s+Envio de Variaveis:"
+)
+_GRUPO_FINAL: Final = re.compile(
+    r"^(Impressao|Sim\. Final)\s+-\s+Envio de Variaveis:"
+)
+_TOTAL_GRUPO: Final = re.compile(r"^\s+Total:")
+_IMPRESSAO: Final = re.compile(r"^Tempo de Impressao:")
+_TEMPO_TOTAL: Final = re.compile(r"^Tempo Total:")
+
+
+def _tempo(linha: str, etapa: str) -> timedelta:
+    m = _TEMPO.search(linha)
+    if m is None:
+        raise ValueError(f"Tempo não encontrado na linha de {etapa}: {linha!r}")
+    return timedelta(hours=int(m[1]), minutes=int(m[2]), seconds=float(m[3]))
 
 
 class BlocoTemposEtapas(Block):
@@ -14,22 +33,10 @@ class BlocoTemposEtapas(Block):
     decomp.tim.
     """
 
-    __slots__ = ["__line"]
+    __slots__ = []
 
     BEGIN_PATTERN = "RELATORIO DE CONVERGENCIA DO PROCESSO ITERATIVO"
     END_PATTERN = ""
-
-    def __init__(
-        self, previous: Any = None, next: Any = None, data: Any = None
-    ) -> None:
-        super().__init__(previous, next, data)
-        self.__line = Line(
-            [
-                IntegerField(3, 35),
-                IntegerField(2, 40),
-                IntegerField(2, 46),
-            ]
-        )
 
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, BlocoTemposEtapas):
@@ -45,59 +52,49 @@ class BlocoTemposEtapas(Block):
         else:
             return self.data.equals(bloco.data)
 
-    def read_line_time(self, linha: str) -> timedelta:
-        data = self.__line.read(linha)
-        return timedelta(hours=data[0], minutes=data[1], seconds=data[2])
-
     # Override
     def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> None:  # type: ignore[override]
-        def converte_tabela_em_df() -> pd.DataFrame:
-
-            df = pd.DataFrame(
-                data={
-                    "Etapa": [
-                        str_leitura_dados,
-                        "Convergencia",
-                        str_impressao,
-                        str_tempo_total,
-                    ],
-                    "Tempo": [
-                        tempo_leitura_dados,
-                        tempo_convergencia,
-                        tempo_impressao,
-                        tempo_total,
-                    ],
-                }
-            )
-            return df
-
-        # Salta 9 linhas linha
-        str_leitura_dados = "Leitura de Dados"
-        str_envio_variaveis = "Envio de Variaveis:"
-        str_impressao = "Impressao"
-        str_total = "Total"
-        str_tempo_total = "Tempo Total"
-        iniciou_convergencia = False
-        iniciou_impressao = False
-        tempo_leitura_dados = timedelta(seconds=0.0)
-        tempo_convergencia = timedelta(seconds=0.0)
-        tempo_impressao = timedelta(seconds=0.0)
-        tempo_total = timedelta(seconds=0.0)
-        while True:
-            linha = file.readline()
-            if len(linha) == 0:
-                self.data = converte_tabela_em_df()
-                break
-            if str_tempo_total in linha:
-                tempo_total = self.read_line_time(linha)
-            elif iniciou_impressao and str_total in linha:
-                tempo_impressao = self.read_line_time(linha)
-            elif iniciou_convergencia and str_total in linha:
-                tempo_convergencia += self.read_line_time(linha)
-            elif str_impressao in linha:
-                iniciou_impressao = True
-            elif str_leitura_dados in linha:
-                tempo_leitura_dados = self.read_line_time(linha)
-            elif str_envio_variaveis in linha and not iniciou_convergencia:
-                iniciou_convergencia = True
-                tempo_convergencia += self.read_line_time(linha)
+        grupo: Literal["nenhum", "iteracao", "final"] = "nenhum"
+        tempo_leitura_dados = timedelta(0)
+        tempo_envio_inicial = timedelta(0)
+        tempo_iteracoes = timedelta(0)
+        tempo_simulacao_final = timedelta(0)
+        tempo_impressao = timedelta(0)
+        tempo_total = timedelta(0)
+        while len(linha := file.readline()) > 0:
+            if _LEITURA_DADOS.search(linha):
+                tempo_leitura_dados = _tempo(linha, "Leitura de Dados")
+            elif _ENVIO_INICIAL.search(linha):
+                tempo_envio_inicial = _tempo(linha, "Envio de Variaveis")
+            elif _GRUPO_ITERACAO.search(linha):
+                grupo = "iteracao"
+            elif _GRUPO_FINAL.search(linha):
+                grupo = "final"
+            elif _TOTAL_GRUPO.search(linha):
+                if grupo == "iteracao":
+                    tempo_iteracoes += _tempo(linha, "Total da iteracao")
+                elif grupo == "final":
+                    tempo_simulacao_final = _tempo(linha, "Simulacao Final")
+                grupo = "nenhum"
+            elif _IMPRESSAO.search(linha):
+                tempo_impressao = _tempo(linha, "Impressao")
+            elif _TEMPO_TOTAL.search(linha):
+                tempo_total = _tempo(linha, "Tempo Total")
+        self.data = pd.DataFrame(
+            data={
+                "Etapa": [
+                    "Leitura de Dados",
+                    "Convergencia",
+                    "Simulacao Final",
+                    "Impressao",
+                    "Tempo Total",
+                ],
+                "Tempo": [
+                    tempo_leitura_dados,
+                    tempo_envio_inicial + tempo_iteracoes,
+                    tempo_simulacao_final,
+                    tempo_impressao,
+                    tempo_total,
+                ],
+            }
+        )

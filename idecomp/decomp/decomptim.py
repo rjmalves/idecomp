@@ -31,8 +31,13 @@ class Decomptim(BlockFile):
         Obtém a tabela dos tempos de execução do DECOMP existente no
         :class:`Decomptim`
 
-        - etapa (`str`)
-        - tempo (`timedelta`)
+        - Etapa (`str`)
+        - Tempo (`timedelta`)
+
+        Possui sempre cinco linhas, na mesma ordem nos dois layouts do
+        arquivo: `Leitura de Dados`, `Convergencia` (envio inicial mais
+        os totais das iterações), `Simulacao Final`, `Impressao` (zero
+        quando o arquivo não possui essa linha) e `Tempo Total`.
 
         :return: O DataFrame com os valores
         :rtype: pd.DataFrame | None.
