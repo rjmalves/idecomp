@@ -5,6 +5,10 @@ import pandas  # type: ignore[import-untyped]
 from cfinterface.components.register import Register
 from cfinterface.files.registerfile import RegisterFile
 
+from idecomp.decomp.modelos.dadger_manual import (
+    DiferencaLeitura,
+    compara_linhas,
+)
 from idecomp.decomp.modelos.dadger import (
     ACALTEFE,
     ACCOFEVA,
@@ -262,6 +266,64 @@ class Dadger(RegisterFile):
         else:
             kwargs_sem_df = {k: v for k, v in kwargs.items() if k != "df"}
             return self.data.get_registers_of_type(t, **kwargs_sem_df)
+
+    @staticmethod
+    def __le_linhas(caminho: str) -> list[str]:
+        # As colunas do DECOMP são bytes: cada byte é lido como um caractere.
+        with open(caminho, "rb") as arquivo:
+            linhas = arquivo.read().decode("latin-1").split("\n")
+        if linhas[-1] == "":
+            linhas.pop()
+        return [linha.removesuffix("\r") for linha in linhas]
+
+    @staticmethod
+    def compara_leitura_decomp(
+        original: str, modificado: str
+    ) -> pandas.DataFrame:
+        """
+        Compara dois arquivos dadger como o DECOMP os lê, linha a linha,
+        nas colunas do Manual do Usuário do DECOMP.
+
+        Serve para verificar se um dadger escrito pela idecomp é lido
+        pelo DECOMP como o original. Os campos são lidos como no Fortran,
+        conforme :func:`~idecomp.decomp.modelos.dadger_manual.compara_linhas`,
+        e as linhas de comentário são ignoradas.
+
+        Os campos de texto são comparados sem os brancos à direita. Os
+        brancos à esquerda são significativos e a idecomp os descarta ao
+        ler um campo de texto: um nome com brancos à esquerda no arquivo
+        original aparece como diferença após a escrita pela idecomp.
+
+        :param original: caminho do arquivo original
+        :type original: str
+        :param modificado: caminho do arquivo modificado
+        :type modificado: str
+        :return: As diferenças de leitura, com as colunas ``linha``,
+            ``registro``, ``coluna_inicial``, ``coluna_final``,
+            ``texto_original``, ``texto_modificado``,
+            ``valor_original`` e ``valor_modificado``. Sem diferenças,
+            o DataFrame é vazio.
+        :rtype: :class:`pandas.DataFrame`
+        :raises ValueError: Se os arquivos tiverem números de linhas
+            diferentes.
+        """
+        linhas_original = Dadger.__le_linhas(original)
+        linhas_modificado = Dadger.__le_linhas(modificado)
+        if len(linhas_original) != len(linhas_modificado):
+            raise ValueError(
+                "Os arquivos têm números de linhas diferentes: "
+                + f"{len(linhas_original)} e {len(linhas_modificado)}"
+            )
+        diferencas = [
+            {"linha": numero, **diferenca._asdict()}
+            for numero, (linha_original, linha_modificada) in enumerate(
+                zip(linhas_original, linhas_modificado), start=1
+            )
+            for diferenca in compara_linhas(linha_original, linha_modificada)
+        ]
+        return pandas.DataFrame(
+            diferencas, columns=["linha", *DiferencaLeitura._fields]
+        )
 
     @property
     def te(self) -> TE | None:

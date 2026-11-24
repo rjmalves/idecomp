@@ -87,6 +87,7 @@ from idecomp.decomp.modelos.dadger import (
 
 import inspect
 
+import pytest
 from cfinterface.components.register import Register
 
 import idecomp.decomp.modelos.dadger as modelos_dadger
@@ -3026,3 +3027,68 @@ def test_leitura_escrita_dadger():
     with patch("builtins.open", m_releitura):
         d2 = Dadger.read("./tests/mocks/arquivos/dadger.py")
         assert d1 == d2
+
+
+def _compara_leitura_decomp(original: str, modificado: str):
+    arquivos = [
+        mock_open(read_data=texto.encode("latin-1")).return_value
+        for texto in [original, modificado]
+    ]
+    with patch("builtins.open", MagicMock(side_effect=arquivos)):
+        return Dadger.compara_leitura_decomp("original", "modificado")
+
+
+def test_compara_leitura_decomp_dadger_sem_diferencas():
+    original = "& Usinas\r\n" + MockUH.rstrip("\n") + "\r\n"
+    modificado = "& Hidrelétricas\n" + MockUH.rstrip("\n") + "   \n"
+    df = _compara_leitura_decomp(original, modificado)
+    assert df.empty
+    assert df.columns.tolist() == [
+        "linha",
+        "registro",
+        "coluna_inicial",
+        "coluna_final",
+        "texto_original",
+        "texto_modificado",
+        "valor_original",
+        "valor_modificado",
+    ]
+
+
+def test_compara_leitura_decomp_dadger_com_diferenca():
+    original = "& Potência\nAC  288  POTEFE        1   611.111\n"
+    modificado = "& Potência\nAC  288  POTEFE        1   611.110\n"
+    df = _compara_leitura_decomp(original, modificado)
+    assert df.to_dict("records") == [
+        {
+            "linha": 2,
+            "registro": "ACPOTEFE",
+            "coluna_inicial": 25,
+            "coluna_final": 34,
+            "texto_original": "   611.111",
+            "texto_modificado": "   611.110",
+            "valor_original": 611.111,
+            "valor_modificado": 611.11,
+        }
+    ]
+
+
+def test_compara_leitura_decomp_dadger_com_numero_de_linhas_diferente():
+    with pytest.raises(ValueError, match="números de linhas diferentes"):
+        _compara_leitura_decomp(MockUH, MockUH + MockUH)
+
+
+def test_compara_leitura_decomp_dadger_escrito_pela_idecomp():
+    original = "".join(MockDadger)
+    m_leitura: MagicMock = mock_open(read_data=original)
+    with patch("builtins.open", m_leitura):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+    m_escrita: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m_escrita):
+        d.write("./tests/mocks/arquivos/dadger.py")
+        chamadas = m_escrita.mock_calls
+        escrito = "".join(
+            chamadas[i].args[0] for i in range(2, len(chamadas) - 1)
+        )
+    df = _compara_leitura_decomp(original, escrito)
+    assert df.empty, df.to_string()

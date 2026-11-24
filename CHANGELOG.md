@@ -8,6 +8,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Adicionado
 
+- Método estático `compara_leitura_decomp` da classe `Dadger`, que compara dois arquivos `dadger` como o DECOMP os lê, nas colunas do Manual do Usuário do DECOMP (versão 31), e retorna as diferenças em um `DataFrame`, com a linha, o registro, as colunas, os textos e os valores lidos de cada uma. Serve para verificar se um `dadger` escrito pela `idecomp` é lido pelo DECOMP como o original. Os campos numéricos são lidos como no Fortran, as linhas de comentário são ignoradas, e as colunas fora dos campos do manual e as linhas dos registros que o manual não descreve (`CX` e `VT`) são comparadas como texto. Os campos de texto são comparados sem os brancos à direita, mas os brancos à esquerda são significativos: como a `idecomp` descarta os brancos à esquerda ao ler um campo de texto, um nome com brancos à esquerda no arquivo original aparece como diferença depois da escrita.
+- Módulo `idecomp.decomp.modelos.dadger_manual`, com as colunas de cada registro do `dadger` no manual do DECOMP (`CAMPOS`), os campos que a `idecomp` lê e o manual não documenta (`EXTENSOES`) e a comparação de duas linhas (`compara_linhas`).
 - Propriedade `tolerancia_simulacao_final` no registro `HE` e filtro de mesmo nome no método `he` da classe `Dadger`, com o flag da coluna 107 que indica se é considerada a tolerância de 0,01 MWmes na verificação das restrições RHE na simulação final.
 
 ### Modificado
