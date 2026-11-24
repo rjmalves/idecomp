@@ -2962,6 +2962,7 @@ class Dadger(RegisterFile):
         tipo_penalidade: int | None = None,
         valor_penalidade: float | None = None,
         arquivo_produtibilidades: str | None = None,
+        tolerancia_simulacao_final: int | None = None,
         *,
         df: Literal[True],
     ) -> pandas.DataFrame: ...
@@ -2976,6 +2977,7 @@ class Dadger(RegisterFile):
         tipo_penalidade: int | None = None,
         valor_penalidade: float | None = None,
         arquivo_produtibilidades: str | None = None,
+        tolerancia_simulacao_final: int | None = None,
         df: Literal[False] = False,
     ) -> HE | list[HE] | None: ...
     @overload
@@ -2989,6 +2991,7 @@ class Dadger(RegisterFile):
         tipo_penalidade: int | None = None,
         valor_penalidade: float | None = None,
         arquivo_produtibilidades: str | None = None,
+        tolerancia_simulacao_final: int | None = None,
         df: bool = False,
     ) -> HE | list[HE] | pandas.DataFrame | None: ...
     def he(
@@ -3001,6 +3004,7 @@ class Dadger(RegisterFile):
         tipo_penalidade: int | None = None,
         valor_penalidade: float | None = None,
         arquivo_produtibilidades: str | None = None,
+        tolerancia_simulacao_final: int | None = None,
         df: bool = False,
     ) -> HE | list[HE] | pandas.DataFrame | None:
         """
@@ -3029,6 +3033,9 @@ class Dadger(RegisterFile):
         :param arquivo_produtibilidades: nome do arquivo com as
             produtibilidades das usinas
         :type arquivo_produtibilidades: int | None
+        :param tolerancia_simulacao_final: flag para considerar a
+            tolerância de 0,01 MWmes na simulação final
+        :type tolerancia_simulacao_final: int | None
         :param df: ignorar os filtros e retornar
             todos os dados de registros como um DataFrame
         :type df: bool
@@ -3046,6 +3053,7 @@ class Dadger(RegisterFile):
             tipo_penalidade=tipo_penalidade,
             valor_penalidade=valor_penalidade,
             arquivo_produtibilidades=arquivo_produtibilidades,
+            tolerancia_simulacao_final=tolerancia_simulacao_final,
             df=df,
         )
 

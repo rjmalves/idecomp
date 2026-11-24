@@ -6,6 +6,14 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Adicionado
+
+- Propriedade `tolerancia_simulacao_final` no registro `HE` e filtro de mesmo nome no método `he` da classe `Dadger`, com o flag da coluna 107 que indica se é considerada a tolerância de 0,01 MWmes na verificação das restrições RHE na simulação final.
+
+### Modificado
+
+- Os registros `CI`, `CE`, `PQ`, `RQ` e `HE` lidos de um `dadger` passam a ter mais elementos em `data`, com `None` nos campos em branco, e são escritos com brancos até o último campo do manual, como já ocorria nos demais registros. As propriedades `limite_inferior`, `limite_superior`, `custo` e `fator_perdas` dos registros `CI` e `CE` continuam a se referir ao leiaute com 3 patamares.
+
 ### Corrigido
 
 - `AC POTEFE`: a potência efetiva era lida e escrita nas colunas 25-35, uma a mais que o campo F10.0 do manual (colunas 25-34). Uma potência como `611.111`, reescrita pela `idecomp`, era lida pelo DECOMP como `611.11`, o que alterava os resultados do caso.
@@ -19,6 +27,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 - `EA`: as ENAs eram lidas a partir da coluna 12, e não da coluna 10 do manual.
 - `FP`: a tolerância para desvio era lida nas colunas 67-71, e não nas colunas 67-69 do manual.
 - `HE`: o nome do arquivo de produtibilidades era lido com 12 caracteres, e não com os 60 do manual (colunas 46-105).
+- `RQ`: só eram lidas as vazões dos 8 primeiros estágios, e não as dos 24 do manual.
+- `CI` e `CE`: os campos dos patamares 4 e 5 e o fator de perdas com 5 patamares (colunas 130-134) eram perdidos na escrita. No registro `PQ`, o mesmo ocorria com o fator de perdas com 5 patamares (colunas 50-54).
 
 ## [1.18.3] - 2026-11-03
 

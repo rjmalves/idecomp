@@ -408,7 +408,7 @@ def test_registro_pq_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == ["SECO_PCH", 1, 1, 2527, 2553, 2503, None, None]
+    assert r.data == ["SECO_PCH", 1, 1, 2527, 2553, 2503, None, None, None]
     assert r.nome == "SECO_PCH"
     r.nome = "TESTE"
     assert r.nome == "TESTE"
@@ -1686,15 +1686,46 @@ def test_registro_fp_dadger_tolerancia_nas_colunas_do_manual():
     assert _le_registro(FP, escrita).data == r.data
 
 
-def test_registro_he_dadger_arquivo_nas_colunas_do_manual():
-    # O arquivo é A60 no manual, nas colunas 46-105.
+def test_registro_he_dadger_arquivo_e_tolerancia_nas_colunas_do_manual():
+    # O arquivo é A60 no manual, nas colunas 46-105, e o flag de
+    # tolerância é I1, na coluna 107.
     arquivo = "produtibilidades_rhe_semanais.dat"
-    linha = MockHE[:45] + arquivo.ljust(60)
+    linha = MockHE[:45] + arquivo.ljust(60) + " 1"
     r = _le_registro(HE, linha)
     assert r.arquivo_produtibilidades == arquivo
+    assert r.tolerancia_simulacao_final == 1
     escrita = _escreve_registro(r)
-    assert escrita[45:105] == linha[45:105]
+    assert escrita[45:107] == linha[45:107]
     assert _le_registro(HE, escrita).data == r.data
+
+
+def test_registro_rq_dadger_vazao_em_24_estagios():
+    linha = "RQ   1   " + "  100" * 23 + "   0."
+    r = _le_registro(RQ, linha)
+    assert r.vazao == [100.0] * 23 + [0.0]
+    escrita = _escreve_registro(r)
+    assert len(escrita.rstrip()) == 129
+    assert _le_registro(RQ, escrita).vazao == r.vazao
+
+
+def test_registro_ci_dadger_cinco_patamares():
+    # Com 5 patamares, o fator de perdas fica nas colunas 130-134.
+    linha = (
+        "CI    1  2 IMPORTA       1   " + "100.5200.0     15.50" * 5 + "3.000"
+    )
+    _verifica_reescrita(CI, linha)
+
+
+def test_registro_ce_dadger_cinco_patamares():
+    linha = (
+        "CE    1  1 EXPORTA       1   " + "80.00150.0     42.75" * 5 + "5.000"
+    )
+    _verifica_reescrita(CE, linha)
+
+
+def test_registro_pq_dadger_cinco_patamares():
+    # Com 5 patamares, o fator de perdas fica nas colunas 50-54.
+    _verifica_reescrita(PQ, MockPQ + " 2400 23003.000")
 
 
 def test_registro_vl_dadger_coeficiente_com_expoente_negativo():
@@ -1735,22 +1766,26 @@ def test_registro_ci_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [
-        1,
-        2,
-        "IMPORTA",
-        1,
-        100.5,
-        200.0,
-        15.5,
-        100.5,
-        200.0,
-        15.5,
-        100.5,
-        200.0,
-        15.5,
-        3.0,
-    ]
+    assert (
+        r.data
+        == [
+            1,
+            2,
+            "IMPORTA",
+            1,
+            100.5,
+            200.0,
+            15.5,
+            100.5,
+            200.0,
+            15.5,
+            100.5,
+            200.0,
+            15.5,
+            3.0,
+        ]
+        + [None] * 6
+    )
     # O limite inferior fracionário (100.5) é preservado na escrita: o campo
     # F5.0 do manual admite decimais quando informados no deck.
     m2: MagicMock = mock_open(read_data="")
@@ -1758,7 +1793,7 @@ def test_registro_ci_dadger():
         with open("", "w") as fp:
             r.write(fp)
         escritas = "".join(c.args[0] for c in m2().write.call_args_list)
-    assert escritas.rstrip("\n") == MockCI
+    assert escritas.rstrip() == MockCI
     assert r.numero_contrato == 1
     r.numero_contrato = 0
     assert r.numero_contrato == 0
@@ -1792,28 +1827,32 @@ def test_registro_ce_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [
-        1,
-        1,
-        "EXPORTA",
-        1,
-        80.0,
-        150.0,
-        42.75,
-        80.0,
-        150.0,
-        42.75,
-        80.0,
-        150.0,
-        42.75,
-        5.0,
-    ]
+    assert (
+        r.data
+        == [
+            1,
+            1,
+            "EXPORTA",
+            1,
+            80.0,
+            150.0,
+            42.75,
+            80.0,
+            150.0,
+            42.75,
+            80.0,
+            150.0,
+            42.75,
+            5.0,
+        ]
+        + [None] * 6
+    )
     m2: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m2):
         with open("", "w") as fp:
             r.write(fp)
         escritas = "".join(c.args[0] for c in m2().write.call_args_list)
-    assert escritas.rstrip("\n") == MockCE
+    assert escritas.rstrip() == MockCE
     assert r.numero_contrato == 1
     r.numero_contrato = 0
     assert r.numero_contrato == 0
@@ -1987,7 +2026,7 @@ def test_registro_rq_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [1, 100, 100, 100, 100, 100, 0, None, None]
+    assert r.data == [1, 100, 100, 100, 100, 100, 0] + [None] * 18
     assert r.codigo_ree == 1
     r.codigo_ree = 0
     assert r.codigo_ree == 0
@@ -2274,7 +2313,7 @@ def test_registro_he_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [1, 2, 60.0, 1, 1710.0, 1, 0, 0, "prodrhe.dat"]
+    assert r.data == [1, 2, 60.0, 1, 1710.0, 1, 0, 0, "prodrhe.dat", None]
     assert r.codigo_restricao == 1
     r.codigo_restricao = 0
     assert r.codigo_restricao == 0
@@ -2302,6 +2341,9 @@ def test_registro_he_dadger():
     assert r.arquivo_produtibilidades == "prodrhe.dat"
     r.arquivo_produtibilidades = "teste.dat"
     assert r.arquivo_produtibilidades == "teste.dat"
+    assert r.tolerancia_simulacao_final is None
+    r.tolerancia_simulacao_final = 1
+    assert r.tolerancia_simulacao_final == 1
 
 
 def test_registro_cm_dadger():

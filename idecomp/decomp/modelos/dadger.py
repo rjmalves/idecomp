@@ -663,6 +663,7 @@ class PQ(Register):
             FortranFloatField(5, 34, 4, compact=True),
             FortranFloatField(5, 39, 4, compact=True),
             FortranFloatField(5, 44, 4, compact=True),
+            FortranFloatField(5, 49, 4, compact=True),
         ]
     )
 
@@ -2347,6 +2348,12 @@ class CI(Register):
             FortranFloatField(5, 74, 3),
             FortranFloatField(10, 79, 2, implied_decimals=2),
             FortranFloatField(5, 89, 3),
+            FortranFloatField(5, 94, 3),
+            FortranFloatField(10, 99, 2, implied_decimals=2),
+            FortranFloatField(5, 109, 3),
+            FortranFloatField(5, 114, 3),
+            FortranFloatField(10, 119, 2, implied_decimals=2),
+            FortranFloatField(5, 129, 3),
         ]
     )
 
@@ -2503,6 +2510,12 @@ class CE(Register):
             FortranFloatField(5, 74, 3),
             FortranFloatField(10, 79, 2, implied_decimals=2),
             FortranFloatField(5, 89, 3),
+            FortranFloatField(5, 94, 3),
+            FortranFloatField(10, 99, 2, implied_decimals=2),
+            FortranFloatField(5, 109, 3),
+            FortranFloatField(5, 114, 3),
+            FortranFloatField(10, 119, 2, implied_decimals=2),
+            FortranFloatField(5, 129, 3),
         ]
     )
 
@@ -3311,6 +3324,22 @@ class RQ(Register):
             FortranFloatField(5, 34, 2),
             FortranFloatField(5, 39, 2),
             FortranFloatField(5, 44, 2),
+            FortranFloatField(5, 49, 2),
+            FortranFloatField(5, 54, 2),
+            FortranFloatField(5, 59, 2),
+            FortranFloatField(5, 64, 2),
+            FortranFloatField(5, 69, 2),
+            FortranFloatField(5, 74, 2),
+            FortranFloatField(5, 79, 2),
+            FortranFloatField(5, 84, 2),
+            FortranFloatField(5, 89, 2),
+            FortranFloatField(5, 94, 2),
+            FortranFloatField(5, 99, 2),
+            FortranFloatField(5, 104, 2),
+            FortranFloatField(5, 109, 2),
+            FortranFloatField(5, 114, 2),
+            FortranFloatField(5, 119, 2),
+            FortranFloatField(5, 124, 2),
         ]
     )
 
@@ -4225,6 +4254,7 @@ class HE(Register):
             FortranIntegerField(1, 41),
             FortranIntegerField(1, 43),
             LiteralField(60, 45),
+            FortranIntegerField(1, 106),
         ]
     )
 
@@ -4359,6 +4389,22 @@ class HE(Register):
     @arquivo_produtibilidades.setter
     def arquivo_produtibilidades(self, t: str) -> None:
         self.data[8] = t
+
+    @property
+    def tolerancia_simulacao_final(self) -> int | None:
+        """
+        Flag para indicar se é considerada a tolerância de 0,01 MWmes
+        na verificação do atendimento à restrição RHE na simulação
+        final.
+
+        :return: A flag.
+        :rtype: int | None
+        """
+        return self.data[9]
+
+    @tolerancia_simulacao_final.setter
+    def tolerancia_simulacao_final(self, t: int) -> None:
+        self.data[9] = t
 
 
 class CM(Register):
