@@ -6,6 +6,32 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Adicionado
+
+- Método estático `compara_leitura_decomp` da classe `Dadger`, que compara dois arquivos `dadger` como o DECOMP os lê, nas colunas do Manual do Usuário do DECOMP (versão 31), e retorna as diferenças em um `DataFrame`, com a linha, o registro, as colunas, os textos e os valores lidos de cada uma. Serve para verificar se um `dadger` escrito pela `idecomp` é lido pelo DECOMP como o original. Os campos numéricos são lidos como no Fortran, as linhas de comentário são ignoradas, e as colunas fora dos campos do manual e as linhas dos registros que o manual não descreve (`CX` e `VT`) são comparadas como texto. Os campos de texto são comparados sem os brancos à direita, mas os brancos à esquerda são significativos: como a `idecomp` descarta os brancos à esquerda ao ler um campo de texto, um nome com brancos à esquerda no arquivo original aparece como diferença depois da escrita.
+- Módulo `idecomp.decomp.modelos.dadger_manual`, com as colunas de cada registro do `dadger` no manual do DECOMP (`CAMPOS`), os campos que a `idecomp` lê e o manual não documenta (`EXTENSOES`) e a comparação de duas linhas (`compara_linhas`).
+- Propriedade `tolerancia_simulacao_final` no registro `HE` e filtro de mesmo nome no método `he` da classe `Dadger`, com o flag da coluna 107 que indica se é considerada a tolerância de 0,01 MWmes na verificação das restrições RHE na simulação final.
+
+### Modificado
+
+- Os registros `CI`, `CE`, `PQ`, `RQ` e `HE` lidos de um `dadger` passam a ter mais elementos em `data`, com `None` nos campos em branco, e são escritos com brancos até o último campo do manual, como já ocorria nos demais registros. As propriedades `limite_inferior`, `limite_superior`, `custo` e `fator_perdas` dos registros `CI` e `CE` continuam a se referir ao leiaute com 3 patamares.
+
+### Corrigido
+
+- `AC POTEFE`: a potência efetiva era lida e escrita nas colunas 25-35, uma a mais que o campo F10.0 do manual (colunas 25-34). Uma potência como `611.111`, reescrita pela `idecomp`, era lida pelo DECOMP como `611.11`, o que alterava os resultados do caso.
+- Os campos reais do `dadger` eram escritos com o número de casas decimais do modelo, o que arredondava os valores informados no deck com mais casas: os limites `3.571` de um registro `CT`, por exemplo, eram reescritos como `3.57`. A escrita passa a usar o número de casas do modelo apenas quando ele reproduz o valor; caso contrário, usa o texto mais curto que reproduz o valor e cabe no campo, em notação exponencial se necessário, como `1.E+21`. Um valor que não cabe no campo de nenhuma forma gera `ValueError`, e não é mais escrito além das colunas do campo.
+- A escrita dos campos do `dadger` em formato exponencial cortava o expoente quando o texto não cabia no campo.
+- Os campos inteiros e reais do `dadger` passam a ser lidos como o DECOMP os lê: os brancos dentro do campo são ignorados, como em `1 2`, lido como `12`, e o expoente pode vir sem letra, como em `1.0+21`. Esses campos eram lidos como `None`. Um inteiro que não cabe no seu campo passa a gerar `ValueError` na escrita, e não é mais escrito além das colunas do campo.
+- `TE`: o título era lido com 75 caracteres, e os 5 últimos dos 80 do manual eram perdidos na escrita.
+- `UH`: a vazão defluente mínima era lida nas colunas 26-35, e não nas colunas 25-34 do manual.
+- `RE`, `LU`, `FU`, `FT`, `FI` e `FE`: o código da restrição era lido nas colunas 5-7, e não nas colunas 5-8 do manual, e um código com 4 dígitos era lido sem o último. Os códigos com até 3 dígitos continuam a ser escritos nas colunas 5-7, como nos decks.
+- `PV`: os campos eram lidos uma coluna à direita: a penalidade e a tolerância nas colunas 6-25 e 29-48, e não nas colunas 5-24 e 28-47 do manual. Os demais campos, que o manual não documenta, foram deslocados da mesma forma.
+- `EA`: as ENAs eram lidas a partir da coluna 12, e não da coluna 10 do manual.
+- `FP`: a tolerância para desvio era lida nas colunas 67-71, e não nas colunas 67-69 do manual.
+- `HE`: o nome do arquivo de produtibilidades era lido com 12 caracteres, e não com os 60 do manual (colunas 46-105).
+- `RQ`: só eram lidas as vazões dos 8 primeiros estágios, e não as dos 24 do manual.
+- `CI` e `CE`: os campos dos patamares 4 e 5 e o fator de perdas com 5 patamares (colunas 130-134) eram perdidos na escrita. No registro `PQ`, o mesmo ocorria com o fator de perdas com 5 patamares (colunas 50-54).
+
 ## [1.18.3] - 2026-11-03
 
 ### Corrigido

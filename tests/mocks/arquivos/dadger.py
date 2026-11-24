@@ -62,7 +62,7 @@ MockPE = "PE   1 0 10000.00"
 
 MockTS = "TS  0.000000000010000 0.000000000001000   1   0.000000000005000"
 
-MockPV = "PV   10000000000000000.00   10000000000000000.00   001   1.2   10000000000000000.00   10000000000000000.00"
+MockPV = "PV  10000000000000000.00   10000000000000000.00   001   1.2   10000000000000000.00   10000000000000000.00"
 
 MockCX = "CX  101   102"
 
@@ -108,9 +108,7 @@ MockACPOTEFE = "AC  275  POTEFE        1      22.5                              
 
 MockACALTEFE = "AC  154  ALTEFE        1     76.70                                   AGO  1 2025"
 
-MockFP = (
-    "FP  999    1  0    5     0   100  0    5    20    20                 0"
-)
+MockFP = "FP  999    1  0    5     0   100  0    5    20    20                0"
 
 MockIR = "IR  NORMAL    17   61"
 
@@ -1034,7 +1032,7 @@ MockDadger = [
     "PD  PRIMAL\n",
     "PU  1\n",
     "TS  0.000000000010000 0.000000000001000   1   0.000000000005000\n",
-    "PV   10000000000000000.00   10000000000000000.00   001   1.2   10000000000000000.00   10000000000000000.00\n",
+    "PV  10000000000000000.00   10000000000000000.00   001   1.2   10000000000000000.00   10000000000000000.00\n",
     "PE   1 0 10000.00\n",
     "CS  1\n",
     "&\n",
@@ -3489,7 +3487,7 @@ MockDadger = [
     "&                 Discret. Q         Discret. V        Janela GH                NptIni NptAd                 \n",
     "&   usi  iper tp Npt  QMin  QMax  tp Npt  VMin  VMax  GHmin GHmax Tol FlgD  tp %/n    %/n NI Verif\n",
     "&X  XXX  XXX  x XXXX XXXXX XXXXX  x XXXX XXXXX XXXXX  XXXXX XXXXX XXX  X    X XXXXX XXXXX XX   X\n",
-    "FP  999    1  0    5     0   100  0    5    20    20                   0                       \n",
+    "FP  999    1  0    5     0   100  0    5    20    20                0                          \n",
     "FP  111    2  0    5     0   100  0    5    97    20\n",
     "FP  135    1  0    5     0   100  0    5    80    20   \n",
     "&PS\n",

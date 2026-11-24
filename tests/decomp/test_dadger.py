@@ -55,6 +55,7 @@ from idecomp.decomp.modelos.dadger import (
     ACNUMCON,
     ACNUMMAQ,
     ACPOTEFE,
+    ACPROESP,
     ACALTEFE,
     FP,
     IR,
@@ -86,6 +87,7 @@ from idecomp.decomp.modelos.dadger import (
 
 import inspect
 
+import pytest
 from cfinterface.components.register import Register
 
 import idecomp.decomp.modelos.dadger as modelos_dadger
@@ -232,13 +234,12 @@ def test_registro_te_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [
-        "PMO - JANEIRO/20 - FEVEREIRO/20 - REV 0 - FCF COM CVAR - 12 REE - VALOR ESP"
-    ]
-    assert (
-        r.titulo
-        == "PMO - JANEIRO/20 - FEVEREIRO/20 - REV 0 - FCF COM CVAR - 12 REE - VALOR ESP"
+    titulo = (
+        "PMO - JANEIRO/20 - FEVEREIRO/20 - REV 0 - FCF COM CVAR - 12 REE - "
+        + "VALOR ESPERADO"
     )
+    assert r.data == [titulo]
+    assert r.titulo == titulo
     r.titulo = "Teste123"
     assert r.titulo == "Teste123"
 
@@ -408,7 +409,7 @@ def test_registro_pq_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == ["SECO_PCH", 1, 1, 2527, 2553, 2503, None, None]
+    assert r.data == ["SECO_PCH", 1, 1, 2527, 2553, 2503, None, None, None]
     assert r.nome == "SECO_PCH"
     r.nome = "TESTE"
     assert r.nome == "TESTE"
@@ -1596,28 +1597,196 @@ def test_registro_ce_dadger_custo_sem_ponto_decimal():
     _verifica_custos_f10_2(CE, MockCE, [39, 59, 79], [6, 9, 12])
 
 
+def _verifica_reescrita(classe, linha):
+    # A linha é reescrita como está, nas colunas do manual.
+    r = _le_registro(classe, linha)
+    assert _escreve_registro(r).rstrip() == linha.rstrip()
+    return r
+
+
+def test_registro_te_dadger_titulo_com_80_caracteres():
+    # O título é A80 no manual, nas colunas 5-84.
+    r = _verifica_reescrita(TE, MockTE)
+    assert r.titulo == MockTE[4:].rstrip()
+
+
+def test_registro_acpotefe_dadger_potencia_nas_colunas_do_manual():
+    # A potência é F10.0 no manual, nas colunas 25-34. Escrita nas
+    # colunas 25-35, "611.111" era lido pelo DECOMP como 611.11.
+    linha = (
+        "AC  288  POTEFE        1   611.111"
+        + "                                   ABR  1 2026"
+    )
+    r = _verifica_reescrita(ACPOTEFE, linha)
+    assert r.potencia == 611.111
+
+
+def test_registro_acproesp_dadger_produtibilidade_com_seis_decimais():
+    linha = _substitui_campo("AC  288  PROESP", 19, 10, "0.008829")
+    r = _le_registro(ACPROESP, linha)
+    assert r.data[1] == 0.008829
+    assert _escreve_registro(r)[19:29] == "  0.008829"
+
+
+def test_registro_ct_dadger_limites_com_tres_decimais():
+    # Os limites são F5.0 no manual e admitem decimais no deck.
+    linha = _substitui_campo(MockCT, 29, 5, "3.571")
+    linha = _substitui_campo(linha, 34, 5, "0.744")
+    r = _le_registro(CT, linha)
+    assert r.data[4:6] == [3.571, 0.744]
+    assert _escreve_registro(r)[29:39] == "3.5710.744"
+
+
+def test_registro_uh_dadger_defluencia_minima_nas_colunas_do_manual():
+    # A vazão defluente mínima é F10.0 no manual, nas colunas 25-34.
+    linha = _substitui_campo(MockUH.rstrip("\n"), 24, 10, "1234.567")
+    r = _verifica_reescrita(UH, linha)
+    assert r.data[3] == 1234.567
+
+
+def test_registros_restricoes_eletricas_dadger_codigo_com_quatro_digitos():
+    # O código da restrição é I4 no manual, nas colunas 5-8. Os decks
+    # preenchem só as colunas 5-7 quando o código tem até três dígitos.
+    for classe, mock in [
+        (RE, MockRE),
+        (LU, MockLU),
+        (FU, MockFU),
+        (FT, MockFT),
+        (FI, MockFI),
+        (FE, MockFE),
+    ]:
+        linha = _substitui_campo(mock, 4, 4, "1001")
+        r = _le_registro(classe, linha)
+        assert r.data[0] == 1001, classe
+        assert _escreve_registro(r)[:9] == linha[:9], classe
+        r = _le_registro(classe, mock)
+        assert _escreve_registro(r)[:9] == mock[:9], classe
+
+
+def test_registro_pv_dadger_nas_colunas_do_manual():
+    # A penalidade e a tolerância são F20.0 no manual, nas colunas 5-24
+    # e 28-47.
+    linha = "PV  " + "100000.00000".rjust(20) + "   " + "0.00000001".rjust(20)
+    r = _verifica_reescrita(PV, linha)
+    assert r.data[:2] == [100000.0, 1e-8]
+
+
+def test_registro_ea_dadger_nas_colunas_do_manual():
+    # As ENAs são 11F10.0 no manual, nas colunas 10-119.
+    r = _verifica_reescrita(EA, MockEA)
+    assert r.ena[0] == 1917.35
+
+
+def test_registro_fp_dadger_tolerancia_nas_colunas_do_manual():
+    # A tolerância para desvio é F3.0 no manual, nas colunas 67-69.
+    linha = _substitui_campo(MockFP[:66], 66, 3, "2.5")
+    r = _le_registro(FP, linha)
+    assert r.data[12] == 2.5
+    escrita = _escreve_registro(r)
+    assert escrita[66:69] == "2.5"
+    assert _le_registro(FP, escrita).data == r.data
+
+
+def test_registro_he_dadger_arquivo_e_tolerancia_nas_colunas_do_manual():
+    # O arquivo é A60 no manual, nas colunas 46-105, e o flag de
+    # tolerância é I1, na coluna 107.
+    arquivo = "produtibilidades_rhe_semanais.dat"
+    linha = MockHE[:45] + arquivo.ljust(60) + " 1"
+    r = _le_registro(HE, linha)
+    assert r.arquivo_produtibilidades == arquivo
+    assert r.tolerancia_simulacao_final == 1
+    escrita = _escreve_registro(r)
+    assert escrita[45:107] == linha[45:107]
+    assert _le_registro(HE, escrita).data == r.data
+
+
+def test_registro_rq_dadger_vazao_em_24_estagios():
+    linha = "RQ   1   " + "  100" * 23 + "   0."
+    r = _le_registro(RQ, linha)
+    assert r.vazao == [100.0] * 23 + [0.0]
+    escrita = _escreve_registro(r)
+    assert len(escrita.rstrip()) == 129
+    assert _le_registro(RQ, escrita).vazao == r.vazao
+
+
+def test_registro_ci_dadger_cinco_patamares():
+    # Com 5 patamares, o fator de perdas fica nas colunas 130-134.
+    linha = (
+        "CI    1  2 IMPORTA       1   " + "100.5200.0     15.50" * 5 + "3.000"
+    )
+    _verifica_reescrita(CI, linha)
+
+
+def test_registro_ce_dadger_cinco_patamares():
+    linha = (
+        "CE    1  1 EXPORTA       1   " + "80.00150.0     42.75" * 5 + "5.000"
+    )
+    _verifica_reescrita(CE, linha)
+
+
+def test_registro_pq_dadger_cinco_patamares():
+    # Com 5 patamares, o fator de perdas fica nas colunas 50-54.
+    _verifica_reescrita(PQ, MockPQ + " 2400 23003.000")
+
+
+def test_registro_vl_dadger_coeficiente_com_expoente_negativo():
+    linha = _substitui_campo(MockVL, 26, 15, "-1.23456789E-3")
+    r = _le_registro(VL, linha)
+    assert r.data[2] == -1.23456789e-3
+    assert _escreve_registro(r)[26:41] == " -1.23456789E-3"
+
+
+def test_registro_lu_dadger_limite_em_notacao_exponencial():
+    # O manual usa 1.e+21 como limite "sem limite".
+    linha = _substitui_campo(MockLU, 24, 10, "1.e+21")
+    r = _le_registro(LU, linha)
+    assert r.data[3] == 1e21
+    escrita = _escreve_registro(r)
+    assert escrita[24:34] == "    1.E+21"
+    assert _le_registro(LU, escrita).data == r.data
+
+
+def test_registro_ft_dadger_coeficiente_pequeno():
+    linha = _substitui_campo(MockFT, 24, 10, "4.E-8")
+    r = _le_registro(FT, linha)
+    assert r.data[4] == 4e-8
+    assert _le_registro(FT, _escreve_registro(r)).data[4] == 4e-8
+
+
+def test_registros_dadger_campos_lidos_como_no_fortran():
+    # O DECOMP ignora os brancos dos campos e aceita o expoente sem letra.
+    linha = _substitui_campo(MockUH, 4, 3, "1 2")
+    assert _le_registro(UH, linha).codigo_usina == 12
+    linha = _substitui_campo(MockLU, 14, 10, "1.0+21")
+    assert _le_registro(LU, linha).data[2] == 1e21
+
+
 def test_registro_ci_dadger():
     m: MagicMock = mock_open(read_data="".join(MockCI))
     r = CI()
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [
-        1,
-        2,
-        "IMPORTA",
-        1,
-        100.5,
-        200.0,
-        15.5,
-        100.5,
-        200.0,
-        15.5,
-        100.5,
-        200.0,
-        15.5,
-        3.0,
-    ]
+    assert (
+        r.data
+        == [
+            1,
+            2,
+            "IMPORTA",
+            1,
+            100.5,
+            200.0,
+            15.5,
+            100.5,
+            200.0,
+            15.5,
+            100.5,
+            200.0,
+            15.5,
+            3.0,
+        ]
+        + [None] * 6
+    )
     # O limite inferior fracionário (100.5) é preservado na escrita: o campo
     # F5.0 do manual admite decimais quando informados no deck.
     m2: MagicMock = mock_open(read_data="")
@@ -1625,7 +1794,7 @@ def test_registro_ci_dadger():
         with open("", "w") as fp:
             r.write(fp)
         escritas = "".join(c.args[0] for c in m2().write.call_args_list)
-    assert escritas.rstrip("\n") == MockCI
+    assert escritas.rstrip() == MockCI
     assert r.numero_contrato == 1
     r.numero_contrato = 0
     assert r.numero_contrato == 0
@@ -1659,28 +1828,32 @@ def test_registro_ce_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [
-        1,
-        1,
-        "EXPORTA",
-        1,
-        80.0,
-        150.0,
-        42.75,
-        80.0,
-        150.0,
-        42.75,
-        80.0,
-        150.0,
-        42.75,
-        5.0,
-    ]
+    assert (
+        r.data
+        == [
+            1,
+            1,
+            "EXPORTA",
+            1,
+            80.0,
+            150.0,
+            42.75,
+            80.0,
+            150.0,
+            42.75,
+            80.0,
+            150.0,
+            42.75,
+            5.0,
+        ]
+        + [None] * 6
+    )
     m2: MagicMock = mock_open(read_data="")
     with patch("builtins.open", m2):
         with open("", "w") as fp:
             r.write(fp)
         escritas = "".join(c.args[0] for c in m2().write.call_args_list)
-    assert escritas.rstrip("\n") == MockCE
+    assert escritas.rstrip() == MockCE
     assert r.numero_contrato == 1
     r.numero_contrato = 0
     assert r.numero_contrato == 0
@@ -1854,7 +2027,7 @@ def test_registro_rq_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [1, 100, 100, 100, 100, 100, 0, None, None]
+    assert r.data == [1, 100, 100, 100, 100, 100, 0] + [None] * 18
     assert r.codigo_ree == 1
     r.codigo_ree = 0
     assert r.codigo_ree == 0
@@ -2141,7 +2314,7 @@ def test_registro_he_dadger():
     with patch("builtins.open", m):
         with open("", "") as fp:
             r.read(fp)
-    assert r.data == [1, 2, 60.0, 1, 1710.0, 1, 0, 0, "prodrhe.dat"]
+    assert r.data == [1, 2, 60.0, 1, 1710.0, 1, 0, 0, "prodrhe.dat", None]
     assert r.codigo_restricao == 1
     r.codigo_restricao = 0
     assert r.codigo_restricao == 0
@@ -2169,6 +2342,9 @@ def test_registro_he_dadger():
     assert r.arquivo_produtibilidades == "prodrhe.dat"
     r.arquivo_produtibilidades = "teste.dat"
     assert r.arquivo_produtibilidades == "teste.dat"
+    assert r.tolerancia_simulacao_final is None
+    r.tolerancia_simulacao_final = 1
+    assert r.tolerancia_simulacao_final == 1
 
 
 def test_registro_cm_dadger():
@@ -2851,3 +3027,68 @@ def test_leitura_escrita_dadger():
     with patch("builtins.open", m_releitura):
         d2 = Dadger.read("./tests/mocks/arquivos/dadger.py")
         assert d1 == d2
+
+
+def _compara_leitura_decomp(original: str, modificado: str):
+    arquivos = [
+        mock_open(read_data=texto.encode("latin-1")).return_value
+        for texto in [original, modificado]
+    ]
+    with patch("builtins.open", MagicMock(side_effect=arquivos)):
+        return Dadger.compara_leitura_decomp("original", "modificado")
+
+
+def test_compara_leitura_decomp_dadger_sem_diferencas():
+    original = "& Usinas\r\n" + MockUH.rstrip("\n") + "\r\n"
+    modificado = "& Hidrelétricas\n" + MockUH.rstrip("\n") + "   \n"
+    df = _compara_leitura_decomp(original, modificado)
+    assert df.empty
+    assert df.columns.tolist() == [
+        "linha",
+        "registro",
+        "coluna_inicial",
+        "coluna_final",
+        "texto_original",
+        "texto_modificado",
+        "valor_original",
+        "valor_modificado",
+    ]
+
+
+def test_compara_leitura_decomp_dadger_com_diferenca():
+    original = "& Potência\nAC  288  POTEFE        1   611.111\n"
+    modificado = "& Potência\nAC  288  POTEFE        1   611.110\n"
+    df = _compara_leitura_decomp(original, modificado)
+    assert df.to_dict("records") == [
+        {
+            "linha": 2,
+            "registro": "ACPOTEFE",
+            "coluna_inicial": 25,
+            "coluna_final": 34,
+            "texto_original": "   611.111",
+            "texto_modificado": "   611.110",
+            "valor_original": 611.111,
+            "valor_modificado": 611.11,
+        }
+    ]
+
+
+def test_compara_leitura_decomp_dadger_com_numero_de_linhas_diferente():
+    with pytest.raises(ValueError, match="números de linhas diferentes"):
+        _compara_leitura_decomp(MockUH, MockUH + MockUH)
+
+
+def test_compara_leitura_decomp_dadger_escrito_pela_idecomp():
+    original = "".join(MockDadger)
+    m_leitura: MagicMock = mock_open(read_data=original)
+    with patch("builtins.open", m_leitura):
+        d = Dadger.read("./tests/mocks/arquivos/dadger.py")
+    m_escrita: MagicMock = mock_open(read_data="")
+    with patch("builtins.open", m_escrita):
+        d.write("./tests/mocks/arquivos/dadger.py")
+        chamadas = m_escrita.mock_calls
+        escrito = "".join(
+            chamadas[i].args[0] for i in range(2, len(chamadas) - 1)
+        )
+    df = _compara_leitura_decomp(original, escrito)
+    assert df.empty, df.to_string()

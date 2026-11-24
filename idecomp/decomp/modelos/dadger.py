@@ -1,13 +1,14 @@
 from typing import IO, Any
 
-from cfinterface.components.floatfield import FloatField
-from cfinterface.components.integerfield import IntegerField
 from cfinterface.components.line import Line
 from cfinterface.components.literalfield import LiteralField
 from cfinterface.components.register import Register
 from numpy import abs
 
 from idecomp.decomp.modelos.campos.fortranfloatfield import FortranFloatField
+from idecomp.decomp.modelos.campos.fortranintegerfield import (
+    FortranIntegerField,
+)
 
 
 class TE(Register):
@@ -19,7 +20,7 @@ class TE(Register):
 
     IDENTIFIER = "TE  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line([LiteralField(75, 4)])
+    LINE = Line([LiteralField(80, 4)])
 
     @property
     def titulo(self) -> str | None:
@@ -45,7 +46,7 @@ class SB(Register):
 
     IDENTIFIER = "SB  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line([IntegerField(2, 4), LiteralField(2, 9)])
+    LINE = Line([FortranIntegerField(2, 4), LiteralField(2, 9)])
 
     @property
     def codigo_submercado(self) -> int | None:
@@ -88,15 +89,15 @@ class UH(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 25, 2),
-            IntegerField(1, 39),
-            IntegerField(2, 44),
-            FloatField(10, 49, 2),
-            FloatField(10, 59, 2),
-            IntegerField(1, 69),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranFloatField(10, 14, 2),
+            FortranFloatField(10, 24, 2),
+            FortranIntegerField(1, 39),
+            FortranIntegerField(2, 44),
+            FortranFloatField(10, 49, 2),
+            FortranFloatField(10, 59, 2),
+            FortranIntegerField(1, 69),
             LiteralField(2, 71),
         ]
     )
@@ -256,24 +257,24 @@ class CT(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
             LiteralField(10, 14),
-            IntegerField(2, 24),
-            FloatField(5, 29, 2),
-            FloatField(5, 34, 2),
+            FortranIntegerField(2, 24),
+            FortranFloatField(5, 29, 2),
+            FortranFloatField(5, 34, 2),
             FortranFloatField(10, 39, 2, implied_decimals=2),
-            FloatField(5, 49, 2),
-            FloatField(5, 54, 2),
+            FortranFloatField(5, 49, 2),
+            FortranFloatField(5, 54, 2),
             FortranFloatField(10, 59, 2, implied_decimals=2),
-            FloatField(5, 69, 2),
-            FloatField(5, 74, 2),
+            FortranFloatField(5, 69, 2),
+            FortranFloatField(5, 74, 2),
             FortranFloatField(10, 79, 2, implied_decimals=2),
-            FloatField(5, 89, 2),
-            FloatField(5, 94, 2),
+            FortranFloatField(5, 89, 2),
+            FortranFloatField(5, 94, 2),
             FortranFloatField(10, 99, 2, implied_decimals=2),
-            FloatField(5, 109, 2),
-            FloatField(5, 114, 2),
+            FortranFloatField(5, 109, 2),
+            FortranFloatField(5, 114, 2),
             FortranFloatField(10, 119, 2, implied_decimals=2),
         ]
     )
@@ -404,14 +405,14 @@ class UE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
             LiteralField(12, 14),
-            IntegerField(3, 29),
-            IntegerField(3, 34),
-            FloatField(10, 39, 1),
-            FloatField(10, 49, 1),
-            FloatField(10, 59, 2),
+            FortranIntegerField(3, 29),
+            FortranIntegerField(3, 34),
+            FortranFloatField(10, 39, 1),
+            FortranFloatField(10, 49, 1),
+            FortranFloatField(10, 59, 2),
         ]
     )
 
@@ -540,19 +541,19 @@ class DP(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(2, 4),
-            IntegerField(2, 9),
-            IntegerField(1, 14),
-            FloatField(10, 19, 1),
-            FloatField(10, 29, 1),
-            FloatField(10, 39, 1),
-            FloatField(10, 49, 1),
-            FloatField(10, 59, 1),
-            FloatField(10, 69, 1),
-            FloatField(10, 79, 1),
-            FloatField(10, 89, 1),
-            FloatField(10, 99, 1),
-            FloatField(10, 109, 1),
+            FortranIntegerField(2, 4),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(1, 14),
+            FortranFloatField(10, 19, 1),
+            FortranFloatField(10, 29, 1),
+            FortranFloatField(10, 39, 1),
+            FortranFloatField(10, 49, 1),
+            FortranFloatField(10, 59, 1),
+            FortranFloatField(10, 69, 1),
+            FortranFloatField(10, 79, 1),
+            FortranFloatField(10, 89, 1),
+            FortranFloatField(10, 99, 1),
+            FortranFloatField(10, 109, 1),
         ]
     )
 
@@ -655,13 +656,14 @@ class PQ(Register):
     LINE = Line(
         [
             LiteralField(10, 4),
-            IntegerField(2, 14),
-            IntegerField(2, 19),
-            FloatField(5, 24, 4, compact=True),
-            FloatField(5, 29, 4, compact=True),
-            FloatField(5, 34, 4, compact=True),
-            FloatField(5, 39, 4, compact=True),
-            FloatField(5, 44, 4, compact=True),
+            FortranIntegerField(2, 14),
+            FortranIntegerField(2, 19),
+            FortranFloatField(5, 24, 4, compact=True),
+            FortranFloatField(5, 29, 4, compact=True),
+            FortranFloatField(5, 34, 4, compact=True),
+            FortranFloatField(5, 39, 4, compact=True),
+            FortranFloatField(5, 44, 4, compact=True),
+            FortranFloatField(5, 49, 4, compact=True),
         ]
     )
 
@@ -749,19 +751,19 @@ class CD(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(2, 4),
-            IntegerField(2, 9),
+            FortranIntegerField(2, 4),
+            FortranIntegerField(2, 9),
             LiteralField(10, 14),
-            IntegerField(2, 24),
-            FloatField(5, 29, 1),
+            FortranIntegerField(2, 24),
+            FortranFloatField(5, 29, 1),
             FortranFloatField(10, 34, 2, implied_decimals=2),
-            FloatField(5, 44, 1),
+            FortranFloatField(5, 44, 1),
             FortranFloatField(10, 49, 2, implied_decimals=2),
-            FloatField(5, 59, 1),
+            FortranFloatField(5, 59, 1),
             FortranFloatField(10, 64, 2, implied_decimals=2),
-            FloatField(5, 74, 1),
+            FortranFloatField(5, 74, 1),
             FortranFloatField(10, 79, 2, implied_decimals=2),
-            FloatField(5, 89, 1),
+            FortranFloatField(5, 89, 1),
             FortranFloatField(10, 94, 2, implied_decimals=2),
         ]
     )
@@ -878,34 +880,34 @@ class RI(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(3, 8),
-            IntegerField(3, 12),
-            FloatField(7, 16, 1),
-            FloatField(7, 23, 1),
-            FloatField(7, 30, 1),
-            FloatField(7, 37, 1),
-            FloatField(7, 44, 1),
-            FloatField(7, 51, 1),
-            FloatField(7, 58, 1),
-            FloatField(7, 65, 1),
-            FloatField(7, 72, 1),
-            FloatField(7, 79, 1),
-            FloatField(7, 86, 1),
-            FloatField(7, 93, 1),
-            FloatField(7, 100, 1),
-            FloatField(7, 107, 1),
-            FloatField(7, 114, 1),
-            FloatField(7, 121, 1),
-            FloatField(7, 128, 1),
-            FloatField(7, 135, 1),
-            FloatField(7, 142, 1),
-            FloatField(7, 149, 1),
-            FloatField(7, 156, 1),
-            FloatField(7, 163, 1),
-            FloatField(7, 170, 1),
-            FloatField(7, 177, 1),
-            FloatField(7, 184, 1),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(3, 8),
+            FortranIntegerField(3, 12),
+            FortranFloatField(7, 16, 1),
+            FortranFloatField(7, 23, 1),
+            FortranFloatField(7, 30, 1),
+            FortranFloatField(7, 37, 1),
+            FortranFloatField(7, 44, 1),
+            FortranFloatField(7, 51, 1),
+            FortranFloatField(7, 58, 1),
+            FortranFloatField(7, 65, 1),
+            FortranFloatField(7, 72, 1),
+            FortranFloatField(7, 79, 1),
+            FortranFloatField(7, 86, 1),
+            FortranFloatField(7, 93, 1),
+            FortranFloatField(7, 100, 1),
+            FortranFloatField(7, 107, 1),
+            FortranFloatField(7, 114, 1),
+            FortranFloatField(7, 121, 1),
+            FortranFloatField(7, 128, 1),
+            FortranFloatField(7, 135, 1),
+            FortranFloatField(7, 142, 1),
+            FortranFloatField(7, 149, 1),
+            FortranFloatField(7, 156, 1),
+            FortranFloatField(7, 163, 1),
+            FortranFloatField(7, 170, 1),
+            FortranFloatField(7, 177, 1),
+            FortranFloatField(7, 184, 1),
         ]
     )
 
@@ -1049,20 +1051,20 @@ class IA(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(2, 4),
+            FortranIntegerField(2, 4),
             LiteralField(2, 9),
             LiteralField(2, 14),
-            IntegerField(1, 17),
-            FloatField(10, 19, 2),
-            FloatField(10, 29, 2),
-            FloatField(10, 39, 2),
-            FloatField(10, 49, 2),
-            FloatField(10, 59, 2),
-            FloatField(10, 69, 2),
-            FloatField(10, 79, 2),
-            FloatField(10, 89, 2),
-            FloatField(10, 99, 2),
-            FloatField(10, 109, 2),
+            FortranIntegerField(1, 17),
+            FortranFloatField(10, 19, 2),
+            FortranFloatField(10, 29, 2),
+            FortranFloatField(10, 39, 2),
+            FortranFloatField(10, 49, 2),
+            FortranFloatField(10, 59, 2),
+            FortranFloatField(10, 69, 2),
+            FortranFloatField(10, 79, 2),
+            FortranFloatField(10, 89, 2),
+            FortranFloatField(10, 99, 2),
+            FortranFloatField(10, 109, 2),
         ]
     )
 
@@ -1163,7 +1165,7 @@ class TX(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FloatField(5, 4, 3),
+            FortranFloatField(5, 4, 3),
         ]
     )
 
@@ -1193,7 +1195,7 @@ class GP(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FloatField(10, 4, 6),
+            FortranFloatField(10, 4, 6),
         ]
     )
 
@@ -1221,7 +1223,7 @@ class NI(Register):
 
     IDENTIFIER = "NI  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line([IntegerField(3, 4), IntegerField(1, 8)])
+    LINE = Line([FortranIntegerField(3, 4), FortranIntegerField(1, 8)])
 
     @property
     def iteracoes(self) -> int | None:
@@ -1263,9 +1265,9 @@ class DT(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(2, 4),
-            IntegerField(2, 9),
-            IntegerField(4, 14),
+            FortranIntegerField(2, 4),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(4, 14),
         ]
     )
 
@@ -1324,32 +1326,32 @@ class MP(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 7),
-            FloatField(5, 9, 3),
-            FloatField(5, 14, 3),
-            FloatField(5, 19, 3),
-            FloatField(5, 24, 3),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
-            FloatField(5, 39, 3),
-            FloatField(5, 44, 3),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
-            FloatField(5, 59, 3),
-            FloatField(5, 64, 3),
-            FloatField(5, 69, 3),
-            FloatField(5, 74, 3),
-            FloatField(5, 79, 3),
-            FloatField(5, 84, 3),
-            FloatField(5, 89, 3),
-            FloatField(5, 94, 3),
-            FloatField(5, 99, 3),
-            FloatField(5, 104, 3),
-            FloatField(5, 109, 3),
-            FloatField(5, 114, 3),
-            FloatField(5, 119, 3),
-            FloatField(5, 124, 3),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 7),
+            FortranFloatField(5, 9, 3),
+            FortranFloatField(5, 14, 3),
+            FortranFloatField(5, 19, 3),
+            FortranFloatField(5, 24, 3),
+            FortranFloatField(5, 29, 3),
+            FortranFloatField(5, 34, 3),
+            FortranFloatField(5, 39, 3),
+            FortranFloatField(5, 44, 3),
+            FortranFloatField(5, 49, 3),
+            FortranFloatField(5, 54, 3),
+            FortranFloatField(5, 59, 3),
+            FortranFloatField(5, 64, 3),
+            FortranFloatField(5, 69, 3),
+            FortranFloatField(5, 74, 3),
+            FortranFloatField(5, 79, 3),
+            FortranFloatField(5, 84, 3),
+            FortranFloatField(5, 89, 3),
+            FortranFloatField(5, 94, 3),
+            FortranFloatField(5, 99, 3),
+            FortranFloatField(5, 104, 3),
+            FortranFloatField(5, 109, 3),
+            FortranFloatField(5, 114, 3),
+            FortranFloatField(5, 119, 3),
+            FortranFloatField(5, 124, 3),
         ]
     )
 
@@ -1423,32 +1425,32 @@ class MT(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(5, 14, 3),
-            FloatField(5, 19, 3),
-            FloatField(5, 24, 3),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
-            FloatField(5, 39, 3),
-            FloatField(5, 44, 3),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
-            FloatField(5, 59, 3),
-            FloatField(5, 64, 3),
-            FloatField(5, 69, 3),
-            FloatField(5, 74, 3),
-            FloatField(5, 79, 3),
-            FloatField(5, 84, 3),
-            FloatField(5, 89, 3),
-            FloatField(5, 94, 3),
-            FloatField(5, 99, 3),
-            FloatField(5, 104, 3),
-            FloatField(5, 109, 3),
-            FloatField(5, 114, 3),
-            FloatField(5, 119, 3),
-            FloatField(5, 124, 3),
-            FloatField(5, 129, 3),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranFloatField(5, 14, 3),
+            FortranFloatField(5, 19, 3),
+            FortranFloatField(5, 24, 3),
+            FortranFloatField(5, 29, 3),
+            FortranFloatField(5, 34, 3),
+            FortranFloatField(5, 39, 3),
+            FortranFloatField(5, 44, 3),
+            FortranFloatField(5, 49, 3),
+            FortranFloatField(5, 54, 3),
+            FortranFloatField(5, 59, 3),
+            FortranFloatField(5, 64, 3),
+            FortranFloatField(5, 69, 3),
+            FortranFloatField(5, 74, 3),
+            FortranFloatField(5, 79, 3),
+            FortranFloatField(5, 84, 3),
+            FortranFloatField(5, 89, 3),
+            FortranFloatField(5, 94, 3),
+            FortranFloatField(5, 99, 3),
+            FortranFloatField(5, 104, 3),
+            FortranFloatField(5, 109, 3),
+            FortranFloatField(5, 114, 3),
+            FortranFloatField(5, 119, 3),
+            FortranFloatField(5, 124, 3),
+            FortranFloatField(5, 129, 3),
         ]
     )
 
@@ -1522,32 +1524,32 @@ class FD(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 7),
-            FloatField(5, 9, 3),
-            FloatField(5, 14, 3),
-            FloatField(5, 19, 3),
-            FloatField(5, 24, 3),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
-            FloatField(5, 39, 3),
-            FloatField(5, 44, 3),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
-            FloatField(5, 59, 3),
-            FloatField(5, 64, 3),
-            FloatField(5, 69, 3),
-            FloatField(5, 74, 3),
-            FloatField(5, 79, 3),
-            FloatField(5, 84, 3),
-            FloatField(5, 89, 3),
-            FloatField(5, 94, 3),
-            FloatField(5, 99, 3),
-            FloatField(5, 104, 3),
-            FloatField(5, 109, 3),
-            FloatField(5, 114, 3),
-            FloatField(5, 119, 3),
-            FloatField(5, 124, 3),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 7),
+            FortranFloatField(5, 9, 3),
+            FortranFloatField(5, 14, 3),
+            FortranFloatField(5, 19, 3),
+            FortranFloatField(5, 24, 3),
+            FortranFloatField(5, 29, 3),
+            FortranFloatField(5, 34, 3),
+            FortranFloatField(5, 39, 3),
+            FortranFloatField(5, 44, 3),
+            FortranFloatField(5, 49, 3),
+            FortranFloatField(5, 54, 3),
+            FortranFloatField(5, 59, 3),
+            FortranFloatField(5, 64, 3),
+            FortranFloatField(5, 69, 3),
+            FortranFloatField(5, 74, 3),
+            FortranFloatField(5, 79, 3),
+            FortranFloatField(5, 84, 3),
+            FortranFloatField(5, 89, 3),
+            FortranFloatField(5, 94, 3),
+            FortranFloatField(5, 99, 3),
+            FortranFloatField(5, 104, 3),
+            FortranFloatField(5, 109, 3),
+            FortranFloatField(5, 114, 3),
+            FortranFloatField(5, 119, 3),
+            FortranFloatField(5, 124, 3),
         ]
     )
 
@@ -1621,31 +1623,31 @@ class VE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(5, 9, 2),
-            FloatField(5, 14, 2),
-            FloatField(5, 19, 2),
-            FloatField(5, 24, 2),
-            FloatField(5, 29, 2),
-            FloatField(5, 34, 2),
-            FloatField(5, 39, 2),
-            FloatField(5, 44, 2),
-            FloatField(5, 49, 2),
-            FloatField(5, 54, 2),
-            FloatField(5, 59, 2),
-            FloatField(5, 64, 2),
-            FloatField(5, 69, 2),
-            FloatField(5, 74, 2),
-            FloatField(5, 79, 2),
-            FloatField(5, 84, 2),
-            FloatField(5, 89, 2),
-            FloatField(5, 94, 2),
-            FloatField(5, 99, 2),
-            FloatField(5, 104, 2),
-            FloatField(5, 109, 2),
-            FloatField(5, 114, 2),
-            FloatField(5, 119, 2),
-            FloatField(5, 124, 2),
+            FortranIntegerField(3, 4),
+            FortranFloatField(5, 9, 2),
+            FortranFloatField(5, 14, 2),
+            FortranFloatField(5, 19, 2),
+            FortranFloatField(5, 24, 2),
+            FortranFloatField(5, 29, 2),
+            FortranFloatField(5, 34, 2),
+            FortranFloatField(5, 39, 2),
+            FortranFloatField(5, 44, 2),
+            FortranFloatField(5, 49, 2),
+            FortranFloatField(5, 54, 2),
+            FortranFloatField(5, 59, 2),
+            FortranFloatField(5, 64, 2),
+            FortranFloatField(5, 69, 2),
+            FortranFloatField(5, 74, 2),
+            FortranFloatField(5, 79, 2),
+            FortranFloatField(5, 84, 2),
+            FortranFloatField(5, 89, 2),
+            FortranFloatField(5, 94, 2),
+            FortranFloatField(5, 99, 2),
+            FortranFloatField(5, 104, 2),
+            FortranFloatField(5, 109, 2),
+            FortranFloatField(5, 114, 2),
+            FortranFloatField(5, 119, 2),
+            FortranFloatField(5, 124, 2),
         ]
     )
 
@@ -1704,9 +1706,9 @@ class RE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(2, 14),
+            FortranIntegerField(4, 4, preferred_size=3),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(2, 14),
         ]
     )
 
@@ -1765,18 +1767,18 @@ class LU(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 24, 2),
-            FloatField(10, 34, 2),
-            FloatField(10, 44, 2),
-            FloatField(10, 54, 2),
-            FloatField(10, 64, 2),
-            FloatField(10, 74, 2),
-            FloatField(10, 84, 2),
-            FloatField(10, 94, 2),
-            FloatField(10, 104, 2),
+            FortranIntegerField(4, 4, preferred_size=3),
+            FortranIntegerField(2, 9),
+            FortranFloatField(10, 14, 2),
+            FortranFloatField(10, 24, 2),
+            FortranFloatField(10, 34, 2),
+            FortranFloatField(10, 44, 2),
+            FortranFloatField(10, 54, 2),
+            FortranFloatField(10, 64, 2),
+            FortranFloatField(10, 74, 2),
+            FortranFloatField(10, 84, 2),
+            FortranFloatField(10, 94, 2),
+            FortranFloatField(10, 104, 2),
         ]
     )
 
@@ -1865,11 +1867,11 @@ class FU(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            FloatField(10, 19, 7),
-            IntegerField(2, 30),
+            FortranIntegerField(4, 4, preferred_size=3),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(3, 14),
+            FortranFloatField(10, 19, 7),
+            FortranIntegerField(2, 30),
         ]
     )
 
@@ -1952,11 +1954,11 @@ class FT(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            IntegerField(2, 19),
-            FloatField(10, 24, 7),
+            FortranIntegerField(4, 4, preferred_size=3),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(3, 14),
+            FortranIntegerField(2, 19),
+            FortranFloatField(10, 24, 7),
         ]
     )
 
@@ -2038,11 +2040,11 @@ class FI(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
+            FortranIntegerField(4, 4, preferred_size=3),
+            FortranIntegerField(2, 9),
             LiteralField(2, 14),
             LiteralField(2, 19),
-            FloatField(10, 24, 7),
+            FortranFloatField(10, 24, 7),
         ]
     )
 
@@ -2124,11 +2126,11 @@ class FE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            IntegerField(2, 19),
-            FloatField(10, 24, 7),
+            FortranIntegerField(4, 4, preferred_size=3),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(3, 14),
+            FortranIntegerField(2, 19),
+            FortranFloatField(10, 24, 7),
         ]
     )
 
@@ -2210,17 +2212,17 @@ class VI(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(3, 9),
-            FloatField(5, 14, 3),
-            FloatField(5, 19, 3),
-            FloatField(5, 24, 3),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
-            FloatField(5, 39, 3),
-            FloatField(5, 44, 3),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(3, 9),
+            FortranFloatField(5, 14, 3),
+            FortranFloatField(5, 19, 3),
+            FortranFloatField(5, 24, 3),
+            FortranFloatField(5, 29, 3),
+            FortranFloatField(5, 34, 3),
+            FortranFloatField(5, 39, 3),
+            FortranFloatField(5, 44, 3),
+            FortranFloatField(5, 49, 3),
+            FortranFloatField(5, 54, 3),
         ]
     )
 
@@ -2299,9 +2301,9 @@ class IR(Register):
     LINE = Line(
         [
             LiteralField(7, 4),
-            IntegerField(2, 14),
-            IntegerField(2, 19),
-            IntegerField(5, 24),
+            FortranIntegerField(2, 14),
+            FortranIntegerField(2, 19),
+            FortranIntegerField(5, 24),
         ]
     )
 
@@ -2332,20 +2334,26 @@ class CI(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 8),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 8),
             LiteralField(10, 11),
-            IntegerField(2, 24),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
+            FortranIntegerField(2, 24),
+            FortranFloatField(5, 29, 3),
+            FortranFloatField(5, 34, 3),
             FortranFloatField(10, 39, 2, implied_decimals=2),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
+            FortranFloatField(5, 49, 3),
+            FortranFloatField(5, 54, 3),
             FortranFloatField(10, 59, 2, implied_decimals=2),
-            FloatField(5, 69, 3),
-            FloatField(5, 74, 3),
+            FortranFloatField(5, 69, 3),
+            FortranFloatField(5, 74, 3),
             FortranFloatField(10, 79, 2, implied_decimals=2),
-            FloatField(5, 89, 3),
+            FortranFloatField(5, 89, 3),
+            FortranFloatField(5, 94, 3),
+            FortranFloatField(10, 99, 2, implied_decimals=2),
+            FortranFloatField(5, 109, 3),
+            FortranFloatField(5, 114, 3),
+            FortranFloatField(10, 119, 2, implied_decimals=2),
+            FortranFloatField(5, 129, 3),
         ]
     )
 
@@ -2488,20 +2496,26 @@ class CE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 8),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 8),
             LiteralField(10, 11),
-            IntegerField(2, 24),
-            FloatField(5, 29, 3),
-            FloatField(5, 34, 3),
+            FortranIntegerField(2, 24),
+            FortranFloatField(5, 29, 3),
+            FortranFloatField(5, 34, 3),
             FortranFloatField(10, 39, 2, implied_decimals=2),
-            FloatField(5, 49, 3),
-            FloatField(5, 54, 3),
+            FortranFloatField(5, 49, 3),
+            FortranFloatField(5, 54, 3),
             FortranFloatField(10, 59, 2, implied_decimals=2),
-            FloatField(5, 69, 3),
-            FloatField(5, 74, 3),
+            FortranFloatField(5, 69, 3),
+            FortranFloatField(5, 74, 3),
             FortranFloatField(10, 79, 2, implied_decimals=2),
-            FloatField(5, 89, 3),
+            FortranFloatField(5, 89, 3),
+            FortranFloatField(5, 94, 3),
+            FortranFloatField(10, 99, 2, implied_decimals=2),
+            FortranFloatField(5, 109, 3),
+            FortranFloatField(5, 114, 3),
+            FortranFloatField(10, 119, 2, implied_decimals=2),
+            FortranFloatField(5, 129, 3),
         ]
     )
 
@@ -2688,18 +2702,18 @@ class EA(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(2, 4),
-            FloatField(10, 11, 2),
-            FloatField(10, 21, 2),
-            FloatField(10, 31, 2),
-            FloatField(10, 41, 2),
-            FloatField(10, 51, 2),
-            FloatField(10, 61, 2),
-            FloatField(10, 71, 2),
-            FloatField(10, 81, 2),
-            FloatField(10, 91, 2),
-            FloatField(10, 101, 2),
-            FloatField(10, 111, 2),
+            FortranIntegerField(2, 4),
+            FortranFloatField(10, 9, 2),
+            FortranFloatField(10, 19, 2),
+            FortranFloatField(10, 29, 2),
+            FortranFloatField(10, 39, 2),
+            FortranFloatField(10, 49, 2),
+            FortranFloatField(10, 59, 2),
+            FortranFloatField(10, 69, 2),
+            FortranFloatField(10, 79, 2),
+            FortranFloatField(10, 89, 2),
+            FortranFloatField(10, 99, 2),
+            FortranFloatField(10, 109, 2),
         ]
     )
 
@@ -2759,13 +2773,13 @@ class ES(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(2, 4),
-            IntegerField(1, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 24, 2),
-            FloatField(10, 34, 2),
-            FloatField(10, 44, 2),
-            FloatField(10, 54, 2),
+            FortranIntegerField(2, 4),
+            FortranIntegerField(1, 9),
+            FortranFloatField(10, 14, 2),
+            FortranFloatField(10, 24, 2),
+            FortranFloatField(10, 34, 2),
+            FortranFloatField(10, 44, 2),
+            FortranFloatField(10, 54, 2),
         ]
     )
 
@@ -2839,12 +2853,12 @@ class QI(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(5, 9, 1),
-            FloatField(5, 14, 1),
-            FloatField(5, 19, 1),
-            FloatField(5, 24, 1),
-            FloatField(5, 29, 1),
+            FortranIntegerField(3, 4),
+            FortranFloatField(5, 9, 1),
+            FortranFloatField(5, 14, 1),
+            FortranFloatField(5, 19, 1),
+            FortranFloatField(5, 24, 1),
+            FortranFloatField(5, 29, 1),
         ]
     )
 
@@ -2933,31 +2947,31 @@ class TI(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(5, 9, 2),
-            FloatField(5, 14, 2),
-            FloatField(5, 19, 2),
-            FloatField(5, 24, 2),
-            FloatField(5, 29, 2),
-            FloatField(5, 34, 2),
-            FloatField(5, 39, 2),
-            FloatField(5, 44, 2),
-            FloatField(5, 49, 2),
-            FloatField(5, 54, 2),
-            FloatField(5, 59, 2),
-            FloatField(5, 64, 2),
-            FloatField(5, 69, 2),
-            FloatField(5, 74, 2),
-            FloatField(5, 79, 2),
-            FloatField(5, 84, 2),
-            FloatField(5, 89, 2),
-            FloatField(5, 94, 2),
-            FloatField(5, 99, 2),
-            FloatField(5, 104, 2),
-            FloatField(5, 109, 2),
-            FloatField(5, 114, 2),
-            FloatField(5, 119, 2),
-            FloatField(5, 124, 2),
+            FortranIntegerField(3, 4),
+            FortranFloatField(5, 9, 2),
+            FortranFloatField(5, 14, 2),
+            FortranFloatField(5, 19, 2),
+            FortranFloatField(5, 24, 2),
+            FortranFloatField(5, 29, 2),
+            FortranFloatField(5, 34, 2),
+            FortranFloatField(5, 39, 2),
+            FortranFloatField(5, 44, 2),
+            FortranFloatField(5, 49, 2),
+            FortranFloatField(5, 54, 2),
+            FortranFloatField(5, 59, 2),
+            FortranFloatField(5, 64, 2),
+            FortranFloatField(5, 69, 2),
+            FortranFloatField(5, 74, 2),
+            FortranFloatField(5, 79, 2),
+            FortranFloatField(5, 84, 2),
+            FortranFloatField(5, 89, 2),
+            FortranFloatField(5, 94, 2),
+            FortranFloatField(5, 99, 2),
+            FortranFloatField(5, 104, 2),
+            FortranFloatField(5, 109, 2),
+            FortranFloatField(5, 114, 2),
+            FortranFloatField(5, 119, 2),
+            FortranFloatField(5, 124, 2),
         ]
     )
 
@@ -3018,12 +3032,12 @@ class DA(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(3, 9),
-            IntegerField(2, 13),
-            FloatField(6, 16, 2),
-            FloatField(4, 24, 1),
-            FloatField(10, 34, 2),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(3, 9),
+            FortranIntegerField(2, 13),
+            FortranFloatField(6, 16, 2),
+            FortranFloatField(4, 24, 1),
+            FortranFloatField(10, 34, 2),
         ]
     )
 
@@ -3124,19 +3138,19 @@ class FP(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(3, 9),
-            IntegerField(1, 14),
-            IntegerField(4, 16),
-            FloatField(5, 21, 3),
-            FloatField(5, 27, 3),
-            IntegerField(1, 34),
-            IntegerField(4, 36),
-            FloatField(5, 41, 3),
-            FloatField(5, 47, 3),
-            FloatField(5, 54, 3),
-            FloatField(5, 60, 3),
-            FloatField(5, 66, 3),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(3, 9),
+            FortranIntegerField(1, 14),
+            FortranIntegerField(4, 16),
+            FortranFloatField(5, 21, 3),
+            FortranFloatField(5, 27, 3),
+            FortranIntegerField(1, 34),
+            FortranIntegerField(4, 36),
+            FortranFloatField(5, 41, 3),
+            FortranFloatField(5, 47, 3),
+            FortranFloatField(5, 54, 3),
+            FortranFloatField(5, 60, 3),
+            FortranFloatField(3, 66, 3),
         ]
     )
 
@@ -3301,15 +3315,31 @@ class RQ(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(2, 4),
-            FloatField(5, 9, 2),
-            FloatField(5, 14, 2),
-            FloatField(5, 19, 2),
-            FloatField(5, 24, 2),
-            FloatField(5, 29, 2),
-            FloatField(5, 34, 2),
-            FloatField(5, 39, 2),
-            FloatField(5, 44, 2),
+            FortranIntegerField(2, 4),
+            FortranFloatField(5, 9, 2),
+            FortranFloatField(5, 14, 2),
+            FortranFloatField(5, 19, 2),
+            FortranFloatField(5, 24, 2),
+            FortranFloatField(5, 29, 2),
+            FortranFloatField(5, 34, 2),
+            FortranFloatField(5, 39, 2),
+            FortranFloatField(5, 44, 2),
+            FortranFloatField(5, 49, 2),
+            FortranFloatField(5, 54, 2),
+            FortranFloatField(5, 59, 2),
+            FortranFloatField(5, 64, 2),
+            FortranFloatField(5, 69, 2),
+            FortranFloatField(5, 74, 2),
+            FortranFloatField(5, 79, 2),
+            FortranFloatField(5, 84, 2),
+            FortranFloatField(5, 89, 2),
+            FortranFloatField(5, 94, 2),
+            FortranFloatField(5, 99, 2),
+            FortranFloatField(5, 104, 2),
+            FortranFloatField(5, 109, 2),
+            FortranFloatField(5, 114, 2),
+            FortranFloatField(5, 119, 2),
+            FortranFloatField(5, 124, 2),
         ]
     )
 
@@ -3372,8 +3402,8 @@ class EZ(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(5, 9, 2),
+            FortranIntegerField(3, 4),
+            FortranFloatField(5, 9, 2),
         ]
     )
 
@@ -3417,9 +3447,9 @@ class HV(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(2, 14),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(2, 14),
         ]
     )
 
@@ -3478,10 +3508,10 @@ class LV(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 24, 2),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranFloatField(10, 14, 2),
+            FortranFloatField(10, 24, 2),
         ]
     )
 
@@ -3554,10 +3584,10 @@ class CV(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            FloatField(10, 19, 7),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(3, 14),
+            FortranFloatField(10, 19, 7),
             LiteralField(4, 34),
         ]
     )
@@ -3639,9 +3669,9 @@ class HQ(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(2, 14),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(2, 14),
         ]
     )
 
@@ -3700,18 +3730,18 @@ class LQ(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 24, 2),
-            FloatField(10, 34, 2),
-            FloatField(10, 44, 2),
-            FloatField(10, 54, 2),
-            FloatField(10, 64, 2),
-            FloatField(10, 74, 1),
-            FloatField(10, 84, 1),
-            FloatField(10, 94, 1),
-            FloatField(10, 104, 1),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranFloatField(10, 14, 2),
+            FortranFloatField(10, 24, 2),
+            FortranFloatField(10, 34, 2),
+            FortranFloatField(10, 44, 2),
+            FortranFloatField(10, 54, 2),
+            FortranFloatField(10, 64, 2),
+            FortranFloatField(10, 74, 1),
+            FortranFloatField(10, 84, 1),
+            FortranFloatField(10, 94, 1),
+            FortranFloatField(10, 104, 1),
         ]
     )
 
@@ -3799,10 +3829,10 @@ class CQ(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
-            FloatField(10, 19, 7),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(3, 14),
+            FortranFloatField(10, 19, 7),
             LiteralField(4, 34),
         ]
     )
@@ -3884,9 +3914,9 @@ class HA(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(2, 14),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(2, 14),
         ]
     )
 
@@ -3945,10 +3975,10 @@ class LA(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            FloatField(10, 14, 2),
-            FloatField(10, 24, 2),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranFloatField(10, 14, 2),
+            FortranFloatField(10, 24, 2),
         ]
     )
 
@@ -4021,9 +4051,9 @@ class CA(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(2, 9),
-            IntegerField(3, 14),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(2, 9),
+            FortranIntegerField(3, 14),
         ]
     )
 
@@ -4078,9 +4108,9 @@ class AR(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 5),
-            FloatField(5, 11, 3),
-            FloatField(5, 17, 3),
+            FortranIntegerField(3, 5),
+            FortranFloatField(5, 11, 3),
+            FortranFloatField(5, 17, 3),
         ]
     )
 
@@ -4139,7 +4169,7 @@ class EV(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(1, 4),
+            FortranIntegerField(1, 4),
             LiteralField(3, 9),
         ]
     )
@@ -4215,15 +4245,16 @@ class HE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(1, 9),
-            FloatField(10, 14, 2),
-            IntegerField(2, 25),
-            FloatField(10, 28, 2),
-            IntegerField(1, 39),
-            IntegerField(1, 41),
-            IntegerField(1, 43),
-            LiteralField(12, 45),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(1, 9),
+            FortranFloatField(10, 14, 2),
+            FortranIntegerField(2, 25),
+            FortranFloatField(10, 28, 2),
+            FortranIntegerField(1, 39),
+            FortranIntegerField(1, 41),
+            FortranIntegerField(1, 43),
+            LiteralField(60, 45),
+            FortranIntegerField(1, 106),
         ]
     )
 
@@ -4359,6 +4390,22 @@ class HE(Register):
     def arquivo_produtibilidades(self, t: str) -> None:
         self.data[8] = t
 
+    @property
+    def tolerancia_simulacao_final(self) -> int | None:
+        """
+        Flag para indicar se é considerada a tolerância de 0,01 MWmes
+        na verificação do atendimento à restrição RHE na simulação
+        final.
+
+        :return: A flag.
+        :rtype: int | None
+        """
+        return self.data[9]
+
+    @tolerancia_simulacao_final.setter
+    def tolerancia_simulacao_final(self, t: int) -> None:
+        self.data[9] = t
+
 
 class CM(Register):
     """
@@ -4369,7 +4416,13 @@ class CM(Register):
 
     IDENTIFIER = "CM  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line([IntegerField(3, 4), IntegerField(3, 9), FloatField(10, 14, 2)])
+    LINE = Line(
+        [
+            FortranIntegerField(3, 4),
+            FortranIntegerField(3, 9),
+            FortranFloatField(10, 14, 2),
+        ]
+    )
 
     @property
     def codigo_restricao(self) -> int:
@@ -4457,7 +4510,7 @@ class PU(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(1, 4),
+            FortranIntegerField(1, 4),
         ]
     )
 
@@ -4518,9 +4571,9 @@ class PE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(2, 4),
-            IntegerField(1, 7),
-            FloatField(10, 9, 6),
+            FortranIntegerField(2, 4),
+            FortranIntegerField(1, 7),
+            FortranFloatField(10, 9, 6),
         ]
     )
 
@@ -4580,7 +4633,7 @@ class TS(Register):
         [
             FortranFloatField(17, 4, 15, implied_decimals=15),
             FortranFloatField(17, 22, 15, implied_decimals=15),
-            IntegerField(1, 42),
+            FortranIntegerField(1, 42),
             FortranFloatField(17, 46, 15, implied_decimals=15),
         ]
     )
@@ -4656,12 +4709,12 @@ class PV(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FloatField(20, 5, 5),
-            FloatField(20, 28, 5),
-            IntegerField(3, 51),
-            FloatField(3, 57, 1),
-            FloatField(20, 63, 5),
-            FloatField(20, 86, 5),
+            FortranFloatField(20, 4, 5),
+            FortranFloatField(20, 27, 5),
+            FortranIntegerField(3, 50),
+            FortranFloatField(3, 56, 1),
+            FortranFloatField(20, 62, 5),
+            FortranFloatField(20, 85, 5),
         ]
     )
 
@@ -4763,8 +4816,8 @@ class CX(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(4, 4),
-            IntegerField(4, 9),
+            FortranIntegerField(4, 4),
+            FortranIntegerField(4, 9),
         ]
     )
 
@@ -4868,7 +4921,7 @@ class CS(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(1, 4),
+            FortranIntegerField(1, 4),
         ]
     )
 
@@ -4898,11 +4951,11 @@ class ACNUMPOS(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -4972,11 +5025,11 @@ class ACNUMJUS(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5072,12 +5125,12 @@ class ACDESVIO(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(10, 24, 2),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
+            FortranFloatField(10, 24, 2),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5155,11 +5208,11 @@ class ACVOLMIN(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
+            FortranIntegerField(3, 4),
+            FortranFloatField(10, 19, 2),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5229,11 +5282,11 @@ class ACVOLMAX(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
+            FortranIntegerField(3, 4),
+            FortranFloatField(10, 19, 2),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5304,12 +5357,12 @@ class ACCOTVOL(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             FortranFloatField(15, 24, 8, "D", implied_decimals=8),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5388,12 +5441,12 @@ class ACCOTARE(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             FortranFloatField(15, 24, 8, "D", implied_decimals=8),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5472,11 +5525,11 @@ class ACPROESP(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(10, 19, 3),
+            FortranIntegerField(3, 4),
+            FortranFloatField(10, 19, 3),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5547,11 +5600,11 @@ class ACPERHID(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(10, 19, 3),
+            FortranIntegerField(3, 4),
+            FortranFloatField(10, 19, 3),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5622,12 +5675,12 @@ class ACNCHAVE(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(10, 24, 3),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
+            FortranFloatField(10, 24, 3),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5706,13 +5759,13 @@ class ACCOTVAZ(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            IntegerField(5, 24),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
+            FortranIntegerField(5, 24),
             FortranFloatField(15, 29, 8, "D", implied_decimals=8),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5799,12 +5852,12 @@ class ACCOFEVA(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            IntegerField(5, 24),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
+            FortranIntegerField(5, 24),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5883,11 +5936,11 @@ class ACNUMCON(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -5958,12 +6011,12 @@ class ACNUMMAQ(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            IntegerField(5, 24),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
+            FortranIntegerField(5, 24),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6042,12 +6095,12 @@ class ACPOTEFE(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(11, 24, 3),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
+            FortranFloatField(10, 24, 3),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6126,12 +6179,12 @@ class ACALTEFE(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            FloatField(10, 24, 2),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
+            FortranFloatField(10, 24, 2),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6210,12 +6263,12 @@ class ACVAZEFE(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
-            IntegerField(5, 24),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
+            FortranIntegerField(5, 24),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6294,11 +6347,11 @@ class ACJUSMED(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
+            FortranIntegerField(3, 4),
+            FortranFloatField(10, 19, 2),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6369,11 +6422,11 @@ class ACVERTJU(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6443,11 +6496,11 @@ class ACVAZMIN(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6517,11 +6570,11 @@ class ACTIPERH(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6593,11 +6646,11 @@ class ACJUSENA(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6668,11 +6721,11 @@ class ACVSVERT(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
+            FortranIntegerField(3, 4),
+            FortranFloatField(10, 19, 2),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6743,11 +6796,11 @@ class ACVMDESV(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            FloatField(10, 19, 2),
+            FortranIntegerField(3, 4),
+            FortranFloatField(10, 19, 2),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6818,11 +6871,11 @@ class ACNPOSNW(Register):
     IDENTIFIER_DIGITS = 15
     LINE = Line(
         [
-            IntegerField(3, 4),
-            IntegerField(5, 19),
+            FortranIntegerField(3, 4),
+            FortranIntegerField(5, 19),
             LiteralField(3, 69),
-            IntegerField(2, 73),
-            IntegerField(4, 76),
+            FortranIntegerField(2, 73),
+            FortranIntegerField(4, 76),
         ]
     )
 
@@ -6893,21 +6946,21 @@ class VL(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(4, 4),
-            FloatField(15, 10, 2),
-            FloatField(
+            FortranIntegerField(4, 4),
+            FortranFloatField(15, 10, 2),
+            FortranFloatField(
                 size=15, starting_position=26, decimal_digits=9, format="E"
             ),
-            FloatField(
+            FortranFloatField(
                 size=15, starting_position=42, decimal_digits=9, format="E"
             ),
-            FloatField(
+            FortranFloatField(
                 size=15, starting_position=58, decimal_digits=9, format="E"
             ),
-            FloatField(
+            FortranFloatField(
                 size=15, starting_position=74, decimal_digits=9, format="E"
             ),
-            FloatField(
+            FortranFloatField(
                 size=15, starting_position=90, decimal_digits=9, format="E"
             ),
         ]
@@ -7024,9 +7077,9 @@ class VU(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(4, 4),
-            IntegerField(4, 10),
-            FloatField(15, 16, 2),
+            FortranIntegerField(4, 4),
+            FortranIntegerField(4, 10),
+            FortranFloatField(15, 16, 2),
         ]
     )
 
@@ -7086,9 +7139,9 @@ class VA(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            IntegerField(4, 4),
-            IntegerField(4, 10),
-            FloatField(15, 16, 2),
+            FortranIntegerField(4, 4),
+            FortranIntegerField(4, 10),
+            FortranFloatField(15, 16, 2),
         ]
     )
 

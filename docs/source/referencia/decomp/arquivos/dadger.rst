@@ -290,3 +290,24 @@ de operação:
 
 .. autoclass:: ACNPOSNW
    :members:
+
+
+.. currentmodule:: idecomp.decomp.modelos.dadger_manual
+
+
+O leiaute dos registros no Manual do Usuário do DECOMP, usado pelo método
+:meth:`~idecomp.decomp.dadger.Dadger.compara_leitura_decomp`, está no módulo
+``idecomp.decomp.modelos.dadger_manual``:
+
+.. autoclass:: CampoManual
+   :members: le
+
+.. autoclass:: DiferencaLeitura
+
+.. autodata:: CAMPOS
+   :no-value:
+
+.. autodata:: EXTENSOES
+   :no-value:
+
+.. autofunction:: compara_linhas

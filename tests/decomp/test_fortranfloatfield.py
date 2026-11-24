@@ -104,9 +104,60 @@ def test_escrita_com_precisao_reduzida_mantem_ponto_decimal():
     assert _le(escrito, 2) == 123456789.0
 
 
-def test_escrita_sem_espaco_para_o_ponto_falha():
-    with pytest.raises(ValueError, match="ponto decimal"):
-        _escreve(1234567890.0, 10, 2, 2)
+def test_escrita_sem_espaco_para_o_ponto_usa_notacao_exponencial():
+    # "1234567890." não cabe em 10 colunas. O valor é escrito em
+    # notação exponencial, com ponto decimal, o mais próximo possível.
+    escrito = _escreve(1234567890.0, 10, 2, 2)
+    assert escrito == "1.23457E+9"
+    assert _le(escrito, 2) == 1234570000.0
+
+
+def test_escrita_que_nao_cabe_no_campo_falha():
+    with pytest.raises(ValueError, match="não cabe"):
+        _escreve(1e21, 4, 2, 0)
+
+
+def test_escrita_reproduz_valor_com_mais_decimais_que_a_precisao():
+    for valor, size, decimal_digits, escrito in [
+        (611.111, 10, 2, "   611.111"),
+        (3.571, 5, 2, "3.571"),
+        (0.0693, 5, 2, ".0693"),
+        (-0.125, 5, 2, "-.125"),
+        (0.008829, 10, 3, "  0.008829"),
+        (33.33, 5, 1, "33.33"),
+    ]:
+        assert _escreve(valor, size, decimal_digits, 0) == escrito, valor
+        assert _le(escrito, 0) == valor, valor
+
+
+def test_escrita_com_a_precisao_preferida_quando_reproduz_o_valor():
+    assert _escreve(1350.0, 5, 2, 0) == " 1350"
+    assert _escreve(22.5, 10, 2, 0) == "     22.50"
+    assert _escreve(0.1 + 0.2, 10, 2, 0) == "      0.30"
+
+
+def test_escrita_em_notacao_exponencial_quando_nao_cabe_em_ponto_fixo():
+    for valor, size, decimal_digits, escrito in [
+        (1e21, 10, 2, "    1.E+21"),
+        (-1e21, 10, 2, "   -1.E+21"),
+        (1.2345e10, 10, 1, "1.2345E+10"),
+        (5e-08, 5, 7, "5.E-8"),
+        (1e-08, 10, 7, "0.00000001"),
+    ]:
+        assert _escreve(valor, size, decimal_digits, 0) == escrito, valor
+        assert _le(escrito, 0) == valor, valor
+
+
+def test_escrita_em_formato_exponencial_nao_corta_o_expoente():
+    campo = FortranFloatField(15, 0, 9, format="E", value=-1.23456789e-3)
+    escrito = campo.write("")
+    assert escrito == " -1.23456789E-3"
+    assert _le(escrito, 0) == -1.23456789e-3
+
+
+def test_escrita_aproxima_valor_que_nao_cabe_no_campo():
+    escrito = _escreve(2 / 3, 5, 2, 0)
+    assert escrito == ".6667"
 
 
 def test_escrita_sem_decimais_implicitos_nao_altera_o_campo():
