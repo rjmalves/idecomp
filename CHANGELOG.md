@@ -6,6 +6,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+## [1.19.0] - 2026-11-24
+
 ### Adicionado
 
 - Método estático `compara_leitura_decomp` da classe `Dadger`, que compara dois arquivos `dadger` como o DECOMP os lê, nas colunas do Manual do Usuário do DECOMP (versão 31), e retorna as diferenças em um `DataFrame`, com a linha, o registro, as colunas, os textos e os valores lidos de cada uma. Serve para verificar se um `dadger` escrito pela `idecomp` é lido pelo DECOMP como o original. Os campos numéricos são lidos como no Fortran, as linhas de comentário são ignoradas, e as colunas fora dos campos do manual e as linhas dos registros que o manual não descreve (`CX` e `VT`) são comparadas como texto. Os campos de texto são comparados sem os brancos à direita, mas os brancos à esquerda são significativos: como a `idecomp` descarta os brancos à esquerda ao ler um campo de texto, um nome com brancos à esquerda no arquivo original aparece como diferença depois da escrita.
@@ -351,7 +353,8 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 - Métodos le_arquivo e escreve_arquivo deprecados
 
-[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.18.3...HEAD
+[Nao Publicado]: https://github.com/rjmalves/idecomp/compare/v1.19.0...HEAD
+[1.19.0]: https://github.com/rjmalves/idecomp/compare/v1.18.3...v1.19.0
 [1.18.3]: https://github.com/rjmalves/idecomp/compare/v1.18.2...v1.18.3
 [1.18.2]: https://github.com/rjmalves/idecomp/compare/v1.18.1...v1.18.2
 [1.18.1]: https://github.com/rjmalves/idecomp/compare/v1.18.0...v1.18.1
