@@ -1,12 +1,20 @@
 # Rotinas de testes associadas ao arquivo decomp.tim do DECOMP
 from idecomp.decomp.modelos.decomptim import (
+    BlocoCaso,
+    BlocoData,
+    BlocoHora,
+    BlocoNumeroProcessadores,
+    BlocoPacoteOtimizacao,
+    BlocoPlataforma,
     BlocoTemposEtapas,
+    BlocoVersaoModelo,
 )
 
 from idecomp.decomp.decomptim import Decomptim
 
 import re
-from datetime import timedelta
+from datetime import datetime, timedelta
+from typing import Any
 
 import pytest
 
@@ -311,4 +319,196 @@ def test_neq_decomptim_tempos_iteracoes():
     dt2 = le_decomptim(MockDecompTim3121)
     assert dt1 == dt2
     dt1.tempos_iteracoes.iloc[0, 1] = timedelta(seconds=99)
+    assert dt1 != dt2
+
+
+PROPRIEDADES_CABECALHO = [
+    "versao_modelo",
+    "caso",
+    "data_hora_inicio",
+    "numero_processadores",
+    "plataforma",
+    "pacote_otimizacao",
+]
+
+CABECALHOS_VERSOES = [
+    pytest.param(
+        MockDecompTim3121,
+        {
+            "versao_modelo": "31.21",
+            "caso": "caso de teste",
+            "data_hora_inicio": datetime(2024, 6, 18, 15, 1, 20, 53000),
+            "numero_processadores": 2,
+            "plataforma": "LINUX (L)",
+            "pacote_otimizacao": "LIBSLV",
+        },
+        id="cabecalho_3121",
+    ),
+    pytest.param(
+        MockDecompTim3201,
+        {
+            "versao_modelo": "32.0.1",
+            "caso": "caso de teste",
+            "data_hora_inicio": datetime(2026, 11, 10, 20, 6, 7, 785000),
+            "numero_processadores": 64,
+            "plataforma": "LINUX (L)",
+            "pacote_otimizacao": "LIBSLV",
+        },
+        id="cabecalho_3201",
+    ),
+    pytest.param(
+        MockDecompTim32151,
+        {
+            "versao_modelo": "32.15.1_coin",
+            "caso": "caso de teste",
+            "data_hora_inicio": datetime(2026, 11, 22, 16, 30, 28, 776000),
+            "numero_processadores": 64,
+            "plataforma": "LINUX (L)",
+            "pacote_otimizacao": "LIBSLV",
+        },
+        id="cabecalho_32151",
+    ),
+    pytest.param(
+        MockDecompTim32152,
+        {
+            "versao_modelo": "32.15.2_gurobi",
+            "caso": "caso de teste",
+            "data_hora_inicio": datetime(2026, 11, 22, 16, 59, 28, 640000),
+            "numero_processadores": 64,
+            "plataforma": "LINUX (L)",
+            "pacote_otimizacao": "LIBSLV",
+        },
+        id="cabecalho_32152",
+    ),
+]
+
+
+def cabecalho(dt: Decomptim) -> dict[str, Any]:
+    return {nome: getattr(dt, nome) for nome in PROPRIEDADES_CABECALHO}
+
+
+@pytest.mark.parametrize("linhas, esperado", CABECALHOS_VERSOES)
+def test_cabecalho_decomptim_versoes(linhas, esperado):
+    assert cabecalho(le_decomptim(linhas)) == esperado
+
+
+@pytest.mark.parametrize("linhas, esperado", CABECALHOS_VERSOES)
+def test_cabecalho_decomptim_nao_altera_tempos(linhas, esperado):
+    corte = indice_linha(linhas, r"^\s*RELATORIO DE CONVERGENCIA")
+    dt = le_decomptim(linhas)
+    sem_cabecalho = le_decomptim(linhas[corte:])
+    assert dt.tempos_etapas.equals(sem_cabecalho.tempos_etapas)
+    assert dt.tempos_iteracoes.equals(sem_cabecalho.tempos_iteracoes)
+
+
+def test_cabecalho_decomptim_ausente():
+    dt = le_decomptim(MockBlocoTemposEtapas)
+    assert cabecalho(dt) == dict.fromkeys(PROPRIEDADES_CABECALHO)
+    assert dt.tempos_etapas is not None
+
+
+def test_cabecalho_decomptim_arquivo_vazio():
+    assert cabecalho(le_decomptim([])) == dict.fromkeys(PROPRIEDADES_CABECALHO)
+
+
+@pytest.mark.parametrize("ausente", ["Data:", "Hora:"])
+def test_cabecalho_decomptim_sem_data_ou_hora(ausente):
+    linhas = [x for x in MockDecompTim32152 if not x.startswith(ausente)]
+    dt = le_decomptim(linhas)
+    assert dt.data_hora_inicio is None
+    assert dt.versao_modelo == "32.15.2_gurobi"
+
+
+@pytest.mark.parametrize(
+    "bloco, inicia, nao_inicia",
+    [
+        (BlocoVersaoModelo, "Versao 32.15.2_gurobi\n", "Nova Versao 1\n"),
+        (BlocoVersaoModelo, "Versao 1\n", "Versao: 1\n"),
+        (BlocoCaso, "Caso: PMO\n", "Outro Caso: PMO\n"),
+        (BlocoData, "Data: 22-11-2026\n", "Ultima Data: 22-11-2026\n"),
+        (BlocoHora, "Hora: 16h 59min 28.640sec\n", "Ultima Hora: 1h\n"),
+        (
+            BlocoNumeroProcessadores,
+            "Numero de Processadores:    64\n",
+            "  Numero de Processadores:    64\n",
+        ),
+        (
+            BlocoPlataforma,
+            "   PLATAFORMA__________: LINUX (L)\n",
+            "PLATAFORMA__________: LINUX (L)\n",
+        ),
+        (
+            BlocoPacoteOtimizacao,
+            "   PACOTE DE OTIMIZACAO: LIBSLV\n",
+            "PACOTE DE OTIMIZACAO: LIBSLV\n",
+        ),
+    ],
+)
+def test_bloco_cabecalho_inicio_ancorado(bloco, inicia, nao_inicia):
+    assert bloco.begins(inicia)
+    assert not bloco.begins(nao_inicia)
+
+
+@pytest.mark.parametrize(
+    "bloco, linha, campo",
+    [
+        (BlocoVersaoModelo, "Versao \n", "versao_modelo"),
+        (BlocoCaso, "Caso:    \n", "caso"),
+        (BlocoData, "Data: sem data\n", "data_hora_inicio"),
+        (BlocoData, "Data: 31-02-2026\n", "data_hora_inicio"),
+        (BlocoHora, "Hora: sem hora\n", "data_hora_inicio"),
+        (BlocoHora, "Hora: 25h 00min 00.000sec\n", "data_hora_inicio"),
+        (
+            BlocoNumeroProcessadores,
+            "Numero de Processadores:  muitos\n",
+            "numero_processadores",
+        ),
+        (BlocoPlataforma, "   PLATAFORMA__________:   \n", "plataforma"),
+        (
+            BlocoPacoteOtimizacao,
+            "   PACOTE DE OTIMIZACAO:\n",
+            "pacote_otimizacao",
+        ),
+    ],
+)
+def test_bloco_cabecalho_linha_sem_valor(bloco, linha, campo):
+    m: MagicMock = mock_open(read_data=linha)
+    b = bloco()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            with pytest.raises(ValueError, match=campo):
+                b.read(fp)
+
+
+def test_bloco_cabecalho_segundos_fracionarios_em_microssegundos():
+    m: MagicMock = mock_open(read_data="Hora: 00h 00min 00.5sec\n")
+    b = BlocoHora()
+    with patch("builtins.open", m):
+        with open("", "") as fp:
+            b.read(fp)
+    assert b.data.microsecond == 500000
+
+
+def test_eq_bloco_cabecalho():
+    def le(bloco, linha):
+        m: MagicMock = mock_open(read_data=linha)
+        b = bloco()
+        with patch("builtins.open", m):
+            with open("", "") as fp:
+                b.read(fp)
+        return b
+
+    caso = le(BlocoCaso, "Caso: PMO\n")
+    assert caso == le(BlocoCaso, "Caso: PMO   \n")
+    assert caso != le(BlocoCaso, "Caso: OUTRO\n")
+    assert caso != le(BlocoPlataforma, "   PLATAFORMA__________: PMO\n")
+    assert caso != BlocoCaso()
+    assert BlocoCaso() != BlocoCaso()
+
+
+def test_neq_decomptim_cabecalho():
+    dt1 = le_decomptim(MockDecompTim32152)
+    dt2 = le_decomptim(MockDecompTim32152)
+    assert dt1 == dt2
+    dt1.data.get_blocks_of_type(BlocoCaso).data = "OUTRO CASO"
     assert dt1 != dt2

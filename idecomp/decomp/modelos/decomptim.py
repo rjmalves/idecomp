@@ -1,7 +1,7 @@
 # Imports de módulos externos
 import re
-from datetime import timedelta
-from typing import IO, Any, Final, Literal
+from datetime import date, time, timedelta
+from typing import IO, Any, ClassVar, Final, Literal
 
 import pandas as pd  # type: ignore[import-untyped]
 from cfinterface.components.block import Block
@@ -36,6 +36,146 @@ def _tempo(linha: str, etapa: str) -> timedelta:
     if m is None:
         raise ValueError(f"Tempo não encontrado na linha de {etapa}: {linha!r}")
     return timedelta(hours=int(m[1]), minutes=int(m[2]), seconds=float(m[3]))
+
+
+class _BlocoCabecalho(Block):
+    """
+    Bloco base para as linhas do cabeçalho do arquivo decomp.tim, em que
+    o valor é lido da própria linha de início do bloco.
+    """
+
+    __slots__ = []
+
+    END_PATTERN = ""
+    CAMPO: ClassVar[str]
+    VALOR: ClassVar[re.Pattern[str]]
+
+    @staticmethod
+    def converte(m: re.Match[str]) -> Any:
+        return m[1]
+
+    def __eq__(self, o: object) -> bool:
+        if not isinstance(o, _BlocoCabecalho) or type(o) is not type(self):
+            return False
+        return self.data is not None and self.data == o.data
+
+    # Override
+    def read(self, file: IO[Any], *args: Any, **kwargs: Any) -> bool:
+        linha = file.readline()
+        m = self.VALOR.search(linha)
+        if m is None:
+            raise ValueError(
+                f"Valor não encontrado na linha de {self.CAMPO}: {linha!r}"
+            )
+        try:
+            self.data = self.converte(m)
+        except ValueError as e:
+            raise ValueError(
+                f"Valor inválido na linha de {self.CAMPO}: {linha!r}"
+            ) from e
+        return True
+
+
+class BlocoVersaoModelo(_BlocoCabecalho):
+    """
+    Bloco com a versão do DECOMP existente no cabeçalho do arquivo
+    decomp.tim, isto é, o primeiro termo após `Versao`.
+    """
+
+    __slots__ = []
+
+    BEGIN_PATTERN = r"^Versao "
+    CAMPO = "versao_modelo"
+    VALOR = re.compile(r"^Versao\s+(\S+)")
+
+
+class BlocoCaso(_BlocoCabecalho):
+    """
+    Bloco com o nome do caso existente no cabeçalho do arquivo decomp.tim.
+    """
+
+    __slots__ = []
+
+    BEGIN_PATTERN = r"^Caso:"
+    CAMPO = "caso"
+    VALOR = re.compile(r"^Caso:\s*(\S.*?)\s*$")
+
+
+class BlocoData(_BlocoCabecalho):
+    """
+    Bloco com a data de início da execução existente no cabeçalho do
+    arquivo decomp.tim.
+    """
+
+    __slots__ = []
+
+    BEGIN_PATTERN = r"^Data:"
+    CAMPO = "data_hora_inicio (linha Data)"
+    VALOR = re.compile(r"^Data:\s*(\d{2})-(\d{2})-(\d{4})")
+
+    @staticmethod
+    def converte(m: re.Match[str]) -> date:
+        return date(int(m[3]), int(m[2]), int(m[1]))
+
+
+class BlocoHora(_BlocoCabecalho):
+    """
+    Bloco com a hora de início da execução existente no cabeçalho do
+    arquivo decomp.tim, com os segundos fracionários.
+    """
+
+    __slots__ = []
+
+    BEGIN_PATTERN = r"^Hora:"
+    CAMPO = "data_hora_inicio (linha Hora)"
+    VALOR = re.compile(r"^Hora:\s*(\d+)h\s*(\d+)min\s*(\d+)\.(\d{1,6})sec")
+
+    @staticmethod
+    def converte(m: re.Match[str]) -> time:
+        return time(int(m[1]), int(m[2]), int(m[3]), int(m[4].ljust(6, "0")))
+
+
+class BlocoNumeroProcessadores(_BlocoCabecalho):
+    """
+    Bloco com o número de processadores existente no cabeçalho do
+    arquivo decomp.tim.
+    """
+
+    __slots__ = []
+
+    BEGIN_PATTERN = r"^Numero de Processadores:"
+    CAMPO = "numero_processadores"
+    VALOR = re.compile(r"^Numero de Processadores:\s*(\d+)")
+
+    @staticmethod
+    def converte(m: re.Match[str]) -> int:
+        return int(m[1])
+
+
+class BlocoPlataforma(_BlocoCabecalho):
+    """
+    Bloco com a plataforma do executável existente no cabeçalho do
+    arquivo decomp.tim.
+    """
+
+    __slots__ = []
+
+    BEGIN_PATTERN = r"^\s+PLATAFORMA_+:"
+    CAMPO = "plataforma"
+    VALOR = re.compile(r"^\s+PLATAFORMA_+:\s*(\S.*?)\s*$")
+
+
+class BlocoPacoteOtimizacao(_BlocoCabecalho):
+    """
+    Bloco com o pacote de otimização existente no cabeçalho do arquivo
+    decomp.tim.
+    """
+
+    __slots__ = []
+
+    BEGIN_PATTERN = r"^\s+PACOTE DE OTIMIZACAO:"
+    CAMPO = "pacote_otimizacao"
+    VALOR = re.compile(r"^\s+PACOTE DE OTIMIZACAO:\s*(\S.*?)\s*$")
 
 
 class BlocoTemposEtapas(Block):
