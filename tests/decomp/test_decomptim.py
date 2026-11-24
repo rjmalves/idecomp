@@ -114,7 +114,7 @@ def test_soma_etapas_decomptim_versoes(linhas, segundos):
 
 
 def indice_linha(linhas: list[str], padrao: str) -> int:
-    return next(i for i, l in enumerate(linhas) if re.match(padrao, l))
+    return next(i for i, linha in enumerate(linhas) if re.match(padrao, linha))
 
 
 TOTAIS_10_PRIMEIRAS_ITERACOES_3121 = [175, 7, 8, 9, 6, 8, 8, 7, 9, 10]
