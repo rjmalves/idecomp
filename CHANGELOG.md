@@ -12,6 +12,13 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 - Os campos reais do `dadger` eram escritos com o número de casas decimais do modelo, o que arredondava os valores informados no deck com mais casas: os limites `3.571` de um registro `CT`, por exemplo, eram reescritos como `3.57`. A escrita passa a usar o número de casas do modelo apenas quando ele reproduz o valor; caso contrário, usa o texto mais curto que reproduz o valor e cabe no campo, em notação exponencial se necessário, como `1.E+21`. Um valor que não cabe no campo de nenhuma forma gera `ValueError`, e não é mais escrito além das colunas do campo.
 - A escrita dos campos do `dadger` em formato exponencial cortava o expoente quando o texto não cabia no campo.
 - Os campos inteiros e reais do `dadger` passam a ser lidos como o DECOMP os lê: os brancos dentro do campo são ignorados, como em `1 2`, lido como `12`, e o expoente pode vir sem letra, como em `1.0+21`. Esses campos eram lidos como `None`. Um inteiro que não cabe no seu campo passa a gerar `ValueError` na escrita, e não é mais escrito além das colunas do campo.
+- `TE`: o título era lido com 75 caracteres, e os 5 últimos dos 80 do manual eram perdidos na escrita.
+- `UH`: a vazão defluente mínima era lida nas colunas 26-35, e não nas colunas 25-34 do manual.
+- `RE`, `LU`, `FU`, `FT`, `FI` e `FE`: o código da restrição era lido nas colunas 5-7, e não nas colunas 5-8 do manual, e um código com 4 dígitos era lido sem o último. Os códigos com até 3 dígitos continuam a ser escritos nas colunas 5-7, como nos decks.
+- `PV`: os campos eram lidos uma coluna à direita: a penalidade e a tolerância nas colunas 6-25 e 29-48, e não nas colunas 5-24 e 28-47 do manual. Os demais campos, que o manual não documenta, foram deslocados da mesma forma.
+- `EA`: as ENAs eram lidas a partir da coluna 12, e não da coluna 10 do manual.
+- `FP`: a tolerância para desvio era lida nas colunas 67-71, e não nas colunas 67-69 do manual.
+- `HE`: o nome do arquivo de produtibilidades era lido com 12 caracteres, e não com os 60 do manual (colunas 46-105).
 
 ## [1.18.3] - 2026-11-03
 

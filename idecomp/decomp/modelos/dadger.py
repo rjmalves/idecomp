@@ -20,7 +20,7 @@ class TE(Register):
 
     IDENTIFIER = "TE  "
     IDENTIFIER_DIGITS = 4
-    LINE = Line([LiteralField(75, 4)])
+    LINE = Line([LiteralField(80, 4)])
 
     @property
     def titulo(self) -> str | None:
@@ -92,7 +92,7 @@ class UH(Register):
             FortranIntegerField(3, 4),
             FortranIntegerField(2, 9),
             FortranFloatField(10, 14, 2),
-            FortranFloatField(10, 25, 2),
+            FortranFloatField(10, 24, 2),
             FortranIntegerField(1, 39),
             FortranIntegerField(2, 44),
             FortranFloatField(10, 49, 2),
@@ -1705,7 +1705,7 @@ class RE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FortranIntegerField(3, 4),
+            FortranIntegerField(4, 4, preferred_size=3),
             FortranIntegerField(2, 9),
             FortranIntegerField(2, 14),
         ]
@@ -1766,7 +1766,7 @@ class LU(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FortranIntegerField(3, 4),
+            FortranIntegerField(4, 4, preferred_size=3),
             FortranIntegerField(2, 9),
             FortranFloatField(10, 14, 2),
             FortranFloatField(10, 24, 2),
@@ -1866,7 +1866,7 @@ class FU(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FortranIntegerField(3, 4),
+            FortranIntegerField(4, 4, preferred_size=3),
             FortranIntegerField(2, 9),
             FortranIntegerField(3, 14),
             FortranFloatField(10, 19, 7),
@@ -1953,7 +1953,7 @@ class FT(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FortranIntegerField(3, 4),
+            FortranIntegerField(4, 4, preferred_size=3),
             FortranIntegerField(2, 9),
             FortranIntegerField(3, 14),
             FortranIntegerField(2, 19),
@@ -2039,7 +2039,7 @@ class FI(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FortranIntegerField(3, 4),
+            FortranIntegerField(4, 4, preferred_size=3),
             FortranIntegerField(2, 9),
             LiteralField(2, 14),
             LiteralField(2, 19),
@@ -2125,7 +2125,7 @@ class FE(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FortranIntegerField(3, 4),
+            FortranIntegerField(4, 4, preferred_size=3),
             FortranIntegerField(2, 9),
             FortranIntegerField(3, 14),
             FortranIntegerField(2, 19),
@@ -2690,17 +2690,17 @@ class EA(Register):
     LINE = Line(
         [
             FortranIntegerField(2, 4),
-            FortranFloatField(10, 11, 2),
-            FortranFloatField(10, 21, 2),
-            FortranFloatField(10, 31, 2),
-            FortranFloatField(10, 41, 2),
-            FortranFloatField(10, 51, 2),
-            FortranFloatField(10, 61, 2),
-            FortranFloatField(10, 71, 2),
-            FortranFloatField(10, 81, 2),
-            FortranFloatField(10, 91, 2),
-            FortranFloatField(10, 101, 2),
-            FortranFloatField(10, 111, 2),
+            FortranFloatField(10, 9, 2),
+            FortranFloatField(10, 19, 2),
+            FortranFloatField(10, 29, 2),
+            FortranFloatField(10, 39, 2),
+            FortranFloatField(10, 49, 2),
+            FortranFloatField(10, 59, 2),
+            FortranFloatField(10, 69, 2),
+            FortranFloatField(10, 79, 2),
+            FortranFloatField(10, 89, 2),
+            FortranFloatField(10, 99, 2),
+            FortranFloatField(10, 109, 2),
         ]
     )
 
@@ -3137,7 +3137,7 @@ class FP(Register):
             FortranFloatField(5, 47, 3),
             FortranFloatField(5, 54, 3),
             FortranFloatField(5, 60, 3),
-            FortranFloatField(5, 66, 3),
+            FortranFloatField(3, 66, 3),
         ]
     )
 
@@ -4224,7 +4224,7 @@ class HE(Register):
             FortranIntegerField(1, 39),
             FortranIntegerField(1, 41),
             FortranIntegerField(1, 43),
-            LiteralField(12, 45),
+            LiteralField(60, 45),
         ]
     )
 
@@ -4663,12 +4663,12 @@ class PV(Register):
     IDENTIFIER_DIGITS = 4
     LINE = Line(
         [
-            FortranFloatField(20, 5, 5),
-            FortranFloatField(20, 28, 5),
-            FortranIntegerField(3, 51),
-            FortranFloatField(3, 57, 1),
-            FortranFloatField(20, 63, 5),
-            FortranFloatField(20, 86, 5),
+            FortranFloatField(20, 4, 5),
+            FortranFloatField(20, 27, 5),
+            FortranIntegerField(3, 50),
+            FortranFloatField(3, 56, 1),
+            FortranFloatField(20, 62, 5),
+            FortranFloatField(20, 85, 5),
         ]
     )
 

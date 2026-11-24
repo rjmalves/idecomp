@@ -233,13 +233,12 @@ def test_registro_te_dadger():
         with open("", "") as fp:
             r.read(fp)
 
-    assert r.data == [
-        "PMO - JANEIRO/20 - FEVEREIRO/20 - REV 0 - FCF COM CVAR - 12 REE - VALOR ESP"
-    ]
-    assert (
-        r.titulo
-        == "PMO - JANEIRO/20 - FEVEREIRO/20 - REV 0 - FCF COM CVAR - 12 REE - VALOR ESP"
+    titulo = (
+        "PMO - JANEIRO/20 - FEVEREIRO/20 - REV 0 - FCF COM CVAR - 12 REE - "
+        + "VALOR ESPERADO"
     )
+    assert r.data == [titulo]
+    assert r.titulo == titulo
     r.titulo = "Teste123"
     assert r.titulo == "Teste123"
 
@@ -1604,6 +1603,12 @@ def _verifica_reescrita(classe, linha):
     return r
 
 
+def test_registro_te_dadger_titulo_com_80_caracteres():
+    # O título é A80 no manual, nas colunas 5-84.
+    r = _verifica_reescrita(TE, MockTE)
+    assert r.titulo == MockTE[4:].rstrip()
+
+
 def test_registro_acpotefe_dadger_potencia_nas_colunas_do_manual():
     # A potência é F10.0 no manual, nas colunas 25-34. Escrita nas
     # colunas 25-35, "611.111" era lido pelo DECOMP como 611.11.
@@ -1629,6 +1634,67 @@ def test_registro_ct_dadger_limites_com_tres_decimais():
     r = _le_registro(CT, linha)
     assert r.data[4:6] == [3.571, 0.744]
     assert _escreve_registro(r)[29:39] == "3.5710.744"
+
+
+def test_registro_uh_dadger_defluencia_minima_nas_colunas_do_manual():
+    # A vazão defluente mínima é F10.0 no manual, nas colunas 25-34.
+    linha = _substitui_campo(MockUH.rstrip("\n"), 24, 10, "1234.567")
+    r = _verifica_reescrita(UH, linha)
+    assert r.data[3] == 1234.567
+
+
+def test_registros_restricoes_eletricas_dadger_codigo_com_quatro_digitos():
+    # O código da restrição é I4 no manual, nas colunas 5-8. Os decks
+    # preenchem só as colunas 5-7 quando o código tem até três dígitos.
+    for classe, mock in [
+        (RE, MockRE),
+        (LU, MockLU),
+        (FU, MockFU),
+        (FT, MockFT),
+        (FI, MockFI),
+        (FE, MockFE),
+    ]:
+        linha = _substitui_campo(mock, 4, 4, "1001")
+        r = _le_registro(classe, linha)
+        assert r.data[0] == 1001, classe
+        assert _escreve_registro(r)[:9] == linha[:9], classe
+        r = _le_registro(classe, mock)
+        assert _escreve_registro(r)[:9] == mock[:9], classe
+
+
+def test_registro_pv_dadger_nas_colunas_do_manual():
+    # A penalidade e a tolerância são F20.0 no manual, nas colunas 5-24
+    # e 28-47.
+    linha = "PV  " + "100000.00000".rjust(20) + "   " + "0.00000001".rjust(20)
+    r = _verifica_reescrita(PV, linha)
+    assert r.data[:2] == [100000.0, 1e-8]
+
+
+def test_registro_ea_dadger_nas_colunas_do_manual():
+    # As ENAs são 11F10.0 no manual, nas colunas 10-119.
+    r = _verifica_reescrita(EA, MockEA)
+    assert r.ena[0] == 1917.35
+
+
+def test_registro_fp_dadger_tolerancia_nas_colunas_do_manual():
+    # A tolerância para desvio é F3.0 no manual, nas colunas 67-69.
+    linha = _substitui_campo(MockFP[:66], 66, 3, "2.5")
+    r = _le_registro(FP, linha)
+    assert r.data[12] == 2.5
+    escrita = _escreve_registro(r)
+    assert escrita[66:69] == "2.5"
+    assert _le_registro(FP, escrita).data == r.data
+
+
+def test_registro_he_dadger_arquivo_nas_colunas_do_manual():
+    # O arquivo é A60 no manual, nas colunas 46-105.
+    arquivo = "produtibilidades_rhe_semanais.dat"
+    linha = MockHE[:45] + arquivo.ljust(60)
+    r = _le_registro(HE, linha)
+    assert r.arquivo_produtibilidades == arquivo
+    escrita = _escreve_registro(r)
+    assert escrita[45:105] == linha[45:105]
+    assert _le_registro(HE, escrita).data == r.data
 
 
 def test_registro_vl_dadger_coeficiente_com_expoente_negativo():

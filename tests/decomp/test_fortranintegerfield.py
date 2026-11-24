@@ -10,8 +10,12 @@ def _le(texto: str) -> int | None:
     return campo.read(texto)
 
 
-def _escreve(valor: int | None, size: int) -> str:
-    campo = FortranIntegerField(size, 0, value=valor)
+def _escreve(
+    valor: int | None, size: int, preferred_size: int | None = None
+) -> str:
+    campo = FortranIntegerField(
+        size, 0, value=valor, preferred_size=preferred_size
+    )
     return campo.write("")
 
 
@@ -37,8 +41,14 @@ def test_escrita_alinhada_a_direita():
     assert _escreve(1001, 4) == "1001"
 
 
+def test_escrita_alinhada_nas_colunas_preferidas():
+    assert _escreve(401, 4, 3) == "401 "
+    assert _escreve(99, 4, 3) == " 99 "
+    assert _escreve(1001, 4, 3) == "1001"
+
+
 def test_escrita_de_valor_nulo_fica_em_branco():
-    assert _escreve(None, 4) == "    "
+    assert _escreve(None, 4, 3) == "    "
 
 
 def test_escrita_que_nao_cabe_no_campo_falha():
