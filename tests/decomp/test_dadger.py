@@ -55,6 +55,7 @@ from idecomp.decomp.modelos.dadger import (
     ACNUMCON,
     ACNUMMAQ,
     ACPOTEFE,
+    ACPROESP,
     ACALTEFE,
     FP,
     IR,
@@ -1594,6 +1595,46 @@ def test_registro_ci_dadger_custo_sem_ponto_decimal():
 
 def test_registro_ce_dadger_custo_sem_ponto_decimal():
     _verifica_custos_f10_2(CE, MockCE, [39, 59, 79], [6, 9, 12])
+
+
+def test_registro_acproesp_dadger_produtibilidade_com_seis_decimais():
+    linha = _substitui_campo("AC  288  PROESP", 19, 10, "0.008829")
+    r = _le_registro(ACPROESP, linha)
+    assert r.data[1] == 0.008829
+    assert _escreve_registro(r)[19:29] == "  0.008829"
+
+
+def test_registro_ct_dadger_limites_com_tres_decimais():
+    # Os limites são F5.0 no manual e admitem decimais no deck.
+    linha = _substitui_campo(MockCT, 29, 5, "3.571")
+    linha = _substitui_campo(linha, 34, 5, "0.744")
+    r = _le_registro(CT, linha)
+    assert r.data[4:6] == [3.571, 0.744]
+    assert _escreve_registro(r)[29:39] == "3.5710.744"
+
+
+def test_registro_vl_dadger_coeficiente_com_expoente_negativo():
+    linha = _substitui_campo(MockVL, 26, 15, "-1.23456789E-3")
+    r = _le_registro(VL, linha)
+    assert r.data[2] == -1.23456789e-3
+    assert _escreve_registro(r)[26:41] == " -1.23456789E-3"
+
+
+def test_registro_lu_dadger_limite_em_notacao_exponencial():
+    # O manual usa 1.e+21 como limite "sem limite".
+    linha = _substitui_campo(MockLU, 24, 10, "1.e+21")
+    r = _le_registro(LU, linha)
+    assert r.data[3] == 1e21
+    escrita = _escreve_registro(r)
+    assert escrita[24:34] == "    1.E+21"
+    assert _le_registro(LU, escrita).data == r.data
+
+
+def test_registro_ft_dadger_coeficiente_pequeno():
+    linha = _substitui_campo(MockFT, 24, 10, "4.E-8")
+    r = _le_registro(FT, linha)
+    assert r.data[4] == 4e-8
+    assert _le_registro(FT, _escreve_registro(r)).data[4] == 4e-8
 
 
 def test_registros_dadger_campos_lidos_como_no_fortran():
