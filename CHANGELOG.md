@@ -8,16 +8,16 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ### Corrigido
 
-- `decomp.tim`: a partir da versão 32.15 do DECOMP, o arquivo tem o bloco final `Sim. Final` e a linha `Tempo de Impressao`. O tempo do bloco `Sim. Final` era somado ao tempo de `Convergencia` e o `Tempo de Impressao` não era lido, então a linha `Impressao` da tabela `tempos_etapas` da classe `Decomptim` valia zero e as etapas não somavam o `Tempo Total` (302 s contra 531 s no arquivo da versão 32.15.1). Esses tempos passam a ser lidos nas suas próprias linhas, e um arquivo truncado no meio da execução é lido até onde chega [#NNN](https://github.com/rjmalves/idecomp/pull/NNN) (@renanmaciel-84).
+- `decomp.tim`: a partir da versão 32.15 do DECOMP, o arquivo tem o bloco final `Sim. Final` e a linha `Tempo de Impressao`. O tempo do bloco `Sim. Final` era somado ao tempo de `Convergencia` e o `Tempo de Impressao` não era lido, então a linha `Impressao` da tabela `tempos_etapas` da classe `Decomptim` valia zero e as etapas não somavam o `Tempo Total` (302 s contra 531 s no arquivo da versão 32.15.1). Esses tempos passam a ser lidos nas suas próprias linhas, e um arquivo truncado no meio da execução é lido até onde chega [#105](https://github.com/rjmalves/idecomp/pull/105) (@renanmaciel-84).
 
 ### Modificado
 
-- A tabela `tempos_etapas` da classe `Decomptim` passa a ter cinco linhas em todas as versões do DECOMP: `Leitura de Dados`, `Convergencia`, `Simulacao Final`, `Impressao` e `Tempo Total`, e a soma das quatro primeiras é igual ao `Tempo Total`. A linha `Impressao` das versões anteriores à 32.15, que tinha o tempo do bloco final, passa a se chamar `Simulacao Final`, e `Impressao` vale zero nelas. Quem filtra a tabela pela etapa `Impressao` em arquivos dessas versões deve passar a filtrar por `Simulacao Final` [#NNN](https://github.com/rjmalves/idecomp/pull/NNN) (@renanmaciel-84).
+- A tabela `tempos_etapas` da classe `Decomptim` passa a ter cinco linhas em todas as versões do DECOMP: `Leitura de Dados`, `Convergencia`, `Simulacao Final`, `Impressao` e `Tempo Total`, e a soma das quatro primeiras é igual ao `Tempo Total`. A linha `Impressao` das versões anteriores à 32.15, que tinha o tempo do bloco final, passa a se chamar `Simulacao Final`, e `Impressao` vale zero nelas. Quem filtra a tabela pela etapa `Impressao` em arquivos dessas versões deve passar a filtrar por `Simulacao Final` [#105](https://github.com/rjmalves/idecomp/pull/105) (@renanmaciel-84).
 
 ### Adicionado
 
-- Propriedade `tempos_iteracoes` da classe `Decomptim`, com uma linha por iteração concluída do processo iterativo e as colunas `iteracao`, `envio_variaveis`, `descida_1a_parte`, `descida_2a_parte`, `retorno` e `total`. A iteração final truncada é descartada, e uma fase ausente em uma iteração concluída vale zero [#NNN](https://github.com/rjmalves/idecomp/pull/NNN) (@renanmaciel-84).
-- Propriedades `versao_modelo`, `caso`, `data_hora_inicio`, `numero_processadores`, `plataforma` e `pacote_otimizacao` da classe `Decomptim`, com os dados do cabeçalho do `decomp.tim`. Cada uma retorna `None` quando a linha não existe no arquivo [#NNN](https://github.com/rjmalves/idecomp/pull/NNN) (@renanmaciel-84).
+- Propriedade `tempos_iteracoes` da classe `Decomptim`, com uma linha por iteração concluída do processo iterativo e as colunas `iteracao`, `envio_variaveis`, `descida_1a_parte`, `descida_2a_parte`, `retorno` e `total`. A iteração final truncada é descartada, e uma fase ausente em uma iteração concluída vale zero [#105](https://github.com/rjmalves/idecomp/pull/105) (@renanmaciel-84).
+- Propriedades `versao_modelo`, `caso`, `data_hora_inicio`, `numero_processadores`, `plataforma` e `pacote_otimizacao` da classe `Decomptim`, com os dados do cabeçalho do `decomp.tim`. Cada uma retorna `None` quando a linha não existe no arquivo [#105](https://github.com/rjmalves/idecomp/pull/105) (@renanmaciel-84).
 
 ## [1.19.0] - 2026-11-24
 
