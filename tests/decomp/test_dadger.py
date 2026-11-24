@@ -1596,6 +1596,14 @@ def test_registro_ce_dadger_custo_sem_ponto_decimal():
     _verifica_custos_f10_2(CE, MockCE, [39, 59, 79], [6, 9, 12])
 
 
+def test_registros_dadger_campos_lidos_como_no_fortran():
+    # O DECOMP ignora os brancos dos campos e aceita o expoente sem letra.
+    linha = _substitui_campo(MockUH, 4, 3, "1 2")
+    assert _le_registro(UH, linha).codigo_usina == 12
+    linha = _substitui_campo(MockLU, 14, 10, "1.0+21")
+    assert _le_registro(LU, linha).data[2] == 1e21
+
+
 def test_registro_ci_dadger():
     m: MagicMock = mock_open(read_data="".join(MockCI))
     r = CI()

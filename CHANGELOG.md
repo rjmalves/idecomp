@@ -6,6 +6,10 @@ O formato segue o [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [Nao Publicado]
 
+### Corrigido
+
+- Os campos inteiros e reais do `dadger` passam a ser lidos como o DECOMP os lê: os brancos dentro do campo são ignorados, como em `1 2`, lido como `12`, e o expoente pode vir sem letra, como em `1.0+21`. Esses campos eram lidos como `None`. Um inteiro que não cabe no seu campo passa a gerar `ValueError` na escrita, e não é mais escrito além das colunas do campo.
+
 ## [1.18.3] - 2026-11-03
 
 ### Corrigido
